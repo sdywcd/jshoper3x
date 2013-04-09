@@ -13,7 +13,7 @@ ostocyjshop更名为ostocyjshoper简称jshoper。取义行走在java上的人。
 平板的app由于那时我主要写设计，基础架构是我写的，更新是其他人做的，我就暂时不公开源码了<br>
 </p>
 <p>
-将来要做的事情：
+将来要做的事情：<br>
 1，简化ostocyjshoper的功能，使用统一的模式来进行编程规范<br>
 2，优化平板上的app<br>
 3，增加手机上的app<br>
@@ -23,7 +23,7 @@ ostocyjshop更名为ostocyjshoper简称jshoper。取义行走在java上的人。
 7，更多功能可能是你给我的想法，或者你fork后自己的创新<br>
 </p>
 <p>
-我的一些解释：
+我的一些解释：<br>
 1，ostocyjshoper并不是一个完美的东西，而且永远都不可能完美。<br>
 2，无论是手机还是平板上的app都需要不断改进。<br>
 3，希望做成通用app应用解决方案的意思是，提供一个数据管理的后端，和一个app前端的基础架构。<br>
@@ -32,7 +32,7 @@ ostocyjshop更名为ostocyjshoper简称jshoper。取义行走在java上的人。
 6，接受定制开发和技术咨询，欢迎聊天。<br>
 </p>
 <p>
-你可以在如下几个地方找到我：
+你可以在如下几个地方找到我：<br>
 1，上海<br>
 2，我的博客：http://sdywcd.iteye.com/<br>
 3，我的微博：http://weibo.com/sdywcd<br>
