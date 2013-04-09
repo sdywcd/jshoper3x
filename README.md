@@ -1,7 +1,7 @@
 这是ostocyjshop计划下的一个新版本，主要是增强App部分的功能。希望可以制作成一个通用的app应用解决方案。
 <br>
 ostocyjshop更名为ostocyjshoper简称jshoper。取义行走在java上的人。
-
+<br><br>
 
 已经做的事情：
 1，ostocyjshoper是app的服务器端，由原先的ostocy-jshop改进而来
