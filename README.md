@@ -32,6 +32,12 @@ ostocyjshop更名为ostocyjshoper简称jshoper。取义行走在java上的人。
 6，接受定制开发和技术咨询，欢迎聊天。<br>
 </p>
 <p>
+关于技术选型:<br>
+1,struts2,spring3.0,hibernate4,freemarker,jsp,jquery,dwr,js,html5,css,mysql5,android4<br>
+大致的技术就上面这些了,全注解,AOP,拦截器,推送,等<br>
+题外话,有人问我为什么不用springmvc，亲因为我在做第一版的时候，springmvc还没生出来呢。那是struts2出来了，我就只能2了。<br>
+</p>
+<p>
 你可以在如下几个地方找到我：<br>
 1，上海<br>
 2，我的博客：http://sdywcd.iteye.com/<br>
