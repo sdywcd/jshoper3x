@@ -1,12 +1,13 @@
 这是ostocyjshop计划下的一个新版本，主要是增强App部分的功能。希望可以制作成一个通用的app应用解决方案。
 <br>
 ostocyjshop更名为ostocyjshoper简称jshoper。取义行走在java上的人。
-<br><br>
+<br>
 
-已经做的事情：
+已经做的事情：<br>
+<p>
 1，ostocyjshoper是app的服务器端，由原先的ostocy-jshop改进而来
 2，ostocyjshoper有自身的一个app客户端，是基于android4平台，适用于平板
-
+<p>
 上面两件事情中第一件的源码可以在 https://code.google.com/p/ostocy-jshop/ 下载到
 平板的app由于那时我主要写设计，基础架构是我写的，更新是其他人做的，我就暂时不公开源码了
 
