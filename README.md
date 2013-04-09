@@ -38,6 +38,12 @@ ostocyjshop更名为ostocyjshoper简称jshoper。取义行走在java上的人。
 题外话,有人问我为什么不用springmvc，亲因为我在做第一版的时候，springmvc还没生出来呢。那是struts2出来了，我就只能2了。<br>
 </p>
 <p>
+关于未来想加入的技术:<br>
+1,搜索技术 lucene<br>
+2,缓存 <br>
+3,其他没想到 <br>
+</p>
+<p>
 你可以在如下几个地方找到我：<br>
 1，上海<br>
 2，我的博客：http://sdywcd.iteye.com/<br>
