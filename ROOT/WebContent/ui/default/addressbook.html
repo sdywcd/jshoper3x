@@ -1,0 +1,54 @@
+<div id="mem_position"><a href="/Member/index.jsp" target="_parent">会员专区</a> &gt; <a href="/Member/AddressList.do">我的地址簿</a></div>
+    <div id="hui_r">
+        <div class="myad_rm1title"><span>我的地址薄</span></div>
+      <div class="myad_rbox">
+ 		<div class="myac_rmtitle" style="margin-left:12px">我的地址薄</div>
+       <div class="myad_rm1">
+          <div class="myad_rth">
+            <div class="myad_rth1">收货人</div>
+            <div class="myad_rth2">详细地址</div>
+            <div class="myad_rth3">邮编</div>
+            <div class="myad_rth4">固定电话</div>
+            <div class="myad_rth5">手机</div>
+            <div class="myad_rth6">操作</div>
+          </div>
+          
+            <div class="myad_rtd1">蒋奇</div>
+            <div class="myad_rtd2">阿萨德发松岛枫松岛枫阿斯蒂芬</div>
+            <div class="myad_rtd3">212212</div>
+            <div class="myad_rtd4">021-61321812</div>
+            <div class="myad_rtd5">1231312313</div>
+            <div class="myad_rtd6"><a href="/Member/UpdateAddressForm.do?addressId=378038&amp;TB_iframe=true&amp;height=315&amp;width=500&amp;modal=ture" onclick="setHeight()" class="thickbox myad_s1">修改</a>
+              <a href="javascript:;" onclick="addrDel(378038);return false;" class="myad_s2">删除</a></div>
+            
+          <div class="clear"></div>
+        </div>
+        <form id="addrForm" action="/Member/AddAddress.do" method="POST" style="margin:0px;">
+          <div class="myad_rm2">
+            <div class="myad_rm2title">新增收货人地址</div>
+            <div class="myad_rm2l">收 货 人：</div>
+            <div class="myad_rm2r1"><input name="realName" id="realName" type="text"></div>
+            <div class="myad_rm2l">所在地区：</div>
+            <div class="myad_rm2r1">
+              <div id="regionCanvas"><select class="selectTree" id="region_1" onchange="SelectTree.ShowChildren(this)" valueelemid="regionId" level="1"><option>请选择...</option><option value="1602">中国</option></select><select class="selectTree" id="region_2" onchange="SelectTree.ShowChildren(this)" valueelemid="regionId" level="2"><option>请选择...</option><option value="100000">安徽</option><option value="100136">北京</option><option value="100156">福建</option><option value="100251">甘肃</option><option value="100352">广东</option><option value="100510">广西</option><option value="100638">贵州</option><option value="100736">海南</option><option value="100760">河北</option><option value="100941">河南</option><option value="101124">黑龙江</option><option value="101269">湖北</option><option value="101387">湖南</option><option value="101524">吉林</option><option value="101598">江苏</option><option value="101724">江西</option><option value="101838">辽宁</option><option value="101956">内蒙古</option><option value="102072">宁夏</option><option value="102099">青海</option><option value="102154">山东</option><option value="102317">山西</option><option value="102448">陕西</option><option value="102567">上海</option><option value="102588">四川</option><option value="102816">天津</option><option value="102836">西藏</option><option value="102919">新疆</option><option value="103032">云南</option><option value="103178">浙江</option><option value="103282">重庆</option></select></div>
+              <input nodepath="1601,1602" value="1602" id="regionId" name="regionId" treename="region" treebean="regionTree" class="selectTree" type="hidden">
+              <input id="region_0" valueelemid="regionId" value="1601" level="0" type="hidden">
+            </div>
+            <div class="myad_rm2l">详细地址：</div>
+            <div class="myad_rm2r2"><input name="address" id="address" value="" class="myad_rm2r2inp1" type="text"><input name="addressType" value="0" type="hidden"></div>
+            <div class="myad_rm2l">固定电话：</div>
+            <div class="myad_rm2r3"><input class="style1" name="telephone" id="telephone" type="text">
+              &nbsp;&nbsp;<input name="telephoneType" value="1" checked="checked" type="radio">&nbsp;办公电话&nbsp;&nbsp;<input name="telephoneType" value="0" type="radio">&nbsp;家庭电话</div>
+            <div><input name="telephoneType" value="0" type="hidden"></div>
+            <div class="clear"></div>
+            <div class="myad_rm2l">手机号码：</div>
+            <div class="myad_rm2r1"><input name="mobilePhone" id="mobilePhone" type="text"></div>
+            <div class="myad_rm2l">邮政编码：</div>
+            <div class="myad_rm2r1"><input name="postalCode" id="postalCode" type="text"></div>
+            <div class="clear"></div>
+            <div class="myad_btn"><input src="images/myad_addbtn.gif" alt="" type="image"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="mem_fixHeight"></div>

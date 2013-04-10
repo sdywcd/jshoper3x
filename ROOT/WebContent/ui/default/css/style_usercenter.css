@@ -1,0 +1,68 @@
+
+
+.usercenter_userinfo{
+	background-color: #F5FAFE;
+    padding: 10px 10px 12px 100px;
+    position: relative;
+    height:120px;
+	}
+.usercenter_userinfo .head{
+	left: 10px;
+    position: absolute;
+    top: 10px;
+	
+	}
+.usercenter_userinfo .head .modify{
+	background-color: #FFFFFF;
+    bottom: 0;
+    left: 0;
+    opacity: 0.75;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 105px;
+	}
+.usercenter_userinfo .info{
+	line-height: 23px;
+	margin-left:30px;
+	
+	}	
+.usercenter_userinfo .info strong{
+    font-family: "Microsoft Yahei","Arial",sans-serif;
+    font-size: 23px;
+    line-height: 1em;	
+}
+.usercenter_userinfo .useful-actions{
+	margin-top:5px;
+	margin-left:30px;
+	}
+.usercenter_userinfo .useful-actions a{
+	color: #404040;
+    margin-right: 15px;
+	}
+	
+.usercenter_userinfo .notice{
+	border: 1px solid #C4D6DA;
+    clear: both;
+    margin: 10px 30px 0;
+	}
+.usercenter_userinfo .notice .wrapper{
+	background: -moz-linear-gradient(center top , #FFFFFF 50%, #F0F6F9 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #FFFFFF;
+    overflow: hidden;
+	}
+.usercenter_userinfo .notice .section{
+	border-top: 1px solid #E1E2E7;
+    line-height: 18px;
+    margin: -1px 6px 0;
+	}
+.usercenter_userinfo .notice .section ul{
+	margin-top:5px;
+	}
+.usercenter_userinfo .notice .section ul li{	
+    color: #999999;
+    margin-right: 20px;
+    vertical-align: middle;
+    white-space: nowrap;
+    display:inline;
+}

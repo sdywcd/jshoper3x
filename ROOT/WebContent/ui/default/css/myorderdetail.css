@@ -1,0 +1,127 @@
+#orderdetail_info{
+	  border: 1px solid #CCCCCC;
+    overflow: visible;
+    padding: 6px;
+    position: relative;
+    width: 99%;
+}
+
+#orderstatearea{
+	margin-top:10px;
+	position:relative;
+
+}
+#orderstatearea .bd{
+	background: none repeat scroll 0 0 #FFFCF3;
+    border: 1px solid #F7E4A5;
+    padding: 20px 30px;
+}
+#orderstatearea .order_state{
+	font-size:14px;	
+	font-weight:lighter;
+	padding-top:10px;
+}
+#orderstatearea .action{
+	padding-top:10px;
+	
+}
+#orderstatearea .tbnotes{
+    border-top: 1px solid #DDDDDD;
+    line-height:20px;
+    margin-top: 15px;
+    padding-top: 5px;
+}
+
+#order_info .tabs-container{
+	margin: 20px 0;
+    position: relative;	
+}
+#order_info .tabnav{
+    left: 20px;
+    position: absolute;
+    z-index: 50;	
+}
+#order_info .tabnav ul{
+	list-style: none outside none;
+}
+#order_info .tabs-nav .current {
+    background-position: 0 -40px;
+}
+#order_info .tabnav li{
+	background: url("../images_green/tabview_bg.gif") no-repeat scroll 0 6px transparent;
+    cursor: pointer;
+    float: left;
+    height: 27px;
+    line-height: 21px;
+    margin-right: 3px;
+    padding-top: 8px;
+    text-align: center;
+    width: 130px;
+    list-style:none;
+}
+.tabs-container .tabs-panels {
+    border: 1px solid #AEC7E5;
+    margin-bottom: 40px;
+    position: relative;
+    top: 29px;
+}
+.tabs-panels {
+    clear: both;
+    height: auto;
+    margin-bottom: 10px;
+    overflow: hidden;
+    padding: 10px 20px;
+}
+
+table{
+	font-size: inherit;
+	border-collapse: collapse;
+    border-spacing: 0;
+    width:100%;
+	}
+.contact-info{
+	}
+.contact-info .sep-row td {
+    border-bottom: 1px solid #DDDDDD;
+}
+.info-box td, .info-box th {
+    line-height: 1.5;
+    padding: 2px 10px;
+    word-wrap: break-word;
+}
+.order-hd{
+	   background: none repeat scroll 0 0 #E8F2FF;
+    color: #404040;
+	}
+.order-hd th{
+	  border-bottom: 1px solid #DDDDDD;
+	}
+	
+.order-item td{
+	    border: 1px solid #DDDDDD;
+	    text-align:center;
+	}
+.order-item .pic-info{
+	float: left;
+    margin-right: 5px;
+	}
+.order-item .pic-info .pic{
+    border: medium none;
+    overflow: hidden;
+}
+.order-item .pic-info .pic img{
+    border:0px;
+    width:80px;
+    height:80px;
+	}
+.order-item .txt-info{
+   line-height: 18px;
+    margin-left: 55px;
+    text-align: left;
+ }
+.order-item .txt-info .desc a{
+	text-decoration: none;
+	}
+ 
+ 
+ 

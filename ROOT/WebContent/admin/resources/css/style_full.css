@@ -1,0 +1,36 @@
+/* -----------------------------------------------------------
+	content
+----------------------------------------------------------- */ 
+
+#content 
+{
+	margin: 0 60px 10px 60px;
+	padding: 0;
+	min-height: 100%;
+	clear: both;
+	overflow: hidden;
+	background: transparent;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> labels
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.label
+{
+	left: 80px;
+	margin: 0;
+	padding: 8px 0 0 5px;
+	width: auto;
+	position: absolute;
+}
+
+#content div.box-left div.form div.fields div.field div.label,
+#content div.box-right div.form div.fields div.field div.label
+{
+	left: 0;
+	margin: 0;
+	padding: 0 0 8px 0;
+	width: auto;
+	position: relative;
+}

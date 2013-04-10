@@ -1,0 +1,61 @@
+
+
+/* root element for accordion. decorated with rounded borders and gradient background image */
+#phb #accordion {
+	/*background:#333 url(/img/global/gradient/h300.png) 0 0;*/
+	width: 170px;
+	border:0px solid #333;	
+	margin-left:10px;
+
+}
+
+/* root element for accordion. decorated with rounded borders and gradient background image */
+#accordion {
+	/*background:#333 url(/img/global/gradient/h300.png) 0 0;*/
+	width: 180px;
+	border:0px solid #333;	
+
+
+}
+
+/* accordion header */
+#accordion h2 {
+	/*background:#ccc url(../images_green/h30.png);*/
+	margin:0;
+	padding:7px 7px;
+	font-size:14px;
+	font-weight:normal;
+	border:1px solid #fff;
+	border-bottom:1px solid #ddd;
+	cursor:pointer;		
+	
+}
+
+/* currently active header */
+#accordion h2.current {
+	cursor:default;
+	background-color:#fff;
+}
+
+/* accordion pane */
+#accordion .pane {
+	border:1px solid #fff;
+	border-width:0 2px;
+	display:none;
+	height:90px;
+
+	color:#000;
+	font-size:12px;
+}
+
+/* a title inside pane */
+#accordion .pane h3 {
+	font-weight:normal;
+	margin:0 0 -5px 0;
+	
+	color:#999;
+}
+
+#accordion .pane {
+	overflow:hidden;
+}

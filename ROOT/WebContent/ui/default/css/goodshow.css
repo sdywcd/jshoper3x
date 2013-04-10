@@ -1,0 +1,130 @@
+.myImagesSlideBox{
+	width:300px;
+	border:1px solid #bbb;
+	height:390px;
+}
+.myImages{
+	padding:10px;
+	text-align:center;
+	position:relative;
+	overflow:hidden;
+	height:260px;
+	width:280px;
+	cursor:pointer;
+	background:#fff url(../images/loading.gif) center center no-repeat;
+}
+.myImages img{
+	width: 280px;
+	height:280px;
+	border:0;
+}
+.myImgs {
+	display:none;
+}
+.myTxts{
+	padding:10px;
+	padding-top:0;padding-bottom:0;
+	text-align:center;
+	overflow:hidden;
+	height:20px;
+	line-height:20px;
+	width:280px;
+}
+
+.myTxts a{
+	text-decoration:none;
+	text-align:center;
+	color:#666;
+}
+.myTxts a:hover{
+	color:#f60;
+}
+
+/*  wrapper element  */
+#scrollable {
+	background-color:#efefef;
+	padding:10px;
+	width:280px;
+	height:42px;
+}
+
+div.items {
+	height:66px;	
+	float:left;
+	width:256px !important;
+	visibility: visible;
+	overflow: hidden; 
+	position: relative;
+}
+/* item */
+div.items a {
+	display:inline-block;
+	float:left;
+	margin-left:6px;
+	width:42px;
+	height:42px;
+	background:#BBB;
+	text-decoration:none;
+	text-align:center;
+	cursor:pointer;
+	border:1px solid #bbb;
+}
+div.items a img{
+
+	width:42px;
+	height:42px;
+}
+div.items a:hover {
+	/*border:1px solid #FF3F3F;*/
+}
+div.items a.active {
+	/*border:1px solid #FF3F3F;*/
+}
+.scrollableDiv{
+	position: absolute; width: 200000em; left: 0px;
+}
+
+/* next / prev buttons */
+a.prev, a.next {
+	background:url(../images/go_down.jpg) no-repeat 0 0;
+	display:block;
+	width:12px;
+	height:50px;
+	float:left;	
+	cursor:pointer;
+}
+a.next {
+	background-image:url(../images/go_up.jpg)		
+}
+
+
+#BigDiv{
+	filter:alpha(opacity=30); 
+	-moz-opacity:0.3; 
+	opacity: 0.3; 
+	background: #777; position: absolute; top: 0; left: 0; z-index: 10000;
+	display:none;
+}
+#MyDiv{
+	background:#FFF;
+	display:none;
+	position:absolute;
+	text-align:center;
+	width:300px;
+	height:390px;
+	z-index:10001;
+}
+.closeMyDiv{
+	position:absolute;
+	right:4px;
+	top:2px;
+	z-index:10002;
+}
+.closeMyDiv a{
+	text-decoration:none;
+	cursor:pointer;
+	color:#000;
+}
+.closeMyDiv a:hover{
+	color:#F60
+}

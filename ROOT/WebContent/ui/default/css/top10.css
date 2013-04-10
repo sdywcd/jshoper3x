@@ -1,0 +1,46 @@
+.topSellers {
+font-family:Arial,Helvetica,sans-serif;
+font-size:12px;
+font-size-adjust:none;
+font-style:normal;
+font-variant:normal;
+font-weight:normal;
+line-height:normal;
+}
+ul {margin:0;padding:0;}
+img {border:0 none;}
+* {margin:0;padding:0;}
+.starx_div,.point_div{ height:auto; padding:0;}
+.starx_div ul,.point_div{ margin:0; padding:0; list-style-type:none}
+.point_div div{width:75px; height:16px; line-height:16px; float:left; margin:0 14px 0 0; padding:0; text-align:center}
+.starx_div div{width:75px; height:16px; line-height:16px; float:left; margin:0 0px 0 0;background:url('images_green/star.gif') no-repeat; padding:0}
+.starx_div .star1{ background-position:0px -203px}
+.starx_div .star2{background-position:0px -181px}
+.starx_div .star3{background-position:0px -159px}
+.starx_div .star4{background-position:0px -137px}
+.starx_div .star5{background-position:0px -116px}
+.starx_div .star1_{background-position:0px -94px}
+.starx_div .star2_{background-position:0px -70px}
+.starx_div .star3_{background-position:0px -50px}
+.starx_div .star4_{background-position:0px -29px}
+.starx_div .star5_{background-position:0px -8px}
+
+
+.topSellers a{}
+.topSellers .channelTitlePic{width:180px;height: 26px;float: left;overflow: hidden;}
+.topSellers ul.topList{width:180px;height:450px;padding-top:3px;overflow:hidden;}
+.topSellers .topSelectPic {width: 65px;height: 65px; margin-right:5px;border:1px solid #D4D4D4;display:block;float: left;overflow:hidden;}
+.topSellers .topSelectPic img{width:65px; height:65px;}
+.topSellers .topList li.mouseover{height: 70px;padding: 5px;border-bottom:1px dashed #D4D4D4;}
+.topSellers .topimg{width: 18px; height:66px; margin-right:0px;float:left;}
+.topSellers .topimg  font{color:#ea661b}
+.topSellers .topimg small {width: 12px;height: 12px;margin:3px 5px;float: left;}
+.topSellers .topSelectName {width: 75px;height: 38px;line-height: 18px;float: left;overflow: hidden;}
+.topSellers .topSelectName font{ color:#42b512}
+.topSellers .topSelctBuy{width: 75px;height: 18px;line-height: 18px;float: left;overflow: hidden;}
+.topSellers .topSelctBuy span{ color:#EA661B;text-decoration:none;}
+.topSellers .smabottom{ width:180px;border-bottom:1px dashed #D4D4D4;}
+.topSellers .topSelecttext{width:170px; height:18px; line-height:18px; margin:5px;overflow: hidden;}
+.topSellers .topSelecttext font{color:#ea661b}
+.topSellers .topSelecttext small {width: 12px;height: 12px;margin:4px 5px 4px 2px;float: left;}
+

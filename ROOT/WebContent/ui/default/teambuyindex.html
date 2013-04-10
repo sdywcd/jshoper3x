@@ -1,0 +1,311 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>首页ostocy-jshop</title>
+<meta content="OSTOCY" name="Author">
+<meta content="OSTOCY" name="Copyright">
+<meta content="0" http-equiv="expires">
+<meta content="ostocy-jshop2.0系统演示" name="keywords">
+<meta content="ostocy-jshop2.0系统演示" name="description">
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<link href="css/global.css" type="text/css" rel="stylesheet">
+<link href="css/teambuy.css" type="text/css" rel="stylesheet">
+<link href="css/category.css" type="text/css" rel="stylesheet">
+<link href="js/easyslider1.7/css/screen.css" type="text/css" rel="stylesheet">
+<script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
+<script src="js/easyslider1.7/js/easySlider1.7.js" type="text/javascript"></script>
+</head>
+<body>
+<!--载入公共头文件-->
+<title></title>
+<link href="css/global.css" type="text/css" rel="stylesheet">
+<meta content="IE=EmulateIE7" http-equiv="X-UA-Compatible">
+<div id="header">
+  <div style="height: 30px;" id="logininfo">
+    <div class="topbar">
+      <div class="inner">
+        <!--<div class="topbar_left">
+						
+							<a style="color: red;" target="_blank" href="http://www.datanggroup.cn/"></a> 
+						</div>-->
+        <div id="id_temp" class="shortcut">
+          <div class="welcome"> 您好，欢迎来到欧斯塔克商城！ </div>
+          <ul>
+            <li> <a target="_blank" href="/html/default/shop/user/login.html">登录 </a> </li>
+            <li> <a href="/InitUserCenterIndex.action">我的塔克 </a> </li>
+            <li> <a target="_blank" href="/html/default/shop/user/register.html">免费注册 </a> </li>
+          </ul>
+          <div class="hotline"> <img src="${basepath}ui/default/images/hotline_top.gif"> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="logo">
+    <div class="inner">
+      <!-- 平时使用的logo -->
+      <div class="logowrap"> <a href="/index.html"><img src="${basepath}ui/default/images/index_logo.gif"> </a> </div>
+      <div class="slogan"> <img src="${basepath}ui/default/images/slogan.gif"> </div>
+      <div class="top_right_ad"> <img style="cursor: pointer;" src="${basepath}ui/default/images/home_promises.gif"> </div>
+      <!--广告尺寸宽度小于378ps高度小于75px-->
+    </div>
+  </div>
+  <div class="topnav">
+    <div class="topnav">
+      <!-- Christmas Change begin -->
+      <div style="position:relative; z-index:999;" class="inner">
+        <!-- Christmas Change End-->
+        <ul class="main_nav">
+          <li> <a target="_blank" href="/index.html">首页 </a> </li>
+          <li> <img src="${basepath}ui/default/images/top_separator_02.gif"> </li>
+          <li> <a target="_blank" href="/index.html">拍卖 </a> </li>
+          <li> <img src="${basepath}ui/default/images/top_separator_02.gif"> </li>
+        </ul>
+        <div class="search">
+          <form action="/ProductListSort.do " style="margin: 0px" method="get" name="searchform" id="searchform">
+            <div style="display:none;">
+              <input type="hidden" value="" name="Cid" id="SortCid2">
+              <input type="hidden" name="Keywords" id="thKeywords">
+              <input type="hidden" value="1" name="searchlist">
+            </div>
+            <input type="text" onkeydown="keyDown(event)" onkeyup="showSuggest();" onfocus="if (value ==''){value =''};this.style.color='#000'" value="" class="searchinput_top" id="topKeywords">
+            <a title="搜索" target="_blank" class="searchbtn" onclick="javascript:checkTopSearchForm();return false;" href="#"></a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="g_content">
+    <div class="g_maindiv">
+      <div class="mainleft">
+        <div class="leftdiv3">
+          <div class="top"></div>
+          <div class="box">
+            <div class="title"><img src="${basepath}ui/default/images/g_wq_1.gif"></div>
+            <ul>
+              <!-- 已经开始的 -->
+              <li class="li2">
+                <div class="day">
+                  <p><img src="${basepath}ui/default/images/g_wq_icon.gif"></p>
+                  <cite>2012-06-08</cite></div>
+                <div class="liwrap">
+                  <div class="name"><a target="_blank" href="/teamBuy/303203.html">鸿粉团 【独家低价239】九阳（joyoung） JYY-50YS6A 电压力煲    只比50YS6少个内胆 但是要便宜100元 赶快抢购吧  **在线支付免邮费哦**&mdash;&mdash;10大烹饪功能，2种压力选择，三种口味任选！还不满意么？！</a></div>
+                  <div class="info"> <a target="_blank" href="/teamBuy/303203.html">
+                    <div class="isopen"></div>
+                    </a>
+                    <div class="infoleft">
+                      <div class="amount">限<span> 100 </span> 人购买</div>
+                      <div class="price">
+                        <p>团购价：<span>￥&nbsp;239.00</span></p>
+                        <cite>高鸿价：<span id="memberprice400261_500423">￥259.00 </span></cite></div>
+                    </div>
+                    <div class="pic"><a target="_blank" href="/teamBuy/303203.html"><img src="${basepath}ui/default/images/500423_1_pic120_1879.jpg"></a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="li2">
+                <div class="day">
+                  <p><img src="${basepath}ui/default/images/g_wq_icon.gif"></p>
+                  <cite>2012-06-09</cite></div>
+                <div class="liwrap">
+                  <div class="name"><a target="_blank" href="/teamBuy/303207.html">鸿粉团 团购只需3499&mdash;&mdash;三星（SAMSUNG）I9108 3G手机 移动定制 TD-SCDMA/GSM Android OS v2.3系统 至尊版双电双充（黑色）   正品行货，现货秒发，全网最低价，配件最齐全，一切都为了您更好的拥有~赶快下手吧~~</a></div>
+                  <div class="info"> <a target="_blank" href="/teamBuy/303207.html">
+                    <div class="isopen"></div>
+                    </a>
+                    <div class="infoleft">
+                      <div class="amount">限<span> 50 </span> 人购买</div>
+                      <div class="price">
+                        <p>团购价：<span>￥&nbsp;3499.00</span></p>
+                        <cite>高鸿价：<span id="memberprice400263_251503">￥3569.00 </span></cite></div>
+                    </div>
+                    <div class="pic"><a target="_blank" href="/teamBuy/303207.html"><img src="${basepath}ui/default/images/251503_1_pic120_4318.jpg" width="120px" height="120px"></a></div>
+                  </div>
+                </div>
+              </li>
+              
+              <li class="li2">
+                <div class="day">
+                  <p><img src="${basepath}ui/default/images/g_wq_icon.gif"></p>
+                  <cite>2012-06-09</cite></div>
+                <div class="liwrap">
+                  <div class="name"><a target="_blank" href="/teamBuy/303205.html">鸿粉团 2299特价大屏本，接近上网本的价格，方便有便宜 惠普（HP）CQ43-400AU 14英寸笔记本电脑（E-450 320GB 2GB DVD刻录 摄像头 无线 DOS）钛金灰 ?</a></div>
+                  <div class="info"> <a target="_blank" href="/teamBuy/303205.html">
+                    <div class="isopen"></div>
+                    </a>
+                    <div class="infoleft">
+                      <div class="amount">限<span> 50 </span> 人购买</div>
+                      <div class="price">
+                        <p>团购价：<span>￥&nbsp;2299.00</span></p>
+                        <cite>高鸿价：<span id="memberprice400262_254890">￥2455.00 </span></cite></div>
+                    </div>
+                    <div class="pic"><a target="_blank" href="/teamBuy/303205.html"><img src="${basepath}ui/default/images/254890_1_pic120_6688.jpg"></a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="li2">
+                <div class="day">
+                  <p><img src="${basepath}ui/default/images/g_wq_icon.gif"></p>
+                  <cite>2012-06-10</cite></div>
+                <div class="liwrap">
+                  <div class="name"><a target="_blank" href="/teamBuy/303209.html">鸿粉团  团购价 只需29元 创见（Transcend）8G MicroSDHC（TF）存储卡（Class4）  **周末开始在线支付免邮费~！**</a></div>
+                  <div class="info"> <a target="_blank" href="/teamBuy/303209.html">
+                    <div class="isopen"></div>
+                    </a>
+                    <div class="infoleft">
+                      <div class="amount">限<span> 200 </span> 人购买</div>
+                      <div class="price">
+                        <p>团购价：<span>￥&nbsp;29.00</span></p>
+                        <cite>高鸿价：<span id="memberprice400264_249217">￥45.00 </span></cite></div>
+                    </div>
+                    <div class="pic"><a target="_blank" href="/teamBuy/303209.html"><img src="${basepath}ui/default/images/249217_1_pic120_991.jpg"></a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="li2">
+                <div class="day">
+                  <p><img src="${basepath}ui/default/images/g_wq_icon.gif"></p>
+                  <cite>2012-06-11</cite></div>
+                <div class="liwrap">
+                  <div class="name"><a target="_blank" href="/teamBuy/303403.html">鸿粉团 【最低价只要189元】利仁（Liven）2018M 电饼铛（黑色） 独特的中国风 又把福字、祥云和元宝完美的融为一体 这绝对十件艺术品!</a></div>
+                  <div class="info"> <a target="_blank" href="/teamBuy/303403.html">
+                    <div class="isopen"></div>
+                    </a>
+                    <div class="infoleft">
+                      <div class="amount">限<span> 100 </span> 人购买</div>
+                      <div class="price">
+                        <p>团购价：<span>￥&nbsp;189.00</span></p>
+                        <cite>高鸿价：<span id="memberprice400292_500487">￥219.00 </span></cite></div>
+                    </div>
+                    <div class="pic"><a target="_blank" href="/teamBuy/303403.html"><img src="${basepath}ui/default/images/500487_1_pic120_7226.JPG"></a></div>
+                  </div>
+                </div>
+              </li>
+              <li class="li2">
+                <div class="day">
+                  <p><img src="${basepath}ui/default/images/g_wq_icon.gif"></p>
+                  <cite>2012-06-11</cite></div>
+                <div class="liwrap">
+                  <div class="name"><a target="_blank" href="/teamBuy/303407.html">鸿粉团 团购只需175元 红心（Hongxin）RH2011 蒸汽挂烫机 热卖极品 蒸汽超强 声音超小 决不会让你失望</a></div>
+                  <div class="info"> <a target="_blank" href="/teamBuy/303407.html">
+                    <div class="isopen"></div>
+                    </a>
+                    <div class="infoleft">
+                      <div class="amount">限<span> 200 </span> 人购买</div>
+                      <div class="price">
+                        <p>团购价：<span>￥&nbsp;175.00</span></p>
+                        <cite>高鸿价：<span id="memberprice400291_245012">￥185.00 </span></cite></div>
+                    </div>
+                    <div class="pic"><a target="_blank" href="/teamBuy/303407.html"><img src="${basepath}ui/default/images/245012_1_pic120_6229.jpg"></a></div>
+                  </div>
+                </div>
+              </li>
+              <!-- 即将开始的  -->
+            </ul>
+          </div>
+          <div class="bottom"></div>
+          <div class="listbottom"> </div>
+        </div>
+      </div>
+      <div class="mainright">
+        <div class="rightdiv2"><a target="_blank" href="/teamBuy/HistoryTeamBuy.do?movementId=127631"><img src="${basepath}ui/default/images/g_gz1.gif"></a> <a target="_blank" href="/Info/InfoDetail_zixun.do?id=116714&amp;rootCid=904&amp;mid=0"><img src="${basepath}ui/default/images/g_gz2.gif"></a> <a target="_blank" href="/Info/InfoDetail_zixun.do?id=122800&amp;rootCid=904&amp;mid=0"><img src="${basepath}ui/default/images/g_gz3.gif"></a> </div>
+        <div class="rightdiv3">
+          <p>鸿粉团员已经节省</p>
+          <cite> <span> <font color="red">￥61412121.0</font> </span> </cite></div>
+        <div style="width:198px;border:#c2c2c2 solid 1px;background:#FFFFFF;float:left;margin:9px 0 0 0;padding:0 0 7px 0;">
+          <p style="margin:11px 0 0 20px;"><a target="_blank" href="http://t.sina.com.cn/tao3c"><img src="${basepath}ui/default/images/t_sina.jpg"></a></p>
+          <p style="margin:5px 0 0 20px;"><a target="_blank" href="http://t.qq.com/tao3c_com"><img src="${basepath}ui/default/images/t_qq.jpg"></a></p>
+          <p style="margin:7px 0 0 7px;"><img src="${basepath}ui/default/images/t_tao3c.jpg"></p>
+        </div>
+        <div class="rightdiv5">
+          <p>订阅高鸿活动通知</p>
+          <cite>不想错过高鸿商城的活动？<br>
+          立刻订阅邮件通知，精彩不再错过！</cite>
+          <div class="email"><span class="left">
+            <input type="text" id="userEmail" name="userEmail">
+            </span><span class="right"><a onclick="getEmail();" href="javascript:;"><img src="${basepath}ui/default/images/g_btn1.gif"></a></span></div>
+        </div>
+        <div class="rightdiv4"><img src="${basepath}ui/default/images/r_pic02.jpg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="foot">
+  <div class="servicepro1 mt7">
+    <div class="servicepro1_t">
+      <p> <img src="${basepath}ui/default/images/servicepro_t_l.gif"> </p>
+      <cite><img src="${basepath}ui/default/images/servicepro_t_r.gif"> </cite> </div>
+    <div class="servicepro1_c">
+      <div class="servicepro1_l">
+        <div class="service_z1">
+          <h1>1 . 新手指南</h1>
+          <ul>
+            <li> <a target="_blank" href="/html/default/article/201205060069.html">注册登录</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060070.html">购物流程</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060071.html">会员介绍</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060072.html">品质保证</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060073.html">订单状态</a> </li>
+          </ul>
+        </div>
+        <div class="service_z1">
+          <h1>2 . 配送方式</h1>
+          <ul>
+            <li> <a target="_blank" href="/html/default/article/201205060075.html">EMS配送</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060076.html">上门自提</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060077.html">快速送货</a> </li>
+            <li> <a target="_blank" href="/html/default/article/notice/201205060078.html">配送范围查询</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060079.html">加急送</a> </li>
+          </ul>
+        </div>
+        <div class="service_z1">
+          <h1>3 . 售后服务</h1>
+          <ul>
+            <li> <a target="_blank" href="/html/default/article/201205060084.html">售后条款</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060085.html">服务承诺</a> </li>
+            <li> <a target="_blank" href="/html/default/article/notice/201205060086.html">错货补货</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060087.html">退款办理</a> </li>
+            <li> <a target="_blank" href="/html/default/article/notice/201205060088.html">交易条款</a> </li>
+          </ul>
+        </div>
+        <div class="service_z1">
+          <h1>4 . 支付方式</h1>
+          <ul>
+            <li> <a target="_blank" href="/html/default/article/201205060080.html">货到付款</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060081.html">在线支付</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060082.html">发票制度</a> </li>
+            <li> <a target="_blank" href="/html/default/article/201205060083.html">公司转账</a> </li>
+          </ul>
+        </div>
+        <div class="service_z1">
+          <h1>5 . 虚拟物品</h1>
+          <ul>
+            <li> <a target="_blank" href="/html/default/article/notice/201205060089.html">积分政策</a> </li>
+            <li> <a target="_blank" href="/html/default/article/notice/201205060090.html">购物券政策</a> </li>
+            <li> <a target="_blank" href="/html/default/article/notice/201205060091.html">联系客服</a> </li>
+            <li> <a target="_blank" href="/html/default/article/notice/201205060092.html">常见问题</a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="servicepro1_r"> <img src="${basepath}ui/default/images/servicerightpic.gif"> </div>
+    </div>
+    <div class="servicepro1_b">
+      <p> <img src="${basepath}ui/default/images/servicepro_b_l.gif"> </p>
+      <cite><img src="${basepath}ui/default/images/servicepro_b_r.gif"> </cite> </div>
+  </div>
+  <div style="background: none repeat scroll 0% 0% rgb(248, 248, 248);" class="servicepro2">
+    <div style="background: none repeat scroll 0% 0% rgb(248, 248, 248);" class="servicepro2_l"></div>
+    <div style="background: none repeat scroll 0% 0% rgb(248, 248, 248);" class="servicepro2_1"> <img src="${basepath}ui/default/images/servicepro_11.gif"> </div>
+    <div style="background: none repeat scroll 0% 0% rgb(248, 248, 248);" class="servicepro2_2"> <img src="${basepath}ui/default/images/servicepro_21.gif"> </div>
+    <div style="background: none repeat scroll 0% 0% rgb(248, 248, 248);" class="servicepro2_4"> <img src="${basepath}ui/default/images/servicepro_41.gif"> </div>
+    <div style="background: none repeat scroll 0% 0% rgb(248, 248, 248);" class="servicepro2_3"> <img src="${basepath}ui/default/images/servicepro_31.gif"> </div>
+    <div style="background: none repeat scroll 0% 0% rgb(248, 248, 248);" class="servicepro2_r"></div>
+  </div>
+  <!-- 底部文字菜单 -->
+  <div class="copyright">
+    <p> <a target="_blank" href="http://www.ostocy.com">关于我们</a> | <a target="_blank" href="#">帮助中心</a> | <a target="_blank" href="#">联系我们</a> | <a target="_blank" href="#">合作伙伴</a> | <a target="_blank" href="#">友情链接</a> | <a target="_blank" href="#">人才招聘</a> </p>
+    <span>沪ICP备09069935号<br>
+    Copyright&copy;2000-2012 All Rights Reserved 欧斯塔克(上海) 版权所有</span> </div>
+  <div class="link"> </div>
+</div>
+<script src="js/jshop.js" type="text/javascript"></script>
+</body>
+</html>

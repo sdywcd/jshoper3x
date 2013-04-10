@@ -1,0 +1,3284 @@
+/* -----------------------------------------------------------
+	main stylesheet
+----------------------------------------------------------- */
+html
+{
+	height: 100%;  
+}
+
+body
+{
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background: #d1d1d1 url("../../resources/images/background.png") repeat;
+	font-family:"微软雅黑", Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 12px;
+}
+
+
+/* -----------------------------------------------------------
+	images
+----------------------------------------------------------- */ 
+
+img
+{
+	border: none;	
+}
+
+/* -----------------------------------------------------------
+	anchors
+----------------------------------------------------------- */ 
+
+a
+{
+	color: #0066CC;	
+	text-decoration: none;
+	cursor: pointer;
+}
+
+a:hover
+{
+	color: #000000;	
+	text-decoration: underline;
+}
+
+/* -----------------------------------------------------------
+	headings
+----------------------------------------------------------- */ 
+
+h1, h2, h3, h4, h5, h6
+{
+	color: #292929;
+	font-weight: bold;
+}
+
+h1
+{
+	font-size: 22px;
+}
+
+h2
+{
+	font-size: 20px;
+}
+
+h3
+{
+	font-size: 18px;  
+}
+
+h4
+{
+	font-size: 16px;
+}
+
+h5
+{
+	font-size: 14px; 
+}
+
+h6
+{
+	font-size: 13px; 
+}
+
+/* -----------------------------------------------------------
+	lists
+----------------------------------------------------------- */ 
+
+ul.circle { list-style-type: circle; }
+ul.disc { list-style-type: disc; }
+ul.square { list-style-type: square; }
+ol.lower-roman { list-style-type: lower-roman; }
+ol.upper-roman { list-style-type: upper-roman; }
+ol.lower-alpha { list-style-type: lower-alpha; }
+ol.upper-alpha { list-style-type: upper-alpha; }
+ol.decimal  { list-style-type: decimal; }
+
+/* -----------------------------------------------------------
+	colors
+----------------------------------------------------------- */ 
+
+div.color
+{
+	right: 0;
+	margin: 116px 13px 0 0;
+	padding: 0 4px 4px 4px;
+	clear: both;
+	overflow: hidden;
+	position: absolute;
+	background: #ffffff;
+	border: 1px solid #cccccc;
+}
+
+div.color a
+{
+	margin: 4px 0 0 0;
+	padding: 0;
+	width: 20px;
+	height: 20px;
+	display: block;
+}
+
+div.color a.blue
+{
+	background: #376ea6;
+}
+
+div.color a.green
+{
+	background: #85924b;
+}
+
+div.color a.brown
+{
+	background: #9b6e42;
+}
+
+div.color a.purple
+{
+	background: #88528b;
+}
+
+div.color a.red
+{
+	background: #bd3220;
+}
+
+div.color a.greyblue
+{
+	background: #566e86;
+}
+
+/* -----------------------------------------------------------
+	header
+----------------------------------------------------------- */ 
+
+#header
+{
+	margin: 0;
+	padding: 10px 60px 0 60px;
+	background: #b0b0b0 url("../../resources/images/header_background.png") repeat;
+}
+
+/* -----------------------------------------------------------
+	header -> logo
+----------------------------------------------------------- */ 
+
+#header #logo
+{
+	float: left;	
+}
+
+#header #logo h1
+{
+	margin: 6px 0 10px 0;
+	padding: 0;
+	color: #ffffff;
+	font-size: 22px;
+}
+
+#header #logo a
+{
+	color: #ffffff;
+	text-decoration: none;	
+}
+
+#header #logo a:hover
+{
+	color: #ffffff;
+}
+
+/* -----------------------------------------------------------
+	header -> user
+----------------------------------------------------------- */ 
+
+#header ul#user
+{
+	margin: 0 0 30px 0;
+	padding: 0;
+	float: right;
+}
+
+#header ul#user li
+{
+	margin: 0;
+	padding: 5px 12px 5px 12px;
+	list-style: none;
+	float: left;
+	border-left: 1px solid #bbbbbb;
+	border-right: 1px solid #a5a5a5;
+}
+
+#header ul#user li.first
+{
+	border-left: none;	
+}
+
+#header ul#user li.last
+{
+	border-right: none;	
+}
+
+#header ul#user li a
+{
+	color: #4e4e4e;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#header ul#user li a:hover
+{
+	color: #376ea6;
+	text-decoration: underline;
+}
+
+#header ul#user li.highlight a
+{
+	color: #ffffff;
+}
+
+#header ul#user li.highlight a:hover
+{
+	color: #376ea6;
+}
+
+#header #header-inner
+{
+	margin: 0;
+	padding: 0;
+	height: 40px;
+	clear: both;
+	position: relative;
+	background: #003367 url("../../resources/images/colors/blue/header_inner.png") repeat-x;
+	border-bottom: 6px solid #ffffff;
+}
+
+/* -----------------------------------------------------------
+	header -> home
+----------------------------------------------------------- */ 
+
+#header #header-inner #home
+{
+	float: left;	
+}
+
+#header #header-inner #home a
+{
+	margin: 0;
+	padding: 0;
+	height: 40px;
+	width: 46px;
+	display: block;
+	background: url("../../resources/images/colors/blue/button_home.png");
+	background-position: 0 0;	
+}
+
+#header #header-inner #home a:hover
+{
+	background-position: 0 -40px;	
+}
+
+/* -----------------------------------------------------------
+	header -> quick
+----------------------------------------------------------- */ 
+
+#header #header-inner #quick,
+#header #header-inner #quick ul
+{
+	margin: 10px 5px 0 0;
+	padding: 0;
+	position: relative;
+	float: right;
+	list-style-type: none;
+	list-style-position: outside;
+}
+
+#header #header-inner #quick li
+{
+	margin: 0 5px 0 0;
+	padding: 0;
+	position: relative;
+	float: left;
+}
+
+#header #header-inner #quick li a
+{
+	top: 0;
+	left: 0;
+	padding: 0;
+	height: 1%;
+	display: block;
+	clear: both;
+	overflow: hidden;
+	background: #336699 url("../../resources/images/colors/blue/quick_l.png") no-repeat top left;
+	color: #FFFFFF;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#header #header-inner #quick li span
+{
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 10px 12px 8px 10px;
+	height: 1%;
+	display: block;
+	float: left;
+	background: url("../../resources/images/colors/blue/quick_r.png") no-repeat top right;
+	border-left: 1px solid #3f6f9f;
+}
+
+#header #header-inner #quick li span.normal
+{
+	padding: 10px 12px 8px 12px;
+	border: none;	
+}
+
+#header #header-inner #quick li span.icon
+{
+	top: 0;
+	left: 0;
+	padding: 8px 8px 4px 8px;
+	background: url("../../resources/images/colors/blue/quick_l.png") no-repeat top left;
+	border-left: none;
+	border-right: 1px solid #2e5c89;
+}
+
+#header #header-inner #quick li a:hover
+{
+	background: #4e4e4e url("../../resources/images/colors/blue/quick_l_selected.png") no-repeat top left;
+}
+
+#header #header-inner #quick li a:hover span
+{
+	background: url("../../resources/images/colors/blue/quick_r_selected.png") no-repeat top right;
+	border-left: 1px solid #545454;
+}
+
+#header #header-inner #quick li a:hover span.normal
+{
+	border: none;	
+}
+
+#header #header-inner #quick li a:hover span.icon
+{
+	background: url("../../resources/images/colors/blue/quick_l_selected.png") no-repeat top left;
+	border-left: none;
+	border-right: 1px solid #464646;
+}
+
+#header #header-inner #quick ul
+{
+	top: 29px;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	display: none;
+	position: absolute;
+	background: #FFFFFF;
+	border: 1px solid #666;
+	border-top: 1px solid #003367;
+	z-index: 100;
+}
+
+#header #header-inner #quick li ul li
+{
+	border-bottom: 1px solid #dddddd;	
+}
+
+#header #header-inner #quick li ul li.last
+{
+	border: none;	
+}
+
+#header #header-inner #quick li ul li a
+{
+	margin: 0;
+	padding: 7px 9px 7px 9px;
+	height: 1%;
+	width: 182px;
+	height: auto;
+	display: block;
+	float: left;
+	background: #FFFFFF;
+	color: #0066CC;
+	font-weight: normal;
+}
+
+#header #header-inner #quick li ul li a.childs
+{
+	margin: 0;
+	padding: 7px 9px 7px 24px;
+	width: 167px;
+	background: #FFFFFF url("../../resources/images/plus.png") no-repeat 8px 9px;
+}
+
+#header #header-inner #quick li ul li a:hover
+{
+	color: #000000;
+	background: #FFFFFF;
+}
+
+#header #header-inner #quick li ul li a.childs:hover
+{
+	background: #FFFFFF url("../../resources/images/minus.png") no-repeat 8px 9px;
+}
+
+#header #header-inner #quick ul ul 
+{
+	top: auto;
+}	
+
+#header #header-inner #quick li ul ul 
+{
+	right: 200px;
+}
+
+#header #header-inner #quick li:hover ul ul, 
+#header #header-inner #quick li:hover ul ul ul, 
+#header #header-inner #quick li:hover ul ul ul ul 
+{
+	display: none;
+}
+
+#header #header-inner #quick li:hover ul, 
+#header #header-inner #quick li li:hover ul, 
+#header #header-inner #quick li li li:hover ul, 
+#header #header-inner #quick li li li li:hover ul
+{
+	display: block;
+}
+
+/* -----------------------------------------------------------
+	header corners
+----------------------------------------------------------- */ 
+
+#header #header-inner div.corner
+{
+	height: 6px;
+	width: 6px;
+	position: absolute;
+	background: url("../../resources/images/colors/blue/header_inner_corners.png") no-repeat;
+}
+
+#header #header-inner div.tl
+{
+	top: 0;
+	left: 0;
+	background-position: 0 0;
+}
+
+#header #header-inner div.tr
+{
+	top: 0;
+	right: 0;
+	background-position: -6px 0;
+}
+
+/* -----------------------------------------------------------
+	content
+----------------------------------------------------------- */ 
+
+#content 
+{
+	margin: 10px 0 10px 0;
+	padding: 0;
+	min-height: 100%;
+	clear: both;
+	overflow: hidden;
+	background: url("../../resources/images/content.png") repeat-y top left;
+}
+
+/* -----------------------------------------------------------
+	content -> left
+----------------------------------------------------------- */ 
+
+#content #left
+{
+	left: 0;
+	width: 280px;
+	position: absolute;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> menu
+----------------------------------------------------------- */ 
+
+#content #left #menu
+{
+	margin: 5px 10px 0 60px;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> menu / heading
+----------------------------------------------------------- */ 
+
+#content #left #menu h6
+{
+	margin: 5px 0 0 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+	background: #dfdfdf url("../../resources/images/menu.png") repeat-x;
+	color: #6e6e6e;
+}
+
+#content #left #menu h6 a
+{
+	margin: 0;
+	padding: 0;
+	height: 1%;
+	display: block;
+	clear: both;
+	overflow: hidden;
+	background: url("../../resources/images/menu_l.png") no-repeat top left;
+	color: #6e6e6e;
+	text-decoration: none;
+}
+
+#content #left #menu h6 span
+{
+	margin: 0;
+	padding: 9px 10px 10px 10px;
+	height: 1%;
+	display: block;
+	background: url("../../resources/images/menu_r.png") no-repeat top right;
+}
+
+#content #left #menu h6.selected
+{
+	background: #00376e url("../../resources/images/colors/blue/menu_selected.png") repeat-x;
+	color: #FFFFFF;
+}
+
+#content #left #menu h6.selected a
+{
+	background: url("../../resources/images/colors/blue/menu_l_selected.png") no-repeat top left;
+	color: #ffffff;
+}
+
+#content #left #menu h6.selected span
+{
+	background: url("../../resources/images/colors/blue/menu_r_selected.png") no-repeat top right;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> menu / links
+----------------------------------------------------------- */
+
+#content #left #menu ul
+{
+	margin: 0;
+	padding: 0;
+	background: #376ea6;
+}
+
+#content #left #menu ul.opened
+{
+	display: block;	
+}
+
+#content #left #menu ul.closed
+{
+	display: none;	
+}
+
+#content #left #menu li
+{
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+	list-style: none;
+	border-top: 1px solid #4377ab;
+	border-bottom: 1px solid #326395;
+	color: #ffffff;
+	font-size: 1px;
+	line-height: 0;
+}
+
+#content #left #menu li a
+{
+	margin: 0 0 0 6px;
+	padding: 7px 0 9px 18px;
+	height: 1%;
+	display: block;
+	float: left;
+	background: url("../../resources/images/colors/blue/menu_arrow.png") no-repeat 0 9px;
+	color: #ffffff;
+	font-size: 12px;
+	line-height: normal;
+	text-decoration: none;
+}
+
+#content #left #menu li a:hover
+{
+	color: #b9dcff;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> menu / collapsible
+----------------------------------------------------------- */ 
+
+#content #left #menu li.collapsible
+{
+	margin: -1px 0 0 0;
+	background: url("../../resources/images/colors/blue/menu_border.png") no-repeat top left;
+}
+
+#content #left #menu li.collapsible a
+{
+	margin: 0 0 0 26px;
+	padding: 8px 0 8px 0;
+	height: 1%;
+	display: block;
+	background: transparent;
+	float: left;
+	font-weight: bold;
+}
+
+#content #left #menu li.collapsible a.plus
+{
+	margin: 0;
+	padding: 7px 0 10px 26px;
+	height: 10px;
+	width: 100%;
+	display: block;
+	float: left;
+	background: url("../../resources/images/menu_plus.png") no-repeat 5px 10px;
+	border: none;
+}
+
+#content #left #menu li.collapsible a.minus
+{
+	margin: 0;
+	padding: 7px 0 10px 26px;
+	height: 10px;
+	width: 100%;
+	display: block;
+	float: left;
+	background: url("../../resources/images/menu_minus.png") no-repeat 5px 10px;
+	border: none;
+	border-bottom: 1px solid #326395;
+}
+
+#content #left #menu li ul
+{
+	margin: 0;
+	padding: 0;
+	border-left: 18px solid #326395;
+}
+
+#content #left #menu li ul.expanded
+{
+	display: block;
+}
+
+#content #left #menu li ul.collapsed
+{
+	display: none;	
+}
+
+#content #left #menu li ul li
+{
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+	list-style: none;
+	background: url("../../resources/images/colors/blue/menu_arrow.png") no-repeat 10px 9px;
+	border-top: 1px solid #4377ab;
+	border-bottom: 1px solid #326395;
+	color: #ffffff;
+}
+
+#content #left #menu li.collapsible ul li a
+{
+	font-weight: normal;
+}
+
+#content #left #menu li.last
+{
+	border-bottom: none;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> date picker
+----------------------------------------------------------- */ 
+
+#content #left #date-picker
+{
+	margin: 5px 10px 0 60px;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+#content #left #date-picker .ui-datepicker  
+{
+	width: auto; 
+	padding: 0; 
+	clear: both;
+	overflow: hidden;
+	background: #FFFFFF; 
+	border: none; 
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header  
+{
+	padding: 5px 0 6px 0;
+	background: #dfdfdf url("../../resources/images/menu.png") repeat-x;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev
+{
+	top: 0;
+	left: 0;
+	padding: 0;
+	background: url("../../resources/images/menu_l.png") no-repeat top left;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev .ui-icon-circle-triangle-w
+{
+	top: 8px;
+	left: 8px;
+	width: 26px;
+	height: 30px;
+	background: url("../../resources/images/calender_prev.png") no-repeat 0 0;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-next  
+{
+	top: 0;
+	right: 0;
+	padding: 5px 12px 5px 0;
+	background: url("../../resources/images/menu_r.png") no-repeat top right;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-next .ui-icon-circle-triangle-e
+{
+	top: 8px;
+	left: 14px;
+	width: 26px;
+	height: 30px;
+	background: url("../../resources/images/calender_next.png") no-repeat 0 0;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev-hover
+{
+	top: 0;
+	left: 0;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-prev-hover .ui-icon-circle-triangle-w
+{
+	background-position: 0 -30px;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-next-hover
+{
+	top: 0;
+	right: 0;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header .ui-datepicker-next-hover .ui-icon-circle-triangle-e
+{
+	background-position: 0 -30px;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-header span
+{
+	color: #6e6e6e;
+	font-weight: bold;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-calendar
+{
+	margin: 5px auto;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-calendar th
+{
+	background: #f6f6f6;
+	border: 1px solid #dddddd;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+}
+
+#content #left #date-picker .ui-datepicker .ui-datepicker-calendar td
+{
+	padding: 5px 3px 5px 3px;
+	background: #ffffff;
+	border: 1px solid #dddddd;
+	border-left: none;
+	border-right: none;
+	border-bottom: none;
+}
+
+/* -----------------------------------------------------------
+	content -> right
+----------------------------------------------------------- */ 
+
+#content #right
+{
+	margin: -10px 60px 0 290px;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box
+----------------------------------------------------------- */
+
+#content div.box
+{
+	margin: 10px 0 0 0;
+	padding: 0 0 10px 0;
+	clear: both;
+	overflow: hidden;
+	background: #ffffff;
+}
+
+#content div.box-left
+{
+	width: 49%;
+	clear: none;
+	float: left;	
+}
+
+#content div.box-right
+{
+	width: 49%;
+	clear: none;
+	float: right;	
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / title
+----------------------------------------------------------- */
+
+#content div.box div.title
+{
+	margin: 0 0 20px 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+	background: #336699 url("../../resources/images/colors/blue/title.png") repeat-x;
+}
+
+#content div.box div.title h1,
+#content div.box div.title h2,
+#content div.box div.title h3,
+#content div.box div.title h4,
+#content div.box div.title h5,
+#content div.box div.title h6
+{
+	margin: 0;
+	padding: 11px 0 11px 10px;
+	float: left;
+	border: none;
+	color: #ffffff;
+}
+
+#content div.box div.title ul.links
+{
+	margin: 0;
+	padding: 0;
+	float: right;
+}
+
+#content div.box div.title ul.links li
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	float: left;
+}
+
+#content div.box div.title ul.links li a
+{
+	margin: 0;
+	padding: 13px 16px 12px 16px;
+	height: 1%;
+	display: block;
+	float: left;
+	background: url("../../resources/images/colors/blue/title_link.png") no-repeat top left;
+	border-left: 1px solid #316293;
+	color: #ffffff;
+	font-size: 11px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+#content div.box div.title ul.links li a:hover
+{
+	background: url("../../../resources/images/colors/blue/title_tab_selected.png") no-repeat bottom center;
+	color: #bfe3ff;
+}
+
+#content div.box div.title ul.links li.ui-tabs-selected a
+{
+	background: url("../../../resources/images/colors/blue/title_tab_selected.png") no-repeat bottom center;
+	color: #bfe3ff;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / search
+----------------------------------------------------------- */ 
+
+#content div.box div.title div.search
+{
+	margin: 0;
+	padding: 6px 6px 6px 7px;
+	float: right;
+	background: url("../../resources/images/colors/blue/title_link.png") no-repeat top left;
+	border-left: 1px solid #316293;
+}
+
+#content div.box div.title div.search div.input
+{
+	float: left;	
+}
+
+#content div.box div.title div.search div.input input
+{
+	margin: 0;
+	padding: 5px 7px 4px 7px;
+	background: #FFFFFF;
+	border: 1px solid #316293;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+}
+
+#content div.box div.title div.search div.button
+{
+	float: left;	
+}
+
+#content div.box div.title div.search div.button input
+{
+	margin: 0;
+	color: #000000;
+	font-size: 1.0em; 
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Sans-Serif; 
+}
+
+#content div.box div.title div.search div.button input.ui-state-default
+{
+	margin: 0;
+	padding: 4px 12px 5px 12px;
+	overflow: hidden;
+	background: #4e85bb url("../../resources/images/colors/blue/button_highlight.png") repeat-x;
+	border: 1px solid #316293;
+	border-left: none;
+	color: #FFFFFF;
+	outline: none;
+	outline-style: none;
+}
+
+#content div.box div.title div.search div.button input.ui-state-hover
+{
+	margin: 0;
+	background: #46a0c1 url("../../resources/images/colors/blue/button_highlight_selected.png") repeat-x;
+	border: 1px solid #316293;
+	border-left: none;
+	color: #FFFFFF;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / headings
+----------------------------------------------------------- */
+
+#content div.box h1,
+#content div.box h2,
+#content div.box h3,
+#content div.box h4,
+#content div.box h5,
+#content div.box h6
+{
+	margin: 10px 20px 10px 20px;
+	padding: 0 0 15px 0;
+	clear: both;
+	overflow: hidden;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / paragraphs
+----------------------------------------------------------- */
+
+#content div.box p
+{
+	margin: 0 24px 10px 24px;
+	padding: 0;
+	color: #5f5f5f;
+	font-size: 12px;
+	line-height: 150%;
+}
+
+#content div.box blockquote
+{
+	margin: 0 34px 0 34px;
+	padding: 0 0 0 14px;
+	border-left: 4px solid #DDDDDD;
+	color: #5f5f5f;
+	font-size: 11px;
+	line-height: 150%;
+}
+
+#content div.box blockquote p
+{
+	margin: 10px 0 10px 0;
+	padding: 0; 
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / lists
+----------------------------------------------------------- */
+
+#content div.box dl
+{
+	margin: 10px 24px 10px 24px;	
+}
+
+#content div.box dt
+{
+	margin: 0;
+	font-size: 12px; 
+}
+
+#content div.box dd
+{
+	margin: 0;
+	padding: 8px 0 8px 15px;
+	font-size: 12px; 
+}
+
+#content div.box ul.left
+{
+	float: left;    
+}
+
+#content div.box ol.left
+{
+	float: left;    
+}
+
+#content div.box li
+{
+	padding: 4px 0 4px 0;
+	font-size: 12px;  
+}
+
+#content div.box ol.lower-roman, 
+#content div.box ol.upper-roman 
+{
+	margin: 10px 24px 10px 44px;
+}
+
+#content div.box ol.lower-alpha, 
+#content div.box ol.upper-alpha
+{
+	margin: 10px 24px 10px 44px;
+}
+
+#content div.box ol.decimal
+{
+	margin: 10px 24px 10px 44px;
+}
+
+#content div.box ul.disc,
+#content div.box ul.circle
+{
+	margin: 10px 24px 10px 38px;
+}
+
+#content div.box ul.square  
+{
+	margin: 10px 24px 10px 40px; 
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / images
+----------------------------------------------------------- */
+
+#content div.box img.left
+{
+	margin: 10px 10px 10px 0;
+	border: none;
+	float: left;
+}
+
+#content div.box img.right
+{
+	margin: 10px 0 10px 10px;
+	border: none;
+	float: right;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / messages
+----------------------------------------------------------- */ 
+
+#content div.box div.messages
+{
+	margin: 0 20px 0 20px;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+#content div.box div.message
+{
+	margin: 0 0 10px 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+#content div.box div.message div.image
+{
+	margin: 2px 0 2px 5px;
+	padding: 6px;
+	float: left;
+}
+
+#content div.box div.message div.image img
+{
+	margin: 0;
+	vertical-align: middle;
+}
+
+#content div.box div.message div.text
+{
+	margin: 0;
+	padding: 10px 6px 10px 6px;
+	float: left;
+}
+
+#content div.box div.message div.dismiss
+{
+	margin: 0;
+	padding: 0;
+	float: right;
+}
+
+#content div.box div.message div.dismiss a
+{
+	margin: 15px 14px 0 0;
+	padding: 0;
+	height: 16px;
+	width: 16px;
+	display: block;
+	background: url("../../resources/images/icons/cross.png") no-repeat;
+}
+
+#content div.box div.message div.text h1,
+#content div.box div.message div.text h2,
+#content div.box div.message div.text h3,
+#content div.box div.message div.text h4,
+#content div.box div.message div.text h5,
+#content div.box div.message div.text h6
+{
+	margin: 0;
+	padding: 0px;
+	border: none;
+}
+
+#content div.box div.message div.text span
+{
+	margin: 0;
+	padding: 5px 0 0 0;
+	height: 1%;
+	display: block;
+}
+
+#content div.box div.message-error
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #FBE3E4;
+	border: 1px solid #FBC2C4;
+	color: #860006;
+}
+
+#content div.box div.message-error h6
+{
+	color: #860006;
+}
+
+#content div.box div.message-warning
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #FFF6BF;
+	border: 1px solid #FFD324;
+	color: #5f5200;
+}
+
+#content div.box div.message-warning h6
+{
+	color: #5f5200;
+}
+
+#content div.box div.message-notice
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #8FBDE0;
+	border: 1px solid #6BACDE;
+	color: #003863;
+}
+
+#content div.box div.message-notice h6
+{
+	color: #003863;
+}
+
+#content div.box div.message-success
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #E6EFC2;
+	border: 1px solid #C6D880;
+	color: #4e6100;
+}
+
+#content div.box div.message-success h6
+{
+	color: #4e6100;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / forms
+----------------------------------------------------------- */
+
+div.form
+{
+	margin: 0;
+	padding: 0 20px 10px 20px;
+	clear: both;
+	overflow: hidden;
+}
+
+.ui-dialog div.form
+{
+	padding: 0;
+}
+
+div.form div.fields
+{
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+div.form div.fields div.field
+{
+	margin: 0;
+	padding: 10px 0 10px 0; 
+	height: 1%;
+	border-bottom: 1px solid #DDDDDD;
+	clear: both;
+	overflow: hidden;
+}
+
+
+div.form div.fields div.field_tclass
+{
+	margin: 0;
+	padding: 10px 0 10px 0; 
+	height: 1%;
+	border-bottom: 1px solid #DDDDDD;
+	clear: both;
+	overflow: hidden;
+}
+
+
+
+div.form div.fields div.field-first
+{
+	padding: 0 0 10px 0; 
+}
+
+div.form div.fields div.field span.error
+{
+	margin: 0;
+	padding: 8px 0 0 0;
+	height: 1%;
+	display: block;
+	clear: both;
+	overflow: hidden;
+	color: #FF0000;
+}
+
+div.form div.fields div.field span.success
+{
+	margin: 8px 0 0 0;
+	padding: 0;
+	height: 1%;
+	display: block;
+	color: #316309;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> labels
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.label
+{
+	left: 310px;
+	margin: 0;
+	padding: 8px 0 0 5px;
+	width: auto;
+	position: absolute;
+}
+
+.ui-dialog div.form div.fields div.field div.label,
+div.box-left div.form div.fields div.field div.label,
+div.box-right div.form div.fields div.field div.label
+{
+	left: 0;
+	margin: 0;
+	padding: 0 0 8px 0;
+	width: auto;
+	position: relative;
+	clear: both;
+	overflow: hidden;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> label (select)
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.label-select
+{
+	padding: 2px 0 0 5px;
+}
+
+.ui-dialog div.form div.fields div.field div.label-select,
+div.box-left div.form div.fields div.field div.label-select,
+div.box-right div.form div.fields div.field div.label-select
+{
+	padding: 0 0 8px 0;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> label (checkbox)
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.label-checkbox
+{
+	padding: 0 0 0 5px;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> label (radio)
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.label-radio
+{
+	padding: 0 0 0 5px;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> label (textarea)
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.label-textarea
+{
+	padding: 0 0 0 5px;
+}
+
+.ui-dialog div.form div.fields div.field div.label-textarea,
+div.box-left div.form div.fields div.field div.label-textarea,
+div.box-right div.form div.fields div.field div.label-textarea
+{
+	padding: 0 0 8px 0;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> labels (label)
+----------------------------------------------------------- */
+
+
+
+div.form div.fields div.field div.label label
+{
+	color: #393939;
+	font-weight: bold;
+}
+
+div.form div.fields div.field div.label span
+{
+	margin: 0;
+	padding: 2px 0 0 0;
+	height: 1%;
+	display: block;
+	color: #363636;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> input
+----------------------------------------------------------- */
+/*
+Ԥ��ͼƬ��css
+*/
+div.form div.fields div.field div.input div.showylarea
+{
+	float:left;
+}
+div.form div.fields div.field div.input div.showylarea ul
+{
+	list-style:none;
+	display:inline;
+}
+div.form div.fields div.field div.input div.showylarea ul li
+{
+	float:left;
+	margin-right:40px;
+}
+div.form div.fields div.field div.input div.showylarea ul li div.yl
+{
+	border:1px solid #ccc;
+}
+div.form div.fields div.field div.input div.showylarea ul li div.yl img
+{
+	width:150px;
+	height:150px;
+
+}
+div.form div.fields div.field div.input div.showylarea ul li div label a.delpicture
+{
+	float:right;
+
+}
+div.form div.fields div.field div.input
+{
+	margin: 0 0 0 200px;
+	padding: 0;
+}
+
+div.form div.fields div.field div.typeinput
+{
+	margin: 0 0 0 0;
+	padding: 0;
+}
+
+.ui-dialog div.form div.fields div.field div.input,
+div.box-left div.form div.fields div.field div.input,
+div.box-right div.form div.fields div.field div.input,
+div.typeinput
+{
+	margin: 0;
+	padding: 7px 7px 6px 7px;
+	clear: both;
+	overflow: hidden;
+	border-top: 1px solid #b3b3b3;
+	border-left: 1px solid #b3b3b3;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+}
+
+div.form div.fields div.field div.input input
+{
+	margin: 0;
+	padding: 7px 7px 6px 7px;
+	float: left;
+	background: #FFFFFF;
+	border-top: 1px solid #b3b3b3;
+	border-left: 1px solid #b3b3b3;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+}
+div.form div.fields div.field div.typeinput input
+{
+	margin: 0;
+	padding: 7px 7px 6px 7px;
+	float: left;
+	background: #FFFFFF;
+	border-top: 1px solid #b3b3b3;
+	border-left: 1px solid #b3b3b3;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+}
+.ui-dialog div.form div.fields div.field div.input input,
+div.box-left div.form div.fields div.field div.input input,
+div.box-right div.form div.fields div.field div.input input
+{
+	width: 100%;
+	padding: 0;
+	border: none;
+}
+
+div.form div.fields div.field div.input-file input
+{
+	float: none;
+}
+/*新增超级小input样式*/
+div.form div.fields div.field div.input input.supersmall
+{
+	width: 15%;	
+}
+div.form div.fields div.field div.input input.small
+{
+	width: 30%;	
+}
+div.form div.fields div.field div.typeinput input.small
+{
+	width: 95%;	
+}
+div.form div.fields div.field div.input input.medium
+{
+	width: 55%;	
+}
+
+div.form div.fields div.field div.input input.large
+{
+	width: 85%;	
+}
+
+div.form div.fields div.field div.input input.date
+{
+	width: 180px;	
+}
+
+div.form div.fields div.field div.input input.button
+{
+	margin: 0;
+	padding: 4px 8px 4px 8px;
+	background: #D4D0C8;
+	border-top: 1px solid #FFFFFF;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #404040;
+	border-bottom: 1px solid #404040;
+	color: #000000;
+}
+div.form div.fields div.field div.typeinput input.button
+{
+	margin: 0;
+	padding: 4px 8px 4px 8px;
+	background: #D4D0C8;
+	border-top: 1px solid #FFFFFF;
+	border-left: 1px solid #FFFFFF;
+	border-right: 1px solid #404040;
+	border-bottom: 1px solid #404040;
+	color: #000000;
+}
+div.form div.fields div.field div.input input.error
+{
+	background: #FBE3E4;
+	border-top: 1px solid #e1b2b3;
+	border-left: 1px solid #e1b2b3;
+	border-right: 1px solid #FBC2C4;
+	border-bottom: 1px solid #FBC2C4;
+}
+
+div.form div.fields div.field div.input input.valid
+{
+	background: #E6EFC2;
+	border-top: 1px solid #cebb98;
+	border-left: 1px solid #cebb98;
+	border-right: 1px solid #c6d880;
+	border-bottom: 1px solid #c6d880;
+}
+
+div.form div.fields div.field div.input img.ui-datepicker-trigger
+{
+	margin: 0 0 0 6px;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> input (file styling)
+----------------------------------------------------------- */
+div.form div.fields div.field div.input a.ui-input-file input
+{
+	position: relative; 
+	height: 28px; 
+	width: 250px; 
+	display: inline; 
+	cursor: pointer; 
+	opacity: 0; 
+	margin-left: -142px;
+}
+div.form div.fields div.field div.input a.ui-input-file
+{
+	margin: 0 0 0 6px;
+	padding: 0;
+	width: 28px;
+	height: 28px;
+	display: inline;
+	position: absolute;
+	overflow: hidden;
+	cursor: pointer;
+	background: #e5e3e3 url("../../resources/images/button_browse.png") no-repeat;
+	border: none;
+	text-decoration: none;
+}
+
+div.form div.fields div.field div.input a:hover.ui-input-file
+{
+	background: #e5e3e3 url("../../resources/images/button_browse_selected.png") no-repeat;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> textarea
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.textarea
+{
+	margin: 0 0 0 200px;
+	padding: 10px;
+	border-top: 1px solid #b3b3b3;
+	border-left: 1px solid #b3b3b3;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+}
+
+div.form div.fields div.field div.textarea-editor
+{
+	padding: 0;
+	border: 1px solid #dddddd;
+}
+
+.ui-dialog div.form div.fields div.field div.textarea,
+div.box-left div.form div.fields div.field div.textarea,
+div.box-right div.form div.fields div.field div.textarea
+{
+	margin: 0;
+}
+
+div.form div.fields div.field div.textarea textarea
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 220px;
+	overflow: hidden;
+	background: #FFFFFF;
+	border-width: 0;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+	outline: none;
+}
+
+.ui-dialog div.form div.fields div.field div.textarea textarea,
+div.box-left div.form div.fields div.field div.textarea textarea,
+div.box-right div.form div.fields div.field div.textarea textarea
+{
+	width: 100%;
+	height: 100px;
+}
+
+div.form div.fields div.field div.textarea textarea.error
+{
+	padding: 3px 10px 10px 23px;
+	background-color: #FBE3E4;
+	background-image: url("../../resources/../../resources/images/icons/exclamation.png");
+	background-repeat: no-repeat;
+	background-position: 3px 3px;
+	border: 1px solid #FBC2C4;
+}
+
+div.form div.fields div.field div.textarea textarea.success
+{
+	padding: 3px 10px 10px 23px;
+	background-color: #E6EFC2;
+	background-image: url("../../resources/../../resources/images/icons/accept.png");
+	background-repeat: no-repeat;
+	background-position: 3px 3px;
+	border: 1px solid #C6D880;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> textarea (tinymce editor)
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.textarea table
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	border: none;
+}
+
+#content div.box div.form div.fields div.field div.textarea table td
+{
+	padding: 0;
+	/*background: #DDDDDD;*/
+	border: none;	
+}
+
+#content div.box div.form div.fields div.field div.textarea table td table
+{
+	margin: 0;
+	padding: 0;
+	width: auto;
+	border: none;
+}
+
+#content div.box div.form div.fields div.field div.textarea table td table td
+{
+	padding: 5px 5px 5px 0;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+}
+
+#content div.box div.form div.fields div.field div.textarea table td table td a
+{
+	border: none;	
+}
+
+#content div.box div.form div.fields div.field div.textarea table td table td a.mceButtonActive
+{
+	background: #b1b1b1;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> select
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.select
+{
+	margin: 0 0 0 200px;
+	padding: 0;
+	float: left;
+}
+
+div.form div.fields div.field div.select a:hover
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+div.form div.fields div.field div.select select
+{
+	margin: 0;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> select (jquery styling)
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.select a.ui-selectmenu-focus
+{
+	border: 1px solid #666666;
+}
+
+div.form div.fields div.field div.select a.ui-selectmenu  
+{
+	color: #565656; 
+	text-decoration: none;
+}
+
+div.form div.fields div.field div.select a.ui-selectmenu:hover  
+{
+	color: #000000;
+	text-decoration: none; 
+}
+
+div.form div.fields div.field div.select a.ui-selectmenu-focus span.ui-icon
+{
+	background-image: url(../../resources/images/ui/ui-icons_222222_256x240.png);
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> element focus
+----------------------------------------------------------- */
+
+div.form div.fields div.field input[type=text]:focus, 
+div.form div.fields div.field input[type=password]:focus,
+div.form div.fields div.field input[type=file]:focus,
+div.form div.fields div.field textarea:focus,
+div.form div.fields div.field select:focus 
+{
+	background: #f6f6f6;
+	border-color: #666;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> checkboxes
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.checkboxes
+{
+	margin: 0 0 0 200px;
+	padding: 0;
+}
+
+div.form div.fields div.field div.checkboxes div.checkbox
+{
+	margin: 0;
+	padding: 2px 0 2px 0;
+	clear: both;
+	overflow: hidden;
+}
+
+div.form div.fields div.field div.checkboxes div.checkbox input
+{
+	margin: 0;	
+	float: left;
+}
+
+div.form div.fields div.field div.checkboxes div.checkbox label
+{
+	margin: 3px 0 0 4px;
+	height: 1%;
+	display: block;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> radios
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.radios
+{
+	margin: 0 0 0 200px;
+	padding: 0;
+}
+
+div.form div.fields div.field div.radios div.radio
+{
+	margin: 0;
+	padding: 2px 0 2px 0;
+	clear: both;
+	overflow: hidden;
+}
+
+div.form div.fields div.field div.radios div.radio input
+{
+	margin: 0;	
+	float: left;
+}
+
+div.form div.fields div.field div.radios div.radio label
+{
+	margin: 3px 0 0 4px;
+	height: 1%;
+	display: block;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> button
+----------------------------------------------------------- */
+
+div.form div.fields div.field div.button
+{
+	margin: 0;
+	/*padding: 0 0 0 8px;*/
+	padding: 0 0 0 0;
+	float: left;
+}
+
+div.form div.fields div.field div.button input
+{
+	/*margin: 0;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;*/
+	font-weight: bold;
+	 background: url("../../resources/images/colors/blue/button_highlight.png") repeat-x scroll 0 0 #4E85BB;
+    border-color: #5C91A4 #2B7089 #1A6480 #2A6F89;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+   
+}
+
+div.form div.fields div.field div.button .ui-state-default
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #e5e3e3 url("../../resources/images/button.png") repeat-x;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #c6c6c6;
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #c6c6c6;
+	color: #515151;
+	outline: none;
+}
+
+div.form div.fields div.field div.button .ui-state-hover
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #b4b4b4 url("../../resources/images/button_selected.png") repeat-x;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #bebebe;
+	border-right: 1px solid #b1b1b1;
+	border-bottom: 1px solid #afafaf;
+	color: #515151;
+	outline: none;
+}
+
+div.form div.fields div.field div.highlight
+{
+	display: inline;
+}
+
+div.form div.fields div.field div.highlight .ui-state-default
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #4e85bb url("../../resources/images/colors/blue/button_highlight.png") repeat-x;
+	border-top: 1px solid #5c91a4;
+	border-left: 1px solid #2a6f89;
+	border-right: 1px solid #2b7089;
+	border-bottom: 1px solid #1a6480;
+	color: #FFFFFF;
+}
+
+div.form div.fields div.field div.highlight .ui-state-hover
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #46a0c1 url("../../resources/images/colors/blue/button_highlight_selected.png") repeat-x;
+	border-top: 1px solid #78acbf;
+	border-left: 1px solid #34819e;
+	border-right: 1px solid #35829f;
+	border-bottom: 1px solid #257897;
+	color: #FFFFFF;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> buttons
+----------------------------------------------------------- */
+
+div.form div.fields div.buttons
+{
+	margin: 10px 0 0 200px;
+	padding: 0;
+}
+
+div.box-left div.form div.fields div.buttons,
+div.box-right div.form div.fields div.buttons
+{
+	margin: 10px 0 0 0;
+}
+
+div.form div.fields div.buttons input
+{
+	margin: 0;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> buttons (jquery styling)
+----------------------------------------------------------- */
+
+div.form div.fields div.buttons .ui-state-default
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #e5e3e3 url("../../resources/images/button.png") repeat-x;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #c6c6c6;
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #c6c6c6;
+	color: #515151;
+	outline: none;
+}
+
+div.form div.fields div.buttons .ui-state-hover
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #b4b4b4 url("../../resources/images/button_selected.png") repeat-x;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #bebebe;
+	border-right: 1px solid #b1b1b1;
+	border-bottom: 1px solid #afafaf;
+	color: #515151;
+	outline: none;
+}
+
+div.form div.fields div.buttons div.highlight
+{
+	display: inline;
+}
+
+div.form div.fields div.buttons div.highlight .ui-state-default
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #4e85bb url("../../resources/images/colors/blue/button_highlight.png") repeat-x;
+	border-top: 1px solid #5c91a4;
+	border-left: 1px solid #2a6f89;
+	border-right: 1px solid #2b7089;
+	border-bottom: 1px solid #1a6480;
+	color: #FFFFFF;
+}
+
+div.form div.fields div.buttons div.highlight .ui-state-hover
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #46a0c1 url("../../resources/images/colors/blue/button_highlight_selected.png") repeat-x;
+	border-top: 1px solid #78acbf;
+	border-left: 1px solid #34819e;
+	border-right: 1px solid #35829f;
+	border-bottom: 1px solid #257897;
+	color: #FFFFFF;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / tables
+----------------------------------------------------------- */
+
+#content div.box div.table
+{
+	margin: 0;
+	padding: 0 10px 10px 10px;
+	clear: both;
+	overflow: hidden;
+}
+
+#content div.box table
+{
+	margin: 0;
+	padding: 0;
+	/*width: 100%;*/
+	border-collapse: collapse;
+}
+
+#content div.box table.tclass
+{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#content div.box table th
+{
+	padding: 10px;
+	background: #eeeeee;
+	border-right: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;
+}
+
+#content div.box table th.last
+{
+	border-right: none;	
+}
+
+#content div.box table th.left
+{
+	text-align: left;   
+}
+
+#content div.box table th.right
+{
+	text-align: right;   
+}
+
+#content div.box table th.center
+{
+	text-align: center;   
+}
+
+/*新建的商品类型参数设置样式*/
+#content div.box table th.th1{
+	width:30%;
+}
+#content div.box table th.th2{
+	width:60%;
+}
+#content div.box table th.th3{
+	width:10%;
+}
+
+#content div.box table th.selected
+{
+	padding: 0;
+	vertical-align: middle;
+}
+
+#content div.box table th.selected input
+{
+	margin: 0;	
+}
+
+#content div.box table td
+{
+	padding: 10px;
+	/*background: #ffffff;
+	border-right: 1px solid #cdcdcd;
+	border-bottom: 1px solid #cdcdcd;*/
+}
+
+#content div.box #cssrefuse table td{
+	padding: 5px;
+}
+
+#content div.box table td.last
+{
+	border-right: none;	
+}
+
+#content div.box table tr.selected td
+{
+	background: #FFFFCC;
+}
+
+#content div.box table td.selected
+{
+	/*padding: 0;
+	width: 3%*/;
+	text-align: center;
+	vertical-align: middle;
+}
+
+#content div.box table td.selected input
+{
+	margin: 0;	
+}
+
+#content div.box table td.title
+{
+	width: 15%;
+	text-align: left;
+}
+
+#content div.box table td.price
+{
+	width: 10%;
+	text-align: center;
+}
+
+#content div.box table td.date
+{
+	width: 33%;
+	text-align: center;
+}
+
+#content div.box table td.category
+{
+	width: 10%;
+	text-align: center;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / table action
+----------------------------------------------------------- */
+
+#content div.box div.action
+{
+	margin: 10px 0 0 0;
+	padding: 0;
+	float: right;
+	background: #FFFFFF;
+	text-align: right;
+}
+
+#content div.box div.action a:hover
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+#content div.box div.action select
+{
+	margin: 0;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+}
+
+#content div.box div.action div.button
+{
+	margin: 6px 0 0 0;
+	padding: 0;
+	text-align: right;
+}
+
+#content div.box div.action div.button input
+{
+	margin: 0;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+#content div.box div.action div.button input.ui-state-default
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #e5e3e3 url("../../resources/images/button.png") repeat-x;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #c6c6c6;
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #c6c6c6;
+	color: #515151;
+}
+
+#content div.box div.action div.button input.ui-state-hover
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #b4b4b4 url("../../resources/images/button_selected.png") repeat-x;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #bebebe;
+	border-right: 1px solid #b1b1b1;
+	border-bottom: 1px solid #afafaf;
+	color: #515151;
+}
+
+#content div.box div.action .ui-selectmenu  
+{
+	margin: 0;
+	padding: 0;
+}
+
+#content div.box div.action a.ui-selectmenu-focus
+{
+	border: 1px solid #666666;
+}
+
+#content div.box div.action a.ui-selectmenu-focus span.ui-icon
+{
+	background-image: url(../../resources/images/ui/ui-icons_222222_256x240.png);
+}
+
+/* -----------------------------------------------------------
+	content -> right -> pagination
+----------------------------------------------------------- */
+
+#content div.box div.pagination
+{
+	margin: 10px 0 0 0;
+	padding: 0;
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+}
+
+#content div.box div.pagination div.results
+{
+	margin: 0;
+	padding: 0;
+	text-align: left;
+	float: left
+}
+
+#content div.box div.pagination div.results span 
+{
+	margin: 0;
+	padding: 6px 8px 6px 8px;
+	height: 1%;
+	display: block;
+	float: left;
+	background: #ebebeb url("../../resources/images/pager.png") repeat-x;
+	border-top: 1px solid #dedede;
+	border-left: 1px solid #cfcfcf;
+	border-right: 1px solid #c4c4c4;
+	border-bottom: 1px solid #c4c4c4;
+	color: #4A4A4A;
+	font-weight: bold;
+}
+
+#content div.box div.pagination ul.pager
+{
+	margin: 0;
+	padding: 0;
+	float: right;
+	text-align: right;
+}
+
+#content div.box div.pagination ul.pager li
+{
+	margin: 0 0 0 4px;
+	padding: 0;
+	height: 1%;
+	float: left;
+	list-style: none;
+	background: #ebebeb url("../../resources/images/pager.png") repeat-x;
+	border-top: 1px solid #dedede;
+	border-left: 1px solid #cfcfcf;
+	border-right: 1px solid #c4c4c4;
+	border-bottom: 1px solid #c4c4c4;
+	color: #4A4A4A;
+	font-weight: bold;
+}
+
+#content div.box div.pagination ul.pager li.separator
+{
+	padding: 6px;   
+}
+
+#content div.box div.pagination ul.pager li.current
+{
+	padding: 6px;   
+	background: #b4b4b4 url("../../resources/images/pager_selected.png") repeat-x;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #bebebe;
+	border-right: 1px solid #b1b1b1;
+	border-bottom: 1px solid #afafaf;
+	color: #515151;
+}
+
+#content div.box div.pagination ul.pager li.disabled
+{
+	padding: 6px;
+	color: #B4B4B4;
+}
+
+#content div.box div.pagination ul.pager li a 
+{
+	margin: 0;
+	padding: 6px;
+	height: 1%;
+	display: block;
+	float: left;
+	color: #515151;
+	text-decoration: none;
+}
+
+#content div.box div.pagination ul.pager li a:hover, 
+#content div.box div.pagination ul.pager li a:active 
+{
+	margin: -1px;
+	background: #b4b4b4 url("../../resources/images/pager_selected.png") repeat-x;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #bebebe;
+	border-right: 1px solid #b1b1b1;
+	border-bottom: 1px solid #afafaf;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> sales chart
+----------------------------------------------------------- */
+
+#content div.box div.sales
+{
+	margin: 0;
+	padding: 0 20px 10px 20px;
+	clear: both;
+	overflow: hidden;
+}
+
+#content div.box div.sales div.legend
+{
+	margin: 0 0 10px 0;
+	padding: 0 0 10px 0;
+	clear: both;
+	overflow: hidden;
+	border-bottom: 1px solid #dddddd;
+}
+
+#content div.box div.sales div.legend h6
+{
+	margin: 0;
+	padding: 0;
+	float: left;
+	border: none;
+}
+
+#content div.box div.sales div.legend ul
+{
+	margin: 0;
+	padding: 0;
+	float: right;	
+}
+
+#content div.box div.sales div.legend li
+{
+	margin: 0;
+	padding: 0 8px 0 4px;
+	list-style: none;
+	float: left;
+	font-size: 11px;
+}
+
+#content div.box div.sales div.legend li.monitors
+{
+	border-left: 12px solid #edc240;
+}
+
+#content div.box div.sales div.legend li.memory
+{
+	border-left: 12px solid #afd8f8;
+}
+
+#content div.box div.sales table
+{
+	width: auto;
+}
+
+#content div.box div.sales table td
+{
+	padding: 2px 3px 3px 3px;
+	background: transparent;
+	border: none;
+}
+
+#content div.box div.sales table td.legendLabel
+{
+	padding: 0 3px 2px 3px;
+}
+
+/* -----------------------------------------------------------
+	footer
+----------------------------------------------------------- */
+
+#footer
+{
+	margin: 0;
+	padding: 5px 0 5px 0;
+	clear: both;
+	overflow: hidden;
+	background: #2a2a2a;
+	text-align: right;
+}
+
+#footer p
+{
+	margin: 0 60px 0 60px;
+	padding: 10px 0 10px 0;
+	color: #ffffff;
+}
+
+/* -----------------------------------------------------------
+	login
+----------------------------------------------------------- */
+
+#login
+{
+	margin: 10% auto 0 auto;
+	padding: 0;
+	width: 420px;
+}
+
+/* -----------------------------------------------------------
+	login -> colors
+----------------------------------------------------------- */ 
+
+#login div.color
+{
+	left: auto;
+	right: auto;
+	margin: 10px auto 0 auto;
+	padding: 3px 3px 3px 0;
+	clear: both;
+	overflow: hidden;
+	background: #FFFFFF;
+}
+
+#login div.color a
+{
+	margin: 0 0 0 3px;
+	padding: 0;
+	width: 20px;
+	height: 20px;
+	display: block;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	login -> title
+----------------------------------------------------------- */ 
+
+#login div.title
+{
+	margin: 0 auto;
+	padding: 0;
+	width: 420px;
+	clear: both;
+	overflow: hidden;
+	position: relative;
+	background: #003367 url("../../resources/images/colors/blue/header_inner.png") repeat-x;
+}
+
+#login div.title h5
+{
+	margin: 10px;
+	padding: 0;
+	color: #ffffff;	
+}
+
+/* -----------------------------------------------------------
+	login -> title / corners
+----------------------------------------------------------- */ 
+
+#login div.title div.corner
+{
+	height: 6px;
+	width: 6px;
+	position: absolute;
+	background: url("../../resources/images/colors/blue/login_corners.png") no-repeat;
+}
+
+#login div.title div.tl
+{
+	top: 0;
+	left: 0;
+	background-position: 0 0;
+}
+
+#login div.title div.tr
+{
+	top: 0;
+	right: 0;
+	background-position: -6px 0;
+}
+
+/* -----------------------------------------------------------
+	login -> messages
+----------------------------------------------------------- */
+
+#login div.messages
+{
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+	background: #ffffff;
+}
+
+#login div.message
+{
+	margin: 20px 20px 0 20px;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+#login div.messages div.message div.image
+{
+	margin: 2px 0 2px 5px;
+	padding: 6px;
+	float: left;
+}
+
+#login div.messages div.message div.image img
+{
+	margin: 0;
+	vertical-align: middle;
+}
+
+#login div.messages div.message div.text
+{
+	margin: 0;
+	padding: 10px 6px 10px 6px;
+	float: left;
+}
+
+#login div.messages div.message div.dismiss
+{
+	margin: 0;
+	padding: 0;
+	float: right;
+}
+
+#login div.messages div.message div.dismiss a
+{
+	margin: 15px 14px 0 0;
+	padding: 0;
+	height: 16px;
+	width: 16px;
+	display: block;
+	background: url("../../resources/images/icons/cross.png") no-repeat;
+}
+
+#login div.messages div.message div.text h1,
+#login div.messages div.message div.text h2,
+#login div.messages div.message div.text h3,
+#login div.messages div.message div.text h4,
+#login div.messages div.message div.text h5,
+#login div.messages div.message div.text h6
+{
+	margin: 0;
+	padding: 0px;
+	border: none;
+}
+
+#login div.messages div.message div.text span
+{
+	margin: 0;
+	padding: 5px 0 0 0;
+	height: 1%;
+	display: block;
+}
+
+#login div.messages div.message-error
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #FBE3E4;
+	border: 1px solid #FBC2C4;
+	color: #860006;
+}
+
+#login div.messages div.message-error h6
+{
+	color: #860006;
+}
+
+#login div.messages div.message-warning
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #FFF6BF;
+	border: 1px solid #FFD324;
+	color: #5f5200;
+}
+
+#login div.messages div.message-warning h6
+{
+	color: #5f5200;
+}
+
+#login div.messages div.message-notice
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #8FBDE0;
+	border: 1px solid #6BACDE;
+	color: #003863;
+}
+
+#login div.messages div.message-notice h6
+{
+	color: #003863;
+}
+
+#login div.messages div.message-success
+{
+	height: 1%;
+	clear: both;
+	overflow: hidden;
+	background: #E6EFC2;
+	border: 1px solid #C6D880;
+	color: #4e6100;
+}
+
+#login div.messages div.message-success h6
+{
+	color: #4e6100;
+}
+
+/* -----------------------------------------------------------
+	login -> inner
+----------------------------------------------------------- */
+
+#login div.inner
+{
+	margin: 0 auto;
+	padding: 20px;
+	width: 380px;
+	background: #FFFFFF url("../../resources/images/login.png") no-repeat top left;
+	border-top: none;
+	border-bottom: none;
+}
+
+/* -----------------------------------------------------------
+	login -> form
+----------------------------------------------------------- */
+
+#login div.form
+{
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+#login div.form div.fields
+{
+	margin: 0;
+	padding: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+#login div.form div.fields div.field
+{
+	margin: 0;
+	padding: 0 0 10px 0;
+	clear: both;
+	overflow: hidden;
+	border: none;
+}
+
+#login div.form div.fields div.field span.error
+{
+	margin: 8px 0 0 0;
+	padding: 0;
+	height: 1%;
+	display: block;
+	color: #FF0000;
+}
+
+#login div.form div.fields div.field label.error
+{
+	margin: 8px 0 0 0;
+	padding: 0;
+	height: 1%;
+	display: block;
+	color: #FF0000;
+}
+
+#login div.form div.fields div.field div.label
+{
+	left: 0;
+	margin: 2px 10px 0 0;
+	padding: 5px 0 0 5px;
+	width: 173px;
+	float: left;
+	position: relative;
+	text-align: right;
+}
+
+#login div.form div.fields div.field div.label label
+{
+	color: #000000;
+	font-weight: bold;
+}
+
+#login  div.form div.fields div.field div.label span
+{
+	margin: 0;
+	padding: 2px 0 0 0;
+	height: 1%;
+	display: block;
+	color: #363636;
+}
+
+#login div.form div.fields div.field div.input
+{
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#login div.form div.fields div.field div.input input
+{
+	margin: 0;
+	padding: 7px 7px 6px 7px;
+	width: 176px;
+	background: #FFFFFF;
+	border-top: 1px solid #b3b3b3;
+	border-left: 1px solid #b3b3b3;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+}
+
+#login div.form div.fields div.field div.input  input.error
+{
+	background: #FBE3E4;
+	border-top: 1px solid #e1b2b3;
+	border-left: 1px solid #e1b2b3;
+	border-right: 1px solid #FBC2C4;
+	border-bottom: 1px solid #FBC2C4;
+}
+
+#login div.form div.fields div.field div.input  input.success
+{
+	background: #E6EFC2;
+	border-top: 1px solid #cebb98;
+	border-left: 1px solid #cebb98;
+	border-right: 1px solid #c6d880;
+	border-bottom: 1px solid #c6d880;
+}
+
+#login div.form div.fields div.field div.input div.link
+{
+	margin: 6px 0 0 0;
+	padding: 0;
+	text-align: right;
+}
+
+#login div.form div.fields div.field div.checkbox
+{
+	margin: 0 0 0 184px;
+	padding: 0;
+}
+
+#login div.form div.fields div.field div.checkbox label
+{
+	color: #565656;
+	font-weight: bold;
+}
+
+#login div.form div.fields div.buttons
+{
+	margin: 0;
+	padding: 10px 0 0 0;
+	clear: both;
+	overflow: hidden;
+	border-top: 1px solid #DDDDDD;
+	text-align: right;
+}
+
+#login div.form div.fields div.buttons input
+{
+	margin: 0;
+	color: #000000;
+	font-size: 1.1em; 
+	font-weight: bold;
+	font-family: Verdana, Helvetica, Sans-Serif; 
+}
+
+#login div.form div.fields div.buttons input.ui-state-default
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #e5e3e3 url("../../resources/images/button.png") repeat-x;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #c6c6c6;
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #c6c6c6;
+	color: #515151;
+}
+
+#login div.form div.fields div.buttons input.ui-state-hover
+{
+	margin: 0;
+	padding: 6px 12px 6px 12px;
+	background: #b4b4b4 url("../../resources/images/button_selected.png") repeat-x;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #bebebe;
+	border-right: 1px solid #b1b1b1;
+	border-bottom: 1px solid #afafaf;
+	color: #515151;
+}
+
+/* -----------------------------------------------------------
+	login -> links
+----------------------------------------------------------- */
+
+#login div.form div.links
+{
+	margin: 10px 0 0 0;
+	padding: 0 0 2px 0;
+	clear: both;
+	overflow: hidden;
+}
+
+/* -----------------------------------------------------------
+	jquery ui
+----------------------------------------------------------- */
+
+.ui-helper-hidden { display: none; }
+.ui-helper-hidden-accessible { position: absolute; left: -99999999px; }
+.ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
+.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+/* -----------------------------------------------------------
+	jquery ui -> icons
+----------------------------------------------------------- */
+
+.ui-icon { width: 16px; height: 16px; background-image: url(../../resources/images/ui/ui-icons_222222_256x240.png); }
+.ui-widget-content .ui-icon { background-image: url(../../resources/images/ui/ui-icons_222222_256x240.png); }
+.ui-widget-header .ui-icon { background-image: url(../../resources/images/ui/ui-icons_222222_256x240.png); }
+.ui-state-default .ui-icon { background-image: url(../../resources/images/ui/ui-icons_ef8c08_256x240.png); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon { background-image: url(../../resources/images/ui/ui-icons_ef8c08_256x240.png); }
+.ui-state-active .ui-icon {background-image: url(../../resources/images/ui/ui-icons_ef8c08_256x240.png); }
+.ui-state-highlight .ui-icon {background-image: url(../../resources/images/ui/ui-icons_228ef1_256x240.png); }
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {background-image: url(../../resources/images/ui/ui-icons_ffd27a_256x240.png); }
+
+/* -----------------------------------------------------------
+	jquery ui -> icon positioning
+----------------------------------------------------------- */
+.ui-icon-carat-1-n { background-position: 0 0; }
+.ui-icon-carat-1-ne { background-position: -16px 0; }
+.ui-icon-carat-1-e { background-position: -32px 0; }
+.ui-icon-carat-1-se { background-position: -48px 0; }
+.ui-icon-carat-1-s { background-position: -64px 0; }
+.ui-icon-carat-1-sw { background-position: -80px 0; }
+.ui-icon-carat-1-w { background-position: -96px 0; }
+.ui-icon-carat-1-nw { background-position: -112px 0; }
+.ui-icon-carat-2-n-s { background-position: -128px 0; }
+.ui-icon-carat-2-e-w { background-position: -144px 0; }
+.ui-icon-triangle-1-n { background-position: 0 -16px; }
+.ui-icon-triangle-1-ne { background-position: -16px -16px; }
+.ui-icon-triangle-1-e { background-position: -32px -16px; }
+.ui-icon-triangle-1-se { background-position: -48px -16px; }
+.ui-icon-triangle-1-s { background-position: -64px -16px; }
+.ui-icon-triangle-1-sw { background-position: -80px -16px; }
+.ui-icon-triangle-1-w { background-position: -96px -16px; }
+.ui-icon-triangle-1-nw { background-position: -112px -16px; }
+.ui-icon-triangle-2-n-s { background-position: -128px -16px; }
+.ui-icon-triangle-2-e-w { background-position: -144px -16px; }
+.ui-icon-arrow-1-n { background-position: 0 -32px; }
+.ui-icon-arrow-1-ne { background-position: -16px -32px; }
+.ui-icon-arrow-1-e { background-position: -32px -32px; }
+.ui-icon-arrow-1-se { background-position: -48px -32px; }
+.ui-icon-arrow-1-s { background-position: -64px -32px; }
+.ui-icon-arrow-1-sw { background-position: -80px -32px; }
+.ui-icon-arrow-1-w { background-position: -96px -32px; }
+.ui-icon-arrow-1-nw { background-position: -112px -32px; }
+.ui-icon-arrow-2-n-s { background-position: -128px -32px; }
+.ui-icon-arrow-2-ne-sw { background-position: -144px -32px; }
+.ui-icon-arrow-2-e-w { background-position: -160px -32px; }
+.ui-icon-arrow-2-se-nw { background-position: -176px -32px; }
+.ui-icon-arrowstop-1-n { background-position: -192px -32px; }
+.ui-icon-arrowstop-1-e { background-position: -208px -32px; }
+.ui-icon-arrowstop-1-s { background-position: -224px -32px; }
+.ui-icon-arrowstop-1-w { background-position: -240px -32px; }
+.ui-icon-arrowthick-1-n { background-position: 0 -48px; }
+.ui-icon-arrowthick-1-ne { background-position: -16px -48px; }
+.ui-icon-arrowthick-1-e { background-position: -32px -48px; }
+.ui-icon-arrowthick-1-se { background-position: -48px -48px; }
+.ui-icon-arrowthick-1-s { background-position: -64px -48px; }
+.ui-icon-arrowthick-1-sw { background-position: -80px -48px; }
+.ui-icon-arrowthick-1-w { background-position: -96px -48px; }
+.ui-icon-arrowthick-1-nw { background-position: -112px -48px; }
+.ui-icon-arrowthick-2-n-s { background-position: -128px -48px; }
+.ui-icon-arrowthick-2-ne-sw { background-position: -144px -48px; }
+.ui-icon-arrowthick-2-e-w { background-position: -160px -48px; }
+.ui-icon-arrowthick-2-se-nw { background-position: -176px -48px; }
+.ui-icon-arrowthickstop-1-n { background-position: -192px -48px; }
+.ui-icon-arrowthickstop-1-e { background-position: -208px -48px; }
+.ui-icon-arrowthickstop-1-s { background-position: -224px -48px; }
+.ui-icon-arrowthickstop-1-w { background-position: -240px -48px; }
+.ui-icon-arrowreturnthick-1-w { background-position: 0 -64px; }
+.ui-icon-arrowreturnthick-1-n { background-position: -16px -64px; }
+.ui-icon-arrowreturnthick-1-e { background-position: -32px -64px; }
+.ui-icon-arrowreturnthick-1-s { background-position: -48px -64px; }
+.ui-icon-arrowreturn-1-w { background-position: -64px -64px; }
+.ui-icon-arrowreturn-1-n { background-position: -80px -64px; }
+.ui-icon-arrowreturn-1-e { background-position: -96px -64px; }
+.ui-icon-arrowreturn-1-s { background-position: -112px -64px; }
+.ui-icon-arrowrefresh-1-w { background-position: -128px -64px; }
+.ui-icon-arrowrefresh-1-n { background-position: -144px -64px; }
+.ui-icon-arrowrefresh-1-e { background-position: -160px -64px; }
+.ui-icon-arrowrefresh-1-s { background-position: -176px -64px; }
+.ui-icon-arrow-4 { background-position: 0 -80px; }
+.ui-icon-arrow-4-diag { background-position: -16px -80px; }
+.ui-icon-extlink { background-position: -32px -80px; }
+.ui-icon-newwin { background-position: -48px -80px; }
+.ui-icon-refresh { background-position: -64px -80px; }
+.ui-icon-shuffle { background-position: -80px -80px; }
+.ui-icon-transfer-e-w { background-position: -96px -80px; }
+.ui-icon-transferthick-e-w { background-position: -112px -80px; }
+.ui-icon-folder-collapsed { background-position: 0 -96px; }
+.ui-icon-folder-open { background-position: -16px -96px; }
+.ui-icon-document { background-position: -32px -96px; }
+.ui-icon-document-b { background-position: -48px -96px; }
+.ui-icon-note { background-position: -64px -96px; }
+.ui-icon-mail-closed { background-position: -80px -96px; }
+.ui-icon-mail-open { background-position: -96px -96px; }
+.ui-icon-suitcase { background-position: -112px -96px; }
+.ui-icon-comment { background-position: -128px -96px; }
+.ui-icon-person { background-position: -144px -96px; }
+.ui-icon-print { background-position: -160px -96px; }
+.ui-icon-trash { background-position: -176px -96px; }
+.ui-icon-locked { background-position: -192px -96px; }
+.ui-icon-unlocked { background-position: -208px -96px; }
+.ui-icon-bookmark { background-position: -224px -96px; }
+.ui-icon-tag { background-position: -240px -96px; }
+.ui-icon-home { background-position: 0 -112px; }
+.ui-icon-flag { background-position: -16px -112px; }
+.ui-icon-calendar { background-position: -32px -112px; }
+.ui-icon-cart { background-position: -48px -112px; }
+.ui-icon-pencil { background-position: -64px -112px; }
+.ui-icon-clock { background-position: -80px -112px; }
+.ui-icon-disk { background-position: -96px -112px; }
+.ui-icon-calculator { background-position: -112px -112px; }
+.ui-icon-zoomin { background-position: -128px -112px; }
+.ui-icon-zoomout { background-position: -144px -112px; }
+.ui-icon-search { background-position: -160px -112px; }
+.ui-icon-wrench { background-position: -176px -112px; }
+.ui-icon-gear { background-position: -192px -112px; }
+.ui-icon-heart { background-position: -208px -112px; }
+.ui-icon-star { background-position: -224px -112px; }
+.ui-icon-link { background-position: -240px -112px; }
+.ui-icon-cancel { background-position: 0 -128px; }
+.ui-icon-plus { background-position: -16px -128px; }
+.ui-icon-plusthick { background-position: -32px -128px; }
+.ui-icon-minus { background-position: -48px -128px; }
+.ui-icon-minusthick { background-position: -64px -128px; }
+.ui-icon-close { background-position: -80px -128px; }
+.ui-icon-closethick { background-position: -96px -128px; }
+.ui-icon-key { background-position: -112px -128px; }
+.ui-icon-lightbulb { background-position: -128px -128px; }
+.ui-icon-scissors { background-position: -144px -128px; }
+.ui-icon-clipboard { background-position: -160px -128px; }
+.ui-icon-copy { background-position: -176px -128px; }
+.ui-icon-contact { background-position: -192px -128px; }
+.ui-icon-image { background-position: -208px -128px; }
+.ui-icon-video { background-position: -224px -128px; }
+.ui-icon-script { background-position: -240px -128px; }
+.ui-icon-alert { background-position: 0 -144px; }
+.ui-icon-info { background-position: -16px -144px; }
+.ui-icon-notice { background-position: -32px -144px; }
+.ui-icon-help { background-position: -48px -144px; }
+.ui-icon-check { background-position: -64px -144px; }
+.ui-icon-bullet { background-position: -80px -144px; }
+.ui-icon-radio-off { background-position: -96px -144px; }
+.ui-icon-radio-on { background-position: -112px -144px; }
+.ui-icon-pin-w { background-position: -128px -144px; }
+.ui-icon-pin-s { background-position: -144px -144px; }
+.ui-icon-play { background-position: 0 -160px; }
+.ui-icon-pause { background-position: -16px -160px; }
+.ui-icon-seek-next { background-position: -32px -160px; }
+.ui-icon-seek-prev { background-position: -48px -160px; }
+.ui-icon-seek-end { background-position: -64px -160px; }
+.ui-icon-seek-start { background-position: -80px -160px; }
+/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
+.ui-icon-seek-first { background-position: -80px -160px; }
+.ui-icon-stop { background-position: -96px -160px; }
+.ui-icon-eject { background-position: -112px -160px; }
+.ui-icon-volume-off { background-position: -128px -160px; }
+.ui-icon-volume-on { background-position: -144px -160px; }
+.ui-icon-power { background-position: 0 -176px; }
+.ui-icon-signal-diag { background-position: -16px -176px; }
+.ui-icon-signal { background-position: -32px -176px; }
+.ui-icon-battery-0 { background-position: -48px -176px; }
+.ui-icon-battery-1 { background-position: -64px -176px; }
+.ui-icon-battery-2 { background-position: -80px -176px; }
+.ui-icon-battery-3 { background-position: -96px -176px; }
+.ui-icon-circle-plus { background-position: 0 -192px; }
+.ui-icon-circle-minus { background-position: -16px -192px; }
+.ui-icon-circle-close { background-position: -32px -192px; }
+.ui-icon-circle-triangle-e { background-position: -48px -192px; }
+.ui-icon-circle-triangle-s { background-position: -64px -192px; }
+.ui-icon-circle-triangle-w { background-position: -80px -192px; }
+.ui-icon-circle-triangle-n { background-position: -96px -192px; }
+.ui-icon-circle-arrow-e { background-position: -112px -192px; }
+.ui-icon-circle-arrow-s { background-position: -128px -192px; }
+.ui-icon-circle-arrow-w { background-position: -144px -192px; }
+.ui-icon-circle-arrow-n { background-position: -160px -192px; }
+.ui-icon-circle-zoomin { background-position: -176px -192px; }
+.ui-icon-circle-zoomout { background-position: -192px -192px; }
+.ui-icon-circle-check { background-position: -208px -192px; }
+.ui-icon-circlesmall-plus { background-position: 0 -208px; }
+.ui-icon-circlesmall-minus { background-position: -16px -208px; }
+.ui-icon-circlesmall-close { background-position: -32px -208px; }
+.ui-icon-squaresmall-plus { background-position: -48px -208px; }
+.ui-icon-squaresmall-minus { background-position: -64px -208px; }
+.ui-icon-squaresmall-close { background-position: -80px -208px; }
+.ui-icon-grip-dotted-vertical { background-position: 0 -224px; }
+.ui-icon-grip-dotted-horizontal { background-position: -16px -224px; }
+.ui-icon-grip-solid-vertical { background-position: -32px -224px; }
+.ui-icon-grip-solid-horizontal { background-position: -48px -224px; }
+.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
+.ui-icon-grip-diagonal-se { background-position: -80px -224px; }
+
+/* -----------------------------------------------------------
+	jquery ui -> misc visuals
+----------------------------------------------------------- */
+
+.ui-widget-overlay { background: #666666 url(../../resources/images/ui/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat; opacity: .50;filter:Alpha(Opacity=50); }
+.ui-widget-shadow { margin: -5px 0 0 -5px; padding: 5px; background: #000000 url(../../resources/images/ui/ui-bg_flat_10_000000_40x100.png) 50% 50% repeat-x; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
+
+/* -----------------------------------------------------------
+	jquery ui -> resizable
+----------------------------------------------------------- */
+
+.ui-resizable { position: relative;}
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0; }
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0; }
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0; height: 100%; }
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0; height: 100%; }
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
+.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}/* Selectable
+
+/* -----------------------------------------------------------
+	jquery ui -> tabs
+----------------------------------------------------------- */
+.ui-tabs .ui-tabs-hide { display: none; }
+
+/* -----------------------------------------------------------
+	jquery ui -> datepicker
+----------------------------------------------------------- */
+.ui-datepicker { width: 190px; padding: .2em .2em 0; background: #FFFFFF; border: 1px solid #000000; border-top: none; }
+.ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; background: #F6F6F6; }
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 1px; width: 1.8em; height: 1.8em; }
+.ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
+.ui-datepicker .ui-datepicker-prev { left: 0; }
+.ui-datepicker .ui-datepicker-next { right: 0; }
+.ui-datepicker .ui-datepicker-prev-hover { left: 0; }
+.ui-datepicker .ui-datepicker-next-hover { right: 0; }
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
+.ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
+.ui-datepicker .ui-datepicker-title select { margin:1px 0; }
+.ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+.ui-datepicker select.ui-datepicker-month, 
+.ui-datepicker select.ui-datepicker-year { width: 49%;}
+.ui-datepicker table {width: 100%; border-collapse: collapse; margin: 0 0 4px 0; }
+.ui-datepicker th { padding: .7em .3em; text-align: center; border: 0;  }
+.ui-datepicker td { border: 0; padding: 1px; }
+.ui-datepicker td span, .ui-datepicker td a { display: block; padding: 3px; text-align: center;  text-decoration: none; }
+.ui-datepicker td span, .ui-datepicker td a:hover { background: #376ea6; color: #ffffff; }
+.ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+.ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+.ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
+.ui-datepicker td span, .ui-datepicker td.ui-datepicker-today a { background: #DDDDDD; color: #585858; }
+.ui-datepicker td span, .ui-datepicker td.ui-datepicker-current-day a { background: #376ea6; color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> datepicker / multiple calenders
+----------------------------------------------------------- */
+.ui-datepicker.ui-datepicker-multi { width:auto; }
+.ui-datepicker-multi .ui-datepicker-group { float:left; }
+.ui-datepicker-multi .ui-datepicker-group table { width:95%; margin:0 auto .4em; }
+.ui-datepicker-multi-2 .ui-datepicker-group { width:50%; }
+.ui-datepicker-multi-3 .ui-datepicker-group { width:33.3%; }
+.ui-datepicker-multi-4 .ui-datepicker-group { width:25%; }
+.ui-datepicker-multi .ui-datepicker-group-last .ui-datepicker-header { border-left-width:0; }
+.ui-datepicker-multi .ui-datepicker-group-middle .ui-datepicker-header { border-left-width:0; }
+.ui-datepicker-multi .ui-datepicker-buttonpane { clear:left; }
+.ui-datepicker-row-break { clear:both; width:100%; }
+
+/* -----------------------------------------------------------
+	jquery ui -> datepicker / rtl support
+----------------------------------------------------------- */
+.ui-datepicker-rtl { direction: rtl; }
+.ui-datepicker-rtl .ui-datepicker-prev { right: 2px; left: auto; }
+.ui-datepicker-rtl .ui-datepicker-next { left: 2px; right: auto; }
+.ui-datepicker-rtl .ui-datepicker-prev:hover { right: 1px; left: auto; }
+.ui-datepicker-rtl .ui-datepicker-next:hover { left: 1px; right: auto; }
+.ui-datepicker-rtl .ui-datepicker-buttonpane { clear:right; }
+.ui-datepicker-rtl .ui-datepicker-buttonpane button { float: left; }
+.ui-datepicker-rtl .ui-datepicker-buttonpane button.ui-datepicker-current { float:right; }
+.ui-datepicker-rtl .ui-datepicker-group { float:right; }
+.ui-datepicker-rtl .ui-datepicker-group-last .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
+.ui-datepicker-rtl .ui-datepicker-group-middle .ui-datepicker-header { border-right-width:0; border-left-width:1px; }
+
+/* -----------------------------------------------------------
+	jquery ui -> select styling
+----------------------------------------------------------- */
+
+.ui-selectmenu  
+{
+	display: block; 
+	position: relative;
+	overflow: hidden;
+	background: #ffffff;
+	border-top: 1px solid #b3b3b3;
+	border-left: 1px solid #b3b3b3;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+	text-align: left; 
+	text-decoration: none; 
+}
+
+.ui-selectmenu-icon { position:absolute; right:6px; margin-top:-8px; top: 50%; }
+.ui-selectmenu-menu { padding:0; margin:0; list-style:none; position:absolute; top: 0; visibility: hidden; overflow: auto; }
+.ui-selectmenu-open { background: #ffffff; border: 1px solid #666666; border-top: none; visibility: visible; }
+.ui-selectmenu-menu-popup { margin-top: -1px; }
+.ui-selectmenu-menu-dropdown { }
+.ui-selectmenu-menu li { padding:0; margin:0; display: block; border-top: 1px dotted transparent; border-bottom: 1px dotted transparent; border-right-width: 0 !important; border-left-width: 0 !important; }
+.ui-selectmenu-menu li a,.ui-selectmenu-status {line-height: 1.4em; display:block; padding: 5px 0 5px 8px; outline:none; text-decoration:none; color: #000000; }
+.ui-selectmenu-menu li.ui-selectmenu-hasIcon a,
+.ui-selectmenu-hasIcon .ui-selectmenu-status  { margin-left: 5px; padding-left: 20px; position: relative; }
+.ui-selectmenu-menu li .ui-icon, .ui-selectmenu-status .ui-icon { position: absolute; top: 1em; margin-top: -8px; left: 0; }
+.ui-selectmenu-status { line-height: 1.4em; }
+.ui-selectmenu-open li.ui-selectmenu-item-focus { background: #376ea6; }
+.ui-selectmenu-open li.ui-selectmenu-item-focus a { color: #ffffff; }
+.ui-selectmenu-open li.ui-selectmenu-item-selected { background: #dfdfdf; }
+.ui-selectmenu-open li.ui-selectmenu-item-selected a { color: #000000; }
+.ui-selectmenu-menu li span,.ui-selectmenu-status span { display:block; margin-bottom: .2em; }
+.ui-selectmenu-menu .ui-selectmenu-group .ui-selectmenu-group-label { line-height: 1.4em; display:block; padding:.6em .5em 0; }
+.ui-selectmenu-menu .ui-selectmenu-group ul { margin: 0; padding: 0; }
+
+/* reset extra padding in firefox */
+.ui-button::-moz-focus-inner { border: 0; padding: 0; }
+
+/* -----------------------------------------------------------
+	jquery ui -> autocomplete
+----------------------------------------------------------- */
+
+.ui-autocomplete { margin: 0; padding: 0; list-style: none; position: absolute; background: #ffffff; border: 1px solid #666666; border-top: none; }
+.ui-autocomplete .ui-menu-item { margin: 0; padding: 0; }
+.ui-autocomplete .ui-menu-item a { margin: 0; padding: 8px; height: 1%; display: block; text-decoration: none; }
+.ui-autocomplete .ui-menu-item a:hover { background: #376ea6; color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> dialog
+----------------------------------------------------------- */
+
+.ui-dialog { position: absolute; padding: 0; width: 300px; overflow: hidden; background: #ffffff; border: 1px solid #336699; }
+.ui-dialog .ui-dialog-titlebar { padding: 8px; position: relative; clear: both; overflow: hidden; background: #336699 url("../../resources/images/colors/blue/title.png") repeat-x; color: #ffffff; font-weight: bold; }
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; } 
+.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.ui-dialog .ui-dialog-content { border: 0; padding: 15px; background: none; overflow: auto; }
+.ui-dialog .ui-dialog-buttonpane { text-align: left; background-image: none; margin: 0; padding: 10px 10px 15px 10px; clear: both; overflow: hidden; }
+.ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
+.ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+.ui-dialog p
+{
+	margin: 0;
+	padding: 0 0 10px 0;
+	color: #5f5f5f;
+	font-size: 11px;
+	line-height: 150%;
+}
+
+.ui-dialog .ui-dialog-buttonpane button
+{
+	margin: 0 6px 0 0; 
+	float: right;
+	color: #000000;
+	font-family: Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-state-default
+{
+	padding: 6px 12px 6px 12px;
+	background: #e5e3e3 url("../../resources/images/button.png") repeat-x;
+	border-top: 1px solid #DDDDDD;
+	border-left: 1px solid #c6c6c6;
+	border-right: 1px solid #DDDDDD;
+	border-bottom: 1px solid #c6c6c6;
+	color: #515151;
+	outline: none;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-state-hover
+{
+	padding: 6px 12px 6px 12px;
+	background: #b4b4b4 url("../../resources/images/button_selected.png") repeat-x;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #bebebe;
+	border-right: 1px solid #b1b1b1;
+	border-bottom: 1px solid #afafaf;
+	color: #515151;
+	outline: none;
+}

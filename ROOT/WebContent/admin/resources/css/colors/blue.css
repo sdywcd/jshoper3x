@@ -1,0 +1,302 @@
+/* -----------------------------------------------------------
+	header
+----------------------------------------------------------- */ 
+
+#header #header-inner
+{
+	background: #b0b0b0 url("../../../resources/images/colors/blue/header_inner.png") repeat-x;
+}
+
+/* -----------------------------------------------------------
+	header -> home
+----------------------------------------------------------- */ 
+
+#header #header-inner #home a
+{
+	background: url("../../../resources/images/colors/blue/button_home.png");
+}
+
+/* -----------------------------------------------------------
+	header -> quick
+----------------------------------------------------------- */
+
+#header #header-inner #quick li a
+{
+	background: #336699 url("../../../resources/images/colors/blue/quick_l.png") no-repeat top left;
+}
+
+#header #header-inner #quick li span
+{
+	background: url("../../../resources/images/colors/blue/quick_r.png") no-repeat top right;
+	border-left: 1px solid #3f6f9f;
+}
+
+#header #header-inner #quick li span.icon
+{
+	background: url("../../../resources/images/colors/blue/quick_l.png") no-repeat top left;
+	border-right: 1px solid #2e5c89;
+}
+
+#header #header-inner #quick li a:hover
+{
+	background: #4e4e4e url("../../../resources/images/colors/blue/quick_l_selected.png") no-repeat top left;
+}
+
+#header #header-inner #quick li a:hover span
+{
+	background: url("../../../resources/images/colors/blue/quick_r_selected.png") no-repeat top right;
+}
+
+#header #header-inner #quick li a:hover span.icon
+{
+	background: url("../../../resources/images/colors/blue/quick_l_selected.png") no-repeat top left;
+}
+
+/* -----------------------------------------------------------
+	header corners
+----------------------------------------------------------- */ 
+
+#header #header-inner div.corner
+{
+	background: url("../../../resources/images/colors/blue/header_inner_corners.png") no-repeat;
+}
+
+#header #header-inner div.tl
+{
+	top: 0;
+	left: 0;
+	background-position: 0 0;
+}
+
+#header #header-inner div.tr
+{
+	top: 0;
+	right: 0;
+	background-position: -6px 0;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> menu
+----------------------------------------------------------- */ 
+
+#content #left #menu h6.selected
+{
+	background: #00376e url("../../../resources/images/colors/blue/menu_selected.png") repeat-x;
+}
+
+#content #left #menu h6.selected a
+{
+	background: url("../../../resources/images/colors/blue/menu_l_selected.png") no-repeat top left;
+}
+
+#content #left #menu h6.selected span
+{
+	background: url("../../../resources/images/colors/blue/menu_r_selected.png") no-repeat top right;
+}
+
+#content #left #menu ul
+{
+	background: #376ea6;
+}
+
+#content #left #menu li
+{
+	border-top: 1px solid #4377ab;
+	border-bottom: 1px solid #326395;
+}
+
+#content #left #menu li a
+{
+	background: url("../../../resources/images/colors/blue/menu_arrow.png") no-repeat 0 9px;
+}
+
+#content #left #menu li a:hover
+{
+	color: #b9dcff;
+}
+
+#content #left #menu li.collapsible
+{
+	background: url("../../../resources/images/colors/blue/menu_border.png") no-repeat top left;
+}
+
+#content #left #menu li.collapsible a.minus
+{
+	border-bottom: 1px solid #326395;
+}
+
+#content #left #menu li ul
+{
+	border-left: 18px solid #326395;
+}
+
+#content #left #menu li ul li
+{
+	background: url("../../../resources/images/colors/blue/menu_arrow.png") no-repeat 10px 9px;
+	border-top: 1px solid #4377ab;
+	border-bottom: 1px solid #326395;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / title
+----------------------------------------------------------- */
+
+#content div.box div.title
+{
+	background: #336699 url("../../../resources/images/colors/blue/title.png") repeat-x;
+}
+
+#content div.box div.title ul.links li a
+{
+	background: url("../../../resources/images/colors/blue/title_link.png") no-repeat top left;
+	border-left: 1px solid #316293;
+}
+
+#content div.box div.title ul.links li a:hover
+{
+	background: url("../../../resources/images/colors/blue/title_tab_selected.png") no-repeat bottom center;
+	color: #bfe3ff;
+}
+
+#content div.box div.title ul.links li.ui-tabs-selected a
+{
+	background: url("../../../resources/images/colors/blue/title_tab_selected.png") no-repeat bottom center;
+	color: #bfe3ff;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / search
+----------------------------------------------------------- */ 
+
+#content div.box div.title div.search
+{
+	background: url("../../../resources/images/colors/blue/title_link.png") no-repeat top left;
+	border-left: 1px solid #316293;
+}
+
+#content div.box div.title div.search div.input input
+{
+	border: 1px solid #316293;
+}
+
+#content div.box div.title div.search div.button input.ui-state-default
+{
+	background: #4e85bb url("../../../resources/images/colors/blue/button_highlight.png") repeat-x;
+	border: 1px solid #316293;
+	border-left: none;
+	color: #FFFFFF;
+}
+
+#content div.box div.title div.search div.button input.ui-state-hover
+{
+	background: #46a0c1 url("../../../resources/images/colors/blue/button_highlight_selected.png") repeat-x;
+	border: 1px solid #316293;
+	border-left: none;
+	color: #FFFFFF;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> button
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.highlight .ui-state-default
+{
+	background: #4e85bb url("../../../resources/images/colors/blue/button_highlight.png") repeat-x;
+	border-top: 1px solid #5c91a4;
+	border-left: 1px solid #2a6f89;
+	border-right: 1px solid #2b7089;
+	border-bottom: 1px solid #1a6480;
+	color: #ffffff;
+}
+
+#content div.box div.form div.fields div.field div.highlight .ui-state-hover
+{
+	background: #46a0c1 url("../../../resources/images/colors/blue/button_highlight_selected.png") repeat-x;
+	border-top: 1px solid #78acbf;
+	border-left: 1px solid #34819e;
+	border-right: 1px solid #35829f;
+	border-bottom: 1px solid #257897;
+	color: #ffffff;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> buttons
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.buttons div.highlight input.ui-state-default
+{
+	background: #4e85bb url("../../../resources/images/colors/blue/button_highlight.png") repeat-x;
+	border-top: 1px solid #5c91a4;
+	border-left: 1px solid #2a6f89;
+	border-right: 1px solid #2b7089;
+	border-bottom: 1px solid #1a6480;
+	color: #ffffff;
+}
+
+#content div.box div.form div.fields div.buttons div.highlight input.ui-state-hover
+{
+	background: #46a0c1 url("../../../resources/images/colors/blue/button_highlight_selected.png") repeat-x;
+	border-top: 1px solid #78acbf;
+	border-left: 1px solid #34819e;
+	border-right: 1px solid #35829f;
+	border-bottom: 1px solid #257897;
+	color: #ffffff;
+}
+
+/* -----------------------------------------------------------
+	login -> title
+----------------------------------------------------------- */ 
+
+#login div.title
+{
+	background: #003367 url("../../../resources/images/colors/blue/header_inner.png") repeat-x;
+}
+
+/* -----------------------------------------------------------
+	login -> title / corners
+----------------------------------------------------------- */ 
+
+#login div.title div.corner
+{
+	background: url("../../../resources/images/colors/blue/login_corners.png") no-repeat;
+}
+
+#login div.title div.tl
+{
+	top: 0;
+	left: 0;
+	background-position: 0 0;
+}
+
+#login div.title div.tr
+{
+	top: 0;
+	right: 0;
+	background-position: -6px 0;
+}
+
+/* -----------------------------------------------------------
+	jquery ui -> select styling
+----------------------------------------------------------- */
+
+.ui-selectmenu-open li.ui-selectmenu-item-focus { background: #376ea6; }
+.ui-selectmenu-open li.ui-selectmenu-item-focus a { color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> datepicker
+----------------------------------------------------------- */
+.ui-datepicker td span, .ui-datepicker td a:hover { background: #376ea6; color: #ffffff; }
+.ui-datepicker td span, .ui-datepicker td.ui-datepicker-current-day a { background: #376ea6; color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> autocomplete
+----------------------------------------------------------- */
+
+.ui-autocomplete .ui-menu-item a:hover { background: #376ea6; color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> dialog
+----------------------------------------------------------- */
+
+.ui-dialog { border: 1px solid #336699; }
+.ui-dialog .ui-dialog-titlebar { background: #336699 url("../../../resources/images/colors/blue/title.png") repeat-x; }

@@ -1,0 +1,505 @@
+.location {
+    color: #383838;
+    font-family: "ËÎÌו",Arial,Lucida,Verdana,Helvetica,sans-serif;
+    padding: 9px 0 6px 9px;
+    width: 970px;
+}
+.agreement {
+    margin: 10px auto 0;
+    width: 940px;
+}
+.agreement .top {
+    background: url("../images/reg_tbg.gif") repeat-x scroll 0 0 transparent;
+    height: 61px;
+    width: 940px;
+}
+.agreement .top p {
+    float: left;
+}
+.agreement .top cite {
+    float: right;
+}
+.agreement .agreementbox {
+    background: url("../images/reg_bg.gif") repeat-x scroll center top transparent;
+    border-left: 1px solid #D1D1D1;
+    border-right: 1px solid #D1D1D1;
+    height: 510px;
+    overflow: hidden;
+    width: 938px;
+}
+.agreement .agreementbox .content {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E1E1E1;
+    font-family: "ËÎÌו";
+    font-size: 14px;
+    height: 380px;
+    line-height: 28px;
+    margin: 12px 0 0 12px;
+    overflow-y: scroll;
+    padding: 30px 60px;
+    width: 793px;
+}
+.agreement .agreementbox .content h1 {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0 0;
+}
+.agreement .agreementbox .content p {
+    margin: 10px 0 0;
+}
+.agreement .agreementbox .colse {
+    margin: 10px 0 0;
+    text-align: center;
+}
+.reg_foot {
+    background: url("../images/reg_foot_bg.gif") repeat-x scroll 0 0 transparent;
+    height: 5px;
+    overflow: hidden;
+    width: 940px;
+}
+.reg_foot p {
+    float: left;
+}
+.reg_foot cite {
+    float: right;
+}
+.login {
+    margin: 10px auto 0;
+    width: 940px;
+}
+.login .top {
+}
+.login .loginbox {
+    background: url("../images/reg_bg.gif") repeat-x scroll center top transparent;
+    border-left: 1px solid #D1D1D1;
+    border-right: 1px solid #D1D1D1;
+    height: 290px;
+    overflow: hidden;
+    width: 938px;
+}
+.reg_left {
+    background: url("../images/newuser2.gif") no-repeat scroll left top transparent;
+    color: #585858;
+    float: left;
+    height: 210px;
+    padding: 0 0 0 80px;
+    width: 383px;
+}
+.reg_left .login_div1 {
+    float: left;
+    margin: 21px 0 0;
+    width: 330px;
+}
+.reg_left .login_div1 p, .reg_left .login_div2 p {
+    float: left;
+    font-size: 14px;
+    padding: 5px 0 0;
+    width: 57px;
+}
+.reg_left .login_div1 cite, .reg_left .login_div2 cite {
+    float: left;
+}
+.reg_left .login_div1 input, .reg_left .login_div2 input {
+    border: 1px solid #D1D1D1;
+    color: #585858;
+    height: 18px;
+    line-height: 18px;
+    padding: 2px;
+    width: 170px;
+}
+.reg_left .login_div2 span {
+    float: left;
+    padding: 7px 0 0 5px;
+}
+.reg_left .login_div2 span a {
+    color: #1A66B3;
+}
+.reg_left .login_div2 {
+    float: left;
+    margin: 12px 0 0;
+    width: 330px;
+}
+.reg_left .login_div3 {
+    float: left;
+    margin: 17px 0 0;
+    width: 330px;
+}
+.reg_left .login_div3 p {
+    float: left;
+    padding: 0 0 0 93px;
+}
+.reg_left .login_div3 cite {
+    float: left;
+    padding: 0 0 0 5px;
+}
+.reg_left .login_div4 {
+    float: left;
+    margin: 11px 0 0;
+    padding: 0 0 0 80px;
+    width: 250px;
+}
+.reg_left .login_div5 {
+    float: left;
+    margin: 11px 0 0;
+    width: 350px;
+}
+.reg_right {
+    background: url("../images/newuser.gif") no-repeat scroll left top transparent;
+    float: left;
+    height: 210px;
+    position: relative;
+    width: 475px;
+}
+.reg_right .newuser {
+    left: 256px;
+    position: absolute;
+    top: 145px;
+}
+.register {
+    margin: 10px auto 0;
+    width: 940px;
+}
+.register .top {
+    background: url("../images/register_top.gif") no-repeat scroll 0 0 transparent;
+    height: 81px;
+    position: relative;
+    width: 940px;
+}
+.register .top .btn {
+    background: url("../images/register_btn1.gif") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    font-weight: bold;
+    height: 23px;
+    left: 345px;
+    line-height: 23px;
+    position: absolute;
+    text-align: center;
+    top: 47px;
+    width: 91px;
+}
+.register .registerbox {
+    background: url("../images/reg_bg.gif") repeat-x scroll center top transparent;
+    border-left: 1px solid #D1D1D1;
+    border-right: 1px solid #D1D1D1;
+    float: left;
+    padding: 0 0 20px;
+    width: 938px;
+}
+.reg_list1 {
+    color: #585858;
+    float: left;
+    font-size: 12px;
+    margin: 10px 0 0 20px;
+    padding: 10px 0 10px 80px;
+    width: 820px;
+}
+.reg_list1 .reg_div1 {
+    float: left;
+    margin: 7px 0 0;
+    width: 820px;
+}
+.reg_list1 .reg_div1 p, .reg_list1 .reg_div2 p {
+    float: left;
+    padding: 5px 0 0;
+    text-align: right;
+    width: 140px;
+}
+.reg_list1 .reg_div1 cite, .reg_list1 .reg_div2 cite {
+    float: left;
+    padding: 0 0 0 12px;
+}
+.reg_list1 .reg_div1 cite input {
+    border: 1px solid #D1D1D1;
+    color: #585858;
+    height: 18px;
+    line-height: 18px;
+    padding: 2px;
+    width: 195px;
+}
+.reg_list1 .reg_div1 cite select {
+    margin: 3px 0 0;
+}
+.reg_list1 .reg_div1 span {
+    color: #9C9C9C;
+    float: left;
+    padding: 7px 0 0 12px;
+    width: 400px;
+}
+.reg_list1 .reg_div1 span a {
+    color: #1A66B3;
+}
+.reg_list1 .reg_div1 p code, .reg_list1 .reg_div2 p code {
+    color: #FF4E00;
+}
+.reg_list1 .reg_div1 ul {
+    float: left;
+}
+.reg_list1 .reg_div1 li {
+    float: left;
+    line-height: 15px;
+    padding: 5px 0 0 10px;
+}
+.reg_list1 .reg_div1 li input {
+    margin: 0 5px 0 0;
+}
+.reg_list1 .reg_div2 {
+    float: left;
+    margin: 7px 0 0;
+    width: 820px;
+}
+.reg_list1 .reg_div2 cite input {
+    border: 1px solid #D1D1D1;
+    color: #585858;
+    height: 18px;
+    line-height: 18px;
+    padding: 2px;
+    width: 60px;
+}
+.reg_list1 .reg_div2 em {
+    float: left;
+    padding: 0 0 0 5px;
+}
+.reg_list1 .reg_div2 span {
+    color: #9C9C9C;
+    float: left;
+    padding: 8px 0 0 8px;
+    width: 100px;
+}
+.reg_list1 .reg_div2 span a {
+    color: #0674CC;
+}
+.reg_list1 .reg_div3 {
+    float: left;
+    margin: 17px 0 0;
+    padding: 0 0 0 95px;
+    width: 700px;
+}
+.reg_list1 .reg_div3 p {
+    float: left;
+    padding: 0 0 0 53px;
+}
+.reg_list1 .reg_div3 cite {
+    float: left;
+    padding: 0 0 0 5px;
+}
+.reg_list1 .reg_div3 cite a {
+    color: #0674CC;
+}
+.reg_list1 .reg_div4 {
+    float: left;
+    margin: 11px 0 0;
+    padding: 0 0 0 180px;
+    width: 620px;
+}
+.reg_list1 .reg_title {
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    height: 20px;
+    margin: 7px 0 0;
+    text-align: right;
+    width: 90px;
+}
+.topline {
+    border-top: 1px solid #E1E1E1;
+}
+.reginfo_trcheck {
+    background: url("../images/accept.gif") no-repeat scroll 5px 3px transparent;
+    color: #009900;
+    float: left;
+    margin: 0 0 0 10px;
+    padding: 3px 5px 3px 25px;
+}
+.reg_list1 .present {
+    background: url("../images/cancel.gif") no-repeat scroll 5px 3px #FFFFFF;
+    border: 1px solid #DCDCDC;
+    color: #666666;
+    float: left;
+    margin: 0 0 0 10px;
+    padding: 3px 5px 3px 25px;
+}
+.reg_list1 .accept {
+    float: left;
+    margin: 3px 0 0 10px;
+}
+.reg_list1 .presentinput {
+    background: none repeat scroll 0 0 #FEF4D0;
+}
+.success {
+    background: url("../images/success_bg2.gif") repeat-y scroll 0 0 transparent;
+    display: block;
+    margin: 10px auto 0;
+    overflow: auto;
+    width: 815px;
+}
+.success .successbox {
+    background: url("../images/success_bg1.gif") no-repeat scroll center top transparent;
+    float: left;
+    padding: 130px 0 70px;
+    width: 815px;
+}
+.success .successbox .s_div1 {
+    float: left;
+    line-height: 24px;
+    text-align: center;
+    width: 815px;
+}
+.success .successbox .s_div1 span {
+    font-size: 14px;
+    font-weight: bold;
+}
+.success .successbox .s_div2 {
+    float: left;
+    padding: 25px 0 0;
+    text-align: center;
+    width: 815px;
+}
+.success .successbox .s_div2 img {
+    margin: 0 10px 0 0;
+}
+.success_foot {
+    background: url("../images/reg_foot_bg.gif") repeat-x scroll 0 0 transparent;
+    height: 5px;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 815px;
+}
+.success_foot p {
+    float: left;
+}
+.success_foot cite {
+    float: right;
+}
+.success2 {
+    background: url("../images/success_bg2.gif") repeat-y scroll 0 0 transparent;
+    display: block;
+    margin: 10px auto 0;
+    overflow: auto;
+    width: 815px;
+}
+.success2 .successbox {
+    float: left;
+    padding: 30px 0 70px;
+    width: 815px;
+}
+.success2 .successbox .s_div1 {
+    float: left;
+    line-height: 24px;
+    text-align: center;
+    width: 815px;
+}
+.success2 .successbox .s_div1 span {
+    font-size: 14px;
+    font-weight: bold;
+}
+.success2 .successbox .s_div2 {
+    float: left;
+    padding: 25px 0 0;
+    text-align: center;
+    width: 815px;
+}
+.success2 .successbox .s_div2 img {
+    margin: 0 10px 0 0;
+}
+.success_foot {
+    background: url("../images/reg_foot_bg.gif") repeat-x scroll 0 0 transparent;
+    height: 5px;
+    margin: 0 auto;
+    overflow: hidden;
+    width: 815px;
+}
+.success_foot p {
+    float: left;
+}
+.success_foot cite {
+    float: right;
+}
+.password {
+    margin: 10px auto 0;
+    width: 940px;
+}
+.password .top {
+    background: url("../images/password_top.gif") no-repeat scroll 0 0 transparent;
+    height: 65px;
+    position: relative;
+    width: 940px;
+}
+.password .top .btn {
+    background: url("../images/register_btn1.gif") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    font-weight: bold;
+    height: 23px;
+    left: 345px;
+    line-height: 23px;
+    position: absolute;
+    text-align: center;
+    top: 47px;
+    width: 91px;
+}
+.password .passwordbox {
+    background: url("../images/reg_bg.gif") repeat-x scroll center top transparent;
+    border-left: 1px solid #D1D1D1;
+    border-right: 1px solid #D1D1D1;
+    float: left;
+    padding: 30px 0 20px 86px;
+    width: 852px;
+}
+.password .passwordbox .p_div1 {
+    background: url("../images/icon11.gif") no-repeat scroll 25px 5px #FFFFFF;
+    border: 1px solid #DCDCDC;
+    color: #DE6231;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 0 0 54px;
+    width: 691px;
+}
+.password .passwordbox .p_div2 {
+    float: left;
+    padding: 10px 0 0;
+    width: 690px;
+}
+.password .passwordbox .p_div2 div {
+    float: left;
+    margin: 5px 0 0;
+    width: 600px;
+}
+.password .passwordbox .p_div2 div p {
+    color: #585858;
+    float: left;
+    height: 19px;
+    padding: 8px 0 0 20px;
+    text-align: right;
+    width: 130px;
+}
+.password .passwordbox .p_div2 div span {
+    float: left;
+}
+.password .passwordbox .p_div2 div span input {
+    border: 1px solid #D1D1D1;
+    color: #666666;
+    height: 20px;
+    line-height: 20px;
+    padding: 2px;
+    width: 190px;
+}
+.password .passwordbox .p_div3 {
+    color: #585858;
+    float: left;
+    line-height: 25px;
+    margin: 25px 0 0;
+    padding: 0 0 0 20px;
+    width: 670px;
+}
+.password .passwordbox .p_div2 div cite {
+}
+.password .passwordbox .p_div2 div cite a {
+    background: url("../images/passwordbtn.gif") no-repeat scroll 0 0 transparent;
+    color: #FFFFFF;
+    float: left;
+    height: 27px;
+    line-height: 27px;
+    margin: 0 0 0 10px;
+    text-align: center;
+    width: 48px;
+}

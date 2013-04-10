@@ -1,0 +1,214 @@
+/* -----------------------------------------------------------
+	header
+----------------------------------------------------------- */ 
+
+#header
+{
+	margin: 0 auto;
+	padding: 10px 0 0 0;
+	background: #b0b0b0 url("../../resources/images/header_background.png") repeat;
+}
+
+/* -----------------------------------------------------------
+	header -> outer
+----------------------------------------------------------- */ 
+
+#header #header-outer
+{
+	margin: 0 auto;
+	padding: 0;
+	width: 960px;
+}
+
+/* -----------------------------------------------------------
+	header -> quick
+----------------------------------------------------------- */
+
+#header #header-inner #quick ul
+{
+	left: 0;
+}
+
+#header #header-inner #quick li ul ul 
+{
+	left: 200px;
+}
+
+/* -----------------------------------------------------------
+	content
+----------------------------------------------------------- */ 
+
+#content 
+{
+	margin: 10px auto 10px auto;
+	width: 960px;
+	background: url("../../resources/images/content_fixed.png") repeat-y top left;
+	clear: both;
+	overflow: hidden;	
+}
+
+/* -----------------------------------------------------------
+	content -> left
+----------------------------------------------------------- */ 
+
+#content #left
+{
+	left: auto;
+	width: 210px;
+	position: relative;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> menu
+----------------------------------------------------------- */ 
+
+#content #left #menu
+{
+	margin: 5px 10px 0 10px;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> date picker
+----------------------------------------------------------- */ 
+
+#content #left #date-picker
+{
+	margin: 5px 10px 0 10px;
+}
+
+/* -----------------------------------------------------------
+	content -> right
+----------------------------------------------------------- */ 
+
+#content #right
+{
+	margin: -10px 0 0 10px;
+	width: 740px;
+	float: left;
+	clear: none;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> labels
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.label
+{
+	left: 0;
+	width: 200px;
+	position: relative;
+	float: left;
+}
+
+#content div.box-left div.form div.fields div.field div.label,
+#content div.box-right div.form div.fields div.field div.label
+{
+	float: none;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> input
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.input
+{
+	margin: 0;
+	float: left;
+}
+
+#content div.box div.form div.fields div.field div.input input.small
+{
+	width: 180px;	
+}
+
+#content div.box div.form div.fields div.field div.input input.medium
+{
+	width: 300px;	
+}
+
+#content div.box div.form div.fields div.field div.input input.large
+{
+	width: 479px;	
+}
+
+#content div.box-left div.form div.fields div.field div.input input,
+#content div.box-right div.form div.fields div.field div.input input
+{
+	width: 307px;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> textarea
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.textarea
+{
+	margin: 0;
+	float: left;
+}
+
+#content div.box div.form div.fields div.field div.textarea textarea,
+#content div.box div.form div.fields div.field div.textarea textarea
+{
+	width: 301px;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> select
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.select
+{
+	margin: 0;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> checkboxes
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.checkboxes
+{
+	margin: 0;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> radios
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.radios
+{
+	margin: 0;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> tables
+----------------------------------------------------------- */
+
+#content div.box table td.selected
+{
+	width: 5%;
+}
+
+#content div.box table td.date
+{
+	width: 30%;
+}
+
+/* -----------------------------------------------------------
+	footer
+----------------------------------------------------------- */
+
+#footer
+{
+	margin: 0 auto;
+	width: 960px;
+}
+
+#footer p
+{
+	margin: 0 10px 0 10px;
+}

@@ -1,0 +1,156 @@
+/* -----------------------------------------------------------
+	header
+----------------------------------------------------------- */ 
+
+#header
+{
+	margin: 0 auto;
+	padding: 10px 0 0 0;
+	background: #b0b0b0 url("../../resources/images/header_background.png") repeat;
+}
+
+/* -----------------------------------------------------------
+	header -> outer
+----------------------------------------------------------- */ 
+
+#header #header-outer
+{
+	margin: 0 auto;
+	padding: 0;
+	width: 960px;
+}
+
+/* -----------------------------------------------------------
+	content
+----------------------------------------------------------- */ 
+
+#content 
+{
+	margin: 0 auto 10px auto;
+	width: 960px;
+	background: transparent;	
+}
+
+/* -----------------------------------------------------------
+	content -> forms -> labels
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.label
+{
+	left: 0;
+	width: 200px;
+	position: relative;
+	float: left;
+}
+
+#content div.box-left div.form div.fields div.field div.label,
+#content div.box-right div.form div.fields div.field div.label
+{
+	float: none;
+}
+
+/* -----------------------------------------------------------
+	content -> forms -> input
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.input
+{
+	margin: 0;
+	float: left;
+}
+
+#content div.box div.form div.fields div.field div.input input.small
+{
+	width: 180px;	
+}
+
+#content div.box div.form div.fields div.field div.input input.medium
+{
+	width: 300px;	
+}
+
+#content div.box div.form div.fields div.field div.input input.large
+{
+	width: 484px;	
+}
+
+#content div.box-left div.form div.fields div.field div.input input,
+#content div.box-right div.form div.fields div.field div.input input
+{
+	width: 414px;
+}
+
+/* -----------------------------------------------------------
+	content -> forms -> textarea
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.textarea
+{
+	margin: 0;
+	float: left;
+}
+
+#content div.box div.form div.fields div.field div.textarea textarea,
+#content div.box div.form div.fields div.field div.textarea textarea
+{
+	width: 408px;
+}
+
+/* -----------------------------------------------------------
+	content -> forms -> select
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.select
+{
+	margin: 0;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> forms -> checkboxes
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.checkboxes
+{
+	margin: 0;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> forms -> radios
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.radios
+{
+	margin: 0;
+	float: left;
+}
+
+/* -----------------------------------------------------------
+	content -> tables
+----------------------------------------------------------- */
+
+#content div.box table td.selected
+{
+	width: 4%;
+}
+
+#content div.box table td.date
+{
+	width: 31%;
+}
+
+/* -----------------------------------------------------------
+	footer
+----------------------------------------------------------- */
+
+#footer
+{
+	margin: 0 auto;
+	width: 960px;
+}
+
+#footer p
+{
+	margin: 0 10px 0 10px;
+}

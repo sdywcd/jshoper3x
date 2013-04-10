@@ -1,0 +1,303 @@
+/* -----------------------------------------------------------
+	header
+----------------------------------------------------------- */ 
+
+#header #header-inner
+{
+	background: #4b194e url("../../../resources/images/colors/purple/header_inner.png") repeat-x;
+}
+
+/* -----------------------------------------------------------
+	header -> home
+----------------------------------------------------------- */ 
+
+#header #header-inner #home a
+{
+	background: url("../../../resources/images/colors/purple/button_home.png");
+}
+
+/* -----------------------------------------------------------
+	header -> quick
+----------------------------------------------------------- */
+
+#header #header-inner ul#quick li a
+{
+	background: #7d4c80 url("../../../resources/images/colors/purple/quick_l.png") no-repeat top left;
+}
+
+#header #header-inner ul#quick li span
+{
+	background: url("../../../resources/images/colors/purple/quick_r.png") no-repeat top right;
+	border-left: 1px solid #855688;
+}
+
+#header #header-inner ul#quick li span.icon
+{
+	background: url("../../../resources/images/colors/purple/quick_l.png") no-repeat top left;
+	border-right: 1px solid #714473;
+}
+
+#header #header-inner ul#quick li a:hover
+{
+	background: #4e4e4e url("../../../resources/images/colors/purple/quick_l_selected.png") no-repeat top left;
+}
+
+#header #header-inner ul#quick li a:hover span
+{
+	background: url("../../../resources/images/colors/purple/quick_r_selected.png") no-repeat top right;
+}
+
+#header #header-inner ul#quick li a:hover span.icon
+{
+	background: url("../../../resources/images/colors/purple/quick_l_selected.png") no-repeat top left;
+}
+
+/* -----------------------------------------------------------
+	header corners
+----------------------------------------------------------- */ 
+
+#header #header-inner div.corner
+{
+	background: url("../../../resources/images/colors/purple/header_inner_corners.png") no-repeat;
+}
+
+#header #header-inner div.tl
+{
+	top: 0;
+	left: 0;
+	background-position: 0 0;
+}
+
+#header #header-inner div.tr
+{
+	top: 0;
+	right: 0;
+	background-position: -6px 0;
+}
+
+/* -----------------------------------------------------------
+	content -> left -> menu
+----------------------------------------------------------- */ 
+
+#content #left #menu h6.selected
+{
+	background: #4b194e url("../../../resources/images/colors/purple/menu_selected.png") repeat-x;
+}
+
+#content #left #menu h6.selected a
+{
+	background: url("../../../resources/images/colors/purple/menu_l_selected.png") no-repeat top left;
+}
+
+#content #left #menu h6.selected span
+{
+	background: url("../../../resources/images/colors/purple/menu_r_selected.png") no-repeat top right;
+}
+
+#content #left #menu ul
+{
+	background: #88528b;
+}
+
+#content #left #menu li
+{
+	border-top: 1px solid #8f5c92;
+	border-bottom: 1px solid #7a497d;
+}
+
+#content #left #menu li a
+{
+	background: url("../../../resources/images/colors/purple/menu_arrow.png") no-repeat 0 9px;	
+}
+
+#content #left #menu li a:hover
+{
+	color: #eccaee;
+}
+
+#content #left #menu li.collapsible
+{
+	background: url("../../../resources/images/colors/purple/menu_border.png") no-repeat top left;
+}
+
+#content #left #menu li.collapsible a.minus
+{
+	border-bottom: 1px solid #7a497d;
+}
+
+#content #left #menu li ul
+{
+	border-left: 18px solid #7a497d;
+}
+
+#content #left #menu li ul li
+{
+	background: url("../../../resources/images/colors/purple/menu_arrow.png") no-repeat 10px 9px;
+	border-top: 1px solid #8f5c92;
+	border-bottom: 1px solid #7a497d;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / title
+----------------------------------------------------------- */
+
+#content div.box div.title
+{
+	background: #7e4c81 url("../../../resources/images/colors/purple/title.png") repeat-x;
+}
+
+#content div.box div.title ul.links li a
+{
+	background: url("../../../resources/images/colors/purple/title_link.png") no-repeat top left;
+	border-left: 1px solid #804d83;
+}
+
+#content div.box div.title ul.links li a:hover
+{
+	background: url("../../../resources/images/colors/purple/title_tab_selected.png") no-repeat bottom center;
+	color: #eccaee;
+}
+
+#content div.box div.title ul.links li.ui-tabs-selected a
+{
+	background: url("../../../resources/images/colors/purple/title_tab_selected.png") no-repeat bottom center;
+	color: #eccaee;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> box / search
+----------------------------------------------------------- */ 
+
+#content div.box div.title div.search
+{
+	background: url("../../../resources/images/colors/purple/title_link.png") no-repeat top left;
+	border-left: 1px solid #804d83;
+}
+
+#content div.box div.title div.search div.input input
+{
+	border: 1px solid #804d83;
+}
+
+#content div.box div.title div.search div.button input.ui-state-default
+{
+	background: #9a6d92 url("../../../resources/images/colors/purple/button_highlight.png") repeat-x;
+	border: 1px solid #804d83;
+	border-left: none;
+	color: #FFFFFF;
+}
+
+#content div.box div.title div.search div.button input.ui-state-hover
+{
+	background: #b946c1 url("../../../resources/images/colors/purple/button_highlight_selected.png") repeat-x;
+	border: 1px solid #804d83;
+	border-left: none;
+	color: #FFFFFF;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms -> button
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.field div.highlight .ui-state-default
+{
+	background: #9a6d92 url("../../../resources/images/colors/purple/button_highlight.png") repeat-x;
+	border-top: 1px solid #a080a2;
+	border-left: 1px solid #906a92;
+	border-right: 1px solid #7e5281;
+	border-bottom: 1px solid #744577;
+	color: #ffffff;
+}
+
+#content div.box div.form div.fields div.field div.highlight .ui-state-hover
+{
+	background: #b946c1 url("../../../resources/images/colors/purple/button_highlight_selected.png") repeat-x;
+	border-top: 1px solid #ba78bf;
+	border-left: 1px solid #97349e;
+	border-right: 1px solid #98359f;
+	border-bottom: 1px solid #902597;
+	color: #ffffff;
+}
+
+/* -----------------------------------------------------------
+	content -> right -> forms
+----------------------------------------------------------- */
+
+#content div.box div.form div.fields div.buttons div.highlight input.ui-state-default
+{
+	background: #9a6d92 url("../../../resources/images/colors/purple/button_highlight.png") repeat-x;
+	border-top: 1px solid #a080a2;
+	border-left: 1px solid #906a92;
+	border-right: 1px solid #7e5281;
+	border-bottom: 1px solid #744577;
+	color: #ffffff;
+}
+
+#content div.box div.form div.fields div.buttons div.highlight input.ui-state-hover
+{
+	background: #b946c1 url("../../../resources/images/colors/purple/button_highlight_selected.png") repeat-x;
+	border-top: 1px solid #ba78bf;
+	border-left: 1px solid #97349e;
+	border-right: 1px solid #98359f;
+	border-bottom: 1px solid #902597;
+	color: #ffffff;
+}
+
+/* -----------------------------------------------------------
+	login -> title
+----------------------------------------------------------- */ 
+
+#login div.title
+{
+	background: #4b194e url("../../../resources/images/colors/purple/header_inner.png") repeat-x;
+}
+
+
+/* -----------------------------------------------------------
+	login -> title / corners
+----------------------------------------------------------- */ 
+
+#login div.title div.corner
+{
+	background: url("../../../resources/images/colors/purple/login_corners.png") no-repeat;
+}
+
+#login div.title div.tl
+{
+	top: 0;
+	left: 0;
+	background-position: 0 0;
+}
+
+#login div.title div.tr
+{
+	top: 0;
+	right: 0;
+	background-position: -6px 0;
+}
+
+/* -----------------------------------------------------------
+	jquery ui -> select styling
+----------------------------------------------------------- */
+
+.ui-selectmenu-open li.ui-selectmenu-item-focus { background: #88528b; }
+.ui-selectmenu-open li.ui-selectmenu-item-focus a { color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> datepicker
+----------------------------------------------------------- */
+.ui-datepicker td span, .ui-datepicker td a:hover { background: #88528b; color: #ffffff; }
+.ui-datepicker td span, .ui-datepicker td.ui-datepicker-current-day a { background: #88528b; color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> autocomplete
+----------------------------------------------------------- */
+
+.ui-autocomplete .ui-menu-item a:hover { background: #88528b; color: #ffffff; }
+
+/* -----------------------------------------------------------
+	jquery ui -> dialog
+----------------------------------------------------------- */
+
+.ui-dialog { border: 1px solid #7e4c81; }
+.ui-dialog .ui-dialog-titlebar { background: #7e4c81 url("../../../resources/images/colors/purple/title.png") repeat-x; }

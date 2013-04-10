@@ -1,0 +1,68 @@
+<div id="main">
+	<div class="content mt5">
+	   <div class="register">
+		     <div class="top"><a class="btn" href="/CompanyClient/RegisterForm.do?returnUrl=">注册企业用户</a></div>
+		     <form style="margin:0;" target="resultIfram" enctype="multipart/form-data" onsubmit="return checkForm(this);" action="/Member/Register.do" method="post">
+                 <input type="hidden" value="" name="CooperType" id="CooperType">
+                 <input type="hidden" value="" name="CooperationId" id="CooperationId">
+				<div class="registerbox">
+					<div class="reg_list1">
+			        	<div class="reg_div1 ">
+			        		<p><code>*</code> 请填写您的Email地址：</p>
+			        		<cite><input type="text" onkeypress="clearMsg(this);" onblur="checkMail(this,1);" id="Email" name="Email"></cite>
+			        		<div id="EmailMsg"></div>
+                            <div><a style="color:red;" target="_blank" href="http://login.mail.sohu.com/rapidReg/cooregister.jsp?form=tao3c">&nbsp;&nbsp;推荐sohu邮箱 </a></div>
+			        	</div>
+			        	<div class="reg_div1">
+			        		<p><code>*</code> 请设置您的用户名：</p>
+			        		<cite><input type="text" onkeypress="clearMsg(this);" onblur="checkLoginId(this,1);" name="loginId"></cite>
+			        		<div id="loginIdMsg">4-20位字符，可由中文、小写英文、数字及“_”组成、不能以数字开头</div>
+			        	</div>
+			        	<div class="reg_div1">
+			        		<p><code>*</code> 请设定您的登录密码：</p>
+			        		<cite><input type="password" onkeypress="clearMsg(this);" onblur="checkPwd(this);" name="password" id="password">
+			        		</cite><div id="passwordMsg">密码请设为6-16为字母或数字</div>
+			        	</div>
+			        	<div class="reg_div1"><p><code>*</code> 请再次输入设定密码：</p><cite><input type="password" onkeypress="clearMsg(this);" onblur="checkPwd2(this);" name="password2"></cite><div id="password2Msg" class="accept"></div></div>
+			        	<div class="reg_div2">
+			        		<p><code>*</code> 请输入验证码：</p>
+			        		<cite><input onkeypress="clearMsg(this);" onblur="checkCode(this);" style="width:74px;" name="validateCode"></cite>
+			        		<em><img alt="" src="/ValidateCode" id="vCode">
+			        		</em><span><a onclick="codeRefresh();return false;" href="javascript:;">看不清楚，换一张</a></span>
+			        		<div id="validateCodeMsg"></div>
+			        	</div>
+			        	<div class="reg_div3"><p><input type="checkbox" name="checkbox" onclick="validateInput(this);" id="checkBox" checked=""></p><cite><a href="/Member/Protocol.do">我已阅读并同意《高鸿网上商城服务条款》</a></cite></div>
+			        	<div class="reg_div4"><input type="image" src="/datang/templets/Default/Default/images/newuserbtn1.gif" id="submitBtn"></div>
+			        	<div id="afterMsg" style="display:none;width:100px;margin-left:180px;margin-top:15px;" class="present"></div>
+			        </div>
+			    </div>
+			    <input type="hidden" name="providerName" value="userRegistAttrProviderSaveSpecialAttribute">
+			    <input type="hidden" value="100" name="memberGroup" id="memberGroup">
+			    <input type="hidden" value="" name="parentId">
+				<input type="hidden" value="" name="childId">
+				<input type="hidden" value="" name="returnUrl">
+			    <input type="hidden" value="0" name="userMID">
+			    <input type="hidden" value="" name="cps">
+			</form>
+			 <div class="reg_foot"><p><img src="../images/reg_foot_l.gif"></p><cite><img src="../images/reg_foot_r.gif"></cite></div>
+		  </div>
+	</div> 
+	
+	<iframe onload="resultIfm()" style="display:none;" name="resultIfram" id="resultIfram"></iframe>
+    <div style="height:187px;width:480px;position:absolute;top:234px;margin-left:230px;background:#e7f3e1;border:#693 solid 1px;z-index:101;display:none;" id="note_layer">
+      <div style="font-weight:bold;margin:5px 10px;float:left;width:440px;_width:430px;">温馨提示</div>
+      <div style="float:left;margin-top:5px;"><a onclick="hideNote();return false;" href="javascript:;"><img alt="关闭" title="关闭" src="/zhongliang/templets/Default/Default/images/z_img02.gif"></a></div><div style="clear:both;"></div>
+      <div style="background:#f8fbf4;border:#693 solid 1px;margin:0 5px 5px 5px;padding:8px;">
+	      您使用的邮件地址已经被系统自动注册为大唐高鸿员工用户。<br>
+	      2009年8月18日起，您已经可以使用您的邮件或者您邮件的前缀在“高鸿商城”登录了。
+	      <br><br>
+	      如：<br>
+	      您的邮箱为：shangyan@cofco.com<br>
+	      您可使用shangyan或者shangyan@cofco.com进行登录。<br>
+	      默认密码为：000000<br>
+	      （小提示：为了确保您帐户的安全，请您登录后立即修改密码）<br>
+	      <br>
+	      <div align="right"><a style="color:#03f;" href="/Member/LoginForm.do">现在就去登录&gt;&gt;</a></div>
+      </div>
+    </div>
+</div>

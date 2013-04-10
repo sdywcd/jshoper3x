@@ -1,0 +1,79 @@
+
+    <div id="mem_right" name="mem_right"  width="100%" height="606" frameborder="0" scrolling="no" onload="javascript:dyniframesize('mem_right');" style="display: block; ">
+      <div id="ind_r">
+        <div class="m1top"><span>会员信息</span></div>
+        <div class="m1">
+          <div class="l">
+            <div class="img"> <img src="${basepath}ui/default/images/hui_100_100.jpg" alt=""> </div>
+            <div class="update"><a href="/Member/UserUpdateForm.do">修改头像</a></div>
+          </div>
+          <div class="r">
+            <ul>
+              <li>·您好！<span class="name">testuser</span>&nbsp;&nbsp;欢迎您回来！</li>
+              <li>您有【 <span class="huiind_s1">0</span> 条未读信息】，<a href="/Member/ReceiverList.do">查看</a>。</li>
+              <li>您有【 <span class="huiind_s1" id="orderCount">0</span> 个正在处理的订单】，<a id="orderHref" href="/Member/AllOrderList.do">查看</a>。</li>
+              <li> 您的鸿卡账户余额为：【<b><span class="huiind_s2">0.00 元</span></b>】&nbsp;
+                您现在拥有的积分为：【<b><span class="huiind_s2">0分</span></b>】</li>
+              <li> 您现在拥有的购物券：【<b><span class="huiind_s2">0 张  共0元 </span></b>】&nbsp;
+                您的经验值为：【<b><span class="huiind_s2">0 分</span></b>】&nbsp;<br>
+              </li>
+              <li> 你的荣誉标示为：【<b><span class="huiind_s2">无</span></b>】
+                你的会员等级为：【<b><span class="huiind_s2"> 注册会员</span></b>】 </li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:10px;" class="m1top"><span>我的最新订单</span></div>
+        <div class="huiind_rm2">
+          <div class="huiind_rm2th">
+            <div class="huiind_rm2th1">下单时间</div>
+            <div class="huiind_rm2th2">订单号</div>
+            <div class="huiind_rm2th3">订单金额</div>
+            <div class="huiind_rm2th4">订单状态</div>
+            <div class="huiind_rm2th5">操作</div>
+          </div>
+        </div>
+        <div class="m2top"><span>商品推荐</span></div>
+        <script type="text/javascript">
+      function loadPrice(mid,id){
+        jQuery("#commend"+id).load("/Member/IncludeProductPrice.do",{id:id,mid:mid});
+      }
+ </script>
+        <div class="m3">
+          <div class="each1">
+            <div class="img"><a href="/product/249354.html" target="_blank"><img src="${basepath}ui/default/images/249354_1_pic120_8692.jpg" alt="Thinkpad X220i（4286-A56）12.5英寸笔记本电脑（i3-2370M 500GB 2G 摄像头 蓝牙 指纹 无线 Win7）"></a></div>
+            <div class="name"><a href="/product/249354.html" target="_blank" title="Thinkpad X220i（4286-A56）12.5英寸笔记本电脑（i3-2370M 500GB 2G 摄像头 蓝牙 指纹 无线 Win7）">Thinkpad X220i（4286-A56）12.5英寸笔记本电脑（i3-2370M 500GB 2G 摄像头 蓝牙 指纹 无线 Win7）</a></div>
+            <div id="commend249354">
+              <div class="price2">高 鸿 价：<span>￥6009.00</span></div>
+            </div>
+            <script type="text/javascript">loadPrice(0, 249354);</script>
+          </div>
+          <div class="each1">
+            <div class="img"><a href="/product/223404.html" target="_blank"><img src="${basepath}ui/default/223404_1_pic120_8078.jpg" alt="ThinkPad Tablet（1838-23C） 10.1英寸平板电脑（Android3.1 16GB IPS屏 双摄像头 USB2.0 手写笔）"></a></div>
+            <div class="name"><a href="/product/223404.html" target="_blank" title="ThinkPad Tablet（1838-23C） 10.1英寸平板电脑（Android3.1 16GB IPS屏 双摄像头 USB2.0 手写笔）">ThinkPad Tablet（1838-23C） 10.1英寸平板电脑（Android3.1 16GB IPS屏 双摄像头 USB2.0 手写笔）</a></div>
+            <div id="commend223404">
+              <div class="price2">高 鸿 价：<span>￥2399.00</span></div>
+            </div>
+            <script type="text/javascript">loadPrice(0, 223404);</script>
+          </div>
+          <div class="each1">
+            <div class="img"><a href="/product/247005.html" target="_blank"><img src="${basepath}ui/default/247005_1_pic120_2063.jpg" alt="华为（HUAWEI）Honor U8860 3G手机 WCDMA/GSM 非定制 Android 2.3系统（晶钻黑）"></a></div>
+            <div class="name"><a href="/product/247005.html" target="_blank" title="华为（HUAWEI）Honor U8860 3G手机 WCDMA/GSM 非定制 Android 2.3系统（晶钻黑）">华为（HUAWEI）Honor U8860 3G手机 WCDMA/GSM 非定制 Android 2.3系统（晶钻黑）</a></div>
+            <div id="commend247005">
+              <div class="price2">高 鸿 价：<span>￥1799.00</span></div>
+            </div>
+            <script type="text/javascript">loadPrice(0, 247005);</script>
+          </div>
+          <div class="each1">
+            <div class="img"><a href="/product/239107.html" target="_blank"><img src="${basepath}ui/default/114900/239107_1_pic120_583.jpg" alt="三星（SAMSUNG）I9100G 3G手机 WCDMA/GSM Android OS v2.3系统（釉白）"></a></div>
+            <div class="name"><a href="/product/239107.html" target="_blank" title="三星（SAMSUNG）I9100G 3G手机 WCDMA/GSM Android OS v2.3系统（釉白）">三星（SAMSUNG）I9100G 3G手机 WCDMA/GSM Android OS v2.3系统（釉白）</a></div>
+            <div id="commend239107">
+              <div class="price2">高 鸿 价：<span>￥3688.00</span></div>
+            </div>
+            <script type="text/javascript">loadPrice(0, 239107);</script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="dtmem_bot" class="dtmem_bot_ind"></div>
+</div>
