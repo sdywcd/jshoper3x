@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+=======
+
+>>>>>>> ubuntujshoper3
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
 
@@ -108,6 +111,9 @@
   </body>
 </html>
 					
+<<<<<<< HEAD
+   	 
+=======
 =======
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 
@@ -218,5 +224,6 @@
   </body>
 </html>
 					
->>>>>>> 4965e20806c06aeddb43d7e9e847c5489ab9391e
+
    	 
+>>>>>>> ubuntujshoper3

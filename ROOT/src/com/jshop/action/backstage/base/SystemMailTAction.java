@@ -342,8 +342,6 @@ public class SystemMailTAction extends ActionSupport {
 	}
 
 	public void findDefaultAllSystemMail() {
-		int currentPage = page;
-		int lineSize = rp;
 		total = this.getSystemMailTService().countfindAllSystemMail();
 		List<SystemMailT> list = this.getSystemMailTService().findAllSystemMail();
 		if (!list.isEmpty()) {
