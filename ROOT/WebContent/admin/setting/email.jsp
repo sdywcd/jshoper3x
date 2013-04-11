@@ -100,7 +100,7 @@
 		
 	    </div>
     	
-    	<script type="text/javascript" src="<%=basePath%>admin/js/setting/functionmentjs.js"></script>
+    	<script type="text/javascript" src="<%=basePath%>admin/js/setting/emailmentjs.js"></script>
     	
 		<%@include file="/admin/footer.jsp"%>
 		

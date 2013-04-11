@@ -53,7 +53,7 @@ public class SystemMailTDaoImpl extends HibernateDaoSupport implements SystemMai
 	public List<SystemMailT> findAllSystemMail() {
 		log.debug("find all findAllSystemMail");
 		try {
-			String queryString = "from SystemMailM";
+			String queryString = "from SystemMailT";
 			List<SystemMailT> list = this.getHibernateTemplate().find(queryString);
 			return list;
 		} catch (RuntimeException re) {
