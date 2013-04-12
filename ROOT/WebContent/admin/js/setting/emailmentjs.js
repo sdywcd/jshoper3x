@@ -34,6 +34,12 @@
 				sortable:true,
 				align:'center'
 			},{
+				display:'SMTP用户名',
+				name:'smtpusername',
+				width:120,
+				sortable:true,
+				align:'center'
+			},{
 				display:'SSL',
 				name:'isssl',
 				width:60,
@@ -60,7 +66,7 @@
 			},{
 				display:'创建时间',
 				name:'createtime',
-				width:150,
+				width:100,
 				sortable:true,
 				align:'center'
 			},{
@@ -84,12 +90,7 @@
 				onpress : action
 			},{
 				separator : true
-			} ],		
-			searchitems : [ {
-				display : '请选择搜索条件',
-				name : 'sc',
-				isdefault : true
-			} ],
+			} ],			
 			sortname : "createtime",
 			sortorder : "desc",
 			usepager : true,
@@ -118,40 +119,25 @@
  */
 $(function(){
 	$('#submit').click(function(){
-		var email=$("#email").val();
-		if(email==""){
-			formwarning("#alerterror","请填写邮箱地址");
+		var sysSendmail=$('#sysSendmail').val();
+		var sysMailSmtp=$('#sysMailSmtp').val();
+		var sysMailPort=$('#sysMailPort').val();
+		var smtpusername=$('#smtpusername').val();
+		var smtppwd=$('#smtppwd').val();
+		$.post("updateEmailProperties.action",{"sysSendmail":sysSendmail,"sysMailSmtp":sysMailSmtp,"sysMailPort":sysMailPort,"smtpusername":smtpusername,"smtppwd":smtppwd},function(){
+
+			window.location.href='systememailmanagement.jsp?session='+session+"#settings";
+		});
+	});
+	
+	$('#submitactivity').click(function(){
+		var detail = $('#detail').val();
+		if(detail==""){
+			jAlert("内容不能为空","信息提示");
 			return false;
 		}
-		var pwd=$("#pwd").val();
-		if(pwd==""){
-			formwarning("#alerterror","请填写邮箱密码");
-			return false;
-		}
-		var smtp=$("#smtp").val();
-		if(smtp==""){
-			formwarning("#alerterror","请填写smtp协议地址");
-			return false;
-		}
-		var port=$("#port").val();
-		if(port==""){
-			formwarning("#alerterror","请填写邮件服务端口");
-			return false;
-		}
-		var isssl=$("input[name='isssl']:checked").val();
-		var isdefault=$("input[name='isdefault']:checked").val();
-		var state=$("input[name='state']:checked").val();
-		this.value="提交中";
-		this.disabled=true;
-		$.post("addSystemMail.action",{"email":email,"pwd":pwd,"smtp":smtp,"port":port,"isssl":isssl,"isdefault":isdefault,"state":state},function(data){
-			if(data.sucflag){
-				window.location.href="emailment.jsp?operate=find&folder=setting";
-			}else{
-				formwarning("#alerterror","邮箱信息增加失败");
-				return false;
-			}
-			
+		$.post("sendActivityEmail.action",{"detail":detail},function(data){
+		
 		});
 	});
 });
-
