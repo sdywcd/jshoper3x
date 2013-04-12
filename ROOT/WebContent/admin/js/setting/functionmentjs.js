@@ -113,7 +113,6 @@ $(function() {
 		}, {
 			separator : true
 		} ],
-
 		searchitems : [ {
 			display : '请选择搜索条件',
 			name : 'sc',
