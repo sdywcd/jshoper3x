@@ -55,4 +55,5 @@ public class SystemMailTServiceImpl implements SystemMailTService {
 		return this.getSystemMailTDao().delSystemMail(id);
 	}
 
+
 }

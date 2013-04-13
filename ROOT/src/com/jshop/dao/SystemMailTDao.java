@@ -50,6 +50,5 @@ public interface SystemMailTDao {
 	public SystemMailT findSysmailByid(String id);
 
 	
-	
-	
+
 }
