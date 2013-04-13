@@ -44,13 +44,13 @@ public class BrandTDaoImpl extends HibernateDaoSupport implements BrandTDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public int delBrandt(final String[] list, final String creatorid) {
 		log.debug("del brandt");
 		try {
 
 			final String queryString = "delete from BrandT as bt where bt.brandid=:brandid and bt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
-
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;

@@ -41,13 +41,18 @@ public class SystemMailTServiceImpl implements SystemMailTService {
 	}
 
 	@Override
-	public SystemMailT findSysmailBysmailid(String id) {
-		return this.getSystemMailTDao().findSysmailBysmailid(id);
+	public SystemMailT findSysmailByid(String id) {
+		return this.getSystemMailTDao().findSysmailByid(id);
 	}
 
 	@Override
 	public int countfindAllSystemMail() {
 		return this.getSystemMailTDao().countfindAllSystemMail();
+	}
+
+	@Override
+	public int delSystemMail(String id) {
+		return this.getSystemMailTDao().delSystemMail(id);
 	}
 
 }

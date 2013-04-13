@@ -129,7 +129,7 @@ public class BaseTools {
 	 * 
 	 * @return
 	 */
-	public static String adminCreatename(){
+	public static  String adminCreatename(){
 		String username=(String) ActionContext.getContext().getSession().get(BACK_USER_NAME_SESSION_KEY);
 		if(!username.isEmpty()){
 			return username;

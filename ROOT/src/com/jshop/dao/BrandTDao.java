@@ -11,43 +11,43 @@ public interface BrandTDao {
 	 * @param bt
 	 * @return
 	 */
-	public abstract int addBrandt(BrandT bt);
+	public  int addBrandt(BrandT bt);
 	/**
 	 * 删除商品品牌
 	 * @param brandid
 	 * @return
 	 */
-	public abstract int delBrandt(String[] list,String creatorid);
+	public  int delBrandt(String[] list,String creatorid);
 	/**
 	 * 更新商品品牌
 	 * @param bt
 	 * @return
 	 */
-	public abstract void updateBrandt(BrandT bt);
+	public  void updateBrandt(BrandT bt);
 	/**
 	 * 查询所有商品品牌
 	 * @param currentPage
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<BrandT>findAllBrandt(final int currentPage,final int lineSize,final String creatorid);
+	public  List<BrandT>findAllBrandt(final int currentPage,final int lineSize,final String creatorid);
 	/**
 	 * 统计所有商品品牌
 	 * @return
 	 */
-	public abstract int countfindAllBrandt(String creatorid);
+	public  int countfindAllBrandt(String creatorid);
 	
 	/**
 	 * 根据id获取商品品牌
 	 * @param brandid
 	 * @return
 	 */
-	public abstract BrandT findBrandById(String brandid);
+	public  BrandT findBrandById(String brandid);
 	/**
 	 * 查询所有商品品牌json方式
 	 * @return
 	 */
-	public abstract List<BrandT>findAllBrandt();
+	public  List<BrandT>findAllBrandt();
 	/**
 	 * 根据排序字段按照排序方式排序
 	 * @param currentPage
@@ -56,6 +56,6 @@ public interface BrandTDao {
 	 * @param queryString
 	 * @return
 	 */
-	public abstract List<BrandT>sortAllBrandt(final int currentPage,final int lineSize,final String creatorid,final String queryString);
+	public  List<BrandT>sortAllBrandt(final int currentPage,final int lineSize,final String creatorid,final String queryString);
 
 }

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -307,7 +309,7 @@ public class SystemMailTAction extends ActionSupport {
 	@Action(value = "updateSystemMail", results = { @Result(name = "json", type = "json") })
 	public String updateSystemMail() {
 		SystemMailT sm = new SystemMailT();
-		sm = this.getSystemMailTService().findSysmailBysmailid(this.getId());
+		sm=this.getSystemMailTService().findSysmailByid(this.getId());
 		sm.setEmail(this.getEmail());
 		sm.setSmtp(this.getSmtp());
 		sm.setPort(this.getPort());
@@ -321,6 +323,22 @@ public class SystemMailTAction extends ActionSupport {
 		return "json";
 	}
 
+	/**
+	 * 根据id获取邮箱信息
+	 * @return
+	 */
+	@Action(value = "findSysmailByid", results = { @Result(name = "json", type = "json") })
+	public String findSysmailByid(){
+		if(Validate.StrNotNull(this.getId())){
+			bean=this.getSystemMailTService().findSysmailByid(this.getId());
+			if(bean!=null){
+				this.setSucflag(true);
+			}
+		}
+		return "json";
+	}
+	
+	
 	/**
 	 * 查询系统邮件
 	 * 
@@ -376,4 +394,20 @@ public class SystemMailTAction extends ActionSupport {
 
 	}
 
+	/**
+	 * 删除邮箱
+	 * @return
+	 */
+	@Action(value = "delSystemMail", results = { @Result(name = "json", type = "json") })
+	public String delSystemMail(){
+		String []strs=StringUtils.split(this.getId(),",");
+		for(String s:strs){
+			this.getSystemMailTService().delSystemMail(s);
+		}
+		this.setSucflag(true);
+		return "json";
+	}
+	
+	
+	
 }

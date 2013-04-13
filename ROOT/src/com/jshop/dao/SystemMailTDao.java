@@ -15,6 +15,13 @@ public interface SystemMailTDao {
 	public int addSystemMail(SystemMailT sm);
 
 	/**
+	 * 删除邮箱
+	 * @param id
+	 * @return
+	 */
+	public int delSystemMail(String id);
+	
+	/**
 	 * 更新系统邮件
 	 * 
 	 * @param sm
@@ -40,6 +47,9 @@ public interface SystemMailTDao {
 	 * @param smialid
 	 * @return
 	 */
-	public SystemMailT findSysmailBysmailid(String id);
+	public SystemMailT findSysmailByid(String id);
 
+	
+	
+	
 }

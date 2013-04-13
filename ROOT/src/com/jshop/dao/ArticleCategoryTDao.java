@@ -17,28 +17,28 @@ public interface ArticleCategoryTDao {
 	 * @param parentId
 	 * @return
 	 */
-	public abstract ArticleCategoryT findPathParentIdByParentId(String parentId,String creatorid);
+	public  ArticleCategoryT findPathParentIdByParentId(String parentId,String creatorid);
 	/**
 	 * 根据分类级数获取文章分类
 	 * @param grade
 	 * @param state
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findArticleCategoryByGrade(String grade,String status,String creatorid);
+	public  List<ArticleCategoryT>findArticleCategoryByGrade(String grade,String status,String creatorid);
 	/**
 	 * 检测文章分类名称
 	 * @param name
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int checkArticleCategoryName(String name,String creatorid);
+	public  int checkArticleCategoryName(String name,String creatorid);
 	/**
 	 * 检测文章分类标记
 	 * @param sign
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int checkArticleCategorySign(String sign,String creatorid);
+	public  int checkArticleCategorySign(String sign,String creatorid);
 	/**
 	 * 删除文章分类status=0
 	 * @param articlecategoryTid
@@ -46,14 +46,14 @@ public interface ArticleCategoryTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	//public abstract int delArticleCategoryT(String articlecategoryTid,String status,String creatorid);
+	//public  int delArticleCategoryT(String articlecategoryTid,String status,String creatorid);
 	public void delArticleCategoryT(ArticleCategoryT act);
 	/**
 	 * 更新文章分类
 	 * @param act
 	 * @return
 	 */
-	public abstract void updateArticleCategoryT(ArticleCategoryT act);
+	public  void updateArticleCategoryT(ArticleCategoryT act);
 	/**
 	 * 获取所有激活的文章分类status=1
 	 * @param currentPage
@@ -62,14 +62,14 @@ public interface ArticleCategoryTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findAllArticleCategoryT(final int currentPage,final int lineSize,final String status,final String creatorid);
+	public  List<ArticleCategoryT>findAllArticleCategoryT(final int currentPage,final int lineSize,final String status,final String creatorid);
 	/**
 	 * 统计所有激活的文章分类
 	 * @param status
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int countfindAllArticleCategoryT(String status,String creatorid);
+	public  int countfindAllArticleCategoryT(String status,String creatorid);
 	
 	/**
 	 * 根据分类级数获取文章分类
@@ -80,7 +80,7 @@ public interface ArticleCategoryTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findAllArticleCategoryTByGrade(final int currentPage,final int lineSize,final String status,final String grade,final String creatorid);
+	public  List<ArticleCategoryT>findAllArticleCategoryTByGrade(final int currentPage,final int lineSize,final String status,final String grade,final String creatorid);
 	
 	/**
 	 *  统计根据分类级数获取文章分类
@@ -89,14 +89,14 @@ public interface ArticleCategoryTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int countfindAllArticleCategoryTByGrade(String grade,String status,String creatorid);
+	public  int countfindAllArticleCategoryTByGrade(String grade,String status,String creatorid);
 	
 	/**
 	 * 根据分类id获取文章分类
 	 * @param articleCategoryTid
 	 * @return
 	 */
-	public abstract ArticleCategoryT findArticleCategoryByarticleCategoryTid(String articleCategoryTid);
+	public  ArticleCategoryT findArticleCategoryByarticleCategoryTid(String articleCategoryTid);
 	
 	/**
 	 * 排除自己获取文章分类名称
@@ -105,7 +105,7 @@ public interface ArticleCategoryTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int checkArticleCategoryNamewithoutMe(String articleCategoryTid,String name,String creatorid);
+	public  int checkArticleCategoryNamewithoutMe(String articleCategoryTid,String name,String creatorid);
 	/**
 	 * 排除自己检测文章标记
 	 * @param articleCategoryTid
@@ -113,7 +113,7 @@ public interface ArticleCategoryTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int checkArticleCategorySignwithoutMe(String articleCategoryTid,String sign,String creatorid);
+	public  int checkArticleCategorySignwithoutMe(String articleCategoryTid,String sign,String creatorid);
 	/**
 	 * 根据parentId获取文章分类
 	 * @param status
@@ -121,34 +121,34 @@ public interface ArticleCategoryTDao {
 	 * @param creatroid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findArticleCategoryByparentId(String status,String parentId,String creatorid);
+	public  List<ArticleCategoryT>findArticleCategoryByparentId(String status,String parentId,String creatorid);
 	/**
 	 * 根据parentId 是 null获取文章分类
 	 * @param status
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findArticleCategoryByparentIdnull(String status,String creatorid);
+	public  List<ArticleCategoryT>findArticleCategoryByparentIdnull(String status,String creatorid);
 	/**
 	 * 根据用户id获取所有文章分类
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findAllArticleCategoryBycreatorid(String creatorid);
+	public  List<ArticleCategoryT>findAllArticleCategoryBycreatorid(String creatorid);
 	/**
 	 * 根据position获取文章分类
 	 * @param position
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findArticleCategoryByposition(final int lineSize,String status,String position,String creatorid);
+	public  List<ArticleCategoryT>findArticleCategoryByposition(final int lineSize,String status,String position,String creatorid);
 	/**
 	 * 根据position获取文章分类无用户id
 	 * @param position
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findArticleCategoryByposition(final int lineSize,String status,String position);
+	public  List<ArticleCategoryT>findArticleCategoryByposition(final int lineSize,String status,String position);
 	/**
 	 * 根据排序方式进行排序
 	 * @param currentPage
@@ -157,13 +157,13 @@ public interface ArticleCategoryTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>sortAllArticleCategoryT(final int currentPage,final int lineSize,final String status,final String creatorid,String queryString);
+	public  List<ArticleCategoryT>sortAllArticleCategoryT(final int currentPage,final int lineSize,final String status,final String creatorid,String queryString);
 	/**
 	 * 根据分类级数获取文章分类无用户id
 	 * @param grade
 	 * @param state
 	 * @return
 	 */
-	public abstract List<ArticleCategoryT>findArticleCategoryByGrade(String grade,String status);
+	public  List<ArticleCategoryT>findArticleCategoryByGrade(String grade,String status);
 	
 }

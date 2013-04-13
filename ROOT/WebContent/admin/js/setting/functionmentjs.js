@@ -113,10 +113,6 @@ $(function() {
 		}, {
 			separator : true
 		} ],
-<<<<<<< HEAD
-=======
-
->>>>>>> 3c0417f349838a485a2a2411513bc65766860055
 		searchitems : [ {
 			display : '请选择搜索条件',
 			name : 'sc',

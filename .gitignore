@@ -15,7 +15,6 @@ local.properties
 .classpath
 .settings/
 .loadpath
-
 # External tool builders
 .externalToolBuilders/
 
@@ -106,6 +105,7 @@ ClientBin
 stylecop.*
 ~$*
 *.dbmdl
+
 Generated_Code #added for RIA/Silverlight projects
 
 # Backup & report files from converting an old project file to a newer
@@ -161,3 +161,4 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+/ROOT

@@ -1,9 +1,14 @@
 package com.jshop.dao.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
@@ -62,7 +67,7 @@ public class SystemMailTDaoImpl extends HibernateDaoSupport implements SystemMai
 		}
 	}
 
-	public SystemMailT findSysmailBysmailid(String id) {
+	public SystemMailT findSysmailByid(String id) {
 		log.debug("find by id SystemMailM");
 		try {
 			SystemMailT instance=(SystemMailT) this.getHibernateTemplate().get("com.jshop.entity.SystemMailT", id);
@@ -87,6 +92,27 @@ public class SystemMailTDaoImpl extends HibernateDaoSupport implements SystemMai
 			return 0;
 		} catch (RuntimeException re) {
 			log.error("countfindAllSystemMail error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int delSystemMail(final String id) {
+		log.debug("SystemMailT");
+		try {
+			final String queryString = "delete from  SystemMailT as sm where sm.id=:id ";
+			Integer integer=(Integer) this.getHibernateTemplate().execute(new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					int i = 0;
+					Query query = session.createQuery(queryString);
+					query.setParameter("id", id);
+					i = query.executeUpdate();
+					return i;
+				}
+			});
+			return integer;
+		} catch (RuntimeException re) {
+			log.error("SystemMailT error", re);
 			throw re;
 		}
 	}
