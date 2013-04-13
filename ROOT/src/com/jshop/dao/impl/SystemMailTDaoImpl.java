@@ -62,7 +62,7 @@ public class SystemMailTDaoImpl extends HibernateDaoSupport implements SystemMai
 		}
 	}
 
-	public SystemMailT findSysmailBysmailid(String id) {
+	public SystemMailT findSysmailByid(String id) {
 		log.debug("find by id SystemMailM");
 		try {
 			SystemMailT instance=(SystemMailT) this.getHibernateTemplate().get("com.jshop.entity.SystemMailT", id);

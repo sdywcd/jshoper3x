@@ -88,7 +88,7 @@
 						<label class="label label-submit"></label>
 						<input type="hidden" id="hidid" name="hidid" value=""/>
 						<input  class="btn btn-success" type="button" id="submit" name="submit" value="提交" />
-						<input  class="btn btn-success"  type="button" id="modify" name="modify" value="更新" style="display: none;" />
+						<input  class="btn btn-success"  type="button" id="update" name="update" value="更新" style="display: none;" />
 						
 					</div>
 					
@@ -101,7 +101,7 @@
 		
 	    </div>
     	
-    	<script type="text/javascript" src="<%=basePath%>admin/js/setting/functionmentjs.js"></script>
+    	<script type="text/javascript" src="<%=basePath%>admin/js/setting/emailmentjs.js"></script>
     	
 		<%@include file="/admin/footer.jsp"%>
 		

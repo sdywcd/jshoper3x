@@ -307,7 +307,7 @@ public class SystemMailTAction extends ActionSupport {
 	@Action(value = "updateSystemMail", results = { @Result(name = "json", type = "json") })
 	public String updateSystemMail() {
 		SystemMailT sm = new SystemMailT();
-		sm = this.getSystemMailTService().findSysmailBysmailid(this.getId());
+		sm = this.getSystemMailTService().findSysmailByid(this.getId());
 		sm.setEmail(this.getEmail());
 		sm.setSmtp(this.getSmtp());
 		sm.setPort(this.getPort());
@@ -321,6 +321,22 @@ public class SystemMailTAction extends ActionSupport {
 		return "json";
 	}
 
+	/**
+	 * 根据id获取邮箱信息
+	 * @return
+	 */
+	@Action(value = "findSysmailByid", results = { @Result(name = "json", type = "json") })
+	public String findSysmailByid(){
+		if(Validate.StrNotNull(this.getId())){
+			bean=this.getSystemMailTService().findSysmailByid(this.getId());
+			if(bean!=null){
+				this.setSucflag(true);
+			}
+		}
+		return "json";
+	}
+	
+	
 	/**
 	 * 查询系统邮件
 	 * 

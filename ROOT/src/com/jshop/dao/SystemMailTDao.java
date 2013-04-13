@@ -40,6 +40,6 @@ public interface SystemMailTDao {
 	 * @param smialid
 	 * @return
 	 */
-	public SystemMailT findSysmailBysmailid(String id);
+	public SystemMailT findSysmailByid(String id);
 
 }
