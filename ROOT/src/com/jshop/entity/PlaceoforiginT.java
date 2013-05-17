@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,7 +31,9 @@ public class PlaceoforiginT implements java.io.Serializable {
 	public PlaceoforiginT() {
 	}
 
-	public PlaceoforiginT(String placeid, String placename, String creatorid, Date createtime, String parentId, String grade, int sort, String parentName, Date updatetime, int versiont) {
+	public PlaceoforiginT(String placeid, String placename, String creatorid,
+			Date createtime, String parentId, String grade, int sort,
+			String parentName, Date updatetime, int versiont) {
 		this.placeid = placeid;
 		this.placename = placename;
 		this.creatorid = creatorid;

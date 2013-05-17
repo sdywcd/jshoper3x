@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -40,7 +40,9 @@ public class GoodsTypeT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	public GoodsTypeT(String id, String navid, String nname, String ltypeid, String lname, String stypeid, String sname, String fname, String navigation, Date createtime, String creatorid, String state) {
+	public GoodsTypeT(String id, String navid, String nname, String ltypeid,
+			String lname, String stypeid, String sname, String fname,
+			String navigation, Date createtime, String creatorid, String state) {
 		this.id = id;
 		this.navid = navid;
 		this.nname = nname;

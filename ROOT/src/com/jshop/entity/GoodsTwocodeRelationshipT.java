@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,8 @@ public class GoodsTwocodeRelationshipT implements java.io.Serializable {
 	public GoodsTwocodeRelationshipT() {
 	}
 
-	public GoodsTwocodeRelationshipT(String id, String goodsid, String goodsname, String twocodepath, String state) {
+	public GoodsTwocodeRelationshipT(String id, String goodsid,
+			String goodsname, String twocodepath, String state) {
 		this.id = id;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;

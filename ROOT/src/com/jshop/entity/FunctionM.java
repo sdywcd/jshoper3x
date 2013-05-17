@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -27,7 +27,8 @@ public class FunctionM implements java.io.Serializable {
 	public FunctionM() {
 	}
 
-	public FunctionM(String id, String visiturl, String visitmethodname, String functionname, Date createtime, String moduleid) {
+	public FunctionM(String id, String visiturl, String visitmethodname,
+			String functionname, Date createtime, String moduleid) {
 		this.id = id;
 		this.visiturl = visiturl;
 		this.visitmethodname = visitmethodname;

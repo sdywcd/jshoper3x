@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,7 +31,8 @@ public class FavoriteT implements java.io.Serializable {
 	public FavoriteT() {
 	}
 
-	public FavoriteT(String favoriteid, String title, String userid, String state, Date addtime) {
+	public FavoriteT(String favoriteid, String title, String userid,
+			String state, Date addtime) {
 		this.favoriteid = favoriteid;
 		this.title = title;
 		this.userid = userid;
@@ -39,7 +40,9 @@ public class FavoriteT implements java.io.Serializable {
 		this.addtime = addtime;
 	}
 
-	public FavoriteT(String favoriteid, String title, String goodsid, String tag, String descript, String userid, String state, Date addtime, Integer readcount, String memberprice) {
+	public FavoriteT(String favoriteid, String title, String goodsid,
+			String tag, String descript, String userid, String state,
+			Date addtime, Integer readcount, String memberprice) {
 		this.favoriteid = favoriteid;
 		this.title = title;
 		this.goodsid = goodsid;

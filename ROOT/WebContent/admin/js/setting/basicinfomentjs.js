@@ -1,82 +1,62 @@
-/**
- * Global variables
- */
-var session = "true";
+
 var flag=false;
 /*
  * ===========================================Gorgeous
  * split-line==============================================
  */
-/**
- * ui
- */
 $(function(){
-	
-	$("h6").each(function(){
-		$(this).removeClass("selected"); 
+	/**
+	 * 删除sitelogo
+	 */
+	$("#delpc").click(function(){
+		var str="";
+		var sum=0;
+		$(":checkbox[name='pcpath']").each(function(){
+			if($(this).attr("checked")){
+				sum++;
+				str+=this.id+",";
+			}
+		});
+		if(sum==0){
+			alert('只有在选择图片后才能删除');
+			return false;
+		}
+		var array=new Array();
+		array=str.split(",");
+		$(array).each(function(k,v){
+			$("#triggers img").remove("img[id="+v+"]");
+			$("#triggers input[name='pcpath']").remove("input[id="+v+"]");
+		});  
 	});
-	$("ul").each(function(){
-		$(this).removeClass("opened"); 
-		$(this).addClass("closed"); 
-	});
-	$("#h-menu-settings").addClass("selected");
-	$("#menu-settings").removeClass("closed"); 
-	$("#menu-settings").addClass("opened");
+	validatelogo=function(){
+		// 获取商品图片路径集合
+		var sitelogo="";
+		$(":checkbox[name='pcpath'][checked=true]").each(function(){
+			sitelogo+=this.value+",";
+		});
+		if(""==sitelogo){
+			jAlert('商城logo必须选择', '信息提示');
+			return false;
+		}
+		flag=true;
+	}
 });
+
 /*
  * ===========================================Gorgeous
  * split-line==============================================
  */
 /**
- * Function
+ * main logic
  */
-function validatelogo(){
-	// 获取商品图片路径集合
-	var sitelogo="";
-	$(":checkbox[name='pcpath'][checked=true]").each(function(){
-		sitelogo+=this.value+",";
-	});
-	if(""==sitelogo){
-		jAlert('商城logo必须选择', '信息提示');
-		return false;
+$(function() {
+	var operate = $.query.get("operate");
+	if (operate == "find") {
+		
+		return;
 	}
-	flag=true;
-}
-
-/**
- * Required to initialize the page data
- */
-//获取图片删除按钮并删除图片
-$(function(){
-	$("#delpc").click(function(){
-		var str="";
-		var sum=0;
-		$(":checkbox[name='pcpath'][checked=true]").each(function(){
-			sum++;
-			str=this.value;
-		});
-		if(sum==0){
-			jAlert('只有在选择图片后才能删除', '信息提示');
-			return false;
-		}
-		if(sum>1){
-			jAlert('不能选择多个图片', '信息提示');
-			return false;
-		}
-		$('#triggers img').each(function(){
-			if(this.id==str){
-				this.style.display="none";
-				$(":checkbox[name='pcpath'][checked=true]").each(function(){
-					if(this.value==str){
-						this.style.display="none";
-						this.name="dispcpath";
-					}
-				});
-			}
-		});  
-
-	});
 });
+
 
 /*
  * ===========================================Gorgeous

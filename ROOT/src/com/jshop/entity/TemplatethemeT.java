@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,7 +28,8 @@ public class TemplatethemeT implements java.io.Serializable {
 	public TemplatethemeT() {
 	}
 
-	public TemplatethemeT(String ttid, String note, String themename, Date createtime, String creatorid, String sign, String status) {
+	public TemplatethemeT(String ttid, String note, String themename,
+			Date createtime, String creatorid, String sign, String status) {
 		this.ttid = ttid;
 		this.note = note;
 		this.themename = themename;

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -34,7 +34,10 @@ public class AdvertiseT implements java.io.Serializable {
 	public AdvertiseT() {
 	}
 
-	public AdvertiseT(String id, String type, String advPath, String showPosition, int showAmount, double showCount, String showWhere, String alt, Date begintime, Date endtime, Date createtime, String creatorid, String state) {
+	public AdvertiseT(String id, String type, String advPath,
+			String showPosition, int showAmount, double showCount,
+			String showWhere, String alt, Date begintime, Date endtime,
+			Date createtime, String creatorid, String state) {
 		this.id = id;
 		this.type = type;
 		this.advPath = advPath;

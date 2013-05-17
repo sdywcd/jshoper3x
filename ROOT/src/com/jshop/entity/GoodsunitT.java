@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,14 +26,16 @@ public class GoodsunitT implements java.io.Serializable {
 	public GoodsunitT() {
 	}
 
-	public GoodsunitT(String unitid, String unitname, String creatorid, Date createtime) {
+	public GoodsunitT(String unitid, String unitname, String creatorid,
+			Date createtime) {
 		this.unitid = unitid;
 		this.unitname = unitname;
 		this.creatorid = creatorid;
 		this.createtime = createtime;
 	}
 
-	public GoodsunitT(String unitid, String unitname, String engunitname, String creatorid, Date createtime) {
+	public GoodsunitT(String unitid, String unitname, String engunitname,
+			String creatorid, Date createtime) {
 		this.unitid = unitid;
 		this.unitname = unitname;
 		this.engunitname = engunitname;

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -43,7 +43,11 @@ public class CartT implements java.io.Serializable {
 	public CartT() {
 	}
 
-	public CartT(String id, String goodsid, String goodsname, String userid, String username, int needquantity, double price, double favorable, double points, double subtotal, Date addtime, String picture, String usersetnum, String state, String htmlpath, String productid, String orderTag) {
+	public CartT(String id, String goodsid, String goodsname, String userid,
+			String username, int needquantity, double price, double favorable,
+			double points, double subtotal, Date addtime, String picture,
+			String usersetnum, String state, String htmlpath, String productid,
+			String orderTag) {
 		this.id = id;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
@@ -63,7 +67,12 @@ public class CartT implements java.io.Serializable {
 		this.orderTag = orderTag;
 	}
 
-	public CartT(String id, String cartid, String orderid, String goodsid, String goodsname, String userid, String username, int needquantity, double price, double favorable, Double changeprice, double points, double subtotal, Date addtime, Integer quantity, String picture, String usersetnum, String weight, String state, String htmlpath, String productid, String orderTag) {
+	public CartT(String id, String cartid, String orderid, String goodsid,
+			String goodsname, String userid, String username, int needquantity,
+			double price, double favorable, Double changeprice, double points,
+			double subtotal, Date addtime, Integer quantity, String picture,
+			String usersetnum, String weight, String state, String htmlpath,
+			String productid, String orderTag) {
 		this.id = id;
 		this.cartid = cartid;
 		this.orderid = orderid;

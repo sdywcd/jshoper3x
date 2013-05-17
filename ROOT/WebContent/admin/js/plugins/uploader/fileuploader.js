@@ -276,7 +276,7 @@ qq.FileUploaderBasic = function(o){
             onLeave: "改文件已经上传,如果需要继续上传则会覆盖原有文件"            
         },
         showMessage: function(message){
-        	jAlert(message,'信息提示');
+        	alert(message);
         }               
     };
     qq.extend(this._options, o);
@@ -491,7 +491,7 @@ qq.FileUploader = function(o){
              '</div>',
 
         // template for one item in file list
-        fileTemplate: '<li>' +
+        fileTemplate: '<li style="display:none;">' +
                 '<span class="qq-upload-file"></span>' +
                 '<span class="qq-upload-spinner"></span>' +
                 '<span class="qq-upload-size"></span>' +

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,7 +33,8 @@ public class SerialT implements java.io.Serializable {
 		this.updatetime = updatetime;
 	}
 
-	public SerialT(String biz, String head, String lastid, int increment, Date updatetime) {
+	public SerialT(String biz, String head, String lastid, int increment,
+			Date updatetime) {
 		this.biz = biz;
 		this.head = head;
 		this.lastid = lastid;

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,7 +25,8 @@ public class InvoicePrintingT implements java.io.Serializable {
 	public InvoicePrintingT() {
 	}
 
-	public InvoicePrintingT(String invoicePrintingId, String orderid, String operatorname, Date createPrintingTime) {
+	public InvoicePrintingT(String invoicePrintingId, String orderid,
+			String operatorname, Date createPrintingTime) {
 		this.invoicePrintingId = invoicePrintingId;
 		this.orderid = orderid;
 		this.operatorname = operatorname;

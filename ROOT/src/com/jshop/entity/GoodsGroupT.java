@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -43,7 +43,12 @@ public class GoodsGroupT implements java.io.Serializable {
 	public GoodsGroupT() {
 	}
 
-	public GoodsGroupT(String groupid, String goodsid, String goodsname, String state, Date begintime, Date endtime, String creatorid, Date createtime, String cashstate, int limitbuy, int salequantity, int SOrderCount, int totalOrderCount, double sendpoint, String detail, String pictureurl, String htmlpath, double memberprice, double groupprice, String placename) {
+	public GoodsGroupT(String groupid, String goodsid, String goodsname,
+			String state, Date begintime, Date endtime, String creatorid,
+			Date createtime, String cashstate, int limitbuy, int salequantity,
+			int SOrderCount, int totalOrderCount, double sendpoint,
+			String detail, String pictureurl, String htmlpath,
+			double memberprice, double groupprice, String placename) {
 		this.groupid = groupid;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
@@ -66,7 +71,13 @@ public class GoodsGroupT implements java.io.Serializable {
 		this.placename = placename;
 	}
 
-	public GoodsGroupT(String groupid, String goodsid, String goodsname, String state, Date begintime, Date endtime, String creatorid, Date createtime, String cashstate, Double cashlimit, int limitbuy, int salequantity, int SOrderCount, int totalOrderCount, double sendpoint, String priceladder, String detail, String pictureurl, String htmlpath, double memberprice, double groupprice, String placename) {
+	public GoodsGroupT(String groupid, String goodsid, String goodsname,
+			String state, Date begintime, Date endtime, String creatorid,
+			Date createtime, String cashstate, Double cashlimit, int limitbuy,
+			int salequantity, int SOrderCount, int totalOrderCount,
+			double sendpoint, String priceladder, String detail,
+			String pictureurl, String htmlpath, double memberprice,
+			double groupprice, String placename) {
 		this.groupid = groupid;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;

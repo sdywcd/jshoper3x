@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -35,7 +35,10 @@ public class GoodsCommentT implements java.io.Serializable {
 	public GoodsCommentT() {
 	}
 
-	public GoodsCommentT(String commentid, String goodsid, String goodsname, String replyorcommentusername, Date posttime, String commentcontent, String state, String replyorcomment, String replyorcommentuserid) {
+	public GoodsCommentT(String commentid, String goodsid, String goodsname,
+			String replyorcommentusername, Date posttime,
+			String commentcontent, String state, String replyorcomment,
+			String replyorcommentuserid) {
 		this.commentid = commentid;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
@@ -47,7 +50,11 @@ public class GoodsCommentT implements java.io.Serializable {
 		this.replyorcommentuserid = replyorcommentuserid;
 	}
 
-	public GoodsCommentT(String commentid, String goodsid, String goodsname, String replyorcommentusername, Date posttime, String commentcontent, Integer score, String state, String replyorcomment, String replyid, String replyorcommentuserid, String emailable, String title, String virtualadd) {
+	public GoodsCommentT(String commentid, String goodsid, String goodsname,
+			String replyorcommentusername, Date posttime,
+			String commentcontent, Integer score, String state,
+			String replyorcomment, String replyid, String replyorcommentuserid,
+			String emailable, String title, String virtualadd) {
 		this.commentid = commentid;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;

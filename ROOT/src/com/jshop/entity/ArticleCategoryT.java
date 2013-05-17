@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -37,7 +37,10 @@ public class ArticleCategoryT implements java.io.Serializable {
 	public ArticleCategoryT() {
 	}
 
-	public ArticleCategoryT(String articleCategoryTid, String grade, String name, String status, Date createtime, String creatorid, String path, int sort, String sign, String position, Date updatetime, int versiont) {
+	public ArticleCategoryT(String articleCategoryTid, String grade,
+			String name, String status, Date createtime, String creatorid,
+			String path, int sort, String sign, String position,
+			Date updatetime, int versiont) {
 		this.articleCategoryTid = articleCategoryTid;
 		this.grade = grade;
 		this.name = name;
@@ -52,7 +55,11 @@ public class ArticleCategoryT implements java.io.Serializable {
 		this.versiont = versiont;
 	}
 
-	public ArticleCategoryT(String articleCategoryTid, String grade, String metaKeywords, String metaDes, String name, String status, Date createtime, String creatorid, String path, int sort, String parentId, String sign, String parentName, String position, Date updatetime, int versiont) {
+	public ArticleCategoryT(String articleCategoryTid, String grade,
+			String metaKeywords, String metaDes, String name, String status,
+			Date createtime, String creatorid, String path, int sort,
+			String parentId, String sign, String parentName, String position,
+			Date updatetime, int versiont) {
 		this.articleCategoryTid = articleCategoryTid;
 		this.grade = grade;
 		this.metaKeywords = metaKeywords;

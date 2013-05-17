@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -29,7 +29,8 @@ public class KeywordT implements java.io.Serializable {
 	public KeywordT() {
 	}
 
-	public KeywordT(String keywordid, String keywordname, String type, String state, Date createtime, String creatorid) {
+	public KeywordT(String keywordid, String keywordname, String type,
+			String state, Date createtime, String creatorid) {
 		this.keywordid = keywordid;
 		this.keywordname = keywordname;
 		this.type = type;
@@ -38,7 +39,9 @@ public class KeywordT implements java.io.Serializable {
 		this.creatorid = creatorid;
 	}
 
-	public KeywordT(String keywordid, String keywordname, Integer searchCount, Integer sort, String type, String state, Date createtime, String creatorid) {
+	public KeywordT(String keywordid, String keywordname, Integer searchCount,
+			Integer sort, String type, String state, Date createtime,
+			String creatorid) {
 		this.keywordid = keywordid;
 		this.keywordname = keywordname;
 		this.searchCount = searchCount;

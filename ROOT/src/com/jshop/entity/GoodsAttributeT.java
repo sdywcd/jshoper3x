@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -34,7 +34,10 @@ public class GoodsAttributeT implements java.io.Serializable {
 	public GoodsAttributeT() {
 	}
 
-	public GoodsAttributeT(String goodsattributeid, String goodsattributename, String goodsTypeId, String goodsTypeName, Date createtime, String state, String creatorid, String attributeType, String attributelist, String sort) {
+	public GoodsAttributeT(String goodsattributeid, String goodsattributename,
+			String goodsTypeId, String goodsTypeName, Date createtime,
+			String state, String creatorid, String attributeType,
+			String attributelist, String sort) {
 		this.goodsattributeid = goodsattributeid;
 		this.goodsattributename = goodsattributename;
 		this.goodsTypeId = goodsTypeId;
@@ -47,7 +50,11 @@ public class GoodsAttributeT implements java.io.Serializable {
 		this.sort = sort;
 	}
 
-	public GoodsAttributeT(String goodsattributeid, String goodsattributename, String goodsTypeId, String goodsTypeName, Date createtime, String state, String creatorid, String attributeType, String attributelist, String sort, String attributeIndex, String issearch, String issametolink) {
+	public GoodsAttributeT(String goodsattributeid, String goodsattributename,
+			String goodsTypeId, String goodsTypeName, Date createtime,
+			String state, String creatorid, String attributeType,
+			String attributelist, String sort, String attributeIndex,
+			String issearch, String issametolink) {
 		this.goodsattributeid = goodsattributeid;
 		this.goodsattributename = goodsattributename;
 		this.goodsTypeId = goodsTypeId;

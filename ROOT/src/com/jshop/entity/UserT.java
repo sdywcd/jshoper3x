@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -61,7 +61,9 @@ public class UserT implements java.io.Serializable {
 	public UserT() {
 	}
 
-	public UserT(String userid, String username, String email, String password, String userstate, double points, int postingcount, Date registtime, String rolemid, String headpath) {
+	public UserT(String userid, String username, String email, String password,
+			String userstate, double points, int postingcount, Date registtime,
+			String rolemid, String headpath) {
 		this.userid = userid;
 		this.username = username;
 		this.email = email;
@@ -74,7 +76,17 @@ public class UserT implements java.io.Serializable {
 		this.headpath = headpath;
 	}
 
-	public UserT(String userid, String username, String realname, String email, String telno, String mobile, String question, String answer, String password, String userstate, double points, int postingcount, String sex, Date registtime, Date disablebegin, Date disableend, String section, String position, String groupid, String parttime1, String parttime2, String parttime3, String parttime4, String parttime5, String parttime6, String hobby, String qq, String msn, String othercontract, String address, String postcode, String birthday, String grade, Date gradetime, String state, String uid, String gradename, String rolemname, String rolemid, String headpath) {
+	public UserT(String userid, String username, String realname, String email,
+			String telno, String mobile, String question, String answer,
+			String password, String userstate, double points, int postingcount,
+			String sex, Date registtime, Date disablebegin, Date disableend,
+			String section, String position, String groupid, String parttime1,
+			String parttime2, String parttime3, String parttime4,
+			String parttime5, String parttime6, String hobby, String qq,
+			String msn, String othercontract, String address, String postcode,
+			String birthday, String grade, Date gradetime, String state,
+			String uid, String gradename, String rolemname, String rolemid,
+			String headpath) {
 		this.userid = userid;
 		this.username = username;
 		this.realname = realname;

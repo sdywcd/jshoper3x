@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,14 +33,18 @@ public class PageEditareaT implements java.io.Serializable {
 	public PageEditareaT() {
 	}
 
-	public PageEditareaT(String pageeditareaid, String name, String sign, String editareatitle) {
+	public PageEditareaT(String pageeditareaid, String name, String sign,
+			String editareatitle) {
 		this.pageeditareaid = pageeditareaid;
 		this.name = name;
 		this.sign = sign;
 		this.editareatitle = editareatitle;
 	}
 
-	public PageEditareaT(String pageeditareaid, String goodscategoryid, String name, String sign, String htmlpath, String editareatitle, String editareavalue, Integer editflag, String state, String snid, String creatorid, Date createtime) {
+	public PageEditareaT(String pageeditareaid, String goodscategoryid,
+			String name, String sign, String htmlpath, String editareatitle,
+			String editareavalue, Integer editflag, String state, String snid,
+			String creatorid, Date createtime) {
 		this.pageeditareaid = pageeditareaid;
 		this.goodscategoryid = goodscategoryid;
 		this.name = name;

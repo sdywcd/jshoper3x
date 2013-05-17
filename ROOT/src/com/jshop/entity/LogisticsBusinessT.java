@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -42,7 +42,9 @@ public class LogisticsBusinessT implements java.io.Serializable {
 	public LogisticsBusinessT() {
 	}
 
-	public LogisticsBusinessT(String logisticsid, String logisticsname, String contractor, String receiver, Date createtime, String creatorid, String state) {
+	public LogisticsBusinessT(String logisticsid, String logisticsname,
+			String contractor, String receiver, Date createtime,
+			String creatorid, String state) {
 		this.logisticsid = logisticsid;
 		this.logisticsname = logisticsname;
 		this.contractor = contractor;
@@ -52,7 +54,12 @@ public class LogisticsBusinessT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	public LogisticsBusinessT(String logisticsid, String logisticsname, String address, String contractor, String telno, String faxno, String email, String receiver, String bankaddress, String bankaccount, Date createtime, String creatorid, String des, String insure, String isCod, String visible, String state, String city, String website, String sendrange, String mobile) {
+	public LogisticsBusinessT(String logisticsid, String logisticsname,
+			String address, String contractor, String telno, String faxno,
+			String email, String receiver, String bankaddress,
+			String bankaccount, Date createtime, String creatorid, String des,
+			String insure, String isCod, String visible, String state,
+			String city, String website, String sendrange, String mobile) {
 		this.logisticsid = logisticsid;
 		this.logisticsname = logisticsname;
 		this.address = address;

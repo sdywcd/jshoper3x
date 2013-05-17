@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,7 +30,9 @@ public class VirtualShippingAddressT implements java.io.Serializable {
 	public VirtualShippingAddressT() {
 	}
 
-	public VirtualShippingAddressT(String virtualshippingaddressid, String userid, String username, String mobile, String email, Date createtime, String state, String issend, String orderid) {
+	public VirtualShippingAddressT(String virtualshippingaddressid,
+			String userid, String username, String mobile, String email,
+			Date createtime, String state, String issend, String orderid) {
 		this.virtualshippingaddressid = virtualshippingaddressid;
 		this.userid = userid;
 		this.username = username;

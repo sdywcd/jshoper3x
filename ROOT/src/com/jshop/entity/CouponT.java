@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -40,7 +40,11 @@ public class CouponT implements java.io.Serializable {
 	public CouponT() {
 	}
 
-	public CouponT(String cid, String ctitle, String cimage, Date endtime, String details, Date createtime, Date modifytime, Date begintime, String creatorid, double lat, double lng, int zoom, int readcount, int starsum, int starusersum, int replycount, int gousersum, String coupontypename, String coupontypeid) {
+	public CouponT(String cid, String ctitle, String cimage, Date endtime,
+			String details, Date createtime, Date modifytime, Date begintime,
+			String creatorid, double lat, double lng, int zoom, int readcount,
+			int starsum, int starusersum, int replycount, int gousersum,
+			String coupontypename, String coupontypeid) {
 		this.cid = cid;
 		this.ctitle = ctitle;
 		this.cimage = cimage;

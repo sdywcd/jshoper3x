@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,7 +31,8 @@ public class TemplatesetT implements java.io.Serializable {
 	public TemplatesetT() {
 	}
 
-	public TemplatesetT(String tsid, String templateurl, String systemcontent, Date createtime, String creatorid, String buildhtmlpath, String sign) {
+	public TemplatesetT(String tsid, String templateurl, String systemcontent,
+			Date createtime, String creatorid, String buildhtmlpath, String sign) {
 		this.tsid = tsid;
 		this.templateurl = templateurl;
 		this.systemcontent = systemcontent;
@@ -41,7 +42,9 @@ public class TemplatesetT implements java.io.Serializable {
 		this.sign = sign;
 	}
 
-	public TemplatesetT(String tsid, String templateurl, String systemcontent, Date createtime, String creatorid, String buildhtmlpath, String sign, String status, String themeid, String themename) {
+	public TemplatesetT(String tsid, String templateurl, String systemcontent,
+			Date createtime, String creatorid, String buildhtmlpath,
+			String sign, String status, String themeid, String themename) {
 		this.tsid = tsid;
 		this.templateurl = templateurl;
 		this.systemcontent = systemcontent;

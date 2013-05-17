@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,7 +30,9 @@ public class ProductSpecificationsT implements java.io.Serializable {
 	public ProductSpecificationsT() {
 	}
 
-	public ProductSpecificationsT(String specificationsid, String name, String specificationsType, String specificationsValue, Date createtime, String creatorid, String state) {
+	public ProductSpecificationsT(String specificationsid, String name,
+			String specificationsType, String specificationsValue,
+			Date createtime, String creatorid, String state) {
 		this.specificationsid = specificationsid;
 		this.name = name;
 		this.specificationsType = specificationsType;
@@ -40,7 +42,10 @@ public class ProductSpecificationsT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	public ProductSpecificationsT(String specificationsid, String name, String note, String sort, String specificationsType, String specificationsValue, Date createtime, String creatorid, String state) {
+	public ProductSpecificationsT(String specificationsid, String name,
+			String note, String sort, String specificationsType,
+			String specificationsValue, Date createtime, String creatorid,
+			String state) {
 		this.specificationsid = specificationsid;
 		this.name = name;
 		this.note = note;

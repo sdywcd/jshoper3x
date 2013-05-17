@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,7 +36,10 @@ public class BasicUserT implements java.io.Serializable {
 	public BasicUserT() {
 	}
 
-	public BasicUserT(String id, String username, String password, String userstate, Date registertime, String email, String rank, String uid, Date createtime, String ip, String istemp, Date updatetime) {
+	public BasicUserT(String id, String username, String password,
+			String userstate, Date registertime, String email, String rank,
+			String uid, Date createtime, String ip, String istemp,
+			Date updatetime) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -51,7 +54,10 @@ public class BasicUserT implements java.io.Serializable {
 		this.updatetime = updatetime;
 	}
 
-	public BasicUserT(String id, String username, String password, String userstate, Date registertime, String email, String groupid, String department, String teamid, String rank, String uid, Date createtime, String ip, String istemp, Date updatetime) {
+	public BasicUserT(String id, String username, String password,
+			String userstate, Date registertime, String email, String groupid,
+			String department, String teamid, String rank, String uid,
+			Date createtime, String ip, String istemp, Date updatetime) {
 		this.id = id;
 		this.username = username;
 		this.password = password;

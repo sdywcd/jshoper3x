@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -48,13 +48,22 @@ public class SaleGoodsrecordT implements java.io.Serializable {
 	public SaleGoodsrecordT() {
 	}
 
-	public SaleGoodsrecordT(String salerecordid, String salegoodsnumber, Date saletradetime) {
+	public SaleGoodsrecordT(String salerecordid, String salegoodsnumber,
+			Date saletradetime) {
 		this.salerecordid = salerecordid;
 		this.salegoodsnumber = salegoodsnumber;
 		this.saletradetime = saletradetime;
 	}
 
-	public SaleGoodsrecordT(String salerecordid, String username, String realname, String salegoodsnumber, String salegoodsname, Double salestartingprice, Date saletradetime, Double saleprice, String salepeople, String telno, String mobile, String sex, String email, String points, Double hiprice, Integer joinnumber, Double marketprice, String salegoodsid, String salegoodspictureurl, String salegoodsinformation, Date begingtime, Date endingtime, String salegoodsmessage, Double lowprice, String place, String manufacturer, String htmlpath) {
+	public SaleGoodsrecordT(String salerecordid, String username,
+			String realname, String salegoodsnumber, String salegoodsname,
+			Double salestartingprice, Date saletradetime, Double saleprice,
+			String salepeople, String telno, String mobile, String sex,
+			String email, String points, Double hiprice, Integer joinnumber,
+			Double marketprice, String salegoodsid, String salegoodspictureurl,
+			String salegoodsinformation, Date begingtime, Date endingtime,
+			String salegoodsmessage, Double lowprice, String place,
+			String manufacturer, String htmlpath) {
 		this.salerecordid = salerecordid;
 		this.username = username;
 		this.realname = realname;

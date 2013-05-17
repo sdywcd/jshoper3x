@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -43,7 +43,10 @@ public class SalegoodsT implements java.io.Serializable {
 	public SalegoodsT() {
 	}
 
-	public SalegoodsT(String salegoodsid, String salegoodsname, String salegoodsnumber, String salegoodspictureurl, String salegoodsstate, double salestartingprice, int salejoinpeople, String realname, String userid, double saleprice) {
+	public SalegoodsT(String salegoodsid, String salegoodsname,
+			String salegoodsnumber, String salegoodspictureurl,
+			String salegoodsstate, double salestartingprice,
+			int salejoinpeople, String realname, String userid, double saleprice) {
 		this.salegoodsid = salegoodsid;
 		this.salegoodsname = salegoodsname;
 		this.salegoodsnumber = salegoodsnumber;
@@ -56,7 +59,14 @@ public class SalegoodsT implements java.io.Serializable {
 		this.saleprice = saleprice;
 	}
 
-	public SalegoodsT(String salegoodsid, String salegoodsname, String salegoodsnumber, String salegoodspictureurl, String salegoodsinformation, String salegoodsstate, Date begingtime, Date endingtime, String salepeople, double salestartingprice, int salejoinpeople, String salebudget, String realname, String userid, double saleprice, String htmlpath, Double marketprice, String newornot, String salegoodsmessage, Double lowprice, String place, String manufacturer) {
+	public SalegoodsT(String salegoodsid, String salegoodsname,
+			String salegoodsnumber, String salegoodspictureurl,
+			String salegoodsinformation, String salegoodsstate,
+			Date begingtime, Date endingtime, String salepeople,
+			double salestartingprice, int salejoinpeople, String salebudget,
+			String realname, String userid, double saleprice, String htmlpath,
+			Double marketprice, String newornot, String salegoodsmessage,
+			Double lowprice, String place, String manufacturer) {
 		this.salegoodsid = salegoodsid;
 		this.salegoodsname = salegoodsname;
 		this.salegoodsnumber = salegoodsnumber;

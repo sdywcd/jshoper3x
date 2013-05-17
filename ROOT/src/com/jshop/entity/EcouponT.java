@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,7 +31,9 @@ public class EcouponT implements java.io.Serializable {
 	public EcouponT() {
 	}
 
-	public EcouponT(String eid, String goodsname, double favourableprices, double pricededuction, String goodsid, Date begintime, Date endtime, String ecouponstate, String state, String note) {
+	public EcouponT(String eid, String goodsname, double favourableprices,
+			double pricededuction, String goodsid, Date begintime,
+			Date endtime, String ecouponstate, String state, String note) {
 		this.eid = eid;
 		this.goodsname = goodsname;
 		this.favourableprices = favourableprices;

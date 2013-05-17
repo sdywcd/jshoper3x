@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -110,7 +110,12 @@ public class GoodsT implements java.io.Serializable {
 	public GoodsT() {
 	}
 
-	public GoodsT(String goodsid, String goodsname, String brandname, String nname, String lname, String navid, String ltypeid, String pictureurl, int quantity, String detail, String recommended, Date createtime, String creatorid, double saleprice, Date updatetime, int versiont, String commoditylist, String isvirtual, String virtualresults) {
+	public GoodsT(String goodsid, String goodsname, String brandname,
+			String nname, String lname, String navid, String ltypeid,
+			String pictureurl, int quantity, String detail, String recommended,
+			Date createtime, String creatorid, double saleprice,
+			Date updatetime, int versiont, String commoditylist,
+			String isvirtual, String virtualresults) {
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
 		this.brandname = brandname;
@@ -132,9 +137,37 @@ public class GoodsT implements java.io.Serializable {
 		this.virtualresults = virtualresults;
 	}
 
-	public GoodsT(String goodsid, String goodsname, String brandname, String model, String nname, String lname, String sname, String fname, String navid, String ltypeid, String stypeid, Double price, Double memberprice, Double points, String pictureurl, int quantity, String salestate, String detail, String unitname, String keywordname, String weight, Integer readcount, String relatedproductid, String recommended, String hotsale, String bargainprice, Integer sort, Date createtime, String creatorid, Integer replycount, String brandid, String placeStore, String metaKeywords, String metaDescription, Double cost, double saleprice, String isNew, String htmlPath, String productSn, String goodsParameterValue, Integer freezeStore, String keywordid, String unitnameid, String goodsTypeId,
-			String goodsTypeName, String goodsAttrVal1, String goodsAttrVal2, String goodsAttrVal3, String goodsAttrVal4, String goodsAttrVal5, String goodsAttrVal6, String goodsAttrVal7, String goodsAttrVal8, String goodsAttrVal9, String goodsAttrVal10, String goodsAttrVal11, String goodsAttrVal12, String goodsAttrVal13, String goodsAttrVal14, String goodsAttrVal15, String goodsAttrVal16, String goodsAttrVal17, String goodsAttrVal18, String goodsAttrVal19, String goodsAttrVal20, String goodsAttrVal21, String goodsAttrVal22, String goodsAttrVal23, String goodsAttrVal24, String goodsAttrVal25, String goodsAttrVal26, String goodsAttrVal27, String goodsAttrVal28, String goodsAttrVal29, String goodsAttrVal0, String usersetnum, String isSpecificationsOpen, Integer star, Integer staruser,
-			Integer totalcomment, Integer virtualsale, String ismobileplatformgoods, Integer sales, Integer realsales, Date updatetime, int versiont, String commoditylist, String isvirtual, String virtualresults) {
+	public GoodsT(String goodsid, String goodsname, String brandname,
+			String model, String nname, String lname, String sname,
+			String fname, String navid, String ltypeid, String stypeid,
+			Double price, Double memberprice, Double points, String pictureurl,
+			int quantity, String salestate, String detail, String unitname,
+			String keywordname, String weight, Integer readcount,
+			String relatedproductid, String recommended, String hotsale,
+			String bargainprice, Integer sort, Date createtime,
+			String creatorid, Integer replycount, String brandid,
+			String placeStore, String metaKeywords, String metaDescription,
+			Double cost, double saleprice, String isNew, String htmlPath,
+			String productSn, String goodsParameterValue, Integer freezeStore,
+			String keywordid, String unitnameid, String goodsTypeId,
+			String goodsTypeName, String goodsAttrVal1, String goodsAttrVal2,
+			String goodsAttrVal3, String goodsAttrVal4, String goodsAttrVal5,
+			String goodsAttrVal6, String goodsAttrVal7, String goodsAttrVal8,
+			String goodsAttrVal9, String goodsAttrVal10, String goodsAttrVal11,
+			String goodsAttrVal12, String goodsAttrVal13,
+			String goodsAttrVal14, String goodsAttrVal15,
+			String goodsAttrVal16, String goodsAttrVal17,
+			String goodsAttrVal18, String goodsAttrVal19,
+			String goodsAttrVal20, String goodsAttrVal21,
+			String goodsAttrVal22, String goodsAttrVal23,
+			String goodsAttrVal24, String goodsAttrVal25,
+			String goodsAttrVal26, String goodsAttrVal27,
+			String goodsAttrVal28, String goodsAttrVal29, String goodsAttrVal0,
+			String usersetnum, String isSpecificationsOpen, Integer star,
+			Integer staruser, Integer totalcomment, Integer virtualsale,
+			String ismobileplatformgoods, Integer sales, Integer realsales,
+			Date updatetime, int versiont, String commoditylist,
+			String isvirtual, String virtualresults) {
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
 		this.brandname = brandname;

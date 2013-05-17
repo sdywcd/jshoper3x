@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,7 +36,8 @@ public class ImgT implements java.io.Serializable {
 	public ImgT() {
 	}
 
-	public ImgT(String imgId, String imgHref, Date createtime, String creatorid, String state) {
+	public ImgT(String imgId, String imgHref, Date createtime,
+			String creatorid, String state) {
 		this.imgId = imgId;
 		this.imgHref = imgHref;
 		this.createtime = createtime;
@@ -44,7 +45,11 @@ public class ImgT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	public ImgT(String imgId, String imgName, String usedGoodsid, String imgType, String imgHref, String des, String imgTypeId, String imgTypeName, String usedPositionName, String usedPositionId, Integer versiont, String usedGoodsname, Date createtime, String creatorid, String state) {
+	public ImgT(String imgId, String imgName, String usedGoodsid,
+			String imgType, String imgHref, String des, String imgTypeId,
+			String imgTypeName, String usedPositionName, String usedPositionId,
+			Integer versiont, String usedGoodsname, Date createtime,
+			String creatorid, String state) {
 		this.imgId = imgId;
 		this.imgName = imgName;
 		this.usedGoodsid = usedGoodsid;

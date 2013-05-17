@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -42,7 +42,11 @@ public class ArticleT implements java.io.Serializable {
 	public ArticleT() {
 	}
 
-	public ArticleT(String articleid, String articleCategoryTid, String title, String contentvalue, String status, Date createtime, String creatorid, String author, String ispublication, String isrecommend, String istop, String articleCategoryName, Date updatetime, int versiont) {
+	public ArticleT(String articleid, String articleCategoryTid, String title,
+			String contentvalue, String status, Date createtime,
+			String creatorid, String author, String ispublication,
+			String isrecommend, String istop, String articleCategoryName,
+			Date updatetime, int versiont) {
 		this.articleid = articleid;
 		this.articleCategoryTid = articleCategoryTid;
 		this.title = title;
@@ -59,7 +63,13 @@ public class ArticleT implements java.io.Serializable {
 		this.versiont = versiont;
 	}
 
-	public ArticleT(String articleid, String articleCategoryTid, String title, String metaKeywords, String metaDes, String contentvalue, String status, Date createtime, String creatorid, String author, String ispublication, String isrecommend, String istop, Integer readcount, String htmlPath, Integer pageCount, String articleCategoryName, String position, String isnotice, Date updatetime, int versiont) {
+	public ArticleT(String articleid, String articleCategoryTid, String title,
+			String metaKeywords, String metaDes, String contentvalue,
+			String status, Date createtime, String creatorid, String author,
+			String ispublication, String isrecommend, String istop,
+			Integer readcount, String htmlPath, Integer pageCount,
+			String articleCategoryName, String position, String isnotice,
+			Date updatetime, int versiont) {
 		this.articleid = articleid;
 		this.articleCategoryTid = articleCategoryTid;
 		this.title = title;

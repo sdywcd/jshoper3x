@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -48,7 +48,11 @@ public class ElectronicMenuCartT implements java.io.Serializable {
 	public ElectronicMenuCartT() {
 	}
 
-	public ElectronicMenuCartT(String id, String goodsid, String goodsname, int needquantity, double memberprice, double points, double subtotal, Date addtime, String picture, String usersetnum, String weight, String state, String tableNumber, String tablestate, String electronicMenuCartid) {
+	public ElectronicMenuCartT(String id, String goodsid, String goodsname,
+			int needquantity, double memberprice, double points,
+			double subtotal, Date addtime, String picture, String usersetnum,
+			String weight, String state, String tableNumber, String tablestate,
+			String electronicMenuCartid) {
 		this.id = id;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
@@ -66,7 +70,15 @@ public class ElectronicMenuCartT implements java.io.Serializable {
 		this.electronicMenuCartid = electronicMenuCartid;
 	}
 
-	public ElectronicMenuCartT(String id, String electronicMenuOrderid, String goodsid, String goodsname, String userid, String username, int needquantity, Double price, double memberprice, Double changeprice, double points, double subtotal, Date addtime, Integer quantity, String picture, String usersetnum, String weight, String state, Double deliveryprice, String taste, String ispackaway, Integer lunchbox, String cookingstate, String tableNumber, String roomName, String tablestate, String electronicMenuCartid) {
+	public ElectronicMenuCartT(String id, String electronicMenuOrderid,
+			String goodsid, String goodsname, String userid, String username,
+			int needquantity, Double price, double memberprice,
+			Double changeprice, double points, double subtotal, Date addtime,
+			Integer quantity, String picture, String usersetnum, String weight,
+			String state, Double deliveryprice, String taste,
+			String ispackaway, Integer lunchbox, String cookingstate,
+			String tableNumber, String roomName, String tablestate,
+			String electronicMenuCartid) {
 		this.id = id;
 		this.electronicMenuOrderid = electronicMenuOrderid;
 		this.goodsid = goodsid;

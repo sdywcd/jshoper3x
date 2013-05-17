@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -41,7 +41,10 @@ public class ProductT implements java.io.Serializable {
 	public ProductT() {
 	}
 
-	public ProductT(String productid, String isDefault, String isSalestate, String productName, String specificationsValue, String goodsid, String creatorid, Date createtime, String specificationsid, String specificationsName) {
+	public ProductT(String productid, String isDefault, String isSalestate,
+			String productName, String specificationsValue, String goodsid,
+			String creatorid, Date createtime, String specificationsid,
+			String specificationsName) {
 		this.productid = productid;
 		this.isDefault = isDefault;
 		this.isSalestate = isSalestate;
@@ -54,7 +57,13 @@ public class ProductT implements java.io.Serializable {
 		this.specificationsName = specificationsName;
 	}
 
-	public ProductT(String productid, Double price, Double memberprice, Double cost, Double saleprice, Integer freezeStore, Integer store, String isDefault, String isSalestate, String productName, String productSn, String specificationsValue, String warehouseLocation, String placeStore, String weight, String goodsid, String creatorid, Date createtime, String specificationsid, String specificationsName) {
+	public ProductT(String productid, Double price, Double memberprice,
+			Double cost, Double saleprice, Integer freezeStore, Integer store,
+			String isDefault, String isSalestate, String productName,
+			String productSn, String specificationsValue,
+			String warehouseLocation, String placeStore, String weight,
+			String goodsid, String creatorid, Date createtime,
+			String specificationsid, String specificationsName) {
 		this.productid = productid;
 		this.price = price;
 		this.memberprice = memberprice;

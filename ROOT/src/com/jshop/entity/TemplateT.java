@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,7 +33,8 @@ public class TemplateT implements java.io.Serializable {
 	public TemplateT() {
 	}
 
-	public TemplateT(String tid, String url, String note, String name, Date createtime, String creatorid) {
+	public TemplateT(String tid, String url, String note, String name,
+			Date createtime, String creatorid) {
 		this.tid = tid;
 		this.url = url;
 		this.note = note;
@@ -42,7 +43,9 @@ public class TemplateT implements java.io.Serializable {
 		this.creatorid = creatorid;
 	}
 
-	public TemplateT(String tid, String url, String note, String name, Date createtime, String creatorid, String type, String themeid, String themename, String tvalue, String sign, String status) {
+	public TemplateT(String tid, String url, String note, String name,
+			Date createtime, String creatorid, String type, String themeid,
+			String themename, String tvalue, String sign, String status) {
 		this.tid = tid;
 		this.url = url;
 		this.note = note;

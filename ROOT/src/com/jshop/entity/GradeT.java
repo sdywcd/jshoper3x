@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,7 +28,8 @@ public class GradeT implements java.io.Serializable {
 	public GradeT() {
 	}
 
-	public GradeT(String gradeid, String gradename, double needcost, double discount, Date createtime, String creatorid) {
+	public GradeT(String gradeid, String gradename, double needcost,
+			double discount, Date createtime, String creatorid) {
 		this.gradeid = gradeid;
 		this.gradename = gradename;
 		this.needcost = needcost;
@@ -37,7 +38,8 @@ public class GradeT implements java.io.Serializable {
 		this.creatorid = creatorid;
 	}
 
-	public GradeT(String gradeid, String gradevalue, String gradename, double needcost, double discount, Date createtime, String creatorid) {
+	public GradeT(String gradeid, String gradevalue, String gradename,
+			double needcost, double discount, Date createtime, String creatorid) {
 		this.gradeid = gradeid;
 		this.gradevalue = gradevalue;
 		this.gradename = gradename;

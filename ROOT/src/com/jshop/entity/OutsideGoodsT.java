@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -38,7 +38,11 @@ public class OutsideGoodsT implements java.io.Serializable {
 	public OutsideGoodsT() {
 	}
 
-	public OutsideGoodsT(String id, String goodsname, String nname, String lname, String sname, String fname, String navid, String ltypeid, String stypeid, String pictureurl, String salestate, int sort, String linkUrl, Date createtime, String creatorid, Date updatetime) {
+	public OutsideGoodsT(String id, String goodsname, String nname,
+			String lname, String sname, String fname, String navid,
+			String ltypeid, String stypeid, String pictureurl,
+			String salestate, int sort, String linkUrl, Date createtime,
+			String creatorid, Date updatetime) {
 		this.id = id;
 		this.goodsname = goodsname;
 		this.nname = nname;
@@ -57,7 +61,11 @@ public class OutsideGoodsT implements java.io.Serializable {
 		this.updatetime = updatetime;
 	}
 
-	public OutsideGoodsT(String id, String goodsname, String nname, String lname, String sname, String fname, String navid, String ltypeid, String stypeid, String pictureurl, String salestate, int sort, String linkUrl, Date createtime, String creatorid, Date updatetime, Integer versiont) {
+	public OutsideGoodsT(String id, String goodsname, String nname,
+			String lname, String sname, String fname, String navid,
+			String ltypeid, String stypeid, String pictureurl,
+			String salestate, int sort, String linkUrl, Date createtime,
+			String creatorid, Date updatetime, Integer versiont) {
 		this.id = id;
 		this.goodsname = goodsname;
 		this.nname = nname;

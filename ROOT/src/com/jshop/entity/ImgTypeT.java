@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,7 +25,8 @@ public class ImgTypeT implements java.io.Serializable {
 	public ImgTypeT() {
 	}
 
-	public ImgTypeT(String imgTypeId, String imgTypeName, Date createtime, String creatorid) {
+	public ImgTypeT(String imgTypeId, String imgTypeName, Date createtime,
+			String creatorid) {
 		this.imgTypeId = imgTypeId;
 		this.imgTypeName = imgTypeName;
 		this.createtime = createtime;

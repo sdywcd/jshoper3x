@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -40,7 +40,10 @@ public class GoodsCategoryT implements java.io.Serializable {
 	public GoodsCategoryT() {
 	}
 
-	public GoodsCategoryT(String goodsCategoryTid, String grade, String name, String state, String path, String sign, String goodsTypeId, Date createtime, String creatorid, Date updatetime, int versiont, String logo, String mobilesync) {
+	public GoodsCategoryT(String goodsCategoryTid, String grade, String name,
+			String state, String path, String sign, String goodsTypeId,
+			Date createtime, String creatorid, Date updatetime, int versiont,
+			String logo, String mobilesync) {
 		this.goodsCategoryTid = goodsCategoryTid;
 		this.grade = grade;
 		this.name = name;
@@ -56,7 +59,12 @@ public class GoodsCategoryT implements java.io.Serializable {
 		this.mobilesync = mobilesync;
 	}
 
-	public GoodsCategoryT(String goodsCategoryTid, String grade, String metaKeywords, String metaDes, String name, String state, String path, Integer sort, String sign, String goodsTypeId, String parentId, Date createtime, String creatorid, String parentName, String htmlpath, Date updatetime, int versiont, String logo, String mobilesync) {
+	public GoodsCategoryT(String goodsCategoryTid, String grade,
+			String metaKeywords, String metaDes, String name, String state,
+			String path, Integer sort, String sign, String goodsTypeId,
+			String parentId, Date createtime, String creatorid,
+			String parentName, String htmlpath, Date updatetime, int versiont,
+			String logo, String mobilesync) {
 		this.goodsCategoryTid = goodsCategoryTid;
 		this.grade = grade;
 		this.metaKeywords = metaKeywords;

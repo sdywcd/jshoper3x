@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,7 +33,10 @@ public class SystemMailT implements java.io.Serializable {
 	public SystemMailT() {
 	}
 
-	public SystemMailT(String id, String email, String smtp, String port, String pwd, String state, String isdefault, String isssl, String creatorid, Date createtime, Date updatetime, String creatorname) {
+	public SystemMailT(String id, String email, String smtp, String port,
+			String pwd, String state, String isdefault, String isssl,
+			String creatorid, Date createtime, Date updatetime,
+			String creatorname) {
 		this.id = id;
 		this.email = email;
 		this.smtp = smtp;

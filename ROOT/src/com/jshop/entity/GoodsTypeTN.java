@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,14 +26,16 @@ public class GoodsTypeTN implements java.io.Serializable {
 	public GoodsTypeTN() {
 	}
 
-	public GoodsTypeTN(String goodsTypeId, String name, Date createtime, String creatorid) {
+	public GoodsTypeTN(String goodsTypeId, String name, Date createtime,
+			String creatorid) {
 		this.goodsTypeId = goodsTypeId;
 		this.name = name;
 		this.createtime = createtime;
 		this.creatorid = creatorid;
 	}
 
-	public GoodsTypeTN(String goodsTypeId, String name, Date createtime, String creatorid, String goodsParameter) {
+	public GoodsTypeTN(String goodsTypeId, String name, Date createtime,
+			String creatorid, String goodsParameter) {
 		this.goodsTypeId = goodsTypeId;
 		this.name = name;
 		this.createtime = createtime;

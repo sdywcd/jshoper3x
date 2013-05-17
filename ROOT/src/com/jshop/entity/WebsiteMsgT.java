@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,7 +30,9 @@ public class WebsiteMsgT implements java.io.Serializable {
 	public WebsiteMsgT() {
 	}
 
-	public WebsiteMsgT(String msgid, String msgtousername, String msgfromuserid, String msgfromusrname, String msgtextid, String state, String title, Date createtime, String msgstate) {
+	public WebsiteMsgT(String msgid, String msgtousername,
+			String msgfromuserid, String msgfromusrname, String msgtextid,
+			String state, String title, Date createtime, String msgstate) {
 		this.msgid = msgid;
 		this.msgtousername = msgtousername;
 		this.msgfromuserid = msgfromuserid;

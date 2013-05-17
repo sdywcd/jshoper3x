@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,7 +31,9 @@ public class OrderInvoiceT implements java.io.Serializable {
 	public OrderInvoiceT() {
 	}
 
-	public OrderInvoiceT(String orderInvoiceid, String orderid, String invType, String invPayee, String amount, String userid, String state, String username, Date createtime) {
+	public OrderInvoiceT(String orderInvoiceid, String orderid, String invType,
+			String invPayee, String amount, String userid, String state,
+			String username, Date createtime) {
 		this.orderInvoiceid = orderInvoiceid;
 		this.orderid = orderid;
 		this.invType = invType;
@@ -43,7 +45,9 @@ public class OrderInvoiceT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	public OrderInvoiceT(String orderInvoiceid, String orderid, String invType, String invPayee, String amount, String userid, String state, String username, String invContent, Date createtime) {
+	public OrderInvoiceT(String orderInvoiceid, String orderid, String invType,
+			String invPayee, String amount, String userid, String state,
+			String username, String invContent, Date createtime) {
 		this.orderInvoiceid = orderInvoiceid;
 		this.orderid = orderid;
 		this.invType = invType;

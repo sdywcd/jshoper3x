@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,7 +33,10 @@ public class VouchersT implements java.io.Serializable {
 	public VouchersT() {
 	}
 
-	public VouchersT(String vouchersid, String vouchersname, String begintime, String endtime, String voucherscontent, double limitprice, String voucherstate, String voucheruseway, String state, Date createtime, String creatorid) {
+	public VouchersT(String vouchersid, String vouchersname, String begintime,
+			String endtime, String voucherscontent, double limitprice,
+			String voucherstate, String voucheruseway, String state,
+			Date createtime, String creatorid) {
 		this.vouchersid = vouchersid;
 		this.vouchersname = vouchersname;
 		this.begintime = begintime;
@@ -47,7 +50,10 @@ public class VouchersT implements java.io.Serializable {
 		this.creatorid = creatorid;
 	}
 
-	public VouchersT(String vouchersid, String vouchersname, String begintime, String endtime, String voucherscontent, double limitprice, String givenuserid, String voucherstate, String voucheruseway, String state, Date createtime, String creatorid) {
+	public VouchersT(String vouchersid, String vouchersname, String begintime,
+			String endtime, String voucherscontent, double limitprice,
+			String givenuserid, String voucherstate, String voucheruseway,
+			String state, Date createtime, String creatorid) {
 		this.vouchersid = vouchersid;
 		this.vouchersname = vouchersname;
 		this.begintime = begintime;

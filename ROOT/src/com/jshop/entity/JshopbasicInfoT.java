@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,29 +25,16 @@ public class JshopbasicInfoT implements java.io.Serializable {
 	private String city;
 	private String street;
 	private String qqservice;
-	private String taobaowwservice;
 	private String skypeservice;
-	private String yahooservice;
-	private String msnservice;
+	private String weixinsevice;
+	private String sinaweiboservice;
 	private String emailservice;
 	private String phoneservice;
 	private String openstate;
 	private String siteclosenotes;
 	private String sitelogo;
 	private String licensed;
-	private String usercenternote;
-	private String jshopnotice;
-	private String registerclose;
 	private String icpnum;
-	private String sendName;
-	private String sendCountry;
-	private String sendProvince;
-	private String sendCity;
-	private String sendDistrict;
-	private String sendStreet;
-	private String sendTelno;
-	private String sendMobile;
-	private String sendContactor;
 	private String state;
 	private String district;
 	private String creatorid;
@@ -58,7 +45,8 @@ public class JshopbasicInfoT implements java.io.Serializable {
 	public JshopbasicInfoT() {
 	}
 
-	public JshopbasicInfoT(String basicinfoid, String jshopname, String state, String creatorid, Date createtime) {
+	public JshopbasicInfoT(String basicinfoid, String jshopname, String state,
+			String creatorid, Date createtime) {
 		this.basicinfoid = basicinfoid;
 		this.jshopname = jshopname;
 		this.state = state;
@@ -66,7 +54,14 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	public JshopbasicInfoT(String basicinfoid, String jshopname, String jshopslogan, String country, String province, String city, String street, String qqservice, String taobaowwservice, String skypeservice, String yahooservice, String msnservice, String emailservice, String phoneservice, String openstate, String siteclosenotes, String sitelogo, String licensed, String usercenternote, String jshopnotice, String registerclose, String icpnum, String sendName, String sendCountry, String sendProvince, String sendCity, String sendDistrict, String sendStreet, String sendTelno, String sendMobile, String sendContactor, String state, String district, String creatorid, Date createtime, String metaKeywords, String metaDes) {
+	public JshopbasicInfoT(String basicinfoid, String jshopname,
+			String jshopslogan, String country, String province, String city,
+			String street, String qqservice, String skypeservice,
+			String weixinsevice, String sinaweiboservice, String emailservice,
+			String phoneservice, String openstate, String siteclosenotes,
+			String sitelogo, String licensed, String icpnum, String state,
+			String district, String creatorid, Date createtime,
+			String metaKeywords, String metaDes) {
 		this.basicinfoid = basicinfoid;
 		this.jshopname = jshopname;
 		this.jshopslogan = jshopslogan;
@@ -75,29 +70,16 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.city = city;
 		this.street = street;
 		this.qqservice = qqservice;
-		this.taobaowwservice = taobaowwservice;
 		this.skypeservice = skypeservice;
-		this.yahooservice = yahooservice;
-		this.msnservice = msnservice;
+		this.weixinsevice = weixinsevice;
+		this.sinaweiboservice = sinaweiboservice;
 		this.emailservice = emailservice;
 		this.phoneservice = phoneservice;
 		this.openstate = openstate;
 		this.siteclosenotes = siteclosenotes;
 		this.sitelogo = sitelogo;
 		this.licensed = licensed;
-		this.usercenternote = usercenternote;
-		this.jshopnotice = jshopnotice;
-		this.registerclose = registerclose;
 		this.icpnum = icpnum;
-		this.sendName = sendName;
-		this.sendCountry = sendCountry;
-		this.sendProvince = sendProvince;
-		this.sendCity = sendCity;
-		this.sendDistrict = sendDistrict;
-		this.sendStreet = sendStreet;
-		this.sendTelno = sendTelno;
-		this.sendMobile = sendMobile;
-		this.sendContactor = sendContactor;
 		this.state = state;
 		this.district = district;
 		this.creatorid = creatorid;
@@ -179,15 +161,6 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.qqservice = qqservice;
 	}
 
-	@Column(name = "TAOBAOWWSERVICE", length = 100)
-	public String getTaobaowwservice() {
-		return this.taobaowwservice;
-	}
-
-	public void setTaobaowwservice(String taobaowwservice) {
-		this.taobaowwservice = taobaowwservice;
-	}
-
 	@Column(name = "SKYPESERVICE", length = 100)
 	public String getSkypeservice() {
 		return this.skypeservice;
@@ -197,22 +170,22 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.skypeservice = skypeservice;
 	}
 
-	@Column(name = "YAHOOSERVICE", length = 100)
-	public String getYahooservice() {
-		return this.yahooservice;
+	@Column(name = "WEIXINSEVICE", length = 100)
+	public String getWeixinsevice() {
+		return this.weixinsevice;
 	}
 
-	public void setYahooservice(String yahooservice) {
-		this.yahooservice = yahooservice;
+	public void setWeixinsevice(String weixinsevice) {
+		this.weixinsevice = weixinsevice;
 	}
 
-	@Column(name = "MSNSERVICE", length = 100)
-	public String getMsnservice() {
-		return this.msnservice;
+	@Column(name = "SINAWEIBOSERVICE", length = 100)
+	public String getSinaweiboservice() {
+		return this.sinaweiboservice;
 	}
 
-	public void setMsnservice(String msnservice) {
-		this.msnservice = msnservice;
+	public void setSinaweiboservice(String sinaweiboservice) {
+		this.sinaweiboservice = sinaweiboservice;
 	}
 
 	@Column(name = "EMAILSERVICE", length = 200)
@@ -269,33 +242,6 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.licensed = licensed;
 	}
 
-	@Column(name = "USERCENTERNOTE", length = 500)
-	public String getUsercenternote() {
-		return this.usercenternote;
-	}
-
-	public void setUsercenternote(String usercenternote) {
-		this.usercenternote = usercenternote;
-	}
-
-	@Column(name = "JSHOPNOTICE", length = 500)
-	public String getJshopnotice() {
-		return this.jshopnotice;
-	}
-
-	public void setJshopnotice(String jshopnotice) {
-		this.jshopnotice = jshopnotice;
-	}
-
-	@Column(name = "REGISTERCLOSE", length = 1)
-	public String getRegisterclose() {
-		return this.registerclose;
-	}
-
-	public void setRegisterclose(String registerclose) {
-		this.registerclose = registerclose;
-	}
-
 	@Column(name = "ICPNUM", length = 45)
 	public String getIcpnum() {
 		return this.icpnum;
@@ -303,87 +249,6 @@ public class JshopbasicInfoT implements java.io.Serializable {
 
 	public void setIcpnum(String icpnum) {
 		this.icpnum = icpnum;
-	}
-
-	@Column(name = "SEND_NAME", length = 45)
-	public String getSendName() {
-		return this.sendName;
-	}
-
-	public void setSendName(String sendName) {
-		this.sendName = sendName;
-	}
-
-	@Column(name = "SEND_COUNTRY", length = 12)
-	public String getSendCountry() {
-		return this.sendCountry;
-	}
-
-	public void setSendCountry(String sendCountry) {
-		this.sendCountry = sendCountry;
-	}
-
-	@Column(name = "SEND_PROVINCE", length = 12)
-	public String getSendProvince() {
-		return this.sendProvince;
-	}
-
-	public void setSendProvince(String sendProvince) {
-		this.sendProvince = sendProvince;
-	}
-
-	@Column(name = "SEND_CITY", length = 12)
-	public String getSendCity() {
-		return this.sendCity;
-	}
-
-	public void setSendCity(String sendCity) {
-		this.sendCity = sendCity;
-	}
-
-	@Column(name = "SEND_DISTRICT", length = 12)
-	public String getSendDistrict() {
-		return this.sendDistrict;
-	}
-
-	public void setSendDistrict(String sendDistrict) {
-		this.sendDistrict = sendDistrict;
-	}
-
-	@Column(name = "SEND_STREET", length = 100)
-	public String getSendStreet() {
-		return this.sendStreet;
-	}
-
-	public void setSendStreet(String sendStreet) {
-		this.sendStreet = sendStreet;
-	}
-
-	@Column(name = "SEND_TELNO", length = 20)
-	public String getSendTelno() {
-		return this.sendTelno;
-	}
-
-	public void setSendTelno(String sendTelno) {
-		this.sendTelno = sendTelno;
-	}
-
-	@Column(name = "SEND_MOBILE", length = 20)
-	public String getSendMobile() {
-		return this.sendMobile;
-	}
-
-	public void setSendMobile(String sendMobile) {
-		this.sendMobile = sendMobile;
-	}
-
-	@Column(name = "SEND_CONTACTOR", length = 45)
-	public String getSendContactor() {
-		return this.sendContactor;
-	}
-
-	public void setSendContactor(String sendContactor) {
-		this.sendContactor = sendContactor;
 	}
 
 	@Column(name = "STATE", nullable = false, length = 1)

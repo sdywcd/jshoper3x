@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,7 +33,10 @@ public class QuestionnaireT implements java.io.Serializable {
 	public QuestionnaireT() {
 	}
 
-	public QuestionnaireT(String qid, String question, String choosetag, String answer, String inputtype, String state, int statistics, String goodsid, Date createtime, String creatorid, int versiont, String title) {
+	public QuestionnaireT(String qid, String question, String choosetag,
+			String answer, String inputtype, String state, int statistics,
+			String goodsid, Date createtime, String creatorid, int versiont,
+			String title) {
 		this.qid = qid;
 		this.question = question;
 		this.choosetag = choosetag;

@@ -8,20 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
     <title>基本信息设置 &middot; jshoper</title>
-
-   <style type="text/css">
-#triggers img {
-	cursor: pointer;
-	margin: 0 5px;
-	background-color: #fff;
-	border: 1px solid #ccc;
-	padding: 2px;
-	width: 200px;
-	height: 150px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-</style>
   </head>
   
   <body data-spy="scroll" data-target=".subnav" data-offset-top="40">
@@ -105,7 +91,7 @@
 						<span class="label label-required">LOGO:</span>
 						</td>
 					<td>
-						 <div id="file-uploader-demo1">
+						 <div id="uploadersitelogo">
 										<noscript>
 												Please enable JavaScript to use file uploader.
 											<!-- or put a simple form for upload here -->
@@ -117,6 +103,11 @@
 						 </table>
 						 <!-- trigger elements -->
 						<div id="triggers"></div>
+						
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">操作:</span>
+						<input class="btn btn-success" type="button" id="delpc" name="delpc" value="删除所选图片"/>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">QQ号码:</span>
@@ -128,11 +119,11 @@
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">微信号:</span>
-						<input type="text" id="msnservice" name="msnservice"/>
+						<input type="text" id="weixinservice" name="weixinservice"/>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">sina微博:</span>
-						<input type="text" id="yahooservice" name="yahooservice"/>
+						<input type="text" id="sinaweiboservice" name="sinaweiboservice"/>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">邮件地址:</span>
@@ -175,13 +166,13 @@
 						<span class="label label-info">请填写网站备案后得到的备案号！</span>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">商户状态:</span>
+						<span class="label label-required">商户可见状态:</span>
 						<select id="state" name="state">
 							<option value="1">
-								开启
+								显示
 							</option>
 							<option value="0">
-								禁用
+								隐藏
 							</option>
 						</select>
 						<span class="label label-info">关系到是否可以在系统内容正常获取推送信息！</span>
@@ -205,11 +196,11 @@
     	<script type="text/javascript" src="<%=basePath%>admin/js/setting/basicinfomentjs.js"></script>
     	<script type="text/javascript" src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
 		<script type="text/javascript">
- 		function createUploader(){            
+ 		function createUploader(){
              var uploader = new qq.FileUploader({
-                 element: document.getElementById('file-uploader-demo1'),
+                 element: document.getElementById('uploadersitelogo'),
                  action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
-                 debug: true,
+                 debug: false,
                  minSizeLimit:1024,
                  sizeLimit: 1073741824,
                  allowedExtensions: ['jpeg','jpg','gif','png'],
@@ -217,10 +208,10 @@
                 	var pcpath1="<%=basePath%>"+responseJSON.success;
                 	var pcpath=responseJSON.success;
   					var htm="<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
-  					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' checked='true'/> "
+  					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' />";
   					$("#triggers").append(htm).append(checkpc);
                  },
-             });           
+             });
          }
  		window.onload = createUploader; 
  	</script>

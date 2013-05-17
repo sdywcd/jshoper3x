@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -27,7 +27,8 @@ public class AuthorityT implements java.io.Serializable {
 	public AuthorityT() {
 	}
 
-	public AuthorityT(String autid, String chpagename, String enpagename, String operate, Date createtime) {
+	public AuthorityT(String autid, String chpagename, String enpagename,
+			String operate, Date createtime) {
 		this.autid = autid;
 		this.chpagename = chpagename;
 		this.enpagename = enpagename;
@@ -35,7 +36,8 @@ public class AuthorityT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	public AuthorityT(String autid, String chpagename, String enpagename, String operate, Date createtime, String roleid) {
+	public AuthorityT(String autid, String chpagename, String enpagename,
+			String operate, Date createtime, String roleid) {
 		this.autid = autid;
 		this.chpagename = chpagename;
 		this.enpagename = enpagename;

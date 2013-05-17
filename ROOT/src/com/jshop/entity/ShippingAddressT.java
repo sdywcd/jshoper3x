@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -38,7 +38,10 @@ public class ShippingAddressT implements java.io.Serializable {
 	public ShippingAddressT() {
 	}
 
-	public ShippingAddressT(String shippingaddressid, String userid, String username, String province, String city, String district, String street, String mobile, Date createtime, String state, String issend) {
+	public ShippingAddressT(String shippingaddressid, String userid,
+			String username, String province, String city, String district,
+			String street, String mobile, Date createtime, String state,
+			String issend) {
 		this.shippingaddressid = shippingaddressid;
 		this.userid = userid;
 		this.username = username;
@@ -52,7 +55,11 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.issend = issend;
 	}
 
-	public ShippingAddressT(String shippingaddressid, String userid, String username, String province, String city, String district, String street, String postcode, String telno, String mobile, String email, Date createtime, String state, String issend, String deliveraddressid, String orderid, String country) {
+	public ShippingAddressT(String shippingaddressid, String userid,
+			String username, String province, String city, String district,
+			String street, String postcode, String telno, String mobile,
+			String email, Date createtime, String state, String issend,
+			String deliveraddressid, String orderid, String country) {
 		this.shippingaddressid = shippingaddressid;
 		this.userid = userid;
 		this.username = username;

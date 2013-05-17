@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,7 +33,8 @@ public class TableT implements java.io.Serializable {
 	public TableT() {
 	}
 
-	public TableT(String tableid, String tableNumber, String roomName, Date createtime, String creatorid, String tablestate, int floor) {
+	public TableT(String tableid, String tableNumber, String roomName,
+			Date createtime, String creatorid, String tablestate, int floor) {
 		this.tableid = tableid;
 		this.tableNumber = tableNumber;
 		this.roomName = roomName;
@@ -43,7 +44,10 @@ public class TableT implements java.io.Serializable {
 		this.floor = floor;
 	}
 
-	public TableT(String tableid, String tableNumber, String roomName, Integer androidDevicesCount, String note, Date createtime, String creatorid, Integer nop, String tablestate, int floor, Integer rnop) {
+	public TableT(String tableid, String tableNumber, String roomName,
+			Integer androidDevicesCount, String note, Date createtime,
+			String creatorid, Integer nop, String tablestate, int floor,
+			Integer rnop) {
 		this.tableid = tableid;
 		this.tableNumber = tableNumber;
 		this.roomName = roomName;

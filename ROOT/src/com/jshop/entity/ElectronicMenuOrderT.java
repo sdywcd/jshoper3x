@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -61,7 +61,11 @@ public class ElectronicMenuOrderT implements java.io.Serializable {
 	public ElectronicMenuOrderT() {
 	}
 
-	public ElectronicMenuOrderT(String electronicMenuOrderid, String paymentid, String paymentname, String electronicorderstate, double freight, double amount, Date purchasetime, String invoice, double shouldpay, double usepoints, String paystate, Date createtime, String tableNumber, String tablestate) {
+	public ElectronicMenuOrderT(String electronicMenuOrderid, String paymentid,
+			String paymentname, String electronicorderstate, double freight,
+			double amount, Date purchasetime, String invoice, double shouldpay,
+			double usepoints, String paystate, Date createtime,
+			String tableNumber, String tablestate) {
 		this.electronicMenuOrderid = electronicMenuOrderid;
 		this.paymentid = paymentid;
 		this.paymentname = paymentname;
@@ -78,8 +82,20 @@ public class ElectronicMenuOrderT implements java.io.Serializable {
 		this.tablestate = tablestate;
 	}
 
-	public ElectronicMenuOrderT(String electronicMenuOrderid, String userid, String username, String paymentid, String paymentname, String delivermode, String deliverynumber, String electronicorderstate, String logisticsid, double freight, double amount, Double points, Date purchasetime, Date deliverytime, String invoice, String shippingaddressid, String customernotes, String logisticswebaddress, Date paytime, String orderTag, String toBuyer, double shouldpay, double usepoints, String vouchersid, String goodid, String goodsname, Integer needquantity, String paystate, String shippingstate, String deliveraddressid, String shippingusername, Date createtime, String hasprintexpress, String hasprintinvoice, String hasprintfpinvoice, String expressnumber, String tradeNo, String tableNumber,
-			String roomName, String tablestate) {
+	public ElectronicMenuOrderT(String electronicMenuOrderid, String userid,
+			String username, String paymentid, String paymentname,
+			String delivermode, String deliverynumber,
+			String electronicorderstate, String logisticsid, double freight,
+			double amount, Double points, Date purchasetime, Date deliverytime,
+			String invoice, String shippingaddressid, String customernotes,
+			String logisticswebaddress, Date paytime, String orderTag,
+			String toBuyer, double shouldpay, double usepoints,
+			String vouchersid, String goodid, String goodsname,
+			Integer needquantity, String paystate, String shippingstate,
+			String deliveraddressid, String shippingusername, Date createtime,
+			String hasprintexpress, String hasprintinvoice,
+			String hasprintfpinvoice, String expressnumber, String tradeNo,
+			String tableNumber, String roomName, String tablestate) {
 		this.electronicMenuOrderid = electronicMenuOrderid;
 		this.userid = userid;
 		this.username = username;

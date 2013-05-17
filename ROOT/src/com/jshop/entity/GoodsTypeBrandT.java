@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +27,8 @@ public class GoodsTypeBrandT implements java.io.Serializable {
 		this.goodsTypeBrandTid = goodsTypeBrandTid;
 	}
 
-	public GoodsTypeBrandT(String goodsTypeBrandTid, String goodsTypeId, String name, String brandname, String brandid) {
+	public GoodsTypeBrandT(String goodsTypeBrandTid, String goodsTypeId,
+			String name, String brandname, String brandid) {
 		this.goodsTypeBrandTid = goodsTypeBrandTid;
 		this.goodsTypeId = goodsTypeId;
 		this.name = name;

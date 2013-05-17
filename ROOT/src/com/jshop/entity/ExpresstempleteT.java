@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,7 +57,19 @@ public class ExpresstempleteT implements java.io.Serializable {
 		this.expresstempleteid = expresstempleteid;
 	}
 
-	public ExpresstempleteT(String expresstempleteid, String sendName, String sendCountry, String sendProvince, String sendCity, String sendDistrict, String sendStreet, String sendTelno, String sendMobile, String recipientName, String recipientCountry, String recipientProvince, String recipientCity, String recipientDistrict, String recipientStreet, String recipientTelno, String recipientMobile, String recipientPostcode, String year, String month, String day, String orderid, String notes, String sendTime, String rightTag, String logisticsid, String state, String expressCss, String expressImg, String kindeditorCode, String sendContactor, String recipientContactor, String hour, String minutes, String quantity) {
+	public ExpresstempleteT(String expresstempleteid, String sendName,
+			String sendCountry, String sendProvince, String sendCity,
+			String sendDistrict, String sendStreet, String sendTelno,
+			String sendMobile, String recipientName, String recipientCountry,
+			String recipientProvince, String recipientCity,
+			String recipientDistrict, String recipientStreet,
+			String recipientTelno, String recipientMobile,
+			String recipientPostcode, String year, String month, String day,
+			String orderid, String notes, String sendTime, String rightTag,
+			String logisticsid, String state, String expressCss,
+			String expressImg, String kindeditorCode, String sendContactor,
+			String recipientContactor, String hour, String minutes,
+			String quantity) {
 		this.expresstempleteid = expresstempleteid;
 		this.sendName = sendName;
 		this.sendCountry = sendCountry;

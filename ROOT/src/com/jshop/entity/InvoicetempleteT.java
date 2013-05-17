@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,13 +22,15 @@ public class InvoicetempleteT implements java.io.Serializable {
 	public InvoicetempleteT() {
 	}
 
-	public InvoicetempleteT(String invoicetempleteid, String state, String kindeditorCode) {
+	public InvoicetempleteT(String invoicetempleteid, String state,
+			String kindeditorCode) {
 		this.invoicetempleteid = invoicetempleteid;
 		this.state = state;
 		this.kindeditorCode = kindeditorCode;
 	}
 
-	public InvoicetempleteT(String invoicetempleteid, String logisticsid, String state, String kindeditorCode) {
+	public InvoicetempleteT(String invoicetempleteid, String logisticsid,
+			String state, String kindeditorCode) {
 		this.invoicetempleteid = invoicetempleteid;
 		this.logisticsid = logisticsid;
 		this.state = state;

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-3-22 15:24:47 by Hibernate Tools 4.0.0
+// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,14 +28,16 @@ public class PageT implements java.io.Serializable {
 	public PageT() {
 	}
 
-	public PageT(String pageid, String rangearea, String creatorid, Date createtime) {
+	public PageT(String pageid, String rangearea, String creatorid,
+			Date createtime) {
 		this.pageid = pageid;
 		this.rangearea = rangearea;
 		this.creatorid = creatorid;
 		this.createtime = createtime;
 	}
 
-	public PageT(String pageid, String enpagename, String cnpagename, String url, String rangearea, String creatorid, Date createtime) {
+	public PageT(String pageid, String enpagename, String cnpagename,
+			String url, String rangearea, String creatorid, Date createtime) {
 		this.pageid = pageid;
 		this.enpagename = enpagename;
 		this.cnpagename = cnpagename;
