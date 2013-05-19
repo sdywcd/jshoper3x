@@ -1,6 +1,7 @@
 package com.jshop.action.backstage.base;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,32 +34,20 @@ public class JshopbasicInfoTAction extends ActionSupport {
 	private String city;
 	private String street;
 	private String qqservice;
-	private String taobaowwservice;
 	private String skypeservice;
-	private String yahooservice;
-	private String msnservice;
+	private String weixinservice;
+	private String sinaweiboservice;
 	private String emailservice;
 	private String phoneservice;
 	private String openstate;
 	private String siteclosenotes;
 	private String sitelogo;
 	private String licensed;
-	private String usercenternote;
-	private String jshopnotice;
-	private String registerclose;
 	private String icpnum;
-	private String sendName;
-	private String sendCountry;
-	private String sendProvince;
-	private String sendCity;
-	private String sendDistrict;
-	private String sendStreet;
-	private String sendTelno;
-	private String sendMobile;
-	private String sendContactor;
 	private String state;
 	private String district;
 	private String creatorid;
+	private Date createtime;
 	private String metaKeywords;
 	private String metaDes;
 	private JshopbasicInfoT beanlist = new JshopbasicInfoT();
@@ -152,15 +141,6 @@ public class JshopbasicInfoTAction extends ActionSupport {
 	public void setQqservice(String qqservice) {
 		this.qqservice = qqservice;
 	}
-
-	public String getTaobaowwservice() {
-		return taobaowwservice;
-	}
-
-	public void setTaobaowwservice(String taobaowwservice) {
-		this.taobaowwservice = taobaowwservice;
-	}
-
 	public String getSkypeservice() {
 		return skypeservice;
 	}
@@ -168,23 +148,6 @@ public class JshopbasicInfoTAction extends ActionSupport {
 	public void setSkypeservice(String skypeservice) {
 		this.skypeservice = skypeservice;
 	}
-
-	public String getYahooservice() {
-		return yahooservice;
-	}
-
-	public void setYahooservice(String yahooservice) {
-		this.yahooservice = yahooservice;
-	}
-
-	public String getMsnservice() {
-		return msnservice;
-	}
-
-	public void setMsnservice(String msnservice) {
-		this.msnservice = msnservice;
-	}
-
 	public String getEmailservice() {
 		return emailservice;
 	}
@@ -233,29 +196,6 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		this.licensed = licensed;
 	}
 
-	public String getUsercenternote() {
-		return usercenternote;
-	}
-
-	public void setUsercenternote(String usercenternote) {
-		this.usercenternote = usercenternote;
-	}
-
-	public String getJshopnotice() {
-		return jshopnotice;
-	}
-
-	public void setJshopnotice(String jshopnotice) {
-		this.jshopnotice = jshopnotice;
-	}
-
-	public String getRegisterclose() {
-		return registerclose;
-	}
-
-	public void setRegisterclose(String registerclose) {
-		this.registerclose = registerclose;
-	}
 
 	public String getIcpnum() {
 		return icpnum;
@@ -263,78 +203,6 @@ public class JshopbasicInfoTAction extends ActionSupport {
 
 	public void setIcpnum(String icpnum) {
 		this.icpnum = icpnum;
-	}
-
-	public String getSendName() {
-		return sendName;
-	}
-
-	public void setSendName(String sendName) {
-		this.sendName = sendName;
-	}
-
-	public String getSendCountry() {
-		return sendCountry;
-	}
-
-	public void setSendCountry(String sendCountry) {
-		this.sendCountry = sendCountry;
-	}
-
-	public String getSendProvince() {
-		return sendProvince;
-	}
-
-	public void setSendProvince(String sendProvince) {
-		this.sendProvince = sendProvince;
-	}
-
-	public String getSendCity() {
-		return sendCity;
-	}
-
-	public void setSendCity(String sendCity) {
-		this.sendCity = sendCity;
-	}
-
-	public String getSendDistrict() {
-		return sendDistrict;
-	}
-
-	public void setSendDistrict(String sendDistrict) {
-		this.sendDistrict = sendDistrict;
-	}
-
-	public String getSendStreet() {
-		return sendStreet;
-	}
-
-	public void setSendStreet(String sendStreet) {
-		this.sendStreet = sendStreet;
-	}
-
-	public String getSendTelno() {
-		return sendTelno;
-	}
-
-	public void setSendTelno(String sendTelno) {
-		this.sendTelno = sendTelno;
-	}
-
-	public String getSendMobile() {
-		return sendMobile;
-	}
-
-	public void setSendMobile(String sendMobile) {
-		this.sendMobile = sendMobile;
-	}
-
-	public String getSendContactor() {
-		return sendContactor;
-	}
-
-	public void setSendContactor(String sendContactor) {
-		this.sendContactor = sendContactor;
 	}
 
 	public String getState() {
@@ -441,6 +309,31 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		this.basepath = basepath;
 	}
 
+	
+	public String getWeixinservice() {
+		return weixinservice;
+	}
+
+	public void setWeixinservice(String weixinservice) {
+		this.weixinservice = weixinservice;
+	}
+
+	public String getSinaweiboservice() {
+		return sinaweiboservice;
+	}
+
+	public void setSinaweiboservice(String sinaweiboservice) {
+		this.sinaweiboservice = sinaweiboservice;
+	}
+
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -466,29 +359,16 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		jbi.setCity(this.getCity().trim());
 		jbi.setStreet(this.getStreet().trim());
 		jbi.setQqservice(this.getQqservice().trim());
-		jbi.setTaobaowwservice(this.getTaobaowwservice().trim());
 		jbi.setSkypeservice(this.getSkypeservice().trim());
-		jbi.setYahooservice(this.getYahooservice().trim());
-		jbi.setMsnservice(this.getMsnservice().trim());
+		jbi.setWeixinservice(this.getWeixinservice().trim());
+		jbi.setSinaweiboservice(this.getSinaweiboservice().trim());
 		jbi.setEmailservice(this.getEmailservice().trim());
 		jbi.setPhoneservice(this.getPhoneservice().trim());
 		jbi.setOpenstate(this.getOpenstate().trim());
 		jbi.setSiteclosenotes(this.getSiteclosenotes());
 		jbi.setSitelogo(this.getSitelogo().trim());
 		jbi.setLicensed(this.getLicensed().trim());
-		jbi.setUsercenternote(this.getUsercenternote());
-		jbi.setJshopnotice(this.getJshopnotice());
-		jbi.setRegisterclose(this.getRegisterclose());
 		jbi.setIcpnum(this.getIcpnum());
-		jbi.setSendName(this.getSendName().trim());
-		jbi.setSendCountry(this.getSendCountry());
-		jbi.setSendProvince(this.getSendProvince());
-		jbi.setSendCity(this.getSendCity());
-		jbi.setSendDistrict(this.getSendDistrict());
-		jbi.setSendStreet(this.getSendStreet());
-		jbi.setSendTelno(this.getSendTelno());
-		jbi.setSendMobile(this.getSendMobile());
-		jbi.setSendContactor(this.getSendContactor());
 		jbi.setState(this.getState());
 		jbi.setDistrict(this.getDistrict());
 		jbi.setCreatorid(BaseTools.adminCreateId());
@@ -551,10 +431,10 @@ public class JshopbasicInfoTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "UpdateJshopbasicInfo", results = { @Result(name = "json", type = "json") })
-	public String UpdateJshopbasicInfo() {
-
+	@Action(value = "updateJshopbasicInfo", results = { @Result(name = "json", type = "json") })
+	public String updateJshopbasicInfo() {
 		JshopbasicInfoT jbi = new JshopbasicInfoT();
+		jbi=this.getJshopbasicInfoTService().findJshopbasicInfoTById(this.getBasicinfoid());
 		jbi.setBasicinfoid(this.getBasicinfoid());
 		jbi.setJshopname(this.getJshopname().trim());
 		jbi.setJshopslogan(this.getJshopslogan().trim());
@@ -563,54 +443,39 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		jbi.setCity(this.getCity().trim());
 		jbi.setStreet(this.getStreet().trim());
 		jbi.setQqservice(this.getQqservice().trim());
-		jbi.setTaobaowwservice(this.getTaobaowwservice().trim());
 		jbi.setSkypeservice(this.getSkypeservice().trim());
-		jbi.setYahooservice(this.getYahooservice().trim());
-		jbi.setMsnservice(this.getMsnservice().trim());
+		jbi.setWeixinservice(this.getWeixinservice().trim());
+		jbi.setSinaweiboservice(this.getSinaweiboservice().trim());
 		jbi.setEmailservice(this.getEmailservice().trim());
 		jbi.setPhoneservice(this.getPhoneservice().trim());
 		jbi.setOpenstate(this.getOpenstate().trim());
 		jbi.setSiteclosenotes(this.getSiteclosenotes());
 		jbi.setSitelogo(this.getSitelogo().trim());
 		jbi.setLicensed(this.getLicensed().trim());
-		jbi.setUsercenternote(this.getUsercenternote());
-		jbi.setJshopnotice(this.getJshopnotice());
-		jbi.setRegisterclose(this.getRegisterclose());
 		jbi.setIcpnum(this.getIcpnum());
-		jbi.setSendName(this.getSendName().trim());
-		jbi.setSendCountry(this.getSendCountry());
-		jbi.setSendProvince(this.getSendProvince());
-		jbi.setSendCity(this.getSendCity());
-		jbi.setSendDistrict(this.getSendDistrict());
-		jbi.setSendStreet(this.getSendStreet());
-		jbi.setSendTelno(this.getSendTelno());
-		jbi.setSendMobile(this.getSendMobile());
-		jbi.setSendContactor(this.getSendContactor());
 		jbi.setState(this.getState());
 		jbi.setDistrict(this.getDistrict());
-		jbi.setCreatetime(BaseTools.systemtime());
 		jbi.setMetaDes(this.getMetaDes());
 		jbi.setMetaKeywords(this.getMetaKeywords());
-		@SuppressWarnings("unused")
-		int i = this.getJshopbasicInfoTService().updateJshopbasicInfo(jbi);
+		this.getJshopbasicInfoTService().updateJshopbasicInfo(jbi);
 		this.setSucflag(true);
 		return "json";
 
 	}
 
 	/**
-	 * 根据id获取商城基本信息
+	 * 根据creatorid获取商城基本信息
 	 * 
 	 * @return
 	 */
 	@Action(value = "findJshopbasicInfoTById", results = { @Result(name = "json", type = "json") })
 	public String findJshopbasicInfoTById() {
-		if (Validate.StrNotNull(this.getBasicinfoid())) {
-			beanlist = this.getJshopbasicInfoTService().findJshopbasicInfoTById(this.getBasicinfoid().trim());
-			if (beanlist != null) {
-				beanlist.setSitelogo(BaseTools.getBasePath()+beanlist.getSitelogo());
-				return "json";
-			}
+		String creatorid=BaseTools.adminCreateId();
+		beanlist = this.getJshopbasicInfoTService().findAllJshopbasicInfo(creatorid);
+		if (beanlist != null) {
+			beanlist.setSitelogo(BaseTools.getBasePath()+beanlist.getSitelogo());
+			this.setSucflag(true);
+			return "json";
 		}
 		return "json";
 	}
@@ -622,7 +487,6 @@ public class JshopbasicInfoTAction extends ActionSupport {
 	 */
 	@Action(value = "delJshopbasicInfo", results = { @Result(name = "json", type = "json") })
 	public String delJshopbasicInfo() {
-
 		if (this.getBasicinfoid() != null) {
 			String[] array = this.getBasicinfoid().trim().split(",");
 			if (this.getJshopbasicInfoTService().delJshopbasicInfo(array, BaseTools.adminCreateId()) > 0) {

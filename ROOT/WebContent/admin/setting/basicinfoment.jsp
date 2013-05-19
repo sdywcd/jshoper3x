@@ -36,40 +36,40 @@
 	              <button type="button" class="close" data-dismiss="alert">×</button>
 	              <strong>说明</strong> 请填写属于你商店的基本信息.
 	            </div>
-		
+				<div id="alerterror"  style="display:none;"class="alert alert-error">
+					<a class="close" data-dismiss="alert" href="#">&times;</a>
+	              	<strong></strong>
+				</div>
+				<div id="alertinfo" style="display:none;" class="alert alert-info">
+					 <a class="close" data-dismiss="alert" href="#">&times;</a>
+	              	<strong></strong>
+				</div>
 			<div class="line-dotted"></div>
 			<!-- 开始显示form表单 -->
 				<div class="form-actions">
 					<div class="form-inline">
-						<span class="label label-required">商户名称:</span>
+						<span class="label label-required">商店名称:</span>
 						<input type="text" id="jshopname" name="jshopname"  class="small"/>
 						<span class="label label-info">给你的商店起一个名字吧！</span>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">商户标语:</span>
+						<span class="label label-required">商店标语:</span>
 						<input type="text" id="jshopslogan" name="jshopslogan"  class="small"/>
 						<span class="label label-info">想一个响亮的口号吧！</span>
 					</div>	
 					<div class="form-inline">
-						<span class="label label-required">商户关键字:</span>
+						<span class="label label-required">商店关键字:</span>
 						<input type="text" id="metaKeywords" name="metaKeywords"  class="medium"/>
 						<span class="label label-info">可以让你的商店在互联网上被搜索到！</span>
 					</div>	
 					<div class="form-inline">
-						<span class="label label-required">商户描述:</span>
+						<span class="label label-required">商店描述:</span>
 						<input type="text" id="metaDes" name="metaDes"  class="medium"/>
 						<span class="label label-info">请告诉大家你的商店卖什么东西吧！</span>
 					</div>		
 					<div class="form-inline">
 						<span class="label label-required">所在国家:</span>
-						<select id="country" name="country">
-							<option value="0">
-								---请选择---
-							</option>
-							<option value="1">
-								中国
-							</option>
-						</select>
+						<input type="text" id="country" name="country"   value="中国"class="small"/>
 						
 					</div>	
 					<div class="form-inline">
@@ -180,7 +180,7 @@
 					<div class="form-inline">
 						<label class="label label-submit"></label>
 						<input class="btn btn-success" type="button" id="submit" name="submit" value="提交"/>
-						<input class="btn btn-success" style="display:none;" type="button" id="modify" name="modify" value="更新"/>
+						<input class="btn btn-success" style="display:none;" type="button" id="update" name="update"  value="更新"/>
 						<input type="hidden" id="hidbasicinfoid" name="hidbasicinfoid" value=""/>
 					</div>
 					

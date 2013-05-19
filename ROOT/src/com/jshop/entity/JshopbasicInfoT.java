@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-5-17 21:49:25 by Hibernate Tools 4.0.0
+// Generated 2013-5-19 18:50:11 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,7 +26,7 @@ public class JshopbasicInfoT implements java.io.Serializable {
 	private String street;
 	private String qqservice;
 	private String skypeservice;
-	private String weixinsevice;
+	private String weixinservice;
 	private String sinaweiboservice;
 	private String emailservice;
 	private String phoneservice;
@@ -57,7 +57,7 @@ public class JshopbasicInfoT implements java.io.Serializable {
 	public JshopbasicInfoT(String basicinfoid, String jshopname,
 			String jshopslogan, String country, String province, String city,
 			String street, String qqservice, String skypeservice,
-			String weixinsevice, String sinaweiboservice, String emailservice,
+			String weixinservice, String sinaweiboservice, String emailservice,
 			String phoneservice, String openstate, String siteclosenotes,
 			String sitelogo, String licensed, String icpnum, String state,
 			String district, String creatorid, Date createtime,
@@ -71,7 +71,7 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.street = street;
 		this.qqservice = qqservice;
 		this.skypeservice = skypeservice;
-		this.weixinsevice = weixinsevice;
+		this.weixinservice = weixinservice;
 		this.sinaweiboservice = sinaweiboservice;
 		this.emailservice = emailservice;
 		this.phoneservice = phoneservice;
@@ -170,13 +170,13 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.skypeservice = skypeservice;
 	}
 
-	@Column(name = "WEIXINSEVICE", length = 100)
-	public String getWeixinsevice() {
-		return this.weixinsevice;
+	@Column(name = "WEIXINSERVICE", length = 100)
+	public String getWeixinservice() {
+		return this.weixinservice;
 	}
 
-	public void setWeixinsevice(String weixinsevice) {
-		this.weixinsevice = weixinsevice;
+	public void setWeixinservice(String weixinservice) {
+		this.weixinservice = weixinservice;
 	}
 
 	@Column(name = "SINAWEIBOSERVICE", length = 100)

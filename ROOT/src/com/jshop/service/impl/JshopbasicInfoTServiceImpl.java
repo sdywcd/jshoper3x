@@ -30,8 +30,8 @@ public class JshopbasicInfoTServiceImpl implements JshopbasicInfoTService {
 		return this.getJshopbasicInfoTDao().delJshopbasicInfo(list, creatorid);
 	}
 
-	public int updateJshopbasicInfo(JshopbasicInfoT jbit) {
-		return this.getJshopbasicInfoTDao().updateJshopbasicInfo(jbit);
+	public void updateJshopbasicInfo(JshopbasicInfoT jbit) {
+		this.getJshopbasicInfoTDao().updateJshopbasicInfo(jbit);
 	}
 
 	public int addJshopbasicInfoT(JshopbasicInfoT jbit) {
@@ -73,4 +73,10 @@ public class JshopbasicInfoTServiceImpl implements JshopbasicInfoTService {
 	public JshopbasicInfoT findJshopbasicInfoBystateandopstate(String state, String openstate) {
 		return this.getJshopbasicInfoTDao().findJshopbasicInfoBystateandopstate(state, openstate);
 	}
+
+	@Override
+	public JshopbasicInfoT findAllJshopbasicInfo(String creatorid) {
+		return this.getJshopbasicInfoTDao().findAllJshopbasicInfo(creatorid);
+	}
+	
 }

@@ -130,63 +130,14 @@ public class JshopbasicInfoTDaoImpl extends HibernateDaoSupport implements Jshop
 		}
 	}
 
-	public int updateJshopbasicInfo(final JshopbasicInfoT jbi) {
-		log.debug("update BrandT");
+	public void updateJshopbasicInfo(JshopbasicInfoT jbi) {
+		log.debug("updateJshopbasicInfo");
 		try {
-
-			final String queryString = "update JshopbasicInfoT as jbi set jbi.jshopname=:jshopname,jbi.jshopslogan=:jshopslogan,jbi.country=:country,jbi.province=:province," + "jbi.city=:city,jbi.district=:district,jbi.street=:street,jbi.qqservice=:qqservice,jbi.taobaowwservice=:taobaowwservice,jbi.skypeservice=:skypeservice,jbi.yahooservice=:yahooservice,jbi.msnservice=:msnservice," + "jbi.emailservice=:emailservice,jbi.phoneservice=:phoneservice,jbi.openstate=:openstate,jbi.siteclosenotes=:siteclosenotes,jbi.sitelogo=:sitelogo,jbi.licensed=:licensed,jbi.usercenternote=:usercenternote,"
-					+ "jbi.jshopnotice=:jshopnotice,jbi.registerclose=:registerclose,jbi.icpnum=:icpnum,jbi.sendName=:sendName,jbi.sendCountry=:sendCountry,jbi.sendProvince=:sendProvince,jbi.sendCity=:sendCity,jbi.sendDistrict=:sendDistrict," + "jbi.sendStreet=:sendStreet,jbi.sendTelno=:sendTelno,jbi.sendMobile=:sendMobile,jbi.sendContactor=:sendContactor,jbi.state=:state,jbi.createtime=:createtime,jbi.metaKeywords=:metaKeywords,jbi.metaDes=:metaDes where jbi.basicinfoid=:basicinfoid";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					int i = 0;
-					Query query = session.createQuery(queryString);
-					query.setParameter("basicinfoid", jbi.getBasicinfoid());
-					query.setParameter("jshopname", jbi.getJshopname());
-					query.setParameter("jshopslogan", jbi.getJshopslogan());
-					query.setParameter("country", jbi.getCountry());
-					query.setParameter("province", jbi.getProvince());
-					query.setParameter("city", jbi.getCity());
-					query.setParameter("street", jbi.getStreet());
-					query.setParameter("qqservice", jbi.getQqservice());
-					query.setParameter("taobaowwservice", jbi.getTaobaowwservice());
-					query.setParameter("skypeservice", jbi.getSkypeservice());
-					query.setParameter("yahooservice", jbi.getYahooservice());
-					query.setParameter("msnservice", jbi.getMsnservice());
-					query.setParameter("emailservice", jbi.getEmailservice());
-					query.setParameter("phoneservice", jbi.getPhoneservice());
-					query.setParameter("openstate", jbi.getOpenstate());
-					query.setParameter("siteclosenotes", jbi.getSiteclosenotes());
-					query.setParameter("sitelogo", jbi.getSitelogo());
-					query.setParameter("licensed", jbi.getLicensed());
-					query.setParameter("usercenternote", jbi.getUsercenternote());
-					query.setParameter("jshopnotice", jbi.getJshopnotice());
-					query.setParameter("registerclose", jbi.getRegisterclose());
-					query.setParameter("icpnum", jbi.getIcpnum());
-					query.setParameter("sendName", jbi.getSendName());
-					query.setParameter("sendCountry", jbi.getSendCountry());
-					query.setParameter("sendProvince", jbi.getSendProvince());
-					query.setParameter("sendCity", jbi.getSendCity());
-					query.setParameter("sendDistrict", jbi.getSendDistrict());
-					query.setParameter("sendStreet", jbi.getSendStreet());
-					query.setParameter("sendTelno", jbi.getSendTelno());
-					query.setParameter("sendMobile", jbi.getSendMobile());
-					query.setParameter("sendContactor", jbi.getSendContactor());
-					query.setParameter("state", jbi.getState());
-					query.setParameter("district", jbi.getDistrict());
-					query.setParameter("createtime", jbi.getCreatetime());
-					query.setParameter("metaKeywords", jbi.getMetaKeywords());
-					query.setParameter("metaDes", jbi.getMetaDes());
-					i = query.executeUpdate();
-					++i;
-					return i;
-				}
-			});
+			this.getHibernateTemplate().update(jbi);
 		} catch (RuntimeException re) {
 			log.error("update  BrandT error", re);
 			throw re;
 		}
-		return 0;
 	}
 
 	public int updateJshopbasicInfostate(final String basicinfoid, final String state) {
@@ -305,6 +256,22 @@ public class JshopbasicInfoTDaoImpl extends HibernateDaoSupport implements Jshop
 			return null;
 		} catch (RuntimeException re) {
 			log.error("find by id JshopbasicInfoT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public JshopbasicInfoT findAllJshopbasicInfo(String creatorid) {
+		log.debug("find by findAllJshopbasicInfo");
+		try {
+			String queryString = "from JshopbasicInfoT as jbi where  jbi.creatorid=:creatorid";
+			List<JshopbasicInfoT> list = this.getHibernateTemplate().findByNamedParam(queryString, "creatorid", creatorid);
+			if (list != null && list.size() > 0) {
+				return list.get(0);
+			}
+			return null;
+		} catch (RuntimeException re) {
+			log.error("findAllJshopbasicInfo error", re);
 			throw re;
 		}
 	}
