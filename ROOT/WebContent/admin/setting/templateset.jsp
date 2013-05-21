@@ -32,7 +32,7 @@
 		    </div>
 			
 		    <div id="mainlogic" class="span10">
-	            <div id="alertinfo" class="alert alert-info">
+	            <div class="alert alert-success">
 	              <button type="button" class="close" data-dismiss="alert">×</button>
 	              <strong>你可以在这里编辑模板和系统内容关系</strong> 
 	            </div>

@@ -14,7 +14,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
@@ -294,7 +293,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 			GoodsTypeTN gtn = (GoodsTypeTN) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gtn.getGoodsTypeId());
-			cellMap.put("cell", new Object[] {gtn.getName(), BaseTools.formateDbDate(gtn.getCreatetime()) });
+			cellMap.put("cell", new Object[] {gtn.getName(), BaseTools.formateDbDate(gtn.getCreatetime()),"<a id='editegoodstypetn' name='editegoodstypetn' href='goodstypetn.jsp?operate=edit&folder=goods&id=" + gtn.getGoodsTypeId() + "'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 	}

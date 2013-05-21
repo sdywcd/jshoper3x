@@ -69,16 +69,27 @@ $(function(){
 	 */
 	$("#submit").click(function(data){
 		var name=$("#name").val();
-		if(""==name){
-			jAlert('商品类型名称必须填写', '信息提示');
-			return false;	
+		if(name==""){
+			formwarning("#alerterror","请填写商品类型名称");
+			return false;
 		}
+		this.value="提交中";
+		this.disabled=true;
 		$.post("addGoodsTypeTN.action",{"name":name},function(data){
 			if(data.sucflag){
-				window.location.href="goodstypetnmanagement.jsp?session="+session+"#goods";
+				$("#alerterror").remove();
+				forminfo("#alertinfo","商品类型增加成功，请增加参数列表吧");
+				$("#goodstypetnparamsarea").show();
+			}else{
+				formwarning("#alerterror","商品类型增加失败");
+				return false;
 			}
 		});
+		this.value="提交成功";
 	});
+	/**
+	 * 增加商品类型参数
+	 */
 	$('#submitparam').click(function(){
 		var name=$('#name').val();
 		if(name==""){
@@ -144,8 +155,8 @@ $(function(){
 		}
 		$('.table tbody').append(html);
 		//显示修改按钮
-		$('#modify').show();
-		$('#modifyparam').show();
+		$('#update').show();
+		$('#updateparam').show();
 		//隐藏增加按钮
 		$('#submit').hide();
 		$('#submitparam').hide();
@@ -153,7 +164,7 @@ $(function(){
 	/**
 	 * 修改商品类型数据
 	 */
-	$('#modify').click(function(){
+	$('#update').click(function(){
 		var name=$('#name').val();
 		if(name==""){
 			jAlert('商品类型必须填写', '信息提示');
@@ -167,7 +178,7 @@ $(function(){
 			}
 		});
 	});
-	$('#modifyparam').click(function(){
+	$('#updateparam').click(function(){
 		var name=$('#name').val();
 		if(name==""){
 			jAlert('商品类型必须填写', '信息提示');
@@ -192,7 +203,16 @@ $(function(){
 
 
 /*===========================================Gorgeous split-line==============================================*/
-
+/**
+ * main logic
+ */
+$(function(){
+	var operate = $.query.get("operate");
+	if (operate == "add") {
+		$("#goodstypetnparamsarea").hide();
+		return;
+	}
+});
 
 
 /*===========================================Gorgeous split-line==============================================*/
@@ -217,7 +237,13 @@ $(function() {
 			width : 400,
 			sortable : true,
 			align : 'center'
-		} ],
+		}, {
+			display : '操作',
+			name : 'operate',
+			width : 100,
+			sortable : true,
+			align : 'center'
+		}  ],
 		buttons : [ {
 			name : '添加',
 			bclass : 'add',
@@ -256,7 +282,7 @@ $(function() {
 	});
 	function action(com, grid) {
 		if (com == '添加') {
-			window.location.href = "addgoodstypetn.jsp?session="+session+"#goods";
+			window.location.href = "goodstypetn.jsp?operate=add&folder=goods";
 			return;
 		} else if (com == '编辑') {
 			if($('.trSelected',grid).length==1){
