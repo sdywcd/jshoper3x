@@ -1,15 +1,16 @@
 package com.jshop.action.backstage.user;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -19,7 +20,8 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
+
+import redis.clients.jedis.Jedis;
 
 import com.jshop.action.backstage.authority.UserRoleMAction;
 import com.jshop.action.backstage.base.InitTAction;
@@ -36,6 +38,7 @@ import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
+
 import freemarker.template.TemplateException;
 @Namespace(value="")
 @ParentPackage("jshop")

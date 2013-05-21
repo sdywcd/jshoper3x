@@ -12,11 +12,11 @@
 <ehcache>
     <diskStore path="D:\cache"/>
     <defaultCache  maxElementsInMemory="1000" eternal="false" overflowToDisk="true"
-        timeToIdleSeconds="120"
-        timeToLiveSeconds="180"
+        timeToIdleSeconds="50"
+        timeToLiveSeconds="60"
         diskPersistent="false"
         diskExpiryThreadIntervalSeconds="60"/>
-        <!-- 
-	<cache name="cn.itcast.bean.Person" maxElementsInMemory="100" eternal="false"
-    overflowToDisk="true" timeToIdleSeconds="300" timeToLiveSeconds="600" diskPersistent="false"/>-->
+       
+	<cache name="com.jshop.entity.UserT"  maxElementsInMemory="100" eternal="false"
+    overflowToDisk="true" timeToIdleSeconds="50" timeToLiveSeconds="60" diskPersistent="false"/>
 </ehcache>

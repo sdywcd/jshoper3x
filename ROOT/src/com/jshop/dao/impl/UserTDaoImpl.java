@@ -67,6 +67,8 @@ public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
 		}
 	}
 
+	
+	
 	@SuppressWarnings("unchecked")
 	public UserT login(UserT transientInstance) {
 		log.debug("login user");

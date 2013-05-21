@@ -60,8 +60,8 @@
 					<ul class="nav pull-right">
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> 商品管理 <b class="caret"></b> </a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=basePath%>admin/goods/goodstypetnment.jsp?operate=find">商品属性设置 </a></li>
-								<li><a href="<%=basePath%>admin/goods/goodsattributement.jsp?operate=find">商品类型参数设置</a></li>
+								<li><a href="<%=basePath%>admin/goods/goodstypetnment.jsp?operate=find">商品类型参数设置 </a></li>
+								<li><a href="<%=basePath%>admin/goods/goodsattributement.jsp?operate=find">商品属性设置</a></li>
 								<li><a href="<%=basePath%>admin/brands/brandsment.jsp?operate=find">品牌设置</a></li>
 								<li><a href="<%=basePath%>admin/goods/goodstypetnbrandsment.jsp?operate=find">品牌类型设置 </a></li>
 								<li><a href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">规格设置 </a></li>
