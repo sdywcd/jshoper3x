@@ -57,4 +57,9 @@ public class GoodsTypeTNServiceImpl implements GoodsTypeTNService {
 
 		return this.getGoodsTypeTNDao().sortAllGoodsTypeTN(currentPage, lineSize, queryString);
 	}
+
+	@Override
+	public List<GoodsTypeTN> findGoodsTypeTNByName(String name) {
+		return this.getGoodsTypeTNDao().findGoodsTypeTNByName(name);
+	}
 }

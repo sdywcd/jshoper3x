@@ -17,6 +17,7 @@ import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsTypeTN;
 import com.jshop.service.GoodsTypeTNService;
@@ -36,7 +37,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 	private Date createtime;
 	private String creatorid;
 	private String goodsParameter;
-	private GoodsTypeTN bean=new GoodsTypeTN();
+	private GoodsTypeTN bean;
 	private List<GoodsTypeTN> beanlist=new ArrayList<GoodsTypeTN>();;
 	private String goodstypetnlist;
 	private String query;
@@ -231,35 +232,45 @@ public class GoodsTypeTNAction extends ActionSupport {
 	 */
 	@Action(value = "addGoodsTypeTN", results = { @Result(name = "json", type = "json") })
 	public String addGoodsTypeTN() {
-		GoodsTypeTN gtn = new GoodsTypeTN();
-		gtn.setGoodsTypeId(this.getSerial().Serialid(Serial.GOODSTYPE));
-		gtn.setName(this.getName());
-		gtn.setCreatetime(BaseTools.systemtime());
-		gtn.setCreatorid(BaseTools.adminCreateId());
-		gtn.setGoodsParameter(this.getGoodsParameter());
-		if (this.getGoodsTypeTNService().addGoodsTypeTN(gtn) > 0) {
+		if(Validate.StrisNull(this.getName())){
 			this.setSucflag(true);
 			return "json";
 		}
-		this.setSucflag(false);
+		List<GoodsTypeTN> list=this.getGoodsTypeTNService().findGoodsTypeTNByName(this.getName());
+		if(!list.isEmpty()){
+			GoodsTypeTN gtn = new GoodsTypeTN();
+			gtn.setGoodsTypeId(this.getSerial().Serialid(Serial.GOODSTYPE));
+			gtn.setName(this.getName());
+			gtn.setCreatetime(BaseTools.systemtime());
+			gtn.setCreatorid(BaseTools.adminCreateId());
+			gtn.setGoodsParameter(this.getGoodsParameter());
+			if (this.getGoodsTypeTNService().addGoodsTypeTN(gtn) > 0) {
+				this.setSucflag(true);
+				return "json";
+			}
+		}
 		return "json";
 	}
 
 	/**
-	 * 异步增加商品类型
-	 * 
+	 * 增加商品类型参数
 	 * @return
 	 */
-	@Action(value = "addGoodsTypeTNajax", results = { @Result(name = "json", type = "json") })
-	public String addGoodsTypeTNajax() {
-		GoodsTypeTN gtn = new GoodsTypeTN();
-		gtn.setGoodsTypeId(this.getSerial().Serialid(Serial.GOODSTYPE));
-		gtn.setName(this.getName());
-		gtn.setCreatetime(BaseTools.systemtime());
-		gtn.setCreatorid(BaseTools.adminCreateId());
-		gtn.setGoodsParameter(this.getGoodsParameter());
-		if (this.getGoodsTypeTNService().addGoodsTypeTN(gtn) > 0) {
+	@Action(value = "addgoodsParameter", results = { @Result(name = "json", type = "json") })
+	public String addgoodsParameter() {
+		if(Validate.StrisNull(this.getName())){
+			this.setSucflag(true);
 			return "json";
+		}
+		List<GoodsTypeTN> list=this.getGoodsTypeTNService().findGoodsTypeTNByName(this.getName());
+		if(!list.isEmpty()){
+			GoodsTypeTN gtn = new GoodsTypeTN();
+			gtn=list.get(0);
+			gtn.setGoodsParameter(this.getGoodsParameter());
+			if (this.getGoodsTypeTNService().updateGoodsTypeTN(gtn) > 0) {
+				this.setSucflag(true);
+				return "json";
+			}
 		}
 		return "json";
 	}
@@ -271,12 +282,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 	 */
 	@Action(value = "findAllGoodsTypeTN", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsTypeTN() {
-		String tag=(String) ActionContext.getContext().getSession().get(BaseTools.KEYFORAUTHORITY);
-		if("1".equals(tag)){
-			this.setSucflag(false);
-			return "json";
-		}
-		if (this.getQtype().equals("sc")) {
+		if (StaticString.SC.equals(this.getQtype())) {
 			findDefaultAllGoodsTypeTN();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -293,7 +299,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 			GoodsTypeTN gtn = (GoodsTypeTN) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gtn.getGoodsTypeId());
-			cellMap.put("cell", new Object[] {gtn.getName(), BaseTools.formateDbDate(gtn.getCreatetime()),"<a id='editegoodstypetn' name='editegoodstypetn' href='goodstypetn.jsp?operate=edit&folder=goods&id=" + gtn.getGoodsTypeId() + "'>[编辑]</a>" });
+			cellMap.put("cell", new Object[] {gtn.getName(), BaseTools.formateDbDate(gtn.getCreatetime()),"<a id='editegoodstypetn' name='editegoodstypetn' href='goodstypetn.jsp?operate=edit&folder=goods&goodsTypeId=" + gtn.getGoodsTypeId() + "'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 	}
@@ -319,6 +325,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 		if (Validate.StrNotNull(this.getGoodsTypeId())) {
 			List<GoodsTypeTN> list=this.getGoodsTypeTNService().findGoodsTypeTNById(this.getGoodsTypeId().trim());
 			if(!list.isEmpty()){
+				bean=new GoodsTypeTN();
 				bean=list.get(0);
 			}
 		}
@@ -330,8 +337,8 @@ public class GoodsTypeTNAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "UpdateGoodsTypeTN", results = { @Result(name = "json", type = "json") })
-	public String UpdateGoodsTypeTN() {
+	@Action(value = "updateGoodsTypeTN", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsTypeTN() {
 		GoodsTypeTN gtn = new GoodsTypeTN();
 		gtn.setGoodsTypeId(this.getGoodsTypeId().trim());
 		gtn.setName(this.getName());
@@ -349,8 +356,8 @@ public class GoodsTypeTNAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "DelGoodsTypeTN", results = { @Result(name = "json", type = "json") })
-	public String DelGoodsTypeTN() {
+	@Action(value = "delGoodsTypeTN", results = { @Result(name = "json", type = "json") })
+	public String delGoodsTypeTN() {
 		if (Validate.StrNotNull(this.getGoodsTypeId())) {
 			String[] list = this.getGoodsTypeId().trim().split(",");
 			int i = this.getGoodsTypeTNService().delGoodsTypeTN(list);
