@@ -237,7 +237,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 			return "json";
 		}
 		List<GoodsTypeTN> list=this.getGoodsTypeTNService().findGoodsTypeTNByName(this.getName());
-		if(!list.isEmpty()){
+		if(list.isEmpty()){
 			GoodsTypeTN gtn = new GoodsTypeTN();
 			gtn.setGoodsTypeId(this.getSerial().Serialid(Serial.GOODSTYPE));
 			gtn.setName(this.getName());

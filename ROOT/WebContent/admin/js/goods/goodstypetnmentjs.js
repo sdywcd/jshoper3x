@@ -1,7 +1,6 @@
 
 /*===========================================Gorgeous split-line==============================================*/
 $(function(){
-	var session ="true";
 	var rid="";
 	var globalrjson="";//post json data to backstage server
 	/*
@@ -25,7 +24,7 @@ $(function(){
 		var html="<tr id='add"+rid+"'>" +
 		"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input id='paramlistname"+rid+"' name='paramlistname"+rid+"'  type='text' /></div></div></div></div></td>"+
 		"<td ><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' type='text'  class='small' /></div></div></div></div></td>"+
-		"<td ><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>"+
+		"<td ><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>"+
 		"</tr>";
 		$('.table tbody').append(html);
 	});
@@ -72,7 +71,6 @@ $(function(){
 			formwarning("#alerterror","请填写商品类型名称");
 			return false;
 		}
-		this.value="提交中";
 		this.disabled=true;
 		$.post("addGoodsTypeTN.action",{"name":name},function(data){
 			if(data.sucflag){
@@ -84,7 +82,6 @@ $(function(){
 				return false;
 			}
 		});
-		this.value="提交成功";
 	});
 	/**
 	 * 增加商品类型参数
@@ -155,7 +152,7 @@ $(function(){
 					html+="<tr id='add"+rid+"'>" +
 					"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='"+item.name+"' /></div></div></div></div></td>"+
 					"<td ><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input id='paramlistsort"+rid+"' type='text' name='paramlistsort"+rid+"' value='"+item.sortList+"' class='small'/></div></div></div></div></td>"+
-					"<td ><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>"+
+					"<td ><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>"+
 					"</tr>";
 				});
 			}
