@@ -36,10 +36,14 @@
 	              <button type="button" class="close" data-dismiss="alert">×</button>
 	              <strong>说明</strong> 请根据需要定义商品的类型并给类型定义参数列表吧
 	            </div>
+	            <div id="alertinfo" style="display:none;" class="alert alert-info">
+					 <a class="close" data-dismiss="alert" href="#">&times;</a>
+	              	<strong></strong>
+				</div>
 				<div id="alerterror"  style="display:none;"class="alert alert-error">
-						<a class="close" data-dismiss="alert" href="#">&times;</a>
-		              	<strong></strong>
-					</div>
+					<a class="close" data-dismiss="alert" href="#">&times;</a>
+	              	<strong></strong>
+				</div>
 			<div class="line-dotted"></div>
 				<!-- flexigrid -->
 				<div id="flexgoodstypetnmanagement">

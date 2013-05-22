@@ -11,31 +11,31 @@ public interface GoodsTypeTNDao {
 	 * @param gtn
 	 * @return
 	 */
-	public abstract int addGoodsTypeTN(GoodsTypeTN gtn);
+	public  int addGoodsTypeTN(GoodsTypeTN gtn);
 	/**
 	 * 批量删除商品类型
 	 * @param list
 	 * @return
 	 */
-	public abstract int delGoodsTypeTN(String [] list);
+	public  int delGoodsTypeTN(String [] list);
 	/**
 	 * 更新商品类型
 	 * @param gtn
 	 * @return
 	 */
-	public abstract int updateGoodsTypeTN(GoodsTypeTN gtn);
+	public  int updateGoodsTypeTN(GoodsTypeTN gtn);
 	/**
 	 * 查询所有商品类型
 	 * @param currentPage
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsTypeTN>findAllGoodsTypeTN(final int currentPage,final int lineSize);
+	public  List<GoodsTypeTN>findAllGoodsTypeTN(final int currentPage,final int lineSize);
 	/**
 	 * 统计查询所有商品类型
 	 * @return
 	 */
-	public abstract int countfindAllGoodsTypeTN();
+	public  int countfindAllGoodsTypeTN();
 	/**
 	 * 根据id获取商品类型
 	 * @param goodstypetnid
@@ -46,13 +46,21 @@ public interface GoodsTypeTNDao {
 	 * 不分页查询所有商品类型
 	 * @return
 	 */
-	public abstract List<GoodsTypeTN>findAllGoodsTypeTNNopage();
+	public  List<GoodsTypeTN>findAllGoodsTypeTNNopage();
 	/**
 	 * 根据不同排序方式进行排序
 	 * @param currentPage
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsTypeTN>sortAllGoodsTypeTN(final int currentPage,final int lineSize,String queryString);
+	public  List<GoodsTypeTN>sortAllGoodsTypeTN(final int currentPage,final int lineSize,String queryString);
+	/**
+	 * 根据商品类型名称获取记录
+	 * @param name
+	 * @return
+	 */
+	public  List<GoodsTypeTN> findGoodsTypeTNByName(String name);
+	
+	
 
 }

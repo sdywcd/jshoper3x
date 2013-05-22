@@ -100,28 +100,24 @@ public class GoodsTypeTNDaoImpl extends HibernateDaoSupport implements GoodsType
 	public int updateGoodsTypeTN(final GoodsTypeTN gtn) {
 		log.debug("update GoodsTypeTN");
 		try {
-
 			final String queryString = "update GoodsTypeTN as gtn set gtn.name=:name,gtn.createtime=:createtime,gtn.creatorid=:creatorid,gtn.goodsParameter=:goodsParameter where gtn.goodsTypeId=:goodsTypeId ";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-
+			Integer integer=this.getHibernateTemplate().execute(new HibernateCallback() {
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("goodsTypeId", gtn.getGoodsTypeId());
 					query.setParameter("name", gtn.getName());
 					query.setParameter("createtime", gtn.getCreatetime());
 					query.setParameter("creatorid", gtn.getCreatorid());
 					query.setParameter("goodsParameter", gtn.getGoodsParameter());
-					i = query.executeUpdate();
-					return i;
+					return query.executeUpdate();
 					
 				}
 			});
+			return integer;
 		} catch (RuntimeException re) {
 			log.error("update  GoodsTypeTN error", re);
 			throw re;
 		}
-		return 0;
 	}
 
 	public int delGoodsTypeTN(final String[] list) {
@@ -187,4 +183,20 @@ public class GoodsTypeTNDaoImpl extends HibernateDaoSupport implements GoodsType
 		}
 
 	}
+
+	@Override
+	public List<GoodsTypeTN> findGoodsTypeTNByName(String name) {
+		log.debug("findGoodsTypeTNByName");
+		try {
+			String queryString = "from GoodsTypeTN as gtn where gtn.name=:name";
+			List<GoodsTypeTN> list = this.getHibernateTemplate().findByNamedParam(queryString, "name", name);
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findGoodsTypeTNByName  error", re);
+			throw re;
+		}
+	}
+	
+	
+	
 }
