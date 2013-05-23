@@ -1,8 +1,5 @@
-
-var rid="";
-var globalrjson="";//post json data to backstage server
-/*===========================================Gorgeous split-line==============================================*/
 $(function(){
+	var rid="";
 	/*
 	 * To obtain random rid
 	 */
@@ -32,6 +29,63 @@ $(function(){
 			}
 		});
 	},
+	/**
+	 * 根据商品类型绑定属性并显示
+	 */
+	findGoodsAttributeTByGoodsTypeName=function(goodsTypeName){
+		//这里需要绑定商品类型。有待商榷
+		$.ajax({
+			url:"findGoodsAttributeTByGoodsTypeName.action",
+			type:"post",
+			data:{"goodsTypeName":goodsTypeName},
+			dataType:'json',
+			async:false,
+			success:function(data){
+				if(data.beanlist.length>0){
+					var html="";
+					var rid="";
+					$.each(data.beanlist,function(n,value){
+						if(value.attributeType=="1"){
+							rid=value.goodsattributeid;
+							html+="<tr id='add"+rid+"'>" +
+							"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='"+value.goodsattributename+"'/></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><select class='attribute' id='attributetype"+rid+"' name='attributetype"+rid+"'><option value='0'>筛选项</option></select></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='medium' id='attributelists"+rid+"' name='attributelists"+rid+"' value='"+value.attributelist+"'></input></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
+							"<input type='hidden' class='attribute' id='paramattributeid' name='paramattributeid' value='"+value.goodsattributeid+"'></input>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
+							"</tr>";
+						}else{
+							rid=value.goodsattributeid;
+							html+="<tr id='add"+rid+"'>" +
+							"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='"+value.goodsattributename+"'/></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><select class='attribute' id='attributetype"+rid+"' name='attributetype"+rid+"'><option value='0' selected>筛选项</option></select></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='attributelists"+rid+"' name='attributelists"+rid+"' value='"+value.attributelist+"'></input></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
+							"<input type='hidden' class='attribute' id='paramattributeid' name='paramattributeid' value='"+value.goodsattributeid+"'></input>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
+							"</tr>";
+						}
+					});
+					var gtid=data.beanlist[0].goodsTypeId;
+					$('#goodstypetn').val(gtid);
+					$('.table tbody').empty().append(html);
+				}
+			}
+		});
+		//显示修改按钮
+		$('#updateattrs').show();
+		//隐藏增加按钮
+		$('#submitattrs').hide();
+	},
+	/**
+	 * 选择商品类型后加载已经有的属性
+	 */
+	$('#goodstypetn').change(function(){
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
+		//这里需要先读取商品类型下已经有的属性并注入到页面中
+		findGoodsAttributeTByGoodsTypeName(goodsTypeName);
+	});
 	/**
 	 * 增加属性列表
 	 */
@@ -306,62 +360,7 @@ $(function(){
 		}
 		
 	});
-	/**
-	 * 根据商品类型绑定属性并显示
-	 */
-	findGoodsAttributeTByGoodsTypeName=function(){
-		var goodsTypeName=$.query.get('goodsTypeName');
-		if(goodsTypeName==""){
-			return false;
-		}
-		//这里需要绑定商品类型。有待商榷
-		$.ajax({
-			url:"findGoodsAttributeTByGoodsTypeName.action",
-			type:"post",
-			data:{"goodsTypeName":goodsTypeName},
-			dataType:'json',
-			async:false,
-			success:function(data){
-				if(data.beanlist.length>0){
-					var html="";
-					var rid="";
-					$.each(data.beanlist,function(n,value){
-						if(value.attributeType=="1"){
-							rid=value.goodsattributeid;
-							html+="<tr id='add"+rid+"'>" +
-							"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='"+value.goodsattributename+"'/></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><select class='attribute' id='attributetype"+rid+"' name='attributetype"+rid+"'><option value='0'>筛选项</option></select></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='medium' id='attributelists"+rid+"' name='attributelists"+rid+"' value='"+value.attributelist+"'></input></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
-							"<input type='hidden' class='attribute' id='paramattributeid' name='paramattributeid' value='"+value.goodsattributeid+"'></input>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
-							"</tr>";
-						}else{
-							rid=value.goodsattributeid;
-							html+="<tr id='add"+rid+"'>" +
-							"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='"+value.goodsattributename+"'/></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><select class='attribute' id='attributetype"+rid+"' name='attributetype"+rid+"'><option value='0' selected>筛选项</option></select></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='attributelists"+rid+"' name='attributelists"+rid+"' value='"+value.attributelist+"'></input></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
-							"<input type='hidden' class='attribute' id='paramattributeid' name='paramattributeid' value='"+value.goodsattributeid+"'></input>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
-							"</tr>";
-						}
-					});
-					var gtid=data.beanlist[0].goodsTypeId
-					$('#goodstypetn').val(gtid);
-					$('.table tbody').append(html);
-				}
-			}
-		});
-		//显示修改按钮
-		$('#modify').show();
-		$('#updateattrs').show();
-		//隐藏增加按钮
-		$('#submit').hide();
-		$('#submitattrs').hide();
-		$('#addattrs').hide();
-	}	
+	
 });
 /*===========================================Gorgeous split-line==============================================*/
 $(function(){
@@ -371,8 +370,14 @@ $(function(){
 		return;
 	}else if(operate=="edit"){
 		findGoodsTypeTNForSelect();
-		findGoodsAttributeTByGoodsTypeName();
-		return;
+		var goodsTypeName=$.query.get('goodsTypeName');
+		if(goodsTypeName==""){
+			return false;
+		}else{
+			findGoodsAttributeTByGoodsTypeName(goodsTypeName);
+			return;
+		}
+		
 	}
 });
 /*===========================================Gorgeous split-line==============================================*/
