@@ -81,7 +81,7 @@ $(function(){
 				}else{
 					var str = this.value;
 					var reg = /[\-\[\{\}\]:"]+/;
-					var result;
+				
 					if((result = reg.exec(str)) !=null){
 						jAlert('商品属性名称有非法字符"[","]","{","}",":","-"', '信息提示');
 						sucflag=false;
