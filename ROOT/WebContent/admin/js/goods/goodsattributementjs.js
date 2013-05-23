@@ -36,6 +36,11 @@ $(function(){
 	 * 增加属性列表
 	 */
 	$('#addattrs').click(function(){
+		var goodstypetn=$('#goodstypetn').val();
+		if(goodstypetn=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
 		getIdforradom();
 		var html="<tr id='add"+rid+"'>" +
 				"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' type='text'/></div></div></div></div></td>"+
@@ -50,9 +55,8 @@ $(function(){
 	 * 提交属性
 	 */
 	$('#submitattrs').click(function(){
-		
 		var goodstypetn=$('#goodstypetn').val();
-		if(goodstypetn==0){
+		if(goodstypetn=="0"){
 			formwarning("#alerterror","请选择商品类型");
 			return false;
 		}
@@ -81,7 +85,7 @@ $(function(){
 				}else{
 					var str = this.value;
 					var reg = /[\-\[\{\}\]:"]+/;
-					var result;
+				
 					if((result = reg.exec(str)) !=null){
 						jAlert('商品属性名称有非法字符"[","]","{","}",":","-"', '信息提示');
 						sucflag=false;
@@ -175,7 +179,7 @@ $(function(){
 	$('#updateattrs').click(function(){
 		this.disabled="true";
 		var goodstypetn=$('#goodstypetn').val();
-		if(goodstypetn==0){
+		if(goodstypetn=="0"){
 			jAlert('商品类型必须选择', '信息提示');
 			return false;
 		}
@@ -428,6 +432,12 @@ $(function() {
 			width:300,
 			sortable:true,
 			align:'center'
+		}, {
+			display : '操作',
+			name : 'operate',
+			width : 100,
+			sortable : true,
+			align : 'center'
 		}],
 		buttons : [ {
 			name : '添加',

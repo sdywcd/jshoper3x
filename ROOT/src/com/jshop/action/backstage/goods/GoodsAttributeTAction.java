@@ -436,7 +436,7 @@ public class GoodsAttributeTAction extends ActionSupport {
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gat.getGoodsattributeid());
-			cellMap.put("cell", new Object[] {gat.getGoodsattributename(), gat.getAttributeType(), gat.getAttributelist(), gat.getSort(), gat.getGoodsTypeName(),gat.getIssearch(),gat.getIssametolink(), BaseTools.formateDbDate(gat.getCreatetime()) });
+			cellMap.put("cell", new Object[] {gat.getGoodsattributename(), gat.getAttributeType(), gat.getAttributelist(), gat.getSort(), gat.getGoodsTypeName(),gat.getIssearch(),gat.getIssametolink(), BaseTools.formateDbDate(gat.getCreatetime()),"<a id='editgoodsattribute' name='editgoodsattribute' href='goodsattribute.jsp?operate=edit&folder=goods&goodsTypeName=" + gat.getGoodsTypeName() + "'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 	}
