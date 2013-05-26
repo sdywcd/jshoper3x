@@ -51,9 +51,9 @@ $(function(){
 							"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='"+value.goodsattributename+"'/></div></div></div></div></td>"+
 							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><select class='attribute' id='attributetype"+rid+"' name='attributetype"+rid+"'><option value='0'>筛选项</option></select></div></div></div></div></td>"+
 							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='medium' id='attributelists"+rid+"' name='attributelists"+rid+"' value='"+value.attributelist+"'></input></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
 							"<input type='hidden' class='attribute' id='paramattributeid' name='paramattributeid' value='"+value.goodsattributeid+"'></input>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='attribute btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
 							"</tr>";
 						}else{
 							rid=value.goodsattributeid;
@@ -61,9 +61,9 @@ $(function(){
 							"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='"+value.goodsattributename+"'/></div></div></div></div></td>"+
 							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><select class='attribute' id='attributetype"+rid+"' name='attributetype"+rid+"'><option value='0' selected>筛选项</option></select></div></div></div></div></td>"+
 							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='attributelists"+rid+"' name='attributelists"+rid+"' value='"+value.attributelist+"'></input></div></div></div></div></td>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' value='"+value.sort+"'/></div></div></div></div></td>"+
 							"<input type='hidden' class='attribute' id='paramattributeid' name='paramattributeid' value='"+value.goodsattributeid+"'></input>"+
-							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
+							"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='attribute btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")' style='display:'';' /></div></div></div></div></td>"+
 							"</tr>";
 						}
 					});
@@ -100,16 +100,69 @@ $(function(){
 				"<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' type='text'/></div></div></div></div></td>"+
 				"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><select class='attribute' id='attributetype"+rid+"' name='attributetype"+rid+"'><option value='0'>筛选项</option></select></div></div></div></div></td>"+
 				"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='attributelists"+rid+"' name='attributelists"+rid+"'  type='text'></input></div></div></div></div></td>"+
-				"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' type='text' /></div></div></div></div></td>"+
-				"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>"+
+				"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute small' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' type='text' /></div></div></div></div></td>"+
+				"<td><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='attribute btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>"+
 				"</tr>";
 		$('.table tbody').append(html);
 	});
 	
-	/**
-	 * 获取页面中商品属性的表单数据并组织成json字符串
-	 * @returns
-	 */
+
+	checkGoodsAttributeForm=function(){
+		var check=true;
+		var paramlistname="paramlistname";
+		var attributelists="attributelists";
+		var paramlistsort="paramlistsort";
+		var paramattributeid="paramattributeid";
+		$(".attribute").each(function(){
+				if(this.name.substring(0,13)==paramlistname){
+					if(this.value==""){
+						formwarning("#alerterror","商品属性名称必须填写");
+						check=false;
+					}else{
+						var str = this.value;
+						var reg = /[\-\[\{\}\]:"]+/;
+						if((result = reg.exec(str)) !=null){
+							formwarning("#alerterror",'商品属性名称有非法字符"[","]","{","}",":","-"');
+							check=false;
+						}
+					}
+					
+				}
+				if(this.name.substring(0,14)==attributelists){
+					if(this.value==""){
+						formwarning("#alerterror",'商品可选项必须填写');
+						check=false;
+					}else {
+						var str = this.value;
+						var reg = /[\-\[\{\}\]:"]+/;
+						if((result = reg.exec(str)) !=null){
+							formwarning("#alerterror",'商品属性名称有非法字符"[","]","{","}",":","-"');
+							check=false;
+						}
+					}
+				}
+				if(this.name.substring(0,13)==paramlistsort){
+					if(this.value==""){
+						formwarning("#alerterror",'商品属性排序必须填写');
+						check=false;
+					}else{
+						var str = this.value;
+						var reg = /\D/;
+						if((result = reg.exec(str)) !=null){
+							formwarning("#alerterror",'商品属性排序只能是数字');
+							check=false;
+						}
+					}
+				}
+				if(this.name.substring(0,16)==paramattributeid){
+					if(this.value==""){
+						formwarning("#alerterror",'商品属性ID异常');
+						check=false;
+					}
+				}
+		});
+		return check;
+	},
 	getGoodsAttributeT=function(){
 		var goodstypetn=$('#goodstypetn').val();
 		if(goodstypetn=="0"){
@@ -124,107 +177,43 @@ $(function(){
 		var paramlistsort="paramlistsort";
 		var paramattributeid="paramattributeid";
 		var delbutton="delbutton";
-		var goodsattributename;
-		var attributeType;
-		var attributelist;
-		var goodsattributeid;
-		var sort;
+		var goodsattributename="";
+		var attributeType="";
+		var attributelist="";
+		var goodsattributeid="";
+		var sort="";
 		var attributeIndex=1;
-		var addflag=0;
-		var sucflag=true;
 		var sub="";
 		var rjson="";
-		var formcheck;
-		$(".attribute").each(function(){
-			if(this.name.substring(0,13)==paramlistname){
-				if(this.value==""){
-					jAlert('商品属性名称必须填写', '信息提示');
-					sucflag=false;
-					return false;
-				}else{
-					var str = this.value;
-					var reg = /[\-\[\{\}\]:"]+/;
-					var result;
-					if((result = reg.exec(str)) !=null){
-						jAlert('商品属性名称有非法字符"[","]","{","}",":","-"', '信息提示');
-						sucflag=false;
-						return false;
-					}
+		if(checkGoodsAttributeForm()){
+			$(".attribute").each(function(){
+				if(this.name.substring(0,13)==paramlistname){
+					goodsattributename=this.value;
 				}
-				goodsattributename=this.value;
-				addflag=1;
-			}
-			if(this.name.substring(0,13)==attributetype){
-				if(this.value==""){
-					jAlert('商品类型必须选择', '信息提示');
-					sucflag=false;
-					return false;
+				if(this.name.substring(0,13)==attributetype){
+					attributeType=this.value;
 				}
-				attributeType=this.value;
-				addflag=2;
-			}
-			if(this.name.substring(0,14)==attributelists){
-				if(this.value==""){
-					jAlert('商品可选项必须填写', '信息提示');
-					sucflag=false;
-					return false;
-				}else {
-					var str = this.value;
-					var reg = /[\-\[\{\}\]:"]+/;
-					var result;
-					if((result = reg.exec(str)) !=null){
-						jAlert('商品可选项有非法字符"[","]","{","}",":","-"', '信息提示');
-						sucflag=false;
-						return false;
-					}
+				if(this.name.substring(0,14)==attributelists){
+					attributelist=this.value;
 				}
-				attributelist=this.value;
-				addflag=3;
-			}
-			if(this.name.substring(0,13)==paramlistsort){
-				if(this.value==""){
-					jAlert('商品属性排序必须填写', '信息提示');
-					sucflag=false;
-					return false;
-				}else{
-					var str = this.value;
-					var reg = /\D/;
-					var result;
-					if((result = reg.exec(str)) !=null){
-						jAlert('商品属性排序只能是数字', '信息提示');
-						sucflag=false;
-						return false;
-					}
+				if(this.name.substring(0,13)==paramlistsort){
+					sort=this.value;
 				}
-				sort=this.value;
-				addflag=4;
-			}
-			if(this.name.substring(0,16)==paramattributeid){
-				if(this.value==""){
-					jAlert('商品属性ID异常', '信息提示');
-					sucflag=false;
-					return false;
+				if(this.name.substring(0,16)==paramattributeid){
+					goodsattributeid=this.value;
 				}
-				goodsattributeid=this.value;
-				addflag=5;
-			}
-			if(this.name.substring(0,9)==delbutton){
-				if(addflag==5){
-					sub+="{\"goodsattributename\":\""+goodsattributename+"\",\"attributeType\":\""+attributeType+"\",\"attributelist\":\""+attributelist+"\",\"sort\":\""+sort+"\",\"goodsattributeid\":\""+goodsattributeid+"\"}-";
-					addflag=0;
-					goodsattributename="";
-					attributeType="";
-					attributelist="";
-					goodsattributeid="";
-					sort="";
-					sucflag=true;
+				if(this.name.substring(0,9)==delbutton){
+						sub+="{\"goodsattributename\":\""+goodsattributename+"\",\"attributeType\":\""+attributeType+"\",\"attributelist\":\""+attributelist+"\",\"sort\":\""+sort+"\",\"goodsattributeid\":\""+goodsattributeid+"\"},";
+						addflag=0;
+						goodsattributename="";
+						attributeType="";
+						attributelist="";
+						goodsattributeid="";
+						sort="";
 				}
-			}
-		});
-		
-		if(sucflag==true){
-			rjson=sub.toString().substring(0, sub.length-1);
-			$.post("UpdateGoodsAttributeT.action",{"rjson":rjson,"goodsTypeId":goodsTypeId,"goodsTypeName":goodsTypeName,"attributeIndex":attributeIndex},function(data){
+			});
+			rjson="["+sub.toString().substring(0, sub.length-1)+"]";
+			$.post("updateGoodsAttributeT.action",{"rjson":rjson,"goodsTypeId":goodsTypeId,"goodsTypeName":goodsTypeName,"attributeIndex":attributeIndex},function(data){
 				if(data.sucflag){
 					sucflag=true;
 					window.location.href="goodsattributement.jsp?operate=find&folder=goods";
@@ -233,22 +222,21 @@ $(function(){
 					this.disabled="";
 				}
 			});
-		}else{
-			this.disabled="";
-			return false;
 		}
-		
-	}
+	
+			
+	
+	},
 	
 	/**
 	 * 提交属性
 	 */
 	$('#submitattrs').click(function(){
-		
+		getGoodsAttributeT();
 	});
 	
 	$('#updateattrs').click(function(){
-		
+		getGoodsAttributeT();
 	});
 	
 });
@@ -454,7 +442,7 @@ $(function() {
 				$('.trSelected',grid).each(function(){
 					str+=this.id.substr(3)+",";
 				});
-				$.post("updateGoodsAttributeissearchBygoodsattributeid.action",{"goodsattributeid":str,"issametolink":issametolink},function(data){
+				$.post("updateGoodsAttributeissametolinkBygoodsattributeid.action",{"goodsattributeid":str,"issametolink":issametolink},function(data){
 					$('#goodsattributenmanagement').flexReload();
 					forminfo("#alertinfo","启用关联搜索成功");
 				});
@@ -470,7 +458,7 @@ $(function() {
 				$('.trSelected',grid).each(function(){
 					str+=this.id.substr(3)+",";
 				});
-				$.post("updateGoodsAttributeissearchBygoodsattributeid.action",{"goodsattributeid":str,"issametolink":issametolink},function(data){
+				$.post("updateGoodsAttributeissametolinkBygoodsattributeid.action",{"goodsattributeid":str,"issametolink":issametolink},function(data){
 					$('#goodsattributenmanagement').flexReload();
 					forminfo("#alertinfo","禁用关联搜索成功");
 				});

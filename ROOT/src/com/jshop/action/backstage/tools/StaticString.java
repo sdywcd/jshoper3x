@@ -8,6 +8,8 @@ public class  StaticString {
 	//flexigrid default search tag
 	public static final String SC="sc";
 	
+	public static final String ZERO="0";
+	
 	public static final String ONE="1";
 	
 	public static final String TWO="2";
@@ -49,5 +51,24 @@ public class  StaticString {
 	public static final String YES="是";
 	
 	public static final String NO="否";
+	
+	//商品属性的静态字段用于json比较取值
+	public static final String GOODSATTRIBUTENAME="goodsattributename";
+	
+	public static final String ATTRIBUTETYPE="attributeType";
+	
+	public static final String ATTRIBUTELIST="attributelist";
+	
+	public static final String SORT="sort";
+	
+	public static final String GOODSATTRIBUTEID="goodsattributeid";
+	
+	public static final String SELECTITEM="筛选项";
+	
+	public static final String INPUTITEM="输入项";
+	
+	
+	
+	
 	
 }

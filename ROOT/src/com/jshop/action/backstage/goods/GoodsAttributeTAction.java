@@ -16,14 +16,16 @@ import org.apache.struts2.json.annotations.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsAttributeT;
 import com.jshop.service.GoodsAttributeTService;
 import com.opensymphony.xwork2.ActionSupport;
+
+import freemarker.template.utility.StringUtil;
 @Namespace("")
 @ParentPackage("jshop")
 public class GoodsAttributeTAction extends ActionSupport {
@@ -290,17 +292,18 @@ public class GoodsAttributeTAction extends ActionSupport {
 	}
 
 	/**
-	 * 增加商品参数
+	 * 更新商品参数
+	 * 
+	 * @return
 	 */
-	@Action(value = "addGoodsAttributeT", results = { @Result(name = "json", type = "json") })
-	public String addGoodsAttributeT() {
+	@Action(value = "updateGoodsAttributeT", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsAttributeT() {
 		JSONArray ja=(JSONArray)JSONValue.parse(this.getRjson());
 		int jsonsize=ja.size();
+		GoodsAttributeT gat = new GoodsAttributeT();
 		for (int i = 0; i <jsonsize; i++) {
-			GoodsAttributeT gat = new GoodsAttributeT();
-			gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
 			gat.setCreatetime(BaseTools.systemtime());
-			gat.setState("1");
+			gat.setState(StaticString.ONE);
 			gat.setCreatorid(BaseTools.adminCreateId());
 			gat.setGoodsTypeId(this.getGoodsTypeId());
 			gat.setGoodsTypeName(this.getGoodsTypeName());
@@ -309,71 +312,30 @@ public class GoodsAttributeTAction extends ActionSupport {
 			Iterator iter = jo.keySet().iterator();
 			while (iter.hasNext()) {
 				String key = iter.next().toString();
-				if (key.equals("goodsattributename")) {
+				if (key.equals(StaticString.GOODSATTRIBUTENAME)) {
 					gat.setGoodsattributename(jo.get(key).toString());
 				}
-				if (key.equals("attributeType")) {
+				if (key.equals(StaticString.ATTRIBUTETYPE)) {
 					gat.setAttributeType(jo.get(key).toString());
 				}
-				if (key.equals("attributelist")) {
+				if (key.equals(StaticString.ATTRIBUTELIST)) {
 					gat.setAttributelist(jo.get(key).toString());
 				}
-				if (key.equals("sort")) {
+				if (key.equals(StaticString.SORT)) {
 					gat.setSort(jo.get(key).toString());
 				}
-			}
-			this.getGoodsAttributeTService().addGoodsAttributeT(gat);
-		}
-		this.setSucflag(true);
-		return "json";
-	}
-
-	/**
-	 * 更新商品参数
-	 * 
-	 * @return
-	 */
-	@Action(value = "UpdateGoodsAttributeT", results = { @Result(name = "json", type = "json") })
-	public String UpdateGoodsAttributeT() {
-		String a[] = this.getRjson().split("-");
-		int count = 0;
-		GoodsAttributeT gat = new GoodsAttributeT();
-		for (int i = 0; i < a.length; i++) {
-			gat.setCreatetime(BaseTools.systemtime());
-			gat.setState("1");
-			gat.setCreatorid(BaseTools.adminCreateId());
-			gat.setGoodsTypeId(this.getGoodsTypeId());
-			gat.setGoodsTypeName(this.getGoodsTypeName());
-			gat.setAttributeIndex(this.getAttributeIndex());
-			JSONObject jo = (JSONObject) JSONValue.parse(a[i].toString());
-			Iterator iter = jo.keySet().iterator();
-			while (iter.hasNext()) {
-				String key = iter.next().toString();
-				if (key.equals("goodsattributename")) {
-					gat.setGoodsattributename(jo.get(key).toString());
-				}
-				if (key.equals("attributeType")) {
-					gat.setAttributeType(jo.get(key).toString());
-				}
-				if (key.equals("attributelist")) {
-					gat.setAttributelist(jo.get(key).toString());
-				}
-				if (key.equals("sort")) {
-					gat.setSort(jo.get(key).toString());
-				}
-				if (key.equals("goodsattributeid")) {
+				if (key.equals(StaticString.GOODSATTRIBUTEID)) {
 					gat.setGoodsattributeid(jo.get(key).toString());
 				}
 			}
-			int j = this.getGoodsAttributeTService().updateGoodsAttributeT(gat);
-			count++;
-
+			if(gat.getGoodsattributeid().length()==0){
+				gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
+				this.getGoodsAttributeTService().addGoodsAttributeT(gat);
+			}else{
+				this.getGoodsAttributeTService().updateGoodsAttributeT(gat);
+			}
 		}
-		if (count == a.length) {
-			this.setSucflag(true);
-			return "json";
-		}
-		this.setSucflag(false);
+		this.setSucflag(true);
 		return "json";
 	}
 
@@ -382,10 +344,7 @@ public class GoodsAttributeTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllGoodsAttributeT", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsAttributeT() {
-
-		if (this.getQtype().equals("sc")) {
-			this.setTotal(0);
-			rows.clear();
+		if (StaticString.SC.equals(this.getQtype())) {
 			this.findDefaultAllGoodsAttributeT();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -412,21 +371,20 @@ public class GoodsAttributeTAction extends ActionSupport {
 		rows.clear();
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			GoodsAttributeT gat = (GoodsAttributeT) it.next();
-			if("0".equals(gat.getAttributeType())){
-				gat.setAttributeType("筛选项");
-			}
-			if("1".equals(gat.getAttributeType())){
-				gat.setAttributeType("输入项");
-			}
-			if("1".equals(gat.getIssearch())){
-				gat.setIssearch("支持");
+			if(StaticString.ZERO.equals(gat.getAttributeType())){
+				gat.setAttributeType(StaticString.SELECTITEM);
 			}else{
-				gat.setIssearch("不支持");
+				gat.setAttributeType(StaticString.INPUTITEM);
 			}
-			if("1".equals(gat.getIssametolink())){
-				gat.setIssametolink("支持");
+			if(StaticString.ONE.equals(gat.getIssearch())){
+				gat.setIssearch(StaticString.SUPPORT);
 			}else{
-				gat.setIssametolink("不支持");
+				gat.setIssearch(StaticString.UNSUPPORT);
+			}
+			if(StaticString.ONE.equals(gat.getIssametolink())){
+				gat.setIssametolink(StaticString.SUPPORT);
+			}else{
+				gat.setIssametolink(StaticString.UNSUPPORT);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gat.getGoodsattributeid());
@@ -440,12 +398,12 @@ public class GoodsAttributeTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "DelGoodsAttributeT", results = { @Result(name = "json", type = "json") })
-	public String DelGoodsAttributeT() {
+	@Action(value = "delGoodsAttributeT", results = { @Result(name = "json", type = "json") })
+	public String delGoodsAttributeT() {
 
 		if (Validate.StrNotNull(this.getGoodsattributeid())) {
-			String[] list = this.getGoodsattributeid().split(",");
-			int i = this.getGoodsAttributeTService().delGoodsAttributeT(list);
+			String[] list = StringUtils.split(this.getGoodsattributeid(), ",");
+			this.getGoodsAttributeTService().delGoodsAttributeT(list);
 			this.setSucflag(true);
 			return "json";
 		}
@@ -463,7 +421,7 @@ public class GoodsAttributeTAction extends ActionSupport {
 
 		if (Validate.StrNotNull(this.getGoodsTypeName())) {
 			List<GoodsAttributeT> list = this.getGoodsAttributeTService().findGoodsAttributeTByGoodsTypeName(this.getGoodsTypeName().trim());
-			if (list != null) {
+			if (!list.isEmpty()) {
 				beanlist = list;
 				this.setSucflag(true);
 				return "json";
@@ -483,7 +441,7 @@ public class GoodsAttributeTAction extends ActionSupport {
 
 		if (Validate.StrNotNull(this.getGoodsTypeId())) {
 			List<GoodsAttributeT> list = this.getGoodsAttributeTService().findGoodsAttributeTBygoodsTypeId(this.getGoodsTypeId());
-			if (list != null) {
+			if (!list.isEmpty()) {
 				gatbeanlist = list;
 				this.setSucflag(true);
 				return "json";
