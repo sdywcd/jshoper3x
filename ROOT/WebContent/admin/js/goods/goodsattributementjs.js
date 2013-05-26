@@ -106,9 +106,7 @@ $(function(){
 		$('.table tbody').append(html);
 	});
 	
-	/**
-	 * 检查商品属性form表单的元素
-	 */
+
 	checkGoodsAttributeForm=function(){
 		var check=true;
 		var paramlistname="paramlistname";
@@ -165,11 +163,6 @@ $(function(){
 		});
 		return check;
 	},
-	
-	/**
-	 * 获取页面中商品属性的表单数据并组织成json字符串
-	 * @returns
-	 */
 	getGoodsAttributeT=function(){
 		var goodstypetn=$('#goodstypetn').val();
 		if(goodstypetn=="0"){

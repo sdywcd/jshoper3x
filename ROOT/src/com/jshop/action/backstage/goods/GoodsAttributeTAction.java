@@ -289,7 +289,6 @@ public class GoodsAttributeTAction extends ActionSupport {
 
 	}
 
-
 	/**
 	 * 更新商品参数
 	 * 
