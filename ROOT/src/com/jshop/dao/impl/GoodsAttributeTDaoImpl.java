@@ -267,6 +267,7 @@ public class GoodsAttributeTDaoImpl extends HibernateDaoSupport implements Goods
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	public int updateGoodsAttributeissearchBygoodsattributeid(final String[] goodsattributeid, final String issearch) {
 		log.debug("updateGoodsAttributeissearchBygoodsattributeid");
 		try {

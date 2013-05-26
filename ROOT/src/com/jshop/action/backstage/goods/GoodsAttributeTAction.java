@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
@@ -288,70 +289,25 @@ public class GoodsAttributeTAction extends ActionSupport {
 
 	}
 
-	/**
-	 * 增加商品参数
-	 */
-	@Action(value = "addGoodsAttributeT", results = { @Result(name = "json", type = "json") })
-	public String addGoodsAttributeT() {
-		String a[] = this.getRjson().split("-");
-		int count = 0;
-		for (int i = 0; i < a.length; i++) {
-			GoodsAttributeT gat = new GoodsAttributeT();
-			gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
-			gat.setCreatetime(BaseTools.systemtime());
-			gat.setState("1");
-			gat.setCreatorid(BaseTools.adminCreateId());
-			gat.setGoodsTypeId(this.getGoodsTypeId());
-			gat.setGoodsTypeName(this.getGoodsTypeName());
-			gat.setAttributeIndex(this.getAttributeIndex());
-			
-			JSONObject jo = (JSONObject) JSONValue.parse(a[i].toString());
-			Iterator iter = jo.keySet().iterator();
-			while (iter.hasNext()) {
-				String key = iter.next().toString();
-				if (key.equals("goodsattributename")) {
-					gat.setGoodsattributename(jo.get(key).toString());
-				}
-				if (key.equals("attributeType")) {
-					gat.setAttributeType(jo.get(key).toString());
-				}
-				if (key.equals("attributelist")) {
-					gat.setAttributelist(jo.get(key).toString());
-				}
-				if (key.equals("sort")) {
-					gat.setSort(jo.get(key).toString());
-				}
-			}
-			if (this.getGoodsAttributeTService().addGoodsAttributeT(gat) > 0) {
-				count++;
-			}
-		}
-		if (count == a.length) {
-			this.setSucflag(true);
-			return "json";
-		}
-		this.setSucflag(false);
-		return "json";
-	}
 
 	/**
 	 * 更新商品参数
 	 * 
 	 * @return
 	 */
-	@Action(value = "UpdateGoodsAttributeT", results = { @Result(name = "json", type = "json") })
-	public String UpdateGoodsAttributeT() {
-		String a[] = this.getRjson().split("-");
-		int count = 0;
+	@Action(value = "updateGoodsAttributeT", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsAttributeT() {
+		JSONArray ja=(JSONArray)JSONValue.parse(this.getRjson());
+		int jsonsize=ja.size();
 		GoodsAttributeT gat = new GoodsAttributeT();
-		for (int i = 0; i < a.length; i++) {
+		for (int i = 0; i <jsonsize; i++) {
 			gat.setCreatetime(BaseTools.systemtime());
 			gat.setState("1");
 			gat.setCreatorid(BaseTools.adminCreateId());
 			gat.setGoodsTypeId(this.getGoodsTypeId());
 			gat.setGoodsTypeName(this.getGoodsTypeName());
 			gat.setAttributeIndex(this.getAttributeIndex());
-			JSONObject jo = (JSONObject) JSONValue.parse(a[i].toString());
+			JSONObject jo=(JSONObject)(ja.get(i));
 			Iterator iter = jo.keySet().iterator();
 			while (iter.hasNext()) {
 				String key = iter.next().toString();
@@ -371,15 +327,14 @@ public class GoodsAttributeTAction extends ActionSupport {
 					gat.setGoodsattributeid(jo.get(key).toString());
 				}
 			}
-			int j = this.getGoodsAttributeTService().updateGoodsAttributeT(gat);
-			count++;
-
+			if(gat.getGoodsattributeid().length()==0){
+				gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
+				this.getGoodsAttributeTService().addGoodsAttributeT(gat);
+			}else{
+				this.getGoodsAttributeTService().updateGoodsAttributeT(gat);
+			}
 		}
-		if (count == a.length) {
-			this.setSucflag(true);
-			return "json";
-		}
-		this.setSucflag(false);
+		this.setSucflag(true);
 		return "json";
 	}
 
@@ -446,8 +401,8 @@ public class GoodsAttributeTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "DelGoodsAttributeT", results = { @Result(name = "json", type = "json") })
-	public String DelGoodsAttributeT() {
+	@Action(value = "delGoodsAttributeT", results = { @Result(name = "json", type = "json") })
+	public String delGoodsAttributeT() {
 
 		if (Validate.StrNotNull(this.getGoodsattributeid())) {
 			String[] list = this.getGoodsattributeid().split(",");
