@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
@@ -293,9 +294,9 @@ public class GoodsAttributeTAction extends ActionSupport {
 	 */
 	@Action(value = "addGoodsAttributeT", results = { @Result(name = "json", type = "json") })
 	public String addGoodsAttributeT() {
-		String a[] = this.getRjson().split("-");
-		int count = 0;
-		for (int i = 0; i < a.length; i++) {
+		JSONArray ja=(JSONArray)JSONValue.parse(this.getRjson());
+		int jsonsize=ja.size();
+		for (int i = 0; i <jsonsize; i++) {
 			GoodsAttributeT gat = new GoodsAttributeT();
 			gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
 			gat.setCreatetime(BaseTools.systemtime());
@@ -304,8 +305,7 @@ public class GoodsAttributeTAction extends ActionSupport {
 			gat.setGoodsTypeId(this.getGoodsTypeId());
 			gat.setGoodsTypeName(this.getGoodsTypeName());
 			gat.setAttributeIndex(this.getAttributeIndex());
-			
-			JSONObject jo = (JSONObject) JSONValue.parse(a[i].toString());
+			JSONObject jo=(JSONObject)(ja.get(i));
 			Iterator iter = jo.keySet().iterator();
 			while (iter.hasNext()) {
 				String key = iter.next().toString();
@@ -322,15 +322,9 @@ public class GoodsAttributeTAction extends ActionSupport {
 					gat.setSort(jo.get(key).toString());
 				}
 			}
-			if (this.getGoodsAttributeTService().addGoodsAttributeT(gat) > 0) {
-				count++;
-			}
+			this.getGoodsAttributeTService().addGoodsAttributeT(gat);
 		}
-		if (count == a.length) {
-			this.setSucflag(true);
-			return "json";
-		}
-		this.setSucflag(false);
+		this.setSucflag(true);
 		return "json";
 	}
 

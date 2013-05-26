@@ -105,136 +105,15 @@ $(function(){
 				"</tr>";
 		$('.table tbody').append(html);
 	});
+	
 	/**
-	 * 提交属性
+	 * 获取页面中商品属性的表单数据并组织成json字符串
+	 * @returns
 	 */
-	$('#submitattrs').click(function(){
+	getGoodsAttributeT=function(){
 		var goodstypetn=$('#goodstypetn').val();
 		if(goodstypetn=="0"){
 			formwarning("#alerterror","请选择商品类型");
-			return false;
-		}
-		var goodsTypeId=$('#goodstypetn').val();
-		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
-		var paramlistname="paramlistname";
-		var attributetype="attributetype";
-		var attributelists="attributelists";
-		var paramlistsort="paramlistsort";
-		var delbutton="delbutton";
-		var goodsattributename;
-		var attributeType;
-		var attributelist;
-		var sort;
-		var attributeIndex=1;
-		var addflag=0;
-		var sucflag=false;
-		var sub="";
-		var rjson="";
-		$(".attribute").each(function(){
-			if(this.name.substring(0,13)==paramlistname){
-				if(this.value==""){
-					jAlert('商品属性名称必须填写', '信息提示');
-					sucflag=false;
-					return false;
-				}else{
-					var str = this.value;
-					var reg = /[\-\[\{\}\]:"]+/;
-				
-					if((result = reg.exec(str)) !=null){
-						jAlert('商品属性名称有非法字符"[","]","{","}",":","-"', '信息提示');
-						sucflag=false;
-						return false;
-					}
-				}
-				goodsattributename=this.value;
-				addflag=1;
-				return true;
-			}
-			if(this.name.substring(0,13)==attributetype){
-				if(this.value==""){
-					jAlert('商品类型必须选择', '信息提示');
-					sucflag=false;
-					return false;
-				}
-				attributeType=this.value;
-				addflag=2;
-				return true;
-			}
-			if(this.name.substring(0,14)==attributelists){
-				if(this.value==""){
-					jAlert('商品可选项必须填写', '信息提示');
-					sucflag=false;
-					return false;
-				}else {
-					var str = this.value;
-					var reg = /[\-\[\{\}\]:"]+/;
-					var result;
-					if((result = reg.exec(str)) !=null){
-						jAlert('商品可选项有非法字符"[","]","{","}",":","-"', '信息提示');
-						sucflag=false;
-						return false;
-					}
-				}
-				attributelist=this.value;
-				addflag=3;
-				return true;
-			}
-			if(this.name.substring(0,13)==paramlistsort){
-				if(this.value==""){
-					jAlert('商品属性排序必须填写', '信息提示');
-					sucflag=false;
-					return false;
-				}else{
-					var str = this.value;
-					var reg = /\D/;
-					var result;
-					if((result = reg.exec(str)) !=null){
-						jAlert('商品属性排序只能数字', '信息提示');
-						sucflag=false;
-						return false;
-					}
-				}
-				sort=this.value;
-				addflag=4;
-				return true;
-			}
-			if(this.name.substring(0,9)==delbutton){
-				if(addflag==4){
-					sub+="{\"goodsattributename\":\""+goodsattributename+"\",\"attributeType\":\""+attributeType+"\",\"attributelist\":\""+attributelist+"\",\"sort\":\""+sort+"\"}-";
-					addflag=0;
-					goodsattributename="";
-					attributeType="";
-					attributelist="";
-					sort="";
-					sucflag=true;
-				}
-			}
-		});
-		rjson=sub.toString().substring(0, sub.length-1);
-		this.disabled=true;
-		if(sucflag==true){
-			//插入商品属性数据
-			//"goodsattributename":goodsattributename,"goodsTypeId":goodsTypeId,"goodsTypeName":goodsTypeName,"attributeType":attributeType,"attributelist":attributelist,"sort":sort,"attributeIndex":attributeIndex
-			$.post("addGoodsAttributeT.action",{"rjson":rjson,"goodsTypeId":goodsTypeId,"goodsTypeName":goodsTypeName,"attributeIndex":attributeIndex},function(data){
-				if(data.sucflag){
-					sucflag=true;
-					window.location.href="goodsattributement.jsp?operate=find&folder=goods";
-				}else{
-					this.disabled="";
-					sucflag=false;
-				}
-			});
-		}else{
-			this.disabled="";
-			return false;
-		}
-	});
-	
-	$('#updateattrs').click(function(){
-		this.disabled="true";
-		var goodstypetn=$('#goodstypetn').val();
-		if(goodstypetn=="0"){
-			jAlert('商品类型必须选择', '信息提示');
 			return false;
 		}
 		var goodsTypeId=$('#goodstypetn').val();
@@ -358,6 +237,17 @@ $(function(){
 			this.disabled="";
 			return false;
 		}
+		
+	}
+	
+	/**
+	 * 提交属性
+	 */
+	$('#submitattrs').click(function(){
+		
+	});
+	
+	$('#updateattrs').click(function(){
 		
 	});
 	
