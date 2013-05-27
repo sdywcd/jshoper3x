@@ -24,8 +24,6 @@ import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsAttributeT;
 import com.jshop.service.GoodsAttributeTService;
 import com.opensymphony.xwork2.ActionSupport;
-
-import freemarker.template.utility.StringUtil;
 @Namespace("")
 @ParentPackage("jshop")
 public class GoodsAttributeTAction extends ActionSupport {
