@@ -255,13 +255,12 @@ $(function() {
 	});
 	function action(com, grid) {
 		if (com == '添加') {
-			window.location.href = "brands.jsp?operate=add&folder=goods";
+			window.location.href = "brand.jsp?operate=add&folder=goods";
 			return;
 		} else if (com == '编辑') {
 			if ($('.trSelected', grid).length == 1) {
 				var str = $('.trSelected', grid)[0].id.substr(3);
-				window.location.href = "brands.jsp?operate=edit&folder=goods&brandid="
-						+ str;
+				window.location.href = "brand.jsp?operate=edit&folder=goods&brandid="+ str;
 				return;
 			} else {
 				formwarning("#alerterror", "请选择一条信息");
