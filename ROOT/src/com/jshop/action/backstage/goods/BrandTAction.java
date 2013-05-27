@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
@@ -294,10 +294,9 @@ public class BrandTAction extends ActionSupport {
 			if (bt != null) {
 				for (Iterator it = bt.iterator(); it.hasNext();) {
 					BrandT b = (BrandT) it.next();
-
 					Map cellMap = new HashMap();
 					cellMap.put("id", b.getBrandid());
-					cellMap.put("cell", new Object[] {b.getBrandname(), b.getSort(), BaseTools.formateDbDate(b.getCreatetime()), b.getCreatorid() });
+					cellMap.put("cell", new Object[] {b.getBrandname(), b.getSort(), BaseTools.formateDbDate(b.getCreatetime()), b.getCreatorid(),"<a id='editbrands' name='editbrands' href='brands.jsp?operate=edit&folder=goods&brandid=" + b.getBrandid()+ "'>[编辑]</a>" });
 					rows.add(cellMap);
 				}
 				return "json";
@@ -313,8 +312,8 @@ public class BrandTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "UpdateBrandt", results = { @Result(name = "json", type = "json") })
-	public String UpdateBrandt() {
+	@Action(value = "updateBrandt", results = { @Result(name = "json", type = "json") })
+	public String updateBrandt() {
 		BrandT bt = new BrandT();
 		bt.setBrandid(this.getBrandid());
 		bt.setBrandname(this.getBrandname().trim());
@@ -351,10 +350,10 @@ public class BrandTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "DelBrandt", results = { @Result(name = "json", type = "json") })
-	public String DelBrandt() {
+	@Action(value = "delBrandt", results = { @Result(name = "json", type = "json") })
+	public String delBrandt() {
 		if (Validate.StrNotNull(this.getBrandid())) {
-			String[] strs = this.getBrandid().trim().split(",");
+			String[] strs = StringUtils.split(this.getBrandid(), ",");
 			if (this.getBrandTService().delBrandt(strs, BaseTools.adminCreateId()) > 0) {
 				return "json";
 			}
