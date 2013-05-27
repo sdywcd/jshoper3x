@@ -17,12 +17,15 @@ import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.BrandT;
+import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.service.BrandTService;
+import com.jshop.service.GoodsTypeBrandTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 public class BrandTAction extends ActionSupport {
 	private BrandTService brandTService;
+	private GoodsTypeBrandTService goodsTypeBrandTService;
 	private Serial serial;
 	private String brandid;
 	private String brandname;
@@ -33,6 +36,8 @@ public class BrandTAction extends ActionSupport {
 	private String logoPath;
 	private String sort;
 	private String url;
+	private String goodsTypeId;
+	private String goodsTypeName;
 	private BrandT bean=new BrandT();
 	private String brandjson;
 	private List<BrandT> brand = new ArrayList<BrandT>();
@@ -46,6 +51,16 @@ public class BrandTAction extends ActionSupport {
 	private boolean sucflag;
 	private String sortname;
 	private String sortorder;
+	@JSON(serialize = false)
+	public GoodsTypeBrandTService getGoodsTypeBrandTService() {
+		return goodsTypeBrandTService;
+	}
+
+	public void setGoodsTypeBrandTService(
+			GoodsTypeBrandTService goodsTypeBrandTService) {
+		this.goodsTypeBrandTService = goodsTypeBrandTService;
+	}
+
 	@JSON(serialize = false)
 	public BrandTService getBrandTService() {
 		return brandTService;
@@ -242,6 +257,23 @@ public class BrandTAction extends ActionSupport {
 	}
 
 
+	public String getGoodsTypeId() {
+		return goodsTypeId;
+	}
+
+	public void setGoodsTypeId(String goodsTypeId) {
+		this.goodsTypeId = goodsTypeId;
+	}
+
+
+	public String getGoodsTypeName() {
+		return goodsTypeName;
+	}
+
+	public void setGoodsTypeName(String goodsTypeName) {
+		this.goodsTypeName = goodsTypeName;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -269,6 +301,14 @@ public class BrandTAction extends ActionSupport {
 		bt.setSort(Integer.parseInt(this.getSort().trim()));
 		bt.setUrl(this.getUrl().trim());
 		if (this.getBrandTService().addBrandt(bt) > 0) {
+			//增加商品品牌和商品类型的关系
+			GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
+			gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
+			gtbt.setBrandid(bt.getBrandid());
+			gtbt.setBrandname(bt.getBrandname());
+			gtbt.setGoodsTypeId(this.getGoodsTypeId());
+			gtbt.setName(this.getGoodsTypeName());
+			this.getGoodsTypeBrandTService().addGoodsTypeBrand(gtbt);
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -325,6 +365,19 @@ public class BrandTAction extends ActionSupport {
 		bt.setSort(Integer.parseInt(this.getSort().trim()));
 		bt.setUrl(this.getUrl().trim());
 		this.getBrandTService().updateBrandt(bt);
+		GoodsTypeBrandT list = this.getGoodsTypeBrandTService().findGoodsTypeBrandByBrandid(bt.getBrandid(), this.getGoodsTypeId());
+		if (list==null) {
+			//增加商品品牌和商品类型的关系
+			GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
+			gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
+			gtbt.setBrandid(bt.getBrandid());
+			gtbt.setBrandname(bt.getBrandname());
+			gtbt.setGoodsTypeId(this.getGoodsTypeId());
+			gtbt.setName(this.getGoodsTypeName());
+			this.getGoodsTypeBrandTService().addGoodsTypeBrand(gtbt);
+			this.setSucflag(true);
+			return "json";
+		}
 		this.setSucflag(true);
 		return "json";
 	}
@@ -339,7 +392,16 @@ public class BrandTAction extends ActionSupport {
 		if (Validate.StrNotNull(this.getBrandid())) {
 			bean = this.getBrandTService().findBrandById(this.getBrandid().trim());
 			if (bean != null) {
-				return "json";
+				//bean.setLogoPath(BaseTools.getBasePath()+bean.getLogoPath());
+				GoodsTypeBrandT gtbt=this.getGoodsTypeBrandTService().findGoodsTypeIdByBrandid(bean.getBrandid());
+				if(gtbt==null){
+					this.setSucflag(false);
+				}else{
+					this.setGoodsTypeId(gtbt.getGoodsTypeId());
+					this.setSucflag(true);
+					return "json";
+				}
+				
 			}
 		}
 		return "json";

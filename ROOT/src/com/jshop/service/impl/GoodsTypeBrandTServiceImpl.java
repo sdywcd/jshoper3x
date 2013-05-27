@@ -60,4 +60,9 @@ public class GoodsTypeBrandTServiceImpl implements GoodsTypeBrandTService {
 		return this.getGoodsTypeBrandTDao().findBrandBygoodsTypeId(goodsTypeId);
 	}
 
+	@Override
+	public GoodsTypeBrandT findGoodsTypeIdByBrandid(String brandid) {
+		return this.getGoodsTypeBrandTDao().findGoodsTypeIdByBrandid(brandid);
+	}
+
 }

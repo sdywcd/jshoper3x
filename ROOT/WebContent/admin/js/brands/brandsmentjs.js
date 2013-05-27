@@ -19,11 +19,32 @@ $(function() {
 			$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
 		});
 	});
-
+	/*
+	 * Get Goods Type for select elements
+	 */
+	findGoodsTypeTNForSelect=function(){
+		$.ajax({
+			url:"findGoodsTypeTNForSelect.action",
+			type:"post",
+			dataType:'json',
+			async:false,
+			success:function(data){
+			if(data.goodstypetnlist!=""){
+				$('#goodstypetn').append(data.goodstypetnlist);
+				}
+			}
+		});
+	},
 	/**
 	 * 增加品牌
 	 */
 	$('#submit').click(function() {
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var brandname = $('#brandname').val();
 		if (brandname == "") {
 			formwarning("#alerterror","请填写品牌名称");
@@ -54,7 +75,9 @@ $(function() {
 			"url" : url,
 			"logoPath" : logoPath,
 			"sort" : sort,
-			"intro" : intro
+			"intro" : intro,
+			"goodsTypeId":goodsTypeId,
+			"goodsTypeName":goodsTypeName
 		}, function(data) {
 			if (data.sucflag) {
 				window.location.href = "brandsment.jsp?operate=find&folder=goods";
@@ -71,33 +94,41 @@ $(function() {
 			return false;
 		}
 		$.post("findBrandById.action",{"brandid" : brandid},function(data) {
-			if (data.bean != null) {
-				$('#submit').hide();
-				$('#modify').show();
+			if (data.sucflag) {
 				$('#brandname').attr("value", data.bean.brandname);
 				$('#url').attr("value", data.bean.url);
 				$('#hidbrandid').attr("value", data.bean.brandid);
-				if (data.bean.url == null) {
-					var htm = "<img id='logoPath' src=''/>";
-				} else {
-					var htm = "<img id='logoPath' src='"
+				if (data.bean.logoPath == "") {
+					return;
+				}else{
+					
+					var htm = "<img id='logoPath' src='../.."
 							+ data.bean.logoPath + "'/>";
 					var checkpc = "<input id='logoPath' name='pcpath' type='checkbox' value='"
 							+ data.bean.logoPath
-							+ "' checked='true' />";
+							+ "' checked />";
+					$("#triggers").html(htm).append(checkpc);
 				}
-				$("#triggers").html(htm).append(checkpc);
 				$('#sort').attr("value", data.bean.sort);
 				if (data.bean.intro == null) {
 					KE.html("intro", "");
 				} else {
 					KE.html("intro", data.bean.intro);
 				}
+				$("#goodstypetn").val(data.goodsTypeId);
+				$('#submit').hide();
+				$('#update').show();
 			}
 		});
 	},
 	
-	$('#modify').click(function() {
+	$('#update').click(function() {
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var brandname = $('#brandname').val();
 		if (brandname == "") {
 			formwarning("#alerterror","请填写品牌名称");
@@ -130,7 +161,9 @@ $(function() {
 			"url" : url,
 			"logoPath" : logoPath,
 			"sort" : sort,
-			"intro" : intro
+			"intro" : intro,
+			"goodsTypeId":goodsTypeId,
+			"goodsTypeName":goodsTypeName
 		}, function(data) {
 			if (data.sucflag) {
 				window.location.href = "brandsment.jsp?operate=find&folder=goods";
@@ -146,7 +179,11 @@ $(function() {
 $(function(){
 	var operate = $.query.get("operate");
 	if (operate == "edit") {
+		findGoodsTypeTNForSelect();
 		findBrandById();
+		return;
+	}else if(operate=="add"){
+		findGoodsTypeTNForSelect();
 		return;
 	}
 });
@@ -236,13 +273,12 @@ $(function() {
 	});
 	function action(com, grid) {
 		if (com == '添加') {
-			window.location.href = "brand.jsp?operate=add&folder=goods";
+			window.location.href = "brands.jsp?operate=add&folder=goods";
 			return;
 		} else if (com == '编辑') {
 			if ($('.trSelected', grid).length == 1) {
 				var str = $('.trSelected', grid)[0].id.substr(3);
-				window.location.href = "brand.jsp?operate=edit&folder=goods&brandid="
-						+ str;
+				window.location.href = "brands.jsp?operate=edit&folder=goods&brandid="+ str;
 				return;
 			} else {
 				formwarning("#alerterror", "请选择一条信息");
@@ -257,7 +293,7 @@ $(function() {
 				$.post("delBrandt.action", {
 					"brandid" : str
 				}, function(data) {
-					$('#brandmanagement').flexReload();
+					$('#brandsmanagement').flexReload();
 					forminfo("#alertinfo", "删除品牌成功");
 				});
 				return;

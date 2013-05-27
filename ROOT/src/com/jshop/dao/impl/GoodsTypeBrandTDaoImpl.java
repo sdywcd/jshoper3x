@@ -15,6 +15,8 @@ import org.springframework.stereotype.Repository;
 import com.jshop.dao.GoodsTypeBrandTDao;
 import com.jshop.entity.GoodsTypeBrandT;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 /**
  * A data access object (DAO) providing persistence and search support for
  * GoodsTypeBrandT entities. Transaction control of the save(), update() and
@@ -184,6 +186,22 @@ public class GoodsTypeBrandTDaoImpl extends HibernateDaoSupport implements Goods
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findBrandBygoodsTypeId error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public GoodsTypeBrandT findGoodsTypeIdByBrandid(String brandid) {
+		log.debug("findGoodsTypeIdByBrandid: " + brandid);
+		try {
+			String queryString = "from GoodsTypeBrandT as gtbt where gtbt.brandid=:brandid";
+			List<GoodsTypeBrandT> list = this.getHibernateTemplate().findByNamedParam(queryString, "brandid", brandid);
+			if (!list.isEmpty()) {
+				return list.get(0);
+			}
+			return null;
+		} catch (RuntimeException re) {
+			log.error("findGoodsTypeIdByBrandid failed", re);
 			throw re;
 		}
 	}

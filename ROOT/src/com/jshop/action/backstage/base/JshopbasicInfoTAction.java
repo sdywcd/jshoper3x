@@ -473,7 +473,6 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		String creatorid=BaseTools.adminCreateId();
 		beanlist = this.getJshopbasicInfoTService().findAllJshopbasicInfo(creatorid);
 		if (beanlist != null) {
-			beanlist.setSitelogo(BaseTools.getBasePath()+beanlist.getSitelogo());
 			this.setSucflag(true);
 			return "json";
 		}

@@ -68,7 +68,7 @@ $(function(){
 						return;
 					}
 					pcpath=value;
-					htm="<img id='"+value+"' src='"+pcpath+"'></img>";
+					htm="<img id='"+value+"' src='../.."+pcpath+"'></img>";
 					checkpc="<input id='"+value+"' name='pcpath' type='checkbox' value='"+value+"' checked/>";
 					allpcpath=htm+checkpc;
 					$('#triggers').append(allpcpath);
