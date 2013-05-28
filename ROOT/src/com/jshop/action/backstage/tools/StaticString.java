@@ -68,6 +68,19 @@ public class  StaticString {
 	public static final String INPUTITEM="输入项";
 	
 	
+	//产品规格的静态字段用于json比较取值
+	public static final String SPECIFIKEY="specifikey";
+	
+	public static final String SPECIFIVALUE="specifivalue";
+	
+	public static final String SPECIFISORT="specifisort";
+	
+	public static final String WORTTYPE="颜色类型";
+	
+	public static final String IMGTYPE="图片类型";
+	
+	public static final String COLORTYPE="颜色类型";
+	
 	
 	
 	

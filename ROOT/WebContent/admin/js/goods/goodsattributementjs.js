@@ -204,7 +204,6 @@ $(function(){
 				}
 				if(this.name.substring(0,9)==delbutton){
 						sub+="{\"goodsattributename\":\""+goodsattributename+"\",\"attributeType\":\""+attributeType+"\",\"attributelist\":\""+attributelist+"\",\"sort\":\""+sort+"\",\"goodsattributeid\":\""+goodsattributeid+"\"},";
-						addflag=0;
 						goodsattributename="";
 						attributeType="";
 						attributelist="";

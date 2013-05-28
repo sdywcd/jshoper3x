@@ -17,10 +17,14 @@
 <link href="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
 <link href="<%=basePath%>admin/ui/assets/css/base.css" rel="stylesheet">
 
+
 <!-- import flexigrid css -->
 <link href="<%=basePath%>admin/js/plugins/flexigrid/css/flexigrid/flexigrid_blue.css" rel="stylesheet" type="text/css" >
 <!-- import uploader css -->
 <link href="<%=basePath%>admin/js/plugins/uploader/fileuploader.css" rel="stylesheet">
+<!-- import  farbtastic css-->
+ <link href="<%=basePath%>admin/js/plugins/farbtastic/farbtastic.css" rel="stylesheet">
+
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>

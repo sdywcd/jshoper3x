@@ -10,17 +10,20 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ProductSpecificationsT;
 import com.jshop.service.ProductSpecificationsTService;
@@ -332,38 +335,29 @@ public class ProductSpecificationsTAction extends ActionSupport {
 
 	public void ProcessProductSpecificationsTList(List<ProductSpecificationsT> list) {
 		rows.clear();
-		StringBuilder sb = new StringBuilder();
-		String[] array;
+		StringBuilder sbkey = new StringBuilder();
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			ProductSpecificationsT gst = (ProductSpecificationsT) it.next();
-			if (gst.getSpecificationsType().equals("1")) {
-				gst.setSpecificationsType("文字类型");
-			} else {
-				gst.setSpecificationsType("图片类型");
-			}
-			array = gst.getSpecificationsValue().split("-");
-			if (array.length > 1) {
-				for (int i = 0; i < array.length; i++) {
-					JSONObject jo = (JSONObject) JSONValue.parse(array[i]);
-					Iterator iter = jo.keySet().iterator();
-					while (iter.hasNext()) {
-						String key = iter.next().toString();
-						if (key.equals("goodsattributename")) {
-							sb.append(jo.get(key).toString() + "  ");
-						}
-					}
-				}
+			if (gst.getSpecificationsType().equals(StaticString.ONE)) {
+				gst.setSpecificationsType(StaticString.WORTTYPE);
+			} else if(gst.getSpecificationsType().equals(StaticString.TWO)) {
+				gst.setSpecificationsType(StaticString.IMGTYPE);
 			}else{
-				JSONObject jo = (JSONObject) JSONValue.parse(gst.getSpecificationsValue());
+				gst.setSpecificationsType(StaticString.COLORTYPE);
+			}
+			JSONArray ja=(JSONArray)JSONValue.parse(gst.getSpecificationsValue());
+			int jsonsize=ja.size();
+			for (int i = 0; i < jsonsize; i++) {
+				JSONObject jo=(JSONObject)(ja.get(i));
 				Iterator iter = jo.keySet().iterator();
 				while (iter.hasNext()) {
 					String key = iter.next().toString();
-					if (key.equals("goodsattributename")) {
-						sb.append(jo.get(key).toString() + "  ");
+					if (key.equals(StaticString.SPECIFIKEY)) {
+						sbkey.append(jo.get(key).toString()).append("");
 					}
 				}
 			}
-			gst.setSpecificationsValue(sb.toString());
+			gst.setSpecificationsValue(sbkey.toString());
 			if (gst.getNote() == null) {
 				gst.setNote("");
 			}
@@ -371,7 +365,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 			cellMap.put("id", gst.getSpecificationsid());
 			cellMap.put("cell", new Object[] { gst.getName() + "[" + gst.getNote() + "]", gst.getSpecificationsType(), gst.getSpecificationsValue(), gst.getSort(), BaseTools.formateDbDate(gst.getCreatetime()) });
 			rows.add(cellMap);
-			sb.delete(0, sb.length());
+			sbkey.delete(0, sbkey.length());
 		}
 
 	}
@@ -387,7 +381,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		if (Validate.StrNotNull(this.getSpecificationsid())) {
 			bean = this.getProductSpecificationsTService().findProductSpecificationsTByspecificationsid(this.getSpecificationsid().trim());
 			if (bean != null) {
-
+				this.setSucflag(true);
 				return "json";
 			}
 		}
@@ -428,7 +422,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	public String delProductSpecification() {
 
 		if (Validate.StrNotNull(this.getSpecificationsid())) {
-			String[] list = this.getSpecificationsid().split(",");
+			String[] list = StringUtils.split(this.getSpecificationsid(), ",");
 			int i = this.getProductSpecificationsTService().delProductSpecification(list);
 			this.setSucflag(true);
 			return "json";
