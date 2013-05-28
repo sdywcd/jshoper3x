@@ -21,16 +21,7 @@
 	            <a class="brand" href="#">商品单位</a>
 				<a class="brand2">所有商品单位列表</a>
             </div>
-			<div class="subnav" data-spy="affix" data-offset-top="40">
-			    <ul class="nav nav-pills">
-			      <li><a href="#typography">Typography</a></li>
-			      <li><a href="#code">Code</a></li>
-			      <li><a href="#tables">Tables</a></li>
-			      <li><a href="#forms">Forms</a></li>
-			      <li><a href="#buttons">Buttons</a></li>
-			      <li><a href="#icons">Icons by Glyphicons</a></li>
-			    </ul>
-			</div>
+			
     	</div>
     	<div class="container-fluid containerb">
 			
@@ -57,54 +48,7 @@
 			    	<table id="goodsunitmanagement" style="display:none;" ></table>
 				</div>
 			<div class="line-dotted"></div>
-			<div class="pagination">
-			    <ul>
-			    <li><a href="#">Prev</a></li>
-			    <li><a href="#">1</a></li>
-			    <li><a href="#">2</a></li>
-			    <li><a href="#">3</a></li>
-			    <li><a href="#">4</a></li>
-			    <li><a href="#">Next</a></li>
-			    </ul>
-		    </div>
-			<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-		          <li><a href="#dropdowns"><span class="badge badge-success">1</span> 西牧狼商务英伦复古牛皮</a></li>
-		          <li><a href="#buttonGroups"><span class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-		          <li><a href="#buttonDropdowns"><span class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-		          <li><a href="#navs"><span class="badge badge-info">4</span> ayhke磨砂牛皮保暖棉鞋</a></li>
-		          <li><a href="#navbar"><span class="badge badge-inverse">5</span> E人E本T4 WIFI版</a></li>
-		        </ul>
-					<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-		          <li><a href="#dropdowns"><span class="badge badge-success">1</span> 西牧狼商务英伦复古牛皮</a></li>
-		          <li><a href="#buttonGroups"><span class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-		          <li><a href="#buttonDropdowns"><span class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-		          <li><a href="#navs"><span class="badge badge-info">4</span> ayhke磨砂牛皮保暖棉鞋</a></li>
-		          <li><a href="#navbar"><span class="badge badge-inverse">5</span> E人E本T4 WIFI版</a></li>
-		        </ul>
 			
-					<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-		          <li><a href="#dropdowns"><span class="badge badge-success">1</span> 西牧狼商务英伦复古牛皮</a></li>
-		          <li><a href="#buttonGroups"><span class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-		          <li><a href="#buttonDropdowns"><span class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-		          <li><a href="#navs"><span class="badge badge-info">4</span> ayhke磨砂牛皮保暖棉鞋</a></li>
-		          <li><a href="#navbar"><span class="badge badge-inverse">5</span> E人E本T4 WIFI版</a></li>
-		        </ul>
-			
-					<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-		          <li><a href="#dropdowns"><span class="badge badge-success">1</span> 西牧狼商务英伦复古牛皮</a></li>
-		          <li><a href="#buttonGroups"><span class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-		          <li><a href="#buttonDropdowns"><span class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-		          <li><a href="#navs"><span class="badge badge-info">4</span> ayhke磨砂牛皮保暖棉鞋</a></li>
-		          <li><a href="#navbar"><span class="badge badge-inverse">5</span> E人E本T4 WIFI版</a></li>
-		        </ul>
 			
 		    </div>
 			
