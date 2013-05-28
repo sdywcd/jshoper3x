@@ -1,45 +1,123 @@
-/**
- * Global variables
- */
-var session ="true";
-var rid = "";
-var globalrjson = "";//post json data to backstage server
+$(function(){
+	var rid = "";
+	var globalrjson = "";//post json data to backstage server
+	/*
+	 * To obtain random rid
+	 */
+	getIdforradom=function(){
+		var myDate = new Date();
+		rid = myDate.getSeconds().toString() + myDate.getMilliseconds().toString();
+	},
+	/*
+	 * Delete Page elements According to rid 
+	 */
+	delParamPChild=function(){
+		$('#add' + rid).remove();
+	},
+	createUploader=function(rid){
+	    var uploader = new qq.FileUploader({
+	        element: document.getElementById("uploadguigepc"+rid),
+	        action: 'ajaxFileUploads.action',
+	        debug: true,
+	        minSizeLimit:1024,
+	        sizeLimit: 1073741824,
+	        allowedExtensions: ['jpeg','jpg','gif','png'],
+	        onComplete: function(id, fileName, responseJSON){
+			var pcpath=responseJSON.success;
+			var htm="<img class='attribute' style='width:100px;height:100px' name='showguigepc"+rid+"' id='"+id+"' src='../.."+pcpath+"' rel='#"+fileName+"'/>"
+			$("#showguigepc"+rid).html(htm);
+	        },
+	      
+	    });  
+	},
+	/**
+	 * 点击增加规格值按钮
+	 */
+	$('#addparam').click(function() {
+		getIdforradom();
+		var html = "<tr id='add"+rid+"'>"
+		+ "<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='' type='text'/></div></div></div></div></td>" 
+		+ "<td class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><div style='display:none;' id='uploadguigepc"+rid+"'></div><input class='attribute' id='attributelists"+rid+"' name='attributelists"+rid+"' type='text' value=''/></div></div></div></div></td>"
+		+ "<td id='specpcparaminput'  class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><div id='showguigepc"+rid+"' style='width:100px;height:100px;'></div></div></div></div></div></td>"
+		+ "<td class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' type='text' value='' /></div></div></div></div></td>"
+		+ "<td class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='attribute btn btn-success' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>" + "</tr>";
+		$('.table tbody').append(html);
+
+		var specificationsType = $('#specificationsType').val();
+		if (specificationsType == "1") {//文字类型 规格名称
+			$('#selectcolordiv').hide();
+			$("#specpc").remove();
+			$("#specpcparaminput").each(function(){
+				$(this).remove();
+			});
+		} else if(specificationsType=="2"){//图片类型
+			var attributelists = "attributelists";
+			$(".attribute").each(function() {
+				if (this.name.substring(0, 14) == attributelists) {
+					this.style.display="none";//隐藏显示上传组件
+					$("#uploadguigepc"+rid).show();
+					createUploader(rid);
+				}
+			});
+			$("#specpc").remove();
+			$("#specpcparaminput").each(function(){
+				$(this).remove();
+			});
+		}else{
+			$('#selectcolordiv').show();//颜色类型
+			var paramlistname = "paramlistname";
+			$(".attribute").each(function() {
+				if (this.name.substring(0, paramlistname.length) == paramlistname) {
+					this.disabled=true;
+					this.value="颜色RGB值填写入规格值参数中";
+					$("#specpc").remove();
+				}
+			});
+			$("#specpcparaminput").each(function(){
+				$(this).remove();
+			});
+		}
+
+	});
+	
+	/**
+	 * 取色控件
+	 */
+	initfarbtastic=function(){
+		$('#demo').hide();
+		var f = $.farbtastic('#picker');
+		var p = $('#picker').css('opacity', 0.25);
+		var selected;
+		$('.colorwell').each(function() {
+			f.linkTo(this);
+			$(this).css('opacity', 0.75);
+		}).focus(function() {
+			if (selected) {
+				$(selected).css('opacity', 0.75).removeClass('colorwell-selected');
+			}
+			f.linkTo(this);
+			p.css('opacity', 1);
+			$(selected = this).css('opacity', 1).addClass('colorwell-selected');
+		});
+		
+	}
+
+	
+	
+	
+});
+
+
 /*===========================================Gorgeous split-line==============================================*/
-/**
- * Function
- */
-
-/*
- * To obtain random rid
- */
-function getIdforradom() {
-	var myDate = new Date();
-	rid = myDate.getSeconds().toString() + myDate.getMilliseconds().toString();
-}
-/*
- * Delete Page elements According to rid 
- */
-function delParamPChild(rid) {
-	$('#add' + rid).remove();
-
-}
-
-function createUploader(rid){ 
-    var uploader = new qq.FileUploader({
-        element: document.getElementById("uploadguigepc"+rid),
-        action: 'ajaxFileUploads.action',
-        debug: true,
-        minSizeLimit:1024,
-        sizeLimit: 1073741824,
-        allowedExtensions: ['jpeg','jpg','gif','png'],
-        onComplete: function(id, fileName, responseJSON){
-		var pcpath=responseJSON.success;
-		var htm="<img class='attribute' style='width:100px;height:100px' name='showguigepc"+rid+"' id='"+id+"' src='../../.."+pcpath+"' rel='#"+fileName+"'/>"
-		$("#showguigepc"+rid).html(htm);
-        },
-      
-    });           
-}
+$(function(){
+	var operate = $.query.get("operate");
+	if (operate == "add") {
+		initfarbtastic();
+		return;
+	}else if(operate=="edit"){
+		initfarbtastic();
+	}
+});
 
 /*===========================================Gorgeous split-line==============================================*/
 
@@ -58,15 +136,15 @@ $(function() {
 			var attributelists = "attributelists";
 			$('#selectcolordiv').hide();
 			$(".attribute").each(function() {
-				if (this.name.substring(0, 14) == attributelists) {
+				if (this.name.substring(0, attributelists.length) == attributelists) {
 					this.disabled = true;
 				}
 			});
-		} else {
+		} else if(specificationsType=="3"){
 			var attributelists = "attributelists";
 			$('#selectcolordiv').show();
 			$(".attribute").each(function() {
-				if (this.name.substring(0, 14) == attributelists) {
+				if (this.name.substring(0,attributelists.length) == attributelists) {
 					this.disabled = false;
 				}
 			});
@@ -123,7 +201,7 @@ $(function() {
 			onpress : action
 		}, {
 			name : '删除',
-			bclass : 'delete',
+			bclass : 'del',
 			onpress : action
 		}, {
 			separator : true
@@ -136,7 +214,7 @@ $(function() {
 		sortname : "createtime",
 		sortorder : "desc",
 		usepager : true,
-		title : '商品规格列表',
+		title : '',
 		useRp : true,
 		rp : 20,
 		rpOptions : [ 5, 20, 40, 100 ],
@@ -150,39 +228,32 @@ $(function() {
 
 	function action(com, grid) {
 		if (com == '添加') {
-			window.location.href = "addproductspecification.jsp?session="+session+"#goods";
+			window.location.href = "productspecification.jsp?operate=add&folder=goods";
 			return;
 		} else if (com == '编辑') {
 			if ($('.trSelected', grid).length == 1) {
-				jConfirm('确定编辑此项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = $('.trSelected', grid)[0].id.substr(3);
-						window.location.href = "addproductspecification.jsp?session="+session+"#goods&specificationsid=" + str;
-						return;
-					}
-				});
+				var str = $('.trSelected', grid)[0].id.substr(3);
+				window.location.href = "addproductspecification.jsp?session="+session+"#goods&specificationsid=" + str;
+				return;
 			} else {
-				jAlert('请选择一条信息', '信息提示');
+				formwarning("#alerterror", "请选择一条信息");
 				return false;
 			}
 		} else if (com = '删除') {
 			if ($('.trSelected', grid).length > 0) {
-				jConfirm('确定删除此项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = "";
-						$('.trSelected', grid).each(function() {
-							str += this.id.substr(3) + ",";
-						});
-						$.post("delProductSpecification.action", {
-							"specificationsid" : str
-						}, function(data) {
-							$('#productspecificationmanagement').flexReload();
-						});
-					}
+				var str = "";
+				$('.trSelected', grid).each(function() {
+					str += this.id.substr(3) + ",";
+				});
+				$.post("delProductSpecification.action", {
+					"specificationsid" : str
+				}, function(data) {
+					$('#productspecificationmanagement').flexReload();
+					forminfo("#alertinfo","删除商品规格成功");
 				});
 				return;
 			} else {
-				jAlert('请选择要删除的信息!', '信息提示');
+				formwarning("#alerterror", "请选择要删除的信息");
 				return false;
 			}
 		}
@@ -197,41 +268,7 @@ $(function() {
  * 增加产品规格值
  */
 $(function() {
-	$('#addparam').click(function() {
-		getIdforradom();
-		var html = "<tr id='add"+rid+"'>"
-		+ "<td class='title'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistname"+rid+"' name='paramlistname"+rid+"' value='' type='text'/></div></div></div></div></td>" 
-		+ "<td class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><div style='display:none;' id='uploadguigepc"+rid+"'></div><input class='attribute' id='attributelists"+rid+"' name='attributelists"+rid+"' type='text' value=''/></div></div></div></div></td>"
-		+ "<td class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><div id='showguigepc"+rid+"' style='width:100px;height:100px;'></div></div></div></div></div></td>"
-		+ "<td class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input class='attribute' id='paramlistsort"+rid+"' name='paramlistsort"+rid+"' type='text' value='' /></div></div></div></div></td>"
-		+ "<td class='paraminput'><div class='form'><div class='fields'><div class='field field-first'><div class='typeinput'><input  class='attribute' id='delbutton"+rid+"' name='delbutton"+rid+"' type='button' value='删除' onClick='delParamPChild("+rid+")'/></div></div></div></div></td>" + "</tr>";
-		$('.table tbody').append(html);
-
-		var specificationsType = $('#specificationsType').val();
-		if (specificationsType == "1") {
-			var attributelists = "attributelists";
-			$('#selectcolordiv').hide();
-			$(".attribute").each(function() {
-				if (this.name.substring(0, 14) == attributelists) {
-					this.disabled = true;
-				}
-			});
-		} else if(specificationsType=="2"){
-			var attributelists = "attributelists";
-			$('#selectcolordiv').show();
-			$(".attribute").each(function() {
-				if (this.name.substring(0, 14) == attributelists) {
-					this.disabled = false;
-					this.style.display="none";//隐藏显示上传组件
-					$("#uploadguigepc"+rid).show();
-					createUploader(rid);
-					
-					
-				}
-			});
-		}
-
-	});
+	
 
 	$('#submit').click(function() {
 		var name = $('#name').val();
