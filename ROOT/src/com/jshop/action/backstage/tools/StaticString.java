@@ -6,6 +6,8 @@ package com.jshop.action.backstage.tools;
  */
 public class  StaticString {
 	//flexigrid default search tag
+	public static final String EMPTY="";
+	
 	public static final String SC="sc";
 	
 	public static final String ZERO="0";
@@ -80,6 +82,15 @@ public class  StaticString {
 	public static final String IMGTYPE="图片类型";
 	
 	public static final String COLORTYPE="颜色类型";
+	
+	//商品分类静态化字段
+	public static final String TOPCA="顶级分类";
+	
+	public static final String TWOCA="二级分类";
+	
+	public static final String THREECA="三级分类";
+	
+	
 	
 	
 	

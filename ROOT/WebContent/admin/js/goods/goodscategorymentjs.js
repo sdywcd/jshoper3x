@@ -1,53 +1,36 @@
-
-/**
- * Global variables
- */
-var session ="true";
-/*===========================================Gorgeous split-line==============================================*/
-
 /**
  * Required to initialize the page data
  */
 
-/*
- * 删除图片按钮
- */
+
 $(function() {
-    $("#delpc").click(function() {
-        var str = "";
-        var sum = 0;
-        $(":checkbox[name='pcpath'][checked=true]").each(function() {
-            sum++;
-            str = this.id;
-        });
-        if (sum == 0) {
-            jAlert('只有在选择图片后才能删除', '信息提示');
-            return false;
-        }
-        if (sum > 1) {
-            jAlert('不能选择多个图片', '信息提示');
-            return false;
-        }
-        $('#triggers img').each(function() {
-            if (this.id == str) {
-                this.style.display = "none";
-                $(":checkbox[name='pcpath'][checked=true]").each(function() {
-                    if (this.id == str) {
-                        this.style.display = "none";
-                        this.name = "dispcpath";
-                    }
-
-                });
-            }
-
-        });
-
-    });
-});
-/**
- * 读取商品一级分类
- */
-$(function() {
+	/*
+	 * 删除图片按钮
+	 */
+	$("#delpc").click(function() {
+		var str = "";
+		var sum = 0;
+		$(":checkbox[name='pcpath']").each(function() {
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		if (sum == 0) {
+			alert('只有在选择图片后才能删除');
+			return false;
+		}
+		var array = new Array();
+		array = str.split(",");
+		$(array).each(function(k, v) {
+			$("#triggers img").remove("img[id=" + v + "]");
+			$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
+		});
+	});
+	
+	/**
+	 * 读取商品一级分类
+	 */
 	$('#addfl').show();
 	$('#modfl').hide();
 	var goodsCategoryTid = $.query.get('goodsCategoryTid');
@@ -85,14 +68,21 @@ $(function() {
 	/**
 	 * 获取商品类型下拉框
 	 */
-	$.post("findGoodsTypeTNForSelect.action", function(data) {
-		if (data.goodstypetnlist != "") {
-			var temp = "<select id='goodsTypeId' name='goodsTypeId'>";
-			var temp2 = "<option value='1'>通用商品类型</option>";
-			var temp1 = "</select>";
-			$('#goodstypetnselect').html(temp + data.goodstypetnlist + temp2 + temp1);
-		}
-	});
+	findGoodsTypeTNForSelect=function(){
+		$.ajax({
+			url:"findGoodsTypeTNForSelect.action",
+			type:"post",
+			dataType:'json',
+			async:false,
+			success:function(data){
+			if(data.goodstypetnlist!=""){
+				var temp = "<option value='1'>通用商品类型</option>";
+				$('#goodsTypeId').html(data.goodstypetnlist+temp);
+				}
+			}
+		});
+	},
+
 	/**
 	 * 验证分类选择
 	 */
@@ -111,6 +101,222 @@ $(function() {
 		}
 	});
 	
+	
+
+	/**
+	 * 增加商品分类
+	 */
+	$('#submit').click(function() {
+		var name = $('#name').val();
+		if (name == "") {
+			formwarning("#alerterror","请填写分类名称");
+			return false;
+		}
+		var parentId = $('#parentId').val();
+		var parentName = $('#parentId').find("option:selected").text();
+		var parentId1 = $('#parentId1').val();
+		var parentName1 = $('#parentId1').find("option:selected").text();
+		var grade="";
+		if (parentId == "0") {
+			grade = "0";
+		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+			grade = "1";
+
+		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+			grade = "2";
+		} else if (parentId == "-1") {
+			formwarning("#alerterror","请选择分类");
+			return false;
+		}
+		var goodsTypeId = $('#goodsTypeId').val();
+		if (goodsTypeId == "0") {
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var sort = $('#sort').val();
+		if (sort == "") {
+			formwarning("#alerterror","请填写排序");
+			return false;
+		}
+		var sign = $('#sign').val();
+		if (sign == "") {
+			formwarning("#alerterror","请填写静态化标示");
+			return false;
+		}
+		var metaKeywords = $('#metaKeywords').val();
+		var metaDes = $('#metaDes').val();
+        // 获logo路径集合
+		var logoPath = "";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				logoPath=this.value;
+			}
+		});
+		var mobilesync=$("input[name='mobilesync']:checked").val();
+		if (parentId == "0") {
+			$.post("addGoodsCategory.action", {
+				"grade" : grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"goodsTypeId" : goodsTypeId,
+                "logo":logoPath,
+                "mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+			$.post("addGoodsCategoryTwo.action", {
+				"parentName" : parentName,
+				"parentId" : parentId,
+				"grade" : grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"goodsTypeId" : goodsTypeId,
+                "logo":logoPath,
+                "mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+			$.post("addGoodsCategoryThree.action", {
+				"parentName1" : parentName1,
+				"parentId" : parentId,
+				"parentId1" : parentId1,
+				"grade" : grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"goodsTypeId" : goodsTypeId,
+                "logo":logoPath,
+                "mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		}
+	});
+	
+	/**
+	 * 根据商品分类id获取分类信息
+	 */
+	findGoodscategoryBygoodscategoryId=function(){
+		var goodsCategoryTid = $.query.get('goodsCategoryTid');
+		if (goodsCategoryTid == "") {
+			return false;
+		}
+		$.post("findGoodscategoryBygoodscategoryId.action", {
+			"goodsCategoryTid" : goodsCategoryTid
+		}, function(data) {
+			if (data.bean != null) {
+				$('#submit').hide();
+				$('#addfl').hide();
+				$('#modfl').show();
+				$('#update').show();
+				$('#name').attr("value", data.bean.name);
+				$('#parentName').attr("value", data.bean.parentName);
+				$('#goodsTypeId').val(data.bean.goodsTypeId);
+				$('#sign').attr("value", data.bean.sign);
+				$('#sort').attr("value", data.bean.sort);
+				$('#metaKeywords').attr("value", data.bean.metaKeywords);
+				$('#metaDes').attr("value", data.bean.metaDes);
+				$('#hidgoodsCategoryTid').attr("value", data.bean.goodsCategoryTid);
+				if(data.bean.logo!=""){
+					 var htm = "<img id='logo' src='" + data.basepath+data.bean.logo + "'/>";
+			         var checkpc = "<input id='logo' name='pcpath' type='checkbox' value='" + data.bean.logo+ "' checked='true' />";
+			         $("#triggers").html(htm).append(checkpc);
+				}
+	            if(data.bean.mobilesync=="1"){
+	            	$("input[name='mobilesync']").get(0).checked=true;
+	            }else{
+	            	$("input[name='mobilesync']").get(1).checked=true;
+	            }
+			}
+		});
+	},
+	
+	
+	/**
+	 * 更新商品分类
+	 */
+	$('#update').click(function() {
+		var name = $('#name').val();
+		if (name == "") {
+			formwarning("#alerterror","请填写分类名称");
+			return false;
+		}
+		var goodsTypeId = $('#goodsTypeId').val();
+		if (goodsTypeId == "0") {
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var sort = $('#sort').val();
+		var sign = $('#sign').val();
+		var metaKeywords = $('#metaKeywords').val();
+		var metaDes = $('#metaDes').val();
+		var goodsCategoryTid = $('#hidgoodsCategoryTid').val();
+		// 获logo路径集合
+		var logoPath = "";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				logoPath=this.value;
+			}
+		});
+		var mobilesync=$("input[name='mobilesync']:checked").val();
+		$.post("updateGoodscategoryT.action", {
+			"metaKeywords" : metaKeywords,
+			"metaDes" : metaDes,
+			"name" : name,
+			"sort" : sort,
+			"sign" : sign,
+			"goodsTypeId" : goodsTypeId,
+			"goodsCategoryTid" : goodsCategoryTid,
+            "logo":logoPath,
+            "mobilesync":mobilesync
+		}, function(data) {
+			if (data.sucflag) {
+				window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+			} else {
+				formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+				return false;
+			}
+		});
+	});
+});
+
+/**
+ * main logic
+ */
+$(function(){
+	var operate=$.query.get("operate");
+	if(operate=="edit"){
+		findGoodsTypeTNForSelect();
+		findGoodscategoryBygoodscategoryId();
+	}else if(operate=="add"){
+		findGoodsTypeTNForSelect();
+		return;
+	}
 });
 /*===========================================Gorgeous split-line==============================================*/
 
@@ -182,7 +388,7 @@ $(function() {
 			onpress : action
 		}, {
 			name : '删除',
-			bclass : 'delete',
+			bclass : 'del',
 			onpress : action
 		}, {
 			separator : true
@@ -204,7 +410,7 @@ $(function() {
 		sortname : "createtime",
 		sortorder : "desc",
 		usepager : true,
-		title : '商品分类列表',
+		title : '',
 		useRp : true,
 		rp : 20,
 		rpOptions : [ 5, 20, 40, 100 ],
@@ -215,47 +421,38 @@ $(function() {
 		procmsg : '正在获取数据，请稍候...',
 		checkbox : true
 	});
-
 	function action(com, grid) {
 		if (com == '添加') {
-			window.location.href = "addgoodscategory.jsp?session="+session+"#goods";
+			window.location.href = "goodscategory.jsp?operate=add&folder=goods";
 			return;
 		} else if (com == '编辑') {
 			if ($('.trSelected', grid).length == 1) {
-				jConfirm('确定编辑此项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = $('.trSelected', grid)[0].id.substr(3);
-						window.location.href = "addgoodscategory.jsp?session="+session+"#goods&goodsCategoryTid=" + str;
-						return;
-					}
-				});
+				var str = $('.trSelected', grid)[0].id.substr(3);
+				window.location.href = "goodscategory.jsp?operate=edit&folder=goods&goodsCategoryTid=" + str;
+				return;
 			} else {
-				jAlert('请选择一条信息', '信息提示');
+				formwarning("#alerterror", "请选择一条信息");
 				return false;
 			}
 		} else if (com == '删除') {
 			if ($('.trSelected', grid).length > 0) {
-				jConfirm('确定删除此项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = "";
-						$('.trSelected', grid).each(function() {
-							str += this.id.substr(3) + ",";
-						});
-						$.post("delGoodscategoryT.action", {
-							"goodsCategoryTid" : str
-						}, function(data) {
-							if(data.sucflag){
-								$('#goodscategorymanagement').flexReload();
-							}else{
-								jAlert('请不要删除顶级分类,请通过编辑修改内容',"信息提示");
-								$('#goodscategorymanagement').flexReload();
-							}
-						});
+				var str = "";
+				$('.trSelected', grid).each(function() {
+					str += this.id.substr(3) + ",";
+				});
+				$.post("delGoodscategoryT.action", {
+					"goodsCategoryTid" : str
+				}, function(data) {
+					if(data.sucflag){
+						$('#goodscategorymanagement').flexReload();
+					}else{
+						formwarning("#alerterror", "请不要删除顶级分类,请通过编辑修改内容");
+						$('#goodscategorymanagement').flexReload();
 					}
 				});
 				return;
 			} else {
-				jAlert('请选择要删除的信息!', '信息提示');
+				formwarning("#alerterror", "请选择要删除的信息");
 				return false;
 			}
 			
@@ -269,122 +466,8 @@ $(function() {
  * Add Function
  */
 
-/**
- * 增加商品分类
- */
 $(function() {
-	$('#submit').click(function() {
-		var name = $('#name').val();
-		if (name == "") {
-			jAlert('分类名称必须填写', '信息提示');
-			return false;
-		}
-		var parentId = $('#parentId').val();
-		var parentName = $('#parentId').find("option:selected").text();
-		var parentId1 = $('#parentId1').val();
-		var parentName1 = $('#parentId1').find("option:selected").text();
-		if (parentId == "0") {
-			var grade = "0";
-		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
-			var grade = "1";
-
-		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
-			var grade = "2";
-		} else if (parentId == "-1") {
-			jAlert('请选择分类', '信息提示');
-			return false;
-		}
-		var goodsTypeId = $('#goodsTypeId').val();
-		if (goodsTypeId == "0") {
-			jAlert('商品类型必须选择', '信息提示');
-			return false;
-		}
-		var sort = $('#sort').val();
-		if (sort == "") {
-			jAlert('排序必须填写', '信息提示');
-			return false;
-		}
-		var sign = $('#sign').val();
-		if (sign == "") {
-			jAlert('标示必须填写', '信息提示');
-			return false;
-		}
-		var metaKeywords = $('#metaKeywords').val();
-		var metaDes = $('#metaDes').val();
-        // 获logo路径集合
-        var logoPath = "";
-        $(":checkbox[name='pcpath'][checked=true]").each(function() {
-            logoPath = this.value
-        });
-        if($("#mobilesync").attr('checked')){
-            var mobilesync="1";
-        }else{
-            var mobilesync="0";
-        }
-		if (parentId == "0") {
-			$.post("addGoodsCategory.action", {
-				"grade" : grade,
-				"metaKeywords" : metaKeywords,
-				"metaDes" : metaDes,
-				"name" : name,
-				"sort" : sort,
-				"sign" : sign,
-				"goodsTypeId" : goodsTypeId,
-                "logo":logoPath,
-                "mobilesync":mobilesync
-			}, function(data) {
-				if (data.sucflag) {
-					window.location.href = "goodscategorymanagement.jsp?session="+session+"#goods";
-				} else {
-					jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
-					return false;
-				}
-			});
-		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
-			$.post("addGoodsCategoryTwo.action", {
-				"parentName" : parentName,
-				"parentId" : parentId,
-				"grade" : grade,
-				"metaKeywords" : metaKeywords,
-				"metaDes" : metaDes,
-				"name" : name,
-				"sort" : sort,
-				"sign" : sign,
-				"goodsTypeId" : goodsTypeId,
-                "logo":logoPath,
-                "mobilesync":mobilesync
-			}, function(data) {
-				if (data.sucflag) {
-					window.location.href = "goodscategorymanagement.jsp?session="+session+"#goods";
-				} else {
-					jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
-					return false;
-				}
-			});
-		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
-			$.post("addGoodsCategoryThree.action", {
-				"parentName1" : parentName1,
-				"parentId" : parentId,
-				"parentId1" : parentId1,
-				"grade" : grade,
-				"metaKeywords" : metaKeywords,
-				"metaDes" : metaDes,
-				"name" : name,
-				"sort" : sort,
-				"sign" : sign,
-				"goodsTypeId" : goodsTypeId,
-                "logo":logoPath,
-                "mobilesync":mobilesync
-			}, function(data) {
-				if (data.sucflag) {
-					window.location.href = "goodscategorymanagement.jsp?session="+session+"#goods";
-				} else {
-					jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
-					return false;
-				}
-			});
-		}
-	});
+	
 });
 /*===========================================Gorgeous split-line==============================================*/
 
@@ -395,79 +478,5 @@ $(function() {
  * 修改商品分类
  */
 $(function() {
-	var goodsCategoryTid = $.query.get('goodsCategoryTid');
-	if (goodsCategoryTid == "") {
-		return false;
-	}
-	$.post("findGoodscategoryBygoodscategoryId.action", {
-		"goodsCategoryTid" : goodsCategoryTid
-	}, function(data) {
-		if (data.bean != null) {
-			$('#submit').hide();
-			$('#addfl').hide();
-			$('#modfl').show();
-			$('#modify').show();
-			$('#name').attr("value", data.bean.name);
-			$('#parentName').attr("value", data.bean.parentName);
-			$('#goodsTypeId').val(data.bean.goodsTypeId);
-			$('#sign').attr("value", data.bean.sign);
-			$('#sort').attr("value", data.bean.sort);
-			$('#metaKeywords').attr("value", data.bean.metaKeywords);
-			$('#metaDes').attr("value", data.bean.metaDes);
-			$('#hidgoodsCategoryTid').attr("value", data.bean.goodsCategoryTid);
-            var htm = "<img id='logo' src='" + data.basepath+data.bean.logo + "'/>";
-            var checkpc = "<input id='logo' name='pcpath' type='checkbox' value='" + data.bean.logo+ "' checked='true' />";
-            $("#triggers").html(htm).append(checkpc);
-            if(data.bean.mobilesync=="1"){
-                $("#mobilesync").attr("checked",true);
-            }else{
-                $("#mobilesync").attr("checked",false);
-            }
-		}
-	});
-
-	$('#modify').click(function() {
-		var name = $('#name').val();
-		if (name == "") {
-			jAlert('分类名称必须填写', '信息提示');
-			return false;
-		}
-		var goodsTypeId = $('#goodsTypeId').val();
-		if (goodsTypeId == "0") {
-			jAlert('商品类型必须选择', '信息提示');
-			return false;
-		}
-		var sort = $('#sort').val();
-		var sign = $('#sign').val();
-		var metaKeywords = $('#metaKeywords').val();
-		var metaDes = $('#metaDes').val();
-		var goodsCategoryTid = $('#hidgoodsCategoryTid').val();
-        var logoPath = "";
-        $(":checkbox[name='pcpath'][checked=true]").each(function() {
-            logoPath = this.value
-        });
-        if($("#mobilesync").attr('checked')){
-            var mobilesync="1";
-        }else{
-            var mobilesync="0";
-        }
-		$.post("updateGoodscategoryT.action", {
-			"metaKeywords" : metaKeywords,
-			"metaDes" : metaDes,
-			"name" : name,
-			"sort" : sort,
-			"sign" : sign,
-			"goodsTypeId" : goodsTypeId,
-			"goodsCategoryTid" : goodsCategoryTid,
-            "logo":logoPath,
-            "mobilesync":mobilesync
-		}, function(data) {
-			if (data.sucflag) {
-				window.location.href = "goodscategorymanagement.jsp?session="+session+"#goods";
-			} else {
-				jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
-				return false;
-			}
-		});
-	});
+	
 });

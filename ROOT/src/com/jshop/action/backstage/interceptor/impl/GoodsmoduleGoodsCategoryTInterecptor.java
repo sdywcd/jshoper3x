@@ -2,13 +2,14 @@ package com.jshop.action.backstage.interceptor.impl;
 
 import java.util.Map;
 
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.interceptor.GoodsmoduleInterecptor;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
+@Namespace("")
 @ParentPackage("jshop")
 public class GoodsmoduleGoodsCategoryTInterecptor extends MethodFilterInterceptor {
 	private GoodsmoduleInterecptor goodsmoduleInterecptor;

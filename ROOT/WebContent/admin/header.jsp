@@ -71,7 +71,6 @@
 								<li><a href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">规格设置 </a></li>
 								
 								<li><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置 </a></li>
-								<li><a href="<%=basePath%>admin/goods/goodsunitment.jsp?operate=find">商品单位设置 </a></li>
 								<li><a href="<%=basePath%>admin/keywords/keywordsment.jsp?operate=find">商品关键字设置</a></li>
 								<li class="divider"></li>
 								<li><a href="#">添加新商品 </a></li>
