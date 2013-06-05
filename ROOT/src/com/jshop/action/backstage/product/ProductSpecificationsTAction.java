@@ -19,7 +19,6 @@ import org.apache.struts2.json.annotations.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
@@ -308,7 +307,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllProductSpecificationsT", results = { @Result(name = "json", type = "json") })
 	public String findAllProductSpecificationsT() {
-		if ("sc".equals(this.getQtype())) {
+		if (StaticString.SC.equals(this.getQtype())) {
 			this.findDefaultAllProductSpecificationsT();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -363,7 +362,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gst.getSpecificationsid());
-			cellMap.put("cell", new Object[] { gst.getName() + "[" + gst.getNote() + "]", gst.getSpecificationsType(), gst.getSpecificationsValue(), gst.getSort(), BaseTools.formateDbDate(gst.getCreatetime()) });
+			cellMap.put("cell", new Object[] { gst.getName() + "[" + gst.getNote() + "]", gst.getSpecificationsType(), gst.getSpecificationsValue(), gst.getSort(), BaseTools.formateDbDate(gst.getCreatetime()),"<a id='editproductspecification' name='editproductspecification' href='productspecification.jsp?operate=edit&folder=goods&specificationsid=" +gst.getSpecificationsid()+ "'>[编辑]</a>" });
 			rows.add(cellMap);
 			sbkey.delete(0, sbkey.length());
 		}

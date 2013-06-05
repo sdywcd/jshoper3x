@@ -41,7 +41,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<ul class="nav">
-						<li class="active"><a href="#">主页</a></li>
+						<li class="active"><a href="<%=basePath%>admin/index.jsp">主页</a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">实验室 <b class="caret"></b> </a>
 							<ul class="dropdown-menu">
 								<li><a href="#"><i class="icon-tags"></i> 电子点餐系统</a></li>
@@ -69,9 +69,7 @@
 								<li><a href="<%=basePath%>admin/brands/brandsment.jsp?operate=find">品牌设置</a></li>
 								<li><a href="<%=basePath%>admin/goods/goodstypetnbrandsment.jsp?operate=find">品牌类型设置 </a></li>
 								<li><a href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">规格设置 </a></li>
-								
-								<li><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置 </a></li>
-								<li><a href="<%=basePath%>admin/keywords/keywordsment.jsp?operate=find">商品关键字设置</a></li>
+								<li><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置 </a></li>				
 								<li class="divider"></li>
 								<li><a href="#">添加新商品 </a></li>
 								<li class="divider"></li>

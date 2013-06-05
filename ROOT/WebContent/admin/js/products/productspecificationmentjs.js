@@ -768,6 +768,12 @@ $(function() {
 			width : 300,
 			sortable : true,
 			align : 'center'
+		}, {
+			display : '操作',
+			name : 'operate',
+			width : 100,
+			sortable : true,
+			align : 'center'
 		} ],
 		buttons : [ {
 			name : '添加',

@@ -31,26 +31,29 @@ $(function() {
 	/**
 	 * 读取商品一级分类
 	 */
-	$('#addfl').show();
-	$('#modfl').hide();
-	var goodsCategoryTid = $.query.get('goodsCategoryTid');
-	if (goodsCategoryTid == "") {
-		$("#fater").hide();
-		$.post("findGoodsCategoryByGradeZeroone.action", function(data) {
-			if (data.sucflag) {
-				if (data.goodscategoryzero == "") {
-					$('#parentId').append("<option value='0'>顶级分类</option>");
-					$('#parentId1').hide();
-				} else {
-					$('#parentId').append(data.goodscategoryzero);
-					$('#parentId1').hide();
-				}
+	findGoodsCategoryByGradeZeroone=function(){
+		$('#addfl').show();
+		$('#modfl').hide();
+		$.ajax({
+			url:"findGoodsCategoryByGradeZeroone.action",
+			type:"post",
+			dataType:'json',
+			async:false,
+			success:function(data){
+				if (data.sucflag) {
+					if (data.goodscategoryzero == "") {
+						$('#parentId').append("<option value='0'>顶级分类</option>");
+						$('#parentId1').hide();
+					} else {
+						$('#parentId').append(data.goodscategoryzero);
+						$('#parentId1').hide();
+					}
 
+				}
 			}
 		});
-	}else{
-		$("#fater").show();
-	}
+	},
+
 
 	/**
 	 * 级联读取二级栏目
@@ -230,12 +233,13 @@ $(function() {
 			"goodsCategoryTid" : goodsCategoryTid
 		}, function(data) {
 			if (data.bean != null) {
-				$('#submit').hide();
-				$('#addfl').hide();
-				$('#modfl').show();
-				$('#update').show();
 				$('#name').attr("value", data.bean.name);
-				$('#parentName').attr("value", data.bean.parentName);
+				var grade=data.bean.grade;
+				if(grade==0){
+					$('#parentName').attr("value", "顶级分类");
+				}else{
+					$('#parentName').attr("value", data.bean.parentName);
+				}
 				$('#goodsTypeId').val(data.bean.goodsTypeId);
 				$('#sign').attr("value", data.bean.sign);
 				$('#sort').attr("value", data.bean.sort);
@@ -252,6 +256,10 @@ $(function() {
 	            }else{
 	            	$("input[name='mobilesync']").get(1).checked=true;
 	            }
+	            $('#submit').hide();
+				$('#addfl').hide();
+				$('#modfl').show();//上级分类显示区域
+				$('#update').show();
 			}
 		});
 	},
@@ -312,9 +320,12 @@ $(function(){
 	var operate=$.query.get("operate");
 	if(operate=="edit"){
 		findGoodsTypeTNForSelect();
+		findGoodsCategoryByGradeZeroone();
 		findGoodscategoryBygoodscategoryId();
+		
 	}else if(operate=="add"){
 		findGoodsTypeTNForSelect();
+		findGoodsCategoryByGradeZeroone();
 		return;
 	}
 });
@@ -462,21 +473,5 @@ $(function() {
 
 });
 /*===========================================Gorgeous split-line==============================================*/
-/**
- * Add Function
- */
 
-$(function() {
-	
-});
-/*===========================================Gorgeous split-line==============================================*/
 
-/**
- * Update Function
- */
-/*
- * 修改商品分类
- */
-$(function() {
-	
-});
