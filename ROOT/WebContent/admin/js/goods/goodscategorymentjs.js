@@ -156,7 +156,7 @@ $(function() {
 			}
 		});
 		var mobilesync=$("input[name='mobilesync']:checked").val();
-		if (parentId == "0") {
+		if (grade == "0") {
 			$.post("addGoodsCategory.action", {
 				"grade" : grade,
 				"metaKeywords" : metaKeywords,
@@ -175,7 +175,7 @@ $(function() {
 					return false;
 				}
 			});
-		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+		} else if (grade=="1") {
 			$.post("addGoodsCategoryTwo.action", {
 				"parentName" : parentName,
 				"parentId" : parentId,
@@ -196,7 +196,7 @@ $(function() {
 					return false;
 				}
 			});
-		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+		} else if (grade=="2") {
 			$.post("addGoodsCategoryThree.action", {
 				"parentName1" : parentName1,
 				"parentId" : parentId,
@@ -240,6 +240,7 @@ $(function() {
 				}else{
 					$('#parentName').attr("value", data.bean.parentName);
 				}
+				$("#grade").val(data.bean.grade);
 				$('#goodsTypeId').val(data.bean.goodsTypeId);
 				$('#sign').attr("value", data.bean.sign);
 				$('#sort').attr("value", data.bean.sort);
@@ -291,25 +292,101 @@ $(function() {
 				logoPath=this.value;
 			}
 		});
+		//这里需要重新定义
+		var grade="";
+		if (parentId == "0") {
+			grade = "0";
+		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+			grade = "1";
+
+		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+			grade = "2";
+		} else if (parentId == "-1") {
+			formwarning("#alerterror","请选择分类");
+			return false;
+		}
 		var mobilesync=$("input[name='mobilesync']:checked").val();
-		$.post("updateGoodscategoryT.action", {
-			"metaKeywords" : metaKeywords,
-			"metaDes" : metaDes,
-			"name" : name,
-			"sort" : sort,
-			"sign" : sign,
-			"goodsTypeId" : goodsTypeId,
-			"goodsCategoryTid" : goodsCategoryTid,
-            "logo":logoPath,
-            "mobilesync":mobilesync
-		}, function(data) {
-			if (data.sucflag) {
-				window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
-			} else {
-				formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
-				return false;
-			}
-		});
+		if (grade == "0") {
+			$.post("addGoodsCategory.action", {
+				"grade" : grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"goodsTypeId" : goodsTypeId,
+                "logo":logoPath,
+                "mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		} else if (grade=="1") {
+			$.post("addGoodsCategoryTwo.action", {
+				"parentName" : parentName,
+				"parentId" : parentId,
+				"grade" : grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"goodsTypeId" : goodsTypeId,
+                "logo":logoPath,
+                "mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		} else if (grade=="2") {
+			$.post("addGoodsCategoryThree.action", {
+				"parentName1" : parentName1,
+				"parentId" : parentId,
+				"parentId1" : parentId1,
+				"grade" : grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"goodsTypeId" : goodsTypeId,
+                "logo":logoPath,
+                "mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		}
+//		$.post("updateGoodscategoryT.action", {
+//			"metaKeywords" : metaKeywords,
+//			"metaDes" : metaDes,
+//			"name" : name,
+//			"sort" : sort,
+//			"sign" : sign,
+//			"goodsTypeId" : goodsTypeId,
+//			"goodsCategoryTid" : goodsCategoryTid,
+//            "logo":logoPath,
+//            "mobilesync":mobilesync
+//		}, function(data) {
+//			if (data.sucflag) {
+//				window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
+//			} else {
+//				formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+//				return false;
+//			}
+//		});
 	});
 });
 
