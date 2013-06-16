@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -498,18 +499,46 @@ public class GoodsCategoryTAction extends ActionSupport {
 	@Action(value = "findGoodsCategoryByGradeZeroone", results = { @Result(name = "json", type = "json") })
 	public String findGoodsCategoryByGradeZeroone() {
 		this.setGoodscategoryzero("");
-		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade("0", "1");
-		if (list != null) {
-			this.goodscategoryzero = "<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
-			for (Iterator it = list.iterator(); it.hasNext();) {
-				GoodsCategoryT gct = (GoodsCategoryT) it.next();
-				this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
-			}
-			this.setSucflag(true);
-			return "json";
+		String grade="0";//表示顶级分类
+		String state="1";//表示启用的分类
+		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade(grade, state);
+		this.goodscategoryzero = "<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
+		for (Iterator it = list.iterator(); it.hasNext();) {
+			GoodsCategoryT gct = (GoodsCategoryT) it.next();
+			this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 		}
 		this.setSucflag(true);
 		return "json";
+	}
+	
+	/**
+	 * 获取一级分类对应的二级分类列表
+	 * @return
+	 */
+	@Action(value = "findGoodscategoryByparentId", results = { @Result(name = "json", type = "json") })
+	public String findGoodscategoryByparentId(){
+		this.setGoodscategorytwo("");
+		if(StringUtils.isBlank(this.getParentId())){
+			this.setSucflag(false);
+			return "json";
+		}
+		String state="1";
+		String parentId=this.getParentId().trim();
+		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findGoodscategoryByparentId(state, parentId);
+		if(!list.isEmpty()){
+			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
+			for (Iterator it = list.iterator(); it.hasNext();) {
+				GoodsCategoryT gct = (GoodsCategoryT) it.next();
+				this.goodscategorytwo += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
+			}
+		}else {
+			this.setGoodscategorytwo("");
+			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
+		}
+		this.setSucflag(true);
+		return "json";
+		
+		
 	}
 
 	/**
@@ -571,6 +600,54 @@ public class GoodsCategoryTAction extends ActionSupport {
 		} else {
 			return "json";
 		}
+		return "json";
+	}
+	
+	
+	/**
+	 * 
+	 * 更新商品分类到顶级分类或者一级分类（顶级分类就是一级分类只是在前端有区分）
+	 * @return
+	 */
+	@Action(value = "updateGoodsCategory", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsCategory() {
+		//根据goodscategoryid读取商品分类信息
+		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
+			this.setSucflag(false);
+			return "json";
+		}
+		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
+		GoodsCategoryT gct=new GoodsCategoryT();
+		gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(goodsCategoryTid);
+		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(goodsCategoryTid, gct.getName());
+		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(goodsCategoryTid, gct.getSign());
+		//判断更新的一级分类的名称和标示是否和其他分类重复
+		if (i == 0 && j == 0) {
+			if (Integer.parseInt(this.getGrade()) == 0) {
+				gct.setGoodsTypeId(this.getGoodsTypeId());//商品类型id
+				gct.setParentName(StaticString.EMPTY);//父分类名称应为是顶级和一级分类所以名称空
+				gct.setGrade(this.getGrade().trim());//顶级分类一级分类
+				gct.setName(this.getName().trim());
+				gct.setMetaKeywords(this.getMetaKeywords().trim());
+				gct.setMetaDes(this.getMetaDes().trim());
+				gct.setState(StaticString.ONE);
+				gct.setPath(gct.getGoodsCategoryTid());
+				gct.setSort(Integer.parseInt(this.getSort().trim()));
+				gct.setSign(this.getSign().trim());
+				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setVersiont(gct.getVersiont()+1);
+				gct.setLogo(this.getLogo());
+				gct.setMobilesync(this.getMobilesync());
+				this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+				this.setSucflag(true);
+				return "json";
+			}
+		} else {
+			this.setSucflag(false);
+			return "json";
+		}
+		this.setSucflag(false);
 		return "json";
 	}
 

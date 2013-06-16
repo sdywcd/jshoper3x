@@ -66,10 +66,7 @@ public class GoodsCategoryTDaoImpl extends HibernateDaoSupport implements GoodsC
 		try {
 			String queryString = "from GoodsCategoryT as gct where gct.state=:state and gct.grade=:grade order by createtime desc";
 			List<GoodsCategoryT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "state", "grade" }, new Object[] { state, grade });
-			if (list != null && list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all GoodsCategoryT by state error", re);
 			throw re;
@@ -413,6 +410,7 @@ public class GoodsCategoryTDaoImpl extends HibernateDaoSupport implements GoodsC
 		}
 		
 	}
+
 
 
 	
