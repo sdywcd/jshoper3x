@@ -1,7 +1,3 @@
-/**
- * Required to initialize the page data
- */
-
 
 $(function() {
 	/*
@@ -53,15 +49,14 @@ $(function() {
 			}
 		});
 	},
-
-
 	/**
-	 * 级联读取二级栏目
+	 * 级联读取一级分类的二级栏目
 	 */
 	$('#parentId').change(function() {
 		var parentId = $('#parentId').val();
+		//parentid=0表示顶级分类，parentid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
 		if (parentId != "0" && parentId != "-1") {
-			$.post("findGoodsCategoryByGradeTwo.action", function(data) {
+			$.post("findGoodscategoryByparentId.action",{"parentId":parentId}, function(data) {
 				if (data.sucflag) {
 					$('#parentId1').html(data.goodscategorytwo);
 				}

@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -498,18 +499,46 @@ public class GoodsCategoryTAction extends ActionSupport {
 	@Action(value = "findGoodsCategoryByGradeZeroone", results = { @Result(name = "json", type = "json") })
 	public String findGoodsCategoryByGradeZeroone() {
 		this.setGoodscategoryzero("");
-		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade("0", "1");
-		if (list != null) {
-			this.goodscategoryzero = "<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
-			for (Iterator it = list.iterator(); it.hasNext();) {
-				GoodsCategoryT gct = (GoodsCategoryT) it.next();
-				this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
-			}
-			this.setSucflag(true);
-			return "json";
+		String grade="0";//表示顶级分类
+		String state="1";//表示启用的分类
+		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade(grade, state);
+		this.goodscategoryzero = "<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
+		for (Iterator it = list.iterator(); it.hasNext();) {
+			GoodsCategoryT gct = (GoodsCategoryT) it.next();
+			this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 		}
 		this.setSucflag(true);
 		return "json";
+	}
+	
+	/**
+	 * 获取一级分类对应的二级分类列表
+	 * @return
+	 */
+	@Action(value = "findGoodscategoryByparentId", results = { @Result(name = "json", type = "json") })
+	public String findGoodscategoryByparentId(){
+		this.setGoodscategorytwo("");
+		if(StringUtils.isBlank(this.getParentId())){
+			this.setSucflag(false);
+			return "json";
+		}
+		String state="1";
+		String parentId=this.getParentId().trim();
+		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findGoodscategoryByparentId(state, parentId);
+		if(!list.isEmpty()){
+			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
+			for (Iterator it = list.iterator(); it.hasNext();) {
+				GoodsCategoryT gct = (GoodsCategoryT) it.next();
+				this.goodscategorytwo += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
+			}
+		}else {
+			this.setGoodscategorytwo("");
+			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
+		}
+		this.setSucflag(true);
+		return "json";
+		
+		
 	}
 
 	/**
