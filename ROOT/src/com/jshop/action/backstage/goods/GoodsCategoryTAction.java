@@ -511,6 +511,8 @@ public class GoodsCategoryTAction extends ActionSupport {
 		return "json";
 	}
 	
+
+	
 	/**
 	 * 获取一级分类对应的二级分类列表
 	 * @return
@@ -600,6 +602,55 @@ public class GoodsCategoryTAction extends ActionSupport {
 		} else {
 			return "json";
 		}
+		return "json";
+	}
+	
+	
+	/**
+	 * 
+	 * 更新商品分类到顶级分类或者一级分类（顶级分类就是一级分类只是在前端有区分）
+	 * @return
+	 */
+	@Action(value = "updateGoodsCategory", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsCategory() {
+		//根据goodscategoryid读取商品分类信息
+		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
+			this.setSucflag(false);
+			return "json";
+		}
+		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
+		GoodsCategoryT gct=new GoodsCategoryT();
+		gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(goodsCategoryTid);
+		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(goodsCategoryTid, gct.getName());
+		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(goodsCategoryTid, gct.getSign());
+		//判断更新的一级分类的名称和标示是否和其他分类重复
+		if (i == 0 && j == 0) {
+			if (Integer.parseInt(this.getGrade()) == 0) {
+				gct.setGoodsTypeId(this.getGoodsTypeId());//商品类型id
+				gct.setParentId(StaticString.EMPTY);//将父分类设置成空
+				gct.setParentName(StaticString.EMPTY);//父分类名称应为是顶级和一级分类所以名称空
+				gct.setGrade(this.getGrade().trim());//顶级分类一级分类
+				gct.setName(this.getName().trim());
+				gct.setMetaKeywords(this.getMetaKeywords().trim());
+				gct.setMetaDes(this.getMetaDes().trim());
+				gct.setState(StaticString.ONE);
+				gct.setPath(StaticString.EMPTY);//将原有分类递归路径设置成空
+				gct.setSort(Integer.parseInt(this.getSort().trim()));
+				gct.setSign(this.getSign().trim());
+				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setVersiont(gct.getVersiont()+1);
+				gct.setLogo(this.getLogo());
+				gct.setMobilesync(this.getMobilesync());
+				this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+				this.setSucflag(true);
+				return "json";
+			}
+		} else {
+			this.setSucflag(false);
+			return "json";
+		}
+		this.setSucflag(false);
 		return "json";
 	}
 

@@ -288,6 +288,10 @@ $(function() {
 			}
 		});
 		//这里需要重新定义
+		var parentId = $('#parentId').val();
+		var parentName = $('#parentId').find("option:selected").text();
+		var parentId1 = $('#parentId1').val();
+		var parentName1 = $('#parentId1').find("option:selected").text();
 		var grade="";
 		if (parentId == "0") {
 			grade = "0";
@@ -302,7 +306,8 @@ $(function() {
 		}
 		var mobilesync=$("input[name='mobilesync']:checked").val();
 		if (grade == "0") {
-			$.post("addGoodsCategory.action", {
+			$.post("updateGoodsCategory.action", {
+				"goodsCategoryTid":goodsCategoryTid,
 				"grade" : grade,
 				"metaKeywords" : metaKeywords,
 				"metaDes" : metaDes,

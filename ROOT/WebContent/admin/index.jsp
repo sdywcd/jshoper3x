@@ -48,7 +48,7 @@
 						<li class="span2"><a href="<%=basePath%>admin/pagecontent/articlemanagement.jsp" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article.png" alt="" class="caption">
 							<h4>文章管理</h4>
 						</a></li>
-						<li class="span2"><a href="<%=basePath%>admin/goods/goodscategory.jsp?operate=find&folder=goods" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png" alt="" class="caption">
+						<li class="span2"><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find"" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png" alt="" class="caption">
 							<h4>分类管理</h4>
 						</a></li>
 						<li class="span2"><a href="#" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-menumgr.png" alt="" class="caption">

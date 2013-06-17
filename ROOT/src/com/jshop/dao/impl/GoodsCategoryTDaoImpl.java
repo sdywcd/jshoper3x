@@ -220,33 +220,13 @@ public class GoodsCategoryTDaoImpl extends HibernateDaoSupport implements GoodsC
 	public int updateGoodscategoryT(final GoodsCategoryT gct) {
 		log.debug(" updateGoodscategoryT");
 		try {
-
-			final String queryString = "update GoodsCategoryT as gct set gct.metaKeywords=:metaKeywords,gct.metaDes=:metaDes,gct.name=:name,gct.sort=:sort,gct.sign=:sign,gct.goodsTypeId=:goodsTypeId,gct.createtime=:createtime,gct.creatorid=:creatorid,gct.logo=:logo,gct.mobilesync=:mobilesync where gct.goodsCategoryTid=:goodsCategoryTid ";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					int i = 0;
-					Query query = session.createQuery(queryString);
-					query.setParameter("goodsCategoryTid", gct.getGoodsCategoryTid());
-					query.setParameter("metaKeywords", gct.getMetaKeywords());
-					query.setParameter("metaDes", gct.getMetaDes());
-					query.setParameter("name", gct.getName());
-					query.setParameter("sort", gct.getSort());
-					query.setParameter("sign", gct.getSign());
-					query.setParameter("goodsTypeId", gct.getGoodsTypeId());
-					query.setParameter("createtime", gct.getCreatetime());
-					query.setParameter("creatorid", gct.getCreatorid());
-					query.setParameter("logo", gct.getLogo());
-					query.setParameter("mobilesync", gct.getMobilesync());
-					i = query.executeUpdate();
-					return i;
-				}
-			});
+			this.getHibernateTemplate().update(gct);
+			return 1;
 		} catch (RuntimeException re) {
 			log.error("updateGoodscategoryT error", re);
 			throw re;
 		}
-		return 0;
+
 	}
 
 	public GoodsCategoryT findGoodscategoryBygoodscategoryId(String goodsCategoryTid) {
@@ -410,6 +390,7 @@ public class GoodsCategoryTDaoImpl extends HibernateDaoSupport implements GoodsC
 		}
 		
 	}
+
 
 
 	

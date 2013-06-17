@@ -26,6 +26,7 @@ public interface GoodsCategoryTDao {
 	 * @return
 	 */
 	public  List<GoodsCategoryT>findGoodsCategoryByGrade(String grade,String state);
+
 	/**
 	 * 检测商品分类名称
 	 * @param name
