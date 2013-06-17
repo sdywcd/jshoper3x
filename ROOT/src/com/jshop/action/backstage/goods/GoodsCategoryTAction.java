@@ -511,6 +511,8 @@ public class GoodsCategoryTAction extends ActionSupport {
 		return "json";
 	}
 	
+
+	
 	/**
 	 * 获取一级分类对应的二级分类列表
 	 * @return
