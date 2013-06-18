@@ -24,7 +24,6 @@ import org.apache.struts2.json.annotations.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.modelbean.GoodsparameterlistModel;

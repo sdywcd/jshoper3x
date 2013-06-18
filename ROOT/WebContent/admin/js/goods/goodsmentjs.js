@@ -1,11 +1,5 @@
 
 /**
- * Global variables
- */
-var session="true";
-/*===========================================Gorgeous split-line==============================================*/
-
-/**
  * flexigrid list 
  */
 $(function() {
@@ -139,7 +133,7 @@ $(function() {
 		sortname : "createtime",
 		sortorder : "desc",
 		usepager : true,
-		title : '商品列表',
+		title : '',
 		useRp : true,
 		rp : 20,
 		rpOptions : [ 5, 20, 40, 100 ],
@@ -153,93 +147,79 @@ $(function() {
 	});
 	function action(com, grid) {
 		if (com == '添加') {
-			window.location.href = 'addgoods.jsp?session='+session+"#goods";
+			window.location.href = "goods.jsp?operate=add&folder=goods";
 			return;
 
 		}else if(com=='编辑'){
 			if ($('.trSelected', grid).length == 1) {
-				jConfirm('确定编辑此项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = $('.trSelected', grid)[0].id.substr(3);
-						window.location.href = "editgoods.jsp?session=" + session + "#goods&goodsid=" + str;
-						return;
-					}
+				var str="";
+				$('.trSelected',grid).each(function(){
+					str=this.id.substr(3);
 				});
+				window.location.href="goods.jsp?operate=edit&folder=goods&goodsid="+str;
+				return;
 			} else {
-				jAlert('请选择一条信息', '信息提示');
+				formwarning("#alerterror", "请选择一条信息");
 				return false;
 			}
 		}else if (com == '删除') {
 			if ($('.trSelected', grid).length > 0) {
-				jConfirm('删除商品会同时删除商品对应的规格货品！确定要删除此项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = "";
-						$('.trSelected', grid).each(function() {
-							str += this.id.substr(3) + ",";
-						});
-						$.post("delGoods.action", {
-							"goodsid" : str
-						}, function(data) {
-							if (data.sucflag) {
-								$('#goodsmanagement').flexReload();
-								jAlert(data.goodsid + '号商品已经删除', '信息提示框');
-							}
-						});
+				var str = "";
+				$('.trSelected', grid).each(function() {
+					str += this.id.substr(3) + ",";
+				});
+				$.post("delGoods.action", {
+					"goodsid" : str
+				}, function(data) {
+					if (data.sucflag) {
+						$('#goodsmanagement').flexReload();
+						forminfo("#alertinfo","删除商品成功");
 					}
 				});
-				return;
 			} else {
-				jAlert('请选择要删除的信息!', '信息提示');
+				formwarning("#alerterror", "请选择要删除的信息");
 				return false;
 			}
 		} else if (com == '标记特价') {
 			if ($('.trSelected', grid).length > 0) {
-				jConfirm('确定要标记此些项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = "";
-						$('.trSelected', grid).each(function() {
-							str += this.id.substr(3) + ",";
-						});
-						var bargainprice = "1";
-						$.post("updateGoodsbargainprice.action", {
-							"goodsid" : str,
-							"bargainprice" : bargainprice
-						}, function(data) {
-							if (data.sucflag) {
-								$('#goodsmanagement').flexReload();
-								jAlert('操作成功', '信息提示框');
-							}
-						});
+				var str = "";
+				$('.trSelected', grid).each(function() {
+					str += this.id.substr(3) + ",";
+				});
+				var bargainprice = "1";
+				$.post("updateGoodsbargainprice.action", {
+					"goodsid" : str,
+					"bargainprice" : bargainprice
+				}, function(data) {
+					if (data.sucflag) {
+						$('#goodsmanagement').flexReload();
+						forminfo("#alertinfo","标记特价成功");
 					}
 				});
-				return;
+				
 			} else {
-				jAlert('请选择要标记特价的信息!', '信息提示');
+				formwarning("#alerterror", "请选择要标记特价的信息");
 				return false;
 			}
 		} else if (com == '标记热销') {
 			if ($('.trSelected', grid).length > 0) {
-				jConfirm('确定要标记此些项吗?', '信息提示', function(r) {
-					if (r) {
-						var str = "";
-						$('.trSelected', grid).each(function() {
-							str += this.id.substr(3) + ",";
-						});
-						var hotsale = "1";
-						$.post("updateGoodshotsale.action", {
-							"goodsid" : str,
-							"hotsale" : hotsale
-						}, function(data) {
-							if (data.sucflag) {
-								$('#goodsmanagement').flexReload();
-								jAlert('操作成功', '信息提示框');
-							}
-						});
+				var str = "";
+				$('.trSelected', grid).each(function() {
+					str += this.id.substr(3) + ",";
+				});
+				var hotsale = "1";
+				$.post("updateGoodshotsale.action", {
+					"goodsid" : str,
+					"hotsale" : hotsale
+				}, function(data) {
+					if (data.sucflag) {
+						$('#goodsmanagement').flexReload();
+						forminfo("#alertinfo","标记热销成功");
 					}
 				});
-				return;
+				
 			} else {
-				jAlert('请选择要标记热销的信息!', '信息提示');
+				formwarning("#alerterror", "请选择要标记热销的信息");
 				return false;
 			}
 		} else if (com == '标记推荐') {
