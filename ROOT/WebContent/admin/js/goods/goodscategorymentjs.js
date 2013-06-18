@@ -326,7 +326,8 @@ $(function() {
 				}
 			});
 		} else if (grade=="1") {
-			$.post("addGoodsCategoryTwo.action", {
+			$.post("updateGoodsCategoryTwo.action", {
+				"goodsCategoryTid":goodsCategoryTid,
 				"parentName" : parentName,
 				"parentId" : parentId,
 				"grade" : grade,
@@ -347,7 +348,8 @@ $(function() {
 				}
 			});
 		} else if (grade=="2") {
-			$.post("addGoodsCategoryThree.action", {
+			$.post("updateGoodsCategoryThree.action", {
+				"goodsCategoryTid":goodsCategoryTid,
 				"parentName1" : parentName1,
 				"parentId" : parentId,
 				"parentId1" : parentId1,
@@ -369,24 +371,6 @@ $(function() {
 				}
 			});
 		}
-//		$.post("updateGoodscategoryT.action", {
-//			"metaKeywords" : metaKeywords,
-//			"metaDes" : metaDes,
-//			"name" : name,
-//			"sort" : sort,
-//			"sign" : sign,
-//			"goodsTypeId" : goodsTypeId,
-//			"goodsCategoryTid" : goodsCategoryTid,
-//            "logo":logoPath,
-//            "mobilesync":mobilesync
-//		}, function(data) {
-//			if (data.sucflag) {
-//				window.location.href = "goodscategoryment.jsp?operate=find&folder=goods";
-//			} else {
-//				formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
-//				return false;
-//			}
-//		});
 	});
 });
 

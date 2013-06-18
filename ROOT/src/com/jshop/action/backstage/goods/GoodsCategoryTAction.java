@@ -693,7 +693,53 @@ public class GoodsCategoryTAction extends ActionSupport {
 		}
 		return "json";
 	}
-
+	/**
+	 * 
+	 * 更新商品分类到二级分类
+	 * @return
+	 */
+	@Action(value = "updateGoodsCategoryTwo", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsCategoryTwo() {
+		//根据goodscategoryid读取商品分类信息
+		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
+			this.setSucflag(false);
+			return "json";
+		}
+		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
+		GoodsCategoryT gct=new GoodsCategoryT();
+		gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(goodsCategoryTid);
+		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(goodsCategoryTid, gct.getName());
+		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(goodsCategoryTid, gct.getSign());
+		//判断更新的一级分类的名称和标示是否和其他分类重复
+		if (i == 0 && j == 0) {
+			if (Integer.parseInt(this.getGrade()) ==1) {
+				gct.setGoodsTypeId(this.getGoodsTypeId());//商品类型id
+				gct.setParentId(this.getParentId().trim());
+				gct.setParentName(this.getParentName());
+				gct.setGrade(this.getGrade().trim());//二级分类
+				gct.setName(this.getName().trim());
+				gct.setMetaKeywords(this.getMetaKeywords().trim());
+				gct.setMetaDes(this.getMetaDes().trim());
+				gct.setState(StaticString.ONE);
+			    gct.setPath(this.getParentId() + "," + gct.getGoodsCategoryTid());//path代表了递归路径，要更新
+				gct.setSort(Integer.parseInt(this.getSort().trim()));
+				gct.setSign(this.getSign().trim());
+				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setVersiont(gct.getVersiont()+1);
+				gct.setLogo(this.getLogo());
+				gct.setMobilesync(this.getMobilesync());
+				this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+				this.setSucflag(true);
+				return "json";
+			}
+		} else {
+			this.setSucflag(false);
+			return "json";
+		}
+		this.setSucflag(false);
+		return "json";
+	}
 	/**
 	 * 增加三级分类
 	 * 
@@ -733,7 +779,53 @@ public class GoodsCategoryTAction extends ActionSupport {
 		}
 		return "json";
 	}
-
+	/**
+	 * 
+	 * 更新商品分类到三级分类
+	 * @return
+	 */
+	@Action(value = "updateGoodsCategoryThree", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsCategoryThree() {
+		//根据goodscategoryid读取商品分类信息
+		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
+			this.setSucflag(false);
+			return "json";
+		}
+		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
+		GoodsCategoryT gct=new GoodsCategoryT();
+		gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(goodsCategoryTid);
+		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(goodsCategoryTid, gct.getName());
+		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(goodsCategoryTid, gct.getSign());
+		//判断更新的一级分类的名称和标示是否和其他分类重复
+		if (i == 0 && j == 0) {
+			if (Integer.parseInt(this.getGrade()) == 2) {
+				gct.setGoodsTypeId(this.getGoodsTypeId());
+				gct.setParentId(this.getParentId1());
+				gct.setParentName(this.getParentName1());
+				gct.setGrade(this.getGrade().trim());//三级分类
+				gct.setName(this.getName().trim());
+				gct.setMetaKeywords(this.getMetaKeywords().trim());
+				gct.setMetaDes(this.getMetaDes().trim());
+				gct.setState(StaticString.ONE);
+				gct.setPath(this.getParentId()+","+this.getParentId1()+","+gct.getGoodsCategoryTid());
+				gct.setSort(Integer.parseInt(this.getSort().trim()));
+				gct.setSign(this.getSign().trim());
+				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setVersiont(gct.getVersiont()+1);
+				gct.setLogo(this.getLogo());
+				gct.setMobilesync(this.getMobilesync());
+				this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+				this.setSucflag(true);
+				return "json";
+			}
+		} else {
+			this.setSucflag(false);
+			return "json";
+		}
+		this.setSucflag(false);
+		return "json";
+	}
 	/**
 	 * 获取所有商品分类
 	 * 
