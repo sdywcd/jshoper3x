@@ -502,7 +502,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 		String grade="0";//表示顶级分类
 		String state="1";//表示启用的分类
 		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade(grade, state);
-		this.goodscategoryzero = "<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
+		this.goodscategoryzero = "";
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			GoodsCategoryT gct = (GoodsCategoryT) it.next();
 			this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";

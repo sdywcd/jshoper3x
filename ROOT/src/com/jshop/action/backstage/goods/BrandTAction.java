@@ -440,6 +440,7 @@ public class BrandTAction extends ActionSupport {
 				this.brandjson += "<option value='" + b.getBrandid() + "'>" + b.getBrandname() + "</option>";
 			}
 			this.setBrandjson(brandjson);
+			this.setSucflag(true);
 			return "json";
 		}
 		return "json";

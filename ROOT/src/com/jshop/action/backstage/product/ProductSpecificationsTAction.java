@@ -45,7 +45,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	private String state;
 	private ProductSpecificationsT bean = new ProductSpecificationsT();
 	private List beanlist = new ArrayList();
-	private List<ProductSpecificationsT> specification = new ArrayList<ProductSpecificationsT>();
+	private List<ProductSpecificationsT> specificationList = new ArrayList<ProductSpecificationsT>();
 	private String query;
 	private String qtype;
 	private List rows = new ArrayList();
@@ -236,12 +236,14 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		this.specificationslist = specificationslist;
 	}
 
-	public List<ProductSpecificationsT> getSpecification() {
-		return specification;
+
+
+	public List<ProductSpecificationsT> getSpecificationList() {
+		return specificationList;
 	}
 
-	public void setSpecification(List<ProductSpecificationsT> specification) {
-		this.specification = specification;
+	public void setSpecificationList(List<ProductSpecificationsT> specificationList) {
+		this.specificationList = specificationList;
 	}
 
 	public String getSpecificationsselect() {
@@ -439,31 +441,30 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllSpecificationsforjson", results = { @Result(name = "json", type = "json") })
 	public String findAllSpecificationsforjson() {
-		this.setSpecificationslist("");
-		this.setSpecificationsselect("");
-		String tempvalue = "";
-		String strbeg = "";
-		String strend = "";
-		this.specification = this.getProductSpecificationsTService().findAllProductSpecificationsTWithoutPage();
-		if (this.specification != null) {
-			for (Iterator it = this.specification.iterator(); it.hasNext();) {
-				ProductSpecificationsT pst = (ProductSpecificationsT) it.next();
-				tempvalue = pst.getName();
-				if (pst.getNote() == null) {
-					pst.setName(pst.getName() + "[]");
-				} else {
-					pst.setName(pst.getName() + "[" + pst.getNote() + "]");
-				}
-				this.specificationslist += "<div class='checkbox'><input type='checkbox' id='" + pst.getSpecificationsid() + "' name='pstspecificationsid' onclick='checkpstspecificationsid()' value='" + tempvalue + "'/><label>" + pst.getName() + "</label></div>";
-				strbeg = "<select id='" + pst.getSpecificationsid() + "' name='" + pst.getSpecificationsid() + "'><option value='0'>---请选择---</option>";
-				this.specificationsselect += "<option value='" + tempvalue + "'>" + pst.getName() + "</option>";
-			}
-			this.setSpecificationslist(this.specificationslist);
-			this.setSpecificationsselect(strbeg + this.specificationsselect);
+//		this.setSpecificationslist("");
+//		this.setSpecificationsselect("");
+//		String tempvalue = "";
+//		String strbeg = "";
+//		String strend = "";
+		specificationList = this.getProductSpecificationsTService().findAllProductSpecificationsTWithoutPage();
+		if (specificationList!= null) {
+//			for (Iterator it = this.specification.iterator(); it.hasNext();) {
+//				ProductSpecificationsT pst = (ProductSpecificationsT) it.next();
+//				tempvalue = pst.getName();
+//				if (pst.getNote() == null) {
+//					pst.setName(pst.getName() + "[]");
+//				} else {
+//					pst.setName(pst.getName() + "[" + pst.getNote() + "]");
+//				}
+//				this.specificationslist += "<div class='checkbox'><input type='checkbox' id='" + pst.getSpecificationsid() + "' name='pstspecificationsid' onclick='checkpstspecificationsid()' value='" + tempvalue + "'/><label>" + pst.getName() + "</label></div>";
+//				strbeg = "<select id='" + pst.getSpecificationsid() + "' name='" + pst.getSpecificationsid() + "'><option value='0'>---请选择---</option>";
+//				this.specificationsselect += "<option value='" + tempvalue + "'>" + pst.getName() + "</option>";
+//			}
+//			this.setSpecificationslist(this.specificationslist);
+//			this.setSpecificationsselect(strbeg + this.specificationsselect);
 			this.setSucflag(true);
 			return "json";
 		}
-		this.setSucflag(true);
 		return "json";
 
 	}

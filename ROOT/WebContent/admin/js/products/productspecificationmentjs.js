@@ -315,7 +315,7 @@ $(function(){
 				}
 			});
 			rjson="["+sub.toString().substring(0, sub.length-1)+"]";
-			$.post("addProductSpecification.action", {
+			$.post("updateProductSpecification.action", {
 				"name" : name,
 				"sort" : sort,
 				"specificationsType" : specificationsType,
@@ -434,7 +434,7 @@ $(function(){
 				}
 			});
 			rjson="["+sub.toString().substring(0, sub.length-1)+"]";
-			$.post("addProductSpecification.action", {
+			$.post("updateProductSpecification.action", {
 				"name" : name,
 				"sort" : sort,
 				"specificationsType" : specificationsType,
@@ -543,7 +543,7 @@ $(function(){
 				}
 			});
 			rjson="["+sub.toString().substring(0, sub.length-1)+"]";
-			$.post("addProductSpecification.action", {
+			$.post("updateProductSpecification.action", {
 				"name" : name,
 				"sort" : sort,
 				"specificationsType" : specificationsType,

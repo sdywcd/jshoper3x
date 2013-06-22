@@ -37,11 +37,13 @@ $(function() {
 			async:false,
 			success:function(data){
 				if (data.sucflag) {
+					var header="<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
+					
 					if (data.goodscategoryzero == "") {
-						$('#parentId').append("<option value='0'>顶级分类</option>");
+						$('#parentId').append(header);
 						$('#parentId1').hide();
 					} else {
-						$('#parentId').append(data.goodscategoryzero);
+						$('#parentId').append(header).append(data.goodscategoryzero);
 						$('#parentId1').hide();
 					}
 

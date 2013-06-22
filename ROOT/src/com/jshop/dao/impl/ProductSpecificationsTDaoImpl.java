@@ -162,10 +162,7 @@ public class ProductSpecificationsTDaoImpl extends HibernateDaoSupport implement
 		try {
 			String queryString = "from ProductSpecificationsT as pst where pst.state='1' order by createtime desc";
 			List<ProductSpecificationsT> list = this.getHibernateTemplate().find(queryString);
-			if (list != null && list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all findAllProductSpecificationsTWithoutPage by state error", re);
 			throw re;

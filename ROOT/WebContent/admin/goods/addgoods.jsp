@@ -150,7 +150,7 @@
 								<div class="field">
 									<div class="label">
 										<label for="input-small">
-											货号:
+											货号（交给产品表）:
 										</label>
 									</div>
 									<div class="input">
