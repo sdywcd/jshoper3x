@@ -183,10 +183,7 @@ public class GoodsAttributeTDaoImpl extends HibernateDaoSupport implements Goods
 		try {
 			String queryString = "from GoodsAttributeT as gat where gat.goodsTypeId=:goodsTypeId";
 			List<GoodsAttributeT> list = this.getHibernateTemplate().findByNamedParam(queryString, "goodsTypeId", goodsTypeId);
-			if (list != null && list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find by id findGoodsAttributeTBygoodsTypeId error", re);
 			throw re;
