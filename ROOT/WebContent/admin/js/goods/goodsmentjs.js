@@ -80,6 +80,52 @@ $(function() {
 			}
 		});
 	},
+	/**
+	 * 获取所有商品品牌列表
+	 */
+	findAllBrandtjson=function(data){
+		$.post("findAllBrandtjson.action",function(data){
+			if(data.sucflag){
+				var header="<option value='0'>---请选择---</option>";
+				$("#brandname").append(header).append(data.brandjson);
+			}else{
+				$("#brandname").append(header);
+			}
+		});
+	},
+	/**
+	 * 获取所有产品规格值列表
+	 */
+	findAllSpecificationsforjson=function(data){
+		$.post("findAllSpecificationsforjson.action",function(data){
+			if(data.sucflag){
+				var header="<option value='0'>---请选择---</option><option value='1'>默认规格</option>";
+				var body="";
+				$(data.specificationList).each(function(k,v){
+					body+="<option value='"+v.specificationsid+"'>"+v.name+"</option>";
+				});
+				$("#isSpecificationsOpen").append(header).append(body);
+			}
+		});
+	},
+	
+	/**
+	 * 当规格选择时动态加载产品信息填充区域
+	 */
+	$("#isSpecificationsOpen").change(function(){
+		var isSpecificationsOpen=$("#isSpecificationsOpen").val();
+		if(isSpecificationsOpen=="0"){
+			$("#specificationsarea").hide();
+			return false;
+		}
+		if(isSpecificationsOpen=="1"){
+			//加载默认产品结构信息，即不包括任何规格值，表示商品信息对应一个产品
+			$("#specificationsarea").show();
+			var specificationsname=$("#isSpecificationsOpen").find("option:selected").text();
+			$("#spname").text(specificationsname);
+		}
+	});
+	
 	
 	/*
 	 * 当商品类型被选择时调用动态加载商品属性方法
@@ -145,8 +191,9 @@ $(function() {
 	if (operate == "add") {
 		findGoodsTypeTNForSelect();
 		findGoodsCategoryByGradeZeroone();
+		findAllBrandtjson();
+		findAllSpecificationsforjson();
 	}
-
 });
 
 /**

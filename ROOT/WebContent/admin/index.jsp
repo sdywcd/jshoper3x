@@ -42,7 +42,7 @@
 			<div class="span7">
 				<div class="row-fluid">
 					<ul class="thumbnails">
-						<li class="span2"><a href="#" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article-add.png" alt="" class="caption">
+						<li class="span2"><a href="<%=basePath%>admin/goods/goods.jsp?operate=add" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article-add.png" alt="" class="caption">
 							<h4>添加产品</h4>
 						</a></li>
 						<li class="span2"><a href="<%=basePath%>admin/pagecontent/articlemanagement.jsp" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article.png" alt="" class="caption">

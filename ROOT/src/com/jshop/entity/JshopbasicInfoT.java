@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-5-19 18:50:11 by Hibernate Tools 4.0.0
+// Generated 2013-6-23 13:29:15 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -197,7 +197,7 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.emailservice = emailservice;
 	}
 
-	@Column(name = "PHONESERVICE", length = 200)
+	@Column(name = "PHONESERVICE", length = 20)
 	public String getPhoneservice() {
 		return this.phoneservice;
 	}
@@ -224,7 +224,7 @@ public class JshopbasicInfoT implements java.io.Serializable {
 		this.siteclosenotes = siteclosenotes;
 	}
 
-	@Column(name = "SITELOGO", length = 500)
+	@Column(name = "SITELOGO")
 	public String getSitelogo() {
 		return this.sitelogo;
 	}

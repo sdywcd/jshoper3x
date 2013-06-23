@@ -71,7 +71,7 @@
 								<li><a href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">规格设置 </a></li>
 								<li><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置 </a></li>				
 								<li class="divider"></li>
-								<li><a href="#">添加新商品 </a></li>
+								<li><a href="<%=basePath%>admin/goods/goods.jsp?operate=add">添加新商品 </a></li>
 								<li class="divider"></li>
 								<!--  <li><a href="#">团购商品 </a></li>
 								<li><a href="#">团购订单管理 </a></li>-->
