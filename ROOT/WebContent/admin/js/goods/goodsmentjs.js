@@ -175,7 +175,6 @@ $(function() {
 		findAllBrandtjson();
 		findAllSpecificationsforjson();
 	}
-
 });
 
 /**
