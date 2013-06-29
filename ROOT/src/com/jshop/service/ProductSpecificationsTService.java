@@ -11,45 +11,46 @@ public interface ProductSpecificationsTService {
 	 *增加商品规格
 	 * @param pst
 	 */
-	public abstract void addProductSpecification(ProductSpecificationsT pst);
+	public  void addProductSpecification(ProductSpecificationsT pst);
 
 	/**
 	 * 更新商品规格
 	 * @param pst
 	 */
-	public abstract int updateProductSpecification(ProductSpecificationsT pst);
+	public  int updateProductSpecification(ProductSpecificationsT pst);
 
 	/**
 	 * 更具规格id获取规格值
 	 * @param specificationsid
 	 * @return
 	 */
-	public abstract ProductSpecificationsT findProductSpecificationsTByspecificationsid(String specificationsid);
+	public  ProductSpecificationsT findProductSpecificationsTByspecificationsid(String specificationsid);
 	/**
 	 * 查询所有商品规格
 	 * @param currentPage
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<ProductSpecificationsT>findAllProductSpecificationsT(final int currentPage,final int lineSize);
+	public  List<ProductSpecificationsT>findAllProductSpecificationsT(final int currentPage,final int lineSize);
 	/**
 	 * 统计查询所有商品规格
 	 * @return
 	 */
-	public abstract int countfindAllProductSpecificationsT();
+	public  int countfindAllProductSpecificationsT();
 	/**
 	 * 删除商品规格
 	 * @param list
 	 * @return
 	 */
-	public abstract int delProductSpecification(String []list);
+	public  int delProductSpecification(String []list);
 
 	/**
-	 * 不分页查询所有商品规格
+	 * 根据状态获取规格值
+	 * @param state
 	 * @return
 	 */
-	public abstract List<ProductSpecificationsT>findAllProductSpecificationsTWithoutPage();
-	
+	public List<ProductSpecificationsT> findAllProductSpecificationsT(String state);
+
 	/**
 	 * 根据排序方式进行排序
 	 * @param currentPage
@@ -57,7 +58,7 @@ public interface ProductSpecificationsTService {
 	 * @param queryString
 	 * @return
 	 */
-	public abstract List<ProductSpecificationsT>sortAllProductSpecificationsT(final int currentPage,final int lineSize,String queryString);
+	public  List<ProductSpecificationsT>sortAllProductSpecificationsT(final int currentPage,final int lineSize,String queryString);
 	
 	
 	
