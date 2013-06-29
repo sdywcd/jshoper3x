@@ -108,12 +108,44 @@ $(function() {
 			}
 		});
 	},
+	/**
+	 * 根据规格值id获取规格值信息
+	 */
+	findProductSpecificationsTByspecificationsid=function(specificationsid){
+		$.ajax({
+    		url:'findProductSpecificationsTByspecificationsid.action', 
+    		type:"post",
+    		data:{"specificationsid":specificationsid},
+    		dataType:'json',
+    		async:false,
+    		success:function(data){
+    			if(data.sucflag){
+    				$("#specificationtext").text(data.bean.name);
+    				var html="";
+    				var jsonObject=$.parseJSON(data.bean.specificationsValue);
+    				if(data.bean.specificationsType=="3"){
+    					$.each(jsonObject,function(k,v){
+        					html+="<div style='margin-right:10px; display: inline;padding-left:90px;padding-top:5px;padding-bottom:5px;background:"+v.specifivalue+"'>" +
+        								"<input  type='checkbox'  value="+v.specifivalue+"/>" +
+        								"</div>";
+        				});
+    				}
+    				
+    				$("#specificationvaluearea").append(html);
+    				
+    			}
+    		
+    		}
+    	 });
+	},
+	
 	
 	/**
 	 * 当规格选择时动态加载产品信息填充区域
 	 */
 	$("#isSpecificationsOpen").change(function(){
 		var isSpecificationsOpen=$("#isSpecificationsOpen").val();
+		var specificationsname=$("#isSpecificationsOpen").find("option:selected").text();
 		if(isSpecificationsOpen=="0"){
 			$("#specificationsarea").hide();
 			return false;
@@ -121,7 +153,11 @@ $(function() {
 		if(isSpecificationsOpen=="1"){
 			//加载默认产品结构信息，即不包括任何规格值，表示商品信息对应一个产品
 			$("#specificationsarea").show();
-			var specificationsname=$("#isSpecificationsOpen").find("option:selected").text();
+			$("#spname").text(specificationsname);
+		}else{
+			//动态获取规格对应的值列表【1=文字类型】【2=图片类型】【3颜色类型】
+			$("#specificationsarea").show();
+			findProductSpecificationsTByspecificationsid(isSpecificationsOpen);
 			$("#spname").text(specificationsname);
 		}
 	});

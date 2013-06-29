@@ -157,14 +157,14 @@ public class ProductSpecificationsTDaoImpl extends HibernateDaoSupport implement
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ProductSpecificationsT> findAllProductSpecificationsTWithoutPage() {
-		log.debug("find all findAllProductSpecificationsTWithoutPage by state");
+	public List<ProductSpecificationsT> findAllProductSpecificationsT(String state) {
+		log.debug("find all findAllProductSpecificationsT by state");
 		try {
-			String queryString = "from ProductSpecificationsT as pst where pst.state='1' order by createtime desc";
-			List<ProductSpecificationsT> list = this.getHibernateTemplate().find(queryString);
+			String queryString = "from ProductSpecificationsT as pst where pst.state=:state order by createtime desc";
+			List<ProductSpecificationsT> list = this.getHibernateTemplate().findByNamedParam(queryString, "state", state);
 			return list;
 		} catch (RuntimeException re) {
-			log.error("find all findAllProductSpecificationsTWithoutPage by state error", re);
+			log.error("find all findAllProductSpecificationsT by state error", re);
 			throw re;
 		}
 	}

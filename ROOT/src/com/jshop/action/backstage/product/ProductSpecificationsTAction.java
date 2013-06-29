@@ -30,7 +30,6 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 public class ProductSpecificationsTAction extends ActionSupport {
-	@Resource(name = "serial")
 	private Serial serial;
 	private ProductSpecificationsTService productSpecificationsTService;
 
@@ -378,8 +377,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	 */
 	@Action(value = "findProductSpecificationsTByspecificationsid", results = { @Result(name = "json", type = "json") })
 	public String findProductSpecificationsTByspecificationsid() {
-
-		if (Validate.StrNotNull(this.getSpecificationsid())) {
+		if (StringUtils.isNotBlank(this.getSpecificationsid())){
 			bean = this.getProductSpecificationsTService().findProductSpecificationsTByspecificationsid(this.getSpecificationsid().trim());
 			if (bean != null) {
 				this.setSucflag(true);
@@ -441,27 +439,9 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllSpecificationsforjson", results = { @Result(name = "json", type = "json") })
 	public String findAllSpecificationsforjson() {
-//		this.setSpecificationslist("");
-//		this.setSpecificationsselect("");
-//		String tempvalue = "";
-//		String strbeg = "";
-//		String strend = "";
-		specificationList = this.getProductSpecificationsTService().findAllProductSpecificationsTWithoutPage();
-		if (specificationList!= null) {
-//			for (Iterator it = this.specification.iterator(); it.hasNext();) {
-//				ProductSpecificationsT pst = (ProductSpecificationsT) it.next();
-//				tempvalue = pst.getName();
-//				if (pst.getNote() == null) {
-//					pst.setName(pst.getName() + "[]");
-//				} else {
-//					pst.setName(pst.getName() + "[" + pst.getNote() + "]");
-//				}
-//				this.specificationslist += "<div class='checkbox'><input type='checkbox' id='" + pst.getSpecificationsid() + "' name='pstspecificationsid' onclick='checkpstspecificationsid()' value='" + tempvalue + "'/><label>" + pst.getName() + "</label></div>";
-//				strbeg = "<select id='" + pst.getSpecificationsid() + "' name='" + pst.getSpecificationsid() + "'><option value='0'>---请选择---</option>";
-//				this.specificationsselect += "<option value='" + tempvalue + "'>" + pst.getName() + "</option>";
-//			}
-//			this.setSpecificationslist(this.specificationslist);
-//			this.setSpecificationsselect(strbeg + this.specificationsselect);
+		String state="1";//可用状态
+		specificationList = this.getProductSpecificationsTService().findAllProductSpecificationsT(state);
+		if (!specificationList.isEmpty()) {
 			this.setSucflag(true);
 			return "json";
 		}

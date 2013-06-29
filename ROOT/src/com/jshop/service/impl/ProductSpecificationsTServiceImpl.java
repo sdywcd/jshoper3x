@@ -41,8 +41,12 @@ public class ProductSpecificationsTServiceImpl implements ProductSpecificationsT
 		return this.getProductSpecificationsTDao().updateProductSpecification(pst);
 	}
 
-	public List<ProductSpecificationsT> findAllProductSpecificationsTWithoutPage() {
-		return this.getProductSpecificationsTDao().findAllProductSpecificationsTWithoutPage();
+	
+
+	@Override
+	public List<ProductSpecificationsT> findAllProductSpecificationsT(
+			String state) {
+		return this.getProductSpecificationsTDao().findAllProductSpecificationsT(state);
 	}
 
 	public List<ProductSpecificationsT> sortAllProductSpecificationsT(int currentPage, int lineSize, String queryString) {
