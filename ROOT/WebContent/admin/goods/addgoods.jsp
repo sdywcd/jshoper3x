@@ -100,78 +100,10 @@
 					<!-- box / title -->
 					<div id="box-basic" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 						<div class="form">
-							<div class="fields">
-								<div class="field field-first">
-									<div class="label">
-										<label for="select">
-											选择商品所属分类:
-										</label>
-									</div>
-									<div class="select">
-										<select id="navid" name="navid">
-											<option value="0">
-												---请选择---
-											</option>
-										</select>
-										<select id="ltypeid" name="ltypeid">
-											<option value="0">
-												---请选择---
-											</option>
-										</select>
-										<select id="stypeid" name="stypeid">
-											<option value="0">
-												---请选择---
-											</option>
-										</select>
-									</div>
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="input-medium">
-											商品名称:
-										</label>
-									</div>
-									<div class="input">
-										<input id="goodsname" name="goodsname" type="text" class="medium"></input>
-									</div>
-
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="input-small">
-											商品编码:
-										</label>
-									</div>
-									<div class="input">
-										<input id="usersetnum" name="usersetnum" type="text" class="small" reg="^\d{4,20}$" tip="编号要是4位-20位数字之间"></input>
-									</div>
-
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="input-small">
-											货号（交给产品表）:
-										</label>
-									</div>
-									<div class="input">
-										<input id="productSn" name="productSn" type="text" class="small"></input>
-									</div>
-
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="select">
-											商品品牌:
-										</label>
-									</div>
-									<div class="select">
-										<select id="brandname" name="brandname">
-											<option value="0">
-												---请选择---
-											</option>
-										</select>
-									</div>
-								</div>
+						
+							
+							
+								
 								<div class="field">
 									<div class="label">
 										<label for="input-small">
@@ -216,62 +148,10 @@
 									</div>
 
 								</div>
-								<div class="field">
-									<div class="label">
-										<label for="select">
-											重量:
-										</label>
-									</div>
-									<div class="select">
-										<input type="text" id="weight" name="weight" class="small"></input>
-										<select id="weightselect">
-											<option value="0">
-												---请选择---
-											</option>
-										</select>
-									</div>
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="input-small">
-											初始库存:
-										</label>
-									</div>
-									<div class="input">
-										<input type="text" id="quantity" name="quantity" value="0" class="small" />
-									</div>
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="input-small">
-											预警库存:
-										</label>
-									</div>
-									<div class="input">
-										<input type="text" id="freezeStore" name="freezeStore" value="10" class="small" />
-
-									</div>
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="input-small">
-											货位:
-										</label>
-									</div>
-									<div class="input">
-										<input type="text" id="placeStore" name="placeStore" value="" class="small" />
-									</div>
-								</div>
-								<div class="field">
-									<div class="label">
-										<label for="input-small">
-											商品积分:
-										</label>
-									</div>
-									<div class="input">
-										<input type="text" id="points" name="point" value="0" class="small"></input>
-									</div>
-								</div>
+								
+								
+							
+								
 								<div class="field">
 									<div class="label label-radio">
 										<label>

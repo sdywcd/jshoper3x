@@ -4,7 +4,7 @@
 <struts>
  <!--开发模式设置开始//-->  
     <!--开发状态 -->  
-    <constant name="struts.devMode" value="false" />
+    <constant name="struts.devMode" value="true" />
     <!-- 配置文件重新加载 -->  
     <constant name="struts.configuration.xml.reload" value="true" />
      <!-- convention类从新加载 -->  
@@ -22,9 +22,9 @@
 		<result-types>
 			<result-type name="json" class="org.apache.struts2.json.JSONResult"></result-type>
 		</result-types>
-		
+
 		<interceptors>
-			
+
 			<interceptor name="json" class="org.apache.struts2.json.JSONInterceptor" />
 			<interceptor name="goodsmoduleGoodsTypeTNInterecptor" class="com.jshop.action.backstage.interceptor.impl.GoodsmoduleGoodsTypeTNInterecptor"/>
 			<interceptor name="goodsmoduleGoodsCategoryTInterecptor" class="com.jshop.action.backstage.interceptor.impl.GoodsmoduleGoodsCategoryTInterecptor"/>
@@ -49,16 +49,16 @@
 				<interceptor-ref name="authoritylogin">
 					<param name="excludeMethods">adminlogin,uploadFiles,findAllCoupon,loginforAndroid,registerforAndroid</param>
 				</interceptor-ref>
-				
+
 				<interceptor-ref name="json">
 					<param name="excludeNullProperties">true</param>
 				</interceptor-ref>
 			</interceptor-stack>
-			
+
 		</interceptors>
 		<default-interceptor-ref name="jshopdefaultStack" />
-		
-		
+
+
 		<global-results>
 			<result name="adminlogin" >/admin/login.jsp</result>
 			<result name="success" >/jshop/admin/authorfailed.jsp</result>
@@ -79,6 +79,6 @@
 		</action>
 		    <!-- 文件下载，支持中文附件名 -->   
  
-		
+
 	</package>
 </struts>

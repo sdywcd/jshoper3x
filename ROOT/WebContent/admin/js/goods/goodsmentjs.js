@@ -124,15 +124,31 @@ $(function() {
     				var html="";
     				var jsonObject=$.parseJSON(data.bean.specificationsValue);
     				if(data.bean.specificationsType=="3"){
+    					//3表示颜色类型
     					$.each(jsonObject,function(k,v){
         					html+="<div style='margin-right:10px; display: inline;padding-left:90px;padding-top:5px;padding-bottom:5px;background:"+v.specifivalue+"'>" +
         								"<input  type='checkbox'  value="+v.specifivalue+"/>" +
         								"</div>";
         				});
+    				}else if(data.bean.specificationsType=="2"){
+    					//2表示图片类型
+    					$.each(jsonObject,function(k,v){
+        					html+="<div style='margin-right:10px; display: inline;padding-top:5px;padding-bottom:5px;'>" +
+        								"<img width='200px' height='200px' src='../.."+v.specifivalue+"'/>" +
+        								"<input  type='checkbox'  value="+v.specifivalue+"/>" +
+        								"</div>";
+        				});
+    				}else if(data.bean.specificationsType=="1"){
+    					//1表示文字类型
+    					$.each(jsonObject,function(k,v){
+        					html+="<div style='margin-right:10px; display: inline;padding-top:5px;padding-bottom:5px;'>" +
+        								"<span>"+v.specifivalue+"</span>" +
+        								"<input  type='checkbox'  value="+v.specifivalue+"/>" +
+        								"</div>";
+        				});
     				}
     				
-    				$("#specificationvaluearea").append(html);
-    				
+    				$("#specificationvaluearea").text("").append(html);
     			}
     		
     		}
@@ -237,7 +253,7 @@ $(function() {
  */
 $(function() {
 	$("#goodsmanagement").flexigrid({
-		url : 'findAllGoods.action',
+		url : 'goods/findAllGoods.action',
 		dataType : 'json',
 		cache : false,
 		colModel : [ {

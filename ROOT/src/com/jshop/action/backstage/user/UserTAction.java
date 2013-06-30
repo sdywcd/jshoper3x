@@ -40,7 +40,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException;
 
 import freemarker.template.TemplateException;
-@Namespace(value="")
+@Namespace("/user")
 @ParentPackage("jshop")
 public class UserTAction extends ActionSupport implements ServletResponseAware, ServletRequestAware, SessionAware, CookiesAware {
 
@@ -694,7 +694,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();
-		
+
 	}
 
 
@@ -709,14 +709,14 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 			this.setSlogin(false);
 			return "json";
 		} else {
-		
+
 			this.setSlogin(true);
 			return "json";
 		}
 	}
 
 
-	
+
 	/**
 	 * 管理员登陆
 	 * 
@@ -726,7 +726,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	@SuppressWarnings("unchecked")
 	@Action(value = "adminlogin", results = { @Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
 	public String adminlogin() throws Exception {
-		
+
 		if(Validate.StrisNull(this.getUsername())){
 			this.setParam(StaticString.ONE);
 			return INPUT;
@@ -1064,7 +1064,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		this.setSucflag(false);
 		return "json";
 	}
-	
+
 	/**
 	 * 更新用户表中后台管理者的权限标记，后期可能全面启用写死的userstate模式改成此模式
 	 * @return
@@ -1080,7 +1080,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		this.setSucflag(false);
 		return "json";
 	}
-	
+
 	/**
 	 * 后台登出
 	 */

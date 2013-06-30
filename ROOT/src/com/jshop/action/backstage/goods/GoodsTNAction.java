@@ -51,7 +51,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.swetake.util.Qrcode;
 
 import freemarker.template.TemplateException;
-@Namespace("")
+@Namespace("/goods")
 @ParentPackage("jshop")
 public class GoodsTNAction extends ActionSupport {
 	private GoodsTService goodsTService;
