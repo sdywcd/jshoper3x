@@ -149,7 +149,6 @@ $(function() {
     				}
     				
     				$("#specificationvaluearea").text("").append(html);
-    				
     			}
     		
     		}
