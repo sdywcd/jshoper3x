@@ -4,6 +4,9 @@
 <struts>
  <!--开发模式设置开始//-->  
     <!--开发状态 -->  
+    
+    
+    
     <constant name="struts.devMode" value="true" />
     <!-- 配置文件重新加载 -->  
     <constant name="struts.configuration.xml.reload" value="true" />
