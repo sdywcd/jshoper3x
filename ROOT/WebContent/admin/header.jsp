@@ -16,6 +16,7 @@
 <link href="<%=basePath%>admin/ui/assets/css/docs.css" rel="stylesheet">
 <link href="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
 <link href="<%=basePath%>admin/ui/assets/css/base.css" rel="stylesheet">
+<link href="<%=basePath%>admin/js/plugins/icheckmaster/skins/square/blue.css" rel="stylesheet">
 
 
 <!-- import flexigrid css -->
@@ -154,10 +155,14 @@
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-collapse.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-carousel.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-typeahead.js"></script>
+	<script src="<%=basePath%>admin/js/plugins/icheckmaster/zepto.icheck.min.js"></script>
+	<script src="<%=basePath%>admin/js/plugins/icheckmaster/jquery.icheck.min.js"></script>
 
     <script type="text/javascript" src="<%=basePath%>admin/js/plugins/flexigrid/myflexigrid.js"></script>
 	<script type="text/javascript" src="<%=basePath%>admin/js/jquery.query.js"></script>
 	<script type="text/javascript" src="<%=basePath%>admin/js/indexjs.js"></script>
 	<script type="text/javascript" src="<%=basePath%>admin/js/base.js"></script>
+	
+	
 </body>
 </html>
