@@ -52,7 +52,7 @@
 							<h4>分类管理</h4>
 						</a></li>
 						<li class="span2"><a href="#" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-menumgr.png" alt="" class="caption">
-							<h4>菜单管理</h4>
+							<h4>图片管理</h4>
 						</a></li>
 						<li class="span2"><a href="#" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-user.png" alt="" class="caption">
 							<h4>用户管理</h4>
