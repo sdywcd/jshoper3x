@@ -1,0 +1,10 @@
+/activiti-context.xml
+/applicationContext.xml
+/com
+/database.properties
+/ehcache.xml
+/email.properties
+/log4j.properties
+/struts.properties
+/struts.xml
+/urlrewrite.xml
