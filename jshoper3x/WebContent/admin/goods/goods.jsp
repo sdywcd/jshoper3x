@@ -76,7 +76,17 @@
 						
 					</div>
 					
+					<div id="params" style="display:none;border:1px solid #E3E3E3;padding:10px;margin-bottom:10px;">
+						<div class="well"><h4>商品参数填写区域</h4></div>
 
+							<div class="form-inline">
+								<span class="label label-required">参数填写区:</span> 
+								<input id="paramsarea" name="paramsarea" value=""/>
+							</div>
+						
+					</div>
+					
+					
 					<div class="form-inline">
 						<span class="label label-required">选择分类: </span> 
 						<select id="parentId" name="parentId"></select><!-- 顶级分类一级分类 -->
@@ -234,13 +244,7 @@
 										type="radio" id="isDefault" name="isDefault" value="0" /> <label
 										for="radio-2">否 </label>
 								</div>
-								<div class="form-inline">
-									<span class="label label-required">是否虚拟:</span> <input
-										type="radio" id="isvirtual" name="isvirtual" value="1"
-										checked="checked" /> <label for="radio-1">是 </label> <input
-										type="radio" id="isvirtual" name="isvirtual" value="0" /> <label
-										for="radio-2">否 </label>
-								</div>
+								
 								<div class="form-inline">
 									<span class="label label-required">货品上架:</span> <input
 										type="radio" id="isSalestate" name="isSalestate" value="1"

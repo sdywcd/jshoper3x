@@ -30,7 +30,6 @@ import com.jshop.entity.GoodsSpecificationsRelationshipT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.entity.JshopbasicInfoT;
-import com.jshop.entity.PageEditareaT;
 import com.jshop.entity.ProductSpecificationsT;
 import com.jshop.entity.SiteNavigationT;
 import com.jshop.entity.TemplatethemeT;
@@ -45,7 +44,6 @@ import com.jshop.service.GoodsSpecificationsRelationshipTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.GoodsTypeBrandTService;
 import com.jshop.service.JshopbasicInfoTService;
-import com.jshop.service.PageEditareaTService;
 import com.jshop.service.ProductSpecificationsTService;
 import com.jshop.service.SiteNavigationTService;
 import com.jshop.service.TemplatethemeTService;
@@ -67,7 +65,7 @@ public class DataCollectionTAction extends ActionSupport {
 
 	private JshopbasicInfoTService jshopbasicInfoTService;
 	private SiteNavigationTService siteNavigationTService;
-	private PageEditareaTService pageEditareaTService;
+	
 	private GoodsCategoryTService goodsCategoryTService;
 	private BrandTService brandTService;
 	private GoodsTypeBrandTService goodsTypeBrandTService;
@@ -181,15 +179,6 @@ public class DataCollectionTAction extends ActionSupport {
 		this.siteNavigationTService = siteNavigationTService;
 	}
 
-	@JSON(serialize = false)
-	public PageEditareaTService getPageEditareaTService() {
-		return pageEditareaTService;
-	}
-
-	public void setPageEditareaTService(
-			PageEditareaTService pageEditareaTService) {
-		this.pageEditareaTService = pageEditareaTService;
-	}
 
 	@JSON(serialize = false)
 	public GoodsCategoryTService getGoodsCategoryTService() {
@@ -333,71 +322,7 @@ public class DataCollectionTAction extends ActionSupport {
 
 	}
 
-	/**
-	 * 获取自定义区域
-	 * 
-	 * @return
-	 */
-	@SuppressWarnings({ "unchecked", "unchecked" })
-	public Map<String, Object> findEditarea(String sign, String state,
-			Map<String, Object> map) {
-		try {
-			List<PageEditareaT> list = this.getPageEditareaTService()
-					.findPageEditareaTBySign(sign, state,
-							BaseTools.adminCreateId());
-			if (!list.isEmpty()) {
-				for (Iterator it = list.iterator(); it.hasNext();) {
-					PageEditareaT pea = (PageEditareaT) it.next();
-					if (pea.getEditflag() == 1) {
-						map.put("p1", pea);
-					}
-					if (pea.getEditflag() == 2) {
-						map.put("p2", pea);
-					}
-					if (pea.getEditflag() == 3) {
-						map.put("p3", pea);
-					}
-					if (pea.getEditflag() == 4) {
-						map.put("p4", pea);
-					}
-					if (pea.getEditflag() == 5) {
-						map.put("p5", pea);
-					}
-					if (pea.getEditflag() == 6) {
-						map.put("p6", pea);
-					}
-					if (pea.getEditflag() == 7) {
-						map.put("p7", pea);
-					}
-					if (pea.getEditflag() == 8) {
-						map.put("p8", pea);
-					}
-					if (pea.getEditflag() == 9) {
-						map.put("p9", pea);
-					}
-					if (pea.getEditflag() == 10) {
-						map.put("p10", pea);
-					}
-					if (pea.getEditflag() == 11) {
-						map.put("p11", pea);
-					}
-					if (pea.getEditflag() == 12) {
-						map.put("p12", pea);
-					}
-					if (pea.getEditflag() == 13) {
-						map.put("p13", pea);
-					}
-				}
-				return map;
-			}
-
-		} catch (Exception e) {
-			this.setLogmsg("<p style='color:red;'>" + e.getMessage() + "</p>");
-		}
-		this.setLogmsg("<p>获取首页自定义区域数据成功</p>");
-		return Collections.emptyMap();
-	}
-
+	
 	/**
 	 * 读取左侧主导航(商品分类)
 	 * 

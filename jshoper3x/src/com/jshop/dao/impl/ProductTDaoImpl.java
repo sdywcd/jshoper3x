@@ -29,7 +29,7 @@ import com.jshop.entity.ProductT;
 @Repository("productTDao")
 public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao {
 	private static final Logger log = LoggerFactory.getLogger(ProductTDaoImpl.class);
-	public int addProductT(ProductT pt) {
+	public int saveProductT(ProductT pt) {
 		log.debug("save ProductT");
 		try {
 			this.getHibernateTemplate().save(pt);

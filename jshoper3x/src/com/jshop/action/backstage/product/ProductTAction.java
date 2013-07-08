@@ -3,6 +3,7 @@ package com.jshop.action.backstage.product;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -38,6 +39,9 @@ public class ProductTAction extends ActionSupport {
 	private String weight;
 	private String goodsid;
 	private String creatorid;
+	private String specificationsid;
+	private String specificationsName;
+	private String unit;
 	private boolean slogin;
 	private boolean sucflag;
 	private String sortname;
@@ -62,6 +66,30 @@ public class ProductTAction extends ActionSupport {
 
 	public void setSerial(Serial serial) {
 		this.serial = serial;
+	}
+
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
+	public String getSpecificationsid() {
+		return specificationsid;
+	}
+
+	public void setSpecificationsid(String specificationsid) {
+		this.specificationsid = specificationsid;
+	}
+
+	public String getSpecificationsName() {
+		return specificationsName;
+	}
+
+	public void setSpecificationsName(String specificationsName) {
+		this.specificationsName = specificationsName;
 	}
 
 	public boolean isSlogin() {
@@ -258,6 +286,42 @@ public class ProductTAction extends ActionSupport {
 
 	}
 
+	@Action(value = "saveProductT", results = { @Result(name = "json", type = "json") })
+	public String saveProductT(){
+		if(StringUtils.isBlank(this.getProductName())){
+			return "json";
+		}
+		ProductT pt=new ProductT();
+		pt.setProductid(this.getSerial().Serialid(Serial.PRODUCT));
+		pt.setPrice(this.getPrice());
+		pt.setMemberprice(this.getMemberprice());
+		pt.setCost(this.getCost());
+		pt.setSaleprice(this.getSaleprice());
+		pt.setFreezeStore(this.getFreezeStore());
+		pt.setStore(this.getStore());
+		pt.setIsDefault(this.getIsDefault());
+		pt.setIsSalestate(this.getIsSalestate());
+		pt.setProductName(this.getProductName());
+		pt.setProductSn(this.getProductSn());
+		pt.setSpecificationsValue(this.getSpecificationsValue());
+		pt.setWarehouseLocation(this.getWarehouseLocation());
+		pt.setPlaceStore(this.getPlaceStore());
+		pt.setWeight(this.getWeight());
+		pt.setGoodsid(this.getGoodsid());
+		pt.setCreatorid(BaseTools.adminCreateId());
+		pt.setCreatetime(BaseTools.systemtime());
+		pt.setSpecificationsid(this.getSpecificationsid());
+		pt.setSpecificationsName(this.getSpecificationsName());
+		pt.setUpdatetime(BaseTools.systemtime());
+		pt.setUnit(this.getUnit());
+		if(this.getProductTService().saveProductT(pt)>0){
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
+	
+	
 	/**
 	 * 根据商品id获取货品信息
 	 * 

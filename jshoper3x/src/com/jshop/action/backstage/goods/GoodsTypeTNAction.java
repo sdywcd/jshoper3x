@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -391,7 +392,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 	 */
 	@Action(value = "findGoodsParameter", results = { @Result(name = "json", type = "json") })
 	public String findGoodsParameter() {
-		if(Validate.StrNotNull(this.getGoodsTypeId())){
+		if(StringUtils.isNotBlank(this.getGoodsTypeId())){
 			List<GoodsTypeTN>list=this.getGoodsTypeTNService().findGoodsTypeTNById(this.getGoodsTypeId());
 			if(!list.isEmpty()){
 				bean=list.get(0);

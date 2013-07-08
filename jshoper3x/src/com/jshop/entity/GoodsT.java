@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-6-23 13:29:15 by Hibernate Tools 4.0.0
+// Generated 2013-7-9 20:35:07 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -34,7 +34,6 @@ public class GoodsT implements java.io.Serializable {
 	private String pictureurl;
 	private int quantity;
 	private String salestate;
-	private String detail;
 	private String unitname;
 	private String keywordname;
 	private String weight;
@@ -82,7 +81,7 @@ public class GoodsT implements java.io.Serializable {
 
 	public GoodsT(String goodsid, String goodsname, String brandname,
 			String nname, String lname, String navid, String ltypeid,
-			String pictureurl, int quantity, String detail, String recommended,
+			String pictureurl, int quantity, String recommended,
 			Date createtime, String creatorid, double saleprice,
 			Date updatetime, int versiont, String commoditylist,
 			String isvirtual, String virtualresults) {
@@ -95,7 +94,6 @@ public class GoodsT implements java.io.Serializable {
 		this.ltypeid = ltypeid;
 		this.pictureurl = pictureurl;
 		this.quantity = quantity;
-		this.detail = detail;
 		this.recommended = recommended;
 		this.createtime = createtime;
 		this.creatorid = creatorid;
@@ -111,7 +109,7 @@ public class GoodsT implements java.io.Serializable {
 			String model, String nname, String lname, String sname,
 			String fname, String navid, String ltypeid, String stypeid,
 			Double price, Double memberprice, Double points, String pictureurl,
-			int quantity, String salestate, String detail, String unitname,
+			int quantity, String salestate, String unitname,
 			String keywordname, String weight, Integer readcount,
 			String relatedproductid, String recommended, String hotsale,
 			String bargainprice, Integer sort, Date createtime,
@@ -143,7 +141,6 @@ public class GoodsT implements java.io.Serializable {
 		this.pictureurl = pictureurl;
 		this.quantity = quantity;
 		this.salestate = salestate;
-		this.detail = detail;
 		this.unitname = unitname;
 		this.keywordname = keywordname;
 		this.weight = weight;
@@ -339,15 +336,6 @@ public class GoodsT implements java.io.Serializable {
 
 	public void setSalestate(String salestate) {
 		this.salestate = salestate;
-	}
-
-	@Column(name = "DETAIL", nullable = false)
-	public String getDetail() {
-		return this.detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
 	}
 
 	@Column(name = "UNITNAME", length = 45)

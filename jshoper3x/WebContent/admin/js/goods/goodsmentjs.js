@@ -90,6 +90,31 @@ $(function() {
 			}
 		});
 	},
+	
+	/**
+	 * 根据商品类型id获取商品参数列表
+	 */
+	findGoodsParameterBygoodsTypeId=function(val){
+		$.post("findGoodsParameter.action",{"goodsTypeId":val},function(data){
+			if(data.sucflag){
+				var gathtmlheader="<div class='well'><h4>商品参数填写区域</h4></div>";
+				var gathtml = "";
+				var gathtmlfooter="</div>";
+				$('#params').text("");
+
+				var jsonstr=$.parseJSON(data.bean.goodsParameter);
+				$.each(jsonstr,function(k,s){
+					gathtml += "<div class='form-inline'>"
+						+ "<span class='label label-required'>"
+						+ s.name + "</span>"
+						+ "<input id='"+s.id+"' name='"+s.id+"' value=''  class='small' type='text' ></input>"
+						+ "</div>";
+				});
+				$('#params').append(gathtmlheader).append(gathtml).append(gathtmlfooter).show();
+			}
+		});
+	}
+	
 	/**
 	 * 获取所有商品品牌列表
 	 */
@@ -190,11 +215,12 @@ $(function() {
 	
 	
 	/*
-	 * 当商品类型被选择时调用动态加载商品属性方法
+	 * 当商品类型被选择时调用动态加载商品属性方法和商品参数方法
 	 */
 	$('#goodsTypeId').change(function(){
 		var goodsTypeId=$('#goodsTypeId').val();
 		findGoodsAttributeTBygoodsTypeId(goodsTypeId);
+		findGoodsParameterBygoodsTypeId(goodsTypeId);
 	});
 	/**
 	 * 级联读取一级分类的二级栏目
@@ -247,14 +273,42 @@ $(function() {
 		}
 	});
 	
+
 	/**
-	 * add goods
+	 * 增加商品
 	 */
-	//保存货品信息
-	$("#submitp").click(function(){
+	saveGoods=function(){
+		var goodsTypeId=$("#goodsTypeId").val();//商品类型id
+		var goodsTypeName=$("#goodsTypeId").find("option:selected").text();//所选商品类型名称
+		//这里需要调用获取商品类型属性和参数填写的值方法
+		var goodsParameterValue=getGoodsParameter();
+		
+		
+	},
+	
+	/**
+	 * 从页面上获取被赋值的商品参数值
+	 */
+	getGoodsParameter=function(){
+		var goodsParameterValue="";
+		$("input[id^='paramlistname']").each(function(){
+			goodsParameterValue+="{\"id\":\""+this.name+"\",\"value\":\""+this.value+"\"},";
+		});
+	}
+	
+	$("#submit").click(function(){
+		saveGoods();
+	});
+	
+	
+	saveProductT=function(){
 		var isSpecificationsOpen=$("#isSpecificationsOpen").val();//所选的规格值id
 		var specificationsName=$("#isSpecificationsOpen").find("option:selected").text();//所选规格值名称
 		var productName=$("#goodsname").val();
+		if(productName==""){
+			formwarning("#alerterror","请填写商品名称");
+			return false;
+		}
 		var productSn=$("#productSn").val();
 		var cost=$("#cost").val();
 		var saleprice=$("#saleprice").val();
@@ -267,11 +321,11 @@ $(function() {
 		var warehouseLocation=$("#warehouseLocation").val();
 		var placeStore=$("#placeStore").val();
 		var isDefault=$("input[name='isDefault']:checked").val();
-		var isvirtual=$("input[name='isvirtual']:checked").val();
 		var isSalestate=$("input[name='isSalestate']:checked").val();
-		
-		$.post("product/saveProductT",{
-			"isSpecificationsOpen":isSpecificationsOpen,
+		this.value="提交中";
+		this.disabled=true;
+		$.post("saveProductT.action",{
+			"specificationsid":isSpecificationsOpen,
 			"specificationsName":specificationsName,
 			"productName":productName,
 			"productSn":productSn,
@@ -286,12 +340,14 @@ $(function() {
 			"warehouseLocation":warehouseLocation,
 			"placeStore":placeStore,
 			"isDefault":isDefault,
-			"isvirtual":isvirtual,
 			"isSalestate":isSalestate
 		},function(data){
-			
+			if(data.sucflag){
+				$("#submitp").attr("disabled",false);
+			}
 		});
-	});
+	}
+	
 	
 	
 	
@@ -306,6 +362,7 @@ $(function() {
 		findGoodsCategoryByGradeZeroone();
 		findAllBrandtjson();
 		findAllSpecificationsforjson();
+		
 	}else if(operate=="edit"){
 		findGoodsTypeTNForSelect();
 		findGoodsCategoryByGradeZeroone();

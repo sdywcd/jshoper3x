@@ -51,7 +51,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.swetake.util.Qrcode;
 
 import freemarker.template.TemplateException;
-@Namespace("/admin/goods")
+@Namespace("")
 @ParentPackage("jshop")
 public class GoodsTNAction extends ActionSupport {
 	private GoodsTService goodsTService;
@@ -1313,7 +1313,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+		//gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -1416,7 +1416,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+		//gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -1518,7 +1518,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+		//gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -1621,7 +1621,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+		//gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -1724,7 +1724,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+		//gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -1862,7 +1862,7 @@ public class GoodsTNAction extends ActionSupport {
 						pt.setWeight(jo.get(key).toString());
 					}
 				}
-				if (this.getProductTService().addProductT(pt) > 0) {
+				if (this.getProductTService().saveProductT(pt) > 0) {
 					count++;
 				}
 			}
@@ -1903,7 +1903,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+		//gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -2050,7 +2050,7 @@ public class GoodsTNAction extends ActionSupport {
 					}
 				} else {
 					pt.setProductid(this.getSerial().Serialid(Serial.PRODUCT));
-					if (this.getProductTService().addProductT(pt) > 0) {
+					if (this.getProductTService().saveProductT(pt) > 0) {
 						count++;
 					}
 				}
@@ -2091,7 +2091,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+		//gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -2229,7 +2229,7 @@ public class GoodsTNAction extends ActionSupport {
 						pt.setWeight(jo.get(key).toString());
 					}
 				}
-				if (this.getProductTService().addProductT(pt) > 0) {
+				if (this.getProductTService().saveProductT(pt) > 0) {
 					count++;
 					//this.setPtasp(pt); //GoodsTaspect切片中使用
 				}
@@ -2271,7 +2271,7 @@ public class GoodsTNAction extends ActionSupport {
 		gt.setPictureurl(this.getPictureurl());
 		gt.setQuantity(Integer.parseInt(this.getQuantity()));
 		gt.setSalestate(this.getSalestate());
-		gt.setDetail(this.getDetail());
+	//	gt.setDetail(this.getDetail());
 		gt.setUnitname(this.getUnitname());
 		gt.setUnitnameid(this.getUnitnameid());
 		gt.setKeywordname(this.getKeywordname());
@@ -2418,7 +2418,7 @@ public class GoodsTNAction extends ActionSupport {
 					}
 				} else {
 					pt.setProductid(this.getSerial().Serialid(Serial.PRODUCT));
-					if (this.getProductTService().addProductT(pt) > 0) {
+					if (this.getProductTService().saveProductT(pt) > 0) {
 						count++;
 					}
 				}

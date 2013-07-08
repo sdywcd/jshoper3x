@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-6-23 13:29:15 by Hibernate Tools 4.0.0
+// Generated 2013-7-9 20:35:07 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -37,24 +37,24 @@ public class ProductT implements java.io.Serializable {
 	private Date createtime;
 	private String specificationsid;
 	private String specificationsName;
+	private Date updatetime;
+	private String unit;
 
 	public ProductT() {
 	}
 
 	public ProductT(String productid, String isDefault, String isSalestate,
-			String productName, String specificationsValue, String goodsid,
-			String creatorid, Date createtime, String specificationsid,
-			String specificationsName) {
+			String productName, String creatorid, Date createtime,
+			String specificationsid, String specificationsName, Date updatetime) {
 		this.productid = productid;
 		this.isDefault = isDefault;
 		this.isSalestate = isSalestate;
 		this.productName = productName;
-		this.specificationsValue = specificationsValue;
-		this.goodsid = goodsid;
 		this.creatorid = creatorid;
 		this.createtime = createtime;
 		this.specificationsid = specificationsid;
 		this.specificationsName = specificationsName;
+		this.updatetime = updatetime;
 	}
 
 	public ProductT(String productid, Double price, Double memberprice,
@@ -63,7 +63,8 @@ public class ProductT implements java.io.Serializable {
 			String productSn, String specificationsValue,
 			String warehouseLocation, String placeStore, String weight,
 			String goodsid, String creatorid, Date createtime,
-			String specificationsid, String specificationsName) {
+			String specificationsid, String specificationsName,
+			Date updatetime, String unit) {
 		this.productid = productid;
 		this.price = price;
 		this.memberprice = memberprice;
@@ -84,6 +85,8 @@ public class ProductT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.specificationsid = specificationsid;
 		this.specificationsName = specificationsName;
+		this.updatetime = updatetime;
+		this.unit = unit;
 	}
 
 	@Id
@@ -186,7 +189,7 @@ public class ProductT implements java.io.Serializable {
 		this.productSn = productSn;
 	}
 
-	@Column(name = "SPECIFICATIONS_VALUE", nullable = false, length = 5000)
+	@Column(name = "SPECIFICATIONS_VALUE", length = 500)
 	public String getSpecificationsValue() {
 		return this.specificationsValue;
 	}
@@ -222,7 +225,7 @@ public class ProductT implements java.io.Serializable {
 		this.weight = weight;
 	}
 
-	@Column(name = "GOODSID", nullable = false, length = 20)
+	@Column(name = "GOODSID", length = 20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -266,6 +269,25 @@ public class ProductT implements java.io.Serializable {
 
 	public void setSpecificationsName(String specificationsName) {
 		this.specificationsName = specificationsName;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATETIME", nullable = false, length = 0)
+	public Date getUpdatetime() {
+		return this.updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	@Column(name = "UNIT", length = 20)
+	public String getUnit() {
+		return this.unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 
 }

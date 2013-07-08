@@ -366,7 +366,7 @@ ServletRequestAware, ServletResponseAware {
 					json.append("\"pictureurl\":\"").append(gt.getPictureurl()).append("\",");
 					json.append("\"quantity\":\"").append(gt.getQuantity()).append("\",");
 					json.append("\"salestate\":\"").append(gt.getSalestate()).append("\",");
-					json.append("\"detail\":\"").append(gt.getDetail()).append("\",");
+					//json.append("\"detail\":\"").append(gt.getDetail()).append("\",");
 					json.append("\"unitname\":\"").append(gt.getUnitname()).append("\",");
 					json.append("\"keywordname\":\"").append(gt.getKeywordname()).append("\",");
 					json.append("\"weight\":\"").append(gt.getWeight()).append("\",");

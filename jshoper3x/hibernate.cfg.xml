@@ -6,7 +6,7 @@
     <session-factory>
         <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
         <property name="hibernate.connection.password">111111</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jshopactive</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jshoper</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
     </session-factory>

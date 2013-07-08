@@ -61,7 +61,7 @@ public class SqliteAction extends SQLiteDBHelper {
 			List<GoodsT> list = this.getGoodsTService().findAllGoodsByNoTerm();
 			List<GoodsCategoryT> l=this.getGoodsCategoryTService().findAllCategoryByNoTrem();
 			for(GoodsT goods:list){
-				st.executeUpdate("insert into goods_tm (goodsCategoryTid,goodsid,goodsname,memberprice,pictureurl,weight,detail,nname,unitname)values('"+goods.getNavid()+"','"+goods.getGoodsid()+"','"+goods.getGoodsname()+"','"+goods.getMemberprice()+"','"+goods.getPictureurl()+"','"+goods.getWeight()+"','"+goods.getDetail()+"','"+goods.getNname()+"','"+goods.getUnitname()+"')");
+				//st.executeUpdate("insert into goods_tm (goodsCategoryTid,goodsid,goodsname,memberprice,pictureurl,weight,detail,nname,unitname)values('"+goods.getNavid()+"','"+goods.getGoodsid()+"','"+goods.getGoodsname()+"','"+goods.getMemberprice()+"','"+goods.getPictureurl()+"','"+goods.getWeight()+"','"+goods.getDetail()+"','"+goods.getNname()+"','"+goods.getUnitname()+"')");
 			}
 			for(GoodsCategoryT category :l){
 				st.executeUpdate("insert into goods_category_tm(goodsCategoryTid,grade,name,goodsTypeId,sort)values('"+category.getGoodsCategoryTid()+"','"+category.getGrade()+"','"+category.getName()+"','"+category.getGoodsTypeId()+"','"+category.getSort()+"')");

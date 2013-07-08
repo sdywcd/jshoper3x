@@ -25,8 +25,8 @@ public class ProductTServiceImpl implements ProductTService {
 		this.productTDao = productTDao;
 	}
 
-	public int addProductT(ProductT pt) {
-		return this.getProductTDao().addProductT(pt);
+	public int saveProductT(ProductT pt) {
+		return this.getProductTDao().saveProductT(pt);
 	}
 
 	public int countfindAllProductT(String creatorid) {
