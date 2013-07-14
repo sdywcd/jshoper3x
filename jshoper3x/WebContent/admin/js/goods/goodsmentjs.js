@@ -281,20 +281,97 @@ $(function() {
 		var goodsTypeId=$("#goodsTypeId").val();//商品类型id
 		var goodsTypeName=$("#goodsTypeId").find("option:selected").text();//所选商品类型名称
 		//这里需要调用获取商品类型属性和参数填写的值方法
-		var goodsParameterValue=getGoodsParameter();
+		var goodsParameterValue=getGoodsParameter(goodsTypeId);
+		var goodsAttrsVals=getgoodsAttrVals(goodsTypeId);
+		var navid=$("#parentId").val();
+		if(navid=="-1"){
+			formwarning("#alerterror", "请选择顶级商品分类");
+			return false;
+		}
+		var nname=$("#parentId").find("option:selected").text();
+		var ltypeid=$("#parentId1").val();
+		if(ltypeid=="-1"){
+			ltypeid=0;
+			lname="";
+		}
+		var lname=$("#parentId1").find("option:selected").text();
+		var stypeid=$("#parentId2").val();
+		if(stypeid=="-1"){
+			stypeid=0;
+			sname="";
+		}
+		var sname=$('#parentId2').find("option:selected").text();
+		var fname="";
+		var goodsname=$("#goodsname").val();
+		//继续
+		
 		
 		
 	},
 	
 	/**
+	 * 获取30个属性值
+	 */
+	getgoodsAttrVals=function(goodsTypeId){
+		var goodsAttrsVals="";
+		if(goodsTypeId!=""){
+			var goodsAttrVal0=$('#goodsAttrVal0').find("option:selected").text();
+			var goodsAttrVal1=$('#goodsAttrVal1').find("option:selected").text();
+			var goodsAttrVal2=$('#goodsAttrVal2').find("option:selected").text();
+			var goodsAttrVal3=$('#goodsAttrVal3').find("option:selected").text();
+			var goodsAttrVal4=$('#goodsAttrVal4').find("option:selected").text();
+			var goodsAttrVal5=$('#goodsAttrVal5').find("option:selected").text();
+			var goodsAttrVal6=$('#goodsAttrVal6').find("option:selected").text();
+			var goodsAttrVal7=$('#goodsAttrVal7').find("option:selected").text();
+			var goodsAttrVal8=$('#goodsAttrVal8').find("option:selected").text();
+			var goodsAttrVal9=$('#goodsAttrVal9').find("option:selected").text();
+			var goodsAttrVal10=$('#goodsAttrVal10').find("option:selected").text();
+			var goodsAttrVal11=$('#goodsAttrVal11').find("option:selected").text();
+			var goodsAttrVal12=$('#goodsAttrVal12').find("option:selected").text();
+			var goodsAttrVal13=$('#goodsAttrVal13').find("option:selected").text();
+			var goodsAttrVal14=$('#goodsAttrVal14').find("option:selected").text();
+			var goodsAttrVal15=$('#goodsAttrVal15').find("option:selected").text();
+			var goodsAttrVal16=$('#goodsAttrVal16').find("option:selected").text();
+			var goodsAttrVal17=$('#goodsAttrVal17').find("option:selected").text();
+			var goodsAttrVal18=$('#goodsAttrVal18').find("option:selected").text();
+			var goodsAttrVal19=$('#goodsAttrVal19').find("option:selected").text();
+			var goodsAttrVal20=$('#goodsAttrVal20').find("option:selected").text();
+			var goodsAttrVal21=$('#goodsAttrVal21').find("option:selected").text();
+			var goodsAttrVal22=$('#goodsAttrVal22').find("option:selected").text();
+			var goodsAttrVal23=$('#goodsAttrVal23').find("option:selected").text();
+			var goodsAttrVal24=$('#goodsAttrVal24').find("option:selected").text();
+			var goodsAttrVal25=$('#goodsAttrVal25').find("option:selected").text();
+			var goodsAttrVal26=$('#goodsAttrVal26').find("option:selected").text();
+			var goodsAttrVal27=$('#goodsAttrVal27').find("option:selected").text();
+			var goodsAttrVal28=$('#goodsAttrVal28').find("option:selected").text();
+			var goodsAttrVal29=$('#goodsAttrVal29').find("option:selected").text();
+			
+			goodsAttrsVals="{\"goodsAttrVal0\":\""+goodsAttrVal0+"\"},{\"goodsAttrVal1\":\""+goodsAttrVal1+"\"},{\"goodsAttrVal2\":\""+goodsAttrVal2+"\"}," +
+					"{\"goodsAttrVal3\":\""+goodsAttrVal3+"\"},{\"goodsAttrVal4\":\""+goodsAttrVal4+"\"},{\"goodsAttrVal5\":\""+goodsAttrVal5+"\"},{\"goodsAttrVal6\":\""+goodsAttrVal6+"\"},"+
+					"{\"goodsAttrVal7\":\""+goodsAttrVal7+"\"},{\"goodsAttrVal8\":\""+goodsAttrVal8+"\"},{\"goodsAttrVal9\":\""+goodsAttrVal9+"\"},{\"goodsAttrVal10\":\""+goodsAttrVal10+"\"}," +
+					"{\"goodsAttrVal11\":\""+goodsAttrVal11+"\"},{\"goodsAttrVal12\":\""+goodsAttrVal12+"\"},{\"goodsAttrVal13\":\""+goodsAttrVal13+"\"},{\"goodsAttrVal14\":\""+goodsAttrVal14+"\"}," +
+					"{\"goodsAttrVal15\":\""+goodsAttrVal15+"\"},{\"goodsAttrVal16\":\""+goodsAttrVal16+"\"},{\"goodsAttrVal17\":\""+goodsAttrVal17+"\"},{\"goodsAttrVal18\":\""+goodsAttrVal18+"\"}," +
+					"{\"goodsAttrVal19\":\""+goodsAttrVal19+"\"},{\"goodsAttrVal20\":\""+goodsAttrVal20+"\"},{\"goodsAttrVal21\":\""+goodsAttrVal21+"\"},{\"goodsAttrVal22\":\""+goodsAttrVal22+"\"}," +
+					"{\"goodsAttrVal23\":\""+goodsAttrVal23+"\"},{\"goodsAttrVal24\":\""+goodsAttrVal24+"\"},{\"goodsAttrVal25\":\""+goodsAttrVal25+"\"},{\"goodsAttrVal26\":\""+goodsAttrVal26+"\"}," +
+					"{\"goodsAttrVal27\":\""+goodsAttrVal27+"\"},{\"goodsAttrVal28\":\""+goodsAttrVal28+"\"},{\"goodsAttrVal29\":\""+goodsAttrVal29+"\"}";
+			
+		}
+		return	goodsAttrsVals;	
+	},
+	
+	
+	/**
 	 * 从页面上获取被赋值的商品参数值
 	 */
-	getGoodsParameter=function(){
+	getGoodsParameter=function(goodsTypeId){
 		var goodsParameterValue="";
-		$("input[id^='paramlistname']").each(function(){
-			goodsParameterValue+="{\"id\":\""+this.name+"\",\"value\":\""+this.value+"\"},";
-		});
-	}
+		if(goodsTypeId!=""){
+			$("input[id^='paramlistname']").each(function(){
+				goodsParameterValue+="{\"id\":\""+this.name+"\",\"value\":\""+this.value+"\"},";
+			});
+		}
+		return goodsParameterValue;
+	},
 	
 	$("#submit").click(function(){
 		saveGoods();
