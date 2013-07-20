@@ -148,6 +148,10 @@ public class Serial {
 	public static String OUTSIDEGOODSQRCODE="outsidegoodsqrcode";
 	//竞拍记录
 	public static String SALEGOODSRECORDT="salegoodsrecordt";
+	//商品属性和商品关系记录表
+	public static String GOODSATTRIBUTERPT="goodsattributerp";
+	//商品介绍和商品关系记录表
+	public static String GOODSDETAILRPT="goodsdetailrp";
 	
 	@Resource
 	private SerialTService serialTService;

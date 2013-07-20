@@ -91,8 +91,8 @@ public class GoodsTServiceImpl implements GoodsTService {
 		return getGoodsTDao().updateFiveGoodsState(goodsid, recommended, hotsale, bargainprice, isNew, ismobileplatformgoods);
 	}
 
-	public int addGoods(GoodsT g) {
-		return getGoodsTDao().addGoods(g);
+	public void saveGoods(GoodsT g) {
+		this.getGoodsTDao().saveGoods(g);
 	}
 
 	public int countAllGoods(String creatorid) {

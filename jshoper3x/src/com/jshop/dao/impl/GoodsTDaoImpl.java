@@ -32,12 +32,11 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	
 	private static final Log log = LogFactory.getLog(GoodsTDaoImpl.class);
 	
-	public int addGoods(GoodsT g) {
+	public void saveGoods(GoodsT g) {
 		log.debug("save goodst");
 		try {
 			this.getHibernateTemplate().save(g);
 			log.debug("save successful");
-			return 1;
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;

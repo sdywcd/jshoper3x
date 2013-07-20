@@ -83,14 +83,16 @@ public class  StaticString {
 	
 	public static final String COLORTYPE="颜色类型";
 	
-	//商品分类静态化字段
+	//商品分类静态字段
 	public static final String TOPCA="顶级分类";
 	
 	public static final String TWOCA="二级分类";
 	
 	public static final String THREECA="三级分类";
 	
-	
+	//商品属性静态字段
+	public static final String ATTRVAL="attrval";
+
 	
 	
 	

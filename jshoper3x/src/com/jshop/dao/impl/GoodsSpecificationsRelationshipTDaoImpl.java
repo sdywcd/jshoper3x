@@ -79,8 +79,8 @@ public class GoodsSpecificationsRelationshipTDaoImpl extends HibernateDaoSupport
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
-					query.setParameter("goodsSetId", gsrt.getGoodsSetId());
-					query.setParameter("specidicationsId", gsrt.getSpecidicationsId());
+					query.setParameter("goodsSetId", gsrt.getId().getGoodsSetId());
+					query.setParameter("specidicationsId", gsrt.getId().getSpecidicationsId());
 					i = query.executeUpdate();
 					return i;
 				}

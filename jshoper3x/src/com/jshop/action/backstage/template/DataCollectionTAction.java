@@ -555,7 +555,7 @@ public class DataCollectionTAction extends ActionSupport {
 		if(!gsrlist.isEmpty()){
 			List<ProductSpecificationsT>list =new ArrayList<ProductSpecificationsT>();
 			ProductSpecificationsT pst=new ProductSpecificationsT();
-			String []strspec=StringUtils.split(gsrlist.get(0).getSpecidicationsId(), ',');
+			String []strspec=StringUtils.split(gsrlist.get(0).getId().getSpecidicationsId(), ',');
 			for(String s:strspec){
 				pst=this.getProductSpecificationsTService().findProductSpecificationsTByspecificationsid(s);
 				list.add(pst);

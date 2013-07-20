@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-7-14 17:34:18 by Hibernate Tools 4.0.0
+// Generated 2013-7-16 21:38:58 by Hibernate Tools 4.0.0
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -20,7 +20,6 @@ public class GoodsT implements java.io.Serializable {
 	private String goodsid;
 	private String goodsname;
 	private String brandname;
-	private String model;
 	private String nname;
 	private String lname;
 	private String sname;
@@ -106,28 +105,26 @@ public class GoodsT implements java.io.Serializable {
 	}
 
 	public GoodsT(String goodsid, String goodsname, String brandname,
-			String model, String nname, String lname, String sname,
-			String fname, String navid, String ltypeid, String stypeid,
-			Double price, Double memberprice, Double points, String pictureurl,
-			int quantity, String salestate, String unitname,
-			String keywordname, String weight, Integer readcount,
-			String relatedproductid, String recommended, String hotsale,
-			String bargainprice, Integer sort, Date createtime,
-			String creatorid, Integer replycount, String brandid,
-			String placeStore, String metaKeywords, String metaDescription,
-			Double cost, double saleprice, String isNew, String htmlPath,
-			String productSn, String goodsParameterValue, Integer freezeStore,
-			String keywordid, String unitnameid, String goodsTypeId,
-			String goodsTypeName, String usersetnum,
-			String isSpecificationsOpen, Integer star, Integer staruser,
-			Integer totalcomment, Integer virtualsale,
+			String nname, String lname, String sname, String fname,
+			String navid, String ltypeid, String stypeid, Double price,
+			Double memberprice, Double points, String pictureurl, int quantity,
+			String salestate, String unitname, String keywordname,
+			String weight, Integer readcount, String relatedproductid,
+			String recommended, String hotsale, String bargainprice,
+			Integer sort, Date createtime, String creatorid,
+			Integer replycount, String brandid, String placeStore,
+			String metaKeywords, String metaDescription, Double cost,
+			double saleprice, String isNew, String htmlPath, String productSn,
+			String goodsParameterValue, Integer freezeStore, String keywordid,
+			String unitnameid, String goodsTypeId, String goodsTypeName,
+			String usersetnum, String isSpecificationsOpen, Integer star,
+			Integer staruser, Integer totalcomment, Integer virtualsale,
 			String ismobileplatformgoods, Integer sales, Integer realsales,
 			Date updatetime, int versiont, String commoditylist,
 			String isvirtual, String virtualresults) {
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
 		this.brandname = brandname;
-		this.model = model;
 		this.nname = nname;
 		this.lname = lname;
 		this.sname = sname;
@@ -210,15 +207,6 @@ public class GoodsT implements java.io.Serializable {
 
 	public void setBrandname(String brandname) {
 		this.brandname = brandname;
-	}
-
-	@Column(name = "MODEL", length = 50)
-	public String getModel() {
-		return this.model;
-	}
-
-	public void setModel(String model) {
-		this.model = model;
 	}
 
 	@Column(name = "NNAME", nullable = false, length = 50)

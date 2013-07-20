@@ -93,6 +93,7 @@
 		<tx:attributes>
 		    <tx:method name="SerialT*" propagation="REQUIRES_NEW"/>
 			<tx:method name="add*" propagation="REQUIRED" />  
+			<tx:method name="save*" propagation="REQUIRED" />  
 	        <tx:method name="del*" propagation="REQUIRED" />  
 	        <tx:method name="update*" propagation="REQUIRED" /> 
 			<tx:method name="get*" read-only="true"/>

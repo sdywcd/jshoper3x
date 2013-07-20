@@ -14,10 +14,9 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.goods.GoodsGroupTAction;
-import com.jshop.action.backstage.goods.GoodsTNAction;
+import com.jshop.action.backstage.goods.GoodsTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.ContentTag;
 import com.jshop.action.backstage.tools.PageModel;
@@ -48,7 +47,7 @@ public class CreateHtml extends ActionSupport {
 	private GoodsCategoryTService goodsCategoryTService;	
 	private DataCollectionTAction dataCollectionTAction;
 	private GoodsGroupTAction goodsGroupTAction;
-	private GoodsTNAction goodsTNAction;
+	private GoodsTAction goodsTAction;
 	private GoodsGroupTService goodsGroupTService;
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private Map<String, Object> session = new HashMap<String, Object>();
@@ -59,19 +58,21 @@ public class CreateHtml extends ActionSupport {
 	private String status;
 	private boolean slogin;
 	private StringBuilder logmsg=new StringBuilder();
+	
+	
 	@JSON(serialize = false)
-	public GoodsTNAction getGoodsTNAction() {
-		return goodsTNAction;
+	public GoodsTAction getGoodsTAction() {
+		return goodsTAction;
 	}
 
-	public void setGoodsTNAction(GoodsTNAction goodsTNAction) {
-		this.goodsTNAction = goodsTNAction;
+	public void setGoodsTAction(GoodsTAction goodsTAction) {
+		this.goodsTAction = goodsTAction;
 	}
-
 	@JSON(serialize = false)
 	public TemplateTService getTemplateTService() {
 		return templateTService;
 	}
+	
 
 	public void setTemplateTService(TemplateTService templateTService) {
 		this.templateTService = templateTService;
@@ -245,7 +246,7 @@ public class CreateHtml extends ActionSupport {
 //			if(!gt.getCreatetime().equals(gt.getUpdatetime())){
 				map.put(FreeMarkervariable.GOODSDETAIL, gt);
 				//获取商品参数
-				map.put(FreeMarkervariable.GOODSPARAMETERS,this.getGoodsTNAction().processGoodsparameters(gt));
+				map.put(FreeMarkervariable.GOODSPARAMETERS,this.getGoodsTAction().processGoodsparameters(gt));
 				//获取商品评论
 				map.put(FreeMarkervariable.GOODSCOMMENTS, this.getDataCollectionTAction().findGoodsCommentBygoodsid(gt));
 				//获取规格值

@@ -13,7 +13,7 @@ public interface GoodsTService {
 	 * @param g
 	 * @return
 	 */
-	public abstract int addGoods(GoodsT g);
+	public void saveGoods(GoodsT g);
 
 	/**
 	 * 批量删除商品
@@ -21,7 +21,7 @@ public interface GoodsTService {
 	 * @param list
 	 * @return
 	 */
-	public abstract int delGoods(String[] list, String creatorid);
+	public int delGoods(String[] list, String creatorid);
 
 	/**
 	 * 更新商品
@@ -29,7 +29,7 @@ public interface GoodsTService {
 	 * @param g
 	 * @return
 	 */
-	public abstract int updateGoods(GoodsT g);
+	public int updateGoods(GoodsT g);
 
 	/**
 	 * 查询所有商品信息
@@ -39,20 +39,23 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoods(final int currentPage, final int lineSize, final String creatorid);
+	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize,
+			final String creatorid);
 
 	/**
 	 * 查询所有没有条件商品
+	 * 
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodsByNoTerm();
+	public List<GoodsT> findAllGoodsByNoTerm();
+
 	/**
 	 * 统计所有商品信息
 	 * 
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int countAllGoods(String creatorid);
+	public int countAllGoods(String creatorid);
 
 	/**
 	 * 根据id获取商品信息
@@ -60,7 +63,7 @@ public interface GoodsTService {
 	 * @param goodsid
 	 * @return
 	 */
-	public abstract GoodsT findGoodsById(String goodsid);
+	public GoodsT findGoodsById(String goodsid);
 
 	/**
 	 * 根据导航id获取商品列表
@@ -69,7 +72,8 @@ public interface GoodsTService {
 	 * @param state
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByNavid(String navid, String salestate, final int currentPage, final int lineSize);
+	public List<GoodsT> findGoodsByNavid(String navid, String salestate,
+			final int currentPage, final int lineSize);
 
 	/**
 	 * 统计根据导航id获取商品列表
@@ -78,7 +82,7 @@ public interface GoodsTService {
 	 * @param salestate
 	 * @return
 	 */
-	public abstract int countfindGoodsByNavid(String navid, String salestate);
+	public int countfindGoodsByNavid(String navid, String salestate);
 
 	/**
 	 * 根据二级分类id获取商品列表
@@ -87,7 +91,8 @@ public interface GoodsTService {
 	 * @param state
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByLtypeid(final String ltypeid, final String salestate, final int currentPage, final int lineSize);
+	public List<GoodsT> findGoodsByLtypeid(final String ltypeid,
+			final String salestate, final int currentPage, final int lineSize);
 
 	/**
 	 * 统计根据二级分类id获取商品列表
@@ -96,7 +101,7 @@ public interface GoodsTService {
 	 * @param state
 	 * @return
 	 */
-	public abstract int countfindGoodsByLtypeid(String ltypeid, String salestate);
+	public int countfindGoodsByLtypeid(String ltypeid, String salestate);
 
 	/**
 	 * 根据三级分类id获取商品列表
@@ -105,7 +110,7 @@ public interface GoodsTService {
 	 * @param state
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByStypeid(String stypeid, String salestate);
+	public List<GoodsT> findGoodsByStypeid(String stypeid, String salestate);
 
 	/**
 	 * 批量更新商品上下架
@@ -114,21 +119,25 @@ public interface GoodsTService {
 	 * @param goodsid
 	 * @return
 	 */
-	public abstract int updateGoodsSaleState(String[] goodsid, String salestate, String creatorid);
+	public int updateGoodsSaleState(String[] goodsid, String salestate,
+			String creatorid);
+
 	/**
 	 * 根据商品类型id下架商品
+	 * 
 	 * @param goodsTypeId
 	 * @param salestate
 	 * @return
 	 */
-	public abstract int updateGoodsSaleState(String goodsTypeId,String salestate);
+	public int updateGoodsSaleState(String goodsTypeId, String salestate);
+
 	/**
 	 * 根据商品品牌获取商品信息
 	 * 
 	 * @param brand
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsBybrand(String brand);
+	public List<GoodsT> findGoodsBybrand(String brand);
 
 	/**
 	 * 根据商品名称获取商品信息
@@ -138,7 +147,8 @@ public interface GoodsTService {
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByGoodsname(final int currentPage, final int lineSize, final String goodsname);
+	public List<GoodsT> findGoodsByGoodsname(final int currentPage,
+			final int lineSize, final String goodsname);
 
 	/**
 	 * 根据商品型号获取商品信息
@@ -146,7 +156,7 @@ public interface GoodsTService {
 	 * @param model
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsBymodel(String model);
+	public List<GoodsT> findGoodsBymodel(String model);
 
 	/**
 	 * 根据商品价格查询商品信息
@@ -154,7 +164,7 @@ public interface GoodsTService {
 	 * @param price
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByprice(String price);
+	public List<GoodsT> findGoodsByprice(String price);
 
 	/**
 	 * 根据关键字查询商品信息
@@ -164,7 +174,8 @@ public interface GoodsTService {
 	 * @param linesize
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByKeyword(String keywordid, int currentPage, int lineSize);
+	public List<GoodsT> findGoodsByKeyword(String keywordid, int currentPage,
+			int lineSize);
 
 	/**
 	 * 统计根据关键字查询商品信息
@@ -172,7 +183,7 @@ public interface GoodsTService {
 	 * @param keywordid
 	 * @return
 	 */
-	public abstract int countfindGoodsByKeyword(String keywordid);
+	public int countfindGoodsByKeyword(String keywordid);
 
 	/**
 	 * 根据用户自定义商品编号查询商品信息
@@ -180,7 +191,7 @@ public interface GoodsTService {
 	 * @param usersetnum
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByusersetnum(String usersetnum);
+	public List<GoodsT> findGoodsByusersetnum(String usersetnum);
 
 	/**
 	 * 根据商品id更新商品浏览次数
@@ -188,7 +199,7 @@ public interface GoodsTService {
 	 * @param goodsid
 	 * @return
 	 */
-	public abstract int updateGoodsreadcount(String goodsid);
+	public int updateGoodsreadcount(String goodsid);
 
 	/**
 	 * 根据商品id更新关联配件（未使用电子产品适用）
@@ -196,7 +207,7 @@ public interface GoodsTService {
 	 * @param list
 	 * @return
 	 */
-	public abstract int updateGoodsrelatedfit(String goodsid, String list);
+	public int updateGoodsrelatedfit(String goodsid, String list);
 
 	/**
 	 * 根据商品id更新关联商品（现在已经使用到）
@@ -204,7 +215,7 @@ public interface GoodsTService {
 	 * @param list
 	 * @return
 	 */
-	public abstract int updateGoodsrelatedgoods(String goodsid, String list);
+	public int updateGoodsrelatedgoods(String goodsid, String list);
 
 	/**
 	 * 根据商品id更新5种商品状态
@@ -216,7 +227,9 @@ public interface GoodsTService {
 	 * @param ismobileplatformgoods
 	 * @return
 	 */
-	public abstract int updateFiveGoodsState(String[] goodsid, String recommended, String hotsale, String bargainprice, String isNew, String ismobileplatformgoods);
+	public int updateFiveGoodsState(String[] goodsid, String recommended,
+			String hotsale, String bargainprice, String isNew,
+			String ismobileplatformgoods);
 
 	/**
 	 * 根据商品id更新商品是否推荐
@@ -226,7 +239,8 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int updateGoodsrecommended(String[] goodsid, String recommended, String creatorid);
+	public int updateGoodsrecommended(String[] goodsid, String recommended,
+			String creatorid);
 
 	/**
 	 * 根据商品id更新商品是否热销
@@ -236,7 +250,8 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int updateGoodshotsale(String[] goodsid, String hotsale, String creatorid);
+	public int updateGoodshotsale(String[] goodsid, String hotsale,
+			String creatorid);
 
 	/**
 	 * 根据商品id更新商品是否特价
@@ -246,7 +261,8 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int updateGoodsbargainprice(String[] goodsid, String bargainprice, String creatorid);
+	public int updateGoodsbargainprice(String[] goodsid, String bargainprice,
+			String creatorid);
 
 	/**
 	 * 根据商品id更新是否新品
@@ -256,7 +272,7 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int updateGoodsisNew(String[] goodsid, String isNew, String creatorid);
+	public int updateGoodsisNew(String[] goodsid, String isNew, String creatorid);
 
 	/**
 	 * 根据商品id更新是否同步到移动平台
@@ -266,7 +282,8 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int updateGoodsismobileplatformgoods(String[] goodsid, String ismobileplatformgoods, String creatorid);
+	public int updateGoodsismobileplatformgoods(String[] goodsid,
+			String ismobileplatformgoods, String creatorid);
 
 	/**
 	 * 根据商品id更新商品排序
@@ -275,7 +292,7 @@ public interface GoodsTService {
 	 * @param sort
 	 * @return
 	 */
-	public abstract int updateSort(String goodsid, Integer sort);
+	public int updateSort(String goodsid, Integer sort);
 
 	/**
 	 * 根据商品id更新商品对应的种类
@@ -284,7 +301,7 @@ public interface GoodsTService {
 	 * @param goodsortid
 	 * @return
 	 */
-	public abstract int updateGoodssortid(String goodsid, String goodsortid);
+	public int updateGoodssortid(String goodsid, String goodsortid);
 
 	/**
 	 * 根据商品id更新商品种类名称
@@ -293,7 +310,7 @@ public interface GoodsTService {
 	 * @param goodssortname
 	 * @return
 	 */
-	public abstract int updateGoodssortname(String goodsid, String goodssortname);
+	public int updateGoodssortname(String goodsid, String goodssortname);
 
 	/**
 	 * 更新商品id更新商品回复数量
@@ -301,7 +318,7 @@ public interface GoodsTService {
 	 * @param goodsid
 	 * @return
 	 */
-	public abstract int updateGoodsreplycount(String goodsid);
+	public int updateGoodsreplycount(String goodsid);
 
 	/**
 	 * 根据导航，大类，小类，商品名称，查询商品数据用于optiontransforselect
@@ -312,14 +329,15 @@ public interface GoodsTService {
 	 * @param goodsname
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsForoptiontransferselect(final String navid, final String ltypeid, final String stypeid, final String goodsname);
+	public List<GoodsT> findGoodsForoptiontransferselect(final String navid,
+			final String ltypeid, final String stypeid, final String goodsname);
 
 	/**
 	 * 查询所有商品没有分页
 	 * 
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodstWithoutSplitpage();
+	public List<GoodsT> findAllGoodstWithoutSplitpage();
 
 	/**
 	 * 根据商品分类获取指定条数的商品记录
@@ -328,7 +346,7 @@ public interface GoodsTService {
 	 * @param limit
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsLimitByGoodsType(String nlstypeid, int limit);
+	public List<GoodsT> findGoodsLimitByGoodsType(String nlstypeid, int limit);
 
 	/**
 	 * 获取同价位商品集合
@@ -338,7 +356,8 @@ public interface GoodsTService {
 	 * @param goodsid
 	 * @return
 	 */
-	public abstract List<GoodsT> findSamepriceGoods(int limit, double minprice, double maxprice, String goodsid);
+	public List<GoodsT> findSamepriceGoods(int limit, double minprice,
+			double maxprice, String goodsid);
 
 	/**
 	 * 获取更多商品
@@ -348,7 +367,8 @@ public interface GoodsTService {
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsT> findMoreGoodsByGoodsType(final String nlstypeid, final int currentPage, int lineSize);
+	public List<GoodsT> findMoreGoodsByGoodsType(final String nlstypeid,
+			final int currentPage, int lineSize);
 
 	/**
 	 * 统计获取更多商品
@@ -356,7 +376,7 @@ public interface GoodsTService {
 	 * @param nlstypeid
 	 * @return
 	 */
-	public abstract int countfindMoreGoodsByGoodsType(final String nlstypeid);
+	public int countfindMoreGoodsByGoodsType(final String nlstypeid);
 
 	/**
 	 * 搜索商品
@@ -366,7 +386,8 @@ public interface GoodsTService {
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsT> findSearchGoods(final String goodsname, final int currentPage, int lineSize);
+	public List<GoodsT> findSearchGoods(final String goodsname,
+			final int currentPage, int lineSize);
 
 	/**
 	 * 统计搜索商品
@@ -374,7 +395,7 @@ public interface GoodsTService {
 	 * @param goodsname
 	 * @return
 	 */
-	public abstract int countfindSearchGoods(String goodsname);
+	public int countfindSearchGoods(String goodsname);
 
 	/**
 	 * 获取更多的上架商品（首页更多商品）
@@ -384,7 +405,8 @@ public interface GoodsTService {
 	 * @param salestate
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodslistMore(final int currentPage, final int lineSize, String salestate);
+	public List<GoodsT> findAllGoodslistMore(final int currentPage,
+			final int lineSize, String salestate);
 
 	/**
 	 * 统计获取更多上架商品
@@ -392,7 +414,7 @@ public interface GoodsTService {
 	 * @param salestate
 	 * @return
 	 */
-	public abstract int countfindAllGoodslistMore(String salestate);
+	public int countfindAllGoodslistMore(String salestate);
 
 	/**
 	 * 根据商品类型获取更多热卖商品
@@ -402,7 +424,8 @@ public interface GoodsTService {
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsT> findMoreHotSaleGoodsByGoodsType(final String nlstypeid, final int currentPage, int lineSize);
+	public List<GoodsT> findMoreHotSaleGoodsByGoodsType(final String nlstypeid,
+			final int currentPage, int lineSize);
 
 	/**
 	 * 统计根据商品类型获取更多热卖商品
@@ -410,7 +433,7 @@ public interface GoodsTService {
 	 * @param nlstypeid
 	 * @return
 	 */
-	public abstract int countfindMoreHotSaleGoodsByGoodsType(final String nlstypeid);
+	public int countfindMoreHotSaleGoodsByGoodsType(final String nlstypeid);
 
 	/**
 	 * 根据商品类型获取更多特价商品
@@ -420,7 +443,8 @@ public interface GoodsTService {
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsT> findMoreBargainPriceGoodsByGoodsType(final String nlstypeid, final int currentPage, int lineSize);
+	public List<GoodsT> findMoreBargainPriceGoodsByGoodsType(
+			final String nlstypeid, final int currentPage, int lineSize);
 
 	/**
 	 * 统计根据商品类型获取更多特价商品
@@ -428,7 +452,7 @@ public interface GoodsTService {
 	 * @param nlstypeid
 	 * @return
 	 */
-	public abstract int countfindMoreBargainPriceGoodsByGoodsType(final String nlstypeid);
+	public int countfindMoreBargainPriceGoodsByGoodsType(final String nlstypeid);
 
 	/**
 	 * 根据商品类型获取更多推荐商品
@@ -438,7 +462,8 @@ public interface GoodsTService {
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsT> findMoreRecommendedGoodsByGoodsType(final String nlstypeid, final int currentPage, int lineSize);
+	public List<GoodsT> findMoreRecommendedGoodsByGoodsType(
+			final String nlstypeid, final int currentPage, int lineSize);
 
 	/**
 	 * 统计根据商品类型获取更多推荐商品
@@ -446,7 +471,7 @@ public interface GoodsTService {
 	 * @param nlstypeid
 	 * @return
 	 */
-	public abstract int countfindMoreRecommendedGoodsByGoodsType(final String nlstypeid);
+	public int countfindMoreRecommendedGoodsByGoodsType(final String nlstypeid);
 
 	/**
 	 * 获取更多特价商品
@@ -455,14 +480,15 @@ public interface GoodsTService {
 	 * @param lineSize
 	 * @return
 	 */
-	public abstract List<GoodsT> findMoreBargainPriceGoods(final int currentPage, int lineSize);
+	public List<GoodsT> findMoreBargainPriceGoods(final int currentPage,
+			int lineSize);
 
 	/**
 	 * 统计获取更多特价商品
 	 * 
 	 * @return
 	 */
-	public abstract int countfindMoreBargainPriceGoods();
+	public int countfindMoreBargainPriceGoods();
 
 	/**
 	 * 获取商品数据给手机客户端
@@ -472,7 +498,8 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodsByismobileplatformgoods(final int currentPage, int lineSize, String creatorid);
+	public List<GoodsT> findAllGoodsByismobileplatformgoods(
+			final int currentPage, int lineSize, String creatorid);
 
 	/**
 	 * 统计获取商品数据给手机客户端
@@ -480,7 +507,7 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract int countfindAllGoodsByismobileplatformgoods(String creatorid);
+	public int countfindAllGoodsByismobileplatformgoods(String creatorid);
 
 	/**
 	 * 根据顶级分类获取
@@ -489,7 +516,7 @@ public interface GoodsTService {
 	 * @param salestate
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodsBynavid(String navid, String salestate);
+	public List<GoodsT> findAllGoodsBynavid(String navid, String salestate);
 
 	/**
 	 * 根据一级分类获
@@ -498,7 +525,7 @@ public interface GoodsTService {
 	 * @param salestate
 	 * @return
 	 */
-	public abstract List<GoodsT> findGoodsByLtypeid(String ltypeid, String salestate);
+	public List<GoodsT> findGoodsByLtypeid(String ltypeid, String salestate);
 
 	/**
 	 * 根据商品id更新htmlpath
@@ -507,7 +534,8 @@ public interface GoodsTService {
 	 * @param htmlPath
 	 * @return
 	 */
-	public abstract int updateHtmlPath(String goodsid, String htmlPath);
+	public int updateHtmlPath(String goodsid, String htmlPath);
+
 	/**
 	 * 根据商品id更新htmlpath避免重复生成无修改页面
 	 * 
@@ -516,7 +544,7 @@ public interface GoodsTService {
 	 * @param updatetime
 	 * @return
 	 */
-	public abstract int updateHtmlPath(String goodsid, String htmlPath,Date updatetime);
+	public int updateHtmlPath(String goodsid, String htmlPath, Date updatetime);
 
 	/**
 	 * 获取所有商品用于安装程序生成静态页
@@ -524,7 +552,7 @@ public interface GoodsTService {
 	 * @param salestate
 	 * @return
 	 */
-	public abstract List<GoodsT> finaAllGoodsT(String salestate);
+	public List<GoodsT> finaAllGoodsT(String salestate);
 
 	/**
 	 * 增加星级评分
@@ -533,7 +561,7 @@ public interface GoodsTService {
 	 * @param starsum
 	 * @return
 	 */
-	public abstract int updatestarsumBygoodsid(String goodsid, int star);
+	public int updatestarsumBygoodsid(String goodsid, int star);
 
 	/**
 	 * 更新商品总打分人数
@@ -542,7 +570,7 @@ public interface GoodsTService {
 	 * @param starusersum
 	 * @return
 	 */
-	public abstract int updatestarusersumBygoodsid(String goodsid, int staruser);
+	public int updatestarusersumBygoodsid(String goodsid, int staruser);
 
 	/**
 	 * 更新商品总评分人数
@@ -551,7 +579,7 @@ public interface GoodsTService {
 	 * @param commentsum
 	 * @return
 	 */
-	public abstract int updatecommentsumBygoodsid(String goodsid, int totalcomment);
+	public int updatecommentsumBygoodsid(String goodsid, int totalcomment);
 
 	/**
 	 * 根据传入的状态查询对应的商品数据
@@ -569,7 +597,10 @@ public interface GoodsTService {
 	 *            筛选状态1/0
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodsBynavidorderbyParams(String navid, String salestate, String sales, String memberprice, String totalcomment, String bargainprice, String hotsale, String recommended, String isNew, String value);
+	public List<GoodsT> findAllGoodsBynavidorderbyParams(String navid,
+			String salestate, String sales, String memberprice,
+			String totalcomment, String bargainprice, String hotsale,
+			String recommended, String isNew, String value);
 
 	/**
 	 * 根据传入的状态查询对应的商品
@@ -586,7 +617,10 @@ public interface GoodsTService {
 	 * @param value
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodsByLtypeidorderbyParams(String ltypeid, String salestate, String sales, String memberprice, String totalcomment, String bargainprice, String hotsale, String recommended, String isNew, String value);
+	public List<GoodsT> findAllGoodsByLtypeidorderbyParams(String ltypeid,
+			String salestate, String sales, String memberprice,
+			String totalcomment, String bargainprice, String hotsale,
+			String recommended, String isNew, String value);
 
 	/**
 	 * 根据排序字段按照排序方式排序
@@ -597,7 +631,8 @@ public interface GoodsTService {
 	 * @param creatorid
 	 * @return
 	 */
-	public abstract List<GoodsT> sortAllGoods(final int currentPage, final int lineSize, final String creatorid, final String queryString);
+	public List<GoodsT> sortAllGoods(final int currentPage, final int lineSize,
+			final String creatorid, final String queryString);
 
 	/**
 	 * 根据商品类型ID更新商品类型名称
@@ -606,39 +641,52 @@ public interface GoodsTService {
 	 * @param goodsTypeId
 	 * @return
 	 */
-	public abstract int updateGoodsTypeNameBygoodsTypeId(String goodsTypeName, String goodsTypeId);
+	public int updateGoodsTypeNameBygoodsTypeId(String goodsTypeName,
+			String goodsTypeId);
+
 	/**
 	 * 根据商品分类的id更新商品分类的名称
+	 * 
 	 * @param queryString
 	 * @return
 	 */
-	public abstract int updateGoodsCategoryBynlsid(String queryString);
+	public int updateGoodsCategoryBynlsid(String queryString);
+
 	/**
 	 * 根据推荐和上架获取商品数据并打乱顺序
+	 * 
 	 * @param currentPage
 	 * @param lineSize
 	 * @param salestate
 	 * @param recommended
 	 * @return
 	 */
-	public abstract List<GoodsT>findshuffleGoods(final int currentPage,final int lineSize,final String salestate,final String recommended);
+	public List<GoodsT> findshuffleGoods(final int currentPage,
+			final int lineSize, final String salestate, final String recommended);
+
 	/**
 	 * 根据属性获取商品列表
+	 * 
 	 * @param currentPage
 	 * @param lineSize
 	 * @param attr
 	 * @param salestate
 	 * @return
 	 */
-	public abstract List<GoodsT>findGoodsByattrs(final int currentPage,final int lineSize,final String attr,final String salestate);
+	public List<GoodsT> findGoodsByattrs(final int currentPage,
+			final int lineSize, final String attr, final String salestate);
+
 	/**
 	 * 根据商品顶级分类获取移动平台的商品数据
+	 * 
 	 * @param navid
 	 * @param salestate
 	 * @param ismobileplatformgoods
 	 * @return
 	 */
-	public abstract List<GoodsT>findGoodsByNavid(String navid,String salestate,String ismobileplatformgoods);
+	public List<GoodsT> findGoodsByNavid(String navid, String salestate,
+			String ismobileplatformgoods);
+
 	/**
 	 * 根据顶级分类获取旗下商品不包含规格值
 	 * 
@@ -646,19 +694,24 @@ public interface GoodsTService {
 	 * @param salestate
 	 * @return
 	 */
-	public abstract List<GoodsT> findAllGoodsBynavid(String navid, String salestate,String isSpecificationsOpen);
+	public List<GoodsT> findAllGoodsBynavid(String navid, String salestate,
+			String isSpecificationsOpen);
+
 	/**
 	 * 根据传入的商品分类数据查询商品集合不包含规格值
+	 * 
 	 * @param navid
 	 * @param ltypeid
 	 * @param salestate
 	 * @param isSpecificationsOpen
 	 * @return
 	 */
-	public abstract List<GoodsT>findAllGoodsBynavidandltypeid(String navid,String ltypeid,String salestate,String isSpecificationsOpen);
-	
+	public List<GoodsT> findAllGoodsBynavidandltypeid(String navid,
+			String ltypeid, String salestate, String isSpecificationsOpen);
+
 	/**
 	 * 根据传入的商品分类数据查询商品集合不包含规格值
+	 * 
 	 * @param navid
 	 * @param ltypeid
 	 * @param stypeid
@@ -666,8 +719,8 @@ public interface GoodsTService {
 	 * @param isSpecificationsOpen
 	 * @return
 	 */
-	public abstract List<GoodsT>findAllGoodsBynavidandltypeidandstypeid(String navid,String ltypeid,String stypeid,String salestate,String isSpecificationsOpen);
-	
-	
+	public List<GoodsT> findAllGoodsBynavidandltypeidandstypeid(String navid,
+			String ltypeid, String stypeid, String salestate,
+			String isSpecificationsOpen);
 
 }

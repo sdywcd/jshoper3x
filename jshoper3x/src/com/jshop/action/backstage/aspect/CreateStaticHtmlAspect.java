@@ -11,7 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 
 import com.jshop.action.backstage.content.article.ArticleTAction;
 import com.jshop.action.backstage.goods.GoodsCategoryTAction;
-import com.jshop.action.backstage.goods.GoodsTNAction;
+import com.jshop.action.backstage.goods.GoodsTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.ContentTag;
@@ -40,7 +40,7 @@ public class CreateStaticHtmlAspect {
 	 */
 	@After("execution(String com.jshop.action.GoodsTNAction.updateGoods())||execution(String com.jshop.action.GoodsTNAction.addGoods())")
 	public void aftergoodsIUCreatestatichtml(JoinPoint joinPoint) throws IOException, TemplateException{
-		GoodsTNAction gtn=(GoodsTNAction) joinPoint.getThis();
+		GoodsTAction gtn=(GoodsTAction) joinPoint.getThis();
 		if(gtn.getBean()!=null){
 			String basepath=gtn.getDataCollectionTAction().getBasePath();
 			String theme=gtn.getDataCollectionTAction().getDefaultTheme();

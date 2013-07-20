@@ -353,7 +353,6 @@ ServletRequestAware, ServletResponseAware {
 					json.append("\"goodsid\":\"").append(gt.getGoodsid()).append("\",");
 					json.append("\"goodsname\":\"").append(gt.getGoodsname()).append("\",");
 					json.append("\"brandname\":\"").append(gt.getBrandname()).append("\",");
-					json.append("\"model\":\"").append(gt.getModel()).append("\",");
 					json.append("\"nname\":\"").append(gt.getNname()).append("\",");
 					json.append("\"lname\":\"").append(gt.getLname()).append("\",");
 					json.append("\"sname\":\"").append(gt.getSname()).append("\",");

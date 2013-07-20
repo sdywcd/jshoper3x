@@ -306,26 +306,18 @@ public class GoodsAttributeTAction extends ActionSupport {
 			gat.setGoodsTypeId(this.getGoodsTypeId());
 			gat.setGoodsTypeName(this.getGoodsTypeName());
 			gat.setAttributeIndex(this.getAttributeIndex());
-			JSONObject jo=(JSONObject)(ja.get(i));
-			Iterator iter = jo.keySet().iterator();
-			while (iter.hasNext()) {
-				String key = iter.next().toString();
-				if (key.equals(StaticString.GOODSATTRIBUTENAME)) {
-					gat.setGoodsattributename(jo.get(key).toString());
-				}
-				if (key.equals(StaticString.ATTRIBUTETYPE)) {
-					gat.setAttributeType(jo.get(key).toString());
-				}
-				if (key.equals(StaticString.ATTRIBUTELIST)) {
-					gat.setAttributelist(jo.get(key).toString());
-				}
-				if (key.equals(StaticString.SORT)) {
-					gat.setSort(jo.get(key).toString());
-				}
-				if (key.equals(StaticString.GOODSATTRIBUTEID)) {
-					gat.setGoodsattributeid(jo.get(key).toString());
-				}
-			}
+			JSONObject jo=(JSONObject)ja.get(i);
+
+			gat.setGoodsattributename(jo.get(StaticString.GOODSATTRIBUTENAME).toString());
+		
+			gat.setAttributeType(jo.get(StaticString.ATTRIBUTETYPE).toString());
+
+			gat.setAttributelist(jo.get(StaticString.ATTRIBUTELIST).toString());
+		
+			gat.setSort(jo.get(StaticString.SORT).toString());
+
+			gat.setGoodsattributeid(jo.get(StaticString.GOODSATTRIBUTEID).toString());
+				
 			if(gat.getGoodsattributeid().length()==0){
 				gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
 				this.getGoodsAttributeTService().addGoodsAttributeT(gat);
