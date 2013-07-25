@@ -474,7 +474,7 @@ $(function() {
 	});
 	function action(com, grid) {
 		if (com == '添加') {
-			window.location.href = "products.jsp?operate=add&folder=goods";
+			window.location.href = "product.jsp?operate=add&folder=goods";
 			return;
 
 		} else if (com == '编辑') {
