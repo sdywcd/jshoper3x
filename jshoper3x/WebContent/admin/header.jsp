@@ -73,15 +73,19 @@
 								<li><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置 </a></li>				
 								<li class="divider"></li>
 								<li><a href="<%=basePath%>admin/goods/goods.jsp?operate=add">添加新商品 </a></li>
+								<li><a href="<%=basePath%>admin/goods/goodsment.jsp?operate=find">所有商品 </a></li>
 								<li class="divider"></li>
+								<li><a href="<%=basePath%>admin/products/product.jsp?operate=add">添加货物 </a></li>
+								<li><a href="<%=basePath%>admin/products/productment.jsp?operate=find">所有货物 </a></li>
 								<!--  <li><a href="#">团购商品 </a></li>
 								<li><a href="#">团购订单管理 </a></li>-->
-								<li class="dropdown-submenu"><a tabindex="-1" href="#">商品列表</a>
+								<!-- <li class="dropdown-submenu"><a tabindex="-1" href="#">商品列表</a>
 									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="<%=basePath%>admin/goods/goodsment.jsp?operate=find">所有商品</a></li>
-										<!-- <li><a tabindex="-1" href="#">仓库商品</a></li> -->
+									
+										<li><a tabindex="-1" href="#">仓库商品</a></li> 
 									</ul>
-								</li>
+								</li>-->
+								<li class="divider"></li>
 								<li><a href="#">商品评论</a></li>
 							</ul>
 						</li>
