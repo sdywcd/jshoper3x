@@ -32,9 +32,8 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 	public int saveProductT(ProductT pt) {
 		log.debug("save ProductT");
 		try {
-			this.getHibernateTemplate().save(pt);
 			log.debug("save successful");
-			return 1;
+			return (Integer)this.getHibernateTemplate().save(pt);
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
@@ -200,6 +199,48 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findProductTByGoodsid error", re);
+			throw re;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductT> findAllProductT(final int currentPage, final int lineSize) {
+		log.debug("find all ProductT");
+		try {
+			List<ProductT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+
+				String queryString = "from ProductT as pt order by pt.createtime desc";
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setFirstResult((currentPage - 1) * lineSize);
+					query.setMaxResults(lineSize);
+					List list = query.list();
+					return list;
+				}
+			});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find all ProductT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int countfineAllProductT() {
+		log.debug("countfindAllProductT");
+		try {
+			String queryString = "select count(*) from ProductT";
+			List list = this.getHibernateTemplate().find(queryString);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countfindAllProductT error", re);
 			throw re;
 		}
 	}

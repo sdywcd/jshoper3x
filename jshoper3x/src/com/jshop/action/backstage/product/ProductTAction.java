@@ -1,7 +1,10 @@
 package com.jshop.action.backstage.product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -9,10 +12,10 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ProductT;
 import com.jshop.service.ProductTService;
@@ -42,14 +45,20 @@ public class ProductTAction extends ActionSupport {
 	private String specificationsid;
 	private String specificationsName;
 	private String unit;
-	private boolean slogin;
-	private boolean sucflag;
+	private String query;
+	private String qtype;
 	private String sortname;
 	private String sortorder;
-
+	private List rows = new ArrayList();
+	private int rp;
+	private int page = 1;
+	private int total = 0;
 	private List<ProductT> beanlist = new ArrayList<ProductT>();
 	private ProductT bean = new ProductT();
 
+	private boolean slogin;
+	private boolean sucflag;
+	
 	@JSON(serialize = false)
 	public ProductTService getProductTService() {
 		return productTService;
@@ -277,6 +286,54 @@ public class ProductTAction extends ActionSupport {
 	}
 
 
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+	public String getQtype() {
+		return qtype;
+	}
+
+	public void setQtype(String qtype) {
+		this.qtype = qtype;
+	}
+
+	public List getRows() {
+		return rows;
+	}
+
+	public void setRows(List rows) {
+		this.rows = rows;
+	}
+
+	public int getRp() {
+		return rp;
+	}
+
+	public void setRp(int rp) {
+		this.rp = rp;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -347,7 +404,7 @@ public class ProductTAction extends ActionSupport {
 	 */
 	@Action(value = "delProductTByproductid", results = { @Result(name = "json", type = "json") })
 	public String delProductTByproductid(){
-		if(Validate.StrNotNull(this.getProductid())){
+		if(StringUtils.isNotBlank(this.getProductid())){
 			int i=this.getProductTService().delProductTByproductid(this.getProductid());
 			this.setSucflag(true);
 			return "json";
@@ -356,5 +413,66 @@ public class ProductTAction extends ActionSupport {
 		return "json";
 		
 	}
+	
+	/**
+	 * 查询所有的货物
+	 * @return
+	 */
+	@Action(value = "findAllProducts", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
+	public String findAllProducts(){
+		if(StaticString.SC.equals(this.getQtype())){
+			finddefaultAllProducts();
+		}else{
+			if(StringUtils.isBlank(this.getQtype())){
+				return "json";
+			}
+		}
+		return "json";
+	}
+
+	private void finddefaultAllProducts() {
+		int currentPage=page;
+		int lineSize=rp;
+		List<ProductT>list=this.getProductTService().findAllProductT(currentPage, lineSize);
+		if(!list.isEmpty()){
+			ProcessProductsList(list);
+		}
+	}
+
+	private void ProcessProductsList(List<ProductT> list) {
+		total=this.getProductTService().countfineAllProductT();
+		rows.clear();
+		for(Iterator it=list.iterator();it.hasNext();){
+			ProductT pt=(ProductT) it.next();
+			if(pt.getIsDefault().equals(StaticString.ZERO)){
+				pt.setIsDefault(StaticString.NO);
+			}else{
+				pt.setIsDefault(StaticString.YES);
+			}
+			if(pt.getIsSalestate().equals(StaticString.ZERO)){
+				pt.setIsSalestate(StaticString.OFFSALE);
+			}else{
+				pt.setIsSalestate(StaticString.ONSALE);
+			}
+			Map<String,Object> cellMap=new HashMap<String,Object>();
+			cellMap.put("id", pt.getProductid());
+			cellMap.put("cell", new Object[]{
+					pt.getProductSn(),
+					pt.getProductName(),
+					pt.getPrice(),
+					pt.getMemberprice(),
+					pt.getCost(),
+					pt.getSaleprice(),
+					pt.getFreezeStore(),
+					pt.getStore(),
+					pt.getWeight(),
+					BaseTools.formateDbDate(pt.getCreatetime()),
+					"<a target='_blank' id='editproduct' href='product.jsp?' name='editproduct'>[编辑]</a>" 
+				});
+			rows.add(cellMap);
+		}
+	}
+	
+	
 
 }

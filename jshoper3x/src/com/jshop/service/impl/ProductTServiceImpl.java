@@ -68,4 +68,14 @@ public class ProductTServiceImpl implements ProductTService {
 		return this.getProductTDao().findProductTByGoodsid(goodsid);
 	}
 
+	@Override
+	public List<ProductT> findAllProductT(int currentPage, int lineSize) {
+		return this.getProductTDao().findAllProductT(currentPage, lineSize);
+	}
+
+	@Override
+	public int countfineAllProductT() {
+		return this.getProductTDao().countfineAllProductT();
+	}
+
 }

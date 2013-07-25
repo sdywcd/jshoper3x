@@ -1192,7 +1192,7 @@ public class GoodsTAction extends ActionSupport {
 	/**
 	 * 获取用户的所有商品信息
 	 */
-	public void finddefaultAllGoods() {
+	private void finddefaultAllGoods() {
 		int currentPage = page;
 		int lineSize = rp;
 		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {

@@ -26,13 +26,26 @@ public interface ProductTDao {
 			final int lineSize, final String creatorid);
 
 	/**
+	 * 查询所有货物
+	 * @param currentPage
+	 * @param lineSize
+	 * @return
+	 */
+	public List<ProductT>findAllProductT(final int currentPage,final int lineSize);
+	
+	/**
 	 * 统计查询所有产品
 	 * 
 	 * @param creatorid
 	 * @return
 	 */
 	public int countfindAllProductT(String creatorid);
-
+	/**
+	 * 统计查询所有货物
+	 * @return
+	 */
+	public int countfineAllProductT();
+	
 	/**
 	 * 根据商品id获取货品数据
 	 * 

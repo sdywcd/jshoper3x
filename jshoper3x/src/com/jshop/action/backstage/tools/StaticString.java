@@ -92,9 +92,12 @@ public class  StaticString {
 	
 	//商品属性静态字段
 	public static final String ATTRVAL="attrval";
-
+	//货物静态字段
+	public static final String DEFAULT="默认";
 	
+	public static final String ONSALE="上架";
 	
+	public static final String OFFSALE="下架";
 	
 	
 }
