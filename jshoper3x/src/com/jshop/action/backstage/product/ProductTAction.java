@@ -30,8 +30,8 @@ public class ProductTAction extends ActionSupport {
 	private Double memberprice;
 	private Double cost;
 	private Double saleprice;
-	private Integer freezeStore;
-	private Integer store;
+	private String freezeStore;
+	private String store;
 	private String isDefault;
 	private String isSalestate;
 	private String productName;
@@ -157,19 +157,21 @@ public class ProductTAction extends ActionSupport {
 		this.saleprice = saleprice;
 	}
 
-	public Integer getFreezeStore() {
+
+
+	public String getFreezeStore() {
 		return freezeStore;
 	}
 
-	public void setFreezeStore(Integer freezeStore) {
+	public void setFreezeStore(String freezeStore) {
 		this.freezeStore = freezeStore;
 	}
 
-	public Integer getStore() {
+	public String getStore() {
 		return store;
 	}
 
-	public void setStore(Integer store) {
+	public void setStore(String store) {
 		this.store = store;
 	}
 
@@ -354,8 +356,8 @@ public class ProductTAction extends ActionSupport {
 		pt.setMemberprice(this.getMemberprice());
 		pt.setCost(this.getCost());
 		pt.setSaleprice(this.getSaleprice());
-		pt.setFreezeStore(this.getFreezeStore());
-		pt.setStore(this.getStore());
+		pt.setFreezeStore(Integer.parseInt(this.getFreezeStore()));
+		pt.setStore(Integer.parseInt(this.getStore()));
 		pt.setIsDefault(this.getIsDefault());
 		pt.setIsSalestate(this.getIsSalestate());
 		pt.setProductName(this.getProductName());

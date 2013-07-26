@@ -33,7 +33,8 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 		log.debug("save ProductT");
 		try {
 			log.debug("save successful");
-			return (Integer)this.getHibernateTemplate().save(pt);
+			this.getHibernateTemplate().save(pt);
+			return 1;
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;

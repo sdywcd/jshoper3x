@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-7-16 21:38:58 by Hibernate Tools 4.0.0
+// Generated 2013-7-26 22:19:04 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -72,8 +72,6 @@ public class GoodsT implements java.io.Serializable {
 	private Date updatetime;
 	private int versiont;
 	private String commoditylist;
-	private String isvirtual;
-	private String virtualresults;
 
 	public GoodsT() {
 	}
@@ -82,8 +80,7 @@ public class GoodsT implements java.io.Serializable {
 			String nname, String lname, String navid, String ltypeid,
 			String pictureurl, int quantity, String recommended,
 			Date createtime, String creatorid, double saleprice,
-			Date updatetime, int versiont, String commoditylist,
-			String isvirtual, String virtualresults) {
+			Date updatetime, int versiont, String commoditylist) {
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
 		this.brandname = brandname;
@@ -100,8 +97,6 @@ public class GoodsT implements java.io.Serializable {
 		this.updatetime = updatetime;
 		this.versiont = versiont;
 		this.commoditylist = commoditylist;
-		this.isvirtual = isvirtual;
-		this.virtualresults = virtualresults;
 	}
 
 	public GoodsT(String goodsid, String goodsname, String brandname,
@@ -120,8 +115,7 @@ public class GoodsT implements java.io.Serializable {
 			String usersetnum, String isSpecificationsOpen, Integer star,
 			Integer staruser, Integer totalcomment, Integer virtualsale,
 			String ismobileplatformgoods, Integer sales, Integer realsales,
-			Date updatetime, int versiont, String commoditylist,
-			String isvirtual, String virtualresults) {
+			Date updatetime, int versiont, String commoditylist) {
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
 		this.brandname = brandname;
@@ -177,8 +171,6 @@ public class GoodsT implements java.io.Serializable {
 		this.updatetime = updatetime;
 		this.versiont = versiont;
 		this.commoditylist = commoditylist;
-		this.isvirtual = isvirtual;
-		this.virtualresults = virtualresults;
 	}
 
 	@Id
@@ -677,24 +669,6 @@ public class GoodsT implements java.io.Serializable {
 
 	public void setCommoditylist(String commoditylist) {
 		this.commoditylist = commoditylist;
-	}
-
-	@Column(name = "ISVIRTUAL", nullable = false, length = 1)
-	public String getIsvirtual() {
-		return this.isvirtual;
-	}
-
-	public void setIsvirtual(String isvirtual) {
-		this.isvirtual = isvirtual;
-	}
-
-	@Column(name = "VIRTUALRESULTS", nullable = false, length = 1000)
-	public String getVirtualresults() {
-		return this.virtualresults;
-	}
-
-	public void setVirtualresults(String virtualresults) {
-		this.virtualresults = virtualresults;
 	}
 
 }

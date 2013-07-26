@@ -72,6 +72,10 @@
 									<span class="label label-info">货号是标示货品的唯一编码</span>
 								</div>
 								<div class="form-inline">
+									<span class="label label-required">货物名称:</span> <input type="text"
+										id="productName" name="productName" class="medium" />
+								</div>
+								<div class="form-inline">
 									<span class="label label-required">成本价:</span> 
 									<input type="text"id="cost" name="cost" class="small" />
 									<span class="label label-info">成本价是该货品实际最合理价值，理论上会员价不得低于成本价</span>
@@ -95,8 +99,11 @@
 									<span class="label label-required">重量:</span> 
 									<input type="text"id="weight" name="weight" class="small" />
 									<select id="unit" name="unit">
-											<option value="1">
-												克（g）
+											<option value="克">
+												克
+											</option>
+											<option value="公斤">
+												公斤
 											</option>
 										</select>
 									<span class="label label-info">重量的作用是用于计算物流费用</span>
@@ -169,29 +176,7 @@
 
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/products/productmentjs.js"></script>
-	<script type="text/javascript"
-		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
-	<script type="text/javascript">
- 		function createUploader(){            
-             var uploader = new qq.FileUploader({
-                 element: document.getElementById('uploadergoodpc'),
-                 action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
-                 debug: true,
-                 minSizeLimit:1024,
-                 sizeLimit: 1073741824,
-                 allowedExtensions: ['jpeg','jpg','gif','png'],
-                 onComplete: function(id, fileName, responseJSON){
-                	var pcpath1="<%=basePath%>"+ responseJSON.success;
-							var pcpath = responseJSON.success;
-							var htm = "<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
-							var checkpc = "<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
-							$("#triggers").append(htm).append(checkpc);
-						},
-					});
-		}
-		window.onload = createUploader;
-	</script>
-	<script type="text/javascript">
+	
 	<%@include file="/admin/footer.jsp"%>
 </body>
 </html>

@@ -229,7 +229,7 @@ public class SendSystemEmail extends ActionSupport {
 		String mailcontent = "";
 		for(int i=0;i<glist.size();i++){
 			gt=this.getGoodsTService().findGoodsById(glist.get(i).toString());
-			mailcontent+=gt.getVirtualresults()+"   ";
+			//mailcontent+=gt.getVirtualresults()+"   ";
 		}
 		return mailcontent;
 	}

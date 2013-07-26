@@ -45,7 +45,7 @@ $(function() {
     					//3表示颜色类型
     					$.each(jsonObject,function(k,v){
         					html+="<div style='margin-right:10px; display: inline;padding-left:90px;padding-top:5px;padding-bottom:5px;background:"+v.specifivalue+"'>" +
-        								"<input  id='colortype' name='colortype' type='checkbox'  value="+v.specifivalue+"/>" +
+        								"<input  id='colortype' name='colortype' type='checkbox'  value='"+v.specifivalue+"' />" +
         								"</div>";
         				});
     				}else if(data.bean.specificationsType=="2"){
@@ -53,7 +53,7 @@ $(function() {
     					$.each(jsonObject,function(k,v){
         					html+="<div style='margin-right:10px; display: inline;padding-top:5px;padding-bottom:5px;'>" +
         								"<img width='200px' height='200px' src='../.."+v.specifivalue+"'/>" +
-        								"<input id='imgtype' name='imgtype' type='checkbox'  value="+v.specifivalue+"/>" +
+        								"<input id='imgtype' name='imgtype' type='checkbox'  value='"+v.specifivalue+"' />" +
         								"</div>";
         				});
     				}else if(data.bean.specificationsType=="1"){
@@ -61,12 +61,12 @@ $(function() {
     					$.each(jsonObject,function(k,v){
         					html+="<div style='margin-right:10px; display: inline;padding-top:5px;padding-bottom:5px;'>" +
         								"<span>"+v.specifivalue+"</span>" +
-        								"<input id='texttype' name='texttype' type='checkbox'  value="+v.specifivalue+"/>" +
+        								"<input id='texttype' name='texttype' type='checkbox'  value='"+v.specifivalue+"' />" +
         								"</div>";
         				});
     				}
     				//在页面上保存一个规格值类型的隐藏域作为增加商品时取值使用
-    				var hidspecificationsType="<input type='hidden' id='specificationsType' name='specificationsType' value='"+data.bean.specificationsType+"'></input>";
+    				var hidspecificationsType="<input type='hidden' id='hidspecificationsType' name='hidspecificationsType' value='"+data.bean.specificationsType+"'></input>";
     				$("#specificationvaluearea").text("").append(html).append(hidspecificationsType);
     			}
     		
@@ -285,15 +285,80 @@ $(function() {
 		return goodsParameterValue;
 	},
 	
-	$("#submit").click(function(){
-		saveGoods();
-	});
+	/**
+	 * 检测规格值每次每种只能选择一个规格值
+	 */
+	checkSpecifications=function(){
+		//这里无法读取到具体的规格值是什么类型的？是图片？文字？颜色？所以只能便利判定了
+		var texttypecount=0;
+		$("input[name='texttype']").each(function(){
+			 if($(this).attr("checked")){
+				 ++texttypecount;
+			 }
+		});
+		var imgtypecount=0;
+		$("input[name='imgtype']").each(function(){
+			if($(this).attr("checked")){
+				 ++imgtypecount;
+			 }
+		});
+		var colortypecount=0;
+		$("input[name='colortype']").each(function(){
+			if($(this).attr("checked")){
+				 ++colortypecount;
+			 }
+		});
+		
+		if(texttypecount>1||imgtypecount>1||colortypecount>1){
+			formwarning("#alerterror", "规格值每次每个类别只能选择一个");
+			return false;
+		}
+		return true;
+	},
+	/**
+	 * 获取所选的规格值
+	 */
+	getselectSpecificationsVal=function(){
+		//这里要获取所选的规格值
+		var specificationsValue="";
+		var hidspecificationsType=$("#hidspecificationsType").val();
+		if(hidspecificationsType=="1"){
+			//文字类型【1=文字类型】【2=图片类型】【3颜色类型】
+			$("input[name='texttype']").each(function(){
+				specificationsValue+="{\"specificationsValue\":\""+this.value+"\"},";
+			});
+			specificationsValue=specificationsValue.toString().substring(0, specificationsValue.length-1);
+		}else if(hidspecificationsType=="2"){
+			$("input[name='imgtype']").each(function(){
+				specificationsValue+="{\"specificationsValue\":\""+this.value+"\"},";
+			});
+			specificationsValue=specificationsValue.toString().substring(0, specificationsValue.length-1);
+		}else if(hidspecificationsType=="3"){
+			$("input[name='colortype']").each(function(){
+				specificationsValue+="{\"specificationsValue\":\""+this.value+"\"},";
+			});
+			specificationsValue=specificationsValue.toString().substring(0, specificationsValue.length-1);
+		}
+		return specificationsValue;
+	},
 	
-	//可能取消
+	/**
+	 * 保存货物
+	 * @returns
+	 */
 	saveProductT=function(){
+		if(!checkSpecifications()){
+			return false;
+		}
 		var isSpecificationsOpen=$("#isSpecificationsOpen").val();//所选的规格值id
+		if(isSpecificationsOpen=='0'){
+			formwarning("#alerterror","请选择一个货物规格");
+			return false;
+		}
 		var specificationsName=$("#isSpecificationsOpen").find("option:selected").text();//所选规格值名称
-		var productName=$("#goodsname").val();
+		//提取选择的规格值
+		var specificationsValue=getselectSpecificationsVal();
+		var productName=$("#productName").val();
 		if(productName==""){
 			formwarning("#alerterror","请填写商品名称");
 			return false;
@@ -304,7 +369,7 @@ $(function() {
 		var memberprice=$("#memberprice").val();
 		var price=$("#price").val();
 		var weight=$("#weight").val();
-		var unit=$("#unit").find("option:selected").text();
+		var unit=$("#unit").val();
 		var store=$("#store").val();
 		var freezeStore=$("#freezeStore").val();
 		var warehouseLocation=$("#warehouseLocation").val();
@@ -314,6 +379,7 @@ $(function() {
 		this.value="提交中";
 		this.disabled=true;
 		$.post("saveProductT.action",{
+			"specificationsValue":specificationsValue,
 			"specificationsid":isSpecificationsOpen,
 			"specificationsName":specificationsName,
 			"productName":productName,
@@ -332,12 +398,17 @@ $(function() {
 			"isSalestate":isSalestate
 		},function(data){
 			if(data.sucflag){
-				$("#submitp").attr("disabled",false);
+				window.location.href="productment.jsp?operate=find&folder=goods";
 			}
 		});
-	}
+	},
 	
-	
+	/**
+	 * 点击提交调用保存货物方法
+	 */
+	$("#submit").click(function(){
+		saveProductT();
+	});
 	
 	
 	
@@ -483,7 +554,7 @@ $(function() {
 				$('.trSelected', grid).each(function() {
 					str = this.id.substr(3);
 				});
-				window.location.href = "products.jsp?operate=edit&folder=goods&productid="
+				window.location.href = "product.jsp?operate=edit&folder=goods&productid="
 						+ str;
 				return;
 			} else {
