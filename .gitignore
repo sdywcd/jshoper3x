@@ -7,8 +7,7 @@
 .metadata
 bin/
 tmp/
-/classes
-*.class
+classes/
 *.tmp
 *.bak
 *.swp
@@ -255,3 +254,4 @@ pip-log.txt
 # Mac crap
 .DS_Store
 /ROOT
+/jshoper3x
