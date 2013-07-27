@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.ProductTDao;
+import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ProductT;
 
 /**
@@ -242,6 +243,18 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 			return 0;
 		} catch (RuntimeException re) {
 			log.error("countfindAllProductT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public ProductT findProductByProductid(String productid) {
+		log.debug("getting findProductByProductid instance with id: " + productid);
+		try {
+			ProductT instance = (ProductT) this.getHibernateTemplate().get("com.jshop.entity.ProductT", productid);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
 			throw re;
 		}
 	}

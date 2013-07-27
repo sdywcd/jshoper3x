@@ -107,5 +107,11 @@ public interface ProductTService {
 	 * @return
 	 */
 	public List<ProductT> findProductTByGoodsid(String goodsid);
-
+	/**
+	 * 根据主键id获取货物记录
+	 * @param productid
+	 * @return
+	 */
+	public ProductT findProductByProductid(String productid);
+	
 }

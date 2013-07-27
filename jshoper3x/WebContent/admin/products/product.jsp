@@ -158,9 +158,8 @@
 						</div>
 					</div>
 					<div class="form-inline">
-						<label class="label label-submit"></label> <input type="hidden"
-							id="hidgoodsCategoryTid" name="hidgoodsCategoryTid" value="" />
-						<input type="hidden" id="hidgrade" name="hidgrade" value="">
+						<label class="label label-submit"></label> 
+						<input type="hidden" id="hidproductid" name="hidproductid" value="">
 						<input class="btn btn-success" type="button" id="submit"
 							name="submit" value="提交" /> <input class="btn btn-success"
 							type="button" id="update" name="update" value="更新"

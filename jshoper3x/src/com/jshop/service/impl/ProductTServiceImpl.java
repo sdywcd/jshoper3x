@@ -78,4 +78,9 @@ public class ProductTServiceImpl implements ProductTService {
 		return this.getProductTDao().countfineAllProductT();
 	}
 
+	@Override
+	public ProductT findProductByProductid(String productid) {
+		return this.getProductTDao().findProductByProductid(productid);
+	}
+
 }

@@ -474,7 +474,21 @@ public class ProductTAction extends ActionSupport {
 			rows.add(cellMap);
 		}
 	}
-	
-	
+	/**
+	 * 获取货物详细
+	 * @return
+	 */
+	@Action(value = "findProductByProductid", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
+	public String findProductByProductid(){
+		if(StringUtils.isBlank(this.getProductid())){
+			return "json";
+		}
+		bean=this.getProductTService().findProductByProductid(this.getProductid());
+		if(bean!=null){
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
 
 }
