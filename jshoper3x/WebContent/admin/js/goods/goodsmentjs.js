@@ -199,7 +199,7 @@ $(function() {
 		var isSpecificationsOpen=$("#isSpecificationsOpen").val();
 		var specificationsName=$("#isSpecificationsOpen").find("option:selected").text();
 		if(isSpecificationsOpen=="0"){
-			$("#specificationsarea").hide();
+			
 			return false;
 		}
 		if(isSpecificationsOpen=="1"){
@@ -273,8 +273,69 @@ $(function() {
 			$('#parentId2').hide();
 		}
 	});
-	
+	/**
+	 * 检测规格值每次每种只能选择一个规格值
+	 */
+	checkSpecifications=function(){
+		//这里无法读取到具体的规格值是什么类型的？是图片？文字？颜色？所以只能便利判定了
+		var texttypecount=0;
+		$("input[name='texttype']").each(function(){
+			 if($(this).attr("checked")){
+				 ++texttypecount;
+			 }
+		});
+		var imgtypecount=0;
+		$("input[name='imgtype']").each(function(){
+			if($(this).attr("checked")){
+				 ++imgtypecount;
+			 }
+		});
+		var colortypecount=0;
+		$("input[name='colortype']").each(function(){
+			if($(this).attr("checked")){
+				 ++colortypecount;
+			 }
+		});
+		
+		if(texttypecount>1||imgtypecount>1||colortypecount>1){
+			formwarning("#alerterror", "规格值每次每个类别只能选择一个");
+			return false;
+		}
+		return true;
+	},
 
+	/**
+	 * 获取所选的规格值
+	 */
+	getselectSpecificationsVal=function(){
+		//这里要获取所选的规格值
+		var specificationsValue="";
+		var hidspecificationsType=$("#hidspecificationsType").val();
+		if(hidspecificationsType=="1"){
+			//文字类型【1=文字类型】【2=图片类型】【3颜色类型】
+			$("input[name='texttype']").each(function(){
+				if($(this).attr("checked")){
+					specificationsValue+="{\"type\":\"texttype\",\"specificationsValue\":\""+this.value+"\"},";
+				}
+			});
+			specificationsValue="["+specificationsValue.toString().substring(0, specificationsValue.length-1)+"]";
+		}else if(hidspecificationsType=="2"){
+			$("input[name='imgtype']").each(function(){
+				if($(this).attr("checked")){
+					specificationsValue+="{\"type\":\"imgtype\",\"specificationsValue\":\""+this.value+"\"},";
+				}
+			});
+			specificationsValue="["+specificationsValue.toString().substring(0, specificationsValue.length-1)+"]";
+		}else if(hidspecificationsType=="3"){
+			$("input[name='colortype']").each(function(){
+				if($(this).attr("checked")){
+					specificationsValue+="{\"type\":\"colortype\",\"specificationsValue\":\""+this.value+"\"},";
+				}
+			});
+			specificationsValue="["+specificationsValue.toString().substring(0, specificationsValue.length-1)+"]";
+		}
+		return specificationsValue;
+	},
 	/**
 	 * 增加商品
 	 */
@@ -319,12 +380,18 @@ $(function() {
 		var bargainprice=$("input[name='bargainprice']:checked").val();
 		var ismobileplatformgoods=$("input[name='ismobileplatformgoods']:checked").val();
 		var salestate=$("input[name='salestate']:checked").val();
+		//获取货物信息
+		if(!checkSpecifications()){
+			return false;
+		}
 		var isSpecificationsOpen=$("#isSpecificationsOpen").val();
 		if(isSpecificationsOpen=="-1"){
 			formwarning("#alerterror", "请选择一个规格");
 			return false;
 		}
 		var specificationsName=$("#isSpecificationsOpen").find("option:selected").text();//所选规格值名称
+		//提取选择的规格值
+		var specificationsValue=getselectSpecificationsVal();
 		var productName=$("#goodsname").val();
 		if(productName==""){
 			formwarning("#alerterror","请填写商品名称");
@@ -343,26 +410,6 @@ $(function() {
 		var placeStore=$("#placeStore").val();
 		var isDefault=$("input[name='isDefault']:checked").val();
 		var isSalestate=$("input[name='isSalestate']:checked").val();
-		//这里要获取所选的规格值
-		var specificationsValue="";
-		var hidspecificationsType=$("#hidspecificationsType").val();
-		if(hidspecificationsType=="1"){
-			//文字类型【1=文字类型】【2=图片类型】【3颜色类型】
-			$(":checkbox[name='texttype'][checked=true]").each(function(){
-				specificationsValue+="{\"specificationsValue\":\""+this.value+"\"},";
-			});
-			specificationsValue=specificationsValue.toString().substring(0, specificationsValue.length-1);
-		}else if(hidspecificationsType=="2"){
-			$(":checkbox[name='imgtype'][checked=true]").each(function(){
-				specificationsValue+="{\"specificationsValue\":\""+this.value+"\"},";
-			});
-			specificationsValue=specificationsValue.toString().substring(0, specificationsValue.length-1);
-		}else if(hidspecificationsType=="3"){
-			$(":checkbox[name='colortype'][checked=true]").each(function(){
-				specificationsValue+="{\"specificationsValue\":\""+this.value+"\"},";
-			});
-			specificationsValue=specificationsValue.toString().substring(0, specificationsValue.length-1);
-		}
 		//获取商品图片路径集合
 		var pictureurl="";
 		$(":checkbox[name='pcpath'][checked=true]").each(function(){
@@ -611,12 +658,20 @@ $(function() {
 			align : 'center'
 		} ],
 		buttons : [ {
-			name : '添加',
+			name : '添加商品',
 			bclass : 'add',
 			onpress : action
 		}, {
-			name : '编辑',
+			name : '添加货物',
+			bclass : 'addproduct',
+			onpress : action
+		}, {
+			name : '编辑商品',
 			bclass : 'edit',
+			onpress : action
+		}, {
+			name : '编辑货物',
+			bclass : 'editproduct',
 			onpress : action
 		}, {
 			name : '删除',
@@ -682,11 +737,24 @@ $(function() {
 		checkbox : true
 	});
 	function action(com, grid) {
-		if (com == '添加') {
+		if (com == '添加商品') {
 			window.location.href = "goods.jsp?operate=add&folder=goods";
 			return;
 
-		} else if (com == '编辑') {
+		} else if(com=="添加货物"){
+			if ($('.trSelected', grid).length == 1) {
+				var str = "";
+				$('.trSelected', grid).each(function() {
+					str = this.id.substr(3);
+				});
+				window.location.href = "products/product.jsp?operate=add&folder=goods&goodsid="
+						+ str;
+				return;
+			} else {
+				formwarning("#alerterror", "请选择需要添加货物的商品");
+				return false;
+			}
+		}else if (com == '编辑商品') {
 			if ($('.trSelected', grid).length == 1) {
 				var str = "";
 				$('.trSelected', grid).each(function() {
@@ -697,6 +765,19 @@ $(function() {
 				return;
 			} else {
 				formwarning("#alerterror", "请选择一条信息");
+				return false;
+			}
+		} else if (com == '编辑货物') {
+			if ($('.trSelected', grid).length == 1) {
+				var str = "";
+				$('.trSelected', grid).each(function() {
+					str = this.id.substr(3);
+				});
+				window.location.href = "products/product.jsp?operate=editd&folder=goods&goodsid="
+						+ str;
+				return;
+			} else {
+				formwarning("#alerterror", "请选择需要编辑货物的商品");
 				return false;
 			}
 		} else if (com == '删除') {

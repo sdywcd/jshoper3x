@@ -241,6 +241,7 @@ $(function() {
 	 * @returns
 	 */
 	saveProductT=function(){
+		
 		if(!checkSpecifications()){
 			return false;
 		}
@@ -270,9 +271,12 @@ $(function() {
 		var placeStore=$("#placeStore").val();
 		var isDefault=$("input[name='isDefault']:checked").val();
 		var isSalestate=$("input[name='isSalestate']:checked").val();
+		//获取商品id，判定是否从good.jsp过来的请求
+		var goodsid = $.query.get("goodsid");
 		this.value="提交中";
 		this.disabled=true;
 		$.post("saveProductT.action",{
+			"goodsid":goodsid,
 			"specificationsValue":specificationsValue,
 			"specificationsid":isSpecificationsOpen,
 			"specificationsName":specificationsName,
@@ -374,7 +378,162 @@ $(function() {
 		saveProductT();
 	});
 	
-	
+	/**
+	 * 查询货物
+	 */
+	findProducts=function(param){
+		$("#productsmanagement").flexigrid({
+			url : 'findAllProducts.action？qtype=goodsid&goodsid='+param,
+			dataType : 'json',
+			cache : false,
+			colModel : [ {
+				display : '货号',
+				name : 'productSn',
+				width : 100,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '货物名称',
+				name : 'productName',
+				width : 200,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '市场价',
+				name : 'price',
+				width : 80,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '会员价',
+				name : 'memberprice',
+				width : 80,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '成本价',
+				name : 'cost',
+				width : 80,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '销售价',
+				name : 'saleprice',
+				width : 80,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '预警库存',
+				name : 'freezeStore',
+				width : 60,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '库存',
+				name : 'store',
+				width : 60,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '重量',
+				name : 'weight',
+				width : 40,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '创建时间',
+				name : 'createtime',
+				width : 150,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '操作',
+				name : 'operating',
+				width : 60,
+				sortable : true,
+				align : 'center'
+			} ],
+			buttons : [ {
+				name : '添加',
+				bclass : 'add',
+				onpress : action
+			}, {
+				name : '编辑',
+				bclass : 'edit',
+				onpress : action
+			}, {
+				name : '删除',
+				bclass : 'del',
+				onpress : action
+			}, {
+				separator : true
+			} ],
+
+			searchitems : [ {
+				display : '请选择搜索条件',
+				name : 'sc',
+				isdefault : true
+			}, {
+				display : '货号',
+				name : 'productSn'
+			}, {
+				display : '商品ID',
+				name : 'goodsid'
+			} ],
+			sortname : "createtime",
+			sortorder : "desc",
+			usepager : true,
+			title : '',
+			useRp : true,
+			rp : 20,
+			rpOptions : [ 5, 20, 40, 100 ],
+			showTableToggleBtn : true,
+			showToggleBtn : true,
+			width : 'auto',
+			height : 'auto',
+			pagestat : '显示{from}到{to}条，共{total}条记录',
+			procmsg : '正在获取数据，请稍候...',
+			checkbox : true
+		});
+		function action(com, grid) {
+			if (com == '添加') {
+				window.location.href = "product.jsp?operate=add&folder=goods";
+				return;
+
+			} else if (com == '编辑') {
+				if ($('.trSelected', grid).length == 1) {
+					var str = "";
+					$('.trSelected', grid).each(function() {
+						str = this.id.substr(3);
+					});
+					window.location.href = "product.jsp?operate=edit&folder=goods&productid="
+							+ str;
+					return;
+				} else {
+					formwarning("#alerterror", "请选择一条信息");
+					return false;
+				}
+			} else if (com == '删除') {
+				if ($('.trSelected', grid).length > 0) {
+					var str = "";
+					$('.trSelected', grid).each(function() {
+						str += this.id.substr(3) + ",";
+					});
+					$.post("delProductT.action", {
+						"productid" : str
+					}, function(data) {
+						if (data.sucflag) {
+							$('#productsmanagement').flexReload();
+							forminfo("#alertinfo", "删除货物成功");
+						}
+					});
+				} else {
+					formwarning("#alerterror", "请选择要删除的信息");
+					return false;
+				}
+			} 
+		}
+	}
 	
 	
 	/**
@@ -382,165 +541,20 @@ $(function() {
 	 */
 	var operate = $.query.get("operate");
 	if (operate == "add") {
-		
 		findAllSpecificationsforjson();
 		
 	}else if(operate=="edit"){
-		findAllSpecificationsforjson();
-		findProductByProductid();
+		var goodsid=$.query.get("goodsid");
+		if(goodsid==""){
+			findAllSpecificationsforjson();
+			findProductByProductid();
+		}else{
+			findProducts(goodsid);
+		}
+		
+	}else if(operate=="find"){
+		var param="";
+		findProducts(param);
 	}
 });
 
-/**
- * flexigrid list
- */
-$(function() {
-	$("#productsmanagement").flexigrid({
-		url : 'findAllProducts.action',
-		dataType : 'json',
-		cache : false,
-		colModel : [ {
-			display : '货号',
-			name : 'productSn',
-			width : 100,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '货物名称',
-			name : 'productName',
-			width : 200,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '市场价',
-			name : 'price',
-			width : 80,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '会员价',
-			name : 'memberprice',
-			width : 80,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '成本价',
-			name : 'cost',
-			width : 80,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '销售价',
-			name : 'saleprice',
-			width : 80,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '预警库存',
-			name : 'freezeStore',
-			width : 60,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '库存',
-			name : 'store',
-			width : 60,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '重量',
-			name : 'weight',
-			width : 40,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '创建时间',
-			name : 'createtime',
-			width : 150,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '操作',
-			name : 'operating',
-			width : 60,
-			sortable : true,
-			align : 'center'
-		} ],
-		buttons : [ {
-			name : '添加',
-			bclass : 'add',
-			onpress : action
-		}, {
-			name : '编辑',
-			bclass : 'edit',
-			onpress : action
-		}, {
-			name : '删除',
-			bclass : 'del',
-			onpress : action
-		}, {
-			separator : true
-		} ],
-
-		searchitems : [ {
-			display : '请选择搜索条件',
-			name : 'sc',
-			isdefault : true
-		}, {
-			display : '货号',
-			name : 'productSn'
-		} ],
-		sortname : "createtime",
-		sortorder : "desc",
-		usepager : true,
-		title : '',
-		useRp : true,
-		rp : 20,
-		rpOptions : [ 5, 20, 40, 100 ],
-		showTableToggleBtn : true,
-		showToggleBtn : true,
-		width : 'auto',
-		height : 'auto',
-		pagestat : '显示{from}到{to}条，共{total}条记录',
-		procmsg : '正在获取数据，请稍候...',
-		checkbox : true
-	});
-	function action(com, grid) {
-		if (com == '添加') {
-			window.location.href = "product.jsp?operate=add&folder=goods";
-			return;
-
-		} else if (com == '编辑') {
-			if ($('.trSelected', grid).length == 1) {
-				var str = "";
-				$('.trSelected', grid).each(function() {
-					str = this.id.substr(3);
-				});
-				window.location.href = "product.jsp?operate=edit&folder=goods&productid="
-						+ str;
-				return;
-			} else {
-				formwarning("#alerterror", "请选择一条信息");
-				return false;
-			}
-		} else if (com == '删除') {
-			if ($('.trSelected', grid).length > 0) {
-				var str = "";
-				$('.trSelected', grid).each(function() {
-					str += this.id.substr(3) + ",";
-				});
-				$.post("delProductT.action", {
-					"productid" : str
-				}, function(data) {
-					if (data.sucflag) {
-						$('#productsmanagement').flexReload();
-						forminfo("#alertinfo", "删除货物成功");
-					}
-				});
-			} else {
-				formwarning("#alerterror", "请选择要删除的信息");
-				return false;
-			}
-		} 
-	}
-});

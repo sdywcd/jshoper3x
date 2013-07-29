@@ -416,6 +416,8 @@ public class ProductTAction extends ActionSupport {
 		
 	}
 	
+
+	
 	/**
 	 * 查询所有的货物
 	 * @return
@@ -427,11 +429,26 @@ public class ProductTAction extends ActionSupport {
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
 				return "json";
+			}else if(this.getQtype().equals("goodsid")){
+				findProductByGoodsid(this.getGoodsid());
 			}
 		}
 		return "json";
 	}
 
+	private void findProductByGoodsid(String goodsid){
+		int currentPage=page;
+		int lineSize=rp;
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			String queryString = "from ProductT as pt where pt.goodsid=:goodsid order by " + sortname + " " + sortorder + "";
+			List<ProductT>list=this.getProductTService().sortAllProductT(currentPage, lineSize, goodsid, queryString);
+			if(!list.isEmpty()){
+				ProcessProductsList(list);
+			}
+		}
+
+	}
+	
 	private void finddefaultAllProducts() {
 		int currentPage=page;
 		int lineSize=rp;

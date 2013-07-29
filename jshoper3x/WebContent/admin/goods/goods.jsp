@@ -252,11 +252,7 @@
 										type="radio" id="isSalestate" name="isSalestate" value="0" /> <label
 										for="radio-2">否 </label>
 								</div>
-								<div class="form-inline">
-									<label class="label label-submit"></label> 
-									<input class="btn btn-success" type="button" id="submitp"
-										name="submitp" value="保存货品信息" />
-								</div>
+	
 						      </div>
 						    </div>
 						  </div>
