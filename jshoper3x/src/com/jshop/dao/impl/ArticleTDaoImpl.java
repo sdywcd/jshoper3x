@@ -110,6 +110,7 @@ public class ArticleTDaoImpl extends HibernateDaoSupport implements ArticleTDao 
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public int delArticleT(final String[] list) {
 		log.debug("delArticleT");
 		try {

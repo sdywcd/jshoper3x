@@ -41,8 +41,8 @@ public class ProductTServiceImpl implements ProductTService {
 		return this.getProductTDao().findAllProductTByGoodsid(creatorid, goodsid);
 	}
 
-	public int updateProductT(ProductT pt) {
-		return this.getProductTDao().updateProductT(pt);
+	public void updateProductT(ProductT pt) {
+		this.getProductTDao().updateProductT(pt);
 	}
 
 	public List<ProductT> findProductTByproductid(String creatorid, String productid) {
@@ -81,6 +81,11 @@ public class ProductTServiceImpl implements ProductTService {
 	@Override
 	public ProductT findProductByProductid(String productid) {
 		return this.getProductTDao().findProductByProductid(productid);
+	}
+
+	@Override
+	public int delProductT(String[] strs) {
+		return this.getProductTDao().delProductT(strs);
 	}
 
 }

@@ -414,7 +414,7 @@ public class BrandTAction extends ActionSupport {
 	 */
 	@Action(value = "delBrandt", results = { @Result(name = "json", type = "json") })
 	public String delBrandt() {
-		if (Validate.StrNotNull(this.getBrandid())) {
+		if (StringUtils.isNotBlank(this.getBrandid())) {
 			String[] strs = StringUtils.split(this.getBrandid(), ",");
 			if (this.getBrandTService().delBrandt(strs, BaseTools.adminCreateId()) > 0) {
 				return "json";

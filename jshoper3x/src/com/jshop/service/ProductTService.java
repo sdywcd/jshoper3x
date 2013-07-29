@@ -54,12 +54,12 @@ public interface ProductTService {
 			String goodsid);
 
 	/**
-	 * 根据goodsid更新产品
+	 * 根据productid更新产品
 	 * 
 	 * @param pt
 	 * @return
 	 */
-	public int updateProductT(ProductT pt);
+	public void updateProductT(ProductT pt);
 
 	/**
 	 * 根据productid查询产品
@@ -113,5 +113,11 @@ public interface ProductTService {
 	 * @return
 	 */
 	public ProductT findProductByProductid(String productid);
+	/**
+	 * 批量删除货物
+	 * @param strs
+	 * @return
+	 */
+	public int delProductT(String []strs);
 	
 }

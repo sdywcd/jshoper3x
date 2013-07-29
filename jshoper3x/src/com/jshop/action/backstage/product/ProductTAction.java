@@ -490,5 +490,58 @@ public class ProductTAction extends ActionSupport {
 		}
 		return "json";
 	}
-
+	
+	/**
+	 * 更新货物信息
+	 * @return
+	 */
+	@Action(value = "updateProductT", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
+	public String updateProductT(){
+		if(StringUtils.isBlank(this.getProductid())){
+			return "json";
+		}
+		ProductT pt=new ProductT();
+		pt=this.getProductTService().findProductByProductid(this.getProductid());
+		pt.setPrice(this.getPrice());
+		pt.setMemberprice(this.getMemberprice());
+		pt.setCost(this.getCost());
+		pt.setSaleprice(this.getSaleprice());
+		pt.setFreezeStore(Integer.parseInt(this.getFreezeStore()));
+		pt.setStore(Integer.parseInt(this.getStore()));
+		pt.setIsDefault(this.getIsDefault());
+		pt.setIsSalestate(this.getIsSalestate());
+		pt.setProductName(this.getProductName());
+		pt.setProductSn(this.getProductSn());
+		pt.setSpecificationsValue(this.getSpecificationsValue());
+		pt.setWarehouseLocation(this.getWarehouseLocation());
+		pt.setPlaceStore(this.getPlaceStore());
+		pt.setWeight(this.getWeight());
+		pt.setCreatorid(BaseTools.adminCreateId());
+		pt.setSpecificationsid(this.getSpecificationsid());
+		pt.setSpecificationsName(this.getSpecificationsName());
+		pt.setUpdatetime(BaseTools.systemtime());
+		pt.setUnit(this.getUnit());
+		this.getProductTService().updateProductT(pt);
+		this.setSucflag(true);
+		return "json";
+	}
+	
+	/**
+	 * 批量删除货物
+	 * @return
+	 */
+	@Action(value = "delProductT", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
+	public String delProductT(){
+		if(StringUtils.isNotBlank(this.getProductid())){
+			String[] strs=StringUtils.split(this.getProductid(), ",");
+			if(this.getProductTService().delProductT(strs)>0){
+				this.setSucflag(true);
+				return "json";
+			}
+			return "json";
+		}
+		return "json";
+	}
+	
+	
 }

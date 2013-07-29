@@ -101,11 +101,10 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 		}
 	}
 
-	public int updateProductT(final ProductT pt) {
+	public void updateProductT(final ProductT pt) {
 		log.debug("updateProductT");
 		try {
 			this.getHibernateTemplate().update(pt);
-			return 1;
 		} catch (RuntimeException re) {
 			log.error("updateProductT error", re);
 			throw re;
@@ -257,6 +256,36 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 			log.error("get failed", re);
 			throw re;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int delProductT(final String[] strs) {
+		log.debug("delProductT");
+		try {
+			final String queryString = "delete from ProductT as pt where pt.productid=:productid";
+			this.getHibernateTemplate().execute(new HibernateCallback() {
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					int i = 0;
+					for (String s : strs) {
+						query.setParameter("productid", s);
+						i = query.executeUpdate();
+						i++;
+					}
+					if (strs.length == i) {
+						return i;
+					} else {
+						return 0;
+					}
+				}
+			});
+		} catch (RuntimeException re) {
+			log.error("delArticleT failed", re);
+			throw re;
+		}
+		return 0;
 	}
 
 	

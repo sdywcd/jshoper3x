@@ -135,7 +135,7 @@ $(function() {
 				}else{
 					$("input[name='isSalestate']").get(1).checked=true;
 				}
-				//这里绑定选择的规格值
+				//这里绑定选择的规格值(这里的texttype，imgtype，colortype表示的是规格值设置中的规格类型，是定死的，且是一个关键判定标记)
 				findProductSpecificationsTByspecificationsid(data.bean.specificationsid);
 				var jsonstr=$.parseJSON(data.bean.specificationsValue);
 				$.each(jsonstr,function(k,v){
@@ -296,6 +296,76 @@ $(function() {
 			}
 		});
 	},
+	
+	/**
+	 * 更新货物
+	 * @returns
+	 */
+	updateProductT=function(){
+		if(!checkSpecifications()){
+			return false;
+		}
+		var productid=$("#hidproductid").val();
+		var isSpecificationsOpen=$("#isSpecificationsOpen").val();//所选的规格值id
+		if(isSpecificationsOpen=='0'){
+			formwarning("#alerterror","请选择一个货物规格");
+			return false;
+		}
+		var specificationsName=$("#isSpecificationsOpen").find("option:selected").text();//所选规格值名称
+		//提取选择的规格值
+		var specificationsValue=getselectSpecificationsVal();
+		var productName=$("#productName").val();
+		if(productName==""){
+			formwarning("#alerterror","请填写商品名称");
+			return false;
+		}
+		var productSn=$("#productSn").val();
+		var cost=$("#cost").val();
+		var saleprice=$("#saleprice").val();
+		var memberprice=$("#memberprice").val();
+		var price=$("#price").val();
+		var weight=$("#weight").val();
+		var unit=$("#unit").val();
+		var store=$("#store").val();
+		var freezeStore=$("#freezeStore").val();
+		var warehouseLocation=$("#warehouseLocation").val();
+		var placeStore=$("#placeStore").val();
+		var isDefault=$("input[name='isDefault']:checked").val();
+		var isSalestate=$("input[name='isSalestate']:checked").val();
+		this.value="提交中";
+		this.disabled=true;
+		$.post("updateProductT.action",{
+			"productid":productid,
+			"specificationsValue":specificationsValue,
+			"specificationsid":isSpecificationsOpen,
+			"specificationsName":specificationsName,
+			"productName":productName,
+			"productSn":productSn,
+			"cost":cost,
+			"saleprice":saleprice,
+			"memberprice":memberprice,
+			"price":price,
+			"weight":weight,
+			"unit":unit,
+			"store":store,
+			"freezeStore":freezeStore,
+			"warehouseLocation":warehouseLocation,
+			"placeStore":placeStore,
+			"isDefault":isDefault,
+			"isSalestate":isSalestate
+		},function(data){
+			if(data.sucflag){
+				window.location.href="productment.jsp?operate=find&folder=goods";
+			}
+		});
+	},
+	
+	/**
+	 * 点击更新调用更新货物方法
+	 */
+	$("#update").click(function(){
+		updateProductT();
+	});
 	
 	/**
 	 * 点击提交调用保存货物方法
@@ -459,7 +529,7 @@ $(function() {
 				$('.trSelected', grid).each(function() {
 					str += this.id.substr(3) + ",";
 				});
-				$.post("delProductTByproductid.action", {
+				$.post("delProductT.action", {
 					"productid" : str
 				}, function(data) {
 					if (data.sucflag) {
