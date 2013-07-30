@@ -383,7 +383,7 @@ $(function() {
 	 */
 	findProducts=function(param){
 		$("#productsmanagement").flexigrid({
-			url : 'findAllProducts.action？qtype=goodsid&goodsid='+param,
+			url : 'findAllProducts.action?qtype=goodsid&goodsid='+param,
 			dataType : 'json',
 			cache : false,
 			colModel : [ {
@@ -541,6 +541,10 @@ $(function() {
 	 */
 	var operate = $.query.get("operate");
 	if (operate == "add") {
+		var goodsname=$.query.get("goodsname");
+		if(goodsname!=""){
+			setdttitle("#dttitle","增加"+goodsname+"的货物信息");
+		}
 		findAllSpecificationsforjson();
 		
 	}else if(operate=="edit"){
@@ -553,8 +557,13 @@ $(function() {
 		}
 		
 	}else if(operate=="find"){
-		var param="";
-		findProducts(param);
+		var goodsname=$.query.get("goodsname");
+		if(goodsname!=""){
+			var param="";
+			setdttitle("#dttitle",goodsname+"的所有货物列表");
+			findProducts(param);
+		}
+		
 	}
 });
 

@@ -38,7 +38,6 @@ import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.GoodsTwocodeRelationshipT;
 import com.jshop.entity.GoodsTypeTN;
-import com.jshop.entity.ProductT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
 import com.jshop.service.GoodsAttributeRpTService;
@@ -61,8 +60,8 @@ import freemarker.template.TemplateException;
 public class GoodsTAction extends ActionSupport {
 	private GoodsTService goodsTService;
 	private Serial serial;
-	private ProductTService productTService;
 	private ImgTAction imgTAction;
+	private ProductTService productTService;
 	private ArticleTService articleTService;
 	private ArticleCategoryTService articleCategoryTService;
 	private JshopbasicInfoTService jshopbasicInfoTService;
@@ -166,6 +165,14 @@ public class GoodsTAction extends ActionSupport {
 	private boolean delpcflag;
 	private boolean slogin;
 	private boolean sucflag;
+	@JSON(serialize = false)
+	public ProductTService getProductTService() {
+		return productTService;
+	}
+
+	public void setProductTService(ProductTService productTService) {
+		this.productTService = productTService;
+	}
 
 	@JSON(serialize = false)
 	public GoodsDetailRpTService getGoodsDetailRpTService() {
@@ -230,15 +237,6 @@ public class GoodsTAction extends ActionSupport {
 
 	public void setGoodsTService(GoodsTService goodsTService) {
 		this.goodsTService = goodsTService;
-	}
-
-	@JSON(serialize = false)
-	public ProductTService getProductTService() {
-		return productTService;
-	}
-
-	public void setProductTService(ProductTService productTService) {
-		this.productTService = productTService;
 	}
 
 	@JSON(serialize = false)
@@ -1101,41 +1099,10 @@ public class GoodsTAction extends ActionSupport {
 		saveGoodsAttributeRpT(gt.getGoodsid());
 		//保存商品介绍
 		saveGoodsDetail(gt.getGoodsid());
-		//保存货物信息
-		saveProductT();
 		this.setSucflag(true);
 		return "json";
 	}
 
-	/**
-	 * 保存货物信息
-	 */
-	private void saveProductT(){
-		ProductT pt=new ProductT();
-		pt.setProductid(this.getSerial().Serialid(Serial.PRODUCT));
-		pt.setGoodsid(gt.getGoodsid());
-		pt.setProductName(this.getProductName());
-		pt.setProductSn(this.getProductSn());
-		pt.setCost(Double.parseDouble(this.getCost()));
-		pt.setSaleprice(Double.parseDouble(this.getSaleprice()));
-		pt.setMemberprice(Double.parseDouble(this.getMemberprice()));
-		pt.setPrice(Double.parseDouble(this.getPrice()));
-		pt.setWeight(this.getWeight());
-		pt.setUnit(this.getUnit());
-		pt.setStore(Integer.parseInt(this.getStore()));
-		pt.setFreezeStore(Integer.parseInt(this.getFreezeStore()));
-		pt.setWarehouseLocation(this.getWarehouseLocation());
-		pt.setPlaceStore(this.getPlaceStore());
-		pt.setIsDefault(this.getIsDefault());
-		pt.setIsSalestate(this.getIsSalestate());
-		pt.setSpecificationsValue(this.getSpecificationsValue());
-		pt.setSpecificationsName(this.getSpecificationsName());
-		pt.setSpecificationsid(this.getSpecificationsid());
-		pt.setCreatetime(BaseTools.systemtime());
-		pt.setCreatorid(BaseTools.adminCreateId());
-		pt.setUpdatetime(pt.getCreatetime());
-		this.getProductTService().saveProductT(pt);
-	}
 	
 	/**
 	 * 插入商品属性到属性和商品关系表

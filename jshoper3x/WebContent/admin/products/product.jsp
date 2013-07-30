@@ -17,7 +17,7 @@
 		<div class="navbar-innert">
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
-				height="30" alt=""></a> <a class="brand" href="#">货物信息管理 </a> <a
+				height="30" alt=""></a> <a class="brand" href="#">货物信息管理 </a> <a id="dttitle"
 				class="brand2">编辑货物信息 </a>
 		</div>
 
