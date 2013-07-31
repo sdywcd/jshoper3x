@@ -3,6 +3,8 @@ package com.jshop.service;
 import java.util.Date;
 import java.util.List;
 
+import com.jshop.entity.GoodsAttributeRpT;
+import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsT;
 
 public interface GoodsTService {
@@ -722,5 +724,12 @@ public interface GoodsTService {
 	public List<GoodsT> findAllGoodsBynavidandltypeidandstypeid(String navid,
 			String ltypeid, String stypeid, String salestate,
 			String isSpecificationsOpen);
-
+	/**
+	 * 商品信息增加过程
+	 * @param gt
+	 * @param gart
+	 * @param gdpt
+	 */
+	public void saveGoodsProcess(GoodsT gt,String goodsattrsval,GoodsDetailRpT gdpt);
+	
 }

@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -1066,7 +1067,6 @@ public class GoodsTAction extends ActionSupport {
 	@Action(value = "saveGoods", results = { @Result(name = "json", type = "json") })
 	public String saveGoods()  {
 		GoodsT gt=new GoodsT();
-		gt.setGoodsid(this.getSerial().Serialid(Serial.GOODS));
 		gt.setGoodsTypeId(this.getGoodsTypeId());
 		gt.setGoodsTypeName(this.getGoodsTypeName());
 		gt.setGoodsParameterValue(this.getGoodsParameterValue());
@@ -1094,44 +1094,21 @@ public class GoodsTAction extends ActionSupport {
 		gt.setCommoditylist(this.getCommoditylist());
 		gt.setMetaDescription(this.getMetaDescription());
 		gt.setMetaKeywords(this.getMetaKeywords());
-		this.getGoodsTService().saveGoods(gt);
-		//保存属性
-		saveGoodsAttributeRpT(gt.getGoodsid());
-		//保存商品介绍
-		saveGoodsDetail(gt.getGoodsid());
-		this.setSucflag(true);
-		return "json";
-	}
-
-	
-	/**
-	 * 插入商品属性到属性和商品关系表
-	 * @param goodsid
-	 */
-	private void saveGoodsAttributeRpT(String goodsid){
-		JSONArray ja=(JSONArray)JSONValue.parse(this.getGoodsAttrsVals());
-		int jsonsize=ja.size();
-		GoodsAttributeRpT gart=new GoodsAttributeRpT();
-		for(int i=0;i<jsonsize;i++){
-			gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
-			gart.setGoodsid(goodsid);
-			JSONObject jo=(JSONObject) ja.get(i);
-			gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
-			this.getGoodsAttributeRpTService().saveGoodsAttributeRpT(gart);
-		}
+		gt.setCreatetime(BaseTools.systemtime());
+		gt.setCreatorid(BaseTools.adminCreateId());
+		gt.setUpdatetime(BaseTools.systemtime());
+		
+		GoodsDetailRpT gdpt=new GoodsDetailRpT();
+		gdpt.setDetail(this.getDetail());
+		
+			this.getGoodsTService().saveGoodsProcess(gt, this.getGoodsAttrsVals(), gdpt);
+			this.setSucflag(true);
+			return "json";
+		
+		
 		
 	}
-	/**
-	 * 保存商品介绍
-	 * @param goodsid
-	 */
-	private void saveGoodsDetail(String goodsid){
-		GoodsDetailRpT gdpt=new GoodsDetailRpT();
-		gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
-		gdpt.setDetail(this.getDetail());
-		gdpt.setGoodsid(goodsid);
-		this.getGoodsDetailRpTService().saveGoodsDetailRpT(gdpt);
-	}
+
 	
 	/**
 	 * 根据用户id读取所有该用户增加的商品

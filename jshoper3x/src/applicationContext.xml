@@ -84,7 +84,7 @@
 		</property>
 	</bean>
 	
-	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	<aop:config>
 		<aop:advisor pointcut="execution(* com.jshop.service.impl.*Service.*(..))" advice-ref="txAdvice"/>
 	</aop:config>

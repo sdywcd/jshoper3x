@@ -8,7 +8,26 @@ $(function() {
 		    increaseArea: '20%' // optional
 		  });
 	
-	
+	  $("#delpc").click(function() {
+			var str = "";
+			var sum = 0;
+			$(":checkbox[name='pcpath']").each(function() {
+				if ($(this).attr("checked")) {
+					sum++;
+					str += this.id + ",";
+				}
+			});
+			if (sum == 0) {
+				alert('只有在选择图片后才能删除');
+				return false;
+			}
+			var array = new Array();
+			array = str.split(",");
+			$(array).each(function(k, v) {
+				$("#triggers img").remove("img[id=" + v + "]");
+				$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
+			});
+		});
 	/**
 	 * 获取商品类型下拉框
 	 */
@@ -189,6 +208,9 @@ $(function() {
 
 
 	
+	
+	
+	
 	/**
 	 * 增加商品
 	 */
@@ -316,6 +338,10 @@ $(function() {
 	$("#submit").click(function(){
 		saveGoods();
 	});
+	
+	
+	
+	
 	
 	
 	/**

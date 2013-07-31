@@ -5,11 +5,22 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.dao.GoodsAttributeRpTDao;
+import com.jshop.dao.GoodsDetailRpTDao;
 import com.jshop.dao.GoodsTDao;
-import com.jshop.dao.impl.GoodsTDaoImpl;
+import com.jshop.entity.GoodsAttributeRpT;
+import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsTService;
 
@@ -18,6 +29,36 @@ import com.jshop.service.GoodsTService;
 public class GoodsTServiceImpl implements GoodsTService {
 	@Resource
 	private GoodsTDao goodsTDao;
+	@Resource
+	private GoodsDetailRpTDao goodsDetailRpTDao;
+	@Resource 
+	private GoodsAttributeRpTDao goodsAttributeRpTDao;
+	@Resource
+	private Serial serial;
+	
+	public Serial getSerial() {
+		return serial;
+	}
+
+	public void setSerial(Serial serial) {
+		this.serial = serial;
+	}
+
+	public GoodsDetailRpTDao getGoodsDetailRpTDao() {
+		return goodsDetailRpTDao;
+	}
+
+	public void setGoodsDetailRpTDao(GoodsDetailRpTDao goodsDetailRpTDao) {
+		this.goodsDetailRpTDao = goodsDetailRpTDao;
+	}
+
+	public GoodsAttributeRpTDao getGoodsAttributeRpTDao() {
+		return goodsAttributeRpTDao;
+	}
+
+	public void setGoodsAttributeRpTDao(GoodsAttributeRpTDao goodsAttributeRpTDao) {
+		this.goodsAttributeRpTDao = goodsAttributeRpTDao;
+	}
 
 	public GoodsTDao getGoodsTDao() {
 		return goodsTDao;
@@ -26,6 +67,8 @@ public class GoodsTServiceImpl implements GoodsTService {
 	public void setGoodsTDao(GoodsTDao goodsTDao) {
 		this.goodsTDao = goodsTDao;
 	}
+	
+	
 
 	public int delGoods(String[] list, String creatorid) {
 		return getGoodsTDao().delGoods(list, creatorid);
@@ -328,5 +371,32 @@ public class GoodsTServiceImpl implements GoodsTService {
 	public List<GoodsT> findAllGoodsByNoTerm() {
 		return this.getGoodsTDao().findAllGoodsByNoTerm();
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void saveGoodsProcess(GoodsT gt, String goodsattrsval,
+			GoodsDetailRpT gdpt) {
+			gt.setGoodsid(this.getSerial().Serialid(Serial.GOODS));
+			this.getGoodsTDao().saveGoods(gt);
+			if(StringUtils.isNotBlank(goodsattrsval)){
+				JSONArray ja=(JSONArray)JSONValue.parse(goodsattrsval);
+				int jsonsize=ja.size();
+				GoodsAttributeRpT gart=new GoodsAttributeRpT();
+				for(int i=0;i<jsonsize;i++){
+					gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
+					gart.setGoodsid(gt.getGoodsid());
+					JSONObject jo=(JSONObject) ja.get(i);
+					gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
+					this.getGoodsAttributeRpTDao().saveGoodsAttributeRpT(gart);
+				}
+			}
+			gdpt.setGoodsid(gt.getGoodsid());
+			gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
+			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdpt);
+			
+		
+		
+	}
+
 
 }
