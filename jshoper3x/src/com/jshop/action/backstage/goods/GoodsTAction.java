@@ -1200,7 +1200,7 @@ public class GoodsTAction extends ActionSupport {
 	@Action(value = "findGoodsById", results = { @Result(name = "json", type = "json") })
 	public String findGoodsById() {
 
-		if (Validate.StrNotNull(this.getGoodsid())) {
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
 			bean = this.getGoodsTService().findGoodsById(this.getGoodsid().trim());
 			if (bean != null) {
 				//this.setBasepath(BaseTools.getBasePath());

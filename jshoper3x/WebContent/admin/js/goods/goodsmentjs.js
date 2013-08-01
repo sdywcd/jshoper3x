@@ -77,62 +77,75 @@ $(function() {
 	 * 根据传入的商品类型id获取商品属性select类型的
 	 */
 	findGoodsAttributeTBygoodsTypeId = function(val) {
-		$.post("findGoodsAttributeTBygoodsTypeId.action", {
-			"goodsTypeId" : val
-		}, function(data) {
-			if (data.sucflag) {
-				$('#gat').text("");
-				var gathtmlheader="<div class='well'><h4>商品属性选择区域</h4></div>";
-				var gathtml = "";
-				var gathtmlfooter="</div>";
-				var option = "";
-				var attributelist = new Array();
-				var length;
-				if (data.gatbeanlist != null) {
-					$.each(data.gatbeanlist, function(i, item) {
-						attributelist = item.attributelist.split(",");
-						length=attributelist.length;
-						option = "<option value='0'>---请选择---</option>";
-						for ( var j = 0; j <length ; j++) {
-							option += "<option value='" + attributelist[j]+ "'>" + attributelist[j] + "</option>";
-						}
-						gathtml += "<div class='form-inline'>"
-								+ "<span class='label label-required'>"
-								+ item.goodsattributename + "</span>"
-								+ "<select id='goodsAttrVal" + i
-								+ "' name='goodsAttrVal" + i + "'>" + option
-								+ "</select>" + "</div>";
-						option = "";
-					});
-					$('#gat').append(gathtmlheader).append(gathtml).append(gathtmlfooter).show();
+		$.ajax({
+			url:"findGoodsAttributeTBygoodsTypeId.action",
+			type:"post",
+			data:{"goodsTypeId":val},
+			dataType:"json",
+			async:false,
+			success:function(data){
+				if (data.sucflag) {
+					$('#gat').text("");
+					var gathtmlheader="<div class='well'><h4>商品属性选择区域</h4></div>";
+					var gathtml = "";
+					var gathtmlfooter="</div>";
+					var option = "";
+					var attributelist = new Array();
+					var length;
+					if (data.gatbeanlist != null) {
+						$.each(data.gatbeanlist, function(i, item) {
+							attributelist = item.attributelist.split(",");
+							length=attributelist.length;
+							option = "<option value='0'>---请选择---</option>";
+							for ( var j = 0; j <length ; j++) {
+								option += "<option value='" + attributelist[j]+ "'>" + attributelist[j] + "</option>";
+							}
+							gathtml += "<div class='form-inline'>"
+									+ "<span class='label label-required'>"
+									+ item.goodsattributename + "</span>"
+									+ "<select id='goodsAttrVal" + i
+									+ "' name='goodsAttrVal" + i + "'>" + option
+									+ "</select>" + "</div>";
+							option = "";
+						});
+						$('#gat').append(gathtmlheader).append(gathtml).append(gathtmlfooter).show();
+					}
 				}
 			}
 		});
+		
 	},
 	
 	/**
 	 * 根据商品类型id获取商品参数列表
 	 */
 	findGoodsParameterBygoodsTypeId=function(val){
-		$.post("findGoodsParameter.action",{"goodsTypeId":val},function(data){
-			if(data.sucflag){
-				var gathtmlheader="<div class='well'><h4>商品参数填写区域</h4></div>";
-				var gathtml = "";
-				var gathtmlfooter="</div>";
-				$('#params').text("");
+		$.ajax({
+			url:"findGoodsParameter.action",
+			type:"post",
+			data:{"goodsTypeId":val},
+			dataType:"json",
+			async:false,
+			success:function(data){
+				if(data.sucflag){
+					var gathtmlheader="<div class='well'><h4>商品参数填写区域</h4></div>";
+					var gathtml = "";
+					var gathtmlfooter="</div>";
+					$('#params').text("");
 
-				var jsonstr=$.parseJSON(data.bean.goodsParameter);
-				$.each(jsonstr,function(k,s){
-					gathtml += "<div class='form-inline'>"
-						+ "<span class='label label-required'>"
-						+ s.name + "</span>"
-						+ "<input id='"+s.id+"' name='"+s.id+"' value=''  class='small' type='text' ></input>"
-						+ "</div>";
-				});
-				$('#params').append(gathtmlheader).append(gathtml).append(gathtmlfooter).show();
+					var jsonstr=$.parseJSON(data.bean.goodsParameter);
+					$.each(jsonstr,function(k,s){
+						gathtml += "<div class='form-inline'>"
+							+ "<span class='label label-required'>"
+							+ s.name + "</span>"
+							+ "<input id='"+s.id+"' name='"+s.id+"' value=''  class='small' type='text' ></input>"
+							+ "</div>";
+					});
+					$('#params').append(gathtmlheader).append(gathtml).append(gathtmlfooter).show();
+				}
 			}
 		});
-	}
+	},
 	
 	/**
 	 * 获取所有商品品牌列表
@@ -206,9 +219,6 @@ $(function() {
 		}
 	});
 
-
-	
-	
 	
 	
 	/**
@@ -339,7 +349,42 @@ $(function() {
 		saveGoods();
 	});
 	
+
+	findGoodsAttributeTRpByGoodsid=function(val){
+		$.ajax({
+			
+		});
+	},
 	
+	
+	/**
+	 * 绑定商品数据
+	 */
+	findGoodsById=function(){
+		var goodsid=$.query.get("goodsid");
+		if(goodsid!=""){
+			$.post("findGoodsById.action",{"goodsid":goodsid},function(data){
+				if(data.sucflag){
+					//设置商品参数的值
+					$("#goodsTypeId").val(data.bean.goodsTypeId);
+					findGoodsParameterBygoodsTypeId(data.bean.goodsTypeId);
+					var jsonstr=$.parseJSON(data.bean.goodsParameterValue);
+					$.each(jsonstr,function(k,v){
+						$('#'+v.id).val(v.value);
+					});
+					//设置商品属性的值，该值需要从商品属性关系表中获取
+					findGoodsAttributeTBygoodsTypeId(data.bean.goodsTypeId);
+					
+					
+					
+					$("#hidgoodsid").val(data.bean.goodsid);
+					
+					
+					
+				}
+			});
+		}
+	}
 	
 	
 	
