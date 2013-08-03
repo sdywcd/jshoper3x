@@ -169,14 +169,14 @@ $(function() {
 	/**
 	 * 级联读取一级分类的二级栏目
 	 */
-	$('#parentId').change(function() {
-		var parentId = $('#parentId').val();
-		//parentid=0表示顶级分类，parentid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
+	$('#navid').change(function() {
+		var navid = $('#navid').val();
+		//navid=0表示顶级分类，navid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
 		//这里再读取二级分类内容
-		if (parentId != "0" && parentId != "-1") {
-			$.post("findGoodscategoryByparentId.action",{"parentId":parentId}, function(data) {
+		if (navid != "0" && navid != "-1") {
+			$.post("findGoodscategoryByparentId.action",{"parentId":navid}, function(data) {
 				if (data.sucflag) {
-					$('#parentId1').html(data.goodscategorytwo);
+					$('#ltypeid').html(data.goodscategorytwo);
 				}
 			});
 		}
@@ -184,14 +184,14 @@ $(function() {
 	/**
 	 * 级联读取二级分类对应的三级分类
 	 */
-	$('#parentId1').change(function(){
-		var parentId = $('#parentId1').val();
+	$('#ltypeid').change(function(){
+		var ltypeid = $('#ltypeid').val();
 		//parentid=0表示顶级分类，parentid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
 		//这里再读取三级分类内容
-		if (parentId != "0" && parentId != "-1") {
-			$.post("findGoodscategoryStypeid.action",{"parentId":parentId}, function(data) {
+		if (ltypeid != "0" && ltypeid != "-1") {
+			$.post("findGoodscategoryStypeid.action",{"parentId":ltypeid}, function(data) {
 				if (data.sucflag) {
-					$('#parentId2').html(data.stypeidlist).show();
+					$('#stypeid').html(data.stypeidlist).show();
 					
 				}
 			});
@@ -202,18 +202,18 @@ $(function() {
 	/**
 	 * 验证分类选择
 	 */
-	$("#parentId").change(function() {
-		var parentId = $('#parentId').val();
-		var parentId1 = $('#parentId1').val();
-		var parentId2 = $('#parentId2').val();
-		if (parentId == '-1') {
-			$('#parentId1').hide();
-			$('#parentId2').hide();
+	$("#navid").change(function() {
+		var navid = $('#navid').val();
+		var ltypeid = $('#ltypeid').val();
+		var stypeid = $('#stypeid').val();
+		if (navid == '-1') {
+			$('#ltypeid').hide();
+			$('#stypeid').hide();
 		} else {
-			$('#parentId1').show();
+			$('#ltypeid').show();
 		}
-		if (parentId1 == "-1") {
-			$('#parentId2').hide();
+		if (ltypeid == "-1") {
+			$('#stypeid').hide();
 		}
 	});
 
@@ -235,17 +235,19 @@ $(function() {
 		}
 		var nname=$("#parentId").find("option:selected").text();
 		var ltypeid=$("#ltypeid").val();
+		var lname="";
 		if(ltypeid=="-1"){
 			ltypeid="0";
-			lname="";
+		}else{
+			lname=$("#ltypeid").find("option:selected").text();
 		}
-		var lname=$("#ltypeid").find("option:selected").text();
 		var stypeid=$("#stypeid").val();
+		var sname="";
 		if(stypeid=="-1"){
 			stypeid="0";
-			sname="";
+		}else{
+			sname=$('#stypeid').find("option:selected").text();	
 		}
-		var sname=$('#stypeid').find("option:selected").text();
 		var fname="";
 		var goodsname=$("#goodsname").val();
 		var usersetnum=$("#usersetnum").val();
@@ -382,9 +384,12 @@ $(function() {
 					$("#goodsTypeId").val(data.bean.goodsTypeId);
 					findGoodsParameterBygoodsTypeId(data.bean.goodsTypeId);
 					var jsonstr=$.parseJSON(data.bean.goodsParameterValue);
-					$.each(jsonstr,function(k,v){
-						$('#'+v.id).val(v.value);
-					});
+					if(jsonstr!=null){
+						$.each(jsonstr,function(k,v){
+							$('#'+v.id).val(v.value);
+						});
+					}
+					
 					//获取商品属性的值，该值需要从商品属性关系表中获取
 					findGoodsAttributeTBygoodsTypeId(data.bean.goodsTypeId);
 					//绑定商品属性值
@@ -399,29 +404,64 @@ $(function() {
 					$('#goodsname').val(data.bean.goodsname);
 					$('#usersetnum').val(data.bean.usersetnum);
 					$('#brandname').val(data.bean.brandid);
-					var brandname=$("#brandname").find("option:selected").text();
-					var points=$("#points").val();
-					var sort=$("#sort").val();
-					var isNew=$("input[name='isNew']:checked").val();
-					var recommended=$("input[name='recommended']:checked").val();
-					var hotsale=$("input[name='hotsale']:checked").val();
-					var bargainprice=$("input[name='bargainprice']:checked").val();
-					var ismobileplatformgoods=$("input[name='ismobileplatformgoods']:checked").val();
-					var salestate=$("input[name='salestate']:checked").val();
+					$('#points').val(data.bean.points);
+					$("#sort").val(data.bean.sort);
+					if("1"==data.bean.isNew){
+						$("input[name='isNew']").get(0).checked=true;
+					}else{
+						$("input[name='isNew']").get(1).checked=true;
+					}
+					if("1"==data.bean.recommended){
+						$("input[name='recommended']").get(0).checked=true;
+					}else{
+						$("input[name='recommended']").get(1).checked=true;
+					}					
+					if("1"==data.bean.hotsale){
+						$("input[name='hotsale']").get(0).checked=true;
+					}else{
+						$("input[name='hotsale']").get(1).checked=true;
+					}
+					if("1"==data.bean.bargainprice){
+						$("input[name='bargainprice']").get(0).checked=true;
+					}else{
+						$("input[name='bargainprice']").get(1).checked=true;
+					}	
+					if("1"==data.bean.ismobileplatformgoods){
+						$("input[name='ismobileplatformgoods']").get(0).checked=true;
+					}else{
+						$("input[name='ismobileplatformgoods']").get(1).checked=true;
+					}
+					if("1"==data.bean.salestate){
+						$("input[name='salestate']").get(0).checked=true;
+					}else{
+						$("input[name='salestate']").get(1).checked=true;
+					}
+				
 					//获取商品图片路径集合
-					var pictureurl="";
-					$(":checkbox[name='pcpath'][checked=true]").each(function(){
-						pictureurl+=this.value+",";
+					var pcpath="";
+					var pcurl=data.bean.pictureurl;
+					var htm="";
+					var checkpc="";
+					var temp=pcurl.split(',');
+					var allpcpath="";
+					$.each(temp,function(n,value){
+						if(""==value){
+							return;
+						}
+						pcpath=value;
+						htm="<img id='"+value+"' src='"+data.basepath+pcpath+"'></img>";
+						checkpc="<input id='"+value+"' name='pcpath' type='checkbox' value='"+value+"' checked/>";
+						allpcpath=htm+checkpc;
+						$('#triggers').append(allpcpath);
 					});
-					pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
-					var detail=$('#detail').val();
-					var commoditylist=$('#commoditylist').val();
-					var metaKeywords=$('#metaKeywords').val();
-					var metaDescription=$('#metaDescription').val();
+					//KE.html("detail", data.bean.detail);
+					$('#commoditylist').val(data.bean.commoditylist);
+					$('#metaKeywords').val(data.bean.metaKeywords);
+					$('#metaDescription').val(data.bean.metaDescription);
 					$("#hidgoodsid").val(data.bean.goodsid);
-					
-					
-					
+					$("#goodscategory").show();
+					$("#modifygoodscategory").show();
+					$("#selectgoodscategory").hide();
 				}
 			});
 		}
@@ -444,6 +484,7 @@ $(function() {
 		findGoodsTypeTNForSelect();
 		findGoodsCategoryByGradeZeroone();
 		findAllBrandtjson();
+		findGoodsById();
 
 	}
 });

@@ -96,7 +96,7 @@
 						<span id="showstypeid" style="display:none;"></span>
 					</div>
 					
-					<div class="form-inline">
+					<div id="selectgoodscategory" class="form-inline">
 						<span class="label label-required">选择分类: </span> 
 						<select id="navid" name="navid"></select><!-- 顶级分类一级分类 -->
 						 <select id="ltypeid" name="ltypeid"></select> <!-- 二级分类 -->
