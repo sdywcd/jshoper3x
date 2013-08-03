@@ -1,5 +1,7 @@
 package com.jshop.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
@@ -26,6 +28,11 @@ public class GoodsAttributeRpTServiceImpl implements GoodsAttributeRpTService {
 	@Override
 	public void saveGoodsAttributeRpT(GoodsAttributeRpT gart) {
 		this.getGoodsAttributeRpTDao().saveGoodsAttributeRpT(gart);
+	}
+
+	@Override
+	public List<GoodsAttributeRpT> findGoodsAttributeRpTBygoodsid(String goodsid) {
+		return this.getGoodsAttributeRpTDao().findGoodsAttributeRpTBygoodsid(goodsid);
 	}
 
 }

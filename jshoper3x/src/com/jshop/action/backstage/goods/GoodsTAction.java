@@ -1197,7 +1197,7 @@ public class GoodsTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findGoodsById", results = { @Result(name = "json", type = "json") })
+	@Action(value = "findGoodsById", results = { @Result(name = "json", type = "json",params = { "excludeNullProperties", "true" }) })
 	public String findGoodsById() {
 
 		if (StringUtils.isNotBlank(this.getGoodsid())) {

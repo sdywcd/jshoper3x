@@ -86,13 +86,27 @@
 						
 					</div>
 					
+					<div id="goodscategory" style="display:none;" class="form-inline">
+						<span class="label label-required">商品所在分类: </span> 
+						<span id="shownname"></span><!-- 显示顶级分类一级分类名称 -->
+						<span id="showlname"></span> <!-- 显示二级分类名称 -->
+						<span id="showsname"></span> <!-- 显示三级分类名称 --> 
+						<span id="shownavid" style="display:none;"></span>
+						<span id="showltypeid" style="display:none;"></span>
+						<span id="showstypeid" style="display:none;"></span>
+					</div>
 					
 					<div class="form-inline">
 						<span class="label label-required">选择分类: </span> 
-						<select id="parentId" name="parentId"></select><!-- 顶级分类一级分类 -->
-						 <select id="parentId1" name="parentId1"></select> <!-- 二级分类 -->
-						 <select id="parentId2" name="parentId2"></select> <!-- 三级分类 -->
+						<select id="navid" name="navid"></select><!-- 顶级分类一级分类 -->
+						 <select id="ltypeid" name="ltypeid"></select> <!-- 二级分类 -->
+						 <select id="stypeid" name="stypeid"></select> <!-- 三级分类 -->
 						 <span class="label label-info">请选择一个商品分类</span>
+						 
+					</div>
+					<div id="modifygoodscategory" style="display:none;" class="form-inline">
+						<span class="label label-required">操作:</span>
+						<input class="btn btn-success" type="button" id="reselectgoodscategory" name="reselectgoodscategory" value="重新选择分类"/>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">商品名称:</span> <input type="text"

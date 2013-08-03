@@ -41,6 +41,7 @@ public class FunctionMDaoImpl extends HibernateDaoSupport implements FunctionMDa
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public int delFunctionM(final String[] strs) {
 		log.debug("delFunctionM");
 		try {

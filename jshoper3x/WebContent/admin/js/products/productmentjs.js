@@ -555,7 +555,6 @@ $(function() {
 		}else{
 			findProducts(goodsid);
 		}
-		
 	}else if(operate=="find"){
 		var goodsname=$.query.get("goodsname");
 		if(goodsname!=""){

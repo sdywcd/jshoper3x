@@ -49,8 +49,6 @@ $(function() {
 	 * 读取商品一级分类
 	 */
 	findGoodsCategoryByGradeZeroone=function(){
-		$('#addfl').show();
-		$('#modfl').hide();
 		$.ajax({
 			url:"findGoodsCategoryByGradeZeroone.action",
 			type:"post",
@@ -60,13 +58,13 @@ $(function() {
 				if (data.sucflag) {
 					var header="<option value='-1'>---请选择---</option>";
 					if (data.goodscategoryzero == "") {
-						$('#parentId').append(header);
-						$('#parentId1').hide();
-						$('#parentId2').hide();
+						$('#navid').append(header);
+						$('#ltypeid').hide();
+						$('#stypeid').hide();
 					} else {
-						$('#parentId').append(header).append(data.goodscategoryzero);
-						$('#parentId1').hide();
-						$('#parentId2').hide();
+						$('#navid').append(header).append(data.goodscategoryzero);
+						$('#ltypeid').hide();
+						$('#stypeid').hide();
 					}
 
 				}
@@ -230,24 +228,24 @@ $(function() {
 		//这里需要调用获取商品类型属性和参数填写的值方法
 		var goodsParameterValue=getGoodsParameter(goodsTypeId);
 		var goodsAttrsVals=getgoodsAttrVals(goodsTypeId);
-		var navid=$("#parentId").val();
+		var navid=$("#navid").val();
 		if(navid=="-1"){
 			formwarning("#alerterror", "请选择顶级商品分类");
 			return false;
 		}
 		var nname=$("#parentId").find("option:selected").text();
-		var ltypeid=$("#parentId1").val();
+		var ltypeid=$("#ltypeid").val();
 		if(ltypeid=="-1"){
-			ltypeid=0;
+			ltypeid="0";
 			lname="";
 		}
-		var lname=$("#parentId1").find("option:selected").text();
-		var stypeid=$("#parentId2").val();
+		var lname=$("#ltypeid").find("option:selected").text();
+		var stypeid=$("#stypeid").val();
 		if(stypeid=="-1"){
-			stypeid=0;
+			stypeid="0";
 			sname="";
 		}
-		var sname=$('#parentId2').find("option:selected").text();
+		var sname=$('#stypeid').find("option:selected").text();
 		var fname="";
 		var goodsname=$("#goodsname").val();
 		var usersetnum=$("#usersetnum").val();
@@ -322,7 +320,7 @@ $(function() {
 	getgoodsAttrVals=function(goodsTypeId){
 		var goodsAttrsVals="";
 		if(goodsTypeId!=""){
-			$("input[id^='goodsAttrVal']").each(function(){
+			$("select[id^='goodsAttrVal']").each(function(){
 				goodsAttrsVals+="{\"attrval\":\""+this.value+"\"},";
 			});
 		}
@@ -349,12 +347,27 @@ $(function() {
 		saveGoods();
 	});
 	
-
-	findGoodsAttributeTRpByGoodsid=function(val){
+	/**
+	 * 查询商品的属性值并进行绑定
+	 */
+	findGoodsAttributeRpTBygoodsid=function(val){
 		$.ajax({
-			
+			url:"findGoodsAttributeRpTBygoodsid.action",
+			type:"post",
+			data:{"goodsid":val},
+			dataType:"json",
+			async:false,
+			success:function(data){
+				if(data.sucflag){
+					$.each(data.beanlist,function(k,v){
+						$('#goodsAttrVal'+k).val(v.attrval);
+					});
+				}
+			}
 		});
 	},
+	
+	
 	
 	
 	/**
@@ -372,11 +385,39 @@ $(function() {
 					$.each(jsonstr,function(k,v){
 						$('#'+v.id).val(v.value);
 					});
-					//设置商品属性的值，该值需要从商品属性关系表中获取
+					//获取商品属性的值，该值需要从商品属性关系表中获取
 					findGoodsAttributeTBygoodsTypeId(data.bean.goodsTypeId);
-					
-					
-					
+					//绑定商品属性值
+					findGoodsAttributeRpTBygoodsid(data.bean.goodsid);
+					$("#navid").val(data.bean.navid);
+					$('#shownname').text(data.bean.nname);
+					$('#showlname').text(data.bean.lname);
+					$('#showsname').text(data.bean.sname);
+					$('#shownavid').text(data.bean.navid);
+					$('#showltypeid').text(data.bean.ltypeid);
+					$('#showstypeid').text(data.bean.stypeid);
+					$('#goodsname').val(data.bean.goodsname);
+					$('#usersetnum').val(data.bean.usersetnum);
+					$('#brandname').val(data.bean.brandid);
+					var brandname=$("#brandname").find("option:selected").text();
+					var points=$("#points").val();
+					var sort=$("#sort").val();
+					var isNew=$("input[name='isNew']:checked").val();
+					var recommended=$("input[name='recommended']:checked").val();
+					var hotsale=$("input[name='hotsale']:checked").val();
+					var bargainprice=$("input[name='bargainprice']:checked").val();
+					var ismobileplatformgoods=$("input[name='ismobileplatformgoods']:checked").val();
+					var salestate=$("input[name='salestate']:checked").val();
+					//获取商品图片路径集合
+					var pictureurl="";
+					$(":checkbox[name='pcpath'][checked=true]").each(function(){
+						pictureurl+=this.value+",";
+					});
+					pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
+					var detail=$('#detail').val();
+					var commoditylist=$('#commoditylist').val();
+					var metaKeywords=$('#metaKeywords').val();
+					var metaDescription=$('#metaDescription').val();
 					$("#hidgoodsid").val(data.bean.goodsid);
 					
 					
