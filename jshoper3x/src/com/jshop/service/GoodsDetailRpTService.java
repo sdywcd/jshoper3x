@@ -7,5 +7,11 @@ public interface GoodsDetailRpTService {
 	 * 增加商品详细介绍
 	 */
 	public void saveGoodsDetailRpT(GoodsDetailRpT gdrt);
-
+	/**
+	 * 根据商品id获取商品详细介绍
+	 * @param goodsid
+	 * @return
+	 */
+	public GoodsDetailRpT findGoodsDetailRpBygoodsid(String goodsid);
+	
 }

@@ -27,4 +27,9 @@ public class GoodsDetailRpTServiceImpl implements GoodsDetailRpTService {
 		this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
 	}
 
+	@Override
+	public GoodsDetailRpT findGoodsDetailRpBygoodsid(String goodsid) {
+		return this.getGoodsDetailRpTDao().findGoodsDetailRpBygoodsid(goodsid);
+	}
+
 }

@@ -94,6 +94,13 @@
 						<span id="shownavid" style="display:none;"></span>
 						<span id="showltypeid" style="display:none;"></span>
 						<span id="showstypeid" style="display:none;"></span>
+						<input type="hidden" id="hidnavid" value=""></input>
+						<input type="hidden" id="hidnname" value=""></input>
+						<input type="hidden" id="hidltypeid" value=""></input>
+						<input type="hidden" id="hidlname" value=""></input>
+						<input type="hidden" id="hidstypeid" value=""></input>
+						<input type="hidden" id="hidsname" value=""></input>
+						
 					</div>
 					
 					<div id="selectgoodscategory" class="form-inline">
@@ -222,7 +229,7 @@
 					
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
-							id="hidgoodsCategoryTid" name="hidgoodsCategoryTid" value="" />
+							id="hidgoodsid" name="hidgoodsid" value="" />
 						<input type="hidden" id="hidgrade" name="hidgrade" value="">
 						<input class="btn btn-success" type="button" id="submit"
 							name="submit" value="提交" /> <input class="btn btn-success"

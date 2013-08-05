@@ -314,7 +314,109 @@ $(function() {
 		
 	},
 	
-	
+
+	/**
+	 * 更新商品
+	 */
+	updateGoods=function(){
+		var goodsid=$("#hidgoodsid").val();
+		var goodsTypeId=$("#goodsTypeId").val();//商品类型id
+		var goodsTypeName=$("#goodsTypeId").find("option:selected").text();//所选商品类型名称
+		//这里需要调用获取商品类型属性和参数填写的值方法
+		var goodsParameterValue=getGoodsParameter(goodsTypeId);
+		var goodsAttrsVals=getgoodsAttrVals(goodsTypeId);
+		
+		if(!$("#selectgoodscategory").is(":hidden")){
+			var navid=$("#navid").val();
+			if(navid=="-1"){
+				formwarning("#alerterror", "请选择顶级商品分类");
+				return false;
+			}
+			var nname=$("#parentId").find("option:selected").text();
+			var ltypeid=$("#ltypeid").val();
+			var lname="";
+			if(ltypeid=="-1"){
+				ltypeid="0";
+			}else{
+				lname=$("#ltypeid").find("option:selected").text();
+			}
+			var stypeid=$("#stypeid").val();
+			var sname="";
+			if(stypeid=="-1"){
+				stypeid="0";
+			}else{
+				sname=$('#stypeid').find("option:selected").text();	
+			}
+			var fname="";
+			
+		}else{
+			var navid=$("#hidnavid").val();
+			var nname;
+		}
+		var goodsname=$("#goodsname").val();
+		var usersetnum=$("#usersetnum").val();
+		var brandid=$("#brandname").val();
+		if(brandid=="-1"){
+			formwarning("#alerterror", "请选择商品品牌");
+			return false;
+		}
+		var brandname=$("#brandname").find("option:selected").text();
+		var points=$("#points").val();
+		var sort=$("#sort").val();
+		var isNew=$("input[name='isNew']:checked").val();
+		var recommended=$("input[name='recommended']:checked").val();
+		var hotsale=$("input[name='hotsale']:checked").val();
+		var bargainprice=$("input[name='bargainprice']:checked").val();
+		var ismobileplatformgoods=$("input[name='ismobileplatformgoods']:checked").val();
+		var salestate=$("input[name='salestate']:checked").val();
+		//获取商品图片路径集合
+		var pictureurl="";
+		$(":checkbox[name='pcpath'][checked=true]").each(function(){
+			pictureurl+=this.value+",";
+		});
+		pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
+		var detail=$('#detail').val();
+		var commoditylist=$('#commoditylist').val();
+		var metaKeywords=$('#metaKeywords').val();
+		var metaDescription=$('#metaDescription').val();
+		this.value="提交中";
+		this.disabled=true;
+		$.post("saveGoods.action",{
+			"goodsTypeId":goodsTypeId,
+			"goodsTypeName":goodsTypeName,
+			"goodsParameterValue":goodsParameterValue,
+			"goodsAttrsVals":goodsAttrsVals,
+			"navid":navid,
+			"nname":nname,
+			"ltypeid":ltypeid,
+			"lname":lname,
+			"stypeid":stypeid,
+			"sname":sname,
+			"fname":fname,
+			"goodsname":goodsname,
+			"usersetnum":usersetnum,
+			"brandid":brandid,
+			"brandname":brandname,
+			"points":points,
+			"sort":sort,
+			"isNew":isNew,
+			"recommended":recommended,
+			"hotsale":hotsale,
+			"bargainprice":bargainprice,
+			"ismobileplatformgoods":ismobileplatformgoods,
+			"salestate":salestate,
+			"pictureurl":pictureurl,
+			"detail":detail,
+			"commoditylist":commoditylist,
+			"metaKeywords":metaKeywords,
+			"metaDescription":metaDescription
+		},function(data){
+			if(data.sucflag){
+				window.location.href="goodsment.jsp?operate=find&folder=goods";
+			}
+		});
+		
+	},
 	
 	/**
 	 * 获取30个属性值
@@ -368,8 +470,25 @@ $(function() {
 			}
 		});
 	},
-	
-	
+	/**
+	 * 根据goodsid获取商品详细介绍
+	 */
+	findGoodsDetialRpTBygoodsid=function(val){
+		$.ajax({
+			url:"findGoodsDetialRpTBygoodsid.action",
+			type:"post",
+			data:{"goodsid":val},
+			dataType:"json",
+			async:false,
+			success:function(data){
+				if(data.sucflag){
+					return data.bean.detail;
+				}else{
+					return "";
+				}
+			}
+		});
+	},
 	
 	
 	/**
@@ -389,7 +508,6 @@ $(function() {
 							$('#'+v.id).val(v.value);
 						});
 					}
-					
 					//获取商品属性的值，该值需要从商品属性关系表中获取
 					findGoodsAttributeTBygoodsTypeId(data.bean.goodsTypeId);
 					//绑定商品属性值
@@ -454,10 +572,11 @@ $(function() {
 						allpcpath=htm+checkpc;
 						$('#triggers').append(allpcpath);
 					});
-					//KE.html("detail", data.bean.detail);
+					var detial=findGoodsDetialRpTBygoodsid(data.bean.goodsid);
+					KE.html("detail", detial);
 					$('#commoditylist').val(data.bean.commoditylist);
 					$('#metaKeywords').val(data.bean.metaKeywords);
-					$('#metaDescription').val(data.bean.metaDescription);
+					$('#metaDes').val(data.bean.metaDescription);
 					$("#hidgoodsid").val(data.bean.goodsid);
 					$("#goodscategory").show();
 					$("#modifygoodscategory").show();
