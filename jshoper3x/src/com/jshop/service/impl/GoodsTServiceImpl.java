@@ -74,8 +74,8 @@ public class GoodsTServiceImpl implements GoodsTService {
 		return getGoodsTDao().delGoods(list, creatorid);
 	}
 
-	public int updateGoods(GoodsT g) {
-		return getGoodsTDao().updateGoods(g);
+	public void updateGoods(GoodsT g) {
+		this.getGoodsTDao().updateGoods(g);
 	}
 
 	public int updateGoodsSaleState(String[] goodsid, String salestate, String creatorid) {

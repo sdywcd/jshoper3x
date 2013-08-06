@@ -352,11 +352,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return null;
 	}
 
-	public int updateGoods(final GoodsT g) {
+	public void updateGoods(final GoodsT g) {
 		log.debug("update GoodsT");
 		try {
 			this.getHibernateTemplate().update(g);
-			return 1;
 		} catch (RuntimeException re) {
 			log.error("update  updateGoods error", re);
 			throw re;

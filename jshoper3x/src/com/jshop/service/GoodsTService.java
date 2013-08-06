@@ -31,7 +31,7 @@ public interface GoodsTService {
 	 * @param g
 	 * @return
 	 */
-	public int updateGoods(GoodsT g);
+	public void updateGoods(GoodsT g);
 
 	/**
 	 * 查询所有商品信息

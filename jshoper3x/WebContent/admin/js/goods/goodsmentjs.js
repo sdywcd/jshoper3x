@@ -325,33 +325,39 @@ $(function() {
 		//这里需要调用获取商品类型属性和参数填写的值方法
 		var goodsParameterValue=getGoodsParameter(goodsTypeId);
 		var goodsAttrsVals=getgoodsAttrVals(goodsTypeId);
-		
+		var navid="";
+		var nname="";
+		var ltypeid="";
+		var lname="";
+		var stypeid="";
+		var sname="";
+		var fname="";
 		if(!$("#selectgoodscategory").is(":hidden")){
-			var navid=$("#navid").val();
+			navid=$("#navid").val();
 			if(navid=="-1"){
 				formwarning("#alerterror", "请选择顶级商品分类");
 				return false;
 			}
-			var nname=$("#parentId").find("option:selected").text();
-			var ltypeid=$("#ltypeid").val();
-			var lname="";
+			nname=$("#parentId").find("option:selected").text();
+			ltypeid=$("#ltypeid").val();
 			if(ltypeid=="-1"){
 				ltypeid="0";
 			}else{
 				lname=$("#ltypeid").find("option:selected").text();
 			}
-			var stypeid=$("#stypeid").val();
-			var sname="";
+			stypeid=$("#stypeid").val();
 			if(stypeid=="-1"){
 				stypeid="0";
 			}else{
 				sname=$('#stypeid').find("option:selected").text();	
 			}
-			var fname="";
-			
 		}else{
-			var navid=$("#hidnavid").val();
-			var nname;
+			navid=$("#hidnavid").val();
+			nname=$("#hidnname").val();
+			ltypeid=$("#hidltypeid").val();
+			lname=$("#hidlname").val();
+			stypeid=$("#hidstypeid").val();
+			sname=$("#hidsname").val();
 		}
 		var goodsname=$("#goodsname").val();
 		var usersetnum=$("#usersetnum").val();
@@ -381,7 +387,8 @@ $(function() {
 		var metaDescription=$('#metaDescription').val();
 		this.value="提交中";
 		this.disabled=true;
-		$.post("saveGoods.action",{
+		$.post("updateGoods.action",{
+			"goodsid":goodsid,
 			"goodsTypeId":goodsTypeId,
 			"goodsTypeName":goodsTypeName,
 			"goodsParameterValue":goodsParameterValue,
@@ -519,6 +526,13 @@ $(function() {
 					$('#shownavid').text(data.bean.navid);
 					$('#showltypeid').text(data.bean.ltypeid);
 					$('#showstypeid').text(data.bean.stypeid);
+					$('#hidnavid').val(data.bean.navid);
+					$('#hidnname').val(data.bean.nname);
+					$('#hidltypeid').val(data.bean.ltypeid);
+					$('#hidlname').val(data.bean.lname);
+					$('#hidstypeid').val(data.bean.stypeid);
+					$('#hidsname').val(data.bean.sname);
+					
 					$('#goodsname').val(data.bean.goodsname);
 					$('#usersetnum').val(data.bean.usersetnum);
 					$('#brandname').val(data.bean.brandid);

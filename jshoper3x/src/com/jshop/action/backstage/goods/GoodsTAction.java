@@ -1230,8 +1230,37 @@ public class GoodsTAction extends ActionSupport {
 	 * @throws TemplateException
 	 * @throws IOException
 	 */
-	@Action(value = "updateGoods", results = { @Result(name = "json", type = "json") })
+	@Action(value = "updateGoods", results = { @Result(name = "json", type = "json",params = { "excludeNullProperties", "true" }) })
 	public String updateGoods() throws IOException, TemplateException {
+		if(StringUtils.isNotBlank(this.getGoodsid())){
+			bean=this.getGoodsTService().findGoodsById(this.getGoodsid());
+			if(bean!=null){
+				bean.setGoodsTypeId(this.getGoodsTypeId());
+				bean.setGoodsTypeName(this.getGoodsTypeName());
+				bean.setGoodsParameterValue(this.getGoodsParameterValue());
+				bean.setNavid(this.getNavid());
+				bean.setNname(this.getNname());
+				bean.setLtypeid(this.getLtypeid());
+				bean.setLname(this.getLname());
+				bean.setStypeid(this.getStypeid());
+				bean.setSname(this.getSname());
+				bean.setFname(this.getFname());
+				bean.setGoodsname(this.getGoodsname());
+				bean.setUsersetnum(this.getUsersetnum());
+				bean.setBrandid(this.getBrandid());
+				bean.setBrandname(this.getBrandname());
+				bean.setPoints(Double.parseDouble(this.getPoints()));
+				bean.setSort(Integer.parseInt(this.getSort()));
+				bean.setIsNew(this.getIsNew());
+				bean.setRecommended(this.getRecommended());
+				bean.setHotsale(this.getHotsale());
+				bean.setBargainprice(this.getBargainprice());
+				bean.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+				
+				
+			}
+		}
+		
 		return allfilename;
 		
 	}
