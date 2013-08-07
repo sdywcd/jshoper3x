@@ -32,4 +32,9 @@ public class GoodsDetailRpTServiceImpl implements GoodsDetailRpTService {
 		return this.getGoodsDetailRpTDao().findGoodsDetailRpBygoodsid(goodsid);
 	}
 
+	@Override
+	public void update(GoodsDetailRpT gdrt) {
+		this.getGoodsDetailRpTDao().update(gdrt);
+	}
+
 }

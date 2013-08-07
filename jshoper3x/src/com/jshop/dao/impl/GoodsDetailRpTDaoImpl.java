@@ -44,4 +44,15 @@ public class GoodsDetailRpTDaoImpl extends HibernateDaoSupport implements
 
 	}
 
+	@Override
+	public void update(GoodsDetailRpT gdrt) {
+		log.debug("update GoodsDetailRpT");
+		try {
+			this.getHibernateTemplate().update(gdrt);
+		} catch (RuntimeException re) {
+			log.error("update GoodsDetailRpT error", re);
+			throw re;
+		}
+	}
+
 }

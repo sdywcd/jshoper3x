@@ -731,5 +731,13 @@ public interface GoodsTService {
 	 * @param gdpt
 	 */
 	public void saveGoodsProcess(GoodsT gt,String goodsattrsval,GoodsDetailRpT gdpt);
+	/**
+	 * 商品信息更新过程
+	 * @param gt
+	 * @param goodsattrsval
+	 * @param gdpt
+	 */
+	public void updateGoodsProcess(GoodsT gt,String goodsattrsval,String detail);
+	
 	
 }

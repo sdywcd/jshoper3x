@@ -217,6 +217,18 @@ $(function() {
 		}
 	});
 
+	/**
+	 * 点击重新选择分类
+	 */
+	$("#reselectgoodscategory").toggle(function(){
+	    	$("#selectgoodscategory").show();
+	    	$("#goodscategory").hide();
+	    }, function(){
+	    	$("#selectgoodscategory").hide();
+	    	$("#goodscategory").show();
+	    });
+	   
+	
 	
 	
 	/**
@@ -435,7 +447,7 @@ $(function() {
 				goodsAttrsVals+="{\"attrval\":\""+this.value+"\"},";
 			});
 		}
-		goodsAttrsVals=goodsAttrsVals.toString().substring(0, goodsAttrsVals.length-1);
+		goodsAttrsVals="["+goodsAttrsVals.toString().substring(0, goodsAttrsVals.length-1)+"]";
 		return	goodsAttrsVals;	
 	},
 	
@@ -450,12 +462,16 @@ $(function() {
 				goodsParameterValue+="{\"id\":\""+this.name+"\",\"value\":\""+this.value+"\"},";
 			});
 		}
-		goodsParameterValue=goodsParameterValue.toString().substring(0, goodsParameterValue.length-1);
+		goodsParameterValue="["+goodsParameterValue.toString().substring(0, goodsParameterValue.length-1)+"]";
 		return goodsParameterValue;
 	},
 	
 	$("#submit").click(function(){
 		saveGoods();
+	});
+	
+	$("#update").click(function(){
+		updateGoods();
 	});
 	
 	/**
@@ -595,6 +611,8 @@ $(function() {
 					$("#goodscategory").show();
 					$("#modifygoodscategory").show();
 					$("#selectgoodscategory").hide();
+					$("#submit").hide();
+					$("#update").show();
 				}
 			});
 		}

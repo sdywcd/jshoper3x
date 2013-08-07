@@ -13,5 +13,10 @@ public interface GoodsDetailRpTService {
 	 * @return
 	 */
 	public GoodsDetailRpT findGoodsDetailRpBygoodsid(String goodsid);
+	/**
+	 * 更新商品详细介绍
+	 * @param gdrt
+	 */
+	public void update(GoodsDetailRpT gdrt);
 	
 }

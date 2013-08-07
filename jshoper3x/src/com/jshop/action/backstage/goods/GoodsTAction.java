@@ -1101,10 +1101,10 @@ public class GoodsTAction extends ActionSupport {
 		GoodsDetailRpT gdpt=new GoodsDetailRpT();
 		gdpt.setDetail(this.getDetail());
 		
-			this.getGoodsTService().saveGoodsProcess(gt, this.getGoodsAttrsVals(), gdpt);
-			this.setSucflag(true);
-			return "json";
-		
+		this.getGoodsTService().saveGoodsProcess(gt, this.getGoodsAttrsVals(), gdpt);
+		this.setSucflag(true);
+		return "json";
+	
 		
 		
 	}
@@ -1256,12 +1256,21 @@ public class GoodsTAction extends ActionSupport {
 				bean.setHotsale(this.getHotsale());
 				bean.setBargainprice(this.getBargainprice());
 				bean.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+				bean.setSalestate(this.getSalestate());
+				bean.setPictureurl(this.getPictureurl());
+				bean.setCommoditylist(this.getCommoditylist());
+				bean.setMetaKeywords(this.getMetaKeywords());
+				bean.setMetaDescription(this.getMetaDescription());
+				bean.setCreatorid(BaseTools.adminCreateId());
+				bean.setUpdatetime(BaseTools.systemtime());
 				
+				this.getGoodsTService().updateGoodsProcess(bean, this.getGoodsAttrsVals(), this.getDetail());
+				this.setSucflag(true);
+				return "json";
 				
 			}
 		}
-		
-		return allfilename;
+		return "json";
 		
 	}
 

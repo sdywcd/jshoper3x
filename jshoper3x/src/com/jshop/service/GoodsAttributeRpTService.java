@@ -17,6 +17,11 @@ public interface GoodsAttributeRpTService {
 	 * @return
 	 */
 	public List<GoodsAttributeRpT>findGoodsAttributeRpTBygoodsid(String goodsid);
+	/**
+	 * 根据goodsid删除商品的属性关联
+	 * @param goodsid
+	 */
+	public void delByProperty(String property,Object entity);
 	
 	
 }

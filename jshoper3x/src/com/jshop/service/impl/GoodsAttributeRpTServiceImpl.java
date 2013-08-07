@@ -35,4 +35,9 @@ public class GoodsAttributeRpTServiceImpl implements GoodsAttributeRpTService {
 		return this.getGoodsAttributeRpTDao().findGoodsAttributeRpTBygoodsid(goodsid);
 	}
 
+	@Override
+	public void delByProperty(String property, Object entity) {
+		this.getGoodsAttributeRpTDao().delByProperty(property, entity);
+	}
+
 }

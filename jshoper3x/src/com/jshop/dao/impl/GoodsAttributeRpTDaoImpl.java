@@ -39,4 +39,17 @@ public class GoodsAttributeRpTDaoImpl extends HibernateDaoSupport  implements Go
 		}
 	}
 
+	@Override
+	public void delByProperty(String property, Object entity) {
+		log.debug("delByProperty");
+		try {
+			this.getHibernateTemplate().delete(property, entity);
+		} catch (RuntimeException re) {
+			log.error("delByProperty error", re);
+			throw re;
+		}
+	}
+
+	
+
 }
