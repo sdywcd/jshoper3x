@@ -163,6 +163,7 @@ public class GoodsTAction extends ActionSupport {
 	private String allfilename;
 	private String pcpath;
 	private String twocodepath;
+	private String basepath;
 	private boolean delpcflag;
 	private boolean slogin;
 	private boolean sucflag;
@@ -320,6 +321,14 @@ public class GoodsTAction extends ActionSupport {
 
 	public void setCreateHtml(CreateHtml createHtml) {
 		this.createHtml = createHtml;
+	}
+
+	public String getBasepath() {
+		return basepath;
+	}
+
+	public void setBasepath(String basepath) {
+		this.basepath = basepath;
 	}
 
 	public String getTwocodepath() {
@@ -1097,16 +1106,33 @@ public class GoodsTAction extends ActionSupport {
 		gt.setCreatetime(BaseTools.systemtime());
 		gt.setCreatorid(BaseTools.adminCreateId());
 		gt.setUpdatetime(BaseTools.systemtime());
-		
 		GoodsDetailRpT gdpt=new GoodsDetailRpT();
 		gdpt.setDetail(this.getDetail());
 		
-		this.getGoodsTService().saveGoodsProcess(gt, this.getGoodsAttrsVals(), gdpt);
+		this.getGoodsTService().saveGoodsProcess(gt,gdpt);
+		this.saveGoodsAttributeRp(gt, this.getGoodsAttrsVals());
 		this.setSucflag(true);
 		return "json";
 	
 		
 		
+	}
+	/**
+	 * 保存属性和商品关系
+	 * @param gt
+	 * @param goodsattrsval
+	 */
+	private void saveGoodsAttributeRp(GoodsT gt,String goodsattrsval){
+		JSONArray ja=(JSONArray)JSONValue.parse(goodsattrsval);
+		int jsonsize=ja.size();
+		GoodsAttributeRpT gart=new GoodsAttributeRpT();
+		for(int i=0;i<jsonsize;i++){
+			gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
+			gart.setGoodsid(gt.getGoodsid());
+			JSONObject jo=(JSONObject) ja.get(i);
+			gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
+			this.getGoodsAttributeRpTService().saveGoodsAttributeRpT(gart);
+		}
 	}
 
 	
@@ -1203,7 +1229,8 @@ public class GoodsTAction extends ActionSupport {
 		if (StringUtils.isNotBlank(this.getGoodsid())) {
 			bean = this.getGoodsTService().findGoodsById(this.getGoodsid().trim());
 			if (bean != null) {
-				//this.setBasepath(BaseTools.getBasePath());
+			
+				this.setBasepath(BaseTools.getBasePath());
 				this.setSucflag(true);
 				return "json";
 			}

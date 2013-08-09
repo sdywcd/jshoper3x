@@ -501,6 +501,7 @@ $(function() {
 	 * 根据goodsid获取商品详细介绍
 	 */
 	findGoodsDetialRpTBygoodsid=function(val){
+		
 		$.ajax({
 			url:"findGoodsDetialRpTBygoodsid.action",
 			type:"post",
@@ -509,9 +510,9 @@ $(function() {
 			async:false,
 			success:function(data){
 				if(data.sucflag){
-					return data.bean.detail;
+					KE.html("detail", data.bean.detail);
 				}else{
-					return "";
+					KE.html("detail", data.bean.detail);
 				}
 			}
 		});
@@ -606,9 +607,9 @@ $(function() {
 						allpcpath=htm+checkpc;
 						$('#triggers').append(allpcpath);
 					});
-					var detial=findGoodsDetialRpTBygoodsid(data.bean.goodsid);
-					KE.html("detail", detial);
-					$('#commoditylist').val(data.bean.commoditylist);
+					findGoodsDetialRpTBygoodsid(data.bean.goodsid);
+					
+					KE.html("commoditylist",data.bean.commoditylist);
 					$('#metaKeywords').val(data.bean.metaKeywords);
 					$('#metaDes').val(data.bean.metaDescription);
 					$("#hidgoodsid").val(data.bean.goodsid);

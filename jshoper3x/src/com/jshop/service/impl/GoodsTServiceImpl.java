@@ -374,22 +374,10 @@ public class GoodsTServiceImpl implements GoodsTService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void saveGoodsProcess(GoodsT gt, String goodsattrsval,
+	public void saveGoodsProcess(GoodsT gt,
 			GoodsDetailRpT gdpt) {
 			gt.setGoodsid(this.getSerial().Serialid(Serial.GOODS));
 			this.getGoodsTDao().saveGoods(gt);
-			if(StringUtils.isNotBlank(goodsattrsval)){
-				JSONArray ja=(JSONArray)JSONValue.parse(goodsattrsval);
-				int jsonsize=ja.size();
-				GoodsAttributeRpT gart=new GoodsAttributeRpT();
-				for(int i=0;i<jsonsize;i++){
-					gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
-					gart.setGoodsid(gt.getGoodsid());
-					JSONObject jo=(JSONObject) ja.get(i);
-					gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
-					this.getGoodsAttributeRpTDao().saveGoodsAttributeRpT(gart);
-				}
-			}
 			gdpt.setGoodsid(gt.getGoodsid());
 			gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
 			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdpt);
