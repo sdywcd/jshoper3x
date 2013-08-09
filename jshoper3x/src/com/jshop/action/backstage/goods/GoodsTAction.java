@@ -1290,8 +1290,8 @@ public class GoodsTAction extends ActionSupport {
 				bean.setMetaDescription(this.getMetaDescription());
 				bean.setCreatorid(BaseTools.adminCreateId());
 				bean.setUpdatetime(BaseTools.systemtime());
-				
-				this.getGoodsTService().updateGoodsProcess(bean, this.getGoodsAttrsVals(), this.getDetail());
+				this.getGoodsTService().updateGoodsProcess(bean, this.getDetail());
+				this.updateGoodsAttributeRp(bean, this.getGoodsAttrsVals());
 				this.setSucflag(true);
 				return "json";
 				
@@ -1301,6 +1301,27 @@ public class GoodsTAction extends ActionSupport {
 		
 	}
 
+	/**
+	 * 更新商品属性关系
+	 * @param gt
+	 * @param goodsattrvals
+	 */
+	private void updateGoodsAttributeRp(GoodsT gt,String goodsattrvals){
+		if(this.getGoodsAttributeRpTService().delBygoodsid(gt.getGoodsid())>0){
+			JSONArray ja=(JSONArray)JSONValue.parse(goodsattrvals);
+			int jsonsize=ja.size();
+			GoodsAttributeRpT gart=new GoodsAttributeRpT();
+			for(int i=0;i<jsonsize;i++){
+				gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
+				gart.setGoodsid(gt.getGoodsid());
+				JSONObject jo=(JSONObject) ja.get(i);
+				gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
+				this.getGoodsAttributeRpTService().saveGoodsAttributeRpT(gart);
+			}
+		}
+		
+	}
+	
 	/**
 	 * 删除商品同时删除商品对应的货品
 	 * 

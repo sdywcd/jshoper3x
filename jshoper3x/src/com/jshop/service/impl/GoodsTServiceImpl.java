@@ -385,36 +385,22 @@ public class GoodsTServiceImpl implements GoodsTService {
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void updateGoodsProcess(GoodsT gt, String goodsattrsval,
-			String detail) {
+	public void updateGoodsProcess(GoodsT gt,String detail) {
 		//更新商品表
 		this.getGoodsTDao().updateGoods(gt);
-		//更新商品属性关联表
-		if(this.getGoodsAttributeRpTDao().delBygoodsid(gt.getGoodsid())>0){
-			if(StringUtils.isNotBlank(goodsattrsval)){
-				JSONArray ja=(JSONArray)JSONValue.parse(goodsattrsval);
-				int jsonsize=ja.size();
-				GoodsAttributeRpT gart=new GoodsAttributeRpT();
-				for(int i=0;i<jsonsize;i++){
-					gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
-					gart.setGoodsid(gt.getGoodsid());
-					JSONObject jo=(JSONObject) ja.get(i);
-					gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
-					this.getGoodsAttributeRpTDao().saveGoodsAttributeRpT(gart);
-				}
-			}
-			GoodsDetailRpT gdrt;
-			gdrt=this.getGoodsDetailRpTDao().findGoodsDetailRpBygoodsid(gt.getGoodsid());
-			if(gdrt!=null){
-				gdrt.setDetail(detail);
-				this.getGoodsDetailRpTDao().update(gdrt);
-			}else{
-				gdrt=new GoodsDetailRpT();
-				gdrt.setGoodsid(gt.getGoodsid());
-				gdrt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
-				this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
-			}
+		//更新商品介绍
+		GoodsDetailRpT gdrt;
+		gdrt=this.getGoodsDetailRpTDao().findGoodsDetailRpBygoodsid(gt.getGoodsid());
+		if(gdrt!=null){
+			gdrt.setDetail(detail);
+			this.getGoodsDetailRpTDao().update(gdrt);
+		}else{
+			gdrt=new GoodsDetailRpT();
+			gdrt.setGoodsid(gt.getGoodsid());
+			gdrt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
+			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
 		}
+	
 		
 		
 		

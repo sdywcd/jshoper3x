@@ -737,7 +737,7 @@ public interface GoodsTService {
 	 * @param goodsattrsval
 	 * @param gdpt
 	 */
-	public void updateGoodsProcess(GoodsT gt,String goodsattrsval,String detail);
+	public void updateGoodsProcess(GoodsT gt,String detail);
 	
 	
 }
