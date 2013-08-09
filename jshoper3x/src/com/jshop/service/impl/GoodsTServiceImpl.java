@@ -402,32 +402,33 @@ public class GoodsTServiceImpl implements GoodsTService {
 		//更新商品表
 		this.getGoodsTDao().updateGoods(gt);
 		//更新商品属性关联表
-		GoodsAttributeRpT grpt=new GoodsAttributeRpT();
-		grpt.setGoodsid(gt.getGoodsid());
-		this.getGoodsAttributeRpTDao().delByProperty("goodsid",grpt);
-		if(StringUtils.isNotBlank(goodsattrsval)){
-			JSONArray ja=(JSONArray)JSONValue.parse(goodsattrsval);
-			int jsonsize=ja.size();
-			GoodsAttributeRpT gart=new GoodsAttributeRpT();
-			for(int i=0;i<jsonsize;i++){
-				gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
-				gart.setGoodsid(gt.getGoodsid());
-				JSONObject jo=(JSONObject) ja.get(i);
-				gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
-				this.getGoodsAttributeRpTDao().saveGoodsAttributeRpT(gart);
+		if(this.getGoodsAttributeRpTDao().delBygoodsid(gt.getGoodsid())>0){
+			if(StringUtils.isNotBlank(goodsattrsval)){
+				JSONArray ja=(JSONArray)JSONValue.parse(goodsattrsval);
+				int jsonsize=ja.size();
+				GoodsAttributeRpT gart=new GoodsAttributeRpT();
+				for(int i=0;i<jsonsize;i++){
+					gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
+					gart.setGoodsid(gt.getGoodsid());
+					JSONObject jo=(JSONObject) ja.get(i);
+					gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
+					this.getGoodsAttributeRpTDao().saveGoodsAttributeRpT(gart);
+				}
+			}
+			GoodsDetailRpT gdrt;
+			gdrt=this.getGoodsDetailRpTDao().findGoodsDetailRpBygoodsid(gt.getGoodsid());
+			if(gdrt!=null){
+				gdrt.setDetail(detail);
+				this.getGoodsDetailRpTDao().update(gdrt);
+			}else{
+				gdrt=new GoodsDetailRpT();
+				gdrt.setGoodsid(gt.getGoodsid());
+				gdrt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
+				this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
 			}
 		}
-		GoodsDetailRpT gdrt;
-		gdrt=this.getGoodsDetailRpTDao().findGoodsDetailRpBygoodsid(gt.getGoodsid());
-		if(gdrt!=null){
-			gdrt.setDetail(detail);
-			this.getGoodsDetailRpTDao().update(gdrt);
-		}else{
-			gdrt=new GoodsDetailRpT();
-			gdrt.setGoodsid(gt.getGoodsid());
-			gdrt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
-			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
-		}
+		
+		
 		
 	}
 

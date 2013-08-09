@@ -1052,7 +1052,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 			this.setLtypeidlist("");
 			this.thiredscategory = this.getGoodsCategoryTService().findGoodscategoryByparentId("1", this.getParentId().trim());
 			if (this.thiredscategory != null) {
-				this.stypeidlist = "<option value='0'>---请选择---</option>";
+				this.stypeidlist = "<option value='-1'>---请选择---</option>";
 				for (Iterator it = this.thiredscategory.iterator(); it.hasNext();) {
 					GoodsCategoryT gct = (GoodsCategoryT) it.next();
 					stypeidlist += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";

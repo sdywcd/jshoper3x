@@ -22,6 +22,9 @@ public interface GoodsAttributeRpTDao {
 	 * @param goodsid
 	 */
 	public void delByProperty(String property,Object entity);
-	
-	
+	/**
+	 * 根据goodsid删除数据
+	 * @param goodsid
+	 */
+	public int delBygoodsid(String goodsid);
 }

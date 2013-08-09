@@ -245,7 +245,7 @@ $(function() {
 			formwarning("#alerterror", "请选择顶级商品分类");
 			return false;
 		}
-		var nname=$("#parentId").find("option:selected").text();
+		var nname=$("#navid").find("option:selected").text();
 		var ltypeid=$("#ltypeid").val();
 		var lname="";
 		if(ltypeid=="-1"){
@@ -279,14 +279,16 @@ $(function() {
 		var salestate=$("input[name='salestate']:checked").val();
 		//获取商品图片路径集合
 		var pictureurl="";
-		$(":checkbox[name='pcpath'][checked=true]").each(function(){
-			pictureurl+=this.value+",";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				pictureurl+=this.value+",";
+			}
 		});
 		pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
 		var detail=$('#detail').val();
 		var commoditylist=$('#commoditylist').val();
 		var metaKeywords=$('#metaKeywords').val();
-		var metaDescription=$('#metaDescription').val();
+		var metaDescription=$('#metaDes').val();
 		this.value="提交中";
 		this.disabled=true;
 		$.post("saveGoods.action",{
@@ -350,7 +352,7 @@ $(function() {
 				formwarning("#alerterror", "请选择顶级商品分类");
 				return false;
 			}
-			nname=$("#parentId").find("option:selected").text();
+			nname=$("#navid").find("option:selected").text();
 			ltypeid=$("#ltypeid").val();
 			if(ltypeid=="-1"){
 				ltypeid="0";
@@ -389,14 +391,16 @@ $(function() {
 		var salestate=$("input[name='salestate']:checked").val();
 		//获取商品图片路径集合
 		var pictureurl="";
-		$(":checkbox[name='pcpath'][checked=true]").each(function(){
-			pictureurl+=this.value+",";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				pictureurl+=this.value+",";
+			}
 		});
 		pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
 		var detail=$('#detail').val();
 		var commoditylist=$('#commoditylist').val();
 		var metaKeywords=$('#metaKeywords').val();
-		var metaDescription=$('#metaDescription').val();
+		var metaDescription=$('#metaDes').val();
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateGoods.action",{
