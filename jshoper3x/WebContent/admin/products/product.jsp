@@ -116,7 +116,7 @@
 									<span class="label label-required">预警库存:</span> 
 									<input type="text"id="freezeStore" name="freezeStore" class="small" />
 								</div>
-								<div class="form-inline">
+								<div id="specificationvalueareadiv"class="form-inline" style="display:none;">
 									<span id="specificationtext" class="label label-required">规格值选择:</span> 
 										<div id="specificationvaluearea" style="margin-top:-28px;position:relative;width:110px; display: inline;">
 											

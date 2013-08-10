@@ -440,8 +440,8 @@ public class ProductTAction extends ActionSupport {
 		int currentPage=page;
 		int lineSize=rp;
 		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
-			String queryString = "from ProductT as pt where pt.goodsid=:goodsid order by " + sortname + " " + sortorder + "";
-			List<ProductT>list=this.getProductTService().sortAllProductT(currentPage, lineSize, goodsid, queryString);
+			String queryString = "from ProductT as pt where pt.goodsid="+goodsid+" order by " + sortname + " " + sortorder + "";
+			List<ProductT>list=this.getProductTService().sortAllProductT(currentPage, lineSize,queryString);
 			if(!list.isEmpty()){
 				ProcessProductsList(list);
 			}

@@ -53,9 +53,9 @@ public class ProductTServiceImpl implements ProductTService {
 		return this.getProductTDao().delProductTBygoodsid(goodsid, creatorid);
 	}
 
-	public List<ProductT> sortAllProductT(int currentPage, int lineSize, String creatorid, String queryString) {
+	public List<ProductT> sortAllProductT(int currentPage, int lineSize,  String queryString) {
 
-		return this.getProductTDao().sortAllProductT(currentPage, lineSize, creatorid, queryString);
+		return this.getProductTDao().sortAllProductT(currentPage, lineSize,  queryString);
 	}
 
 	@Override

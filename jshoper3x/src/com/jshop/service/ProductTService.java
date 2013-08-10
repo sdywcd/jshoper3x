@@ -90,7 +90,7 @@ public interface ProductTService {
 	 * @return
 	 */
 	public List<ProductT> sortAllProductT(final int currentPage,
-			final int lineSize, final String creatorid, String queryString);
+			final int lineSize, String queryString);
 
 	/**
 	 * 根据产品id删除产品

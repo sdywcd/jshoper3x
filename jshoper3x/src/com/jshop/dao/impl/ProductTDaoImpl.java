@@ -147,7 +147,7 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ProductT> sortAllProductT(final int currentPage, final int lineSize, final String creatorid, final String queryString) {
+	public List<ProductT> sortAllProductT(final int currentPage, final int lineSize, final String queryString) {
 		log.debug("find all ProductT");
 		try {
 			List<ProductT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
@@ -155,15 +155,11 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 					Query query = session.createQuery(queryString);
 					query.setFirstResult((currentPage - 1) * lineSize);
 					query.setMaxResults(lineSize);
-					query.setParameter("creatorid", creatorid);
 					List list = query.list();
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all ProductT error", re);
 			throw re;

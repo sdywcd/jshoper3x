@@ -87,15 +87,17 @@ $(function() {
 		var isSpecificationsOpen=$("#isSpecificationsOpen").val();
 		var specificationsName=$("#isSpecificationsOpen").find("option:selected").text();
 		if(isSpecificationsOpen=="0"){
+			$("#specificationvalueareadiv").hide();
+			$("#spname").text(specificationsName);
 			return false;
 		}
 		if(isSpecificationsOpen=="1"){
 			//加载默认产品结构信息，即不包括任何规格值，表示商品信息对应一个产品
-			$("#specificationsarea").show();
+			$("#specificationvalueareadiv").hide();
 			$("#spname").text(specificationsName);
 		}else{
 			//动态获取规格对应的值列表【1=文字类型】【2=图片类型】【3颜色类型】
-			$("#specificationsarea").show();
+			$("#specificationvalueareadiv").show();
 			findProductSpecificationsTByspecificationsid(isSpecificationsOpen);
 			$("#spname").text(specificationsName);
 		}
@@ -381,9 +383,10 @@ $(function() {
 	/**
 	 * 查询货物
 	 */
-	findProducts=function(param){
+	findProducts=function(qtype,param){
 		$("#productsmanagement").flexigrid({
 			url : 'findAllProducts.action?'+param,
+			qtype:qtype,
 			dataType : 'json',
 			cache : false,
 			colModel : [ {
@@ -497,9 +500,15 @@ $(function() {
 		});
 		function action(com, grid) {
 			if (com == '添加') {
-				window.location.href = "product.jsp?operate=add&folder=goods";
-				return;
-
+				var goodsid=$.query.get("goodsid");
+				var goodsname=$.query.get("goodsname");
+				if(goodsid==""&&goodsname==""){
+					window.location.href = "product.jsp?operate=add&folder=goods";
+					return;
+				}else{
+					window.location.href = "product.jsp?operate=add&goodsid="+goodsid+"&goodsname="+goodsname+"&folder=goods";
+					return;
+				}
 			} else if (com == '编辑') {
 				if ($('.trSelected', grid).length == 1) {
 					var str = "";
@@ -553,17 +562,20 @@ $(function() {
 			findAllSpecificationsforjson();
 			findProductByProductid();
 		}else{
-			var param="qtype=goodsid&goodsid="+goodsid;
-			findProducts(param);
+			var qtype="goodsid";
+			var param="goodsid="+goodsid;
+			findProducts(qtype,param);
 		}
 	}else if(operate=="find"){
+		var goodsid=$.query.get("goodsid");
 		var goodsname=$.query.get("goodsname");
 		if(goodsname!=""){
-			var param="qtype=goodsid&goodsid="+goodsname;
+			var qtype="goodsid";
+			var param="goodsid="+goodsid;
 			setdttitle("#dttitle",goodsname+"的所有货物列表");
-			findProducts(param);
+			findProducts(qtype,param);
 		}else{
-			var param="qtype=sc";
+			var param="";
 			findProducts(param);
 		}
 		
