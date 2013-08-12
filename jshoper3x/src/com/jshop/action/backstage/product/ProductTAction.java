@@ -345,6 +345,10 @@ public class ProductTAction extends ActionSupport {
 
 	}
 
+	/**
+	 * 保存商品的货物信息
+	 * @return
+	 */
 	@Action(value = "saveProductT", results = { @Result(name = "json", type = "json") })
 	public String saveProductT(){
 		if(StringUtils.isBlank(this.getProductName())){

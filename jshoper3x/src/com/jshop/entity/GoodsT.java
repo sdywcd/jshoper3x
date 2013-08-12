@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-7-26 22:19:04 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-8-11 9:45:25 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -53,9 +53,7 @@ public class GoodsT implements java.io.Serializable {
 	private double saleprice;
 	private String isNew;
 	private String htmlPath;
-	private String productSn;
 	private String goodsParameterValue;
-	private Integer freezeStore;
 	private String keywordid;
 	private String unitnameid;
 	private String goodsTypeId;
@@ -65,7 +63,7 @@ public class GoodsT implements java.io.Serializable {
 	private Integer star;
 	private Integer staruser;
 	private Integer totalcomment;
-	private Integer virtualsale;
+	private String isvirtualsale;
 	private String ismobileplatformgoods;
 	private Integer sales;
 	private Integer realsales;
@@ -109,11 +107,11 @@ public class GoodsT implements java.io.Serializable {
 			Integer sort, Date createtime, String creatorid,
 			Integer replycount, String brandid, String placeStore,
 			String metaKeywords, String metaDescription, Double cost,
-			double saleprice, String isNew, String htmlPath, String productSn,
-			String goodsParameterValue, Integer freezeStore, String keywordid,
-			String unitnameid, String goodsTypeId, String goodsTypeName,
-			String usersetnum, String isSpecificationsOpen, Integer star,
-			Integer staruser, Integer totalcomment, Integer virtualsale,
+			double saleprice, String isNew, String htmlPath,
+			String goodsParameterValue, String keywordid, String unitnameid,
+			String goodsTypeId, String goodsTypeName, String usersetnum,
+			String isSpecificationsOpen, Integer star, Integer staruser,
+			Integer totalcomment, String isvirtualsale,
 			String ismobileplatformgoods, Integer sales, Integer realsales,
 			Date updatetime, int versiont, String commoditylist) {
 		this.goodsid = goodsid;
@@ -152,9 +150,7 @@ public class GoodsT implements java.io.Serializable {
 		this.saleprice = saleprice;
 		this.isNew = isNew;
 		this.htmlPath = htmlPath;
-		this.productSn = productSn;
 		this.goodsParameterValue = goodsParameterValue;
-		this.freezeStore = freezeStore;
 		this.keywordid = keywordid;
 		this.unitnameid = unitnameid;
 		this.goodsTypeId = goodsTypeId;
@@ -164,7 +160,7 @@ public class GoodsT implements java.io.Serializable {
 		this.star = star;
 		this.staruser = staruser;
 		this.totalcomment = totalcomment;
-		this.virtualsale = virtualsale;
+		this.isvirtualsale = isvirtualsale;
 		this.ismobileplatformgoods = ismobileplatformgoods;
 		this.sales = sales;
 		this.realsales = realsales;
@@ -499,15 +495,6 @@ public class GoodsT implements java.io.Serializable {
 		this.htmlPath = htmlPath;
 	}
 
-	@Column(name = "PRODUCT_SN", length = 45)
-	public String getProductSn() {
-		return this.productSn;
-	}
-
-	public void setProductSn(String productSn) {
-		this.productSn = productSn;
-	}
-
 	@Column(name = "GOODS_PARAMETER_VALUE", length = 5000)
 	public String getGoodsParameterValue() {
 		return this.goodsParameterValue;
@@ -515,15 +502,6 @@ public class GoodsT implements java.io.Serializable {
 
 	public void setGoodsParameterValue(String goodsParameterValue) {
 		this.goodsParameterValue = goodsParameterValue;
-	}
-
-	@Column(name = "FREEZE_STORE")
-	public Integer getFreezeStore() {
-		return this.freezeStore;
-	}
-
-	public void setFreezeStore(Integer freezeStore) {
-		this.freezeStore = freezeStore;
 	}
 
 	@Column(name = "KEYWORDID", length = 20)
@@ -607,13 +585,13 @@ public class GoodsT implements java.io.Serializable {
 		this.totalcomment = totalcomment;
 	}
 
-	@Column(name = "VIRTUALSALE")
-	public Integer getVirtualsale() {
-		return this.virtualsale;
+	@Column(name = "ISVIRTUALSALE", length = 1)
+	public String getIsvirtualsale() {
+		return this.isvirtualsale;
 	}
 
-	public void setVirtualsale(Integer virtualsale) {
-		this.virtualsale = virtualsale;
+	public void setIsvirtualsale(String isvirtualsale) {
+		this.isvirtualsale = isvirtualsale;
 	}
 
 	@Column(name = "ISMOBILEPLATFORMGOODS", length = 1)
