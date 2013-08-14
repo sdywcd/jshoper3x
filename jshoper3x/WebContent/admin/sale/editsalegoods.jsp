@@ -1,4 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=utf-8"
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();
@@ -91,11 +92,11 @@
 									<input type=radio id="salegoodsstate" name="salegoodsstate"
 										class="small" value="0" /> <label>关闭</label> <input
 										type=radio id="salegoodsstate" name="salegoodsstate"
-										class="small"  value="1" /> <label>开启</label>
+										class="small" value="1" /> <label>开启</label>
 								</div>
 							</div>
 						</div>
- 
+
 						<div class="field field-first">
 							<div class="label">
 								<label for="input-small"> 拍卖者: </label>
@@ -112,12 +113,12 @@
 								<label for="input-small"> 起拍价: </label>
 							</div>
 							<div class="input">
-								<input type="text" id="salestartingprice" name="salestartingprice"
-									class="small" />
+								<input type="text" id="salestartingprice"
+									name="salestartingprice" class="small" />
 
 							</div>
 						</div>
-							<div class="field field-first">
+						<div class="field field-first">
 							<div class="label">
 								<label for="input-small"> 人数限制:</label>
 							</div>
@@ -127,44 +128,38 @@
 
 							</div>
 						</div>
-				
-					<div id="box-mainpicture" class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
-						<div class="form">
-							<div class="fields">
-								<div class="field">
-									<div class="label">
-										<label for="file">
-										拍卖商品图片：
-										</label>
-									</div>
-									<div class="input input-file">
-										<button id="delpc" name="delpc">
-											删除图片
-										</button>
-										<div id="file-uploader-demo1">
-											<noscript>
-												<p>
-													Please enable JavaScript to use file uploader.
-												</p>
-												<!-- or put a simple form for upload here -->
-											</noscript>
+
+						<div id="box-mainpicture"
+							class="ui-tabs-panel ui-widget-content ui-corner-bottom ui-tabs-hide">
+							<div class="form">
+								<div class="fields">
+									<div class="field">
+										<div class="label">
+											<label for="file"> 拍卖商品图片： </label>
 										</div>
-										<!-- trigger elements -->
-										<div id="triggers">
+										<div class="input input-file">
+											<button id="delpc" name="delpc">删除图片</button>
+											<div id="file-uploader-demo1">
+												<noscript>
+													<p>Please enable JavaScript to use file uploader.</p>
+													<!-- or put a simple form for upload here -->
+												</noscript>
+											</div>
+											<!-- trigger elements -->
+											<div id="triggers"></div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-							
+
 						<div class="field field-first">
 							<div class="label">
 								<label for="input-small"> 开始时间: </label>
 							</div>
 							<div class="input">
-								<input type="text" id="begingtime" name="begingtime" class="small"
-									not-null=false
+								<input type="text" id="begingtime" name="begingtime"
+									class="small" not-null=false
 									onfocus="WdatePicker({startDate:'%y-%M 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUserStartDate:true})" />
 
 							</div>
@@ -174,13 +169,14 @@
 								<label for="input-small"> 结束时间： </label>
 							</div>
 							<div class="input">
-								<input type="text" id="endingtime" name="endingtime" class="small"
+								<input type="text" id="endingtime" name="endingtime"
+									class="small"
 									onfocus="WdatePicker({startDate:'%y-%M 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUserStartDate:true})" />
 
 							</div>
 						</div>
-						
-									<div class="field field-first">
+
+						<div class="field field-first">
 							<div class="label">
 								<label for="input-small"> 商场价 :</label>
 							</div>
@@ -189,38 +185,37 @@
 									class="small" />
 							</div>
 						</div>
-								<div class="field ">
+						<div class="field ">
 							<div class="label label-radio">
 								<label for="input-small"> 是否新: </label>
 							</div>
 							<div class="radios">
 								<div class="radio">
-									<input type=radio id="newornot" name="newornot"
-										class="small" value="1" /> <label>是</label> <input
-										type=radio id="newornot" name="newornot"
-										class="small" checked="checked" value="0" /> <label>不是</label>
+									<input type=radio id="newornot" name="newornot" class="small"
+										value="1" /> <label>是</label> <input type=radio id="newornot"
+										name="newornot" class="small" checked="checked" value="0" />
+									<label>不是</label>
 								</div>
 							</div>
 						</div>
-								<div class="field field-first">
+						<div class="field field-first">
 							<div class="label">
 								<label for="input-small">拍卖商品简介:</label>
 							</div>
 							<div class="input">
-							<textarea rows="10" cols="40" id="salegoodsmessage" name="salegoodsmessage"
-									class="small" ></textarea>
+								<textarea rows="10" cols="40" id="salegoodsmessage"
+									name="salegoodsmessage" class="small"></textarea>
 							</div>
 						</div>
-							<div class="field field-first">
+						<div class="field field-first">
 							<div class="label">
 								<label for="input-small"> 最低叫价限制 :</label>
 							</div>
 							<div class="input">
-								<input type="text" id="lowprice" name="lowprice"
-									class="small" />
+								<input type="text" id="lowprice" name="lowprice" class="small" />
 							</div>
 						</div>
-							<div class="field field-first">
+						<div class="field field-first">
 							<div class="label">
 								<label for="input-small"> 生产厂商 :</label>
 							</div>
@@ -229,56 +224,59 @@
 									class="small" />
 							</div>
 						</div>
-								<div class="field field-first">
+						<div class="field field-first">
 							<div class="label">
 								<label for="input-small"> 生产地:</label>
 							</div>
 							<div class="input">
-								<input type="text" id="place" name="place"
-									class="small" />
+								<input type="text" id="place" name="place" class="small" />
 							</div>
 						</div>
-	<div class="field field-first">
-								<div class="label">
-									<label for="input-small">
-										拍卖商品说明:
-									</label>
-								</div>
-								<div style="margin: 0 0 0 200px;">
-									<div id="cssrefuse">
-										<textarea id="salegoodsinformation" name="salegoodsinformation" cols="50" rows="12" style="width: 100%; height: 600px; visibility: hidden;"><%=htmlspecialchars(htmlData)%></textarea>
-									</div>
+						<div class="field field-first">
+							<div class="label">
+								<label for="input-small"> 拍卖商品说明: </label>
+							</div>
+							<div style="margin: 0 0 0 200px;">
+								<div id="cssrefuse">
+									<textarea id="salegoodsinformation" name="salegoodsinformation"
+										cols="50" rows="12"
+										style="width: 100%; height: 600px; visibility: hidden;"><%=htmlspecialchars(htmlData)%></textarea>
 								</div>
 							</div>
-							<div class="form">
-						<div class="fields">
-							<div class="field field-first">
-								<div class="input">
-									<div class="button highlight">
-										<input type="hidden" id="salegoodsid" name="salegoodsid" />
-									<!-- 	<input type="button" id="add" name="add" value="提交"  /> -->
-										<input type="button" id="update" name="update" value="更新" style="display: none;" />
+						</div>
+						<div class="form">
+							<div class="fields">
+								<div class="field field-first">
+									<div class="input">
+										<div class="button highlight">
+											<input type="hidden" id="salegoodsid" name="salegoodsid" />
+											<!-- 	<input type="button" id="add" name="add" value="提交"  /> -->
+											<input type="button" id="update" name="update" value="更新"
+												style="display: none;" />
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
-							
-						</div>
-					</div>	
-				</div>
-				<!-- end table -->
-				
-			<!-- end content / right -->
+			</div>
 		</div>
-		<!-- end content -->
-		<!-- footer -->
-		<script type="text/javascript" src="<%=basePath%>/jshop/admin/js/regme.js"></script>
-		<script type="text/javascript" src="<%=basePath%>/admin/js/sale/salemanagement.js"></script>
-		<script type="text/javascript" src="<%=basePath %>/My97DatePicker/WdatePicker.js"></script>
-		<%@include file="/jshop/admin/footer.jsp"%>
-		<!-- end footert -->
+		<!-- end table -->
+
+		<!-- end content / right -->
+	</div>
+	<!-- end content -->
+	<!-- footer -->
+	<script type="text/javascript"
+		src="<%=basePath%>/jshop/admin/js/regme.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>/admin/js/sale/salemanagement.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath %>/My97DatePicker/WdatePicker.js"></script>
+	<%@include file="/jshop/admin/footer.jsp"%>
+	<!-- end footert -->
 	<script type="text/javascript">
  		 function createUploader(){ 
              var uploader = new qq.FileUploader({
@@ -301,7 +299,7 @@
  		window.onload = createUploader; 
  	</script>
 
-		<script type="text/javascript">
+	<script type="text/javascript">
  		KE.show({
 			id : 'salegoodsinformation',
 		    imageUploadJson : '<%=basePath%>/jshop/admin/js/jsp/upload_json.jsp',
@@ -329,7 +327,7 @@
  		 });  
  		
  	</script>
-	</body>
+</body>
 
 </html>
 <%!private String htmlspecialchars(String str) {

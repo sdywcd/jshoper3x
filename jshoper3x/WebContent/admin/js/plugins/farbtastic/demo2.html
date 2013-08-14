@@ -2,24 +2,25 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
- <title>Farbtastic</title>
- <script type="text/javascript" src="../jquery1.4.2.js"></script>
- <script type="text/javascript" src="farbtastic.js"></script>
- <link rel="stylesheet" href="farbtastic.css" type="text/css" />
- <style type="text/css" media="screen">
-   .colorwell {
-     border: 2px solid #fff;
-     width: 6em;
-     text-align: center;
-     cursor: pointer;
-   }
-   body .colorwell-selected {
-     border: 2px solid #000;
-     font-weight: bold;
-   }
- </style>
- 
- <script type="text/javascript" charset="utf-8">
+<title>Farbtastic</title>
+<script type="text/javascript" src="../jquery1.4.2.js"></script>
+<script type="text/javascript" src="farbtastic.js"></script>
+<link rel="stylesheet" href="farbtastic.css" type="text/css" />
+<style type="text/css" media="screen">
+.colorwell {
+	border: 2px solid #fff;
+	width: 6em;
+	text-align: center;
+	cursor: pointer;
+}
+
+body .colorwell-selected {
+	border: 2px solid #000;
+	font-weight: bold;
+}
+</style>
+
+<script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
     $('#demo').hide();
     var f = $.farbtastic('#picker');
@@ -39,19 +40,34 @@
  </script>
 </head>
 <body>
-<h1>jQuery Color Picker: Farbtastic</h1>
+	<h1>jQuery Color Picker: Farbtastic</h1>
 
-<div id="demo" style="color: red; font-size: 1.4em">jQuery.js is not present. You must install jQuery in this folder for the demo to work.</div>
+	<div id="demo" style="color: red; font-size: 1.4em">jQuery.js is
+		not present. You must install jQuery in this folder for the demo to
+		work.</div>
 
-<form action="" style="width: 500px;">
-  <div id="picker" style="float: right;"></div>
-  <div class="form-item"><label for="color1">Color 1:</label><input type="text" id="color1" name="color1" class="colorwell" value="#123456" /></div>
-  <div class="form-item"><label for="color2">Color 2:</label><input type="text" id="color2" name="color2" class="colorwell" value="#123456" /></div>
-  <div class="form-item"><label for="color3">Color 3:</label><input type="text" id="color3" name="color3" class="colorwell" value="#123456" /></div>
-  
-</form>
+	<form action="" style="width: 500px;">
+		<div id="picker" style="float: right;"></div>
+		<div class="form-item">
+			<label for="color1">Color 1:</label><input type="text" id="color1"
+				name="color1" class="colorwell" value="#123456" />
+		</div>
+		<div class="form-item">
+			<label for="color2">Color 2:</label><input type="text" id="color2"
+				name="color2" class="colorwell" value="#123456" />
+		</div>
+		<div class="form-item">
+			<label for="color3">Color 3:</label><input type="text" id="color3"
+				name="color3" class="colorwell" value="#123456" />
+		</div>
 
-<p>More info on <a href="http://www.acko.net/dev/farbtastic">Acko.net</a>.</p>
-<p>Created by <a href="http://www.acko.net/">Steven Wittens</a>.</p>
+	</form>
+
+	<p>
+		More info on <a href="http://www.acko.net/dev/farbtastic">Acko.net</a>.
+	</p>
+	<p>
+		Created by <a href="http://www.acko.net/">Steven Wittens</a>.
+	</p>
 </body>
 </html>

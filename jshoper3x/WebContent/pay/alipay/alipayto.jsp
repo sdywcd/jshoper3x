@@ -24,27 +24,29 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>支付宝双功能付款</title>
-		<style type="text/css">
-.font_content{
-	font-family:"宋体";
-	font-size:14px;
-	color:#FF6600;
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>支付宝双功能付款</title>
+<style type="text/css">
+.font_content {
+	font-family: "宋体";
+	font-size: 14px;
+	color: #FF6600;
 }
-.font_title{
-	font-family:"宋体";
-	font-size:16px;
-	color:#FF0000;
-	font-weight:bold;
+
+.font_title {
+	font-family: "宋体";
+	font-size: 16px;
+	color: #FF0000;
+	font-weight: bold;
 }
-table{
+
+table {
 	border: 1px solid #CCCCCC;
 }
-		</style>
-	</head>
-	<%
+</style>
+</head>
+<%
 		//request.setCharacterEncoding("UTF-8");
 			//AlipyConfig.java中配置信息（不可以修改）
 			String input_charset = AlipayConfig.input_charset;
@@ -115,22 +117,22 @@ table{
 				logistics_fee_2,logistics_type_2,logistics_payment_2,buyer_email,discount,input_charset,key,sign_type);
 	%>
 
-	<body>
-        <table align="center" width="350" cellpadding="5" cellspacing="0">
-            <tr>
-                <td align="center" class="font_title" colspan="2">订单确认</td>
-            </tr>
-            <tr>
-                <td class="font_content" align="right">订单号：</td>
-                <td class="font_content" align="left"><%=out_trade_no%></td>
-            </tr>
-            <tr>
-                <td class="font_content" align="right">付款总金额：</td>
-                <td class="font_content" align="left"><%=price%></td>
-            </tr>
-            <tr>
-                <td align="center" colspan="2"><%=sHtmlText%></td>
-            </tr>
-        </table>
-	</body>
+<body>
+	<table align="center" width="350" cellpadding="5" cellspacing="0">
+		<tr>
+			<td align="center" class="font_title" colspan="2">订单确认</td>
+		</tr>
+		<tr>
+			<td class="font_content" align="right">订单号：</td>
+			<td class="font_content" align="left"><%=out_trade_no%></td>
+		</tr>
+		<tr>
+			<td class="font_content" align="right">付款总金额：</td>
+			<td class="font_content" align="left"><%=price%></td>
+		</tr>
+		<tr>
+			<td align="center" colspan="2"><%=sHtmlText%></td>
+		</tr>
+	</table>
+</body>
 </html>

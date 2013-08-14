@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -15,10 +14,8 @@ import org.apache.struts2.json.annotations.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.modelbean.GoodsBelinkedModel;
-import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
 import com.jshop.entity.BrandT;
@@ -26,7 +23,7 @@ import com.jshop.entity.GoodsAttributeT;
 import com.jshop.entity.GoodsBelinkedT;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsCommentT;
-import com.jshop.entity.GoodsSpecificationsRelationshipT;
+import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.entity.JshopbasicInfoT;
@@ -40,7 +37,7 @@ import com.jshop.service.GoodsAttributeTService;
 import com.jshop.service.GoodsBelinkedTService;
 import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsCommentTService;
-import com.jshop.service.GoodsSpecificationsRelationshipTService;
+import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.GoodsTypeBrandTService;
 import com.jshop.service.JshopbasicInfoTService;
@@ -70,7 +67,7 @@ public class DataCollectionTAction extends ActionSupport {
 	private BrandTService brandTService;
 	private GoodsTypeBrandTService goodsTypeBrandTService;
 	private ProductSpecificationsTService productSpecificationsTService;
-	private GoodsSpecificationsRelationshipTService goodsSpecificationsRelationshipTService;
+	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
 	private int gradecount;
 	private GoodsTService goodsTService;
 	private ArticleTService articleTService;
@@ -90,14 +87,15 @@ public class DataCollectionTAction extends ActionSupport {
 		this.goodsBelinkedTService = goodsBelinkedTService;
 	}
 
+	
 	@JSON(serialize = false)
-	public GoodsSpecificationsRelationshipTService getGoodsSpecificationsRelationshipTService() {
-		return goodsSpecificationsRelationshipTService;
+	public GoodsSpecificationsProductRpTService getGoodsSpecificationsProductRpTService() {
+		return goodsSpecificationsProductRpTService;
 	}
 
-	public void setGoodsSpecificationsRelationshipTService(
-			GoodsSpecificationsRelationshipTService goodsSpecificationsRelationshipTService) {
-		this.goodsSpecificationsRelationshipTService = goodsSpecificationsRelationshipTService;
+	public void setGoodsSpecificationsProductRpTService(
+			GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService) {
+		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
 	}
 
 	@JSON(serialize = false)
@@ -551,16 +549,16 @@ public class DataCollectionTAction extends ActionSupport {
 	 * @return
 	 */
 	public List<ProductSpecificationsT>findProductSpecificationsTByspecificationsid(GoodsT gt){
-		List<GoodsSpecificationsRelationshipT>gsrlist=this.getGoodsSpecificationsRelationshipTService().checkSpecificationRelationshipBygoodssetid(gt.getGoodsid());
+		List<GoodsSpecificationsProductRpT>gsrlist=this.getGoodsSpecificationsProductRpTService().checkSpecificationRelationshipBygoodssetid(gt.getGoodsid());
 		if(!gsrlist.isEmpty()){
-			List<ProductSpecificationsT>list =new ArrayList<ProductSpecificationsT>();
-			ProductSpecificationsT pst=new ProductSpecificationsT();
-			String []strspec=StringUtils.split(gsrlist.get(0).getId().getSpecidicationsId(), ',');
-			for(String s:strspec){
-				pst=this.getProductSpecificationsTService().findProductSpecificationsTByspecificationsid(s);
-				list.add(pst);
-			}
-			return list;
+//			List<ProductSpecificationsT>list =new ArrayList<ProductSpecificationsT>();
+//			ProductSpecificationsT pst=new ProductSpecificationsT();
+//			String []strspec=StringUtils.split(gsrlist.get(0).getId().getSpecidicationsId(), ',');
+//			for(String s:strspec){
+//				pst=this.getProductSpecificationsTService().findProductSpecificationsTByspecificationsid(s);
+//				list.add(pst);
+//			}
+//			return list;
 		}
 		return Collections.emptyList();
 	}

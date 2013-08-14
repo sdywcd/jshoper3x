@@ -437,45 +437,45 @@
 	float: left;
 }
 
-.detail_info_rm3 .rm3_4{
-	width:376px;
-	padding:0 0 0 10px;
-	float:left;
+.detail_info_rm3 .rm3_4 {
+	width: 376px;
+	padding: 0 0 0 10px;
+	float: left;
 }
 
-.detail_info_rm3 .rm3_4 p{
-	width:70px;
-	float:left;
-	padding:20px 0 0 0 ;
+.detail_info_rm3 .rm3_4 p {
+	width: 70px;
+	float: left;
+	padding: 20px 0 0 0;
 }
 
-.detail_info_rm3 .rm3_4 cite{
-	float:left;
-	width:300px;
+.detail_info_rm3 .rm3_4 cite {
+	float: left;
+	width: 300px;
 }
 
-.detail_info_rm3 .rm3_4 cite a{
-	float:left;
-	text-align:center;
-	height:20px;
-	line-height:20px;
-	margin:16px 9px 0 0;
-	width:auto;
-	padding:0 5px 0 5px;
-	border:#C6C6C6 solid 1px;	
+.detail_info_rm3 .rm3_4 cite a {
+	float: left;
+	text-align: center;
+	height: 20px;
+	line-height: 20px;
+	margin: 16px 9px 0 0;
+	width: auto;
+	padding: 0 5px 0 5px;
+	border: #C6C6C6 solid 1px;
 }
-.detail_info_rm3 .rm3_4 cite a:hover{
-	
-	color:E13A00;
-	text-decoration:none;
-	border:#E13A00 solid 1px;	
+
+.detail_info_rm3 .rm3_4 cite a:hover {
+	color: E13A00;
+	text-decoration: none;
+	border: #E13A00 solid 1px;
 }
-.detail_info_rm3 .rm3_4 cite a:active{
-	
-	color:E13A00;
-	font-weight:bold;
-	text-decoration:none;
-	border:#E13A00 solid 2px;	
+
+.detail_info_rm3 .rm3_4 cite a:active {
+	color: E13A00;
+	font-weight: bold;
+	text-decoration: none;
+	border: #E13A00 solid 2px;
 }
 
 .detail_info_rm3 .rm3_2 {
@@ -547,7 +547,7 @@
 	top: 25px;
 	left: 310px;
 	float: left;
-	filter: Alpha(Opacity =     100);
+	filter: Alpha(Opacity =       100);
 	font-weight: normal;
 	line-height: 20px;
 	z-index: 6
@@ -612,14 +612,14 @@
 .setmeal .set_1_r .pageup {
 	padding: 60px 10px 0 15px;
 	float: left;
-	style ="z-index: 6 ";
+	style ="z-index: 6";
 	position: relative;
 }
 
 .setmeal .set_1_r .pagedn {
 	padding: 60px 0 0 10px;
 	float: left;
-	style ="z-index: 6 ";
+	style ="z-index: 6";
 	position: relative;
 }
 
@@ -628,7 +628,7 @@
 	float: left;
 	height: 190px;
 	position: relative;
-	style ="z-index: 5 ";
+	style ="z-index: 5";
 	overflow: hidden
 }
 
@@ -1803,62 +1803,60 @@ UNKNOWN {
 
 /* root element for tabs  */
 ul.css-tabs {
-    margin:0 !important;
-    padding:0;
-    height:30px;
-    border-bottom:1px solid #666;
+	margin: 0 !important;
+	padding: 0;
+	height: 30px;
+	border-bottom: 1px solid #666;
 }
 
 /* single tab */
 ul.css-tabs li {
-    float:left;
-    padding:0;
-    margin:0;
-    list-style-type:none;
+	float: left;
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
 }
 
 /* link inside the tab. uses a background image */
 ul.css-tabs a {
-    float:left;
-    font-size:13px;
-    display:block;
-    padding:5px 30px;
-    text-decoration:none;
-    border:1px solid #666;
-    border-bottom:0px;
-    height:18px;
-    background-color:#efefef;
-    color:#777;
-    margin-right:2px;
-    position:relative;
-    top:1px;
-    outline:0;
-    -moz-border-radius:4px 4px 0 0;
+	float: left;
+	font-size: 13px;
+	display: block;
+	padding: 5px 30px;
+	text-decoration: none;
+	border: 1px solid #666;
+	border-bottom: 0px;
+	height: 18px;
+	background-color: #efefef;
+	color: #777;
+	margin-right: 2px;
+	position: relative;
+	top: 1px;
+	outline: 0;
+	-moz-border-radius: 4px 4px 0 0;
 }
 
 ul.css-tabs a:hover {
-    background-color:#F7F7F7;
-    color:#333;
+	background-color: #F7F7F7;
+	color: #333;
 }
 
 /* selected tab */
 ul.css-tabs a.current {
-    background-color:#ddd;
-    border-bottom:1px solid #ddd;
-    color:#000;
-    cursor:default;
+	background-color: #ddd;
+	border-bottom: 1px solid #ddd;
+	color: #000;
+	cursor: default;
 }
-
 
 /* tab pane */
 .css-panes div {
-    /*display:none;
+	/*display:none;
     border:0px solid #666;
     border-width:0 1px 1px 1px;
   
     padding:15px 20px;
     width:750px;
     min-height:150px;*/
+	
 }
-
-

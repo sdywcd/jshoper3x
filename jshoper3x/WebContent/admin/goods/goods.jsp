@@ -65,69 +65,83 @@
 						</select> <span class="label label-info">请选择一个商品类型</span>
 					</div>
 					<!-- 加载商品类型属性和参数区域 -->
-					
-					<div id="gat" style="display:none;border:1px solid #E3E3E3;padding:10px;margin-bottom:10px;">
-						<div class="well"><h4>商品属性选择区域</h4></div>
 
-							<div class="form-inline">
-								<span class="label label-required">属性选择区:</span> <select
-									id="gatarea" name="gatarea"></select>
-							</div>
-						
-					</div>
-					
-					<div id="params" style="display:none;border:1px solid #E3E3E3;padding:10px;margin-bottom:10px;">
-						<div class="well"><h4>商品参数填写区域</h4></div>
+					<div id="gat"
+						style="display: none; border: 1px solid #E3E3E3; padding: 10px; margin-bottom: 10px;">
+						<div class="well">
+							<h4>商品属性选择区域</h4>
+						</div>
 
-							<div class="form-inline">
-								<span class="label label-required">参数填写区:</span> 
-								<input id="paramsarea" name="paramsarea" value=""/>
-							</div>
-						
+						<div class="form-inline">
+							<span class="label label-required">属性选择区:</span> <select
+								id="gatarea" name="gatarea"></select>
+						</div>
+
 					</div>
-					
-					<div id="goodscategory" style="display:none;" class="form-inline">
-						<span class="label label-required">商品所在分类: </span> 
-						<span id="shownname"></span><!-- 显示顶级分类一级分类名称 -->
-						<span id="showlname"></span> <!-- 显示二级分类名称 -->
-						<span id="showsname"></span> <!-- 显示三级分类名称 --> 
-						<span id="shownavid" style="display:none;"></span>
-						<span id="showltypeid" style="display:none;"></span>
-						<span id="showstypeid" style="display:none;"></span>
-						<input type="hidden" id="hidnavid" value=""></input>
-						<input type="hidden" id="hidnname" value=""></input>
-						<input type="hidden" id="hidltypeid" value=""></input>
-						<input type="hidden" id="hidlname" value=""></input>
-						<input type="hidden" id="hidstypeid" value=""></input>
-						<input type="hidden" id="hidsname" value=""></input>
-						
+
+					<div id="params"
+						style="display: none; border: 1px solid #E3E3E3; padding: 10px; margin-bottom: 10px;">
+						<div class="well">
+							<h4>商品参数填写区域</h4>
+						</div>
+
+						<div class="form-inline">
+							<span class="label label-required">参数填写区:</span> <input
+								id="paramsarea" name="paramsarea" value="" />
+						</div>
+
 					</div>
-					
+
+					<div id="goodscategory" style="display: none;" class="form-inline">
+						<span class="label label-required">商品所在分类: </span> <span
+							id="shownname"></span>
+						<!-- 显示顶级分类一级分类名称 -->
+						<span id="showlname"></span>
+						<!-- 显示二级分类名称 -->
+						<span id="showsname"></span>
+						<!-- 显示三级分类名称 -->
+						<span id="shownavid" style="display: none;"></span> <span
+							id="showltypeid" style="display: none;"></span> <span
+							id="showstypeid" style="display: none;"></span> <input
+							type="hidden" id="hidnavid" value=""></input> <input
+							type="hidden" id="hidnname" value=""></input> <input
+							type="hidden" id="hidltypeid" value=""></input> <input
+							type="hidden" id="hidlname" value=""></input> <input
+							type="hidden" id="hidstypeid" value=""></input> <input
+							type="hidden" id="hidsname" value=""></input>
+
+					</div>
+
 					<div id="selectgoodscategory" class="form-inline">
-						<span class="label label-required">选择分类: </span> 
-						<select id="navid" name="navid"></select><!-- 顶级分类一级分类 -->
-						 <select id="ltypeid" name="ltypeid"></select> <!-- 二级分类 -->
-						 <select id="stypeid" name="stypeid"></select> <!-- 三级分类 -->
-						 <span class="label label-info">请选择一个商品分类</span>
-						 
+						<span class="label label-required">选择分类: </span> <select
+							id="navid" name="navid"></select>
+						<!-- 顶级分类一级分类 -->
+						<select id="ltypeid" name="ltypeid"></select>
+						<!-- 二级分类 -->
+						<select id="stypeid" name="stypeid"></select>
+						<!-- 三级分类 -->
+						<span class="label label-info">请选择一个商品分类</span>
+
 					</div>
-					<div id="modifygoodscategory" style="display:none;" class="form-inline">
-						<span class="label label-required">操作:</span>
-						<input class="btn btn-success" type="button" id="reselectgoodscategory" name="reselectgoodscategory" value="重新选择分类"/>
+					<div id="modifygoodscategory" style="display: none;"
+						class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="reselectgoodscategory"
+							name="reselectgoodscategory" value="重新选择分类" />
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">商品名称:</span> <input type="text"
-							id="goodsname" name="goodsname" class="medium" />
-							<span class="label label-info">商品名称会根据货品规格信息智能变化</span>
+							id="goodsname" name="goodsname" class="medium" /> <span
+							class="label label-info">商品名称会根据货品规格信息智能变化</span>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">商品编码:</span> <input type="text"
-							id="usersetnum" name="usersetnum" class="small" />
-							<span class="label label-info">商品编码可以标记货品和商品的归属关系（货品表要记录商品编码）</span>
+							id="usersetnum" name="usersetnum" class="small" /> <span
+							class="label label-info">商品编码可以标记货品和商品的归属关系（货品表要记录商品编码）</span>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">商品品牌: </span> 
-						<select id="brandname" name="brandname"></select>
+						<span class="label label-required">商品品牌: </span> <select
+							id="brandname" name="brandname"></select>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">商品积分:</span> <input type="text"
@@ -138,84 +152,84 @@
 							id="sort" name="sort" class="small" />
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">新品:</span> <input
-							type="radio" id="isNew" name="isNew" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="isNew" name="isNew" value="0" /> <label
+						<span class="label label-required">新品:</span> <input type="radio"
+							id="isNew" name="isNew" value="1" checked="checked" /> <label
+							for="radio-1">是 </label> <input type="radio" id="isNew"
+							name="isNew" value="0" /> <label for="radio-2">否 </label>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">推荐:</span> <input type="radio"
+							id="recommended" name="recommended" value="1" checked="checked" />
+						<label for="radio-1">是 </label> <input type="radio"
+							id="recommended" name="recommended" value="0" /> <label
 							for="radio-2">否 </label>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">推荐:</span> <input
-							type="radio" id="recommended" name="recommended" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="recommended" name="recommended" value="0" /> <label
-							for="radio-2">否 </label>
+						<span class="label label-required">热销:</span> <input type="radio"
+							id="hotsale" name="hotsale" value="1" checked="checked" /> <label
+							for="radio-1">是 </label> <input type="radio" id="hotsale"
+							name="hotsale" value="0" /> <label for="radio-2">否 </label>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">热销:</span> <input
-							type="radio" id="hotsale" name="hotsale" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="hotsale" name="hotsale" value="0" /> <label
-							for="radio-2">否 </label>
-					</div>
-					<div class="form-inline">
-						<span class="label label-required">特价:</span> <input
-							type="radio" id="bargainprice" name="bargainprice" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="bargainprice" name="bargainprice" value="0" /> <label
+						<span class="label label-required">特价:</span> <input type="radio"
+							id="bargainprice" name="bargainprice" value="1" checked="checked" />
+						<label for="radio-1">是 </label> <input type="radio"
+							id="bargainprice" name="bargainprice" value="0" /> <label
 							for="radio-2">否 </label>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">同步移动平台:</span> <input
-							type="radio" id="ismobileplatformgoods" name="ismobileplatformgoods" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="ismobileplatformgoods" name="ismobileplatformgoods" value="0" /> <label
-							for="radio-2">否 </label>
+							type="radio" id="ismobileplatformgoods"
+							name="ismobileplatformgoods" value="1" checked="checked" /> <label
+							for="radio-1">是 </label> <input type="radio"
+							id="ismobileplatformgoods" name="ismobileplatformgoods" value="0" />
+						<label for="radio-2">否 </label>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">上架:</span> <input
-							type="radio" id="salestate" name="salestate" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="salestate" name="salestate" value="0" /> <label
-							for="radio-2">否 </label>
-							<span class="label label-info">这里的上架选项和货品中的上架选项不同，这里控制多个，货品仅控制自己一个</span>
+						<span class="label label-required">上架:</span> <input type="radio"
+							id="salestate" name="salestate" value="1" checked="checked" /> <label
+							for="radio-1">是 </label> <input type="radio" id="salestate"
+							name="salestate" value="0" /> <label for="radio-2">否 </label> <span
+							class="label label-info">这里的上架选项和货品中的上架选项不同，这里控制多个，货品仅控制自己一个</span>
 					</div>
-				
-					
-					<div  class="form-inline">
-					<table>
-					<tr>
-					<td>
-						<span class="label label-required">主图:</span>
-						</td>
-					<td>
-						 <div id="uploadergoodpc">
+
+
+					<div class="form-inline">
+						<table>
+							<tr>
+								<td><span class="label label-required">主图:</span></td>
+								<td>
+									<div id="uploadergoodpc">
 										<noscript>
-												Please enable JavaScript to use file uploader.
+											Please enable JavaScript to use file uploader.
 											<!-- or put a simple form for upload here -->
 										</noscript>
-								
-						 </div>
-						</td>
-						</tr>
-						 </table>
-						 <!-- trigger elements -->
+
+									</div>
+								</td>
+							</tr>
+						</table>
+						<!-- trigger elements -->
 						<div id="triggers"></div>
-						
+
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">操作:</span>
-						<input class="btn btn-success" type="button" id="delpc" name="delpc" value="删除所选图片"/>
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="delpc" name="delpc"
+							value="删除所选图片" />
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">商品介绍:</span> <textarea id="detail" name="detail" cols="50" rows="12" style="width: 100%; height: 600px; visibility: hidden;"><%=htmlspecialchars(htmlData)%></textarea>
+						<span class="label label-required">商品介绍:</span>
+						<textarea id="detail" name="detail" cols="50" rows="12"
+							style="width: 100%; height: 600px; visibility: hidden;"><%=htmlspecialchars(htmlData)%></textarea>
 					</div>
-					
+
 					<div class="form-inline">
 						<span class="label label-required">商品清单:</span>
-						<textarea id="commoditylist" name="commoditylist" cols="50" rows="12" style="width: 100%; height: 400px; visibility: hidden;"><%=htmlspecialchars(htmlDatacommoditylist)%></textarea>
+						<textarea id="commoditylist" name="commoditylist" cols="50"
+							rows="12" style="width: 100%; height: 400px; visibility: hidden;"><%=htmlspecialchars(htmlDatacommoditylist)%></textarea>
 					</div>
-					
+
 					<div class="form-inline">
 						<span class="label label-required">页面关键字:</span> <input
 							type="text" id="metaKeywords" name="metaKeywords" class="small" />
@@ -224,17 +238,16 @@
 						<span class="label label-required">页面描述:</span> <input type="text"
 							id="metaDes" name="metaDes" class="medium" />
 					</div>
-					
-					
-					
+
+
+
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
-							id="hidgoodsid" name="hidgoodsid" value="" />
-						<input type="hidden" id="hidgrade" name="hidgrade" value="">
-						<input class="btn btn-success" type="button" id="submit"
-							name="submit" value="提交" /> <input class="btn btn-success"
-							type="button" id="update" name="update" value="更新"
-							style="display: none;" />
+							id="hidgoodsid" name="hidgoodsid" value="" /> <input
+							type="hidden" id="hidgrade" name="hidgrade" value=""> <input
+							class="btn btn-success" type="button" id="submit" name="submit"
+							value="提交" /> <input class="btn btn-success" type="button"
+							id="update" name="update" value="更新" style="display: none;" />
 					</div>
 				</div>
 
@@ -248,7 +261,7 @@
 		src="<%=basePath%>admin/js/goods/goodsmentjs.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
-			<script type="text/javascript"
+	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/kindeditor/kindeditor-min.js"></script>
 	<script type="text/javascript">
  		function createUploader(){            

@@ -1,14 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=GBK" pageEncoding="GBK"%>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.ResponseHandler"%> 
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler"%> 
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil"%> 
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
+<%@ page language="java" contentType="text/html; charset=GBK"
+	pageEncoding="GBK"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.ResponseHandler"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
 <%@ page import="com.jshop.backstage.tools.Md5Util"%>
-<%@ include file = "config.jsp" %>     
+<%@ include file="config.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
-  
-	<%
+
+<%
 	//---------------------------------------------------------
 	//财付通支付应答（处理回调）示例，商户按照此文档进行开发即可 该页面反馈给用户看
 	//---------------------------------------------------------
@@ -115,7 +120,7 @@
 	//out.print("sign_String:  " + debuginfo + "<br><br>");
 	
 	%>
-	
+
 
 
 

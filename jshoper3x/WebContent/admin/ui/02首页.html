@@ -6,384 +6,373 @@
 <meta name="author" content="magi">
 <title>首页 &middot; jshoper</title>
 
-    <!-- Le styles -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="assets/css/docs.css" rel="stylesheet">
-    <link href="assets/js/google-code-prettify/prettify.css" rel="stylesheet">
-    <link href="assets/css/base.css" rel="stylesheet">
+<!-- Le styles -->
+<link href="assets/css/bootstrap.css" rel="stylesheet">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="assets/css/docs.css" rel="stylesheet">
+<link href="assets/js/google-code-prettify/prettify.css"
+	rel="stylesheet">
+<link href="assets/css/base.css" rel="stylesheet">
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <!-- Fav and touch icons -->
-    <link rel="shortcut icon" href="assets/ico/favicon.ico">
-  </head>
+<!-- Fav and touch icons -->
+<link rel="shortcut icon" href="assets/ico/favicon.ico">
+</head>
 
-  <body>
+<body>
 
-    <!-- Navbar
+	<!-- Navbar
     ================================================== -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-              <div class="navbar-inner">
-                <div class="container">
-                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </a>
-                  <div class="nav-collapse collapse navbar-inverse-collapse">
-                    <ul class="nav">
-                      <li class="active"><a href="#">主页</a></li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">实验室 <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#"><i class="icon-tags"></i> 电子点餐系统</a></li>
-                          <li><a href="#"><i class="icon-shopping-cart"></i> B2O线下电商</a></li>
-                          <li class="divider"></li>
-                          <li class="nav-header">未上市产品</li>
-                          <li><a href="#"><i class="icon-globe"></i> 开发中</a></li>
-                        </ul>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理 <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                      <li><a href="#"><i class="icon-star"></i> 授权</a></li>
-                      <li><a href="#"><i class="icon-wrench"></i> 技术支持</a></li>
-                          <li class="divider"></li>
-                          <li><a href="#"><i class="icon-user"></i> 账号（管理员）</a></li>
-                          <li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li>
-						</li>
-                        </ul>
-                      </li>
-                    </ul>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
+				<div class="nav-collapse collapse navbar-inverse-collapse">
+					<ul class="nav">
+						<li class="active"><a href="#">主页</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">实验室 <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="icon-tags"></i> 电子点餐系统</a></li>
+								<li><a href="#"><i class="icon-shopping-cart"></i>
+										B2O线下电商</a></li>
+								<li class="divider"></li>
+								<li class="nav-header">未上市产品</li>
+								<li><a href="#"><i class="icon-globe"></i> 开发中</a></li>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">管理 <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#"><i class="icon-star"></i> 授权</a></li>
+								<li><a href="#"><i class="icon-wrench"></i> 技术支持</a></li>
+								<li class="divider"></li>
+								<li><a href="#"><i class="icon-user"></i> 账号（管理员）</a></li>
+								<li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li></li>
+					</ul>
+					</li>
+					</ul>
 					<ul class="nav pull-right">
-    <li class="dropdown"><a class="dropdown-toggle"
-    data-toggle="dropdown"
-    href="#">
-    商品管理
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-    <li><a href="#">商品类型参数设置</a></li>
-    <li><a href="#">商品品牌设置</a></li>
-    <li><a href="#">商品品牌类型设置 </a></li>
-    <li><a href="#">商品规格设置 </a></li>
-    <li><a href="#">商品属性设置 </a></li>
-    <li><a href="#">商品分类设置 </a></li>
-    <li><a href="#">商品单位设置 </a></li>
-    <li><a href="#">商品关键字设置</a></li>
-	<li class="divider"></li>
-    <li><a href="#">添加新商品 </a></li>
-	<li class="divider"></li>
-    <li><a href="#">团购商品 </a></li>
-    <li><a href="#">团购订单管理 </a></li>
-    <li class="dropdown-submenu">
-    <a tabindex="-1" href="#">商品列表</a>
-    <ul class="dropdown-menu">
-    <li><a tabindex="-1" href="#">所有商品</a></li>
-    <li><a tabindex="-1" href="#">仓库商品</a></li>
-    </ul>
-    </li>
-    <li><a href="#">商品评论</a></li>
-    </ul>
-    </li>
-    <li class="dropdown">
-    <a class="dropdown-toggle"
-    data-toggle="dropdown"
-    href="#">
-    订单管理
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-    <li><a href="#">所有订单</a></li>
-	<li><a href="#">待发货订单</a></li>
-	<li><a href="#">已发货订单</a></li>
-	<li><a href="#">需开票订单</a></li>
-	<li><a href="#">需退货订单</a></li>
-    </ul>
-    </li>
-    <li class="dropdown">
-    <a class="dropdown-toggle"
-    data-toggle="dropdown"
-    href="#">
-    会员管理
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-    <li><a href="#">会员列表</a></li>
-	<li><a href="#">会员等级设置</a></li>
-    </ul>
-    </li>
-    <li class="dropdown">
-    <a class="dropdown-toggle"
-    data-toggle="dropdown"
-    href="#">
-    内容管理
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-	<li><a href="#">导航设置</a></li>
-	<li><a href="#">文章分类</a></li>
-	<li><a href="#">添加文章</a></li>
-	<li><a href="#">所有文章</a></li>
-    </ul>
-    </li>
-    <li class="dropdown">
-    <a class="dropdown-toggle"
-    data-toggle="dropdown"
-    href="#">
-    自定义页面管理
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-	<li><a href="#">添加自定义页面</a></li>
-	<li><a href="#">自定义页面设置</a></li>
-    </ul>
-    </li>
-    <li class="dropdown">
-    <a class="dropdown-toggle"
-    data-toggle="dropdown"
-    href="#">
-    图片管理
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-    <li><a href="#">图片列表</a></li>
-    </ul>
-    </li>
-    <li class="dropdown">
-    <a class="dropdown-toggle"
-    data-toggle="dropdown"
-    href="#">
-    系统设置
-    <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu">
-	<li><a href="#">基本设置</a></li>
-	<li><a href="#">安全设置</a></li>
-	<li><a href="#">邮箱设置</a></li>
-	<li><a href="#">全局参数设置</a></li>
-	<li><a href="#">支付方式设置</a></li>
-	<li><a href="#">物流及配送设置</a></li>
-	<li><a href="#">快递单模板设置</a></li>
-	<li><a href="#">发货单模板设置</a></li>
-	<li><a href="#">模板主题设置</a></li>
-	<li><a href="#">模板文件设置</a></li>
-	<li><a href="#">模板文件和系统内容设置</a></li>
-	<li><a href="#">系统模块设置</a></li>
-	<li><a href="#">模块功能设置</a></li>
-	<li><a href="#">角色权限设置</a></li>
-    </ul>
-    </li>
-    </ul>
-                  </div><!-- /.nav-collapse -->
-                </div>
-				
-              </div><!-- /navbar-inner -->
-            </div>
-	<div class="navbar">
-              <div class="navbar-innert">
-                <a class="brand" href="#"><img src="assets/img/logo.png" width="175" height="30" alt=""></a>
-                <a class="brand" href="#">欢迎登录后台管理系统</a>
-              </div>
-            </div>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 商品管理 <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">商品类型参数设置</a></li>
+								<li><a href="#">商品品牌设置</a></li>
+								<li><a href="#">商品品牌类型设置 </a></li>
+								<li><a href="#">商品规格设置 </a></li>
+								<li><a href="#">商品属性设置 </a></li>
+								<li><a href="#">商品分类设置 </a></li>
+								<li><a href="#">商品单位设置 </a></li>
+								<li><a href="#">商品关键字设置</a></li>
+								<li class="divider"></li>
+								<li><a href="#">添加新商品 </a></li>
+								<li class="divider"></li>
+								<li><a href="#">团购商品 </a></li>
+								<li><a href="#">团购订单管理 </a></li>
+								<li class="dropdown-submenu"><a tabindex="-1" href="#">商品列表</a>
+									<ul class="dropdown-menu">
+										<li><a tabindex="-1" href="#">所有商品</a></li>
+										<li><a tabindex="-1" href="#">仓库商品</a></li>
+									</ul></li>
+								<li><a href="#">商品评论</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 订单管理 <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">所有订单</a></li>
+								<li><a href="#">待发货订单</a></li>
+								<li><a href="#">已发货订单</a></li>
+								<li><a href="#">需开票订单</a></li>
+								<li><a href="#">需退货订单</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 会员管理 <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">会员列表</a></li>
+								<li><a href="#">会员等级设置</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 内容管理 <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">导航设置</a></li>
+								<li><a href="#">文章分类</a></li>
+								<li><a href="#">添加文章</a></li>
+								<li><a href="#">所有文章</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 自定义页面管理 <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">添加自定义页面</a></li>
+								<li><a href="#">自定义页面设置</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 图片管理 <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">图片列表</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 系统设置 <b class="caret"></b>
+						</a>
+							<ul class="dropdown-menu">
+								<li><a href="#">基本设置</a></li>
+								<li><a href="#">安全设置</a></li>
+								<li><a href="#">邮箱设置</a></li>
+								<li><a href="#">全局参数设置</a></li>
+								<li><a href="#">支付方式设置</a></li>
+								<li><a href="#">物流及配送设置</a></li>
+								<li><a href="#">快递单模板设置</a></li>
+								<li><a href="#">发货单模板设置</a></li>
+								<li><a href="#">模板主题设置</a></li>
+								<li><a href="#">模板文件设置</a></li>
+								<li><a href="#">模板文件和系统内容设置</a></li>
+								<li><a href="#">系统模块设置</a></li>
+								<li><a href="#">模块功能设置</a></li>
+								<li><a href="#">角色权限设置</a></li>
+							</ul></li>
+					</ul>
+				</div>
+				<!-- /.nav-collapse -->
+			</div>
 
-						
-    <div class="container-fluid containerb">
-            
-    <div class="row-fluid">
-	
-    <div class="span2">
-				  <a href="#" class="thumbnail"><img src="http://i.360buy.com/commons/img/no-img_mid_.jpg" alt="" class="caption"></a>
-    <div class="well well-small smallt">
-				  <h4>邹志刚，你好！</h4>
-                    <p>
-                    上次登录时间<br />2012年12月18日15:01:25
+		</div>
+		<!-- /navbar-inner -->
+	</div>
+	<div class="navbar">
+		<div class="navbar-innert">
+			<a class="brand" href="#"><img src="assets/img/logo.png"
+				width="175" height="30" alt=""></a> <a class="brand" href="#">欢迎登录后台管理系统</a>
+		</div>
+	</div>
+
+
+	<div class="container-fluid containerb">
+
+		<div class="row-fluid">
+
+			<div class="span2">
+				<a href="#" class="thumbnail"><img
+					src="http://i.360buy.com/commons/img/no-img_mid_.jpg" alt=""
+					class="caption"></a>
+				<div class="well well-small smallt">
+					<h4>邹志刚，你好！</h4>
+					<p>
+						上次登录时间<br />2012年12月18日15:01:25
 					</p>
-				<button class="btn btn-block btn-primary" type="button">我的jshooper</button>
+					<button class="btn btn-block btn-primary" type="button">我的jshooper</button>
 				</div>
 
 
-			<div class="line-dotted"></div>
-    <div class="well well-small">
-    <ul class="nav nav-list">
-    <li class="nav-header">自定义快捷菜单</li>
-    <li><a href="#">商品类型参数设置</a></li>
-    <li><a href="#">商品品牌设置</a></li>
-    <li><a href="#">商品品牌类型设置 </a></li>
-    <li><a href="#">商品规格设置 </a></li>
-    <li><a href="#">商品属性设置 </a></li>
-    <li><a href="#">商品分类设置 </a></li>
-    <li><a href="#">商品单位设置 </a></li>
-    <li><a href="#">商品关键字设置</a></li>
-    <li><a href="#">团购商品 </a></li>
-    <li><a href="#">团购订单管理 </a></li>
-    <li><a href="#">商品列表</a>
-	</li>
-    </ul>
-	</div>
-	
-    </div>
-	
-    <div class="span7">
-	<div class="row-fluid">
-            <ul class="thumbnails">
-              <li class="span2">
-                  <a href="#" class="thumbnail"><img src="assets/img/header/icon-48-article-add.png" alt="" class="caption"><h4>添加产品</h4></a>
-              </li>
-              <li class="span2">
-                  <a href="#" class="thumbnail"><img src="assets/img/header/icon-48-article.png" alt="" class="caption"><h4>文章管理</h4></a>
-              </li>
-              <li class="span2">
-                  <a href="#" class="thumbnail"><img src="assets/img/header/icon-48-category.png" alt="" class="caption"><h4>分类管理</h4></a>
-              </li>
-              <li class="span2">
-                  <a href="#" class="thumbnail"><img src="assets/img/header/icon-48-menumgr.png" alt="" class="caption"><h4>菜单管理</h4></a>
-              </li>
-              <li class="span2">
-                  <a href="#" class="thumbnail"><img src="assets/img/header/icon-48-user.png" alt="" class="caption"><h4>用户管理</h4></a>
-              </li>
-              <li class="span2">
-                  
-                  <a href="#" class="thumbnail"><img src="assets/img/header/icon-48-config.png" alt="" class="caption"><h4>控制面板</h4></a>
-                
-              </li>
-            </ul>
-          </div>
-		  
-		 
-		<h4>系统运行信息</h4>
-		<table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <td class="left_2">系统版本号：</td>
-                  <td>jshoper Enterprise 4.6.0.0 <a href="#"><span class="label label-info">有可用的更新！</span></a></td>
-                </tr>
-                <tr>
-                  <td>系统启动时间：</td>
-                  <td>2012年12月18日15:19:26</td>
-                </tr>
-                <tr>
-                  <td>系统已运行时间：</td>
-                  <td>2012-12-18 15:20:08</td>
-                </tr>
-                <tr>
-                  <td>系统CUP使用率：</td>
-                  <td>0.12% <span class="badge badge-warning">!</span></td>
-                </tr>
-                <tr>
-                  <td>系统分配的物理内存量：</td>
-                  <td>124.56MB</td>
-                </tr>
-                <tr>
-                  <td>缓存对象数：</td>
-                  <td>87</td>
-                </tr>
-              </tbody>
-            </table>
-			<div class="line-dotted"></div>
-		<h4>系统运行环境</h4>
-		<table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <td class="left_2">java版本：</td>
-                  <td>6.15</td>
-                </tr>
-                <tr>
-                  <td>apache版本：</td>
-                  <td>2.12</td>
-                </tr>
-                <tr>
-                  <td>操作系统：</td>
-                  <td>Microsoft Windows 2003 (Microsoft Windows NT 5.2.3790 Service Pack 2)</td>
-                </tr>
-                <tr>
-                  <td>数据库版本：</td>
-                  <td>Mysql Express Edition </td>
-                </tr>
-                <tr>
-                  <td>数据库版本号：</td>
-                  <td>9.00.15</td>
-                </tr>
-                <tr>
-                  <td>数据库大小：</td>
-                  <td>数据库:9 M / 日志:16 M</td>
-                </tr>
-              </tbody>
-            </table>
-			
-			</div>
-			
-    <div class="span3">
-		<h4>更新 New 5</h4>
-		<ul class="nav nav-list bs-docs-sidenavh">
-          <li><a href="#dropdowns">最后400台！超值佳能5D Mark I </a></li>
-          <li><a href="#buttonGroups">酷冷至尊战斧二代主动式40</a></li>
-          <li><a href="#buttonDropdowns">康佳 LED 32英寸 高清窄边</a></li>
-          <li><a href="#navs">换季清仓19.9元抢限量红叶雨伞</a></li>
-          <li><a href="#navbar">专车专用全包围手缝脚垫</a></li>
-        </ul>
-			<div class="line-dotted"></div>
-		<h4>销量 Top 5</h4>
-		<ul class="nav nav-list bs-docs-sidenavh">
-          <li><a href="#dropdowns"><span class="badge badge-success">1</span> 西牧狼商务英伦复古牛皮</a></li>
-          <li><a href="#buttonGroups"><span class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-          <li><a href="#buttonDropdowns"><span class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-          <li><a href="#navs"><span class="badge badge-info">4</span> ayhke磨砂牛皮保暖棉鞋</a></li>
-          <li><a href="#navbar"><span class="badge badge-inverse">5</span> E人E本T4 WIFI版</a></li>
-        </ul>
-	
-	
-    </div>
-	
-    </div>
-	
-    </div>
-	
-    <div class="navbar navbar-fixed-bottom">
-              <div class="navbar-inner navbar-innerb">
-			<div class="pull-right fixed-bottom-cp">
-				&copy; jshoper 2012
-			</div>
-			<div class="viewsite fixed-bottom-div"><a href="http://www.localjoomla3.com/" target="_blank"><i class="icon-share-alt"></i> 浏览网站</a></div>
-	<div class="loggedin-users fixed-bottom-div"><span class="badge">0</span> 访客在线</div>
-	<div class="backloggedin-users fixed-bottom-div"><span class="badge">1</span> 管理在线</div>
-	<div class="no-unread-messages fixed-bottom-div"><a href="/administrator/index.php?option=com_messages"><i class="icon-envelope"></i> 0</a></div>
-	<div class="logout fixed-bottom-div"><a href="#myModal" role="button" data-toggle="modal"><i class="icon-minus-sign"></i> 注销</a></div>
-            </div>
-	</div>
-	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		<h3 id="myModalLabel">退出jshoper？</h3>
-	</div>
-	<div class="modal-body">
-		<p>请再次确认您的操作…</p>
-	</div>
-	<div class="modal-footer">
-		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-		<button class="btn btn-primary">确认退出</button>
-	</div>
-</div>	
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap-transition.js"></script>
-    <script src="assets/js/bootstrap-alert.js"></script>
-    <script src="assets/js/bootstrap-modal.js"></script>
-    <script src="assets/js/bootstrap-dropdown.js"></script>
-    <script src="assets/js/bootstrap-scrollspy.js"></script>
-    <script src="assets/js/bootstrap-tab.js"></script>
-    <script src="assets/js/bootstrap-tooltip.js"></script>
-    <script src="assets/js/bootstrap-popover.js"></script>
-    <script src="assets/js/bootstrap-button.js"></script>
-    <script src="assets/js/bootstrap-collapse.js"></script>
-    <script src="assets/js/bootstrap-carousel.js"></script>
-    <script src="assets/js/bootstrap-typeahead.js"></script>
+				<div class="line-dotted"></div>
+				<div class="well well-small">
+					<ul class="nav nav-list">
+						<li class="nav-header">自定义快捷菜单</li>
+						<li><a href="#">商品类型参数设置</a></li>
+						<li><a href="#">商品品牌设置</a></li>
+						<li><a href="#">商品品牌类型设置 </a></li>
+						<li><a href="#">商品规格设置 </a></li>
+						<li><a href="#">商品属性设置 </a></li>
+						<li><a href="#">商品分类设置 </a></li>
+						<li><a href="#">商品单位设置 </a></li>
+						<li><a href="#">商品关键字设置</a></li>
+						<li><a href="#">团购商品 </a></li>
+						<li><a href="#">团购订单管理 </a></li>
+						<li><a href="#">商品列表</a></li>
+					</ul>
+				</div>
 
-  </body>
+			</div>
+
+			<div class="span7">
+				<div class="row-fluid">
+					<ul class="thumbnails">
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="assets/img/header/icon-48-article-add.png" alt=""
+								class="caption">
+							<h4>添加产品</h4></a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="assets/img/header/icon-48-article.png" alt=""
+								class="caption">
+							<h4>文章管理</h4></a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="assets/img/header/icon-48-category.png" alt=""
+								class="caption">
+							<h4>分类管理</h4></a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="assets/img/header/icon-48-menumgr.png" alt=""
+								class="caption">
+							<h4>菜单管理</h4></a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="assets/img/header/icon-48-user.png" alt="" class="caption">
+							<h4>用户管理</h4></a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="assets/img/header/icon-48-config.png" alt=""
+								class="caption">
+							<h4>控制面板</h4></a></li>
+					</ul>
+				</div>
+
+
+				<h4>系统运行信息</h4>
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<td class="left_2">系统版本号：</td>
+							<td>jshoper Enterprise 4.6.0.0 <a href="#"><span
+									class="label label-info">有可用的更新！</span></a></td>
+						</tr>
+						<tr>
+							<td>系统启动时间：</td>
+							<td>2012年12月18日15:19:26</td>
+						</tr>
+						<tr>
+							<td>系统已运行时间：</td>
+							<td>2012-12-18 15:20:08</td>
+						</tr>
+						<tr>
+							<td>系统CUP使用率：</td>
+							<td>0.12% <span class="badge badge-warning">!</span></td>
+						</tr>
+						<tr>
+							<td>系统分配的物理内存量：</td>
+							<td>124.56MB</td>
+						</tr>
+						<tr>
+							<td>缓存对象数：</td>
+							<td>87</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="line-dotted"></div>
+				<h4>系统运行环境</h4>
+				<table class="table table-bordered">
+					<tbody>
+						<tr>
+							<td class="left_2">java版本：</td>
+							<td>6.15</td>
+						</tr>
+						<tr>
+							<td>apache版本：</td>
+							<td>2.12</td>
+						</tr>
+						<tr>
+							<td>操作系统：</td>
+							<td>Microsoft Windows 2003 (Microsoft Windows NT 5.2.3790
+								Service Pack 2)</td>
+						</tr>
+						<tr>
+							<td>数据库版本：</td>
+							<td>Mysql Express Edition</td>
+						</tr>
+						<tr>
+							<td>数据库版本号：</td>
+							<td>9.00.15</td>
+						</tr>
+						<tr>
+							<td>数据库大小：</td>
+							<td>数据库:9 M / 日志:16 M</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+			<div class="span3">
+				<h4>更新 New 5</h4>
+				<ul class="nav nav-list bs-docs-sidenavh">
+					<li><a href="#dropdowns">最后400台！超值佳能5D Mark I </a></li>
+					<li><a href="#buttonGroups">酷冷至尊战斧二代主动式40</a></li>
+					<li><a href="#buttonDropdowns">康佳 LED 32英寸 高清窄边</a></li>
+					<li><a href="#navs">换季清仓19.9元抢限量红叶雨伞</a></li>
+					<li><a href="#navbar">专车专用全包围手缝脚垫</a></li>
+				</ul>
+				<div class="line-dotted"></div>
+				<h4>销量 Top 5</h4>
+				<ul class="nav nav-list bs-docs-sidenavh">
+					<li><a href="#dropdowns"><span class="badge badge-success">1</span>
+							西牧狼商务英伦复古牛皮</a></li>
+					<li><a href="#buttonGroups"><span
+							class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
+					<li><a href="#buttonDropdowns"><span
+							class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
+					<li><a href="#navs"><span class="badge badge-info">4</span>
+							ayhke磨砂牛皮保暖棉鞋</a></li>
+					<li><a href="#navbar"><span class="badge badge-inverse">5</span>
+							E人E本T4 WIFI版</a></li>
+				</ul>
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="navbar navbar-fixed-bottom">
+		<div class="navbar-inner navbar-innerb">
+			<div class="pull-right fixed-bottom-cp">&copy; jshoper 2012</div>
+			<div class="viewsite fixed-bottom-div">
+				<a href="http://www.localjoomla3.com/" target="_blank"><i
+					class="icon-share-alt"></i> 浏览网站</a>
+			</div>
+			<div class="loggedin-users fixed-bottom-div">
+				<span class="badge">0</span> 访客在线
+			</div>
+			<div class="backloggedin-users fixed-bottom-div">
+				<span class="badge">1</span> 管理在线
+			</div>
+			<div class="no-unread-messages fixed-bottom-div">
+				<a href="/administrator/index.php?option=com_messages"><i
+					class="icon-envelope"></i> 0</a>
+			</div>
+			<div class="logout fixed-bottom-div">
+				<a href="#myModal" role="button" data-toggle="modal"><i
+					class="icon-minus-sign"></i> 注销</a>
+			</div>
+		</div>
+	</div>
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true">×</button>
+			<h3 id="myModalLabel">退出jshoper？</h3>
+		</div>
+		<div class="modal-body">
+			<p>请再次确认您的操作…</p>
+		</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+			<button class="btn btn-primary">确认退出</button>
+		</div>
+	</div>
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="assets/js/jquery.js"></script>
+	<script src="assets/js/bootstrap-transition.js"></script>
+	<script src="assets/js/bootstrap-alert.js"></script>
+	<script src="assets/js/bootstrap-modal.js"></script>
+	<script src="assets/js/bootstrap-dropdown.js"></script>
+	<script src="assets/js/bootstrap-scrollspy.js"></script>
+	<script src="assets/js/bootstrap-tab.js"></script>
+	<script src="assets/js/bootstrap-tooltip.js"></script>
+	<script src="assets/js/bootstrap-popover.js"></script>
+	<script src="assets/js/bootstrap-button.js"></script>
+	<script src="assets/js/bootstrap-collapse.js"></script>
+	<script src="assets/js/bootstrap-carousel.js"></script>
+	<script src="assets/js/bootstrap-typeahead.js"></script>
+
+</body>
 </html>

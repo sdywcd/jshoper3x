@@ -1,96 +1,110 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<title>Image</title>
-		<style type="text/css" rel="stylesheet">
-			body {
-				margin: 0;
-				font:12px/1.5 "sans serif",tahoma,verdana,helvetica;
-				background-color:#F0F0EE;
-				color:#222222;
-				overflow:hidden;
-			}
-			form {
-				margin:0;
-			}
-			label {
-				cursor:pointer;
-			}
-			#resetBtn {
-				margin-left:10px;
-				cursor:pointer;
-			}
-			.main {
-				margin: 0 10px;
-			}
-			.clearfix:after {
-				content: ".";
-				display: block;
-				height: 0;
-				clear: both;
-				visibility: hidden;
-			}
-			.tab-navi {
-				width:98%;
-				border-bottom:1px solid #A0A0A0;
-				padding-left:5px;
-				margin-bottom:10px;
-				
-			}
-			.tab-navi ul  {
-				list-style-image:none;
-				list-style-position:outside;
-				list-style-type:none;
-				margin:0;
-				padding:0;
-			}
-			.tab-navi li {
-				position: relative;
-				border: 1px solid #A0A0A0;
-				background-color: #E0E0E0;
-				margin: 0 2px -1px 0;
-				padding: 0 20px;
-				float: left;
-				line-height: 25px;
-				text-align: center;
-				color: #555555;
-				cursor: pointer;
-			}
-			.tab-navi li.selected {
-				background-color: #F0F0EE;
-				border-bottom: 1px solid #F0F0EE;
-				color: #000000;
-				cursor: default;
-			}
-			.tab-navi li.on {
-				background-color: #F0F0EE;
-				color: #000000;
-			}
-			.table  {
-				list-style-image:none;
-				list-style-position:outside;
-				list-style-type:none;
-				margin:0;
-				padding:0;
-				display:block;
-			}
-			.table li {
-				padding:0;
-				margin-bottom:10px;
-				display:list-item;
-			}
-			.table li label {
-				font-weight:bold;
-			}
-			.table li input {
-				vertical-align:middle;
-			}
-			.table li img {
-				vertical-align:middle;
-			}
-		</style>
-		<script type="text/javascript">
+<head>
+<meta charset="utf-8" />
+<title>Image</title>
+<style type="text/css" rel="stylesheet">
+body {
+	margin: 0;
+	font: 12px/1.5 "sans serif", tahoma, verdana, helvetica;
+	background-color: #F0F0EE;
+	color: #222222;
+	overflow: hidden;
+}
+
+form {
+	margin: 0;
+}
+
+label {
+	cursor: pointer;
+}
+
+#resetBtn {
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.main {
+	margin: 0 10px;
+}
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.tab-navi {
+	width: 98%;
+	border-bottom: 1px solid #A0A0A0;
+	padding-left: 5px;
+	margin-bottom: 10px;
+}
+
+.tab-navi ul {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.tab-navi li {
+	position: relative;
+	border: 1px solid #A0A0A0;
+	background-color: #E0E0E0;
+	margin: 0 2px -1px 0;
+	padding: 0 20px;
+	float: left;
+	line-height: 25px;
+	text-align: center;
+	color: #555555;
+	cursor: pointer;
+}
+
+.tab-navi li.selected {
+	background-color: #F0F0EE;
+	border-bottom: 1px solid #F0F0EE;
+	color: #000000;
+	cursor: default;
+}
+
+.tab-navi li.on {
+	background-color: #F0F0EE;
+	color: #000000;
+}
+
+.table {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+
+.table li {
+	padding: 0;
+	margin-bottom: 10px;
+	display: list-item;
+}
+
+.table li label {
+	font-weight: bold;
+}
+
+.table li input {
+	vertical-align: middle;
+}
+
+.table li img {
+	vertical-align: middle;
+}
+</style>
+<script type="text/javascript">
 			var KE = parent.KindEditor;
 			location.href.match(/\?id=([\w-]+)/i);
 			var id = RegExp.$1;
@@ -218,51 +232,59 @@
 				KE.util.hideLoadingPage(id);
 			}, window, document);
 		</script>
-	</head>
-	<body>
-		<div class="main">
-			<div id="tabNavi" class="tab-navi">
-				<ul class="clearfix">
-					<li><span id="lang.remoteImage"></span></li>
-					<li><span id="lang.localImage"></span></li>
-				</ul>
-			</div>
-			<iframe name="uploadIframe" id="uploadIframe" style="display:none;"></iframe>
-			<input type="hidden" id="type" name="type" value="" />
-			<form id="uploadForm" name="uploadForm" method="post" enctype="multipart/form-data" target="uploadIframe">
-				<input type="hidden" id="editorId" name="id" value="" />
-				<input type="hidden" id="referMethod" name="referMethod" value="" />
-				<input type="hidden" name="imgBorder" value="0" />
-				<ul class="table">
-					<li>
-						<div id="tab1" style="display:none;">
-							<label for="url"><span id="lang.remoteUrl"></span></label>&nbsp;
-							<input type="text" id="url" name="url" value="http://" maxlength="255" style="width:230px;" />
-							<input type="button" id="viewServer" name="viewServer" value="" />
-						</div>
-						<div id="tab2" style="display:none;">
-							<label for="imgFile"><span id="lang.localUrl"></span></label>&nbsp;
-							<input type="file" id="imgFile" name="imgFile" style="width:300px;" />
-						</div>
-					</li>
-					<li>
-						<label for="imgWidth"><span id="lang.size"></span></label>&nbsp;
-						<span id="lang.width"></span> <input type="text" id="imgWidth" name="imgWidth" value="" maxlength="4" style="width:50px;text-align:right;" />
-						<span id="lang.height"></span> <input type="text" id="imgHeight" name="imgHeight" value="" maxlength="4" style="width:50px;text-align:right;" />
-						<img src="./images/refresh.gif" width="16" height="16" id="resetBtn" alt="" title="" />
-					</li>
-					<li>
-						<label><span id="lang.align"></span></label>&nbsp;
-						<input type="radio" id="defaultChk" name="align" value="" checked="checked" /> <img id="defaultImg" src="./images/align_top.gif" width="23" height="25" border="0" alt="" title="" />
-						<input type="radio" id="leftChk" name="align" value="left" /> <img id="leftImg" src="./images/align_left.gif" width="23" height="25" border="0" alt="" title="" />
-						<input type="radio" id="rightChk" name="align" value="right" /> <img id="rightImg" src="./images/align_right.gif" width="23" height="25" border="0" alt="" title="" />
-					</li>
-					<li>
-						<label for="imgTitle"><span id="lang.imgTitle"></span></label>
-						<input type="text" id="imgTitle" name="imgTitle" value="" maxlength="255" style="width:95%;" />
-					</li>
-				</ul>
-			</form>
+</head>
+<body>
+	<div class="main">
+		<div id="tabNavi" class="tab-navi">
+			<ul class="clearfix">
+				<li><span id="lang.remoteImage"></span></li>
+				<li><span id="lang.localImage"></span></li>
+			</ul>
 		</div>
-	</body>
+		<iframe name="uploadIframe" id="uploadIframe" style="display: none;"></iframe>
+		<input type="hidden" id="type" name="type" value="" />
+		<form id="uploadForm" name="uploadForm" method="post"
+			enctype="multipart/form-data" target="uploadIframe">
+			<input type="hidden" id="editorId" name="id" value="" /> <input
+				type="hidden" id="referMethod" name="referMethod" value="" /> <input
+				type="hidden" name="imgBorder" value="0" />
+			<ul class="table">
+				<li>
+					<div id="tab1" style="display: none;">
+						<label for="url"><span id="lang.remoteUrl"></span></label>&nbsp; <input
+							type="text" id="url" name="url" value="http://" maxlength="255"
+							style="width: 230px;" /> <input type="button" id="viewServer"
+							name="viewServer" value="" />
+					</div>
+					<div id="tab2" style="display: none;">
+						<label for="imgFile"><span id="lang.localUrl"></span></label>&nbsp;
+						<input type="file" id="imgFile" name="imgFile"
+							style="width: 300px;" />
+					</div>
+				</li>
+				<li><label for="imgWidth"><span id="lang.size"></span></label>&nbsp;
+					<span id="lang.width"></span> <input type="text" id="imgWidth"
+					name="imgWidth" value="" maxlength="4"
+					style="width: 50px; text-align: right;" /> <span id="lang.height"></span>
+					<input type="text" id="imgHeight" name="imgHeight" value=""
+					maxlength="4" style="width: 50px; text-align: right;" /> <img
+					src="./images/refresh.gif" width="16" height="16" id="resetBtn"
+					alt="" title="" /></li>
+				<li><label><span id="lang.align"></span></label>&nbsp; <input
+					type="radio" id="defaultChk" name="align" value=""
+					checked="checked" /> <img id="defaultImg"
+					src="./images/align_top.gif" width="23" height="25" border="0"
+					alt="" title="" /> <input type="radio" id="leftChk" name="align"
+					value="left" /> <img id="leftImg" src="./images/align_left.gif"
+					width="23" height="25" border="0" alt="" title="" /> <input
+					type="radio" id="rightChk" name="align" value="right" /> <img
+					id="rightImg" src="./images/align_right.gif" width="23" height="25"
+					border="0" alt="" title="" /></li>
+				<li><label for="imgTitle"><span id="lang.imgTitle"></span></label>
+					<input type="text" id="imgTitle" name="imgTitle" value=""
+					maxlength="255" style="width: 95%;" /></li>
+			</ul>
+		</form>
+	</div>
+</body>
 </html>

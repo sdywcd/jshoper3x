@@ -1,3 +1,4 @@
+
 <%
 /* *
  功能：支付宝主动通知调用的页面（服务器异步通知页面）
@@ -32,11 +33,12 @@
  //********************************
  * */
 %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.jshop.pay.alipay.util.*"%>
 <%@ page import="com.jshop.pay.alipay.config.*"%>
-<%@ page import="com.jshop.action.front.*" %>
+<%@ page import="com.jshop.action.front.*"%>
 <%
 	CallBackAlipayOrderAction cbaction=new CallBackAlipayOrderAction();
 	String key = AlipayConfig.key;

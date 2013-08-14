@@ -1,8 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=GBK" pageEncoding="GBK"%>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil" %>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler"%>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
-<%@ include file = "config.jsp" %>
+<%@ page language="java" contentType="text/html; charset=GBK"
+	pageEncoding="GBK"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
+<%@ include file="config.jsp"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
@@ -87,6 +91,7 @@ String debuginfo = reqHandler.getDebugInfo();
 <title>财付通即时到帐程序演示</title>
 </head>
 <body>
-<br/><a target="_blank" href="<%=requestUrl %>">财付通支付</a>
+	<br />
+	<a target="_blank" href="<%=requestUrl %>">财付通支付</a>
 </body>
 </html>

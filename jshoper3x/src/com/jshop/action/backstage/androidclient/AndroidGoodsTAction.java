@@ -230,7 +230,7 @@ ServletRequestAware, ServletResponseAware {
 					json.append("\"htmlPath\":\"").append(gt.getHtmlPath()).append("\",");
 					json.append("\"productSn\":\"").append(gt.getPrice()).append("\",");
 					//json.append("\"goodsParameterValue\":\"").append(gt.getGoodsParameterValue()).append("\",");
-					json.append("\"freezeStore\":\"").append(gt.getFreezeStore()).append("\",");
+					//json.append("\"freezeStore\":\"").append(gt.getFreezeStore()).append("\",");
 					//json.append("\"keywordid\":\"").append(gt.getKeywordid()).append("\",");
 					//json.append("\"unitnameid\":\"").append(gt.getUnitnameid()).append("\",");
 					json.append("\"goodsTypeId\":\"").append(gt.getGoodsTypeId()).append("\",");
@@ -270,7 +270,7 @@ ServletRequestAware, ServletResponseAware {
 					json.append("\"star\":\"").append(gt.getStar()).append("\",");
 					json.append("\"staruser\":\"").append(gt.getStaruser()).append("\",");
 					json.append("\"totalcomment\":\"").append(gt.getTotalcomment()).append("\",");
-					json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
+					//json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
 					json.append("\"ismobileplatformgoods\":\"").append(gt.getIsmobileplatformgoods()).append("\",");
 					json.append("\"sales\":\"").append(gt.getSales()).append("\",");
 					json.append("\"realsales\":\"").append(gt.getRealsales()).append("\"");
@@ -388,7 +388,7 @@ ServletRequestAware, ServletResponseAware {
 					json.append("\"htmlPath\":\"").append(gt.getHtmlPath()).append("\",");
 					json.append("\"productSn\":\"").append(gt.getPrice()).append("\",");
 					//json.append("\"goodsParameterValue\":\"").append(gt.getGoodsParameterValue()).append("\",");
-					json.append("\"freezeStore\":\"").append(gt.getFreezeStore()).append("\",");
+					//json.append("\"freezeStore\":\"").append(gt.getFreezeStore()).append("\",");
 					json.append("\"keywordid\":\"").append(gt.getKeywordid()).append("\",");
 					json.append("\"unitnameid\":\"").append(gt.getUnitnameid()).append("\",");
 					json.append("\"goodsTypeId\":\"").append(gt.getGoodsTypeId()).append("\",");
@@ -428,7 +428,7 @@ ServletRequestAware, ServletResponseAware {
 					json.append("\"star\":\"").append(gt.getStar()).append("\",");
 					json.append("\"staruser\":\"").append(gt.getStaruser()).append("\",");
 					json.append("\"totalcomment\":\"").append(gt.getTotalcomment()).append("\"");
-					json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
+					//json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
 					json.append("\"ismobileplatformgoods\":\"").append(gt.getIsmobileplatformgoods()).append("\",");
 					json.append("\"sales\":\"").append(gt.getSales()).append("\",");
 					json.append("\"realsales\":\"").append(gt.getRealsales()).append("\"");
@@ -507,7 +507,7 @@ ServletRequestAware, ServletResponseAware {
 				//json.append("\"htmlPath\":\"").append(gt.getHtmlPath()).append("\",");
 				json.append("\"productSn\":\"").append(gt.getPrice()).append("\",");
 				//json.append("\"goodsParameterValue\":\"").append(gt.getGoodsParameterValue()).append("\",");
-				json.append("\"freezeStore\":\"").append(gt.getFreezeStore()).append("\",");
+				//json.append("\"freezeStore\":\"").append(gt.getFreezeStore()).append("\",");
 				//json.append("\"keywordid\":\"").append(gt.getKeywordid()).append("\",");
 				//json.append("\"unitnameid\":\"").append(gt.getUnitnameid()).append("\",");
 				json.append("\"goodsTypeId\":\"").append(gt.getGoodsTypeId()).append("\",");
@@ -547,7 +547,7 @@ ServletRequestAware, ServletResponseAware {
 				json.append("\"star\":\"").append(gt.getStar()).append("\",");
 				json.append("\"staruser\":\"").append(gt.getStaruser()).append("\",");
 				json.append("\"totalcomment\":\"").append(gt.getTotalcomment()).append("\",");
-				json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
+				//json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
 				json.append("\"ismobileplatformgoods\":\"").append(gt.getIsmobileplatformgoods()).append("\",");
 				json.append("\"sales\":\"").append(gt.getSales()).append("\",");
 				json.append("\"realsales\":\"").append(gt.getRealsales()).append("\"");

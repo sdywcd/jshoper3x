@@ -13,7 +13,6 @@ import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsBelinkedT;
-import com.jshop.entity.GoodsSpecificationsRelationshipT;
 import com.jshop.entity.GoodsT;
 
 
@@ -30,10 +29,10 @@ public class GoodsTAspect {
 		GoodsTAction gtn=(GoodsTAction) joinPoint.getThis();
 		if (gtn.getIsSpecificationsOpen().equals("1")) {
 			if(gtn.getSpecificationsid()!=null ){
-				GoodsSpecificationsRelationshipT gsrt = new GoodsSpecificationsRelationshipT();
-				gsrt.getId().setSpecidicationsId(gtn.getSpecificationsid());
-				gsrt.getId().setGoodsSetId(gtn.getBean().getGoodsid());
-				gtn.getGoodsSpecificationsRelationshipTService().addGoodsAssociatedProductById(gsrt);
+//				GoodsSpecificationsRelationshipT gsrt = new GoodsSpecificationsRelationshipT();
+//				gsrt.getId().setSpecidicationsId(gtn.getSpecificationsid());
+//				gsrt.getId().setGoodsSetId(gtn.getBean().getGoodsid());
+//				gtn.getGoodsSpecificationsRelationshipTService().addGoodsAssociatedProductById(gsrt);
 			}
 		}
 	}
@@ -47,24 +46,24 @@ public class GoodsTAspect {
 		GoodsTAction gtn=(GoodsTAction) joinPoint.getThis();
 		//当修改商品规格时关闭规格操作将删除该商品的规格值
 		if("2".equals(gtn.getIsSpecificationsOpen())||"0".equals(gtn.getIsSpecificationsOpen())){
-			List<GoodsSpecificationsRelationshipT> list = gtn.getGoodsSpecificationsRelationshipTService().checkSpecificationRelationshipBygoodssetid(gtn.getBean().getGoodsid());
-			if(!list.isEmpty()){
-				gtn.getGoodsSpecificationsRelationshipTService().delGoodsAssociatedProductById(gtn.getBean().getGoodsid());			
-			}			
+//			List<GoodsSpecificationsRelationshipT> list = gtn.getGoodsSpecificationsRelationshipTService().checkSpecificationRelationshipBygoodssetid(gtn.getBean().getGoodsid());
+//			if(!list.isEmpty()){
+//				gtn.getGoodsSpecificationsRelationshipTService().delGoodsAssociatedProductById(gtn.getBean().getGoodsid());			
+//			}			
 		}
 		if("1".equals(gtn.getIsSpecificationsOpen())&&gtn.getSpecificationsid() != null){
-			List<GoodsSpecificationsRelationshipT> list = gtn.getGoodsSpecificationsRelationshipTService().checkSpecificationRelationshipBygoodssetid(gtn.getBean().getGoodsid());
-			if(list.isEmpty()){
-				GoodsSpecificationsRelationshipT gsrt = new GoodsSpecificationsRelationshipT();
-				gsrt.getId().setSpecidicationsId(gtn.getSpecificationsid());
-				gsrt.getId().setGoodsSetId(gtn.getBean().getGoodsid());
-				gtn.getGoodsSpecificationsRelationshipTService().addGoodsAssociatedProductById(gsrt);			
-			}else{	
-				GoodsSpecificationsRelationshipT gsrt = new GoodsSpecificationsRelationshipT();
-				gsrt.getId().setSpecidicationsId(gtn.getSpecificationsid());
-				gsrt.getId().setGoodsSetId(gtn.getBean().getGoodsid());
-				gtn.getGoodsSpecificationsRelationshipTService().updateGoodsAssociatedProductById(gsrt);
-			}
+//			List<GoodsSpecificationsRelationshipT> list = gtn.getGoodsSpecificationsRelationshipTService().checkSpecificationRelationshipBygoodssetid(gtn.getBean().getGoodsid());
+//			if(list.isEmpty()){
+//				GoodsSpecificationsRelationshipT gsrt = new GoodsSpecificationsRelationshipT();
+//				gsrt.getId().setSpecidicationsId(gtn.getSpecificationsid());
+//				gsrt.getId().setGoodsSetId(gtn.getBean().getGoodsid());
+//				gtn.getGoodsSpecificationsRelationshipTService().addGoodsAssociatedProductById(gsrt);			
+//			}else{	
+//				GoodsSpecificationsRelationshipT gsrt = new GoodsSpecificationsRelationshipT();
+//				gsrt.getId().setSpecidicationsId(gtn.getSpecificationsid());
+//				gsrt.getId().setGoodsSetId(gtn.getBean().getGoodsid());
+//				gtn.getGoodsSpecificationsRelationshipTService().updateGoodsAssociatedProductById(gsrt);
+//			}
 		}
 	}
 	

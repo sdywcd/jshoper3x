@@ -11,20 +11,30 @@
 <meta name="author" content="magi">
 <title>首页 &middot; jshoper</title>
 <!-- Le styles -->
-<link href="<%=basePath%>admin/ui/assets/css/bootstrap.css" rel="stylesheet">
-<link href="<%=basePath%>admin/ui/assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="<%=basePath%>admin/ui/assets/css/bootstrap.css"
+	rel="stylesheet">
+<link href="<%=basePath%>admin/ui/assets/css/bootstrap-responsive.css"
+	rel="stylesheet">
 <link href="<%=basePath%>admin/ui/assets/css/docs.css" rel="stylesheet">
-<link href="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+<link
+	href="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.css"
+	rel="stylesheet">
 <link href="<%=basePath%>admin/ui/assets/css/base.css" rel="stylesheet">
-<link href="<%=basePath%>admin/js/plugins/icheckmaster/skins/square/blue.css" rel="stylesheet">
+<link
+	href="<%=basePath%>admin/js/plugins/icheckmaster/skins/square/blue.css"
+	rel="stylesheet">
 
 
 <!-- import flexigrid css -->
-<link href="<%=basePath%>admin/js/plugins/flexigrid/css/flexigrid/flexigrid_blue.css" rel="stylesheet" type="text/css" >
+<link
+	href="<%=basePath%>admin/js/plugins/flexigrid/css/flexigrid/flexigrid_blue.css"
+	rel="stylesheet" type="text/css">
 <!-- import uploader css -->
-<link href="<%=basePath%>admin/js/plugins/uploader/fileuploader.css" rel="stylesheet">
+<link href="<%=basePath%>admin/js/plugins/uploader/fileuploader.css"
+	rel="stylesheet">
 <!-- import  farbtastic css-->
- <link href="<%=basePath%>admin/js/plugins/farbtastic/farbtastic.css" rel="stylesheet">
+<link href="<%=basePath%>admin/js/plugins/farbtastic/farbtastic.css"
+	rel="stylesheet">
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -32,27 +42,35 @@
     <![endif]-->
 
 <!-- Fav and touch icons -->
-<link rel="shortcut icon" href="<%=basePath%>admin/ui/assets/ico/favicon.ico">
+<link rel="shortcut icon"
+	href="<%=basePath%>admin/ui/assets/ico/favicon.ico">
 </head>
 <body>
 	<!-- Navbar================================================== -->
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
 			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".navbar-inverse-collapse"> <span class="icon-bar"></span>
+					<span class="icon-bar"></span> <span class="icon-bar"></span>
+				</a>
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<ul class="nav">
 						<li class="active"><a href="<%=basePath%>admin/index.jsp">主页</a></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">实验室 <b class="caret"></b> </a>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">实验室 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
 								<li><a href="#"><i class="icon-tags"></i> 电子点餐系统</a></li>
-								<li><a href="#"><i class="icon-shopping-cart"></i> B2O线下电商</a></li>
+								<li><a href="#"><i class="icon-shopping-cart"></i>
+										B2O线下电商</a></li>
 								<li class="divider"></li>
 								<li class="nav-header">未上市产品</li>
 								<li><a href="#"><i class="icon-globe"></i> 开发中</a></li>
-							</ul>
-						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理 <b class="caret"></b> </a>
+							</ul></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown">管理 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
 								<li><a href="#"><i class="icon-star"></i> 授权</a></li>
 								<li><a href="#"><i class="icon-wrench"></i> 技术支持</a></li>
@@ -63,20 +81,40 @@
 
 					</ul>
 					<ul class="nav pull-right">
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> 商品管理 <b class="caret"></b> </a>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 商品管理 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=basePath%>admin/goods/goodstypetnment.jsp?operate=find">商品类型参数设置 </a></li>
-								<li><a href="<%=basePath%>admin/goods/goodsattributement.jsp?operate=find">商品属性设置</a></li>
-								<li><a href="<%=basePath%>admin/brands/brandsment.jsp?operate=find">品牌设置</a></li>
-								<li><a href="<%=basePath%>admin/goods/goodstypetnbrandsment.jsp?operate=find">品牌类型设置 </a></li>
-								<li><a href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">规格设置 </a></li>
-								<li><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置 </a></li>				
+								<li><a
+									href="<%=basePath%>admin/goods/goodstypetnment.jsp?operate=find">商品类型参数设置
+								</a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodsattributement.jsp?operate=find">商品属性设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/brands/brandsment.jsp?operate=find">品牌设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodstypetnbrandsment.jsp?operate=find">品牌类型设置
+								</a></li>
+								<li><a
+									href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">规格设置
+								</a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置
+								</a></li>
 								<li class="divider"></li>
-								<li><a href="<%=basePath%>admin/goods/goods.jsp?operate=add">添加新商品 </a></li>
-								<li><a href="<%=basePath%>admin/goods/goodsment.jsp?operate=find">所有商品 </a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goods.jsp?operate=add">添加新商品
+								</a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodsment.jsp?operate=find">所有商品
+								</a></li>
 								<li class="divider"></li>
-								<li><a href="<%=basePath%>admin/products/product.jsp?operate=add">添加货物 </a></li>
-								<li><a href="<%=basePath%>admin/products/productment.jsp?operate=find">所有货物 </a></li>
+								<li><a
+									href="<%=basePath%>admin/products/product.jsp?operate=add">添加货物
+								</a></li>
+								<li><a
+									href="<%=basePath%>admin/products/productment.jsp?operate=find">所有货物
+								</a></li>
 								<!--  <li><a href="#">团购商品 </a></li>
 								<li><a href="#">团购订单管理 </a></li>-->
 								<!-- <li class="dropdown-submenu"><a tabindex="-1" href="#">商品列表</a>
@@ -87,51 +125,73 @@
 								</li>-->
 								<li class="divider"></li>
 								<li><a href="#">商品评论</a></li>
-							</ul>
-						</li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> 订单管理 <b class="caret"></b> </a>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 订单管理 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
 								<li><a href="#">所有订单</a></li>
 								<li><a href="#">待发货订单</a></li>
 								<li><a href="#">已发货订单</a></li>
 								<li><a href="#">需开票订单</a></li>
 								<li><a href="#">需退货订单</a></li>
-							</ul>
-						</li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> 用户管理 <b class="caret"></b> </a>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 用户管理 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find">用户列表</a></li>
-								<li><a href="<%=basePath%>admin/user/gradement.jsp?operate=find">用户等级设置</a></li>
-							</ul>
-						</li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> 内容管理 <b class="caret"></b> </a>
+								<li><a
+									href="<%=basePath%>admin/user/userment.jsp?operate=find">用户列表</a></li>
+								<li><a
+									href="<%=basePath%>admin/user/gradement.jsp?operate=find">用户等级设置</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 内容管理 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=basePath%>admin/pagecontent/sitenavigationment.jsp?operate=find">导航设置</a></li>
-								<li><a href="<%=basePath%>admin/pagecontent/articlecategoryment.jsp?operate=find">文章分类</a></li>
-								<li><a href="<%=basePath%>admin/pagecontent/sitenavigationment.jsp?operate=find">添加文章</a></li>
-								<li><a href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
-							</ul>
-						</li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> 图片管理 <b class="caret"></b> </a>
+								<li><a
+									href="<%=basePath%>admin/pagecontent/sitenavigationment.jsp?operate=find">导航设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/pagecontent/articlecategoryment.jsp?operate=find">文章分类</a></li>
+								<li><a
+									href="<%=basePath%>admin/pagecontent/sitenavigationment.jsp?operate=find">添加文章</a></li>
+								<li><a
+									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 图片管理 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=basePath%>admin/img/serverimgment.jsp?operate=find">图片列表</a></li>
-							</ul>
-						</li>
-						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"> 系统设置 <b class="caret"></b> </a>
+								<li><a
+									href="<%=basePath%>admin/img/serverimgment.jsp?operate=find">图片列表</a></li>
+							</ul></li>
+						<li class="dropdown"><a class="dropdown-toggle"
+							data-toggle="dropdown" href="#"> 系统设置 <b class="caret"></b>
+						</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find">基本设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/emailment.jsp?operate=find">邮箱设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/globalparamset.jsp?operate=find">全局参数设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/paymentment.jsp?operate=find">支付方式设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/logisticsment.jsp?operate=find">物流及配送设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/templatethemement.jsp?operate=find">模板主题设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/templatement.jsp?operate=find">模板文件设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/templatesetment.jsp?operate=find">模板文件和系统内容设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/modulement.jsp?operate=find">系统模块设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/functionment.jsp?operate=find">模块功能设置</a></li>
-								<li><a href="<%=basePath%>admin/setting/rolement.jsp?operate=find">角色权限设置</a></li>
-							</ul>
-						</li>
+								<li><a
+									href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find">基本设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/emailment.jsp?operate=find">邮箱设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/globalparamset.jsp?operate=find">全局参数设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/paymentment.jsp?operate=find">支付方式设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/logisticsment.jsp?operate=find">物流及配送设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/templatethemement.jsp?operate=find">模板主题设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/templatement.jsp?operate=find">模板文件设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/templatesetment.jsp?operate=find">模板文件和系统内容设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/modulement.jsp?operate=find">系统模块设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/functionment.jsp?operate=find">模块功能设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/setting/rolement.jsp?operate=find">角色权限设置</a></li>
+							</ul></li>
 					</ul>
 				</div>
 				<!-- /.nav-collapse -->
@@ -141,12 +201,13 @@
 		<!-- /navbar-inner -->
 	</div>
 
-	
+
 	<!-- Le javascript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="<%=basePath%>admin/ui/assets/js/jquery.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.js"></script>
+	<script
+		src="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-transition.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-alert.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-modal.js"></script>
@@ -159,13 +220,16 @@
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-collapse.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-carousel.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-typeahead.js"></script>
-	<script src="<%=basePath%>admin/js/plugins/icheckmaster/jquery.icheck.min.js"></script>
+	<script
+		src="<%=basePath%>admin/js/plugins/icheckmaster/jquery.icheck.min.js"></script>
 
-    <script type="text/javascript" src="<%=basePath%>admin/js/plugins/flexigrid/myflexigrid.js"></script>
-	<script type="text/javascript" src="<%=basePath%>admin/js/jquery.query.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>admin/js/plugins/flexigrid/myflexigrid.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>admin/js/jquery.query.js"></script>
 	<script type="text/javascript" src="<%=basePath%>admin/js/indexjs.js"></script>
 	<script type="text/javascript" src="<%=basePath%>admin/js/base.js"></script>
-	
-	
+
+
 </body>
 </html>

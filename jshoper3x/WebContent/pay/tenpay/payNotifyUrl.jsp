@@ -1,11 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=GBK" pageEncoding="GBK"%>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler" %>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.ResponseHandler" %>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.ClientResponseHandler" %>    
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayHttpClient" %>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
-<%@ page import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil"%>
-<%@ include file = "config.jsp" %>
+<%@ page language="java" contentType="text/html; charset=GBK"
+	pageEncoding="GBK"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.ResponseHandler"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.ClientResponseHandler"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayHttpClient"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
+<%@ page
+	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil"%>
+<%@ include file="config.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
 //---------------------------------------------------------

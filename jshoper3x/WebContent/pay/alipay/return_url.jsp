@@ -1,3 +1,4 @@
+
 <%
 /* *
  功能：付完款后跳转的页面（页面跳转同步通知页面）
@@ -29,12 +30,14 @@
  //********************************
  * */
 %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="com.jshop.pay.alipay.util.*"%>
 <%@ page import="com.jshop.pay.alipay.config.*"%>
-<%@ page import="com.jshop.action.front.*" %><%
+<%@ page import="com.jshop.action.front.*"%>
+<%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
@@ -42,15 +45,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html>
-  <head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>支付成功客户端返回</title>
-		<link rel="stylesheet" type="text/css" title="Green" href="<%=basePath%>ui/default/css/style_green.css" />
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>支付成功客户端返回</title>
+<link rel="stylesheet" type="text/css" title="Green"
+	href="<%=basePath%>ui/default/css/style_green.css" />
 
 
-  </head>
-  <body>
-<%
+</head>
+<body>
+	<%
 	CallBackAlipayOrderAction cbaction=new CallBackAlipayOrderAction();
 	String key = AlipayConfig.key;
 	//获取支付宝GET过来反馈信息
@@ -150,72 +154,71 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 %>-->
 
-<div id="top_header">
-	<div id="top_header_menu">
-	<!--<jsp:include page="../top_header.jsp"></jsp:include>-->
-    </div>
-</div>
-<div id="header">
-
-	<div id="header_inner" class="fixed">
-
-		<div id="logo">
-			<h2>www.soipay.com</h2>
+	<div id="top_header">
+		<div id="top_header_menu">
+			<!--<jsp:include page="../top_header.jsp"></jsp:include>-->
 		</div>
-		
-		<!-- 读取导航菜单 -->
-		  <s:action name="GetIndexMenu" namespace="/jshop_system" id="bean" /> 
-		  <div id="menu">
-			<ul>
-				<li><a href="<%=basePath %>index.jsp " class="active">首页</a></li>
-			    <s:if test="#bean.mainmenu!=null">
-                <s:iterator id="bean" value="#bean.mainmenu" status="findindexmenu">
-				<li><a href="<%=basePath %>goods/goodslist.jsp?navid=<s:property value="navid"/>" target="_blank" class="active"><s:property value="nname"/></a></li>
-                </s:iterator>
-			    </s:if>
-			</ul>
-		 </div>
-		
-		
-  </div>
-</div>
+	</div>
+	<div id="header">
 
-<div id="main">
+		<div id="header_inner" class="fixed">
 
-	<div id="main_inner" class="fixed">
-	  <div id="top_main_inner" class="fixed">
-   		<!--<jsp:include page="../header.jsp"></jsp:include>-->
-      </div>
-	  <div id="primaryContent_2columns">
-			<div id="columnA_2columns">
-                <table>
-		        	<tr>
-		        		<td class="font_content" align="right">
-		                 	  状态：</td>
-		                <td class="font_content" align="left"><%=verifyStatus %></td>
-		        	</tr>
-		        	<tr>
-		        		<td class="font_content" align="right"></td>
-		                <td class="font_content" align="left"><a href="InitUserCenterIndex.action">返回soipay用户中心</a></td>
-		        	</tr>
-        		</table>
+			<div id="logo">
+				<h2>www.soipay.com</h2>
 			</div>
-	
-		</div>
-		
-		<div id="secondaryContent_2columns">
-		
-			
+
+			<!-- 读取导航菜单 -->
+			<s:action name="GetIndexMenu" namespace="/jshop_system" id="bean" />
+			<div id="menu">
+				<ul>
+					<li><a href="<%=basePath %>index.jsp " class="active">首页</a></li>
+					<s:if test="#bean.mainmenu!=null">
+						<s:iterator id="bean" value="#bean.mainmenu"
+							status="findindexmenu">
+							<li><a
+								href="<%=basePath %>goods/goodslist.jsp?navid=<s:property value="navid"/>"
+								target="_blank" class="active"><s:property value="nname" /></a></li>
+						</s:iterator>
+					</s:if>
+				</ul>
+			</div>
+
 
 		</div>
+	</div>
 
-		<br class="clear" />
+	<div id="main">
+
+		<div id="main_inner" class="fixed">
+			<div id="top_main_inner" class="fixed">
+				<!--<jsp:include page="../header.jsp"></jsp:include>-->
+			</div>
+			<div id="primaryContent_2columns">
+				<div id="columnA_2columns">
+					<table>
+						<tr>
+							<td class="font_content" align="right">状态：</td>
+							<td class="font_content" align="left"><%=verifyStatus %></td>
+						</tr>
+						<tr>
+							<td class="font_content" align="right"></td>
+							<td class="font_content" align="left"><a
+								href="InitUserCenterIndex.action">返回soipay用户中心</a></td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
+			<div id="secondaryContent_2columns"></div>
+
+			<br class="clear" />
+
+		</div>
 
 	</div>
 
-</div>
-
-<!--<jsp:include page="../footer.jsp"></jsp:include>-->
+	<!--<jsp:include page="../footer.jsp"></jsp:include>-->
 	<!-- This JavaScript snippet activates those tabs -->
 
 </body>
@@ -293,4 +296,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <td class="font_content" align="left"><%=verifyStatus %></td>
             </tr>
         </table> -->
-      
+

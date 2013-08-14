@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=GBK" pageEncoding="GBK"%>
+<%@ page language="java" contentType="text/html; charset=GBK"
+	pageEncoding="GBK"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";

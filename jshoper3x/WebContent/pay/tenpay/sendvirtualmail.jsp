@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%
           String path = request.getContextPath();
           String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -7,7 +8,8 @@
 
 <html>
 <head>
-<script type="text/javascript" src="<%=basePath%>ui/default/js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript"
+	src="<%=basePath%>ui/default/js/jquery-1.6.2.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=GBK">
 <title></title>
 <script type="text/javascript">

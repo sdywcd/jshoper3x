@@ -14,7 +14,7 @@ div.zoomdiv {
 	z-index: 100;
 	position: absolute;
 	top: 110px;
-	left:310px;
+	left: 310px;
 	width: 500px;
 	height: 500px;
 	background: #ffffff;
@@ -37,5 +37,5 @@ div.jqZoomPup {
 	opacity: 0.5;
 	-moz-opacity: 0.5;
 	-khtml-opacity: 0.5;
-	filter: alpha(Opacity = 50);
+	filter: alpha(Opacity =   50);
 }

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -14,16 +15,19 @@
 
 	<div class="navbar">
 		<div class="navbar-innert">
-			<a class="brand" href="#"><img src="<%=basePath%>admin/ui/assets/img/logo.png" width="175" height="30" alt=""> </a> <a class="brand" href="#">欢迎登录后台管理系统</a>
+			<a class="brand" href="#"><img
+				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
+				height="30" alt=""> </a> <a class="brand" href="#">欢迎登录后台管理系统</a>
 		</div>
 	</div>
-	<div  class="container-fluid containerb">
+	<div class="container-fluid containerb">
 
 		<div class="row-fluid">
 
 			<div class="span2">
-				<a href="#" class="thumbnail"><img src="http://i.360buy.com/commons/img/no-img_mid_.jpg" alt="" class="caption">
-				</a>
+				<a href="#" class="thumbnail"><img
+					src="http://i.360buy.com/commons/img/no-img_mid_.jpg" alt=""
+					class="caption"> </a>
 				<div class="well well-small smallt">
 					<h4>邹志刚，你好！</h4>
 					<p>
@@ -42,24 +46,36 @@
 			<div class="span7">
 				<div class="row-fluid">
 					<ul class="thumbnails">
-						<li class="span2"><a href="<%=basePath%>admin/goods/goods.jsp?operate=add" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article-add.png" alt="" class="caption">
-							<h4>添加产品</h4>
-						</a></li>
-						<li class="span2"><a href="<%=basePath%>admin/pagecontent/articlemanagement.jsp" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article.png" alt="" class="caption">
-							<h4>文章管理</h4>
-						</a></li>
-						<li class="span2"><a href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find"" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png" alt="" class="caption">
-							<h4>分类管理</h4>
-						</a></li>
-						<li class="span2"><a href="#" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-menumgr.png" alt="" class="caption">
-							<h4>图片管理</h4>
-						</a></li>
-						<li class="span2"><a href="#" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-user.png" alt="" class="caption">
-							<h4>用户管理</h4>
-						</a></li>
-						<li class="span2"><a href="#" class="thumbnail"><img src="<%=basePath%>admin/ui/assets/img/header/icon-48-config.png" alt="" class="caption">
-							<h4>控制面板</h4>
-						</a></li>
+						<li class="span2"><a
+							href="<%=basePath%>admin/goods/goods.jsp?operate=add"
+							class="thumbnail"><img
+								src="<%=basePath%>admin/ui/assets/img/header/icon-48-article-add.png"
+								alt="" class="caption">
+								<h4>添加产品</h4> </a></li>
+						<li class="span2"><a
+							href="<%=basePath%>admin/pagecontent/articlemanagement.jsp"
+							class="thumbnail"><img
+								src="<%=basePath%>admin/ui/assets/img/header/icon-48-article.png"
+								alt="" class="caption">
+								<h4>文章管理</h4> </a></li>
+						<li class="span2"><a
+							href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find"
+							" class="thumbnail"><img
+								src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"
+								alt="" class="caption">
+								<h4>分类管理</h4> </a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="<%=basePath%>admin/ui/assets/img/header/icon-48-menumgr.png"
+								alt="" class="caption">
+								<h4>图片管理</h4> </a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="<%=basePath%>admin/ui/assets/img/header/icon-48-user.png"
+								alt="" class="caption">
+								<h4>用户管理</h4> </a></li>
+						<li class="span2"><a href="#" class="thumbnail"><img
+								src="<%=basePath%>admin/ui/assets/img/header/icon-48-config.png"
+								alt="" class="caption">
+								<h4>控制面板</h4> </a></li>
 					</ul>
 				</div>
 
@@ -69,8 +85,8 @@
 					<tbody>
 						<tr>
 							<td class="left_2">系统版本号：</td>
-							<td>jshoper Enterprise 4.6.0.0 <a href="#"><span class="label label-info">有可用的更新！</span>
-							</a>
+							<td>jshoper Enterprise 4.6.0.0 <a href="#"><span
+									class="label label-info">有可用的更新！</span> </a>
 							</td>
 						</tr>
 						<tr>
@@ -110,7 +126,8 @@
 						</tr>
 						<tr>
 							<td>操作系统：</td>
-							<td>Microsoft Windows 2003 (Microsoft Windows NT 5.2.3790 Service Pack 2)</td>
+							<td>Microsoft Windows 2003 (Microsoft Windows NT 5.2.3790
+								Service Pack 2)</td>
 						</tr>
 						<tr>
 							<td>数据库版本：</td>
@@ -132,30 +149,25 @@
 			<div class="span3">
 				<h4>更新 New 5</h4>
 				<ul class="nav nav-list bs-docs-sidenavh">
-					<li><a href="#dropdowns">最后400台！超值佳能5D Mark I </a>
-					</li>
-					<li><a href="#buttonGroups">酷冷至尊战斧二代主动式40</a>
-					</li>
-					<li><a href="#buttonDropdowns">康佳 LED 32英寸 高清窄边</a>
-					</li>
-					<li><a href="#navs">换季清仓19.9元抢限量红叶雨伞</a>
-					</li>
-					<li><a href="#navbar">专车专用全包围手缝脚垫</a>
-					</li>
+					<li><a href="#dropdowns">最后400台！超值佳能5D Mark I </a></li>
+					<li><a href="#buttonGroups">酷冷至尊战斧二代主动式40</a></li>
+					<li><a href="#buttonDropdowns">康佳 LED 32英寸 高清窄边</a></li>
+					<li><a href="#navs">换季清仓19.9元抢限量红叶雨伞</a></li>
+					<li><a href="#navbar">专车专用全包围手缝脚垫</a></li>
 				</ul>
 				<div class="line-dotted"></div>
 				<h4>销量 Top 5</h4>
 				<ul class="nav nav-list bs-docs-sidenavh">
-					<li><a href="#dropdowns"><span class="badge badge-success">1</span> 西牧狼商务英伦复古牛皮</a>
-					</li>
-					<li><a href="#buttonGroups"><span class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a>
-					</li>
-					<li><a href="#buttonDropdowns"><span class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a>
-					</li>
-					<li><a href="#navs"><span class="badge badge-info">4</span> ayhke磨砂牛皮保暖棉鞋</a>
-					</li>
-					<li><a href="#navbar"><span class="badge badge-inverse">5</span> E人E本T4 WIFI版</a>
-					</li>
+					<li><a href="#dropdowns"><span class="badge badge-success">1</span>
+							西牧狼商务英伦复古牛皮</a></li>
+					<li><a href="#buttonGroups"><span
+							class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
+					<li><a href="#buttonDropdowns"><span
+							class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
+					<li><a href="#navs"><span class="badge badge-info">4</span>
+							ayhke磨砂牛皮保暖棉鞋</a></li>
+					<li><a href="#navbar"><span class="badge badge-inverse">5</span>
+							E人E本T4 WIFI版</a></li>
 				</ul>
 
 

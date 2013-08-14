@@ -45,7 +45,7 @@ import com.jshop.service.GoodsAttributeRpTService;
 import com.jshop.service.GoodsBelinkedTService;
 import com.jshop.service.GoodsCommentTService;
 import com.jshop.service.GoodsDetailRpTService;
-import com.jshop.service.GoodsSpecificationsRelationshipTService;
+import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.GoodsTwocodeRelationshipTService;
 import com.jshop.service.GoodsTypeTNService;
@@ -74,7 +74,7 @@ public class GoodsTAction extends ActionSupport {
 	private GoodsBelinkedTService goodsBelinkedTService;
 	private CreateHtml createHtml;
 	private DataCollectionTAction dataCollectionTAction;
-	private GoodsSpecificationsRelationshipTService goodsSpecificationsRelationshipTService;
+	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
 	private GoodsTwocodeRelationshipTService goodsTwocodeRelationshipTService;
 	private String goodsid;
 	private String goodsname;
@@ -287,13 +287,13 @@ public class GoodsTAction extends ActionSupport {
 	}
 	
 	@JSON(serialize = false)
-	public GoodsSpecificationsRelationshipTService getGoodsSpecificationsRelationshipTService() {
-		return goodsSpecificationsRelationshipTService;
+	public GoodsSpecificationsProductRpTService getGoodsSpecificationsProductRpTService() {
+		return goodsSpecificationsProductRpTService;
 	}
 
-	public void setGoodsSpecificationsRelationshipTService(
-			GoodsSpecificationsRelationshipTService goodsSpecificationsRelationshipTService) {
-		this.goodsSpecificationsRelationshipTService = goodsSpecificationsRelationshipTService;
+	public void setGoodsSpecificationsProductRpTService(
+			GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService) {
+		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
 	}
 
 	@JSON(serialize = false)

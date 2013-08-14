@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
@@ -13,7 +14,8 @@
 <title>登录 &middot; jshoper</title>
 
 <!-- Le styles -->
-<link href="<%=basePath%>admin/ui/assets/css/bootstrap.css" rel="stylesheet">
+<link href="<%=basePath%>admin/ui/assets/css/bootstrap.css"
+	rel="stylesheet">
 <style type="text/css">
 html {
 	height: 100%;
@@ -22,7 +24,8 @@ html {
 .view-login {
 	padding-top: 0;
 	background-color: #142849;
-	background-image: -webkit-gradient(radial, center center, 0, center center, 460, from(#165387), to(#142849) );
+	background-image: -webkit-gradient(radial, center center, 0, center center, 460, from(#165387
+		), to(#142849));
 	background-image: -webkit-radial-gradient(circle, #165387, #142849);
 	background-image: -moz-radial-gradient(circle, #165387, #142849);
 	background-image: -o-radial-gradient(circle, #165387, #142849);
@@ -63,9 +66,12 @@ html {
 	padding: 7px 9px;
 }
 </style>
-<link href="<%=basePath%>admin/ui/assets/css/bootstrap-responsive.css" rel="stylesheet">
+<link href="<%=basePath%>admin/ui/assets/css/bootstrap-responsive.css"
+	rel="stylesheet">
 <link href="<%=basePath%>admin/ui/assets/css/docs.css" rel="stylesheet">
-<link href="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.css" rel="stylesheet">
+<link
+	href="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.css"
+	rel="stylesheet">
 <link href="<%=basePath%>admin/ui/assets/css/base.css" rel="stylesheet">
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -74,32 +80,40 @@ html {
     <![endif]-->
 
 <!-- Fav and touch icons -->
-<link rel="shortcut icon" href="<%=basePath%>admin/ui/assets/ico/favicon.ico"/>
+<link rel="shortcut icon"
+	href="<%=basePath%>admin/ui/assets/ico/favicon.ico" />
 </head>
 
-<body data-spy="scroll" data-target=".bs-docs-sidebar" class="view-login">
+<body data-spy="scroll" data-target=".bs-docs-sidebar"
+	class="view-login">
 
 	<div class="container">
 
 
-		<form class="form-signin"  action="user/adminlogin.action" method="post">
+		<form class="form-signin" action="user/adminlogin.action"
+			method="post">
 			<h2 class="form-signin-heading">
-				<img src="<%=basePath%>admin/ui/assets/img/logo.png" width="280" height="48">
+				<img src="<%=basePath%>admin/ui/assets/img/logo.png" width="280"
+					height="48">
 			</h2>
-			
+
 			<div class="messages">
 				<div style="display: none;" id="message-error"
 					class="message message-error">
 					<div class="image">
-						<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-alert.png" alt="Error" height="32" />
-						<span>您输入的用户名或者密码错误</span>
+						<img
+							src="<%=basePath%>admin/ui/assets/img/header/icon-48-alert.png"
+							alt="Error" height="32" /> <span>您输入的用户名或者密码错误</span>
 					</div>
 				</div>
 			</div>
 			<hr />
-			<input id="username" name="username" type="text" class="input-block-level" placeholder="Username"> 
-			<input id="password" name="password"  type="password" class="input-block-level" placeholder="Password"> 
-			<label class="checkbox"><input type="checkbox" value="remember-me"> 记住我 </label>
+			<input id="username" name="username" type="text"
+				class="input-block-level" placeholder="Username"> <input
+				id="password" name="password" type="password"
+				class="input-block-level" placeholder="Password"> <label
+				class="checkbox"><input type="checkbox" value="remember-me">
+				记住我 </label>
 			<button class="btn btn-large btn-primary" type="submit">
 				<i class="icon-user icon-white"></i> 安全登录
 			</button>
@@ -112,7 +126,8 @@ html {
 		<div class="navbar-inner navbar-innerb">
 			<div class="pull-right fixed-bottom-cp">&copy; jshoper 2012</div>
 			<div class="viewsite fixed-bottom-div">
-				<a href="http://www.localjoomla3.com/" target="_blank"><i class="icon-share-alt"></i> 浏览网站</a>
+				<a href="http://www.localjoomla3.com/" target="_blank"><i
+					class="icon-share-alt"></i> 浏览网站</a>
 			</div>
 			<div class="loggedin-users fixed-bottom-div">
 				<span class="badge">0</span> 访客在线
@@ -138,7 +153,8 @@ html {
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-collapse.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-carousel.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-typeahead.js"></script>
-	<script type="text/javascript" src="<%=basePath%>admin/js/jquery.query.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>admin/js/jquery.query.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		//读取登录返回状态并显示提示
