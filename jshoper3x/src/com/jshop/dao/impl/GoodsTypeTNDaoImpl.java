@@ -196,6 +196,23 @@ public class GoodsTypeTNDaoImpl extends HibernateDaoSupport implements GoodsType
 			throw re;
 		}
 	}
+
+	@Override
+	public int countsortAllGoodsTypeTN(String queryString) {
+		log.debug("countsortAllGoodsTypeTN");
+		try {
+			List list = this.getHibernateTemplate().find(queryString);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countsortAllGoodsTypeTN error", re);
+			throw re;
+		}
+	}
 	
 	
 	

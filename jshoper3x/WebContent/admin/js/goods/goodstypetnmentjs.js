@@ -280,6 +280,9 @@ $(function() {
 			display : '请选择搜索条件',
 			name : 'sc',
 			isdefault : true
+		},{
+			display:'商品类型名称',
+			name:'name'
 		} ],
 		sortname : "createtime",
 		sortorder : "desc",

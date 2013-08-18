@@ -55,6 +55,12 @@ public interface GoodsTypeTNDao {
 	 */
 	public  List<GoodsTypeTN>sortAllGoodsTypeTN(final int currentPage,final int lineSize,String queryString);
 	/**
+	 * 根据参数统计搜索结果计数
+	 * @param queryString
+	 * @return
+	 */
+	public int countsortAllGoodsTypeTN(String queryString);
+	/**
 	 * 根据商品类型名称获取记录
 	 * @param name
 	 * @return

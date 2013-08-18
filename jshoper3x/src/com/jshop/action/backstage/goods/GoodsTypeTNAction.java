@@ -289,11 +289,16 @@ public class GoodsTypeTNAction extends ActionSupport {
 			if (Validate.StrisNull(this.getQuery())) {
 				return "json";
 			} else {
+				if(this.getQtype().equals("name")){
+					findGoodsTypeTNByParams();
+				}
 				return "json";
 			}
 		}
 		return "json";
 	}
+
+	
 
 	public void ProcessGoodsTypeTNList(List<GoodsTypeTN> list) {
 		for (Iterator it = list.iterator(); it.hasNext();) {
@@ -304,7 +309,18 @@ public class GoodsTypeTNAction extends ActionSupport {
 			rows.add(cellMap);
 		}
 	}
-
+	
+	private void findGoodsTypeTNByParams() {
+		int currentPage = page;
+		int lineSize = rp;
+		String qs= "select count(*) from GoodsTypeTN  where "+this.getQtype()+" like '%"+this.getQuery()+"%' ";
+		total = this.getGoodsTypeTNService().countsortAllGoodsTypeTN(qs);
+		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
+			String queryString = "from GoodsTypeTN as gtn where gtn."+this.getQtype()+" like '%"+this.getQuery()+"%' order by " + sortname + " " + sortorder + "";
+			List<GoodsTypeTN> list = this.getGoodsTypeTNService().sortAllGoodsTypeTN(currentPage, lineSize, queryString);
+			this.ProcessGoodsTypeTNList(list);
+		}
+	}
 	public void findDefaultAllGoodsTypeTN() {
 		int currentPage = page;
 		int lineSize = rp;

@@ -853,7 +853,9 @@ public class GoodsCategoryTAction extends ActionSupport {
 		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
 			String queryString = "from GoodsCategoryT as gt where state=:state order by " + sortname + " " + sortorder + " ";
 			List<GoodsCategoryT> list = this.getGoodsCategoryTService().sortAllGoodsCategoryT(currentPage, lineSize, state, queryString);
-			this.ProcessGoodsCategoryTList(list);
+			if(!list.isEmpty()){
+				this.ProcessGoodsCategoryTList(list);
+			}
 		}
 	}
 

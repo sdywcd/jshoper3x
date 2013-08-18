@@ -62,4 +62,9 @@ public class GoodsTypeTNServiceImpl implements GoodsTypeTNService {
 	public List<GoodsTypeTN> findGoodsTypeTNByName(String name) {
 		return this.getGoodsTypeTNDao().findGoodsTypeTNByName(name);
 	}
+
+	@Override
+	public int countsortAllGoodsTypeTN(String queryString) {
+		return this.getGoodsTypeTNDao().countsortAllGoodsTypeTN(queryString);
+	}
 }
