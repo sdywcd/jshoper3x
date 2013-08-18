@@ -159,7 +159,10 @@
 					</div>
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
-							id="hidproductid" name="hidproductid" value=""> <input
+							id="hidproductid" name="hidproductid" value="">
+							  <input type="hidden" id="hidgoodsid" name="hidgoodsid" value="">
+							   <input type="hidden" id="hidgoodsname" name="hidgoodsname" value="">
+							  <input
 							class="btn btn-success" type="button" id="submit" name="submit"
 							value="提交" /> <input class="btn btn-success" type="button"
 							id="update" name="update" value="更新" style="display: none;" />

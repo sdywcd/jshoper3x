@@ -3,9 +3,10 @@ package com.jshop.service;
 import java.util.Date;
 import java.util.List;
 
-import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
+import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
+import com.jshop.entity.ProductT;
 
 public interface GoodsTService {
 
@@ -730,14 +731,14 @@ public interface GoodsTService {
 	 * @param gart
 	 * @param gdpt
 	 */
-	public void saveGoodsProcess(GoodsT gt,GoodsDetailRpT gdpt);
+	public void saveGoodsProcess(GoodsT gt,GoodsDetailRpT gdpt,ProductT pt,GoodsSpecificationsProductRpT gspt);
 	/**
 	 * 商品信息更新过程
 	 * @param gt
 	 * @param goodsattrsval
 	 * @param gdpt
 	 */
-	public void updateGoodsProcess(GoodsT gt,String detail);
+	public void updateGoodsProcess(GoodsT gt,String detail,ProductT pt);
 	
 	
 }

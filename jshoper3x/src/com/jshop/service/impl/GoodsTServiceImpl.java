@@ -19,10 +19,15 @@ import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.dao.GoodsAttributeRpTDao;
 import com.jshop.dao.GoodsDetailRpTDao;
 import com.jshop.dao.GoodsTDao;
+import com.jshop.dao.ProductTDao;
 import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
+import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
+import com.jshop.entity.ProductT;
+import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.GoodsTService;
+import com.taobao.api.domain.Product;
 
 @Service("goodsTService")
 @Scope("prototype")
@@ -33,6 +38,10 @@ public class GoodsTServiceImpl implements GoodsTService {
 	private GoodsDetailRpTDao goodsDetailRpTDao;
 	@Resource 
 	private GoodsAttributeRpTDao goodsAttributeRpTDao;
+	@Resource
+	private ProductTDao productTDao;
+	@Resource
+	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
 	@Resource
 	private Serial serial;
 	
@@ -69,6 +78,25 @@ public class GoodsTServiceImpl implements GoodsTService {
 	}
 	
 	
+
+	public ProductTDao getProductTDao() {
+		return productTDao;
+	}
+
+	public void setProductTDao(ProductTDao productTDao) {
+		this.productTDao = productTDao;
+	}
+
+
+
+	public GoodsSpecificationsProductRpTService getGoodsSpecificationsProductRpTService() {
+		return goodsSpecificationsProductRpTService;
+	}
+
+	public void setGoodsSpecificationsProductRpTService(
+			GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService) {
+		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
+	}
 
 	public int delGoods(String[] list, String creatorid) {
 		return getGoodsTDao().delGoods(list, creatorid);
@@ -375,17 +403,21 @@ public class GoodsTServiceImpl implements GoodsTService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void saveGoodsProcess(GoodsT gt,
-			GoodsDetailRpT gdpt) {
+			GoodsDetailRpT gdpt,ProductT pt,GoodsSpecificationsProductRpT gspt) {
 			gt.setGoodsid(this.getSerial().Serialid(Serial.GOODS));
 			this.getGoodsTDao().saveGoods(gt);
 			gdpt.setGoodsid(gt.getGoodsid());
 			gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
 			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdpt);
+			this.getProductTDao().saveProductT(pt);
+			//增加规格商品和货物关系表
+			this.getGoodsSpecificationsProductRpTService().addGoodsAssociatedProductById(gspt);
+			
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void updateGoodsProcess(GoodsT gt,String detail) {
+	public void updateGoodsProcess(GoodsT gt,String detail,ProductT pt) {
 		//更新商品表
 		this.getGoodsTDao().updateGoods(gt);
 		//更新商品介绍
@@ -400,7 +432,7 @@ public class GoodsTServiceImpl implements GoodsTService {
 			gdrt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
 			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
 		}
-	
+		this.getProductTDao().updateProductT(pt);
 		
 		
 		

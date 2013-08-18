@@ -36,9 +36,11 @@ import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
+import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.GoodsTwocodeRelationshipT;
 import com.jshop.entity.GoodsTypeTN;
+import com.jshop.entity.ProductT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
 import com.jshop.service.GoodsAttributeRpTService;
@@ -142,6 +144,7 @@ public class GoodsTAction extends ActionSupport {
 	private String belinkedgoodsid;//关联商品id串
 	private String isvirtual;//是否虚拟商品标记
 	private String virtualresults;//虚拟商品返回结果
+	private String productid;
 	private String rejson;
 	private String query;//text
 	private String qtype;//select
@@ -1057,6 +1060,14 @@ public class GoodsTAction extends ActionSupport {
 		this.pathName = pathName;
 	}
 
+	public String getProductid() {
+		return productid;
+	}
+
+	public void setProductid(String productid) {
+		this.productid = productid;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -1075,6 +1086,7 @@ public class GoodsTAction extends ActionSupport {
 	 */
 	@Action(value = "saveGoods", results = { @Result(name = "json", type = "json") })
 	public String saveGoods()  {
+		//构造goods
 		GoodsT gt=new GoodsT();
 		gt.setGoodsTypeId(this.getGoodsTypeId());
 		gt.setGoodsTypeName(this.getGoodsTypeName());
@@ -1090,6 +1102,10 @@ public class GoodsTAction extends ActionSupport {
 		gt.setUsersetnum(this.getUsersetnum());
 		gt.setBrandid(this.getBrandid());
 		gt.setBrandname(this.getBrandname());
+		gt.setCost(Double.parseDouble(this.getCost()));
+		gt.setSaleprice(Double.parseDouble(this.getSaleprice()));
+		gt.setMemberprice(Double.parseDouble(this.getMemberprice()));
+		gt.setPrice(Double.parseDouble(this.getPrice()));
 		gt.setPoints(Double.parseDouble(this.getPoints()));
 		gt.setSort(Integer.parseInt(this.getSort()));
 		gt.setIsNew(this.getIsNew());
@@ -1106,10 +1122,41 @@ public class GoodsTAction extends ActionSupport {
 		gt.setCreatetime(BaseTools.systemtime());
 		gt.setCreatorid(BaseTools.adminCreateId());
 		gt.setUpdatetime(BaseTools.systemtime());
+		//构造goodsdetail和goods关系
 		GoodsDetailRpT gdpt=new GoodsDetailRpT();
 		gdpt.setDetail(this.getDetail());
+		//构造product
+		ProductT pt=new ProductT();
+		pt.setProductid(this.getSerial().Serialid(Serial.PRODUCT));
+		pt.setPrice(gt.getPrice());
+		pt.setMemberprice(gt.getMemberprice());
+		pt.setCost(gt.getCost());
+		pt.setSaleprice(gt.getSaleprice());
+		pt.setFreezeStore(0);
+		pt.setStore(0);
+		pt.setIsDefault(StaticString.ONE);//表示默认
+		pt.setIsSalestate(StaticString.ONE);//表示对外销售状态
+		pt.setProductName(gt.getGoodsname());
+		pt.setProductSn(gt.getUsersetnum());
+		pt.setSpecificationsValue(StaticString.EMPTY);
+		pt.setWarehouseLocation(StaticString.EMPTY);
+		pt.setPlaceStore(StaticString.EMPTY);
+		pt.setWeight(StaticString.EMPTY);
+		pt.setGoodsid(gt.getGoodsid());
+		pt.setCreatorid(gt.getCreatorid());
+		pt.setCreatetime(gt.getCreatetime());
+		pt.setSpecificationsid(StaticString.ZERO);//表示默认规格的值
+		pt.setSpecificationsName(StaticString.DEFAULTSPECIFNAME);//默认规格值名称
+		pt.setUpdatetime(gt.getCreatetime());
+		pt.setUnit(StaticString.EMPTY);
+		//构造goodsspecificationproductrp
+		GoodsSpecificationsProductRpT gspt=new GoodsSpecificationsProductRpT();
+		gspt.setGoodsSpecificationsProductRpTid(this.getSerial().Serialid(Serial.GOODSSPECIFICATIONSPRODUCTRPT));
+		gspt.setGoodsid(gt.getGoodsid());
+		gspt.setProductid(pt.getProductid());
+		gspt.setSpecidicationsid("0");//0表示默认规格
 		
-		this.getGoodsTService().saveGoodsProcess(gt,gdpt);
+		this.getGoodsTService().saveGoodsProcess(gt,gdpt,pt,gspt);
 		this.saveGoodsAttributeRp(gt, this.getGoodsAttrsVals());
 		this.setSucflag(true);
 		return "json";
@@ -1229,7 +1276,10 @@ public class GoodsTAction extends ActionSupport {
 		if (StringUtils.isNotBlank(this.getGoodsid())) {
 			bean = this.getGoodsTService().findGoodsById(this.getGoodsid().trim());
 			if (bean != null) {
-			
+				List<ProductT>list=this.getProductTService().findProductTByGoodsid(bean.getGoodsid());
+				if(!list.isEmpty()){
+					this.setProductid(list.get(0).getProductid());
+				}
 				this.setBasepath(BaseTools.getBasePath());
 				this.setSucflag(true);
 				return "json";
@@ -1276,6 +1326,10 @@ public class GoodsTAction extends ActionSupport {
 				bean.setUsersetnum(this.getUsersetnum());
 				bean.setBrandid(this.getBrandid());
 				bean.setBrandname(this.getBrandname());
+				bean.setCost(Double.parseDouble(this.getCost()));
+				bean.setSaleprice(Double.parseDouble(this.getSaleprice()));
+				bean.setMemberprice(Double.parseDouble(this.getMemberprice()));
+				bean.setPrice(Double.parseDouble(this.getPrice()));
 				bean.setPoints(Double.parseDouble(this.getPoints()));
 				bean.setSort(Integer.parseInt(this.getSort()));
 				bean.setIsNew(this.getIsNew());
@@ -1290,7 +1344,31 @@ public class GoodsTAction extends ActionSupport {
 				bean.setMetaDescription(this.getMetaDescription());
 				bean.setCreatorid(BaseTools.adminCreateId());
 				bean.setUpdatetime(BaseTools.systemtime());
-				this.getGoodsTService().updateGoodsProcess(bean, this.getDetail());
+				//构造product
+				ProductT pt=new ProductT();
+				pt=this.getProductTService().findProductByProductid(this.getProductid());
+				pt.setPrice(bean.getPrice());
+				pt.setMemberprice(bean.getMemberprice());
+				pt.setCost(bean.getCost());
+				pt.setSaleprice(bean.getSaleprice());
+				pt.setFreezeStore(0);
+				pt.setStore(0);
+				pt.setIsDefault(StaticString.ONE);//表示默认
+				pt.setIsSalestate(StaticString.ONE);//表示对外销售状态
+				pt.setProductName(bean.getGoodsname());
+				pt.setProductSn(bean.getUsersetnum());
+				pt.setSpecificationsValue(StaticString.EMPTY);
+				pt.setWarehouseLocation(StaticString.EMPTY);
+				pt.setPlaceStore(StaticString.EMPTY);
+				pt.setWeight(StaticString.EMPTY);
+				pt.setGoodsid(bean.getGoodsid());
+				pt.setCreatorid(bean.getCreatorid());
+				pt.setCreatetime(bean.getCreatetime());
+				pt.setSpecificationsid(StaticString.ZERO);//表示默认规格的值
+				pt.setSpecificationsName(StaticString.DEFAULTSPECIFNAME);//默认规格值名称
+				pt.setUpdatetime(bean.getCreatetime());
+				pt.setUnit(StaticString.EMPTY);
+				this.getGoodsTService().updateGoodsProcess(bean, this.getDetail(),pt);
 				this.updateGoodsAttributeRp(bean, this.getGoodsAttrsVals());
 				this.setSucflag(true);
 				return "json";

@@ -152,7 +152,8 @@ public class Serial {
 	public static String GOODSATTRIBUTERPT="goodsattributerp";
 	//商品介绍和商品关系记录表
 	public static String GOODSDETAILRPT="goodsdetailrp";
-	
+	//商品和货物关系表
+	public static String GOODSSPECIFICATIONSPRODUCTRPT="goodsspecificationsproductrpt";
 	@Resource
 	private SerialTService serialTService;
 	

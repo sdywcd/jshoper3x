@@ -140,27 +140,31 @@ $(function() {
 				//这里绑定选择的规格值(这里的texttype，imgtype，colortype表示的是规格值设置中的规格类型，是定死的，且是一个关键判定标记)
 				findProductSpecificationsTByspecificationsid(data.bean.specificationsid);
 				var jsonstr=$.parseJSON(data.bean.specificationsValue);
-				$.each(jsonstr,function(k,v){
-					if(v.type=="texttype"){
-						$("input[name='texttype']").each(function(){
-							 if($(this).attr("value")==v.specificationsValue){
-								 $(this).attr("checked",true);
-							 }
-						});
-					}else if(v.type=="imgtype"){
-						$("input[name='imgtype']").each(function(){
-							 if($(this).attr("value")==v.specificationsValue){
-								 $(this).attr("checked",true);
-							 }
-						});
-					}else if(v.type=="colortype"){
-						$("input[name='colortype']").each(function(){
-							 if($(this).attr("value")==v.specificationsValue){
-								 $(this).attr("checked",true);
-							 }
-						});
-					}
-				});
+				if(jsonstr!=null){
+					$.each(jsonstr,function(k,v){
+						if(v.type=="texttype"){
+							$("input[name='texttype']").each(function(){
+								 if($(this).attr("value")==v.specificationsValue){
+									 $(this).attr("checked",true);
+								 }
+							});
+						}else if(v.type=="imgtype"){
+							$("input[name='imgtype']").each(function(){
+								 if($(this).attr("value")==v.specificationsValue){
+									 $(this).attr("checked",true);
+								 }
+							});
+						}else if(v.type=="colortype"){
+							$("input[name='colortype']").each(function(){
+								 if($(this).attr("value")==v.specificationsValue){
+									 $(this).attr("checked",true);
+								 }
+							});
+						}
+					});
+				}
+				$("#specificationvalueareadiv").show();
+				$("#hidgoodsid").val(data.bean.goodsid);
 				$("#hidproductid").val(data.bean.productid);
 				$("#submit").hide();
 				$("#update").show();
@@ -274,7 +278,7 @@ $(function() {
 		var isDefault=$("input[name='isDefault']:checked").val();
 		var isSalestate=$("input[name='isSalestate']:checked").val();
 		//获取商品id，判定是否从good.jsp过来的请求
-		var goodsid = $.query.get("goodsid");
+		var goodsid=$("#hidgoodsid").val();
 		this.value="提交中";
 		this.disabled=true;
 		$.post("saveProductT.action",{
@@ -298,7 +302,7 @@ $(function() {
 			"isSalestate":isSalestate
 		},function(data){
 			if(data.sucflag){
-				window.location.href="productment.jsp?operate=find&folder=goods";
+				window.location.href="productment.jsp?operate=find&goodsid="+goodsid+"&folder=goods";
 			}
 		});
 	},
@@ -338,9 +342,11 @@ $(function() {
 		var placeStore=$("#placeStore").val();
 		var isDefault=$("input[name='isDefault']:checked").val();
 		var isSalestate=$("input[name='isSalestate']:checked").val();
+		var goodsid=$("#hidgoodsid").val();
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateProductT.action",{
+			"goodsid":goodsid,
 			"productid":productid,
 			"specificationsValue":specificationsValue,
 			"specificationsid":isSpecificationsOpen,
@@ -361,7 +367,7 @@ $(function() {
 			"isSalestate":isSalestate
 		},function(data){
 			if(data.sucflag){
-				window.location.href="productment.jsp?operate=find&folder=goods";
+				window.location.href="productment.jsp?operate=find&goodsid="+goodsid+"&folder=goods";
 			}
 		});
 	},
@@ -569,10 +575,14 @@ $(function() {
 	}else if(operate=="find"){
 		var goodsid=$.query.get("goodsid");
 		var goodsname=$.query.get("goodsname");
-		if(goodsname!=""){
+		if(goodsid!=""&&goodsname!=""){
 			var qtype="goodsid";
 			var param="goodsid="+goodsid;
 			setdttitle("#dttitle",goodsname+"的所有货物列表");
+			findProducts(qtype,param);
+		}else if(goodsid!=""){
+			var qtype="goodsid";
+			var param="goodsid="+goodsid;
 			findProducts(qtype,param);
 		}else{
 			var param="";

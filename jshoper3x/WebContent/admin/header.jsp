@@ -110,9 +110,6 @@
 								</a></li>
 								<li class="divider"></li>
 								<li><a
-									href="<%=basePath%>admin/products/product.jsp?operate=add">添加货物
-								</a></li>
-								<li><a
 									href="<%=basePath%>admin/products/productment.jsp?operate=find">所有货物
 								</a></li>
 								<!--  <li><a href="#">团购商品 </a></li>

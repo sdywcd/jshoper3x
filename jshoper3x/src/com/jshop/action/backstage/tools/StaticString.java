@@ -83,6 +83,7 @@ public class  StaticString {
 	
 	public static final String COLORTYPE="颜色类型";
 	
+	public static final String DEFAULTSPECIFNAME="默认规格";
 	//商品分类静态字段
 	public static final String TOPCA="顶级分类";
 	
@@ -99,5 +100,6 @@ public class  StaticString {
 	
 	public static final String OFFSALE="下架";
 	
+	//商品规格
 	
 }

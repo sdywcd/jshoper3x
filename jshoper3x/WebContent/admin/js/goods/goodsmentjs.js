@@ -269,6 +269,10 @@ $(function() {
 			return false;
 		}
 		var brandname=$("#brandname").find("option:selected").text();
+		var cost=$("#cost").val();
+		var saleprice=$("#saleprice").val();
+		var memberprice=$("#memberprice").val();
+		var price=$("#price").val();
 		var points=$("#points").val();
 		var sort=$("#sort").val();
 		var isNew=$("input[name='isNew']:checked").val();
@@ -307,6 +311,10 @@ $(function() {
 			"usersetnum":usersetnum,
 			"brandid":brandid,
 			"brandname":brandname,
+			"cost":cost,
+			"saleprice":saleprice,
+			"memberprice":memberprice,
+			"price":price,
 			"points":points,
 			"sort":sort,
 			"isNew":isNew,
@@ -381,6 +389,11 @@ $(function() {
 			return false;
 		}
 		var brandname=$("#brandname").find("option:selected").text();
+		var cost=$("#cost").val();
+		var saleprice=$("#saleprice").val();
+		var memberprice=$("#memberprice").val();
+		var price=$("#price").val();
+		var points=$("#points").val();
 		var points=$("#points").val();
 		var sort=$("#sort").val();
 		var isNew=$("input[name='isNew']:checked").val();
@@ -401,6 +414,7 @@ $(function() {
 		var commoditylist=$('#commoditylist').val();
 		var metaKeywords=$('#metaKeywords').val();
 		var metaDescription=$('#metaDes').val();
+		var productid=$("#hidproductid").val();
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateGoods.action",{
@@ -420,6 +434,10 @@ $(function() {
 			"usersetnum":usersetnum,
 			"brandid":brandid,
 			"brandname":brandname,
+			"cost":cost,
+			"saleprice":saleprice,
+			"memberprice":memberprice,
+			"price":price,
 			"points":points,
 			"sort":sort,
 			"isNew":isNew,
@@ -432,7 +450,8 @@ $(function() {
 			"detail":detail,
 			"commoditylist":commoditylist,
 			"metaKeywords":metaKeywords,
-			"metaDescription":metaDescription
+			"metaDescription":metaDescription,
+			"productid":productid
 		},function(data){
 			if(data.sucflag){
 				window.location.href="goodsment.jsp?operate=find&folder=goods";
@@ -553,10 +572,13 @@ $(function() {
 					$('#hidlname').val(data.bean.lname);
 					$('#hidstypeid').val(data.bean.stypeid);
 					$('#hidsname').val(data.bean.sname);
-					
 					$('#goodsname').val(data.bean.goodsname);
 					$('#usersetnum').val(data.bean.usersetnum);
 					$('#brandname').val(data.bean.brandid);
+					$('#cost').val(data.bean.cost);
+					$('#saleprice').val(data.bean.saleprice);
+					$('#memberprice').val(data.bean.memberprice);
+					$('#price').val(data.bean.price);
 					$('#points').val(data.bean.points);
 					$("#sort").val(data.bean.sort);
 					if("1"==data.bean.isNew){
@@ -613,6 +635,7 @@ $(function() {
 					$('#metaKeywords').val(data.bean.metaKeywords);
 					$('#metaDes').val(data.bean.metaDescription);
 					$("#hidgoodsid").val(data.bean.goodsid);
+					$("#hidproductid").val(data.bean.productid);
 					$("#goodscategory").show();
 					$("#modifygoodscategory").show();
 					$("#selectgoodscategory").hide();

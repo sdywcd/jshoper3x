@@ -6,9 +6,13 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.dao.ProductTDao;
+import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.ProductT;
+import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.ProductTService;
 
 @Service("productTService")
@@ -16,6 +20,17 @@ import com.jshop.service.ProductTService;
 public class ProductTServiceImpl implements ProductTService {
 	@Resource
 	private ProductTDao productTDao;
+	@Resource
+	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
+	
+	public GoodsSpecificationsProductRpTService getGoodsSpecificationsProductRpTService() {
+		return goodsSpecificationsProductRpTService;
+	}
+
+	public void setGoodsSpecificationsProductRpTService(
+			GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService) {
+		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
+	}
 
 	public ProductTDao getProductTDao() {
 		return productTDao;
@@ -86,6 +101,23 @@ public class ProductTServiceImpl implements ProductTService {
 	@Override
 	public int delProductT(String[] strs) {
 		return this.getProductTDao().delProductT(strs);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void saveProductProcess(ProductT pt,
+			GoodsSpecificationsProductRpT gsrt) {
+		this.getProductTDao().saveProductT(pt);
+		this.getGoodsSpecificationsProductRpTService().addGoodsAssociatedProductById(gsrt);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void updateProductProcess(ProductT pt,
+			GoodsSpecificationsProductRpT gsrt) {
+		this.getProductTDao().updateProductT(pt);
+		this.getGoodsSpecificationsProductRpTService().updateGoodsAssociatedProductById(gsrt);
+		
 	}
 
 }

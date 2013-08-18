@@ -17,7 +17,9 @@ import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.ProductT;
+import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.ProductTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
@@ -25,6 +27,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class ProductTAction extends ActionSupport {
 	private Serial serial;
 	private ProductTService productTService;
+	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
 	private String productid;
 	private Double price;
 	private Double memberprice;
@@ -66,6 +69,16 @@ public class ProductTAction extends ActionSupport {
 
 	public void setProductTService(ProductTService productTService) {
 		this.productTService = productTService;
+	}
+
+	@JSON(serialize = false)
+	public GoodsSpecificationsProductRpTService getGoodsSpecificationsProductRpTService() {
+		return goodsSpecificationsProductRpTService;
+	}
+
+	public void setGoodsSpecificationsProductRpTService(
+			GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService) {
+		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
 	}
 
 	@JSON(serialize = false)
@@ -353,7 +366,7 @@ public class ProductTAction extends ActionSupport {
 	public String saveProductT(){
 		if(StringUtils.isBlank(this.getProductName())){
 			return "json";
-		}
+		} 
 		ProductT pt=new ProductT();
 		pt.setProductid(this.getSerial().Serialid(Serial.PRODUCT));
 		pt.setPrice(this.getPrice());
@@ -377,10 +390,14 @@ public class ProductTAction extends ActionSupport {
 		pt.setSpecificationsName(this.getSpecificationsName());
 		pt.setUpdatetime(BaseTools.systemtime());
 		pt.setUnit(this.getUnit());
-		if(this.getProductTService().saveProductT(pt)>0){
-			this.setSucflag(true);
-			return "json";
-		}
+		//保存商品和规格和货物关系，要进行事务控制
+		GoodsSpecificationsProductRpT gsrt=new GoodsSpecificationsProductRpT();
+		gsrt.setGoodsSpecificationsProductRpTid(this.getSerial().Serialid(Serial.GOODSSPECIFICATIONSPRODUCTRPT));
+		gsrt.setGoodsid(pt.getGoodsid());
+		gsrt.setProductid(pt.getProductid());
+		gsrt.setSpecidicationsid(pt.getSpecificationsid());
+		this.getProductTService().saveProductProcess(pt, gsrt);
+		this.setSucflag(true);
 		return "json";
 	}
 	
@@ -490,7 +507,7 @@ public class ProductTAction extends ActionSupport {
 					pt.getStore(),
 					pt.getWeight(),
 					BaseTools.formateDbDate(pt.getCreatetime()),
-					"<a target='_blank' id='editproduct' href='product.jsp?' name='editproduct'>[编辑]</a>" 
+					"<a id='editproduct' href='product.jsp?operate=edit&productid="+pt.getProductid()+"&folder=goods' name='editproduct'>[编辑]</a>" 
 				});
 			rows.add(cellMap);
 		}
@@ -542,7 +559,12 @@ public class ProductTAction extends ActionSupport {
 		pt.setSpecificationsName(this.getSpecificationsName());
 		pt.setUpdatetime(BaseTools.systemtime());
 		pt.setUnit(this.getUnit());
-		this.getProductTService().updateProductT(pt);
+		//保存商品和规格和货物关系，要进行事务控制
+		GoodsSpecificationsProductRpT gsrt=this.getGoodsSpecificationsProductRpTService().checkSpecificationRelationshipByproductid(pt.getProductid()).get(0);
+		gsrt.setGoodsid(pt.getGoodsid());
+		gsrt.setProductid(pt.getProductid());
+		gsrt.setSpecidicationsid(pt.getSpecificationsid());
+		this.getProductTService().updateProductProcess(pt, gsrt);
 		this.setSucflag(true);
 		return "json";
 	}

@@ -2,6 +2,7 @@ package com.jshop.service;
 
 import java.util.List;
 
+import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.ProductT;
 
 public interface ProductTService {
@@ -119,5 +120,17 @@ public interface ProductTService {
 	 * @return
 	 */
 	public int delProductT(String []strs);
+	/**
+	 * 货物信息增加过程
+	 * @param pt
+	 * @param gsrt
+	 */
+	public void saveProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt);
+	/**
+	 * 货物信息更新过程
+	 * @param pt
+	 * @param gsrt
+	 */
+	public void updateProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt);
 	
 }

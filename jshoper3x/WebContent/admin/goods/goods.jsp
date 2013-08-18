@@ -144,6 +144,26 @@
 							id="brandname" name="brandname"></select>
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">成本价:</span> <input
+							type="text" id="cost" name="cost" class="small" /> <span
+							class="label label-info">成本价是该货品实际最合理价值，理论上会员价不得低于成本价</span>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">销售价:</span> <input
+							type="text" id="saleprice" name="saleprice" class="small" />
+						<span class="label label-info">销售价是该货品对非会员或者无优惠时的价格</span>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">会员价:</span> <input
+							type="text" id="memberprice" name="memberprice"
+							class="small" /> <span class="label label-info">会员价是该货品对会员或者优惠时的价格</span>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">市场价:</span> <input
+							type="text" id="price" name="price" class="small" /> <span
+							class="label label-info">市场价是该货品其他平台的价格</span>
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">商品积分:</span> <input type="text"
 							id="points" name="points" class="small" />
 					</div>
@@ -244,7 +264,7 @@
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
 							id="hidgoodsid" name="hidgoodsid" value="" /> <input
-							type="hidden" id="hidgrade" name="hidgrade" value=""> <input
+							type="hidden" id="hidproductid" name="hidproductid" value=""> <input
 							class="btn btn-success" type="button" id="submit" name="submit"
 							value="提交" /> <input class="btn btn-success" type="button"
 							id="update" name="update" value="更新" style="display: none;" />
