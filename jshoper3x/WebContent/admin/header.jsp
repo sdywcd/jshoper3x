@@ -109,9 +109,7 @@
 									href="<%=basePath%>admin/goods/goodsment.jsp?operate=find">所有商品
 								</a></li>
 								<li class="divider"></li>
-								<li><a
-									href="<%=basePath%>admin/products/productment.jsp?operate=find">所有货物
-								</a></li>
+								
 								<!--  <li><a href="#">团购商品 </a></li>
 								<li><a href="#">团购订单管理 </a></li>-->
 								<!-- <li class="dropdown-submenu"><a tabindex="-1" href="#">商品列表</a>

@@ -241,7 +241,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 		if(list.isEmpty()){
 			GoodsTypeTN gtn = new GoodsTypeTN();
 			gtn.setGoodsTypeId(this.getSerial().Serialid(Serial.GOODSTYPE));
-			gtn.setName(this.getName());
+			gtn.setName(this.getName().trim());
 			gtn.setCreatetime(BaseTools.systemtime());
 			gtn.setCreatorid(BaseTools.adminCreateId());
 			gtn.setGoodsParameter(this.getGoodsParameter());
@@ -313,10 +313,10 @@ public class GoodsTypeTNAction extends ActionSupport {
 	private void findGoodsTypeTNByParams() {
 		int currentPage = page;
 		int lineSize = rp;
-		String qs= "select count(*) from GoodsTypeTN  where "+this.getQtype()+" like '%"+this.getQuery()+"%' ";
+		String qs= "select count(*) from GoodsTypeTN  where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
 		total = this.getGoodsTypeTNService().countsortAllGoodsTypeTN(qs);
 		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from GoodsTypeTN as gtn where gtn."+this.getQtype()+" like '%"+this.getQuery()+"%' order by " + sortname + " " + sortorder + "";
+			String queryString = "from GoodsTypeTN as gtn where gtn."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + sortname + " " + sortorder + "";
 			List<GoodsTypeTN> list = this.getGoodsTypeTNService().sortAllGoodsTypeTN(currentPage, lineSize, queryString);
 			this.ProcessGoodsTypeTNList(list);
 		}

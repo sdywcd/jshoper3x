@@ -406,7 +406,7 @@
 	border-right: solid 1px #ddd;
 	overflow: hidden;
 	vertical-align: middle;
-	white-space: nowrap;
+	/*white-space: nowrap;*/
 	background-color: #fff;
 }
 

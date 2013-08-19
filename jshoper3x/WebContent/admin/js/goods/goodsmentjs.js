@@ -679,7 +679,7 @@ $(function() {
 		colModel : [ {
 			display : '商品名称',
 			name : 'goodsname',
-			width : 500,
+			width : 400,
 			sortable : true,
 			align : 'center'
 		}, {

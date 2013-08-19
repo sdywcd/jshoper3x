@@ -60,10 +60,6 @@ $(function() {
 				logoPath=this.value;
 			}
 		});
-		if(sum==0){
-			formwarning("#alerterror","请选择一个商店LOGO");
-			return false;
-		}
 		var sort = $('#sort').val();
 		if (sort == "") {
 			formwarning("#alerterror","请填写排序");

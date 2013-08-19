@@ -404,10 +404,7 @@ public class GoodsTServiceImpl implements GoodsTService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void saveGoodsProcess(GoodsT gt,
 			GoodsDetailRpT gdpt,ProductT pt,GoodsSpecificationsProductRpT gspt) {
-			gt.setGoodsid(this.getSerial().Serialid(Serial.GOODS));
 			this.getGoodsTDao().saveGoods(gt);
-			gdpt.setGoodsid(gt.getGoodsid());
-			gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
 			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdpt);
 			this.getProductTDao().saveProductT(pt);
 			//增加规格商品和货物关系表

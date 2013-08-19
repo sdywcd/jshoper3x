@@ -1088,6 +1088,7 @@ public class GoodsTAction extends ActionSupport {
 	public String saveGoods()  {
 		//构造goods
 		GoodsT gt=new GoodsT();
+		gt.setGoodsid(this.getSerial().Serialid(Serial.GOODS));
 		gt.setGoodsTypeId(this.getGoodsTypeId());
 		gt.setGoodsTypeName(this.getGoodsTypeName());
 		gt.setGoodsParameterValue(this.getGoodsParameterValue());
@@ -1124,7 +1125,9 @@ public class GoodsTAction extends ActionSupport {
 		gt.setUpdatetime(BaseTools.systemtime());
 		//构造goodsdetail和goods关系
 		GoodsDetailRpT gdpt=new GoodsDetailRpT();
+		gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
 		gdpt.setDetail(this.getDetail());
+		gdpt.setGoodsid(gt.getGoodsid());
 		//构造product
 		ProductT pt=new ProductT();
 		pt.setProductid(this.getSerial().Serialid(Serial.PRODUCT));
@@ -1232,35 +1235,35 @@ public class GoodsTAction extends ActionSupport {
 		rows.clear();
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			GoodsT gt = (GoodsT) it.next();
-			if (gt.getRecommended().equals("1")) {
-				gt.setRecommended("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+			if (gt.getRecommended().equals(StaticString.ONE)) {
+				gt.setRecommended("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setRecommended("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				gt.setRecommended("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getHotsale().equals("1")) {
-				gt.setHotsale("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+			if (gt.getHotsale().equals(StaticString.ONE)) {
+				gt.setHotsale("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setHotsale("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				gt.setHotsale("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getBargainprice().equals("1")) {
-				gt.setBargainprice("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+			if (gt.getBargainprice().equals(StaticString.ONE)) {
+				gt.setBargainprice("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setBargainprice("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				gt.setBargainprice("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getIsNew().equals("1")) {
-				gt.setIsNew("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+			if (gt.getIsNew().equals(StaticString.ONE)) {
+				gt.setIsNew("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setIsNew("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				gt.setIsNew("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getSalestate().equals("1")) {
-				gt.setSalestate("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+			if (gt.getSalestate().equals(StaticString.ONE)) {
+				gt.setSalestate("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setSalestate("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				gt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 
 			Map cellMap = new HashMap();
 			cellMap.put("id", gt.getGoodsid());
-			cellMap.put("cell", new Object[] { gt.getGoodsname(), gt.getUsersetnum(), gt.getMemberprice(),gt.getNname(),  gt.getSalestate(), gt.getIsNew(), gt.getBargainprice(), gt.getHotsale(), gt.getRecommended(), gt.getQuantity(), "<a target='_blank' id='editgoods' href='goods.jsp?operate=edit&folder=setting&goodsid="+gt.getGoodsid()+"' name='editgoods'>[编辑]</a>"});
+			cellMap.put("cell", new Object[] { gt.getGoodsname(), gt.getUsersetnum(), gt.getMemberprice(),gt.getNname(),  gt.getSalestate(), gt.getIsNew(), gt.getBargainprice(), gt.getHotsale(), gt.getRecommended(), gt.getQuantity(), "<a id='editgoods' href='goods.jsp?operate=edit&folder=setting&goodsid="+gt.getGoodsid()+"' name='editgoods'>[编辑]</a>"});
 			rows.add(cellMap);
 		}
 	}
@@ -1346,6 +1349,8 @@ public class GoodsTAction extends ActionSupport {
 				bean.setUpdatetime(BaseTools.systemtime());
 				//构造product
 				ProductT pt=new ProductT();
+				//根据商品和规格货物关系，通过spid0和goodsid来取出addgoods时唯一对照的默认规格值的productdid进行级联更新
+				//this.getGoodsSpecificationsProductRpTService().checkSpecificationRelationshipBygoodssetid(this.getGoodsid());
 				pt=this.getProductTService().findProductByProductid(this.getProductid());
 				pt.setPrice(bean.getPrice());
 				pt.setMemberprice(bean.getMemberprice());
