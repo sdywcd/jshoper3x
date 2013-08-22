@@ -293,7 +293,6 @@ public class SaleGoodsrecordAction extends ActionSupport {
 			re.setMarketprice(list.getMarketprice());
 			re.setMobile(user.getMobile());
 			re.setPlace(list.getPlace());
-			re.setPoints(String.valueOf(user.getPoints()));
 			re.setRealname(user.getRealname());
 			re.setSalegoodsid(list.getSalegoodsid());
 			re.setSalegoodsinformation(list.getSalegoodsinformation());
@@ -306,7 +305,6 @@ public class SaleGoodsrecordAction extends ActionSupport {
 			re.setSalerecordid(this.getSerial().Serialid(Serial.SALEGOODSRECORDT));
 			re.setSalestartingprice(list.getSalestartingprice());
 			re.setSaletradetime(new Date());
-			re.setSex(user.getSex());
 			re.setTelno(user.getTelno());
 			re.setUsername(user.getUsername());	
 		this.getSaleGoodsrecordService().addrecordByhiprice(re);

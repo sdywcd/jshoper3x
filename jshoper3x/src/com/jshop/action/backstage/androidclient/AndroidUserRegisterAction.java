@@ -158,30 +158,13 @@ ServletRequestAware, ServletResponseAware {
 			user.setAnswer(null);
 			user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));
 			user.setUserstate("1");
-			user.setPoints(0.0);
-			user.setPostingcount(0);
-			user.setSex(null);
-			user.setRegisttime(BaseTools.systemtime());
-			user.setDisablebegin(null);
-			user.setDisableend(null);
 			user.setSection(null);
 			user.setPosition(null);
 			user.setGroupid(null);
 			user.setParttime1(null);
 			user.setParttime2(null);
 			user.setParttime3(null);
-			user.setParttime4(null);
-			user.setParttime5(null);
-			user.setParttime6(null);
-			user.setHobby(null);
 			user.setQq(null);
-			user.setMsn(null);
-			user.setOthercontract(null);
-			user.setAddress(null);
-			user.setPostcode(null);
-			user.setBirthday(null);
-			user.setGrade(null);
-			user.setGradetime(null);
 			user.setState("4");//register from mobile
 			if(this.getUsertService().save(user)>0){
 				this.setSucflag("1");//表示注册成功

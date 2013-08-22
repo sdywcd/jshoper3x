@@ -1,35 +1,4 @@
 
-/**
- * Global variables
- */
-var session="true";
-/*
- * ===========================================Gorgeous
- * split-line==============================================
- */
-/**
- * ui
- */
-$(function(){
-
-	$("h6").each(function(){
-		$(this).removeClass("selected"); 
-	});
-	$("ul").each(function(){
-		$(this).removeClass("opened"); 
-		$(this).addClass("closed"); 
-	});
-	$("#h-menu-member").addClass("selected");
-	$("#menu-member").removeClass("closed"); 
-	$("#menu-member").addClass("opened");
-});
-/*
- * ===========================================Gorgeous
- * split-line==============================================
- */
-/**
- * Required to initialize the page data
- */
 $(function(){
 	/**
 	 * 获取模块下拉列表
@@ -68,7 +37,7 @@ $(function(){
  * flexigrid list
  */
 $(function() {
-	$("#membermanagement").flexigrid( {
+	$("#usermanagement").flexigrid( {
 		url : 'findAllUsert.action',
 		dataType : 'json',
 		cache : false,
@@ -153,7 +122,7 @@ $(function() {
 			onpress : action
 		},{
 			name:'删除',
-			bclass:'delete',
+			bclass:'del',
 			onpress:action
 		},{
 			name:'发送激活邮件',
@@ -191,10 +160,10 @@ $(function() {
 			display : '用户名',
 			name : 'username'
 		} ],
-		sortname : "gradetime",
+		sortname : "registtime",
 		sortorder : "desc",
 		usepager : true,
-		title : '会员列表',
+		title : '',
 		useRp : true,
 		rp : 20,
 		rpOptions : [ 5, 20, 40, 100 ],

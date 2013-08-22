@@ -774,12 +774,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 				rows.clear();
 				for (Iterator it = list.iterator(); it.hasNext();) {
 					UserT u = (UserT) it.next();
-					if ("0".equals(u.getSex())) {
-						u.setSex("女");
-					}
-					if ("1".equals(u.getSex())) {
-						u.setSex("男");
-					}
 					if ("1".equals(u.getState())) {
 						u.setState("普通用户");
 					}
@@ -804,14 +798,9 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 					if ("3".equals(u.getUserstate())) {
 						u.setUserstate("禁止发帖");
 					}
-					if (u.getGradetime() != null) {
-						this.setGradetime(BaseTools.formateDbDate(u.getGradetime()));
-					} else {
-						this.setGradetime("");
-					}
 					Map cellMap = new HashMap();
 					cellMap.put("id", u.getUserid());
-					cellMap.put("cell", new Object[] { u.getUsername(), u.getRealname(), u.getEmail(), u.getSex(), u.getPoints(), u.getQq(), u.getMsn(), u.getGradename(), u.getUserstate(), u.getGradetime(), BaseTools.formateDbDate(u.getRegisttime()) });
+					cellMap.put("cell", new Object[] { u.getUsername(), u.getRealname(), u.getEmail(),  u.getQq(),  u.getUserstate() });
 					rows.add(cellMap);
 				}
 				return "json";
@@ -862,35 +851,13 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 			user.setAnswer(null);
 			user.setPassword(md5.getMD5ofStr("111111"));//默认密码6个1
 			user.setUserstate(this.getUserstate());
-			user.setPoints(Double.parseDouble(this.getPoints().trim()));
-			user.setPostingcount(0);
-			user.setSex(null);
-			user.setRegisttime(BaseTools.systemtime());
-			user.setDisablebegin(null);
-			user.setDisableend(null);
 			user.setSection(null);
 			user.setPosition(null);
 			user.setGroupid(null);
 			user.setParttime1(null);
 			user.setParttime2(null);
 			user.setParttime3(null);
-			user.setParttime4(null);
-			user.setParttime5(null);
-			user.setParttime6(null);
-			user.setHobby(null);
 			user.setQq(null);
-			user.setMsn(null);
-			user.setOthercontract(null);
-			user.setAddress(null);
-			user.setPostcode(null);
-			user.setBirthday(null);
-			user.setGrade(this.getGrade());
-			user.setGradename(this.getGradename().trim());
-			if (this.getGrade().equals("0")) {
-				user.setGradetime(null);
-			} else {
-				user.setGradetime(BaseTools.systemtime());
-			}
 			user.setState(this.getState());
 			user.setRolemid("0");
 			user.setRolemname("");
@@ -935,16 +902,8 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 			user.setUserid(this.getUserid());
 			user.setUsername(this.getUsername().trim());
 			user.setEmail(this.getEmail().trim());
-			user.setPoints(Double.parseDouble(this.getPoints().trim()));
 			user.setUserstate(this.getUserstate());
-			user.setGrade(this.getGrade());
-			user.setGradename(this.getGradename());
 			user.setState(this.getState());
-			if (this.getGrade().equals("0")) {
-				user.setGradetime(null);
-			} else {
-				user.setGradetime(BaseTools.systemtime());
-			}
 			if(this.getUsertService().updateUserTunpwd(user)>0){
 				this.setSucflag(true);
 				return "json";

@@ -20,17 +20,7 @@
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
 				height="30" alt=""></a> <a class="brand" href="#">用户设置</a> <a
-				class="brand2">所有用户列表</a>
-		</div>
-		<div class="subnav" data-spy="affix" data-offset-top="40">
-			<ul class="nav nav-pills">
-				<li><a href="#typography">Typography</a></li>
-				<li><a href="#code">Code</a></li>
-				<li><a href="#tables">Tables</a></li>
-				<li><a href="#forms">Forms</a></li>
-				<li><a href="#buttons">Buttons</a></li>
-				<li><a href="#icons">Icons by Glyphicons</a></li>
-			</ul>
+				class="brand2">所有管理类及运营类账户列表</a>
 		</div>
 	</div>
 	<div class="container-fluid containerb">
@@ -45,41 +35,29 @@
 			<div class="span10">
 				<div class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">×</button>
-					<strong>Well done!</strong> You successfully read this important
-					alert message.
+					<strong>说明!</strong> 这里显示了所有系统中的商品信息
 				</div>
-				<div class="input-append">
-					<input class="span2" id="appendedInputButtons" type="text">
-					<button class="btn" type="button">
-						<i class="icon-search"></i>
-					</button>
-					<button class="btn" type="button">
-						<i class="icon-remove"></i>
-					</button>
+				<div id="alertinfo" style="display: none;" class="alert alert-info">
+					<a class="close" data-dismiss="alert" href="#">&times;</a> <strong></strong>
+				</div>
+				<div id="alerterror" style="display: none;"
+					class="alert alert-error">
+					<a class="close" data-dismiss="alert" href="#">&times;</a> <strong></strong>
 				</div>
 				<div class="line-dotted"></div>
 				<!-- flexigrid -->
-				<div id="flexmembermanagement">
-					<table id="membermanagement" style="display: none;"></table>
+				<div id="flexusermanagement">
+					<table id="usermanagement" style="display: none;"></table>
 				</div>
 				<div class="line-dotted"></div>
-				<div class="pagination">
-					<ul>
-						<li><a href="#">Prev</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">Next</a></li>
-					</ul>
-				</div>
+				
 			</div>
 
 		</div>
 
 	</div>
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/user/membermentjs.js"></script>
+		src="<%=basePath%>admin/js/user/usermentjs.js"></script>
 	<%@include file="/admin/footer.jsp"%>
 
 </body>

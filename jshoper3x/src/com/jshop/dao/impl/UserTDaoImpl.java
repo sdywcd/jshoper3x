@@ -163,11 +163,12 @@ public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public int updateUserTunpwd(final UserT u) {
 		log.debug("update UpdateUserTunpwd");
 		try {
 
-			final String queryString = "update UserT as u set u.username=:username,u.email=:email,u.points=:points," + "u.grade=:grade,u.gradename=:gradename,u.gradetime=:gradetime,u.state=:state,u.userstate=:userstate where u.userid=:userid";
+			final String queryString = "update UserT as u set u.username=:username,u.email=:email,u.state=:state,u.userstate=:userstate where u.userid=:userid";
 			Integer integer=(Integer)this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
@@ -176,12 +177,8 @@ public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
 					query.setParameter("userid", u.getUserid());
 					query.setParameter("username", u.getUsername());
 					query.setParameter("email", u.getEmail());
-					query.setParameter("points", u.getPoints());
-					query.setParameter("grade", u.getGrade());
-					query.setParameter("gradetime", u.getGradetime());
 					query.setParameter("state", u.getState());
 					query.setParameter("userstate", u.getUserstate());
-					query.setParameter("gradename", u.getGradename());
 					i = query.executeUpdate();
 					return i;
 				}

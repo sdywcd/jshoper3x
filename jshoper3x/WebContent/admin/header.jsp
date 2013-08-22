@@ -132,13 +132,13 @@
 								<li><a href="#">需退货订单</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#"> 用户管理 <b class="caret"></b>
+							data-toggle="dropdown" href="#">用户管理 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="<%=basePath%>admin/user/userment.jsp?operate=find">用户列表</a></li>
+									href="<%=basePath%>admin/user/userment.jsp?operate=find">系统用户列表</a></li>
 								<li><a
-									href="<%=basePath%>admin/user/gradement.jsp?operate=find">用户等级设置</a></li>
+									href="<%=basePath%>admin/user/gradement.jsp?operate=find">会员等级设置</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#"> 内容管理 <b class="caret"></b>
