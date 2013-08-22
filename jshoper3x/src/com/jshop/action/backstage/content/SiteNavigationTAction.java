@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -282,14 +283,14 @@ public class SiteNavigationTAction extends ActionSupport {
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			SiteNavigationT sn = (SiteNavigationT) it.next();
 			if (sn.getIsTargetBlank().equals("1")) {
-				sn.setIsTargetBlank("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+				sn.setIsTargetBlank("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				sn.setIsTargetBlank("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				sn.setIsTargetBlank("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (sn.getIsVisible().equals("1")) {
-				sn.setIsVisible("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+				sn.setIsVisible("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				sn.setIsVisible("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				sn.setIsVisible("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (sn.getPosition().equals("1")) {
 				sn.setPosition("上");
@@ -389,9 +390,8 @@ public class SiteNavigationTAction extends ActionSupport {
 	 */
 	@Action(value = "delSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String delSiteNavigationT() {
-
-		if (Validate.StrNotNull(this.getSnid())) {
-			String[] strs = this.getSnid().split(",");
+		if(StringUtils.isNotBlank(this.getSnid())){
+			String[] strs = StringUtils.split(this.getSnid(), ",");
 			this.getSiteNavigationTService().delSiteNavigationT(strs);
 			this.setSucflag(true);
 			return "json";

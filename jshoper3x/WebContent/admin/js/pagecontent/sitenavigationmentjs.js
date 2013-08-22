@@ -3,6 +3,16 @@
  * flexigrid list
  */
 $(function() {
+	/**
+	 * ui
+	 */
+	  $('input').iCheck({
+		    checkboxClass: 'icheckbox_square-blue',
+		    radioClass: 'iradio_square-blue',
+		    increaseArea: '20%' // optional
+		  });
+	
+	
 	$("#sitenavigationmanagement").flexigrid( {
 		url : 'findAllSiteNavigationT.action',
 		dataType : 'json',
@@ -120,7 +130,7 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				$.post("delSiteNavigationT.action", {
-					"brandid" : str
+					"snid" : str
 				}, function(data) {
 					$('#sitenavigationmanagement').flexReload();
 					forminfo("#alertinfo", "删除品牌成功");
@@ -166,7 +176,7 @@ $(function(){
 		}, function(data) {
 			if (data.bean != null) {
 				$('#submit').hide();
-				$('#modify').show();
+				$('#update').show();
 				$('#name').attr("value", data.bean.name);
 				$('#syscontent').val(data.bean.htmlPath);
 				$('#htmlPath').attr("value", data.bean.htmlPath);
@@ -206,18 +216,8 @@ $(function(){
 		var htmlPath = $('#htmlPath').val();
 		var position = $("#position").val();
 		var sort = $('#sort').val();
-		var isTargetBlank="0";
-		if ($("#isTargetBlank").attr('checked')) {
-			isTargetBlank = "1";
-		} else {
-			isTargetBlank = "0";
-		}
-		var isVisible="0";
-		if ($("#isVisible").attr('checked')) {
-			isVisible = "1";
-		} else {
-			isVisible = "0";
-		}
+		var isTargetBlank=$("input[name='isTargetBlank']:checked").val();
+		var isVisible=$("input[name='isVisible']:checked").val();
 		$.post("addSiteNavigationT.action", {
 			"name" : name,
 			"htmlPath" : htmlPath,
@@ -228,7 +228,7 @@ $(function(){
 			"sign" : sign
 		}, function(data) {
 			if (data.sucflag) {
-				window.location.href = "sitenavigationmanagement.jsp?session=" + session + "#pagecontent";
+				window.location.href = "sitenavigationment.jsp?operate=find&folder=pagecontent";
 			} else {
 				formwarning("#alerterror","导航增加失败");
 				return false;
@@ -236,7 +236,7 @@ $(function(){
 		});
 	});
 	
-	$('#modify').click(function() {
+	$('#update').click(function() {
 		var name = $('#name').val();
 		if (name == "") {
 			formwarning("#alerterror","导航名称必须填写");
@@ -255,16 +255,8 @@ $(function(){
 		var htmlPath = $('#htmlPath').val();
 		var position = $("#position").val();
 		var sort = $('#sort').val();
-		if ($("#isTargetBlank").attr('checked')) {
-			var isTargetBlank = "1";
-		} else {
-			var isTargetBlank = "0";
-		}
-		if ($("#isVisible").attr('checked')) {
-			var isVisible = "1";
-		} else {
-			var isVisible = "0";
-		}
+		var isTargetBlank=$("input[name='isTargetBlank']:checked").val();
+		var isVisible=$("input[name='isVisible']:checked").val();
 		var snid = $('#hidsnid').val();
 		$.post("updateSiteNavigationT.action", {
 			"snid" : snid,
@@ -277,7 +269,7 @@ $(function(){
 			"sign" : sign
 		}, function(data) {
 			if (data.sucflag) {
-				window.location.href = "sitenavigationmanagement.jsp?session=" + session + "#pagecontent";
+				window.location.href = "sitenavigationment.jsp?operate=find&folder=pagecontent";
 			} else {
 				formwarning("#alerterror","更新导航失败");
 				return false;
@@ -292,9 +284,8 @@ $(function(){
 $(function(){
 	var operate=$.query.get("operate");
 	if(operate=="add"){
-		
-	}else if(operate=="find"){
 		getTemplateOutHtmlPath();
+	
 	}else if(operate=="edit"){
 		findSiteNavigationBysnid();
 	}
