@@ -287,6 +287,7 @@ $(function(){
 		getTemplateOutHtmlPath();
 	
 	}else if(operate=="edit"){
+		getTemplateOutHtmlPath();
 		findSiteNavigationBysnid();
 	}
 	

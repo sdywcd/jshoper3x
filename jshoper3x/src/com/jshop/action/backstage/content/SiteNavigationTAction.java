@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.SiteNavigationT;
 import com.jshop.service.SiteNavigationTService;
@@ -251,9 +252,7 @@ public class SiteNavigationTAction extends ActionSupport {
 
 	@Action(value = "findAllSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String findAllSiteNavigationT() {
-		if ("sc".equals(this.getQtype())) {
-			this.setTotal(0);
-			rows.clear();
+		if (StaticString.SC.equals(this.getQtype())) {
 			this.findDefaultAllSiteNavigation();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -287,21 +286,21 @@ public class SiteNavigationTAction extends ActionSupport {
 			} else {
 				sn.setIsTargetBlank("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (sn.getIsVisible().equals("1")) {
+			if (sn.getIsVisible().equals(StaticString.ONE)) {
 				sn.setIsVisible("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				sn.setIsVisible("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (sn.getPosition().equals("1")) {
-				sn.setPosition("上");
-			} else if (sn.getPosition().equals("2")) {
-				sn.setPosition("中");
+			if (sn.getPosition().equals(StaticString.ONE)) {
+				sn.setPosition("页面上部");
+			} else if (sn.getPosition().equals(StaticString.TWO)) {
+				sn.setPosition("页面中部");
 			} else {
-				sn.setPosition("下");
+				sn.setPosition("页面下部");
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sn.getSnid());
-			cellMap.put("cell", new Object[] { sn.getName(), sn.getPosition(), sn.getSign(), sn.getSort(), sn.getIsTargetBlank(), sn.getIsVisible(), BaseTools.formateDbDate(sn.getCreatetime()), sn.getCreatorid(), "<a target='_blank' id='editsitenavigation' href='jshop/admin/pagecontent/addsitenavigation.jsp?snid=" + sn.getSnid() + "' name='editsitenavigation'>[编辑]</a>" + "<a target='_blank' id='browersitenavigation' href='" + sn.getHtmlPath() + "' name='browersitenavigation'>[预览]</a>" });
+			cellMap.put("cell", new Object[] { sn.getName(), sn.getPosition(), sn.getSign(), sn.getSort(), sn.getIsTargetBlank(), sn.getIsVisible(), BaseTools.formateDbDate(sn.getCreatetime()), sn.getCreatorid(), "<a id='editsitenavigation' href='sitenavigation.jsp?operate=edit&folder=pagecontent&snid=" + sn.getSnid() + "' name='editsitenavigation'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 	}
@@ -361,7 +360,6 @@ public class SiteNavigationTAction extends ActionSupport {
 	 */
 	@Action(value = "updateSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String updateSiteNavigationT() {
-
 		SiteNavigationT sn = new SiteNavigationT();
 		sn.setSnid(this.getSnid());
 		sn.setIsTargetBlank(this.getIsTargetBlank());
