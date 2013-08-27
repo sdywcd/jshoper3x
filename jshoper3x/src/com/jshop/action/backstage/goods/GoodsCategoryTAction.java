@@ -615,7 +615,6 @@ public class GoodsCategoryTAction extends ActionSupport {
 	public String updateGoodsCategory() {
 		//根据goodscategoryid读取商品分类信息
 		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
-			this.setSucflag(false);
 			return "json";
 		}
 		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
@@ -646,11 +645,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 				this.setSucflag(true);
 				return "json";
 			}
-		} else {
-			this.setSucflag(false);
-			return "json";
 		}
-		this.setSucflag(false);
 		return "json";
 	}
 

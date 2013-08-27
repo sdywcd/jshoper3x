@@ -1,5 +1,14 @@
 
 $(function() {
+	/**
+	 * ui
+	 */
+	  $('input').iCheck({
+		    checkboxClass: 'icheckbox_square-blue',
+		    radioClass: 'iradio_square-blue',
+		    increaseArea: '20%' // optional
+		  });
+	 
 	/*
 	 * 删除图片按钮
 	 */
@@ -232,12 +241,12 @@ $(function() {
 			if (data.bean != null) {
 				$('#name').attr("value", data.bean.name);
 				var grade=data.bean.grade;
-				if(grade==0){
+				if(grade=="0"){
 					$('#parentName').attr("value", "顶级分类");
 				}else{
 					$('#parentName').attr("value", data.bean.parentName);
 				}
-				$("#grade").val(data.bean.grade);
+				$("#hidgrade").val(grade);
 				$('#goodsTypeId').val(data.bean.goodsTypeId);
 				$('#sign').attr("value", data.bean.sign);
 				$('#sort').attr("value", data.bean.sort);
@@ -294,7 +303,7 @@ $(function() {
 		var parentName = $('#parentId').find("option:selected").text();
 		var parentId1 = $('#parentId1').val();
 		var parentName1 = $('#parentId1').find("option:selected").text();
-		var grade="";
+		var grade=$("#hidgrade").val();
 		if (parentId == "0") {
 			grade = "0";
 		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
@@ -303,8 +312,10 @@ $(function() {
 		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
 			grade = "2";
 		} else if (parentId == "-1") {
-			formwarning("#alerterror","请选择分类");
-			return false;
+			if(grade==""){
+				formwarning("#alerterror","请选择分类");
+				return false;
+			}
 		}
 		var mobilesync=$("input[name='mobilesync']:checked").val();
 		if (grade == "0") {

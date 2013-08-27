@@ -38,7 +38,13 @@ public interface ArticleCategoryTService {
 	 * @return
 	 */
 	public int checkArticleCategoryName(String name, String creatorid);
-
+	/**
+	 * 检测文章分类名称
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public int checkArticleCategoryName(String name);
 	/**
 	 * 检测文章分类标记
 	 * 
@@ -47,7 +53,14 @@ public interface ArticleCategoryTService {
 	 * @return
 	 */
 	public int checkArticleCategorySign(String sign, String creatorid);
-
+	/**
+	 * 检测文章分类标记
+	 * 
+	 * @param sign
+	 * @param creatorid
+	 * @return
+	 */
+	public int checkArticleCategorySign(String sign);
 	/**
 	 * 删除文章分类status=0
 	 * 
@@ -125,6 +138,15 @@ public interface ArticleCategoryTService {
 	 * @return
 	 */
 	public int checkArticleCategoryNamewithoutMe(String articleCategoryTid, String name, String creatorid);
+	/**
+	 * 排除自己获取文章分类名称
+	 * 
+	 * @param articleCategoryTid
+	 * @param name
+	 * @param creatorid
+	 * @return
+	 */
+	public int checkArticleCategoryNamewithoutMe(String articleCategoryTid, String name);
 
 	/**
 	 * 排除自己检测文章标记
@@ -135,7 +157,15 @@ public interface ArticleCategoryTService {
 	 * @return
 	 */
 	public int checkArticleCategorySignwithoutMe(String articleCategoryTid, String sign, String creatorid);
-
+	/**
+	 * 排除自己检测文章标记
+	 * 
+	 * @param articleCategoryTid
+	 * @param sign
+	 * @param creatorid
+	 * @return
+	 */
+	public int checkArticleCategorySignwithoutMe(String articleCategoryTid, String sign);
 	/**
 	 * 根据parentId获取文章分类
 	 * 
@@ -200,5 +230,12 @@ public interface ArticleCategoryTService {
 	 * @return
 	 */
 	public List<ArticleCategoryT> findArticleCategoryByGrade(String grade, String status);
-
+	/**
+	 * 根据parentid获取文章分类
+	 * @param status
+	 * @param parentId
+	 * @return
+	 */
+	public List<ArticleCategoryT>findArticleCategoryByparentId(String status,String parentId);
+	
 }

@@ -1,72 +1,21 @@
 
 /**
- * Required to initialize the page data
- */
-/**
- * 读取文章一级分类
- */
-$(function() {
-	$('#addfl').show();
-	$('#modfl').hide();
-	var articleCategoryTid = $.query.get('articleCategoryTid');
-	if (articleCategoryTid == "") {
-		$("#fater").hide();
-		$.post("findArticlCategoryByGradeZeroone.action", function(data) {
-			if (data.sucflag) {
-				if (data.articlecategoryzero == "") {
-					$('#parentId').append("<option value='0'>顶级分类</option>");
-					$('#parentId1').hide();
-				} else {
-					$('#parentId').append(data.articlecategoryzero);
-					$('#parentId1').hide();
-				}
-
-			}
-		});
-	}else{
-		$("#fater").show();
-	}
-
-	/**
-	 * 级联读取二级栏目
-	 */
-	$('#parentId').change(function() {
-		var parentId = $('#parentId').val();
-		if (parentId != "0" && parentId != "-1") {
-			$.post("findArticleCategoryByGradeTwo.action", function(data) {
-				if (data.sucflag) {
-					$('#parentId1').html(data.articlecategorytwo);
-				}
-			});
-		}
-	});
-});
-
-/**
- * 验证分类选择
- */
-$(function() {
-	$("#parentId").change(function() {
-		var parentId = $('#parentId').val();
-		var parentId1 = $('#parentId1').val();
-		var parentId2 = $('#parentId2').val();
-		if (parentId == '0') {
-			$('#parentId1').hide();
-			$('#parentId2').hide();
-		} else {
-			$('#parentId1').show();
-		}
-		if (parentId1 == "-1") {
-			$('#parentId2').hide();
-		}
-	});
-});
-/*===========================================Gorgeous split-line==============================================*/
-
-/**
  * flexigrid list 
  */
 $(function() {
+	
+	/**
+	 * ui
+	 */
+	  $('input').iCheck({
+		    checkboxClass: 'icheckbox_square-blue',
+		    radioClass: 'iradio_square-blue',
+		    increaseArea: '20%' // optional
+		  });
+	 
+	  
+	  
+	  
 	$("#articlecategorymanagement").flexigrid( {
 		url : 'findAllArticleCategoryT.action',
 		dataType : 'json',
@@ -117,6 +66,12 @@ $(function() {
 		}, {
 			display : '创建者编号',
 			name : 'creatorid',
+			width : 200,
+			sortable : true,
+			align : 'center'
+		}, {
+			display : '操作',
+			name : 'operating',
 			width : 200,
 			sortable : true,
 			align : 'center'
@@ -234,7 +189,8 @@ $(function() {
 		}
 		var metaKeywords = $('#metaKeywords').val();
 		var metaDes = $('#metaDes').val();
-		if (parentId == "0") {
+		var mobilesync=$("input[name='mobilesync']:checked").val();
+		if (grade == "0") {
 			$.post("addArticleCategoryT.action",
 			{
 				"grade" : grade,
@@ -243,16 +199,17 @@ $(function() {
 				"name" : name,
 				"sort" : sort,
 				"sign" : sign,
-				"position" : position
+				"position" : position,
+				"mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
-					window.location.href = "articlecategorymanagement.jsp?session="+session+"#pagecontent";
+					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
 				} else {
-					jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
 					return false;
 				}
 			});
-		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+		} else if (grade="1") {
 			$.post("addArticleCategoryTwo.action",
 
 			{
@@ -264,18 +221,18 @@ $(function() {
 				"name" : name,
 				"sort" : sort,
 				"sign" : sign,
-				"position" : position
+				"position" : position,
+				"mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
-					window.location.href = "articlecategorymanagement.jsp?session="+session+"#pagecontent";
+					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
 				} else {
-					jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
 					return false;
 				}
 			});
-		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+		} else if (grade="2") {
 			$.post("addArticleCategoryThree.action",
-
 			{
 				"parentName1" : parentName1,
 				"parentId" : parentId,
@@ -286,12 +243,13 @@ $(function() {
 				"name" : name,
 				"sort" : sort,
 				"sign" : sign,
-				"position" : position
+				"position" : position,
+				"mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
-					window.location.href = "articlecategorymanagement.jsp?session="+session+"#pagecontent";
+					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
 				} else {
-					jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
 					return false;
 				}
 			});
@@ -305,73 +263,212 @@ $(function() {
  * Update Function
  */
 $(function() {
-	var articleCategoryTid = $.query.get('articleCategoryTid');
-	if (articleCategoryTid == "") {
-		return false;
-	}
-	$.post("findArticleCategoryByarticleCategoryTid.action", {
-		"articleCategoryTid" : articleCategoryTid
-	}, function(data) {
-		if (data.bean != null) {
-			$('#submit').hide();
-			$('#addfl').hide();
-			$('#modfl').show();
-			$('#modify').show();
-			$('#name').attr("value", data.bean.name);
-			$('#parentName').attr("value", data.bean.parentName);
-			$('#sign').attr("value", data.bean.sign);
-			$('#sort').attr("value", data.bean.sort);
-			$('#metaKeywords').attr("value", data.bean.metaKeywords);
-			$('#metaDes').attr("value", data.bean.metaDes);
-			if (data.bean.position == "1") {
-				$("#position").attr("checked", true);
-			} else {
-				$("#position").attr("checked", false);
-			}
-			$('#hidarticleCategoryTid').attr("value", data.bean.articleCategoryTid);
-		}
-	});
 
-	$('#modify').click(function() {
+	$('#update').click(function() {
 		var name = $('#name').val();
 		if (name == "") {
-			jAlert('分类名称必须填写', '信息提示');
+			formwarning("#alerterror","分类名称必须填写");
 			return false;
 		}
 		var sort = $('#sort').val();
 		var sign = $('#sign').val();
+		var position = "0";
 		if ($('#position').attr('checked')) {
-			var position = "1";
+			position = "1";
 		} else {
-			var position = "0";
+			position = "0";
 		}
 		var metaKeywords = $('#metaKeywords').val();
 		var metaDes = $('#metaDes').val();
 		var articleCategoryTid = $('#hidarticleCategoryTid').val();
-		var grade=$('#hidgrade').val();
-		$.post("updateArticleCategoryT.action",
+		//这里需要重新定义
+		var parentId = $('#parentId').val();
+		var parentName = $('#parentId').find("option:selected").text();
+		var parentId1 = $('#parentId1').val();
+		var parentName1 = $('#parentId1').find("option:selected").text();
+		var grade=$("#hidgrade").val();
+		if (parentId == "0") {
+			grade = "0";
+		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+			grade = "1";
 
-		{
-			"metaKeywords" : metaKeywords,
-			"metaDes" : metaDes,
-			"name" : name,
-			"sort" : sort,
-			"sign" : sign,
-			"articleCategoryTid" : articleCategoryTid,
-			"position" : position
-		}, function(data) {
-			if (data.sucflag) {
-				window.location.href = "articlecategorymanagement.jsp?session="+session+"#pagecontent";
-			} else {
-				jAlert('分类名称或者标示不能和其他分类和标示重复', '信息提示');
+		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+			grade = "2";
+		} else if (parentId == "-1") {
+			if(grade==""){
+				formwarning("#alerterror","请选择分类");
 				return false;
 			}
-		});
+		}
+		var mobilesync=$("input[name='mobilesync']:checked").val();
+		if (grade == "0") {
+			$.post("updateArticleCategory.action",{
+				"grade":grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"articleCategoryTid" : articleCategoryTid,
+				"position" : position,
+				"mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		}else if(grade=="1"){
+			$.post("updateArticleCategoryTwo.action",{
+				"grade":grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"articleCategoryTid" : articleCategoryTid,
+				"position" : position,
+				"parentName" : parentName,
+				"parentId" : parentId,
+				"mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		}else if(grade=="2"){
+			$.post("updateArticleCategoryThree.action",{
+				"grade":grade,
+				"metaKeywords" : metaKeywords,
+				"metaDes" : metaDes,
+				"name" : name,
+				"sort" : sort,
+				"sign" : sign,
+				"articleCategoryTid" : articleCategoryTid,
+				"position" : position,
+				"parentName1" : parentName1,
+				"parentId" : parentId,
+				"parentId1" : parentId1,
+				"mobilesync":mobilesync
+			}, function(data) {
+				if (data.sucflag) {
+					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
+				} else {
+					formwarning("#alerterror","分类名称或者标示不能和其他分类和标示重复");
+					return false;
+				}
+			});
+		}
+		
+		
+		
 	});
 });
 /*===========================================Gorgeous split-line==============================================*/
 
+$(function(){
 
+	  findArticleCategoryByarticleCategoryTid=function(){
+		  var articleCategoryTid = $.query.get('articleCategoryTid');
+			if (articleCategoryTid == "") {
+				return false;
+			}
+		  $.post("findArticleCategoryByarticleCategoryTid.action", {
+				"articleCategoryTid" : articleCategoryTid
+			}, function(data) {
+				if (data.bean != null) {
+					$('#submit').hide();
+					$('#update').show();
+					$('#name').attr("value", data.bean.name);
+					var grade=data.bean.grade;
+					if(grade=="0"){
+						$('#parentName').attr("value", "顶级分类");
+					}else{
+						$('#parentName').attr("value", data.bean.parentName);
+					}
+					$("#hidgrade").val(grade);
+					$('#sign').attr("value", data.bean.sign);
+					$('#sort').attr("value", data.bean.sort);
+					$('#metaKeywords').attr("value", data.bean.metaKeywords);
+					$('#metaDes').attr("value", data.bean.metaDes);
+					if (data.bean.position == "1") {
+						$("#position").attr("checked", true);
+					} else {
+						$("#position").attr("checked", false);
+					}
+					$('#hidarticleCategoryTid').attr("value", data.bean.articleCategoryTid);
+				}
+			});
+	  },
+	  /**
+		 * 读取文章一级分类
+		 */
+		findArticlCategoryByGradeZeroone=function(){
+			$.ajax({
+				url:"findArticlCategoryByGradeZeroone.action",
+				type:"post",
+				dataType:'json',
+				async:false,
+				success:function(data){
+					if(data.sucflag){
+						var header="<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
+						if(data.articlecategoryzero==""){
+							$('#parentId').append(header);
+							$('#parentId1').hide();
+						}else{
+							$('#parentId').append(header).append(data.articlecategoryzero);
+							$('#parentId1').hide();
+						}
+					}
+				}
+			});
+		},
+		/**
+		 * 级联读取二级栏目
+		 */
+		$('#parentId').change(function() {
+			var parentId = $('#parentId').val();
+			//parentid=0表示顶级分类，parentid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
+			if (parentId != "0" && parentId != "-1") {
+				$.post("findArticleCategoryByparentId.action",{"parentId":parentId}, function(data) {
+					if (data.sucflag) {
+						$('#parentId1').html(data.articlecategorytwo);
+					}
+				});
+			}
+		});
+		$("#parentId").change(function() {
+			var parentId = $('#parentId').val();
+			var parentId1 = $('#parentId1').val();
+			var parentId2 = $('#parentId2').val();
+			if (parentId == '0') {
+				$('#parentId1').hide();
+				$('#parentId2').hide();
+			} else {
+				$('#parentId1').show();
+			}
+			if (parentId1 == "-1") {
+				$('#parentId2').hide();
+			}
+		});
+  	/**
+	 * main logic
+	 */
+	var operate = $.query.get("operate");
+	if (operate == "add") {
+		findArticlCategoryByGradeZeroone();
+			
+	}else if(operate=="edit"){
+		findArticlCategoryByGradeZeroone();
+		findArticleCategoryByarticleCategoryTid();
+	}
+	
+});
 
 
 

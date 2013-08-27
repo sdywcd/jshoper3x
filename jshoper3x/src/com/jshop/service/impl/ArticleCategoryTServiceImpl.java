@@ -42,9 +42,6 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 		return getArticleCategoryTDao().checkArticleCategorySign(sign, creatorid);
 	}
 
-	public int checkArticleCategorySignwithoutMe(String articleCategoryTid, String sign, String creatorid) {
-		return getArticleCategoryTDao().checkArticleCategorySignwithoutMe(articleCategoryTid, sign, creatorid);
-	}
 
 	public int countfindAllArticleCategoryT(String status, String creatorid) {
 		return getArticleCategoryTDao().countfindAllArticleCategoryT(status, creatorid);
@@ -54,12 +51,7 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 		return getArticleCategoryTDao().countfindAllArticleCategoryTByGrade(grade, status, creatorid);
 	}
 
-	// public int delArticleCategoryT(String articlecategoryTid, String status,
-	// String creatorid) {
-	// return
-	// getArticleCategoryTDaoImpl().delArticleCategoryT(articlecategoryTid,
-	// status, creatorid);
-	// }
+
 
 	public void delArticleCategoryT(ArticleCategoryT act) {
 		this.getArticleCategoryTDao().delArticleCategoryT(act);
@@ -118,5 +110,41 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 	public List<ArticleCategoryT> findArticleCategoryByGrade(String grade, String status) {
 		return this.getArticleCategoryTDao().findArticleCategoryByGrade(grade, status);
 	}
+
+	@Override
+	public int checkArticleCategoryName(String name) {
+		return this.getArticleCategoryTDao().checkArticleCategoryName(name);
+	}
+
+	@Override
+	public int checkArticleCategorySign(String sign) {
+		return this.getArticleCategoryTDao().checkArticleCategorySign(sign);
+	}
+
+	@Override
+	public int checkArticleCategoryNamewithoutMe(String articleCategoryTid,
+			String name) {
+		return this.getArticleCategoryTDao().checkArticleCategoryNamewithoutMe(articleCategoryTid, name);
+	}
+
+	@Override
+	public int checkArticleCategorySignwithoutMe(String articleCategoryTid,
+			String sign) {
+		return this.getArticleCategoryTDao().checkArticleCategorySignwithoutMe(articleCategoryTid, sign);
+	}
+
+	@Override
+	public int checkArticleCategorySignwithoutMe(String articleCategoryTid,
+			String sign, String creatorid) {
+		return this.getArticleCategoryTDao().checkArticleCategorySignwithoutMe(articleCategoryTid, sign, creatorid);
+	}
+
+	@Override
+	public List<ArticleCategoryT> findArticleCategoryByparentId(String status,
+			String parentId) {
+		return this.getArticleCategoryTDao().findArticleCategoryByparentId(status, parentId);
+	}
+
+
 
 }

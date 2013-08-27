@@ -394,7 +394,6 @@ $(function() {
 		var memberprice=$("#memberprice").val();
 		var price=$("#price").val();
 		var points=$("#points").val();
-		var points=$("#points").val();
 		var sort=$("#sort").val();
 		var isNew=$("input[name='isNew']:checked").val();
 		var recommended=$("input[name='recommended']:checked").val();
