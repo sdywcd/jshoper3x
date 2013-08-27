@@ -5,6 +5,7 @@
 *.pydevproject
 .project
 .metadata
+
 bin/
 tmp/
 classes/
@@ -14,6 +15,7 @@ classes/
 *~.nib
 local.properties
 .classpath
+build.properties
 .settings/
 .loadpath
 External tool builders
@@ -254,4 +256,4 @@ pip-log.txt
 # Mac crap
 .DS_Store
 /ROOT
-/jshoper3x
+/jshoper3x/WebContent/Uploads
