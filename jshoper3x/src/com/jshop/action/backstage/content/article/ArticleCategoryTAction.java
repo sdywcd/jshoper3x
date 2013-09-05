@@ -761,15 +761,16 @@ public class ArticleCategoryTAction extends ActionSupport {
 	 */
 	@Action(value = "delArticleCategoryT", results = { @Result(name = "json", type = "json") })
 	public String delArticleCategoryT() {
-		if (Validate.StrNotNull(this.getArticleCategoryTid())) {
-			String[] strs = this.getArticleCategoryTid().split(",");
-			for (String s : strs) {  
-				bean=this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(s);
-			    bean.setArticleCategoryTid(s);
-			    bean.setStatus("0");
-			    bean.setCreatorid(BaseTools.adminCreateId());
-			    this.getArticleCategoryTService().delArticleCategoryT(bean);
-			}  
+		if (StringUtils.isNotBlank(this.getArticleCategoryTid())) {
+			String[] strs = StringUtils.split(this.getArticleCategoryTid().trim(),",");
+//			for (String s : strs) {  
+//				bean=this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(s);
+//			    bean.setArticleCategoryTid(s);
+//			    bean.setStatus("0");
+//			    bean.setCreatorid(BaseTools.adminCreateId());
+//			    this.getArticleCategoryTService().delArticleCategoryT(bean);
+//			}
+			this.getArticleCategoryTService().delArticleCategoryT(strs);
 			this.setSucflag(true);
 			return "json";
 		}

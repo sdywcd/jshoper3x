@@ -41,15 +41,30 @@ public interface ArticleTDao {
 	 */
 	public List<ArticleT> findAllArticleT(final int currentPage,
 			final int lineSize, final String creatorid);
-
 	/**
-	 * 统计获取所有文章
+	 * 获取所有文章
 	 * 
+	 * @param currentPage
+	 * @param lineSize
 	 * @param status
 	 * @param creatorid
 	 * @return
 	 */
+	public List<ArticleT> findAllArticleT(final int currentPage,
+			final int lineSize);
+	/**
+	 * 统计获取所有文章
+	 * 
+	 * @param creatorid
+	 * @return
+	 */
 	public int countfindAllArticle(String creatorid);
+	/**
+	 * 统计获取所有文章
+	 * 
+	 * @return
+	 */
+	public int countfindAllArticle();
 
 	/**
 	 * 更新文章

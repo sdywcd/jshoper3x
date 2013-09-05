@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -27,6 +28,7 @@ import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
@@ -44,7 +46,14 @@ public class ArticleTAction extends ActionSupport {
 	private CreateHtml createHtml;
 	private Serial serial;
 	private String articleid;
-	private String articleCategoryTid;
+	private String tipcontent;
+	private String nname;
+	private String lname;
+	private String sname;
+	private String fname;
+	private String navid;
+	private String ltypeid;
+	private String stypeid;
 	private String title;
 	private String metaKeywords;
 	private String metaDes;
@@ -55,11 +64,11 @@ public class ArticleTAction extends ActionSupport {
 	private String ispublication;
 	private String isrecommend;
 	private String istop;
+	private String mobilesync;
 	private String readcount;
 	private String htmlPath;
 	private Integer pageCount;
 	private String isnotice;
-	private String articleCategoryName;
 	private Date createtime;
 	private Date updatetime;
 	private Integer version;
@@ -72,7 +81,6 @@ public class ArticleTAction extends ActionSupport {
 	private int total = 0;
 	private String query;
 	private String qtype;
-	private boolean slogin;
 	private boolean sucflag;
 	
 	@JSON(serialize = false)
@@ -127,14 +135,6 @@ public class ArticleTAction extends ActionSupport {
 
 	public void setArticleid(String articleid) {
 		this.articleid = articleid;
-	}
-
-	public String getArticleCategoryTid() {
-		return articleCategoryTid;
-	}
-
-	public void setArticleCategoryTid(String articleCategoryTid) {
-		this.articleCategoryTid = articleCategoryTid;
 	}
 
 	public String getTitle() {
@@ -280,15 +280,6 @@ public class ArticleTAction extends ActionSupport {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -311,14 +302,6 @@ public class ArticleTAction extends ActionSupport {
 
 	public void setQtype(String qtype) {
 		this.qtype = qtype;
-	}
-
-	public String getArticleCategoryName() {
-		return articleCategoryName;
-	}
-
-	public void setArticleCategoryName(String articleCategoryName) {
-		this.articleCategoryName = articleCategoryName;
 	}
 
 	public Map<String, Object> getMap() {
@@ -371,6 +354,78 @@ public class ArticleTAction extends ActionSupport {
 		this.version = version;
 	}
 
+	public String getTipcontent() {
+		return tipcontent;
+	}
+
+	public void setTipcontent(String tipcontent) {
+		this.tipcontent = tipcontent;
+	}
+
+	public String getNname() {
+		return nname;
+	}
+
+	public void setNname(String nname) {
+		this.nname = nname;
+	}
+
+	public String getLname() {
+		return lname;
+	}
+
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+
+	public String getSname() {
+		return sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+	public String getFname() {
+		return fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	public String getNavid() {
+		return navid;
+	}
+
+	public void setNavid(String navid) {
+		this.navid = navid;
+	}
+
+	public String getLtypeid() {
+		return ltypeid;
+	}
+
+	public void setLtypeid(String ltypeid) {
+		this.ltypeid = ltypeid;
+	}
+
+	public String getStypeid() {
+		return stypeid;
+	}
+
+	public void setStypeid(String stypeid) {
+		this.stypeid = stypeid;
+	}
+
+	public String getMobilesync() {
+		return mobilesync;
+	}
+
+	public void setMobilesync(String mobilesync) {
+		this.mobilesync = mobilesync;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -393,35 +448,37 @@ public class ArticleTAction extends ActionSupport {
 	public String addArticleT() throws IOException, TemplateException {
 		ArticleT at = new ArticleT();
 		at.setArticleid(this.getSerial().Serialid(Serial.ARTICLE));
-		at.setArticleCategoryTid(this.getArticleCategoryTid());
-		at.setArticleCategoryName(this.getArticleCategoryName());
+		at.setNname(this.getNname());
+		at.setNavid(this.getNavid());
+		at.setLname(this.getLname());
+		at.setLtypeid(this.getLtypeid());
+		at.setSname(this.getSname());
+		at.setStypeid(this.getStypeid());
+		at.setFname(this.getFname());
 		at.setTitle(this.getTitle());
 		at.setMetaKeywords(this.getMetaKeywords());
 		at.setMetaDes(this.getMetaDes());
 		at.setContentvalue(this.getContentvalue());
+		at.setStatus(StaticString.ONE);//显示
 		at.setAuthor(this.getAuthor());
-		if (this.getIspublication().equals("1")) {
-			at.setIspublication("1");
-			at.setStatus("1");
-		} else {
-			at.setIspublication("0");
-			at.setStatus("0");
-		}
+		at.setIspublication(this.getIspublication());
 		at.setIsrecommend(this.getIsrecommend());
 		at.setIstop(this.getIstop());
 		at.setReadcount(0);
-		at.setPageCount(this.getPageCount());
+		at.setPageCount(1);//默认只分一页
 		at.setCreatetime(BaseTools.systemtime());
 		at.setCreatorid(BaseTools.adminCreateId());
-		at.setUpdatetime(BaseTools.defaulttime());
+		at.setUpdatetime(at.getCreatetime());
 		at.setVersiont(0);
+		at.setMobilesync(this.getMobilesync());
+		at.setTipcontent(this.getTipcontent());
 		at.setHtmlPath("#");
-		actbean = this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(this.getArticleCategoryTid());
-		if (actbean != null) {
-			if (actbean.getPosition() != null && actbean.getPosition().equals("1")) {
-				at.setPosition("1");
+		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
+		if(!list.isEmpty()){
+			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {
+				at.setPosition(StaticString.ONE);
 			} else {
-				at.setPosition("0");
+				at.setPosition(StaticString.ZERO);
 			}
 		}
 		at.setIsnotice(this.getIsnotice());
@@ -448,16 +505,14 @@ public class ArticleTAction extends ActionSupport {
 	 */
 	@Action(value = "findArticleByarticleid", results = { @Result(name = "json", type = "json") })
 	public String findArticleByarticleid() {
-		if(Validate.StrNotNull(this.getArticleid())){
-			bean = this.getArticleTService().findArticleByarticleid(this.getArticleid());
+		if(StringUtils.isNotBlank(this.getArticleid())){
+			bean = this.getArticleTService().findArticleByarticleid(this.getArticleid().trim());
 			if (bean != null) {
 				this.setSucflag(true);
 				return "json";
 			}
-			this.setSucflag(false);
 			return "json";
 		}
-		this.setSucflag(false);
 		return "json";
 
 	}
@@ -473,33 +528,35 @@ public class ArticleTAction extends ActionSupport {
 	public String updateArticleT() throws IOException, TemplateException {
 		ArticleT at = new ArticleT();
 		at=this.getArticleTService().findArticleByarticleid(this.getArticleid());
-		at.setArticleCategoryTid(this.getArticleCategoryTid());
-		at.setArticleCategoryName(this.getArticleCategoryName());
+		at.setNname(this.getNname());
+		at.setNavid(this.getNavid());
+		at.setLname(this.getLname());
+		at.setLtypeid(this.getLtypeid());
+		at.setSname(this.getSname());
+		at.setStypeid(this.getStypeid());
+		at.setFname(this.getFname());
 		at.setTitle(this.getTitle());
 		at.setMetaKeywords(this.getMetaKeywords());
 		at.setMetaDes(this.getMetaDes());
 		at.setContentvalue(this.getContentvalue());
-		if (this.getIspublication().equals("1")) {
-			at.setIspublication("1");
-			at.setStatus("1");
-		} else {
-			at.setIspublication("0");
-			at.setStatus("0");
-		}
+		at.setStatus(StaticString.ONE);//显示
 		at.setAuthor(this.getAuthor());
+		at.setIspublication(this.getIspublication());
 		at.setIsrecommend(this.getIsrecommend());
 		at.setIstop(this.getIstop());
-		at.setPageCount(this.getPageCount());
-		at.setUpdatetime(BaseTools.systemtime());
+		at.setReadcount(0);
+		at.setPageCount(1);//默认只分一页
 		at.setCreatorid(BaseTools.adminCreateId());
-		at.setVersiont(at.getVersiont());
-		at.setReadcount(Integer.parseInt(this.getReadcount()));
-		actbean = this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(this.getArticleCategoryTid());
-		if (actbean != null) {
-			if (actbean.getPosition() != null && actbean.getPosition().equals("1")) {
-				at.setPosition("1");
+		at.setUpdatetime(BaseTools.systemtime());
+		at.setVersiont(at.getVersiont()+1);
+		at.setMobilesync(this.getMobilesync());
+		at.setTipcontent(this.getTipcontent());
+		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
+		if(!list.isEmpty()){
+			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {
+				at.setPosition(StaticString.ONE);
 			} else {
-				at.setPosition("0");
+				at.setPosition(StaticString.ZERO);
 			}
 		}
 		at.setIsnotice(this.getIsnotice());
@@ -508,7 +565,6 @@ public class ArticleTAction extends ActionSupport {
 			this.setSucflag(true);
 			return "json";
 		}
-		this.setSucflag(false);
 		return "json";
 	}
 
@@ -519,13 +575,11 @@ public class ArticleTAction extends ActionSupport {
 	 */
 	@Action(value = "delArticleT", results = { @Result(name = "json", type = "json") })
 	public String delArticleT() {
-		//this.setArticleid("201205060090,1,2,3");
-		String[] strs = this.getArticleid().split(",");
+		String[] strs = StringUtils.split(this.getArticleid(), ",");
 		for(String s:strs){
 			this.getArticleTService().delArticleT(s);
-			this.setSucflag(true);
-			return "json";
 		}
+		this.setSucflag(true);
 		return "json";
 	}
 
@@ -537,7 +591,7 @@ public class ArticleTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllArticleT", results = { @Result(name = "json", type = "json") })
 	public String findAllArticleT() throws Exception {
-		if ("sc".equals(this.getQtype())) {
+		if (StaticString.SC.equals(this.getQtype())) {
 			this.findDefaultAllArticle();				
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -552,8 +606,8 @@ public class ArticleTAction extends ActionSupport {
 	public void findDefaultAllArticle() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getArticleTService().countfindAllArticle(BaseTools.adminCreateId());
-		List<ArticleT> list = this.getArticleTService().findAllArticleT(currentPage, lineSize, BaseTools.adminCreateId());
+		total = this.getArticleTService().countfindAllArticle();
+		List<ArticleT> list = this.getArticleTService().findAllArticleT(currentPage, lineSize);
 		if (list != null) {
 			this.ProcessArticleTList(list);
 		}
@@ -563,28 +617,28 @@ public class ArticleTAction extends ActionSupport {
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			ArticleT at = (ArticleT) it.next();
 			if (at.getIspublication().equals("1")) {
-				at.setIspublication("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+				at.setIspublication("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				at.setIspublication("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				at.setIspublication("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (at.getIsrecommend().equals("1")) {
-				at.setIsrecommend("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+				at.setIsrecommend("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				at.setIsrecommend("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				at.setIsrecommend("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (at.getIstop().equals("1")) {
-				at.setIstop("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+				at.setIstop("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				at.setIstop("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				at.setIstop("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (at.getIsnotice().equals("1")) {
-				at.setIsnotice("<span class='truestatue'><img src='../images/base_right_icon.gif'/></span>");
+				at.setIsnotice("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				at.setIsnotice("<span class='falsestatue'><img src='../images/base_wrong_icon.gif'/></span>");
+				at.setIsnotice("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", at.getArticleid());
-			cellMap.put("cell", new Object[] { at.getTitle(), at.getArticleCategoryName(),at.getIsnotice(), at.getIspublication(), at.getIsrecommend(), at.getIstop(), at.getCreatetime(), "<a target='_blank' id='editarticle' href='jshop/admin/pagecontent/addarticle.jsp?articleid=" + at.getArticleid() + "' name='editarticle'>[编辑]</a>" + "<a target='_blank' id='browerarticle' href='" + at.getHtmlPath() + "' name='browerarticle'>[预览]</a>" });
+			cellMap.put("cell", new Object[] { at.getTitle(), at.getNname(),at.getIsnotice(), at.getIspublication(), at.getIsrecommend(), at.getIstop(), BaseTools.formateDbDate(at.getCreatetime()), "<a id='editarticle' href='article.jsp?operate=edit&folder=pagecontent&articleid=" + at.getArticleid() + "' name='editarticle'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 	}

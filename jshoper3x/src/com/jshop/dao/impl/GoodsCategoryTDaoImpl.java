@@ -391,6 +391,37 @@ public class GoodsCategoryTDaoImpl extends HibernateDaoSupport implements GoodsC
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public int delGoodscategoryT(final String[] strs) {
+		log.debug("del delGoodscategoryT");
+		try {
+
+			final String queryString = "delete from GoodsCategoryT as gct where gct.goodsCategoryTid=:goodsCategoryTid";
+			this.getHibernateTemplate().execute(new HibernateCallback() {
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					int i = 0;
+					for (String s : strs) {
+						query.setParameter("goodsCategoryTid", s);
+						i = query.executeUpdate();
+						i++;
+					}
+					if (strs.length == i) {
+						return i;
+					} else {
+						return 0;
+					}
+				}
+			});
+		} catch (RuntimeException re) {
+			log.error("del delGoodscategoryT failed", re);
+			throw re;
+		}
+		return 0;
+	}
+
 
 
 	

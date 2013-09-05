@@ -19,18 +19,8 @@
 		<div class="navbar-innert">
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
-				height="30" alt=""></a> <a class="brand" href="#">商品管理</a> <a
-				class="brand2">所有商品列表</a>
-		</div>
-		<div class="subnav" data-spy="affix" data-offset-top="40">
-			<ul class="nav nav-pills">
-				<li><a href="#typography">Typography</a></li>
-				<li><a href="#code">Code</a></li>
-				<li><a href="#tables">Tables</a></li>
-				<li><a href="#forms">Forms</a></li>
-				<li><a href="#buttons">Buttons</a></li>
-				<li><a href="#icons">Icons by Glyphicons</a></li>
-			</ul>
+				height="30" alt=""></a> <a class="brand" href="#">文章管理</a> <a
+				class="brand2">所有文章列表</a>
 		</div>
 	</div>
 	<div class="container-fluid containerb">
@@ -45,92 +35,23 @@
 			<div class="span10">
 				<div class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">×</button>
-					<strong>Well done!</strong> You successfully read this important
-					alert message.
+					<strong>说明</strong> 请根据需要定义文章
 				</div>
-				<div class="input-append">
-					<input class="span2" id="appendedInputButtons" type="text">
-					<button class="btn" type="button">
-						<i class="icon-search"></i>
-					</button>
-					<button class="btn" type="button">
-						<i class="icon-remove"></i>
-					</button>
+				<div id="alertinfo" style="display: none;" class="alert alert-info">
+					<a class="close" data-dismiss="alert" href="#">&times;</a> <strong></strong>
+				</div>
+				<div id="alerterror" style="display: none;"
+					class="alert alert-error">
+					<a class="close" data-dismiss="alert" href="#">&times;</a> <strong></strong>
 				</div>
 				<div class="line-dotted"></div>
 				<!-- flexigrid -->
 				<div id="flexarticlemanagement">
 					<table id="articlemanagement" style="display: none;"></table>
 				</div>
+			
 				<div class="line-dotted"></div>
-				<div class="pagination">
-					<ul>
-						<li><a href="#">Prev</a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">Next</a></li>
-					</ul>
-				</div>
-				<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-					<li><a href="#dropdowns"><span class="badge badge-success">1</span>
-							西牧狼商务英伦复古牛皮</a></li>
-					<li><a href="#buttonGroups"><span
-							class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-					<li><a href="#buttonDropdowns"><span
-							class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-					<li><a href="#navs"><span class="badge badge-info">4</span>
-							ayhke磨砂牛皮保暖棉鞋</a></li>
-					<li><a href="#navbar"><span class="badge badge-inverse">5</span>
-							E人E本T4 WIFI版</a></li>
-				</ul>
-				<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-					<li><a href="#dropdowns"><span class="badge badge-success">1</span>
-							西牧狼商务英伦复古牛皮</a></li>
-					<li><a href="#buttonGroups"><span
-							class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-					<li><a href="#buttonDropdowns"><span
-							class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-					<li><a href="#navs"><span class="badge badge-info">4</span>
-							ayhke磨砂牛皮保暖棉鞋</a></li>
-					<li><a href="#navbar"><span class="badge badge-inverse">5</span>
-							E人E本T4 WIFI版</a></li>
-				</ul>
-
-				<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-					<li><a href="#dropdowns"><span class="badge badge-success">1</span>
-							西牧狼商务英伦复古牛皮</a></li>
-					<li><a href="#buttonGroups"><span
-							class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-					<li><a href="#buttonDropdowns"><span
-							class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-					<li><a href="#navs"><span class="badge badge-info">4</span>
-							ayhke磨砂牛皮保暖棉鞋</a></li>
-					<li><a href="#navbar"><span class="badge badge-inverse">5</span>
-							E人E本T4 WIFI版</a></li>
-				</ul>
-
-				<div class="line-dotted"></div>
-				<h4>销量 Top 5</h4>
-				<ul class="nav nav-list bs-docs-sidenavh">
-					<li><a href="#dropdowns"><span class="badge badge-success">1</span>
-							西牧狼商务英伦复古牛皮</a></li>
-					<li><a href="#buttonGroups"><span
-							class="badge badge-warning">2</span> 限量300台送UV镜！特价尼康 D3200！</a></li>
-					<li><a href="#buttonDropdowns"><span
-							class="badge badge-important">3</span> 电子书刊畅读卡（季度卡）赠《攻心话术》！</a></li>
-					<li><a href="#navs"><span class="badge badge-info">4</span>
-							ayhke磨砂牛皮保暖棉鞋</a></li>
-					<li><a href="#navbar"><span class="badge badge-inverse">5</span>
-							E人E本T4 WIFI版</a></li>
-				</ul>
+				
 
 			</div>
 

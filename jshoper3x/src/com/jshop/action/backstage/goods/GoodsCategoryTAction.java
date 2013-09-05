@@ -946,26 +946,27 @@ public class GoodsCategoryTAction extends ActionSupport {
 	 */
 	@Action(value = "delGoodscategoryT", results = { @Result(name = "json", type = "json") })
 	public String delGoodscategoryT() {
-		if (Validate.StrNotNull(this.getGoodsCategoryTid())) {
-			String[] strs = this.getGoodsCategoryTid().split(",");
-			for (int i = 0; i < strs.length; i++) {
-				bean = this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(strs[i]);
-				if (bean != null) {
-					if (bean.getGrade().equals("0")) {
-						this.setSucflag(false);
-						return "json";
-					} else {
-						int j = this.getGoodsCategoryTService().delGoodscategoryT(strs[i], "0");
-						if (j > 0) {
-							this.setSucflag(true);
-							return "json";
-						}
-					}
-				}
+		if (StringUtils.isNotBlank(this.getGoodsCategoryTid())) {
+			String[]strs=StringUtils.split(this.getGoodsCategoryTid().trim(), ",");
+			if(this.getGoodsCategoryTService().delGoodscategoryT(strs)>0){
+				//更新商品分类的静态页路径
+				updateGoodsCategoryhtmlpath();
 			}
-			//更新商品分类的静态页路径
-			updateGoodsCategoryhtmlpath();
-			
+//			for (int i = 0; i < strs.length; i++) {
+//				bean = this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(strs[i]);
+//				if (bean != null) {
+//					if (bean.getGrade().equals("0")) {
+//						this.setSucflag(false);
+//						return "json";
+//					} else {
+//						int j = this.getGoodsCategoryTService().delGoodscategoryT(strs[i], "0");
+//						if (j > 0) {
+//							this.setSucflag(true);
+//							return "json";
+//						}
+//					}
+//				}
+//			}
 		}
 		this.setSucflag(true);
 		return "json";

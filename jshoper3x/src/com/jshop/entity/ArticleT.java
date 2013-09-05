@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-8-27 20:25:25 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-1 10:07:10 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -18,7 +18,6 @@ import javax.persistence.TemporalType;
 public class ArticleT implements java.io.Serializable {
 
 	private String articleid;
-	private String articleCategoryTid;
 	private String title;
 	private String metaKeywords;
 	private String metaDes;
@@ -33,22 +32,28 @@ public class ArticleT implements java.io.Serializable {
 	private Integer readcount;
 	private String htmlPath;
 	private Integer pageCount;
-	private String articleCategoryName;
 	private String position;
 	private String isnotice;
 	private Date updatetime;
 	private int versiont;
+	private String mobilesync;
+	private String tipcontent;
+	private String nname;
+	private String lname;
+	private String sname;
+	private String fname;
+	private String navid;
+	private String ltypeid;
+	private String stypeid;
 
 	public ArticleT() {
 	}
 
-	public ArticleT(String articleid, String articleCategoryTid, String title,
-			String contentvalue, String status, Date createtime,
-			String creatorid, String author, String ispublication,
-			String isrecommend, String istop, String articleCategoryName,
-			Date updatetime, int versiont) {
+	public ArticleT(String articleid, String title, String contentvalue,
+			String status, Date createtime, String creatorid, String author,
+			String ispublication, String isrecommend, String istop,
+			Date updatetime, int versiont, String mobilesync) {
 		this.articleid = articleid;
-		this.articleCategoryTid = articleCategoryTid;
 		this.title = title;
 		this.contentvalue = contentvalue;
 		this.status = status;
@@ -58,20 +63,21 @@ public class ArticleT implements java.io.Serializable {
 		this.ispublication = ispublication;
 		this.isrecommend = isrecommend;
 		this.istop = istop;
-		this.articleCategoryName = articleCategoryName;
 		this.updatetime = updatetime;
 		this.versiont = versiont;
+		this.mobilesync = mobilesync;
 	}
 
-	public ArticleT(String articleid, String articleCategoryTid, String title,
-			String metaKeywords, String metaDes, String contentvalue,
-			String status, Date createtime, String creatorid, String author,
+	public ArticleT(String articleid, String title, String metaKeywords,
+			String metaDes, String contentvalue, String status,
+			Date createtime, String creatorid, String author,
 			String ispublication, String isrecommend, String istop,
 			Integer readcount, String htmlPath, Integer pageCount,
-			String articleCategoryName, String position, String isnotice,
-			Date updatetime, int versiont) {
+			String position, String isnotice, Date updatetime, int versiont,
+			String mobilesync, String tipcontent, String nname, String lname,
+			String sname, String fname, String navid, String ltypeid,
+			String stypeid) {
 		this.articleid = articleid;
-		this.articleCategoryTid = articleCategoryTid;
 		this.title = title;
 		this.metaKeywords = metaKeywords;
 		this.metaDes = metaDes;
@@ -86,11 +92,19 @@ public class ArticleT implements java.io.Serializable {
 		this.readcount = readcount;
 		this.htmlPath = htmlPath;
 		this.pageCount = pageCount;
-		this.articleCategoryName = articleCategoryName;
 		this.position = position;
 		this.isnotice = isnotice;
 		this.updatetime = updatetime;
 		this.versiont = versiont;
+		this.mobilesync = mobilesync;
+		this.tipcontent = tipcontent;
+		this.nname = nname;
+		this.lname = lname;
+		this.sname = sname;
+		this.fname = fname;
+		this.navid = navid;
+		this.ltypeid = ltypeid;
+		this.stypeid = stypeid;
 	}
 
 	@Id
@@ -101,15 +115,6 @@ public class ArticleT implements java.io.Serializable {
 
 	public void setArticleid(String articleid) {
 		this.articleid = articleid;
-	}
-
-	@Column(name = "ARTICLE_CATEGORY_TID", nullable = false, length = 20)
-	public String getArticleCategoryTid() {
-		return this.articleCategoryTid;
-	}
-
-	public void setArticleCategoryTid(String articleCategoryTid) {
-		this.articleCategoryTid = articleCategoryTid;
 	}
 
 	@Column(name = "TITLE", nullable = false, length = 100)
@@ -221,7 +226,7 @@ public class ArticleT implements java.io.Serializable {
 		this.readcount = readcount;
 	}
 
-	@Column(name = "HTML_PATH", length = 225)
+	@Column(name = "HTML_PATH")
 	public String getHtmlPath() {
 		return this.htmlPath;
 	}
@@ -237,15 +242,6 @@ public class ArticleT implements java.io.Serializable {
 
 	public void setPageCount(Integer pageCount) {
 		this.pageCount = pageCount;
-	}
-
-	@Column(name = "ARTICLE_CATEGORY_NAME", nullable = false, length = 45)
-	public String getArticleCategoryName() {
-		return this.articleCategoryName;
-	}
-
-	public void setArticleCategoryName(String articleCategoryName) {
-		this.articleCategoryName = articleCategoryName;
 	}
 
 	@Column(name = "POSITION", length = 1)
@@ -283,6 +279,87 @@ public class ArticleT implements java.io.Serializable {
 
 	public void setVersiont(int versiont) {
 		this.versiont = versiont;
+	}
+
+	@Column(name = "MOBILESYNC", nullable = false, length = 1)
+	public String getMobilesync() {
+		return this.mobilesync;
+	}
+
+	public void setMobilesync(String mobilesync) {
+		this.mobilesync = mobilesync;
+	}
+
+	@Column(name = "TIPCONTENT", length = 100)
+	public String getTipcontent() {
+		return this.tipcontent;
+	}
+
+	public void setTipcontent(String tipcontent) {
+		this.tipcontent = tipcontent;
+	}
+
+	@Column(name = "NNAME", length = 45)
+	public String getNname() {
+		return this.nname;
+	}
+
+	public void setNname(String nname) {
+		this.nname = nname;
+	}
+
+	@Column(name = "LNAME", length = 45)
+	public String getLname() {
+		return this.lname;
+	}
+
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+
+	@Column(name = "SNAME", length = 45)
+	public String getSname() {
+		return this.sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+	@Column(name = "FNAME", length = 45)
+	public String getFname() {
+		return this.fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	@Column(name = "NAVID", length = 20)
+	public String getNavid() {
+		return this.navid;
+	}
+
+	public void setNavid(String navid) {
+		this.navid = navid;
+	}
+
+	@Column(name = "LTYPEID", length = 20)
+	public String getLtypeid() {
+		return this.ltypeid;
+	}
+
+	public void setLtypeid(String ltypeid) {
+		this.ltypeid = ltypeid;
+	}
+
+	@Column(name = "STYPEID", length = 20)
+	public String getStypeid() {
+		return this.stypeid;
+	}
+
+	public void setStypeid(String stypeid) {
+		this.stypeid = stypeid;
 	}
 
 }

@@ -112,4 +112,9 @@ public class GoodsCategoryTServiceImpl implements GoodsCategoryTService {
 		return this.getGoodsCategoryTDao().findAllCategoryByNoTrem();
 	}
 
+	@Override
+	public int delGoodscategoryT(String[] strs) {
+		return this.getGoodsCategoryTDao().delGoodscategoryT(strs);
+	}
+
 }

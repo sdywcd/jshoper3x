@@ -477,5 +477,36 @@ public class ArticleCategoryTDaoImpl extends HibernateDaoSupport implements Arti
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public int delArticleCategoryT(final String strs[]) {
+		log.debug("del GoodsT");
+		try {
+
+			final String queryString = "delete from ArticleCategoryT as act where act.articleCategoryTid=:articleCategoryTid";
+			this.getHibernateTemplate().execute(new HibernateCallback() {
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					int i = 0;
+					for (String s : strs) {
+						query.setParameter("articleCategoryTid", s);
+						i = query.executeUpdate();
+						i++;
+					}
+					if (strs.length == i) {
+						return i;
+					} else {
+						return 0;
+					}
+				}
+			});
+		} catch (RuntimeException re) {
+			log.error("del GoodsT failed", re);
+			throw re;
+		}
+		return 0;
+	}
+
 
 }

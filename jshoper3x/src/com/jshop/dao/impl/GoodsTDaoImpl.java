@@ -60,6 +60,7 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public int delGoods(final String[] list, final String creatorid) {
 		log.debug("del GoodsT");
 		try {

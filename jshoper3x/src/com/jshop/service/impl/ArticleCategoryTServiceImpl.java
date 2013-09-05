@@ -145,6 +145,11 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 		return this.getArticleCategoryTDao().findArticleCategoryByparentId(status, parentId);
 	}
 
+	@Override
+	public int delArticleCategoryT(String[] strs) {
+		return this.getArticleCategoryTDao().delArticleCategoryT(strs);
+	}
+
 
 
 }

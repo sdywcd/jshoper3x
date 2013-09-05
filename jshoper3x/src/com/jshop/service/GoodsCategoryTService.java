@@ -53,7 +53,12 @@ public interface GoodsCategoryTService {
 	 * @param goodscategoryid
 	 */
 	public int delGoodscategoryT(String goodsCategoryTid, String state);
-
+	/**
+	 * 删除商品分类
+	 * @param strs
+	 * @return
+	 */
+	public int delGoodscategoryT(String strs[]);
 	/**
 	 * 更新商品分类
 	 * 

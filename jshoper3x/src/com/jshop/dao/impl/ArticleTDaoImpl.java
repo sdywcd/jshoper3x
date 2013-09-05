@@ -77,10 +77,7 @@ public class ArticleTDaoImpl extends HibernateDaoSupport implements ArticleTDao 
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("findAllArticleT error", re);
 			throw re;
@@ -287,6 +284,48 @@ public class ArticleTDaoImpl extends HibernateDaoSupport implements ArticleTDao 
 			return integer;
 		} catch (RuntimeException re) {
 			log.error("delArticleT error", re);
+			throw re;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ArticleT> findAllArticleT(final int currentPage, final int lineSize) {
+		log.debug("findAllArticleT");
+		try {
+			List<ArticleT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+
+				String queryString = "from ArticleT order by createtime desc";
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setFirstResult((currentPage - 1) * lineSize);
+					query.setMaxResults(lineSize);
+					List list = query.list();
+					return list;
+				}
+			});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findAllArticleT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int countfindAllArticle() {
+		log.debug("countfindAllArticle");
+		try {
+			String queryString = "select count(*) from ArticleT";
+			List list = this.getHibernateTemplate().find(queryString);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countfindAllArticle error", re);
 			throw re;
 		}
 	}

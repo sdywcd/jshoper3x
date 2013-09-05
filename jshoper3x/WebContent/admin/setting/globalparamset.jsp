@@ -157,6 +157,11 @@
 						<h4>内容相关</h4>
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">文章分页字符数: </span> <input
+							id="articlesplitsize" name="articlesplitsize" type="text" value="" /> <span
+							class="label label-info">文章每多少个字符进行分页</span>
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">评论审核:</span> <input
 							type="radio" id="iscommentmoderation" name="iscommentmoderation"
 							value="1" /> <label for="radio-1">开启 </label> <input

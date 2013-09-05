@@ -86,4 +86,15 @@ public class ArticleTServiceImpl implements ArticleTService {
 		return this.getArticleTDao().delArticleT(id);
 	}
 
+	@Override
+	public List<ArticleT> findAllArticleT(int currentPage, int lineSize) {
+		return this.getArticleTDao().findAllArticleT(currentPage, lineSize);
+	}
+
+	@Override
+	public int countfindAllArticle() {
+		return this.getArticleTDao().countfindAllArticle();
+				
+	}
+
 }

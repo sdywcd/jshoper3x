@@ -29,7 +29,7 @@
 					src="http://i.360buy.com/commons/img/no-img_mid_.jpg" alt=""
 					class="caption"> </a>
 				<div class="well well-small smallt">
-					<h4>邹志刚，你好！</h4>
+					<h4>陈达，你好！</h4>
 					<p>
 						上次登录时间<br />2012年12月18日15:01:25
 					</p>
@@ -53,7 +53,7 @@
 								alt="" class="caption">
 								<h4>添加产品</h4> </a></li>
 						<li class="span2"><a
-							href="<%=basePath%>admin/pagecontent/articlemanagement.jsp"
+							href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find"
 							class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-article.png"
 								alt="" class="caption">
@@ -72,10 +72,10 @@
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-user.png"
 								alt="" class="caption">
 								<h4>用户管理</h4> </a></li>
-						<li class="span2"><a href="#" class="thumbnail"><img
+						<li class="span2"><a href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find" class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-config.png"
 								alt="" class="caption">
-								<h4>控制面板</h4> </a></li>
+								<h4>基本设置</h4> </a></li>
 					</ul>
 				</div>
 

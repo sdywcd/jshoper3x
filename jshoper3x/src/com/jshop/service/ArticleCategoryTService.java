@@ -70,7 +70,12 @@ public interface ArticleCategoryTService {
 	 * @return
 	 */
 	public void delArticleCategoryT(ArticleCategoryT act);
-
+	/**
+	 * 删除文章分类
+	 * @param strs
+	 * @return
+	 */
+	public int delArticleCategoryT(String strs[]);
 	/**
 	 * 更新文章分类
 	 * 
