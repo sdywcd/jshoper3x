@@ -22,28 +22,47 @@ $(function(){
 			async:false,
 			success:function(data){
 				if(data.sucflag){
-					var header="<option value='-1'>---请选择---</option><option value='0'>顶级分类</option>";
+					var header="<option value='-1'>---请选择---</option>";
 					if(data.articlecategoryzero==""){
-						$('#parentId').append(header);
-						$('#parentId1').hide();
+						$('#navid').append(header);
+						$('#ltypeid').hide();
+						$('#stypeid').hide();
 					}else{
-						$('#parentId').append(header).append(data.articlecategoryzero);
-						$('#parentId1').hide();
+						$('#navid').append(header).append(data.articlecategoryzero);
+						$('#ltypeid').hide();
+						$('#stypeid').hide();
 					}
 				}
 			}
 		});
-	}
+	},
 	/**
 	 * 级联读取二级栏目
 	 */
-	$('#parentId').change(function() {
-		var parentId = $('#parentId').val();
-		//parentid=0表示顶级分类，parentid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
-		if (parentId != "0" && parentId != "-1") {
-			$.post("findArticleCategoryByparentId.action",{"parentId":parentId}, function(data) {
+	$('#navid').change(function() {
+		var navid = $('#navid').val();
+		//navid=0表示顶级分类，navid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
+		if (navid != "0" && navid != "-1") {
+			$.post("findArticleCategoryByparentId.action",{"parentId":navid}, function(data) {
 				if (data.sucflag) {
-					$('#parentId1').html(data.articlecategorytwo);
+					$('#ltypeid').html(data.articlecategorytwo);
+				}
+			});
+		}
+	});
+	
+	/**
+	 * 级联读取二级分类对应的三级分类
+	 */
+	$('#ltypeid').change(function(){
+		var ltypeid = $('#ltypeid').val();
+		//parentid=0表示顶级分类，parentid=-1表示请选择，也就是当都不是这两个条件时执行一级栏目对应的下级栏目的搜索
+		//这里再读取三级分类内容
+		if (ltypeid != "0" && ltypeid != "-1") {
+			$.post("findArticleCategoryByparentId.action",{"parentId":ltypeid}, function(data) {
+				if (data.sucflag) {
+					$('#stypeid').html(data.articlecategorytwo).show();
+					
 				}
 			});
 		}
@@ -52,21 +71,32 @@ $(function(){
 	/**
 	 * 验证分类选择
 	 */
-	$("#parentId").change(function(){
-		var parentId=$('#parentId').val();
-		var parentId1=$('#parentId1').val();
-		var parentId2=$('#parentId2').val();
-		if(parentId=='0'){
-			$('#parentId1').hide();
-			$('#parentId2').hide();
-		}else{
-			$('#parentId1').show();
+	$("#navid").change(function(){
+		var navid = $('#navid').val();
+		var ltypeid = $('#ltypeid').val();
+		var stypeid = $('#stypeid').val();
+		if (navid == '-1') {
+			$('#ltypeid').hide();
+			$('#stypeid').hide();
+		} else {
+			$('#ltypeid').show();
 		}
-		if(parentId1=="-1"){
-			$('#parentId2').hide();
+		if (ltypeid == "-1") {
+			$('#stypeid').hide();
 		}
 	});
 	
+	/**
+	 * 点击重新选择分类
+	 */
+	$("#reselectarticlecategory").toggle(function(){
+	    	$("#selectarticlecategory").show();
+	    	$("#articlecategory").hide();
+	    }, function(){
+	    	$("#selectarticlecategory").hide();
+	    	$("#articlecategory").show();
+	    });
+	   
 	
 	/**
 	 * 增加文章
@@ -109,6 +139,7 @@ $(function(){
 		var tipcontent=$("#tipcontent").val();
 		var metaKeywords=$('#metaKeywords').val();
 		var metaDes=$('#metaDes').val();
+		var sort=$("#sort").val();
 		this.value="提交中";
 		this.disabled=true;
 		$.post("addArticleT.action",{
@@ -129,7 +160,8 @@ $(function(){
 			"contentvalue":contentvalue,
 			"tipcontent":tipcontent,
 			"metaKeywords":metaKeywords,
-			"metaDes":metaDes
+			"metaDes":metaDes,
+			"sort":sort
 			},function(data){
 			if(data.sucflag){
 				window.location.href="articlement.jsp?operate=find&folder=pagecontent";
@@ -210,6 +242,7 @@ $(function(){
 	 * @returns
 	 */
 	updateArticleT=function(){
+		var articleid=$("#hidarticleid").val();
 		var title=$('#title').val();
 		if(title==""){
 			formwarning("#alerterror", "文章标题必须填写");
@@ -260,10 +293,11 @@ $(function(){
 		var tipcontent=$("#tipcontent").val();
 		var metaKeywords=$('#metaKeywords').val();
 		var metaDes=$('#metaDes').val();
+		var sort=$("#sort").val();
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateArticleT.action",{
-			"articleid":hidarticleid,
+			"articleid":articleid,
 			"navid":navid,
 			"nname":nname,
 			"ltypeid":ltypeid,
@@ -281,7 +315,8 @@ $(function(){
 			"contentvalue":contentvalue,
 			"tipcontent":tipcontent,
 			"metaKeywords":metaKeywords,
-			"metaDes":metaDes
+			"metaDes":metaDes,
+			"sort":sort
 			},function(data){
 			if(data.sucflag){
 				window.location.href="articlement.jsp?operate=find&folder=pagecontent";
@@ -292,133 +327,146 @@ $(function(){
 		});
 	},
 	
-	
-	$("#articlemanagement").flexigrid( {
-		url : 'findAllArticleT.action',
-		dataType : 'json',
-		cache : false,
-		colModel : [ {
-			display : '标题',
-			name : 'title',
-			width : 315,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '分类',
-			name : 'articleCategoryName',
-			width : 215,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '公告',
-			name : 'isnotice',
-			width : 115,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '发布',
-			name : 'ispublication',
-			width : 115,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '推荐',
-			name : 'isrecommend',
-			width : 115,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '置顶',
-			name : 'istop',
-			width : 115,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '创建时间',
-			name : 'createtime',
-			width : 214,
-			sortable : true,
-			align : 'center'
-
-		}, {
-			display : '操作',
-			name : 'operating',
-			width : 200,
-			sortable : true,
-			align : 'center'
-		} ],
-		buttons : [ {
-			name : '添加',
-			bclass : 'add',
-			onpress : action
-		}, {
-			name : '编辑',
-			bclass : 'edit',
-			onpress : action
-		}, {
-			name : '删除',
-			bclass : 'del',
-			onpress : action
-		},{
-			separator : true
-		} ],
-
-		searchitems : [ {
-			display : '请选择搜索条件',
-			name : 'sc',
-			isdefault : true
-		}, {
-			display : '分类名称',
-			name : 'name'
-		} ],
-		sortname : "createtime",
-		sortorder : "desc",
-		usepager : true,
-		useRp : true,
-		rp : 20,
-		rpOptions : [ 5, 20, 40, 100 ],
-		showTableToggleBtn : true,
-		width : 'auto',
-		height : 'auto',
-		pagestat : '显示{from}到{to}条，共{total}条记录',
-		procmsg : '正在获取数据，请稍候...',
-		checkbox:true
+	/**
+	 * 保存文章
+	 */
+	$("#submit").click(function(){
+		saveArticle();
 	});
+	
+	$("#update").click(function(){
+		updateArticleT();
+	});
+	
+	findAllArticleT=function(){
+		$("#articlemanagement").flexigrid( {
+			url : 'findAllArticleT.action',
+			dataType : 'json',
+			cache : false,
+			colModel : [ {
+				display : '标题',
+				name : 'title',
+				width : 315,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '分类',
+				name : 'articleCategoryName',
+				width : 215,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '公告',
+				name : 'isnotice',
+				width : 115,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '发布',
+				name : 'ispublication',
+				width : 115,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '推荐',
+				name : 'isrecommend',
+				width : 115,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '置顶',
+				name : 'istop',
+				width : 115,
+				sortable : true,
+				align : 'center'
+			}, {
+				display : '创建时间',
+				name : 'createtime',
+				width : 214,
+				sortable : true,
+				align : 'center'
 
-	function action(com, grid) {
-		if (com == '添加') {
-			window.location.href = "article.jsp?operate=add&folder=pagecontent";
-			return;
+			}, {
+				display : '操作',
+				name : 'operating',
+				width : 200,
+				sortable : true,
+				align : 'center'
+			} ],
+			buttons : [ {
+				name : '添加',
+				bclass : 'add',
+				onpress : action
+			}, {
+				name : '编辑',
+				bclass : 'edit',
+				onpress : action
+			}, {
+				name : '删除',
+				bclass : 'del',
+				onpress : action
+			},{
+				separator : true
+			} ],
 
-		} else if (com == '编辑') {
-			if ($('.trSelected', grid).length == 1) {
-				var str = $('.trSelected', grid)[0].id.substr(3);
-				window.location.href = "article.jsp?operate=edit&folder=pagecontent&articleid=" + str;
+			searchitems : [ {
+				display : '请选择搜索条件',
+				name : 'sc',
+				isdefault : true
+			}, {
+				display : '分类名称',
+				name : 'name'
+			} ],
+			sortname : "createtime",
+			sortorder : "desc",
+			usepager : true,
+			useRp : true,
+			rp : 20,
+			rpOptions : [ 5, 20, 40, 100 ],
+			showTableToggleBtn : true,
+			width : 'auto',
+			height : 'auto',
+			pagestat : '显示{from}到{to}条，共{total}条记录',
+			procmsg : '正在获取数据，请稍候...',
+			checkbox:true
+		});
+
+		function action(com, grid) {
+			if (com == '添加') {
+				window.location.href = "article.jsp?operate=add&folder=pagecontent";
 				return;
-			} else {
-				formwarning("#alerterror", "请选择一条信息");
-				return false;
+
+			} else if (com == '编辑') {
+				if ($('.trSelected', grid).length == 1) {
+					var str = $('.trSelected', grid)[0].id.substr(3);
+					window.location.href = "article.jsp?operate=edit&folder=pagecontent&articleid=" + str;
+					return;
+				} else {
+					formwarning("#alerterror", "请选择一条信息");
+					return false;
+				}
+			} else if (com == '删除') {
+				if ($('.trSelected', grid).length > 0) {
+					var str = "";
+					$('.trSelected', grid).each(function() {
+						str += this.id.substr(3) + ",";
+					});
+					$.post("delArticleT.action", {
+						"articleid" : str
+					}, function(data) {
+						$('#articlemanagement').flexReload();
+					});
+					return;
+				} else {
+					formwarning("#alerterror", "请选择要删除的信息");
+					return false;
+				}
 			}
-		} else if (com == '删除') {
-			if ($('.trSelected', grid).length > 0) {
-				var str = "";
-				$('.trSelected', grid).each(function() {
-					str += this.id.substr(3) + ",";
-				});
-				$.post("delArticleT.action", {
-					"articleid" : str
-				}, function(data) {
-					$('#articlemanagement').flexReload();
-				});
-				return;
-			} else {
-				formwarning("#alerterror", "请选择要删除的信息");
-				return false;
-			}
+
 		}
 
 	}
-
+	
 	
   	/**
 	 * main logic
@@ -428,8 +476,9 @@ $(function(){
 		findArticlCategoryByGradeZeroone();
 	}else if(operate=="edit"){
 		findArticlCategoryByGradeZeroone();
-		findArticleCategoryByarticleCategoryTid();
 		findArticleByarticleid();
+	}else if(operate=="find"){
+		findAllArticleT();
 	}
 	
 	

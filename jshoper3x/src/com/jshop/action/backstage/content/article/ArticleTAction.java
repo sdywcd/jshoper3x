@@ -72,6 +72,7 @@ public class ArticleTAction extends ActionSupport {
 	private Date createtime;
 	private Date updatetime;
 	private Integer version;
+	private String sort;
 	private ArticleT bean = new ArticleT();
 	private ArticleCategoryT actbean = new ArticleCategoryT();
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -426,6 +427,14 @@ public class ArticleTAction extends ActionSupport {
 		this.mobilesync = mobilesync;
 	}
 
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -473,6 +482,7 @@ public class ArticleTAction extends ActionSupport {
 		at.setMobilesync(this.getMobilesync());
 		at.setTipcontent(this.getTipcontent());
 		at.setHtmlPath("#");
+		at.setSort(Integer.parseInt(this.getSort()));
 		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
 		if(!list.isEmpty()){
 			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {
@@ -551,6 +561,7 @@ public class ArticleTAction extends ActionSupport {
 		at.setVersiont(at.getVersiont()+1);
 		at.setMobilesync(this.getMobilesync());
 		at.setTipcontent(this.getTipcontent());
+		at.setSort(Integer.parseInt(this.getSort()));
 		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
 		if(!list.isEmpty()){
 			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {

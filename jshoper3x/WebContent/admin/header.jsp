@@ -149,7 +149,7 @@
 								<li><a
 									href="<%=basePath%>admin/pagecontent/articlecategoryment.jsp?operate=find">文章分类设置</a></li>
 								<li><a
-									href="<%=basePath%>admin/pagecontent/sitenavigationment.jsp?operate=find">添加文章</a></li>
+									href="<%=basePath%>admin/pagecontent/article.jsp?operate=add">添加文章</a></li>
 								<li><a
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
 							</ul></li>
