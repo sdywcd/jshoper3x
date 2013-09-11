@@ -51,9 +51,7 @@ public class TemplateTAction extends ActionSupport {
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
 	private boolean sucflag;
-	private String usession;
 	@JSON(serialize = false)
 	public TemplateTService getTemplateTService() {
 		return templateTService;
@@ -153,13 +151,6 @@ public class TemplateTAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
 
 	public String getQuery() {
 		return query;
@@ -207,15 +198,6 @@ public class TemplateTAction extends ActionSupport {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-
-	public String getUsession() {
-		return usession;
-	}
-
-	public void setUsession(String usession) {
-		this.usession = usession;
 	}
 
 	public String getThemeid() {

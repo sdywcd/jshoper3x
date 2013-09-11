@@ -71,7 +71,7 @@
 						<li class="span2"><a href="#" class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-user.png"
 								alt="" class="caption">
-								<h4>用户管理</h4> </a></li>
+								<h4>会员管理</h4> </a></li>
 						<li class="span2"><a href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find" class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-config.png"
 								alt="" class="caption">

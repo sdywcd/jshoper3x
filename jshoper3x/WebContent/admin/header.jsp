@@ -136,7 +136,7 @@
 						</a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="<%=basePath%>admin/user/membergroup.jsp?operate=add">添加用户分组</a></li>
+									href="<%=basePath%>admin/member/membergroup.jsp?operate=add">添加用户分组</a></li>
 								<li><a
 									href="<%=basePath%>admin/user/userment.jsp?operate=find">系统用户列表</a></li>
 								<li><a

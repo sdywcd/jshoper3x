@@ -154,6 +154,8 @@ public class Serial {
 	public static String GOODSDETAILRPT="goodsdetailrp";
 	//商品和货物关系表
 	public static String GOODSSPECIFICATIONSPRODUCTRPT="goodsspecificationsproductrpt";
+	//会员分组表
+	public static String MEMBERGROUP="membergroup";
 	@Resource
 	private SerialTService serialTService;
 	
