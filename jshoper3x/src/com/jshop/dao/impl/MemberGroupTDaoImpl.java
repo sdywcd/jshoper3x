@@ -151,7 +151,7 @@ public class MemberGroupTDaoImpl extends HibernateDaoSupport implements MemberGr
 	public int delMemberGroupT(final String[] strs) {
 		log.debug("delMemberGroupT");
 		try {
-			final String queryString = "delete from MemberGroupT as mgt where mgt.tid=:tid";
+			final String queryString = "delete from MemberGroupT as mgt where mgt.id=:id";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {

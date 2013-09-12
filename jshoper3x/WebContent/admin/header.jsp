@@ -61,7 +61,7 @@
 							data-toggle="dropdown">实验室 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a href="#"><i class="icon-tags"></i> 电子点餐系统</a></li>
+								<li><a href="http://www.ostocy.com" target="_blank"><i class="icon-tags"></i> 电子点餐系统</a></li>
 								<li><a href="#"><i class="icon-shopping-cart"></i>
 										B2O线下电商</a></li>
 								<li class="divider"></li>
@@ -137,6 +137,8 @@
 							<ul class="dropdown-menu">
 								<li><a
 									href="<%=basePath%>admin/member/membergroup.jsp?operate=add">添加用户分组</a></li>
+									<li><a
+									href="<%=basePath%>admin/member/membergroupment.jsp?operate=find">用户分组列表</a></li>
 								<li><a
 									href="<%=basePath%>admin/user/userment.jsp?operate=find">系统用户列表</a></li>
 								<li><a

@@ -39,7 +39,7 @@ $(function() {
 		if(id==""){
 			return false;
 		}
-		$.post("findMembergroupByid.action",{"id":id},function(data){
+		$.post("findMemberGroupTById.action",{"id":id},function(data){
 			if(data.sucflag){
 				$("#hidmembergroupid").val(data.bean.id);
 				$("#name").val(data.bean.name);
@@ -63,10 +63,12 @@ $(function() {
 		}
 		var status=$("input[name='status']:checked").val();
 		var id=$("#hidmembergroupid").val();
-		$.post("updateMembergroup.action",{
+		var attrs="";
+		$.post("updateMemberGroupT.action",{
 			"name":name,
 			"status":status,
-			"id":id
+			"id":id,
+			"attrs":attrs
 		},function(data){
 			if(data.sucflag){
 				window.location.href="membergroupment.jsp?operate=find&folder=member";
@@ -139,7 +141,7 @@ $(function() {
 				display : '用户名',
 				name : 'username'
 			} ],
-			sortname : "registtime",
+			sortname : "createtime",
 			sortorder : "desc",
 			usepager : true,
 			title : '',
@@ -169,7 +171,7 @@ $(function() {
 					$('.trSelected', grid).each(function() {
 						str += this.id.substr(3) + ",";
 					});
-					$.post("delMembergroupt.action",{"id":str},function(data){
+					$.post("delMemberGroupT.action",{"id":str},function(data){
 						$('#membergroupmanagement').flexReload();
 					});
 					return;

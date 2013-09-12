@@ -67,11 +67,11 @@
 						<li class="span2"><a href="#" class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-menumgr.png"
 								alt="" class="caption">
-								<h4>图片管理</h4> </a></li>
-						<li class="span2"><a href="#" class="thumbnail"><img
+								<h4>订单管理</h4> </a></li>
+						<li class="span2"><a href="<%=basePath%>admin/member/membergroupment.jsp?operate=find" class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-user.png"
 								alt="" class="caption">
-								<h4>会员管理</h4> </a></li>
+								<h4>分组管理</h4> </a></li>
 						<li class="span2"><a href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find" class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-config.png"
 								alt="" class="caption">
@@ -147,7 +147,7 @@
 			</div>
 
 			<div class="span3">
-				<h4>更新 New 5</h4>
+				<h4>最新订单</h4>
 				<ul class="nav nav-list bs-docs-sidenavh">
 					<li><a href="#dropdowns">最后400台！超值佳能5D Mark I </a></li>
 					<li><a href="#buttonGroups">酷冷至尊战斧二代主动式40</a></li>

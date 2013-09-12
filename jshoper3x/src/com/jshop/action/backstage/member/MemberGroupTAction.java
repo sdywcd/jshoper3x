@@ -234,6 +234,66 @@ public class MemberGroupTAction extends ActionSupport{
 		}
 	}
 	
+	/**
+	 * 根据主键id获取用户分组
+	 * @return
+	 */
+	@Action(value = "findMemberGroupTById", results = {@Result(name = "json",type="json")})
+	public String findMemberGroupTById(){
+		if(StringUtils.isBlank(this.getId())){
+			return "json";
+		}
+		bean=this.getMemberGroupTService().findMemberGroupTById(this.getId().trim());
+		if(bean!=null){
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
+	
+	/**
+	 * 更新会员分组
+	 * @return
+	 */
+	@Action(value = "updateMemberGroupT", results = {@Result(name = "json",type="json")})
+	public String updateMemberGroupT(){
+		if(StringUtils.isBlank(this.getId())){
+			return "json";
+		}
+		bean=this.getMemberGroupTService().findMemberGroupTById(this.getId().trim());
+		if(bean!=null){
+			bean.setName(this.getName().trim());
+			bean.setStatus(this.getStatus().trim());
+			bean.setUpdatetime(BaseTools.systemtime());
+			bean.setVersiont(bean.getVersiont()+1);
+			bean.setAttrs(this.getAttrs());
+			this.getMemberGroupTService().updateMemberGroupT(bean);
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
+	
+	/**
+	 * 批量删除会员分组
+	 * @return
+	 */
+	@Action(value = "delMemberGroupT", results = {@Result(name = "json",type="json")})
+	public String delMemberGroupT(){
+		if(StringUtils.isBlank(this.getId())){
+			return "json";
+		}
+		String []strs=StringUtils.split(this.getId(), ",");
+		if(this.getMemberGroupTService().delMemberGroupT(strs)>0){
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+		
+	}
+	
+	
+	
 	
 	
 	
