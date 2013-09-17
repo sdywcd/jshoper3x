@@ -154,9 +154,7 @@ public class MemberGroupTAction extends ActionSupport{
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
 	}
-	/**
-	 * 去除查询所有商品类别的错误
-	 */
+	
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();

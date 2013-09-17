@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>用户分组设置 &middot; jshoper</title>
+<title>会员分组设置 &middot; jshoper</title>
 </head>
 
 <body data-spy="scroll" data-target=".subnav" data-offset-top="40">
@@ -16,8 +16,8 @@
 		<div class="navbar-innert">
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
-				height="30" alt=""></a> <a class="brand" href="#">用户分组设置 </a> <a
-				class="brand2">编辑用户分组</a>
+				height="30" alt=""></a> <a class="brand" href="#">会员分组设置 </a> <a
+				class="brand2">编辑会员分组</a>
 		</div>
 
 	</div>
@@ -33,7 +33,7 @@
 			<div id="mainlogic" class="span10">
 				<div class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">×</button>
-					<strong>说明</strong> 请根据需要编辑用户分组
+					<strong>说明</strong> 请根据需要编辑会员分组
 				</div>
 				<div id="alerterror" style="display: none;"
 					class="alert alert-error">
@@ -46,7 +46,7 @@
 				<div class="btn-group">
 					<button id="btnback" type="button" class="btn btn-success">返回</button>
 				</div>
-				<!-- 开始用户分组form表单 -->
+				<!-- 开始会员分组form表单 -->
 				<div class="form-actions">
 					<div class="form-inline">
 						<span class="label label-required">分组名称: </span> <input
