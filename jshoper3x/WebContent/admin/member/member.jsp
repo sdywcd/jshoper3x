@@ -130,6 +130,12 @@
 							<span class="label label-info">自己的一段小介绍</span>
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">手机: </span> <input
+							id="mobile" name="mobile" type="text" value=""
+							class="small" /> 
+							
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">QQ: </span> <input
 							id="qq" name="qq" type="text" value=""
 							class="small" /> 
@@ -196,9 +202,9 @@
 					<div class="form-inline">
 						<span class="label label-required">用户状态:</span> <input
 							type="radio" id="userstate" name=userstate value="1"
-							checked="checked" /> <label for="radio-1">启用 </label> <input
+							checked="checked" /> <label for="radio-1">激活 </label> <input
 							type="radio" id="userstate" name="userstate" value="0" /> <label
-							for="radio-2">禁用</label>
+							for="radio-2">禁止</label>
 					</div>
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"

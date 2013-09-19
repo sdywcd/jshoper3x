@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-17 20:50:28 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-19 19:12:29 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -45,18 +45,23 @@ public class MemberT implements java.io.Serializable {
 	private String headpath;
 	private Date createtime;
 	private String creatorid;
+	private Date updatetime;
+	private String mobile;
+	private int versiont;
 
 	public MemberT() {
 	}
 
 	public MemberT(String id, String loginname, String loginpwd, String nick,
-			Date createtime, String creatorid) {
+			Date createtime, String creatorid, Date updatetime, int versiont) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
 		this.nick = nick;
 		this.createtime = createtime;
 		this.creatorid = creatorid;
+		this.updatetime = updatetime;
+		this.versiont = versiont;
 	}
 
 	public MemberT(String id, String loginname, String loginpwd, String nick,
@@ -66,7 +71,7 @@ public class MemberT implements java.io.Serializable {
 			String weixin, String sinaweibo, String tag, Integer belove,
 			Integer loveother, Integer postingcount, String question,
 			String answer, String userstate, String headpath, Date createtime,
-			String creatorid) {
+			String creatorid, Date updatetime, String mobile, int versiont) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
@@ -95,6 +100,9 @@ public class MemberT implements java.io.Serializable {
 		this.headpath = headpath;
 		this.createtime = createtime;
 		this.creatorid = creatorid;
+		this.updatetime = updatetime;
+		this.mobile = mobile;
+		this.versiont = versiont;
 	}
 
 	@Id
@@ -349,6 +357,34 @@ public class MemberT implements java.io.Serializable {
 
 	public void setCreatorid(String creatorid) {
 		this.creatorid = creatorid;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATETIME", nullable = false, length = 0)
+	public Date getUpdatetime() {
+		return this.updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	@Column(name = "MOBILE", length = 20)
+	public String getMobile() {
+		return this.mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	@Column(name = "VERSIONT", nullable = false)
+	public int getVersiont() {
+		return this.versiont;
+	}
+
+	public void setVersiont(int versiont) {
+		this.versiont = versiont;
 	}
 
 }

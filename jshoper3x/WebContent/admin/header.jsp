@@ -76,6 +76,7 @@
 								<li><a href="#"><i class="icon-wrench"></i> 技术支持</a></li>
 								<li class="divider"></li>
 								<li><a href="#"><i class="icon-user"></i> 账号（管理员）</a></li>
+								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>系统用户列表</i></a></li>
 								<li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li>
 							</ul></li>
 
@@ -138,7 +139,7 @@
 								<li><a href="<%=basePath%>admin/member/membergroup.jsp?operate=add">添加会员分组</a></li>
 								<li><a href="<%=basePath%>admin/member/membergroupment.jsp?operate=find">会员分组列表</a></li>
 								<li><a href="<%=basePath%>admin/member/member.jsp?operate=add">添加会员</a></li>
-								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find">系统用户列表</a></li>
+								<li><a href="<%=basePath%>admin/member/memberment.jsp?operate=find">会员列表</a></li>
 								<li><a href="<%=basePath%>admin/user/gradement.jsp?operate=find">会员等级设置</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
@@ -155,11 +156,11 @@
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
-							data-toggle="dropdown" href="#"> 图片管理 <b class="caret"></b>
+							data-toggle="dropdown" href="#"> 素材管理 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="<%=basePath%>admin/img/serverimgment.jsp?operate=find">图片列表</a></li>
+									href="<%=basePath%>admin/material/imagematerialment.jsp?operate=find">图片素材列表</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#"> 系统设置 <b class="caret"></b>

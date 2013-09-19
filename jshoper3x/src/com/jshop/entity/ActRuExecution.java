@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-17 20:50:28 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-19 19:12:29 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;

@@ -90,10 +90,7 @@ public class GoodsAttributeRpTAction extends ActionSupport {
 		return "json";
 	}
 	
-	
-	
-	
-	
+
 	
 	
 }

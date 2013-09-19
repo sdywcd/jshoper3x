@@ -100,6 +100,30 @@ public class  StaticString {
 	
 	public static final String OFFSALE="下架";
 	
-	//商品规格
+	//会员静态字段
+	public static final String SEXMAN="男";
 	
+	public static final String SEXFEMAL="女";
+	
+	public static final String SEXWHICHMAN="同性";
+	
+	public static final String SEXWHICHFEMAL="异性";
+	
+	public static final String MERRYED="已婚";
+	
+	public static final String UNMERRY="未婚";
+	
+	public static final String BLOODA="A型";
+	
+	public static final String BLOODB="B型";
+	
+	public static final String BLOODAB="AB型";
+	
+	public static final String BLOODO="O型";
+	
+	public static final String DOACTIVE="激活";
+	
+	public static final String DONOTACTIVE="禁止";
+	
+	public static final String TAG="tag";
 }

@@ -37,6 +37,7 @@ $(function() {
 		var blood=$("#blood").val();
 		var constellation=$("#constellation").val();
 		var des=$("#des").val();
+		var mobile=$("#mobile").val();
 		var qq=$("#qq").val();
 		var weixin=$("#weixin").val();
 		var sinaweibo=$("#sinaweibo").val();
@@ -75,6 +76,7 @@ $(function() {
 			"blood":blood,
 			"constellation":constellation,
 			"des":des,
+			"mobile":mobile,
 			"qq":qq,
 			"weixin":weixin,
 			"sinaweibo":sinaweibo,
@@ -86,16 +88,21 @@ $(function() {
 			"userstate":userstate
 		},function(data){
 			if(data.sucflag){
-				window.location.href="membergroupment.jsp?operate=find&folder=member";
+				window.location.href="memberment.jsp?operate=find&folder=member";
 				return;
 			}else{
-				formwarning("#alerterror", "用户分组增加失败");
-				return false;
+				if(data.message!=""){
+					formwarning("#alerterror",data.message);
+					return false;
+				}else{
+					formwarning("#alerterror", "用户分组增加失败");
+					return false;
+				}
 			}
 		});
 	},
 	
-	findMembergroupByid=function(){
+	findMemberTById=function(){
 		var id=$.query.get("id");
 		if(id==""){
 			return false;
@@ -112,23 +119,24 @@ $(function() {
 				if("1"==data.bean.sex){
 					$("input[name='sex']").get(0).checked=true;
 				}else{
-					$("input[name='sex']").get(1).checked=false;
+					$("input[name='sex']").get(1).checked=true;
 				}
 				if("1"==data.bean.whichsex){
 					$("input[name='whichsex']").get(0).checked=true;
 				}else{
-					$("input[name='whichsex']").get(1).checked=false;
+					$("input[name='whichsex']").get(1).checked=true;
 				}
 				if("1"==data.bean.merrystatus){
 					$("input[name='merrystatus']").get(0).checked=true;
 				}else{
-					$("input[name='merrystatus']").get(1).checked=false;
+					$("input[name='merrystatus']").get(1).checked=true;
 				}
 				
 				$("#birthday").val(data.bean.birthday);
 				$("#blood").val(data.bean.blood);
 				$("#constellation").val(data.bean.constellation);
 				$("#des").val(data.bean.des);
+				$("#mobile").val(data.bean.mobile);
 				$("#qq").val(data.bean.qq);
 				$("#weixin").val(data.bean.weixin);
 				$("#sinaweibo").val(data.bean.sinaweibo);
@@ -164,8 +172,10 @@ $(function() {
 				if("1"==data.bean.userstate){
 					$("input[name='userstate']").get(0).checked=true;
 				}else{
-					$("input[name='userstate']").get(1).checked=false;
+					$("input[name='userstate']").get(1).checked=true;
 				}
+				$("#loginname").attr("readonly",true);
+				$("#loginpwd").attr("readonly",true);
 				$("#submit").hide();
 				$("#update").show();
 			}
@@ -173,22 +183,8 @@ $(function() {
 		
 	},
 	
-	updateMembergroup=function(){
+	updateMemberT=function(){
 		var id=$("#hidid").val();
-		var loginname=$("#loginname").val();
-		if(loginname==""){
-			formwarning("#alerterror", "用户名必须填写");
-			return false;
-		}
-		var loginpwd=$("#loginpwd").val();
-		if(loginpwd==""){
-			formwarning("#alerterror", "密码必须填写");
-			return false;
-		}
-		if(loginpwd.length<7||loginpwd.length>16){
-			formwarning("#alerterror", "密码长度必须大于等于7位小于16位");
-			return false;
-		}
 		var nick=$("#nick").val();
 		var realname=$("#realname").val();
 		var city=$("#city").val();
@@ -200,6 +196,7 @@ $(function() {
 		var blood=$("#blood").val();
 		var constellation=$("#constellation").val();
 		var des=$("#des").val();
+		var mobile=$("#mobile").val();
 		var qq=$("#qq").val();
 		var weixin=$("#weixin").val();
 		var sinaweibo=$("#sinaweibo").val();
@@ -224,10 +221,8 @@ $(function() {
 		var question=$("#question").val();
 		var answer=$("#answer").val();
 		var userstate=$("input[name='userstate']:checked").val();
-		$.post("saveMemberT.action",{
+		$.post("updateMemberT.action",{
 			"id":id,
-			"loginname":loginname,
-			"loginpwd":loginpwd,
 			"nick":nick,
 			"realname":realname,
 			"city":city,
@@ -239,6 +234,7 @@ $(function() {
 			"blood":blood,
 			"constellation":constellation,
 			"des":des,
+			"mobile":mobile,
 			"qq":qq,
 			"weixin":weixin,
 			"sinaweibo":sinaweibo,
@@ -250,10 +246,10 @@ $(function() {
 			"userstate":userstate
 		},function(data){
 			if(data.sucflag){
-				window.location.href="membergroupment.jsp?operate=find&folder=member";
+				window.location.href="memberment.jsp?operate=find&folder=member";
 				return;
 			}else{
-				formwarning("#alerterror", "用户分组更新失败");
+				formwarning("#alerterror", "会员更新失败");
 				return false;
 			}
 		});
@@ -265,7 +261,7 @@ $(function() {
 		saveMemberT();
 	});
 	$("#update").click(function(){
-		updateMember();
+		updateMemberT();
 	});
 	/**
 	 * 获取所有会员列表
@@ -287,13 +283,13 @@ $(function() {
 				width:100,
 				sortable:true,
 				align:'center'
-			},{ 
+			},{
 				display:'姓名',
 				name:'realname',
 				width:100,
 				sortable:true,
 				align:'center'
-			},{ 
+			},{
 				display:'城市',
 				name:'city',
 				width:100,
@@ -302,6 +298,12 @@ $(function() {
 			},{ 
 				display:'性别',
 				name:'sex',
+				width:100,
+				sortable:true,
+				align:'center'
+			},{ 
+				display:'手机',
+				name:'mobile',
 				width:100,
 				sortable:true,
 				align:'center'
@@ -326,6 +328,12 @@ $(function() {
 			},{ 
 				display:'标签',
 				name:'tag',
+				width:150,
+				sortable:true,
+				align:'center'
+			},{ 
+				display:'状态',
+				name:'userstate',
 				width:150,
 				sortable:true,
 				align:'center'
@@ -418,7 +426,7 @@ $(function() {
 	if (operate == "add") {
 		
 	}else if(operate=="edit"){
-		findMemberByid();
+		findMemberTById();
 	}else if(operate=="find"){
 		findAllmembert();
 	}

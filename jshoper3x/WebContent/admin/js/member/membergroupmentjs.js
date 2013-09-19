@@ -46,7 +46,7 @@ $(function() {
 				if("1"==data.bean.status){
 					$("input[name='status']").get(0).checked=true;
 				}else{
-					$("input[name='status']").get(1).checked=false;
+					$("input[name='status']").get(1).checked=true;
 				}
 				$("#submit").hide();
 				$("#update").show();
