@@ -1,28 +1,5 @@
 
 /**
- * Global variables
- */
-var session="true";
-/*===========================================Gorgeous split-line==============================================*/
-/**
- * ui
- */
-$(function(){
-
-	$("h6").each(function(){
-		$(this).removeClass("selected"); 
-	});
-	$("ul").each(function(){
-		$(this).removeClass("opened"); 
-		$(this).addClass("closed"); 
-	});
-	$("#h-menu-order").addClass("selected");
-	$("#menu-order").removeClass("closed"); 
-	$("#menu-order").addClass("opened");
-});
-/*===========================================Gorgeous split-line==============================================*/
-
-/**
  * flexigrid list 
  */
 $(function() {
@@ -40,7 +17,7 @@ $(function() {
 		}, {
 			display : '订单名称',
 			name : 'goodsname',
-			width : 300,
+			width : 200,
 			sortable : true,
 			align : 'center'
 		}, {
@@ -58,67 +35,67 @@ $(function() {
 		}, {
 			display : '订单所属人',
 			name : 'username',
-			width : 200,
+			width : 150,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '收货人',
 			name : 'shippingusername',
-			width : 200,
+			width : 150,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '支付方式',
 			name : 'paymentname',
-			width : 150,
+			width : 100,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '配送方式',
 			name : 'delivermode',
-			width : 150,
+			width : 100,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '订单状态',
 			name : 'orderstate',
-			width : 150,
+			width : 100,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '支付状态',
 			name : 'paystate',
-			width : 150,
+			width : 100,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '发货状态',
 			name : 'shippingstate',
-			width : 150,
+			width : 100,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '下单时间',
 			name : 'purchasetime',
-			width : 150,
+			width : 100,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '发货时间',
 			name : 'deliverytime',
-			width : 150,
+			width : 100,
+			sortable : true,
+			align : 'center'
+		},{
+			display : '订单来源',
+			name : 'orderTag',
+			width : 100,
 			sortable : true,
 			align : 'center'
 		}, {
 			display : '开票',
 			name : 'invoice',
-			width : 100,
-			sortable : true,
-			align : 'center'
-		}, {
-			display : '订单来源',
-			name : 'orderTag',
-			width : 100,
+			width : 80,
 			sortable : true,
 			align : 'center'
 		} ],
@@ -140,7 +117,7 @@ $(function() {
 		sortname : "purchasetime",
 		sortorder : "desc",
 		usepager : true,
-		title : '订单列表',
+		title : '',
 		useRp : true,
 		rp : 20,
 		rpOptions : [ 5, 20, 40, 100 ],
@@ -154,4 +131,3 @@ $(function() {
 
 
 });
-/*===========================================Gorgeous split-line==============================================*/

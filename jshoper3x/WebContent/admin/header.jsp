@@ -126,11 +126,39 @@
 							data-toggle="dropdown" href="#"> 订单管理 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">所有订单</a></li>
-								<li><a href="#">待发货订单</a></li>
-								<li><a href="#">已发货订单</a></li>
-								<li><a href="#">需开票订单</a></li>
-								<li><a href="#">需退货订单</a></li>
+								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/ordersment.jsp?operate=find">普通订单</a>
+									<ul class="dropdown-menu">
+										<li><a tabindex="-1" href="#">待发货订单</a></li> 
+										<li><a tabindex="-1" href="#">已发货订单</a></li> 
+										<li><a tabindex="-1" href="#">需开票订单</a></li>
+										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+									</ul>
+								</li>
+								
+								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/ordersment.jsp?operate=find">团购订单</a>
+									<ul class="dropdown-menu">
+										<li><a tabindex="-1" href="#">待发货订单</a></li> 
+										<li><a tabindex="-1" href="#">已发货订单</a></li> 
+										<li><a tabindex="-1" href="#">需开票订单</a></li>
+										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+									</ul>
+								</li>
+								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/ordersment.jsp?operate=find">拍卖订单</a>
+									<ul class="dropdown-menu">
+										<li><a tabindex="-1" href="#">待发货订单</a></li> 
+										<li><a tabindex="-1" href="#">已发货订单</a></li> 
+										<li><a tabindex="-1" href="#">需开票订单</a></li>
+										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+									</ul>
+								</li>
+								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/ordersment.jsp?operate=find">手机订单</a>
+									<ul class="dropdown-menu">
+										<li><a tabindex="-1" href="#">待发货订单</a></li> 
+										<li><a tabindex="-1" href="#">已发货订单</a></li> 
+										<li><a tabindex="-1" href="#">需开票订单</a></li>
+										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+									</ul>
+								</li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#">会员管理 <b class="caret"></b>

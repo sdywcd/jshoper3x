@@ -12,7 +12,7 @@ $(function() {
 	/**
 	 * flexigrid list
 	 */
-		$("#serverimgmanagement").flexigrid( {
+		$("#imagematerialmanagement").flexigrid( {
 			url : 'readAllSeverDirectory.action',
 			dataType : 'json',
 			cache : false,
@@ -76,13 +76,9 @@ $(function() {
 			if (com == '上传图片') {
 					if ($('.trSelected', grid).length == 1) {
 						var str = $('.trSelected', grid)[0].id.substr(3);
-						jConfirm('确定要将图片上传到目录' + str + '下吗?', '信息提示', function(r) {
-							if (r) {
-								window.location.href = "addimg.jsp?session=" + session + "#images&imgdirpath=" + str;
-							}
-						});
+						window.location.href = "imagematerialment.jsp?operate=add&folder=material&imgdirpath=" + str;
 					} else {
-						window.location.href="addimg.jsp";
+						window.location.href = "imagematerialment.jsp?operate=add&folder=material";
 					}
 				} else if (com == '创建分类') {
 					jPrompt('请输入分类名称:', '', '分类信息', function(r) {
@@ -103,22 +99,18 @@ $(function() {
 
 				} else if (com == '删除') {
 					if ($('.trSelected', grid).length > 0) {
-						jConfirm('确定删除此项吗?', '信息提示', function(r) {
-							if (r) {
-								var str = "";
-								$('.trSelected', grid).each(function() {
-									str += this.id.substr(3) + ",";
-								});
-								$.post("delServerDirectoryFile.action", {
-									"directoryname" : str
-								}, function(data) {
-									$('#serverimgmanagement').flexReload();
-								});
-							}
+						var str = "";
+						$('.trSelected', grid).each(function() {
+							str += this.id.substr(3) + ",";
+						});
+						$.post("delServerDirectoryFile.action", {
+							"directoryname" : str
+						}, function(data) {
+							$('#imagematerialmanagement').flexReload();
 						});
 						return;
 					} else {
-						jAlert('请选择要删除的信息!', '信息提示');
+						formwarning("#alerterror", "请选择一条信息");
 						return false;
 					}
 				}

@@ -336,7 +336,21 @@ public class OrderTAction extends ActionSupport {
 			}
 			Map cellMap = new HashMap();
 			cellMap.put("id", o.getOrderid());
-			cellMap.put("cell", new Object[] {o.getOrderid(), "<a id='orderdetial'href='InitOrdersDetail?orderid=" + o.getOrderid() + "' name='orderdetail'>" + o.getGoodsname() + "</a>", o.getAmount(), o.getNeedquantity(), o.getUsername(), o.getShippingusername(), o.getPaymentname(), o.getDelivermode(), o.getOrderstate(), o.getPaystate(), o.getShippingstate(), BaseTools.formateDbDate(o.getPurchasetime()), this.getFormatedeliverytime(), o.getInvoice(), o.getOrderTag() });
+			cellMap.put("cell", new Object[] {
+					o.getOrderid(), "<a id='orderdetial' href='InitOrdersDetail.action?orderid=" + o.getOrderid() + "' name='orderdetail'>" + o.getGoodsname() + "</a>",
+					o.getAmount(), 
+					o.getNeedquantity(), 
+					o.getUsername(), 
+					o.getShippingusername(), 
+					o.getPaymentname(), 
+					o.getDelivermode(), 
+					o.getOrderstate(), 
+					o.getPaystate(), 
+					o.getShippingstate(), 
+					BaseTools.formateDbDate(o.getPurchasetime()), 
+					this.getFormatedeliverytime(), 
+					o.getOrderTag(),
+					o.getInvoice() });
 			rows.add(cellMap);
 		}
 	}
@@ -566,8 +580,8 @@ public class OrderTAction extends ActionSupport {
 	 * @return
 	 */
 	@Action(value = "InitOrdersDetail", results = { 
-			@Result(name = "success",type="dispatcher",location = "/jshop/admin/order/ordersdetail.jsp?session=${usession}"),
-			@Result(name = "input",type="dispatcher",location = "/jshop/admin/order/ordersdetail.jsp?session=${usession}")
+			@Result(name = "success",type="dispatcher",location = "/admin/order/ordersdetail.jsp?operate=find"),
+			@Result(name = "input",type="dispatcher",location = "/admin/order/ordersdetail.jsp?operate=error")
 	})
 	public String InitOrdersDetail() {
 		map.clear();

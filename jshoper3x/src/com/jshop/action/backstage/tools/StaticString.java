@@ -124,6 +124,46 @@ public class  StaticString {
 	public static final String DOACTIVE="激活";
 	
 	public static final String DONOTACTIVE="禁止";
-	
+	//个性化标签json标记
 	public static final String TAG="tag";
+	
+	/**
+	 * 订单部分
+	 */
+	
+	//配送方式
+	//分成快递，平邮，ems，和虚拟类购物方式
+	public static final String EXPRESS="快递";
+	
+	public static final String POST="平邮";
+	
+	public static final String EMS="EMS";
+	
+	public static final String CARD="虚拟充值";
+	
+	//订单状态
+
+	public static final String ORDERSTATE_ONE="已确认";
+
+	public static final String ORDERSTATE_TWO="货到付款";
+	
+	public static final String ORDERSTATE_THREE="待确认收货";
+	
+	public static final String ORDERSTATE_FOUR="退货";
+	
+	public static final String ORDERSTATE_FIVE="关闭";
+	
+	public static final String ORDERSTATE_SIX="用户已收货";
+	
+	public static final String ORDERSTATE_SEVEN="缺货";
+	
+	public static final String ORDERSTATE_EIGHT="用户删除";
+
+	public static final String ORDERSTATE_NINE="成功";
+	
+	
+	
+	
+	
+	
 }
