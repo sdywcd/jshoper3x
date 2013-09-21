@@ -64,7 +64,7 @@
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"
 								alt="" class="caption">
 								<h4>分类管理</h4> </a></li>
-						<li class="span2"><a href="<%=basePath%>admin/order/ordersment.jsp?operate=find" class="thumbnail"><img
+						<li class="span2"><a href="<%=basePath%>admin/order/normalordersment.jsp?operate=find" class="thumbnail"><img
 								src="<%=basePath%>admin/ui/assets/img/header/icon-48-menumgr.png"
 								alt="" class="caption">
 								<h4>订单管理</h4> </a></li>

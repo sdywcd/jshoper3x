@@ -46,8 +46,8 @@
 				</div>
 				<div class="line-dotted"></div>
 				<!-- flexigrid -->
-				<div id="flexordersmanagement">
-					<table id="ordersmanagement" style="display: none;"></table>
+				<div id="flexnormalordersmanagement">
+					<table id="normalordersmanagement" style="display: none;"></table>
 				</div>
 				<div class="line-dotted"></div>
 
@@ -58,7 +58,7 @@
 
 	</div>
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/order/ordersmentjs.js"></script>
+		src="<%=basePath%>admin/js/order/normalordersmentjs.js"></script>
 	<%@include file="/admin/footer.jsp"%>
 
 </body>

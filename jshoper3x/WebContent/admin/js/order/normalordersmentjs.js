@@ -3,8 +3,16 @@
  * flexigrid list 
  */
 $(function() {
-
-	$("#ordersmanagement").flexigrid( {
+	/**
+	 * ui
+	 */
+	  $('input').iCheck({
+		    checkboxClass: 'icheckbox_square-blue',
+		    radioClass: 'iradio_square-blue',
+		    increaseArea: '20%' // optional
+		  });
+	
+	$("#normalordersmanagement").flexigrid( {
 		url : 'findAllOrders.action',
 		dataType : 'json',
 		cache : false,
@@ -102,7 +110,11 @@ $(function() {
 		buttons : [ {
 			separator : true
 		} ],
-
+		buttons:[{
+			name:'添加普通订单',
+			bclass:'add',
+			onpress:action
+		}],
 		searchitems : [ {
 			display : '请选择搜索条件',
 			name : 'sc',
@@ -114,7 +126,7 @@ $(function() {
 			display : '收件人',
 			name : 'shippingusername'
 		} ],
-		sortname : "purchasetime",
+		sortname : "createtime",
 		sortorder : "desc",
 		usepager : true,
 		title : '',
@@ -128,6 +140,11 @@ $(function() {
 		procmsg : '正在获取数据，请稍候...',
 		checkbox:true
 	});
-
+	function action(com,grid){
+		if(com=='添加普通订单'){
+			window.location.href = "normalorder.jsp?operate=add&folder=orders";
+			return;
+		}
+	}
 
 });
