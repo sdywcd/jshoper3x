@@ -312,10 +312,10 @@ public class OrderTAction extends ActionSupport {
 				o.setShippingstate(AllOrderState.SHIPPINGSTATE_TWO);
 			}
 
-			if (o.getInvoice().equals("0")) {
-				o.setInvoice(AllOrderState.INVOICE_ZERO);
+			if (o.getIsinvoice().equals("0")) {
+				o.setIsinvoice(AllOrderState.INVOICE_ZERO);
 			} else {
-				o.setInvoice(AllOrderState.INVOICE_ONE);
+				o.setIsinvoice(AllOrderState.INVOICE_ONE);
 			}
 			if (o.getDelivermode().equals("EXPRESS")) {
 				o.setDelivermode(AllOrderState.EXPRESS);
@@ -337,10 +337,12 @@ public class OrderTAction extends ActionSupport {
 			Map cellMap = new HashMap();
 			cellMap.put("id", o.getOrderid());
 			cellMap.put("cell", new Object[] {
-					o.getOrderid(), "<a id='orderdetial' href='InitOrdersDetail.action?orderid=" + o.getOrderid() + "' name='orderdetail'>" + o.getGoodsname() + "</a>",
+					o.getOrderid(),
+					"<a id='orderdetial' href='InitOrdersDetail.action?orderid=" + o.getOrderid() + "' name='orderdetail'>" + o.getGoodsname() + "</a>",
+					
 					o.getAmount(), 
 					o.getNeedquantity(), 
-					o.getUsername(), 
+					o.getMembername(), 
 					o.getShippingusername(), 
 					o.getPaymentname(), 
 					o.getDelivermode(), 
@@ -350,7 +352,7 @@ public class OrderTAction extends ActionSupport {
 					BaseTools.formateDbDate(o.getPurchasetime()), 
 					this.getFormatedeliverytime(), 
 					o.getOrderTag(),
-					o.getInvoice() });
+					o.getIsinvoice() });
 			rows.add(cellMap);
 		}
 	}
@@ -513,10 +515,10 @@ public class OrderTAction extends ActionSupport {
 				o.setShippingstate(AllOrderState.SHIPPINGSTATE_TWO);
 			}
 
-			if (o.getInvoice().equals("0")) {
-				o.setInvoice(AllOrderState.INVOICE_ZERO);
+			if (o.getIsinvoice().equals("0")) {
+				o.setIsinvoice(AllOrderState.INVOICE_ZERO);
 			} else {
-				o.setInvoice(AllOrderState.INVOICE_ONE);
+				o.setIsinvoice(AllOrderState.INVOICE_ONE);
 			}
 			if (o.getDelivermode().equals("EXPRESS")) {
 				o.setDelivermode(AllOrderState.EXPRESS);

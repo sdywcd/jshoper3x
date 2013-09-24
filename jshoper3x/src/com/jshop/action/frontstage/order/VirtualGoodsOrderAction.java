@@ -582,18 +582,18 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		order.setPurchasetime(BaseTools.systemtime());
 		order.setDeliverytime(null);//虚拟发货时间，在系统支付成功后填充
 		order.setDeliverynumber(null);//同上时间点，有系统自行生成一个号码
-		order.setInvoice("0");//虚拟不开票
-		order.setCustomernotes(this.getCustomernotes());
+		order.setIsinvoice("0");//虚拟不开票
+		order.setCustomerordernotes(this.getCustomernotes());
 		order.setPaytime(null);//订单刚加入没有支付时间
 		order.setOrderTag(this.getOrderTag());//这里是虚拟订单充值卡类型
-		order.setToBuyer(null);//给用户留言，这个应该会在后台给出，仅能给出一次
+		//order.setToBuyer(null);//给用户留言，这个应该会在后台给出，仅能给出一次
 		order.setShouldpay(Arith.sub(Arith.add(this.getTotal(), this.getFreight()), this.getVouchercontent()));//金额包含运费，但不包含优惠
 		order.setUsepoints(0.0);//用户使用的积分，目前没提供这个功能故为0
 		order.setVouchersid(this.getUsedvoucherid());//使用的优惠券id
 		order.setCreatetime(BaseTools.systemtime());
-		order.setHasprintexpress("0");//虚拟订单不需要打印快递单
-		order.setHasprintinvoice("0");//虚拟订单不需要打印发货单
-		order.setHasprintfpinvoice("0");//虚拟订单不需要开发票
+		order.setIsprintexpress("0");//虚拟订单不需要打印快递单
+		order.setIsprintinvoice("0");//虚拟订单不需要打印发货单
+		order.setIsprintfpinvoice("0");//虚拟订单不需要开发票
 		order.setExpressnumber(null);//虚拟订单不需要快递单号
 		order.setPaymentid(this.getPm().getPaymentid());
 		order.setPaymentname(this.getPm().getPaymentname());
@@ -635,18 +635,18 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		order.setPurchasetime(BaseTools.systemtime());
 		order.setDeliverytime(null);//虚拟发货时间，在系统支付成功后填充
 		order.setDeliverynumber(null);//同上时间点，有系统自行生成一个号码
-		order.setInvoice("0");//虚拟不开票
-		order.setCustomernotes(this.getCustomernotes());
+		order.setIsinvoice("0");//虚拟不开票
+		order.setCustomerordernotes(this.getCustomernotes());
 		order.setPaytime(null);//订单刚加入没有支付时间
 		order.setOrderTag(this.getOrderTag());//这里是虚拟订单充值卡类型
-		order.setToBuyer(null);//给用户留言，这个应该会在后台给出，仅能给出一次
+		order.setToBuyerNotes(null);//给用户留言，这个应该会在后台给出，仅能给出一次
 		order.setShouldpay(Arith.sub(Arith.add(this.getTotal(), this.getFreight()), this.getVouchercontent()));//金额包含运费，但不包含优惠
 		order.setUsepoints(0.0);//用户使用的积分，目前没提供这个功能故为0
 		order.setVouchersid(this.getUsedvoucherid());//使用的优惠券id
 		order.setCreatetime(BaseTools.systemtime());
-		order.setHasprintexpress("0");//虚拟订单不需要打印快递单
-		order.setHasprintinvoice("0");//虚拟订单不需要打印发货单
-		order.setHasprintfpinvoice("0");//虚拟订单不需要开发票
+		order.setIsprintexpress("0");//虚拟订单不需要打印快递单
+		order.setIsprintinvoice("0");//虚拟订单不需要打印发货单
+		order.setIsprintfpinvoice("0");//虚拟订单不需要开发票
 		order.setExpressnumber(null);//虚拟订单不需要快递单号
 		order.setPaymentid(this.getPm().getPaymentid());
 		order.setPaymentname(this.getPm().getPaymentname());

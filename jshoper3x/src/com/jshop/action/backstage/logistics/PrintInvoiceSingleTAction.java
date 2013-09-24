@@ -178,7 +178,7 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 	public void GetOrderShippingAddress(String orderid) {
 		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
 		if (st != null) {
-			pi.setShippingusername(st.getUsername());
+			pi.setShippingusername(st.getMembername());
 			pi.setCountry(st.getCountry());
 			pi.setProvince(st.getProvince());
 			pi.setCity(st.getCity());
@@ -198,7 +198,7 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 		if (o != null) {
 			GetChangeTime(Date.valueOf(o.getPurchasetime().toString()));
 			pi.setOrderid(o.getOrderid());
-			pi.setHasprintfpinvoice(GetChangeHasprintfpinvoice(o.getHasprintfpinvoice()));
+			pi.setHasprintfpinvoice(GetChangeHasprintfpinvoice(o.getIsprintfpinvoice()));
 			pi.setAmount(String.valueOf(o.getAmount()));
 			pi.setShouldpay(String.valueOf(o.getShouldpay()));
 			pi.setFreight(String.valueOf(o.getFreight()));

@@ -55,8 +55,8 @@ public class OrderTServiceImpl implements OrderTService {
 		return this.getOrderTDao().findOrderDetailByorderid(orderid);
 	}
 
-	public int updateOrder(OrderT o) {
-		return this.getOrderTDao().updateOrder(o);
+	public void updateOrder(OrderT o) {
+		this.getOrderTDao().updateOrder(o);
 	}
 
 	public int updateOrderPaystateByorderid(String orderid, String paystate) {

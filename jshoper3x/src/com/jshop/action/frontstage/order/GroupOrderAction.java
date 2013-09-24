@@ -841,8 +841,8 @@ public class GroupOrderAction extends ActionSupport {
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
 			s.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
-			s.setUserid(list.getUserid());
-			s.setUsername(list.getUsername());
+			s.setMemberid(list.getUserid());
+			s.setMembername(list.getUsername());
 			s.setCountry(list.getCountry());
 			s.setProvince(list.getProvince());
 			s.setCity(list.getCity());

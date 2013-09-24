@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-19 19:12:29 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-24 22:17:57 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -18,8 +18,8 @@ import javax.persistence.TemporalType;
 public class ShippingAddressT implements java.io.Serializable {
 
 	private String shippingaddressid;
-	private String userid;
-	private String username;
+	private String memberid;
+	private String membername;
 	private String province;
 	private String city;
 	private String district;
@@ -34,17 +34,18 @@ public class ShippingAddressT implements java.io.Serializable {
 	private String deliveraddressid;
 	private String orderid;
 	private String country;
+	private String shopid;
 
 	public ShippingAddressT() {
 	}
 
-	public ShippingAddressT(String shippingaddressid, String userid,
-			String username, String province, String city, String district,
+	public ShippingAddressT(String shippingaddressid, String memberid,
+			String membername, String province, String city, String district,
 			String street, String mobile, Date createtime, String state,
-			String issend) {
+			String issend, String country) {
 		this.shippingaddressid = shippingaddressid;
-		this.userid = userid;
-		this.username = username;
+		this.memberid = memberid;
+		this.membername = membername;
 		this.province = province;
 		this.city = city;
 		this.district = district;
@@ -53,16 +54,18 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.state = state;
 		this.issend = issend;
+		this.country = country;
 	}
 
-	public ShippingAddressT(String shippingaddressid, String userid,
-			String username, String province, String city, String district,
+	public ShippingAddressT(String shippingaddressid, String memberid,
+			String membername, String province, String city, String district,
 			String street, String postcode, String telno, String mobile,
 			String email, Date createtime, String state, String issend,
-			String deliveraddressid, String orderid, String country) {
+			String deliveraddressid, String orderid, String country,
+			String shopid) {
 		this.shippingaddressid = shippingaddressid;
-		this.userid = userid;
-		this.username = username;
+		this.memberid = memberid;
+		this.membername = membername;
 		this.province = province;
 		this.city = city;
 		this.district = district;
@@ -77,6 +80,7 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.deliveraddressid = deliveraddressid;
 		this.orderid = orderid;
 		this.country = country;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -89,25 +93,25 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.shippingaddressid = shippingaddressid;
 	}
 
-	@Column(name = "USERID", nullable = false, length = 20)
-	public String getUserid() {
-		return this.userid;
+	@Column(name = "MEMBERID", nullable = false, length = 20)
+	public String getMemberid() {
+		return this.memberid;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
 
-	@Column(name = "USERNAME", nullable = false, length = 50)
-	public String getUsername() {
-		return this.username;
+	@Column(name = "MEMBERNAME", nullable = false, length = 45)
+	public String getMembername() {
+		return this.membername;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setMembername(String membername) {
+		this.membername = membername;
 	}
 
-	@Column(name = "PROVINCE", nullable = false, length = 12)
+	@Column(name = "PROVINCE", nullable = false, length = 45)
 	public String getProvince() {
 		return this.province;
 	}
@@ -116,7 +120,7 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.province = province;
 	}
 
-	@Column(name = "CITY", nullable = false, length = 12)
+	@Column(name = "CITY", nullable = false, length = 45)
 	public String getCity() {
 		return this.city;
 	}
@@ -125,7 +129,7 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.city = city;
 	}
 
-	@Column(name = "DISTRICT", nullable = false, length = 12)
+	@Column(name = "DISTRICT", nullable = false, length = 45)
 	public String getDistrict() {
 		return this.district;
 	}
@@ -143,7 +147,7 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.street = street;
 	}
 
-	@Column(name = "POSTCODE", length = 10)
+	@Column(name = "POSTCODE", length = 45)
 	public String getPostcode() {
 		return this.postcode;
 	}
@@ -225,13 +229,22 @@ public class ShippingAddressT implements java.io.Serializable {
 		this.orderid = orderid;
 	}
 
-	@Column(name = "COUNTRY", length = 20)
+	@Column(name = "COUNTRY", nullable = false, length = 45)
 	public String getCountry() {
 		return this.country;
 	}
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

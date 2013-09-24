@@ -155,7 +155,7 @@ public class PrintExpressSingleTAction extends ActionSupport {
 	public void GetOrderShippingAddress(String orderid) {
 		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
 		if (st != null) {
-			pe.setRecipientName(st.getUsername());
+			pe.setRecipientName(st.getMembername());
 			pe.setRecipientCountry(st.getCountry());
 			pe.setRecipientProvince(st.getProvince());
 			pe.setRecipientCity(st.getCity());
@@ -164,7 +164,7 @@ public class PrintExpressSingleTAction extends ActionSupport {
 			pe.setRecipientTelno(st.getTelno());
 			pe.setRecipientMobile(st.getMobile());
 			pe.setRecipientPostcode(st.getPostcode());
-			pe.setRecipientContactor(st.getUsername());
+			pe.setRecipientContactor(st.getMembername());
 		}
 	}
 
@@ -187,8 +187,8 @@ public class PrintExpressSingleTAction extends ActionSupport {
 	public void GetOrderDetailByOrderId(String orderid) {
 		OrderT o = this.getOrderTService().findOrderDetailByorderid(orderid);
 		if (o != null) {
-			pe.setQuantity(o.getNeedquantity().toString());
-			pe.setNotes(o.getCustomernotes());
+			pe.setQuantity(o.getNeedquantity()+"");
+			pe.setNotes(o.getCustomerordernotes());
 			pe.setLogisticsid(o.getLogisticsid());
 			GetChangeTime(Date.valueOf(o.getPurchasetime().toString()));//这里修改了
 		}

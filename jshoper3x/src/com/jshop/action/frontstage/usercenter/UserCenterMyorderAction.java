@@ -541,8 +541,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
 			s.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
-			s.setUserid(list.getUserid());
-			s.setUsername(list.getUsername());
+			s.setMemberid(list.getUserid());
+			s.setMembername(list.getUsername());
 			s.setCountry(list.getCountry());
 			s.setProvince(list.getProvince());
 			s.setCity(list.getCity());
@@ -593,7 +593,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 				order.setDeliveraddressid(oldorder.getDeliveraddressid());
 				order.setShippingusername(oldorder.getShippingusername());
 				//设置收货人信息给支付宝借口
-				AlipayConfig.receive_name = list.get(0).getUsername();
+				AlipayConfig.receive_name = list.get(0).getMembername();
 				AlipayConfig.receive_address = list.get(0).getProvince() + list.get(0).getCity() + list.get(0).getDistrict() + list.get(0).getStreet();
 				AlipayConfig.reveive_zip = list.get(0).getPostcode();
 				AlipayConfig.reveive_phone = list.get(0).getTelno();
@@ -669,22 +669,22 @@ public class UserCenterMyorderAction extends ActionSupport {
 		order.setPurchasetime(BaseTools.systemtime());
 		order.setDeliverytime(null);
 		order.setDeliverynumber(null);
-		order.setInvoice(oldorder.getInvoice());
-		order.setCustomernotes(this.getCustomernotes());
+		order.setIsinvoice(oldorder.getIsinvoice());
+		order.setCustomerordernotes(this.getCustomernotes());
 		order.setLogisticswebaddress(this.getLogisticswebaddress());
 		order.setPaytime(null);
 		order.setOrderTag(this.getOrderTag());
-		order.setToBuyer(null);
+		order.setToBuyerNotes(null);
 		order.setShouldpay(oldorder.getShouldpay());
 		order.setUsepoints(oldorder.getUsepoints());
 		order.setVouchersid(oldorder.getVouchersid());
 		order.setCreatetime(BaseTools.systemtime());
-		order.setHasprintexpress("0");//未打印快递单
-		order.setHasprintinvoice("0");//未打印发货单
-		order.setHasprintfpinvoice("0");//未开具发票
+		order.setIsprintexpress("0");//未打印快递单
+		order.setIsprintinvoice("0");//未打印发货单
+		order.setIsprintfpinvoice("0");//未开具发票
 		order.setExpressnumber(null);//快递单号
 		try {
-			int i = this.getOrderTService().updateOrder(order);
+			this.getOrderTService().updateOrder(order);
 			AlipayConfig.out_trade_no = order.getOrderid();
 			AlipayConfig.subject = order.getGoodsname();
 			AlipayConfig.body = order.getGoodsname();
@@ -768,10 +768,10 @@ public class UserCenterMyorderAction extends ActionSupport {
 				o.setShippingstate(AllOrderState.SHIPPINGSTATE_TWO);
 			}
 
-			if (o.getInvoice().equals("0")) {
-				o.setInvoice(AllOrderState.INVOICE_ZERO);
+			if (o.getIsinvoice().equals("0")) {
+				o.setIsinvoice(AllOrderState.INVOICE_ZERO);
 			} else {
-				o.setInvoice(AllOrderState.INVOICE_ONE);
+				o.setIsinvoice(AllOrderState.INVOICE_ONE);
 			}
 			if (o.getDelivermode().equals("EXPRESS")) {
 				o.setDelivermode(AllOrderState.EXPRESS);

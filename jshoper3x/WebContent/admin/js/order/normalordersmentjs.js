@@ -24,7 +24,7 @@ $(function() {
 			align : 'center'
 		}, {
 			display : '订单名称',
-			name : 'goodsname',
+			name : 'ordername',
 			width : 200,
 			sortable : true,
 			align : 'center'
@@ -41,8 +41,8 @@ $(function() {
 			sortable : true,
 			align : 'center'
 		}, {
-			display : '订单所属人',
-			name : 'username',
+			display : '订单购买人',
+			name : 'membername',
 			width : 150,
 			sortable : true,
 			align : 'center'

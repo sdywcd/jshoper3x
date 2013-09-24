@@ -802,11 +802,11 @@ public class FrontOrderAction extends ActionSupport {
 		order.setDeliverytime(null);
 		order.setDeliverynumber(null);
 		//发票处理
-		order.setInvoice("0");//目前前台没有开票，如果要这里需要动态取得为1
-		order.setCustomernotes(this.getCustomernotes());
+		order.setIsinvoice("0");//目前前台没有开票，如果要这里需要动态取得为1
+		order.setCustomerordernotes(this.getCustomernotes());
 		order.setPaytime(null);
 		order.setOrderTag(this.getOrderTag());
-		order.setToBuyer(null);//给用户的留言
+		order.setToBuyerNotes(null);//给用户的留言
 		//		if(!this.isSvoucher()){
 		order.setShouldpay(Arith.sub(Arith.add(this.getTotal(), this.getFreight()), this.getVouchercontent()));
 		//		}else{
@@ -815,9 +815,9 @@ public class FrontOrderAction extends ActionSupport {
 		order.setUsepoints(0.0);//用户没有使用积分
 		order.setVouchersid(this.getUsedvoucherid());
 		order.setCreatetime(BaseTools.systemtime());
-		order.setHasprintexpress("0");//未打印快递单
-		order.setHasprintinvoice("0");//未打印发货单
-		order.setHasprintfpinvoice("0");//未开具发票
+		order.setIsprintexpress("0");//未打印快递单
+		order.setIsprintinvoice("0");//未打印发货单
+		order.setIsprintfpinvoice("0");//未开具发票
 		order.setExpressnumber(null);//快递单号
 		order.setPaymentid(this.getPm().getPaymentid());
 		order.setPaymentname(this.getPm().getPaymentname());
@@ -911,8 +911,8 @@ public class FrontOrderAction extends ActionSupport {
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
 			s.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
-			s.setUserid(list.getUserid());
-			s.setUsername(list.getUsername());
+			s.setMemberid(list.getUserid());
+			s.setMembername(list.getUsername());
 			s.setCountry(list.getCountry());
 			s.setProvince(list.getProvince());
 			s.setCity(list.getCity());

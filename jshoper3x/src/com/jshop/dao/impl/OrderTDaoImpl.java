@@ -172,59 +172,14 @@ public class OrderTDaoImpl extends HibernateDaoSupport implements OrderTDao {
 		}
 	}
 
-	public int updateOrder(final OrderT o) {
+	public void updateOrder(final OrderT o) {
 		log.debug("update OrderT");
 		try {
-
-			final String queryString = "update OrderT as o set o.username=:username,o.paymentid=:paymentid,o.paymentname=:paymentname,o.delivermode=:delivermode,o.deliverynumber=:deliverynumber," + "o.orderstate=:orderstate,o.logisticsid=:logisticsid,o.freight=:freight,o.amount=:amount,o.points=:points,o.purchasetime=:purchasetime,o.deliverytime=:deliverytime,o.invoice=:invoice," + "o.shippingaddressid=:shippingaddressid,o.customernotes=:customernotes,o.logisticswebaddress=:logisticswebaddress,o.paytime=:paytime,o.orderTag=:orderTag,o.toBuyer=:toBuyer," + "o.shouldpay=:shouldpay,o.usepoints=:usepoints,o.vouchersid=:vouchersid,o.goodid=:goodid,o.goodsname=:goodsname,o.needquantity=:needquantity,o.paystate=:paystate,o.shippingstate=:shippingstate,"
-					+ "o.deliveraddressid=:deliveraddressid,o.shippingusername=:shippingusername,o.createtime=:createtime where o.orderid=:orderid and o.userid=:userid";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					int i = 0;
-					Query query = session.createQuery(queryString);
-					query.setParameter("orderid", o.getOrderid());
-					query.setParameter("userid", o.getUserid());
-					query.setParameter("username", o.getUsername());
-					query.setParameter("paymentid", o.getPaymentid());
-					query.setParameter("paymentname", o.getPaymentname());
-					query.setParameter("delivermode", o.getDelivermode());
-					query.setParameter("deliverynumber", o.getDeliverynumber());
-					query.setParameter("orderstate", o.getOrderstate());
-					query.setParameter("logisticsid", o.getLogisticsid());
-					query.setParameter("freight", o.getFreight());
-					query.setParameter("amount", o.getAmount());
-					query.setParameter("points", o.getPoints());
-					query.setParameter("purchasetime", o.getPurchasetime());
-					query.setParameter("deliverytime", o.getDeliverytime());
-					query.setParameter("invoice", o.getInvoice());
-					query.setParameter("shippingaddressid", o.getShippingaddressid());
-					query.setParameter("customernotes", o.getCustomernotes());
-					query.setParameter("logisticswebaddress", o.getLogisticswebaddress());
-					query.setParameter("paytime", o.getPaytime());
-					query.setParameter("orderTag", o.getOrderTag());
-					query.setParameter("toBuyer", o.getToBuyer());
-					query.setParameter("shouldpay", o.getShouldpay());
-					query.setParameter("usepoints", o.getUsepoints());
-					query.setParameter("vouchersid", o.getVouchersid());
-					query.setParameter("goodid", o.getGoodid());
-					query.setParameter("goodsname", o.getGoodsname());
-					query.setParameter("needquantity", o.getNeedquantity());
-					query.setParameter("paystate", o.getPaystate());
-					query.setParameter("shippingstate", o.getShippingstate());
-					query.setParameter("deliveraddressid", o.getDeliveraddressid());
-					query.setParameter("shippingusername", o.getShippingusername());
-					query.setParameter("createtime", o.getCreatetime());
-					i = query.executeUpdate();
-					++i;
-					return i;
-				}
-			});
+			this.getHibernateTemplate().update(o);
 		} catch (RuntimeException re) {
 			log.error("update  OrderT error", re);
 			throw re;
 		}
-		return 0;
 	}
 
 	public int updateOrderPaystateByorderid(final String orderid, final String paystate) {

@@ -73,7 +73,7 @@ public interface OrderTService {
 	 * @param o
 	 * @return
 	 */
-	public abstract int updateOrder(OrderT o);
+	public void updateOrder(OrderT o);
 	
 	/**
 	 * 支付宝返回数据，更新订单是否付款标记

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-19 19:12:29 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-24 22:17:57 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -18,8 +18,8 @@ import javax.persistence.TemporalType;
 public class OrderT implements java.io.Serializable {
 
 	private String orderid;
-	private String userid;
-	private String username;
+	private String memberid;
+	private String membername;
 	private String paymentid;
 	private String paymentname;
 	private String delivermode;
@@ -28,45 +28,55 @@ public class OrderT implements java.io.Serializable {
 	private String logisticsid;
 	private double freight;
 	private double amount;
-	private Double points;
+	private double points;
 	private Date purchasetime;
 	private Date deliverytime;
-	private String invoice;
+	private String isinvoice;
 	private String shippingaddressid;
-	private String customernotes;
+	private String customerordernotes;
 	private String logisticswebaddress;
 	private Date paytime;
 	private String orderTag;
-	private String toBuyer;
+	private String toBuyerNotes;
 	private double shouldpay;
 	private double usepoints;
 	private String vouchersid;
 	private String goodid;
 	private String goodsname;
-	private Integer needquantity;
+	private int needquantity;
 	private String paystate;
 	private String shippingstate;
 	private String deliveraddressid;
 	private String shippingusername;
 	private Date createtime;
-	private String hasprintexpress;
-	private String hasprintinvoice;
-	private String hasprintfpinvoice;
+	private String isprintexpress;
+	private String isprintinvoice;
+	private String isprintfpinvoice;
 	private String expressnumber;
 	private String tradeNo;
+	private String userid;
+	private String username;
+	private String logisticsname;
+	private String errorOrderTag;
+	private String productinfo;
+	private String goodsinfo;
+	private Integer versiont;
+	private String ordername;
+	private String shopid;
 
 	public OrderT() {
 	}
 
-	public OrderT(String orderid, String userid, String username,
+	public OrderT(String orderid, String memberid, String membername,
 			String paymentid, String paymentname, String delivermode,
 			String orderstate, String logisticsid, double freight,
-			double amount, Date purchasetime, String invoice,
-			String shippingaddressid, double shouldpay, double usepoints,
-			String paystate) {
+			double amount, double points, Date purchasetime, String isinvoice,
+			String orderTag, double shouldpay, double usepoints,
+			int needquantity, String paystate, String productinfo,
+			String goodsinfo, String ordername) {
 		this.orderid = orderid;
-		this.userid = userid;
-		this.username = username;
+		this.memberid = memberid;
+		this.membername = membername;
 		this.paymentid = paymentid;
 		this.paymentname = paymentname;
 		this.delivermode = delivermode;
@@ -74,30 +84,38 @@ public class OrderT implements java.io.Serializable {
 		this.logisticsid = logisticsid;
 		this.freight = freight;
 		this.amount = amount;
+		this.points = points;
 		this.purchasetime = purchasetime;
-		this.invoice = invoice;
-		this.shippingaddressid = shippingaddressid;
+		this.isinvoice = isinvoice;
+		this.orderTag = orderTag;
 		this.shouldpay = shouldpay;
 		this.usepoints = usepoints;
+		this.needquantity = needquantity;
 		this.paystate = paystate;
+		this.productinfo = productinfo;
+		this.goodsinfo = goodsinfo;
+		this.ordername = ordername;
 	}
 
-	public OrderT(String orderid, String userid, String username,
+	public OrderT(String orderid, String memberid, String membername,
 			String paymentid, String paymentname, String delivermode,
 			String deliverynumber, String orderstate, String logisticsid,
-			double freight, double amount, Double points, Date purchasetime,
-			Date deliverytime, String invoice, String shippingaddressid,
-			String customernotes, String logisticswebaddress, Date paytime,
-			String orderTag, String toBuyer, double shouldpay,
-			double usepoints, String vouchersid, String goodid,
-			String goodsname, Integer needquantity, String paystate,
+			double freight, double amount, double points, Date purchasetime,
+			Date deliverytime, String isinvoice, String shippingaddressid,
+			String customerordernotes, String logisticswebaddress,
+			Date paytime, String orderTag, String toBuyerNotes,
+			double shouldpay, double usepoints, String vouchersid,
+			String goodid, String goodsname, int needquantity, String paystate,
 			String shippingstate, String deliveraddressid,
-			String shippingusername, Date createtime, String hasprintexpress,
-			String hasprintinvoice, String hasprintfpinvoice,
-			String expressnumber, String tradeNo) {
+			String shippingusername, Date createtime, String isprintexpress,
+			String isprintinvoice, String isprintfpinvoice,
+			String expressnumber, String tradeNo, String userid,
+			String username, String logisticsname, String errorOrderTag,
+			String productinfo, String goodsinfo, Integer versiont,
+			String ordername, String shopid) {
 		this.orderid = orderid;
-		this.userid = userid;
-		this.username = username;
+		this.memberid = memberid;
+		this.membername = membername;
 		this.paymentid = paymentid;
 		this.paymentname = paymentname;
 		this.delivermode = delivermode;
@@ -109,13 +127,13 @@ public class OrderT implements java.io.Serializable {
 		this.points = points;
 		this.purchasetime = purchasetime;
 		this.deliverytime = deliverytime;
-		this.invoice = invoice;
+		this.isinvoice = isinvoice;
 		this.shippingaddressid = shippingaddressid;
-		this.customernotes = customernotes;
+		this.customerordernotes = customerordernotes;
 		this.logisticswebaddress = logisticswebaddress;
 		this.paytime = paytime;
 		this.orderTag = orderTag;
-		this.toBuyer = toBuyer;
+		this.toBuyerNotes = toBuyerNotes;
 		this.shouldpay = shouldpay;
 		this.usepoints = usepoints;
 		this.vouchersid = vouchersid;
@@ -127,11 +145,20 @@ public class OrderT implements java.io.Serializable {
 		this.deliveraddressid = deliveraddressid;
 		this.shippingusername = shippingusername;
 		this.createtime = createtime;
-		this.hasprintexpress = hasprintexpress;
-		this.hasprintinvoice = hasprintinvoice;
-		this.hasprintfpinvoice = hasprintfpinvoice;
+		this.isprintexpress = isprintexpress;
+		this.isprintinvoice = isprintinvoice;
+		this.isprintfpinvoice = isprintfpinvoice;
 		this.expressnumber = expressnumber;
 		this.tradeNo = tradeNo;
+		this.userid = userid;
+		this.username = username;
+		this.logisticsname = logisticsname;
+		this.errorOrderTag = errorOrderTag;
+		this.productinfo = productinfo;
+		this.goodsinfo = goodsinfo;
+		this.versiont = versiont;
+		this.ordername = ordername;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -144,22 +171,22 @@ public class OrderT implements java.io.Serializable {
 		this.orderid = orderid;
 	}
 
-	@Column(name = "USERID", nullable = false, length = 20)
-	public String getUserid() {
-		return this.userid;
+	@Column(name = "MEMBERID", nullable = false, length = 20)
+	public String getMemberid() {
+		return this.memberid;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
 
-	@Column(name = "USERNAME", nullable = false, length = 50)
-	public String getUsername() {
-		return this.username;
+	@Column(name = "MEMBERNAME", nullable = false, length = 50)
+	public String getMembername() {
+		return this.membername;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setMembername(String membername) {
+		this.membername = membername;
 	}
 
 	@Column(name = "PAYMENTID", nullable = false, length = 20)
@@ -234,12 +261,12 @@ public class OrderT implements java.io.Serializable {
 		this.amount = amount;
 	}
 
-	@Column(name = "POINTS", precision = 22, scale = 0)
-	public Double getPoints() {
+	@Column(name = "POINTS", nullable = false, precision = 10)
+	public double getPoints() {
 		return this.points;
 	}
 
-	public void setPoints(Double points) {
+	public void setPoints(double points) {
 		this.points = points;
 	}
 
@@ -263,16 +290,16 @@ public class OrderT implements java.io.Serializable {
 		this.deliverytime = deliverytime;
 	}
 
-	@Column(name = "INVOICE", nullable = false, length = 1)
-	public String getInvoice() {
-		return this.invoice;
+	@Column(name = "ISINVOICE", nullable = false, length = 1)
+	public String getIsinvoice() {
+		return this.isinvoice;
 	}
 
-	public void setInvoice(String invoice) {
-		this.invoice = invoice;
+	public void setIsinvoice(String isinvoice) {
+		this.isinvoice = isinvoice;
 	}
 
-	@Column(name = "SHIPPINGADDRESSID", nullable = false, length = 20)
+	@Column(name = "SHIPPINGADDRESSID", length = 20)
 	public String getShippingaddressid() {
 		return this.shippingaddressid;
 	}
@@ -281,13 +308,13 @@ public class OrderT implements java.io.Serializable {
 		this.shippingaddressid = shippingaddressid;
 	}
 
-	@Column(name = "CUSTOMERNOTES", length = 100)
-	public String getCustomernotes() {
-		return this.customernotes;
+	@Column(name = "CUSTOMERORDERNOTES", length = 100)
+	public String getCustomerordernotes() {
+		return this.customerordernotes;
 	}
 
-	public void setCustomernotes(String customernotes) {
-		this.customernotes = customernotes;
+	public void setCustomerordernotes(String customerordernotes) {
+		this.customerordernotes = customerordernotes;
 	}
 
 	@Column(name = "LOGISTICSWEBADDRESS", length = 225)
@@ -309,7 +336,7 @@ public class OrderT implements java.io.Serializable {
 		this.paytime = paytime;
 	}
 
-	@Column(name = "ORDER_TAG", length = 1)
+	@Column(name = "ORDER_TAG", nullable = false, length = 1)
 	public String getOrderTag() {
 		return this.orderTag;
 	}
@@ -318,13 +345,13 @@ public class OrderT implements java.io.Serializable {
 		this.orderTag = orderTag;
 	}
 
-	@Column(name = "TO_BUYER", length = 100)
-	public String getToBuyer() {
-		return this.toBuyer;
+	@Column(name = "TO_BUYER_NOTES", length = 100)
+	public String getToBuyerNotes() {
+		return this.toBuyerNotes;
 	}
 
-	public void setToBuyer(String toBuyer) {
-		this.toBuyer = toBuyer;
+	public void setToBuyerNotes(String toBuyerNotes) {
+		this.toBuyerNotes = toBuyerNotes;
 	}
 
 	@Column(name = "SHOULDPAY", nullable = false, precision = 10)
@@ -372,12 +399,12 @@ public class OrderT implements java.io.Serializable {
 		this.goodsname = goodsname;
 	}
 
-	@Column(name = "NEEDQUANTITY")
-	public Integer getNeedquantity() {
+	@Column(name = "NEEDQUANTITY", nullable = false)
+	public int getNeedquantity() {
 		return this.needquantity;
 	}
 
-	public void setNeedquantity(Integer needquantity) {
+	public void setNeedquantity(int needquantity) {
 		this.needquantity = needquantity;
 	}
 
@@ -408,7 +435,7 @@ public class OrderT implements java.io.Serializable {
 		this.deliveraddressid = deliveraddressid;
 	}
 
-	@Column(name = "SHIPPINGUSERNAME", length = 50)
+	@Column(name = "SHIPPINGUSERNAME", length = 45)
 	public String getShippingusername() {
 		return this.shippingusername;
 	}
@@ -427,31 +454,31 @@ public class OrderT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	@Column(name = "HASPRINTEXPRESS", length = 1)
-	public String getHasprintexpress() {
-		return this.hasprintexpress;
+	@Column(name = "ISPRINTEXPRESS", length = 1)
+	public String getIsprintexpress() {
+		return this.isprintexpress;
 	}
 
-	public void setHasprintexpress(String hasprintexpress) {
-		this.hasprintexpress = hasprintexpress;
+	public void setIsprintexpress(String isprintexpress) {
+		this.isprintexpress = isprintexpress;
 	}
 
-	@Column(name = "HASPRINTINVOICE", length = 1)
-	public String getHasprintinvoice() {
-		return this.hasprintinvoice;
+	@Column(name = "ISPRINTINVOICE", length = 1)
+	public String getIsprintinvoice() {
+		return this.isprintinvoice;
 	}
 
-	public void setHasprintinvoice(String hasprintinvoice) {
-		this.hasprintinvoice = hasprintinvoice;
+	public void setIsprintinvoice(String isprintinvoice) {
+		this.isprintinvoice = isprintinvoice;
 	}
 
-	@Column(name = "HASPRINTFPINVOICE", length = 1)
-	public String getHasprintfpinvoice() {
-		return this.hasprintfpinvoice;
+	@Column(name = "ISPRINTFPINVOICE", length = 1)
+	public String getIsprintfpinvoice() {
+		return this.isprintfpinvoice;
 	}
 
-	public void setHasprintfpinvoice(String hasprintfpinvoice) {
-		this.hasprintfpinvoice = hasprintfpinvoice;
+	public void setIsprintfpinvoice(String isprintfpinvoice) {
+		this.isprintfpinvoice = isprintfpinvoice;
 	}
 
 	@Column(name = "EXPRESSNUMBER", length = 50)
@@ -470,6 +497,87 @@ public class OrderT implements java.io.Serializable {
 
 	public void setTradeNo(String tradeNo) {
 		this.tradeNo = tradeNo;
+	}
+
+	@Column(name = "USERID", length = 20)
+	public String getUserid() {
+		return this.userid;
+	}
+
+	public void setUserid(String userid) {
+		this.userid = userid;
+	}
+
+	@Column(name = "USERNAME", length = 45)
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	@Column(name = "LOGISTICSNAME", length = 45)
+	public String getLogisticsname() {
+		return this.logisticsname;
+	}
+
+	public void setLogisticsname(String logisticsname) {
+		this.logisticsname = logisticsname;
+	}
+
+	@Column(name = "ERROR_ORDER_TAG", length = 1)
+	public String getErrorOrderTag() {
+		return this.errorOrderTag;
+	}
+
+	public void setErrorOrderTag(String errorOrderTag) {
+		this.errorOrderTag = errorOrderTag;
+	}
+
+	@Column(name = "PRODUCTINFO", nullable = false, length = 2000)
+	public String getProductinfo() {
+		return this.productinfo;
+	}
+
+	public void setProductinfo(String productinfo) {
+		this.productinfo = productinfo;
+	}
+
+	@Column(name = "GOODSINFO", nullable = false, length = 1000)
+	public String getGoodsinfo() {
+		return this.goodsinfo;
+	}
+
+	public void setGoodsinfo(String goodsinfo) {
+		this.goodsinfo = goodsinfo;
+	}
+
+	@Column(name = "VERSIONT")
+	public Integer getVersiont() {
+		return this.versiont;
+	}
+
+	public void setVersiont(Integer versiont) {
+		this.versiont = versiont;
+	}
+
+	@Column(name = "ORDERNAME", nullable = false, length = 1000)
+	public String getOrdername() {
+		return this.ordername;
+	}
+
+	public void setOrdername(String ordername) {
+		this.ordername = ordername;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }
