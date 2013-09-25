@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-24 22:17:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-25 20:51:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -48,6 +48,7 @@ public class MemberT implements java.io.Serializable {
 	private Date updatetime;
 	private String mobile;
 	private int versiont;
+	private String mid;
 
 	public MemberT() {
 	}
@@ -71,7 +72,8 @@ public class MemberT implements java.io.Serializable {
 			String weixin, String sinaweibo, String tag, Integer belove,
 			Integer loveother, Integer postingcount, String question,
 			String answer, String userstate, String headpath, Date createtime,
-			String creatorid, Date updatetime, String mobile, int versiont) {
+			String creatorid, Date updatetime, String mobile, int versiont,
+			String mid) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
@@ -103,6 +105,7 @@ public class MemberT implements java.io.Serializable {
 		this.updatetime = updatetime;
 		this.mobile = mobile;
 		this.versiont = versiont;
+		this.mid = mid;
 	}
 
 	@Id
@@ -124,7 +127,7 @@ public class MemberT implements java.io.Serializable {
 		this.loginname = loginname;
 	}
 
-	@Column(name = "LOGINPWD", nullable = false, length = 36)
+	@Column(name = "LOGINPWD", nullable = false, length = 32)
 	public String getLoginpwd() {
 		return this.loginpwd;
 	}
@@ -151,7 +154,7 @@ public class MemberT implements java.io.Serializable {
 		this.realname = realname;
 	}
 
-	@Column(name = "CITY", length = 20)
+	@Column(name = "CITY", length = 45)
 	public String getCity() {
 		return this.city;
 	}
@@ -160,7 +163,7 @@ public class MemberT implements java.io.Serializable {
 		this.city = city;
 	}
 
-	@Column(name = "DISTRICT", length = 20)
+	@Column(name = "DISTRICT", length = 45)
 	public String getDistrict() {
 		return this.district;
 	}
@@ -385,6 +388,15 @@ public class MemberT implements java.io.Serializable {
 
 	public void setVersiont(int versiont) {
 		this.versiont = versiont;
+	}
+
+	@Column(name = "MID", length = 32)
+	public String getMid() {
+		return this.mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 
 }

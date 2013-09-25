@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-24 22:17:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-25 20:51:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;

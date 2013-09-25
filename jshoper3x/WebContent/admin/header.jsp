@@ -168,7 +168,7 @@
 								<li><a href="<%=basePath%>admin/member/membergroupment.jsp?operate=find">会员分组列表</a></li>
 								<li><a href="<%=basePath%>admin/member/member.jsp?operate=add">添加会员</a></li>
 								<li><a href="<%=basePath%>admin/member/memberment.jsp?operate=find">会员列表</a></li>
-								<li><a href="<%=basePath%>admin/user/gradement.jsp?operate=find">会员等级设置</a></li>
+								<li><a href="<%=basePath%>admin/member/membergradement.jsp?operate=find">会员等级设置</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#"> 内容管理 <b class="caret"></b>

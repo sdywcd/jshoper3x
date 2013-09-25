@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-24 22:17:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-25 20:51:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -32,6 +32,7 @@ public class BasicUserT implements java.io.Serializable {
 	private String ip;
 	private String istemp;
 	private Date updatetime;
+	private Integer type;
 
 	public BasicUserT() {
 	}
@@ -57,7 +58,8 @@ public class BasicUserT implements java.io.Serializable {
 	public BasicUserT(String id, String username, String password,
 			String userstate, Date registertime, String email, String groupid,
 			String department, String teamid, String rank, String uid,
-			Date createtime, String ip, String istemp, Date updatetime) {
+			Date createtime, String ip, String istemp, Date updatetime,
+			Integer type) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
@@ -73,6 +75,7 @@ public class BasicUserT implements java.io.Serializable {
 		this.ip = ip;
 		this.istemp = istemp;
 		this.updatetime = updatetime;
+		this.type = type;
 	}
 
 	@Id
@@ -85,7 +88,7 @@ public class BasicUserT implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "USERNAME", nullable = false, length = 45)
+	@Column(name = "USERNAME", nullable = false, length = 100)
 	public String getUsername() {
 		return this.username;
 	}
@@ -212,6 +215,15 @@ public class BasicUserT implements java.io.Serializable {
 
 	public void setUpdatetime(Date updatetime) {
 		this.updatetime = updatetime;
+	}
+
+	@Column(name = "TYPE")
+	public Integer getType() {
+		return this.type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 }
