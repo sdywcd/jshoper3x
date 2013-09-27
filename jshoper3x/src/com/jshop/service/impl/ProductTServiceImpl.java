@@ -120,4 +120,10 @@ public class ProductTServiceImpl implements ProductTService {
 		
 	}
 
+	@Override
+	public List<ProductT> findProductByproductName(String productName,
+			int lineSize) {
+		return this.getProductTDao().findProductByproductName(productName, lineSize);
+	}
+
 }

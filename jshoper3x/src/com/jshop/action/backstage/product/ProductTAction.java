@@ -358,6 +358,9 @@ public class ProductTAction extends ActionSupport {
 
 	}
 
+	
+	
+	
 	/**
 	 * 保存商品的货物信息
 	 * @return
@@ -585,6 +588,26 @@ public class ProductTAction extends ActionSupport {
 		}
 		return "json";
 	}
+	
+	/**
+	 * 根据货物名称获取货物信息
+	 * @return
+	 */
+	@Action(value = "findProductByproductName", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
+	public String findProductByproductName(){
+		if(StringUtils.isBlank(this.getProductName())){
+			return "json";
+		}
+		beanlist=this.getProductTService().findProductByproductName(this.getProductName(), 100);
+		if(!beanlist.isEmpty()){
+			ProcessProductsList(beanlist);
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
+	
+	
 	
 	
 }

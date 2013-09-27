@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.aspectj.lang.JoinPoint;
+
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
 
 import com.jshop.action.backstage.content.article.ArticleTAction;
 import com.jshop.action.backstage.goods.GoodsCategoryTAction;
@@ -129,7 +132,7 @@ public class CreateStaticHtmlAspect {
 	 * @throws TemplateException 
 	 * @throws IOException 
 	 */
-	@After("execution(String com.jshop.action.ArticleTAction.addArticleT())||execution(String com.jshop.action.ArticleTAction.updateArticleT())")
+	@After(value="execution(String com.jshop.action.backstage.content.article.ArticleTAction.addArticleT(..))||execution(String com.jshop.action.backstage.content.article.ArticleTAction.updateArticleT(..))")
 	public void afterarticleIUCreatestatichtml(JoinPoint joinPoint) throws IOException, TemplateException{
 		ArticleTAction ata=(ArticleTAction)joinPoint.getThis();
 		if(ata.getBean()!=null){

@@ -556,10 +556,12 @@ $(function() {
 	 */
 	var operate = $.query.get("operate");
 	if (operate == "add") {
+		var goodsid=$.query.get("goodsid");
 		var goodsname=$.query.get("goodsname");
 		if(goodsname!=""){
 			setdttitle("#dttitle","增加"+goodsname+"的货物信息");
 		}
+		$("#hidgoodsid").val(goodsid);
 		findAllSpecificationsforjson();
 		
 	}else if(operate=="edit"){

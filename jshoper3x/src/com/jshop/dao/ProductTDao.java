@@ -122,5 +122,12 @@ public interface ProductTDao {
 	 * @return
 	 */
 	public int delProductT(String []strs);
+	/**
+	 * 根据货物名称获取货物信息
+	 * @param productName
+	 * @param lineSzie
+	 * @return
+	 */
+	public List<ProductT>findProductByproductName(String productName,final int lineSize);
 	
 }

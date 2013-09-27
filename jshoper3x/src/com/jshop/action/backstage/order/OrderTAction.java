@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.CartT;
 import com.jshop.entity.LogisticsBusinessT;
@@ -24,6 +25,7 @@ import com.jshop.entity.UserT;
 import com.jshop.service.CartTService;
 import com.jshop.service.LogisticsBusinessTService;
 import com.jshop.service.OrderTService;
+import com.jshop.service.ProductTService;
 import com.jshop.service.ShippingAddressTService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
@@ -31,6 +33,8 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 public class OrderTAction extends ActionSupport {
+	private Serial serial;
+	private ProductTService productTService;
 	private OrderTService orderTService;
 	private UsertService usertService;
 	private CartTService cartTService;
@@ -52,11 +56,28 @@ public class OrderTAction extends ActionSupport {
 	private int total = 0;
 	private String sortname;
 	private String sortorder;
+	private String productName;
 	Map<String, Object> map = new HashMap<String, Object>();
 	private boolean slogin = false;
 	private String usession;
 	private String formatedeliverytime;//格式化的发货时间
-	
+	@JSON(serialize = false)
+	public Serial getSerial() {
+		return serial;
+	}
+
+	public void setSerial(Serial serial) {
+		this.serial = serial;
+	}
+	@JSON(serialize = false)
+	public ProductTService getProductTService() {
+		return productTService;
+	}
+
+	public void setProductTService(ProductTService productTService) {
+		this.productTService = productTService;
+	}
+
 	@JSON(serialize = false)
 	public OrderTService getOrderTService() {
 		return orderTService;
@@ -259,10 +280,20 @@ public class OrderTAction extends ActionSupport {
 		this.formatedeliverytime = formatedeliverytime;
 	}
 
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();
 	}
+
+	
 
 	/**
 	 * 处理订单迭代
@@ -789,5 +820,17 @@ public class OrderTAction extends ActionSupport {
 			this.ProcessOrderList(order);
 		}
 	}
+	
+	/**
+	 * 初始化普通订单所需数据
+	 * @return
+	 */
+	public String InitNormalOrderNeedInfoBack(){
+		return null;
+	}
+	
+	
+	
+	
 	
 }

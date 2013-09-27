@@ -14,6 +14,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.json.annotations.JSON;
+import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.goods.GoodsGroupTAction;
 import com.jshop.action.backstage.goods.GoodsTAction;
@@ -38,6 +39,7 @@ import freemarker.template.TemplateException;
 
 @ParentPackage("json-default")
 @Namespace("")
+@Controller("createHtml")
 public class CreateHtml extends ActionSupport {
 	private TemplateTAction templateTAction;
 	private TemplateTService templateTService;

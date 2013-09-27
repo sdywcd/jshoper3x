@@ -647,9 +647,10 @@ public class ArticleTAction extends ActionSupport {
 			} else {
 				at.setIsnotice("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
+			
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", at.getArticleid());
-			cellMap.put("cell", new Object[] { at.getTitle(), at.getNname(),at.getIsnotice(), at.getIspublication(), at.getIsrecommend(), at.getIstop(), BaseTools.formateDbDate(at.getCreatetime()), "<a id='editarticle' href='article.jsp?operate=edit&folder=pagecontent&articleid=" + at.getArticleid() + "' name='editarticle'>[编辑]</a>" });
+			cellMap.put("cell", new Object[] { at.getTitle(), at.getNname(),at.getIsnotice(), at.getIspublication(), at.getIsrecommend(), at.getIstop(), BaseTools.formateDbDate(at.getCreatetime()), "<a id='editarticle' href='article.jsp?operate=edit&folder=pagecontent&articleid=" + at.getArticleid() + "' name='editarticle'>[编辑]</a><a id='showarticle' href="+BaseTools.getBasePath()+"/"+at.getHtmlPath()+" name='showarticle'>[预览]</a><a id='showarticle' href='wo#' name='showarticle'>[静态化]</a>" });
 			rows.add(cellMap);
 		}
 	}

@@ -284,6 +284,31 @@ public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao 
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ProductT> findProductByproductName(final String productName,
+			final int lineSize) {
+		log.debug("findProductByproductName");
+		try {
+			List<ProductT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+
+				String queryString = "from ProductT as pt where pt.productName like :productName order by pt.createtime desc";
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setMaxResults(lineSize);
+					query.setParameter("productName", "%"+productName+"%");
+					List list = query.list();
+					return list;
+				}
+			});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findProductByproductName error", re);
+			throw re;
+		}
+	}
+
 	
 	
 	

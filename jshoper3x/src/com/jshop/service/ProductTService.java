@@ -132,5 +132,12 @@ public interface ProductTService {
 	 * @param gsrt
 	 */
 	public void updateProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt);
+	/**
+	 * 根据货物名称获取货物信息
+	 * @param productName
+	 * @param lineSzie
+	 * @return
+	 */
+	public List<ProductT>findProductByproductName(String productName,final int lineSize);
 	
 }

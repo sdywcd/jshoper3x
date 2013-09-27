@@ -7,10 +7,13 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.dao.OrderTDao;
 import com.jshop.dao.impl.OrderTDaoImpl;
 import com.jshop.entity.OrderT;
+import com.jshop.entity.ShippingAddressT;
 import com.jshop.service.OrderTService;
 
 @Service("orderTService")
@@ -141,4 +144,15 @@ public class OrderTServiceImpl implements OrderTService {
 	public List<OrderT> findAllreturnOrder(int currentPage, int lineSize, String orderstate) {
 		return this.getOrderTDao().findAllreturnOrder(currentPage, lineSize, orderstate);
 	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void saveNormalOrderNeedInfoBack(OrderT ordert,
+			ShippingAddressT sAddressT) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
 }

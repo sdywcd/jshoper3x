@@ -14,6 +14,7 @@ import org.apache.struts2.json.annotations.JSON;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.modelbean.GoodsBelinkedModel;
 import com.jshop.entity.ArticleCategoryT;
@@ -58,6 +59,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 
 @ParentPackage("json-default")
 @Namespace("")
+@Controller("dataCollectionTAction")
 public class DataCollectionTAction extends ActionSupport {
 
 	private JshopbasicInfoTService jshopbasicInfoTService;
