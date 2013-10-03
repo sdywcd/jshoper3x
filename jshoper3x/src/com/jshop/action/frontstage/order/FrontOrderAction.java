@@ -21,11 +21,13 @@ import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.PaymentCode;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.entity.LogisticsbusinessareaT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 import com.jshop.entity.ShippingAddressT;
@@ -574,8 +576,8 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 获取用户收获地址
 	 */
-	public void GetUserDeliverAddress(UserT user) {
-		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressByuserid(user.getUserid());
+	public void GetUserDeliverAddress(MemberT memberT) {
+		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
 		ActionContext.getContext().put("deliveraddress", list);
 	
 	}
@@ -610,10 +612,10 @@ public class FrontOrderAction extends ActionSupport {
 	 * 
 	 * @param user
 	 */
-	public void GetMyCart(UserT user) {
+	public void GetMyCart(MemberT memberT) {
 		String state="1";
 		String orderTag=this.getOrderTag();
-		List<CartT> list = this.getCartTService().findAllCartByUserId(user.getUserid(),state,orderTag);
+		List<CartT> list = this.getCartTService().findAllCartByMemberId(memberT.getId(),state,orderTag);
 		if (list != null) {
 			this.setTotal(0.0);
 			this.setTotalweight(0.0);
@@ -681,16 +683,16 @@ public class FrontOrderAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}")
 	})
 	public String InitOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if (user != null) {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if (memberT != null) {
 			//获取用户收获地址
-			GetUserDeliverAddress(user);
+			GetUserDeliverAddress(memberT);
 			//获取物流商
 			GetDefaultLogistictsBusiness();
 			//获取支付方式
 			GetDefaultPayment();
 			//获取购物车中的商品作为订单商品处理
-			GetMyCart(user);
+			GetMyCart(memberT);
 			//计算运费
 			GetLogisticsPrice();
 			//获取总金额+运费
@@ -723,7 +725,7 @@ public class FrontOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String GetVouchersByname() throws ParseException {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			if (Validate.StrNotNull(this.getVouchername())) {
 				VouchersT v = this.getVouchersTService().findVouchersForHonor(this.getVouchername());
@@ -770,7 +772,6 @@ public class FrontOrderAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("static-access")
 	public void initOrderInfo(UserT user) {
 		order.setOrderid(this.getSerialidorderid());
 		order.setUserid(user.getUserid());
@@ -787,8 +788,10 @@ public class FrontOrderAction extends ActionSupport {
 		order.setShippingstate("0");//未发货
 		order.setLogisticsid(this.getLogisticsid().trim());
 		order.setLogisticswebaddress(this.getLogisticswebaddress());
-		order.setGoodid(this.getCartgoodsid());
-		order.setGoodsname(this.getCartgoodsname());
+		//这部分的逻辑需要修改，需要组织json来填写productinfo
+		//order.setGoodid(this.getCartgoodsid());
+		//order.setProductinfo(this.getCartgoodsid());
+		//order.setGoodsname(this.getCartgoodsname());
 		order.setNeedquantity(this.getCartneedquantity());
 		order.setFreight(this.getFreight());//运费，在request中也有
 		//		if(!this.isSvoucher()){
@@ -871,12 +874,12 @@ public class FrontOrderAction extends ActionSupport {
 		AlipayConfig.key = this.getPm().getSafecode();
 		AlipayConfig.seller_email = this.getPm().getAccount();
 		AlipayConfig.out_trade_no = order.getOrderid();
-		AlipayConfig.subject = order.getGoodsname();
-		AlipayConfig.body = order.getGoodsname();
+		AlipayConfig.subject = order.getOrdername();//这里获取productinfo的第一个json的productname
+		AlipayConfig.body = order.getOrdername();//获取productinfo所有的productname
 		AlipayConfig.price = String.valueOf(order.getShouldpay());
 		AlipayConfig.logistics_fee = String.valueOf(order.getFreight());
 		//设置收货人信息给支付宝借口
-		AlipayConfig.receive_name = this.getDt().getUsername();
+		AlipayConfig.receive_name = this.getDt().getShippingusername();
 		AlipayConfig.receive_address = this.getDt().getProvince() + this.getDt().getCity() + this.getDt().getDistrict() + this.getDt().getStreet();
 		AlipayConfig.reveive_zip = this.getDt().getPostcode();
 		AlipayConfig.reveive_phone = this.getDt().getTelno();
@@ -892,9 +895,9 @@ public class FrontOrderAction extends ActionSupport {
 		TenPayConfig.out_trade_no=order.getOrderid();//订单号
 		int totalfee=(int)(order.getShouldpay()*100);
 		TenPayConfig.total_fee=String.valueOf(totalfee);
-		TenPayConfig.body=order.getGoodsname();
+		TenPayConfig.body=order.getOrdername();
 		TenPayConfig.bank_type="DEFAULT";
-		TenPayConfig.subject=order.getGoodsname();
+		TenPayConfig.subject=order.getOrdername();
 		TenPayConfig.goods_tag=order.getOrderTag();//手机充值虚拟卡
 		TenPayConfig.trade_mode="1";//即时到帐
 		TenPayConfig.trans_type="2";//虚拟交易
@@ -911,8 +914,8 @@ public class FrontOrderAction extends ActionSupport {
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
 			s.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
-			s.setMemberid(list.getUserid());
-			s.setMembername(list.getUsername());
+			s.setMemberid(list.getMemberid());
+			s.setShippingusername(list.getShippingusername());
 			s.setCountry(list.getCountry());
 			s.setProvince(list.getProvince());
 			s.setCity(list.getCity());
@@ -932,7 +935,7 @@ public class FrontOrderAction extends ActionSupport {
 				this.setSshoppingaddress(false);//这里应该改成true比较好
 				order.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
 				order.setDeliveraddressid(list.getAddressid());//设置收货地址到订单中
-				order.setShippingusername(list.getUsername());//设置收货人
+				order.setShippingusername(list.getShippingusername());//设置收货人
 			} else {
 				this.setSshoppingaddress(true);
 			}
@@ -957,7 +960,7 @@ public class FrontOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitAlipayneedInfo() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			//预先生成订单编号

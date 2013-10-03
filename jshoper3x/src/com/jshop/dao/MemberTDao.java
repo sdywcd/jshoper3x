@@ -60,8 +60,45 @@ public interface MemberTDao {
 	 * @return
 	 */
 	public List<MemberT>findMemberTByloginname(String loginname);
-	
-	
-	
+	/**
+	 * 根据邮件查询用户
+	 * @param email
+	 * @return
+	 */
+	public List<MemberT> findMemberTByemail(String email);
+	/**
+	 * 根据加密的mid获取用户数据
+	 * @param mid
+	 * @return
+	 */
+	public List<MemberT>findMemberTymid(String mid);
+	/**
+	 * 根据安全问题检查用户是否存在
+	 * @param loginname
+	 * @param question
+	 * @param answer
+	 * @return
+	 */
+	public List<MemberT>findMemberByQA(String loginname,String question,String answer);
+	/**
+	 * 会员登录
+	 * @param m
+	 * @return
+	 */
+	public List<MemberT>login(MemberT m);
+	/**
+	 * 根据id更新会员头像
+	 * @param m
+	 * @return
+	 */
+	public int updateMemberHeadpathByid(MemberT m);
+	/**
+	 * 更新会员密码保护
+	 * @param id
+	 * @param question
+	 * @param answer
+	 * @return
+	 */
+	public int updateMemberPwdProctection(String id,String question,String answer);
 	
 }

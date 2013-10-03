@@ -109,4 +109,16 @@ public class CartTServiceImpl implements CartTService {
 		return this.getCartTDao().delCartByid(id);
 	}
 
+	@Override
+	public CartT findProductInCart(String memberid, String goodsid,
+			String productid, String state) {
+		return this.getCartTDao().findProductInCart(memberid, goodsid, productid, state);
+	}
+
+	@Override
+	public List<CartT> findAllCartByMemberId(String memberid, String state,
+			String orderTag) {
+		return this.getCartTDao().findAllCartByMemberId(memberid, state, orderTag);
+	}
+
 }

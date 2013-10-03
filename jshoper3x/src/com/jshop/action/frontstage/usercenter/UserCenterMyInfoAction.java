@@ -26,8 +26,11 @@ import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.UtilCommon;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
+import com.jshop.service.MemberTService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -38,42 +41,37 @@ import com.opensymphony.xwork2.ActionSupport;
 })
 public class UserCenterMyInfoAction extends ActionSupport implements  
 ServletResponseAware {
-	private UsertService usertService;
+	private MemberTService memberTService;
 	private DataCollectionTAction dataCollectionTAction;
-	private String userid;
-	private String username;
+	private String id;
+	private String loginname;
+	private String loginpwd;
+	private String nick;
 	private String realname;
+	private String city;
+	private String district;
+	private String sex;
+	private String whichsex;
+	private String merrystatus;
+	private String birthday;
+	private String blood;
+	private String constellation;
+	private String des;
 	private String email;
-	private String telno;
-	private String mobile;
+	private String qq;
+	private String weixin;
+	private String sinaweibo;
+	private String tag;
+	private Integer belove;
+	private Integer loveother;
+	private Integer postingcount;
 	private String question;
 	private String answer;
-	private String password;
-	private String userstate;
-	private Double points;
-	private Integer postingcount;
-	private String sex;
-	private Date registtime;
-	private Date disablebegin;
-	private Date disableend;
-	private String section;
-	private String position;
-	private String groupid;
-	private String parttime1;
-	private String parttime2;
-	private String parttime3;
-	private String parttime4;
-	private String parttime5;
-	private String parttime6;
-	private String hobby;
-	private String qq;
-	private String msn;
-	private String othercontract;
-	private String address;
-	private String postcode;
-	private String birthday;
-	private String grade;
-	private Date gradetime;
+	private String memberstate;
+	private Date createtime;
+	private String creatorid;
+	private Date updatetime;
+	private String mobile;
 	private String state;
 	private String headpath;
 	private File fileupload; // 和JSP中input标记name同名  
@@ -84,38 +82,24 @@ ServletResponseAware {
     // Struts2拦截器获得的文件名,命名规则，File的名字+FileName  
     // 如此处为 'fileupload' + 'FileName' = 'fileuploadFileName'  
     private String fileuploadFileName; // 上传来的文件的名字  
-	private UserT head= new UserT();
+	private MemberT bean= new MemberT();
+	private boolean sucflag;
+	@JSON(serialize=false)
+	public MemberTService getMemberTService() {
+		return memberTService;
+	}
+
+	public void setMemberTService(MemberTService memberTService) {
+		this.memberTService = memberTService;
+	}
+
+	@JSON(serialize=false)
 	public DataCollectionTAction getDataCollectionTAction() {
 		return dataCollectionTAction;
 	}
 
 	public void setDataCollectionTAction(DataCollectionTAction dataCollectionTAction) {
 		this.dataCollectionTAction = dataCollectionTAction;
-	}
-
-	@JSON(serialize=false)
-	public UsertService getUsertService() {
-		return usertService;
-	}
-
-	public void setUsertService(UsertService usertService) {
-		this.usertService = usertService;
-	}
-
-	public String getUserid() {
-		return userid;
-	}
-
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getRealname() {
@@ -133,15 +117,6 @@ ServletResponseAware {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getTelno() {
-		return telno;
-	}
-
-	public void setTelno(String telno) {
-		this.telno = telno;
-	}
-
 	public String getMobile() {
 		return mobile;
 	}
@@ -165,31 +140,6 @@ ServletResponseAware {
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUserstate() {
-		return userstate;
-	}
-
-	public void setUserstate(String userstate) {
-		this.userstate = userstate;
-	}
-
-	public Double getPoints() {
-		return points;
-	}
-
-	public void setPoints(Double points) {
-		this.points = points;
-	}
-
 	public Integer getPostingcount() {
 		return postingcount;
 	}
@@ -206,110 +156,6 @@ ServletResponseAware {
 		this.sex = sex;
 	}
 
-	public Date getRegisttime() {
-		return registtime;
-	}
-
-	public void setRegisttime(Date registtime) {
-		this.registtime = registtime;
-	}
-
-	public Date getDisablebegin() {
-		return disablebegin;
-	}
-
-	public void setDisablebegin(Date disablebegin) {
-		this.disablebegin = disablebegin;
-	}
-
-	public Date getDisableend() {
-		return disableend;
-	}
-
-	public void setDisableend(Date disableend) {
-		this.disableend = disableend;
-	}
-
-	public String getSection() {
-		return section;
-	}
-
-	public void setSection(String section) {
-		this.section = section;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
-	}
-
-	public String getGroupid() {
-		return groupid;
-	}
-
-	public void setGroupid(String groupid) {
-		this.groupid = groupid;
-	}
-
-	public String getParttime1() {
-		return parttime1;
-	}
-
-	public void setParttime1(String parttime1) {
-		this.parttime1 = parttime1;
-	}
-
-	public String getParttime2() {
-		return parttime2;
-	}
-
-	public void setParttime2(String parttime2) {
-		this.parttime2 = parttime2;
-	}
-
-	public String getParttime3() {
-		return parttime3;
-	}
-
-	public void setParttime3(String parttime3) {
-		this.parttime3 = parttime3;
-	}
-
-	public String getParttime4() {
-		return parttime4;
-	}
-
-	public void setParttime4(String parttime4) {
-		this.parttime4 = parttime4;
-	}
-
-	public String getParttime5() {
-		return parttime5;
-	}
-
-	public void setParttime5(String parttime5) {
-		this.parttime5 = parttime5;
-	}
-
-	public String getParttime6() {
-		return parttime6;
-	}
-
-	public void setParttime6(String parttime6) {
-		this.parttime6 = parttime6;
-	}
-
-	public String getHobby() {
-		return hobby;
-	}
-
-	public void setHobby(String hobby) {
-		this.hobby = hobby;
-	}
-
 	public String getQq() {
 		return qq;
 	}
@@ -317,61 +163,12 @@ ServletResponseAware {
 	public void setQq(String qq) {
 		this.qq = qq;
 	}
-
-	public String getMsn() {
-		return msn;
-	}
-
-	public void setMsn(String msn) {
-		this.msn = msn;
-	}
-
-	public String getOthercontract() {
-		return othercontract;
-	}
-
-	public void setOthercontract(String othercontract) {
-		this.othercontract = othercontract;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-
 	public String getBirthday() {
 		return birthday;
 	}
 
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
-	}
-
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-	public Date getGradetime() {
-		return gradetime;
-	}
-
-	public void setGradetime(Date gradetime) {
-		this.gradetime = gradetime;
 	}
 
 	public String getState() {
@@ -438,12 +235,180 @@ ServletResponseAware {
 		this.fileuploadFileName = fileuploadFileName;
 	}
 
-	public UserT getHead() {
-		return head;
+	public String getId() {
+		return id;
 	}
 
-	public void setHead(UserT head) {
-		this.head = head;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getLoginname() {
+		return loginname;
+	}
+
+	public void setLoginname(String loginname) {
+		this.loginname = loginname;
+	}
+
+	public String getLoginpwd() {
+		return loginpwd;
+	}
+
+	public void setLoginpwd(String loginpwd) {
+		this.loginpwd = loginpwd;
+	}
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+	public String getWhichsex() {
+		return whichsex;
+	}
+
+	public void setWhichsex(String whichsex) {
+		this.whichsex = whichsex;
+	}
+
+	public String getMerrystatus() {
+		return merrystatus;
+	}
+
+	public void setMerrystatus(String merrystatus) {
+		this.merrystatus = merrystatus;
+	}
+
+	public String getBlood() {
+		return blood;
+	}
+
+	public void setBlood(String blood) {
+		this.blood = blood;
+	}
+
+	public String getConstellation() {
+		return constellation;
+	}
+
+	public void setConstellation(String constellation) {
+		this.constellation = constellation;
+	}
+
+	public String getDes() {
+		return des;
+	}
+
+	public void setDes(String des) {
+		this.des = des;
+	}
+
+	public String getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(String weixin) {
+		this.weixin = weixin;
+	}
+
+	public String getSinaweibo() {
+		return sinaweibo;
+	}
+
+	public void setSinaweibo(String sinaweibo) {
+		this.sinaweibo = sinaweibo;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public Integer getBelove() {
+		return belove;
+	}
+
+	public void setBelove(Integer belove) {
+		this.belove = belove;
+	}
+
+	public Integer getLoveother() {
+		return loveother;
+	}
+
+	public void setLoveother(Integer loveother) {
+		this.loveother = loveother;
+	}
+
+	public String getMemberstate() {
+		return memberstate;
+	}
+
+	public void setMemberstate(String memberstate) {
+		this.memberstate = memberstate;
+	}
+
+	public Date getCreatetime() {
+		return createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	public String getCreatorid() {
+		return creatorid;
+	}
+
+	public void setCreatorid(String creatorid) {
+		this.creatorid = creatorid;
+	}
+
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	public MemberT getBean() {
+		return bean;
+	}
+
+	public void setBean(MemberT bean) {
+		this.bean = bean;
+	}
+
+	public boolean isSucflag() {
+		return sucflag;
+	}
+
+	public void setSucflag(boolean sucflag) {
+		this.sucflag = sucflag;
 	}
 
 	/**
@@ -459,13 +424,13 @@ ServletResponseAware {
 	 * 根据用户id获取用户信息
 	 * @return
 	 */
-	@Action(value = "findUserInfo", results = { 
+	@Action(value = "findMemberInfo", results = { 
 			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/memberbasicinfo.ftl"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
-	public String findUserInfo(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+	public String findMemberInfo(){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
@@ -487,41 +452,47 @@ ServletResponseAware {
 	 * @return
 	 */
 	
-	@Action(value = "updateUserforMyInfo", results = { 
-			@Result(name = "success",type="chain",location = "findUserInfo"),
+	@Action(value = "updateMemberforMyInfo", results = { 
+			@Result(name = "success",type="chain",location = "findMemberInfo"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
-	public String updateUserforMyInfo(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
-			UserT u1=new UserT();
-			u1.setHeadpath(this.getHeadpath());
-			u1.setUserid(user.getUserid());
-			u1.setUsername(user.getUsername());
-			u1.setRealname(this.getRealname().trim());
-			u1.setEmail(user.getEmail());
-			u1.setTelno(this.getTelno().trim());
-			u1.setMobile(this.getMobile().trim());
-			u1.setQuestion(user.getQuestion());
-			u1.setAnswer(user.getAnswer());
-			u1.setPassword(user.getPassword());
-			u1.setUserstate(user.getUserstate());
-			u1.setPostingcount(user.getPostingcount());
-			u1.setSection(user.getSection());
-			u1.setPosition(user.getPosition());
-			u1.setGroupid(user.getGroupid());
-			u1.setParttime1(user.getParttime1());
-			u1.setParttime2(user.getParttime2());
-			u1.setParttime3(user.getParttime3());
-			u1.setQq(this.getQq().trim());
-			u1.setState(user.getState());
-			u1.setUid(user.getUid());
-			u1.setRolemid(user.getRolemid());
-			if(this.getUsertService().updateUserforMyInfo(u1)>0){
-				return SUCCESS;
-			}else{
-				return INPUT;
-			}
+	public String updateMemberforMyInfo(){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			MemberT m=new MemberT();
+			m.setId(memberT.getId());
+			m.setLoginname(memberT.getLoginname());
+			m.setNick(this.getNick().trim());
+			m.setRealname(this.getRealname().trim());
+			m.setCity(this.getCity().trim());
+			m.setDistrict(this.getDistrict().trim());
+			m.setSex(this.getSex());
+			m.setWhichsex(this.getWhichsex());
+			m.setMerrystatus(this.getMerrystatus());
+			m.setBirthday(this.getBirthday().trim());
+			m.setBlood(this.getBlood());
+			m.setConstellation(this.getConstellation());
+			m.setDes(this.getDes());
+			m.setEmail(this.getEmail());
+			m.setQq(this.getQq());
+			m.setWeixin(this.getWeixin());
+			m.setSinaweibo(this.getSinaweibo());
+			m.setTag(this.getTag());
+			m.setBelove(memberT.getBelove());
+			m.setLoveother(memberT.getLoveother());
+			m.setPostingcount(memberT.getPostingcount());
+			m.setQuestion(memberT.getQuestion());
+			m.setAnswer(memberT.getAnswer());
+			m.setMemberstate(memberT.getMemberstate());
+			m.setHeadpath(this.getHeadpath().trim());
+			m.setCreatetime(memberT.getCreatetime());
+			m.setCreatorid(memberT.getCreatorid());
+			m.setUpdatetime(BaseTools.systemtime());
+			m.setMobile(this.getMobile().trim());
+			m.setVersiont(memberT.getVersiont()+1);
+			m.setMid(memberT.getMid());
+			this.getMemberTService().updateMemberT(m);
+			return SUCCESS;
 		}else{
 			return INPUT;
 		}
@@ -564,12 +535,11 @@ ServletResponseAware {
             //检查上传的是否是图片  
             if (UtilCommon.checkIsImage(extName)) {  
                 FileUtils.copyFile(fileupload, new File(filePath));  
-                UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-        		if(user!=null){
-        			UserT  u= new UserT();
-        			u.setHeadpath(headpath);
-        			u.setUserid(user.getUserid());
-        			this.getUsertService().updateUserHeadPathByUserId(u);
+                MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+        		if(memberT!=null){
+        			memberT.setHeadpath(headpath);
+        			memberT.setId(memberT.getId());
+        			this.getMemberTService().updateMemberHeadpathByid(memberT);
         		}
         		
               // out.print("<font color='red'>" + fileuploadFileName   + "上传成功!</font>#" + filePath + "#" + fileuploadFileName);  
@@ -612,15 +582,14 @@ ServletResponseAware {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findUserHeadById", results = { @Result(name = "json", type = "json") })
-	public String findUserHeadById() {
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		
-		 head = this.getUsertService().findById(user.getUserid());
-			if (head != null) {				
+	@Action(value = "findMemberHeadById", results = { @Result(name = "json", type = "json") })
+	public String findMemberHeadById() {
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		bean = this.getMemberTService().findMemberTById(memberT.getId());
+			if (bean != null) {
+				this.setSucflag(true);
 				return "json";
 			}
-		
 		return "json";
 	}
 	

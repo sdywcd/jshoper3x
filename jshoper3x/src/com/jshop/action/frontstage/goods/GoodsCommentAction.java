@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.GoodsCommentT;
 import com.jshop.entity.UserT;
 import com.jshop.service.GoodsCommentTService;
@@ -167,7 +168,7 @@ public class GoodsCommentAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addGoodsComment(){
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user=(UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if(user!=null){
 			GoodsCommentT gct=new GoodsCommentT();
 			gct.setCommentid(this.getSerial().Serialid(Serial.GOODSCOMMENT));

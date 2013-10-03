@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-26 20:43:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -32,6 +32,24 @@ public class AdvertiseT implements java.io.Serializable {
 	private String state;
 
 	public AdvertiseT() {
+	}
+
+	public AdvertiseT(String id, String type, String advPath,
+			String showPosition, int showAmount, double showCount,
+			String showWhere, String alt, Date begintime, Date endtime,
+			Date createtime, String state) {
+		this.id = id;
+		this.type = type;
+		this.advPath = advPath;
+		this.showPosition = showPosition;
+		this.showAmount = showAmount;
+		this.showCount = showCount;
+		this.showWhere = showWhere;
+		this.alt = alt;
+		this.begintime = begintime;
+		this.endtime = endtime;
+		this.createtime = createtime;
+		this.state = state;
 	}
 
 	public AdvertiseT(String id, String type, String advPath,
@@ -156,7 +174,7 @@ public class AdvertiseT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	@Column(name = "CREATORID", nullable = false, length = 20)
+	@Column(name = "CREATORID", length = 20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}

@@ -16,8 +16,10 @@ import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.FavoriteT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
 import com.jshop.service.FavoriteTService;
 import com.opensymphony.xwork2.ActionContext;
@@ -39,7 +41,7 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 	private String memberprice;
 	private String favoriteid;
 	private String cp;
-	private boolean slogin=false;
+	private boolean slogin;
 	private boolean sucflag;
 	@JSON(serialize=false)
 	public DataCollectionTAction getDataCollectionTAction() {
@@ -163,8 +165,8 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addFavorite(){
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			this.setSlogin(true);
 			FavoriteT f=new FavoriteT();
 			f.setFavoriteid(this.getSerial().Serialid(Serial.FAVORITE));
@@ -172,7 +174,7 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 			f.setGoodsid(this.getGoodsid().trim());
 			f.setTag(null);
 			f.setDescript(null);  
-			f.setUserid(user.getUserid());
+			f.setUserid(memberT.getId());
 			f.setState("0");
 			f.setAddtime(BaseTools.systemtime());
 			f.setReadcount(Integer.parseInt(this.getReadcount().trim()));
@@ -195,22 +197,22 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 	 * @return
 	 * @throws UnknownHostException 
 	 */
-	@Action(value = "GetMyFavoriteByUserId", results = { 
+	@Action(value = "getMyFavoriteBymemberId", results = { 
 			@Result(name = "success",type="freemarker",location = "WEB-INF/theme/default/shop/favorite.ftl"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
-	public String GetMyFavoriteByUserId(){
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+	public String getMyFavoriteBymemberId(){
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			int currentPage=1;
 			int lineSize=50;
 			try{
 				currentPage=Integer.parseInt(this.getCp());
 			}catch(Exception e){
 		}
-			List<FavoriteT>list=this.getFavoriteTService().findAllFavoriteByUserid(user.getUserid(), currentPage, lineSize);
+			List<FavoriteT>list=this.getFavoriteTService().findAllFavoriteByUserid(memberT.getId(), currentPage, lineSize);
 			try {
-				int allRecorders=this.getFavoriteTService().countfindAllFavoriteByUserid(user.getUserid());
+				int allRecorders=this.getFavoriteTService().countfindAllFavoriteByUserid(memberT.getId());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -235,13 +237,13 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 	 * 删除用户收藏
 	 * @return
 	 */
-	@Action(value = "DelMyFavoriteByid", results = { 
-			@Result(name = "success",type="chain",location = "GetMyFavoriteByUserId"),
+	@Action(value = "delMyFavoriteByid", results = { 
+			@Result(name = "success",type="chain",location = "getMyFavoriteBymemberId"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
-	public String DelMyFavoriteByid(){
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+	public String delMyFavoriteByid(){
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			this.setSlogin(true);
 			if(Validate.StrNotNull(this.getFavoriteid())){
 				String [] strs=this.getFavoriteid().split(",");

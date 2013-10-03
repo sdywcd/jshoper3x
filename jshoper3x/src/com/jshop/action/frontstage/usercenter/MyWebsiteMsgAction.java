@@ -2,6 +2,7 @@ package com.jshop.action.frontstage.usercenter;
 import java.sql.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -15,6 +16,8 @@ import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.MsgtextT;
 import com.jshop.entity.UserT;
 import com.jshop.entity.WebsiteMsgT;
@@ -46,11 +49,11 @@ public class MyWebsiteMsgAction extends ActionSupport {
 	private static Date createtime1;
 	private String msgState;	
 	private String cp;
-	MsgtextT msgbean = new MsgtextT();
-	WebsiteMsgT webbean= new WebsiteMsgT();
+	private MsgtextT msgbean = new MsgtextT();
+	private WebsiteMsgT webbean= new WebsiteMsgT();
 	
-	private boolean sflag=false;
-	private boolean slogin=false;
+	private boolean sflag;
+	private boolean slogin;
 	
 	@JSON(serialize=false)
 	public DataCollectionTAction getDataCollectionTAction() {
@@ -200,8 +203,8 @@ public class MyWebsiteMsgAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addWebsiteMsgT(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			this.setSlogin(true);
 			MsgtextT mt=new MsgtextT();
 			mt.setMsgtextid(this.getSerial().Serialid(Serial.MSGTEXT));
@@ -211,8 +214,8 @@ public class MyWebsiteMsgAction extends ActionSupport {
 				WebsiteMsgT wm=new WebsiteMsgT();
 				wm.setMsgid(this.getSerial().Serialid(Serial.WEBSITEMSG));
 				wm.setMsgtousername(this.getMsgToUsername().trim());
-				wm.setMsgfromuserid(user.getUserid());
-				wm.setMsgfromusrname(user.getUsername());
+				wm.setMsgfromuserid(memberT.getId());
+				wm.setMsgfromusrname(memberT.getLoginname());
 				wm.setMsgtextid(this.getMsgtextid());
 				wm.setMsgstate("1");
 				wm.setState("0");
@@ -244,12 +247,12 @@ public class MyWebsiteMsgAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/login.html")
 	})
 	public String findAllWebsiteMsgByToUsername(){
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			int currentPage=1;
 			int lineSize =15;
-			List<WebsiteMsgT> list = this.getWebsiteMsgTService().findAllWebsiteMsgByToUsername(currentPage, lineSize, user.getUsername());
-			int allRecorders=this.getWebsiteMsgTService().countfindAllWebsiteMsgByToUsername(user.getUsername());
+			List<WebsiteMsgT> list = this.getWebsiteMsgTService().findAllWebsiteMsgByToUsername(currentPage, lineSize, memberT.getLoginname());
+			int allRecorders=this.getWebsiteMsgTService().countfindAllWebsiteMsgByToUsername(memberT.getLoginname());
 			if(list!=null){
 				//路径获取
 				ActionContext.getContext().put("basePath", this.getDataCollectionTAction().getBasePath());
@@ -290,15 +293,15 @@ public class MyWebsiteMsgAction extends ActionSupport {
 	 * 删除站内消息
 	 * @return
 	 */
-	@Action(value = "DelWebsiteMsgT", results = {
+	@Action(value = "delWebsiteMsgT", results = {
 			@Result(name = "success",type="chain",location = "findAllWebsiteMsgByToUsername"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/login.html")
 	})
-	public String DelWebsiteMsgT(){
+	public String delWebsiteMsgT(){
 		String temp=this.getMsgid().trim()+",";
-		String []array=temp.split(",");
+		String strs[]=StringUtils.split(temp, ",");
 		@SuppressWarnings("unused")
-		int i=this.getWebsiteMsgTService().delWebsiteMsgT(array);
+		int i=this.getWebsiteMsgTService().delWebsiteMsgT(strs);
 		return SUCCESS;
 	}
 	
@@ -310,8 +313,8 @@ public class MyWebsiteMsgAction extends ActionSupport {
 			@Result(name = "json",type="json")			
 	})
 	public String findMsgtextById(){
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){			
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){			
 			if(!this.getMsgtextid().isEmpty()){
 				String temp=this.getMsgtextid().trim()+",";
 				String []tempid=temp.split(",");

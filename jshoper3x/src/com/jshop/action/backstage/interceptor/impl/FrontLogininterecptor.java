@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.StrutsStatics;
 
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.StaticString;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
@@ -18,7 +19,7 @@ public class FrontLogininterecptor extends MethodFilterInterceptor{
 		ActionContext actionContext=invocation.getInvocationContext();
 		HttpServletRequest request=(HttpServletRequest)actionContext.get(StrutsStatics.HTTP_REQUEST);
 		Map session=actionContext.getSession();
-		if(BaseTools.USER_SESSION_KEY!=null){
+		if(StaticString.MEMBER_SESSION_KEY!=null){
 			return invocation.invoke();
 		}else{
 			return "login";

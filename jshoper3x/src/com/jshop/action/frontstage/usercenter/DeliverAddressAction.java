@@ -17,8 +17,10 @@ import org.springframework.stereotype.Controller;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.DeliverAddressT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
 import com.jshop.service.DeliverAddressTService;
 import com.opensymphony.xwork2.ActionContext;
@@ -47,8 +49,8 @@ public class DeliverAddressAction extends ActionSupport {
 	private String state;
 	private String country;
 
-	private boolean sucflag=false;
-	private boolean slogin=false;
+	private boolean sucflag;
+	private boolean slogin;
 	
 	private Map<String,Object>amap=new HashMap<String,Object>();
 	
@@ -226,12 +228,12 @@ public class DeliverAddressAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addDeliveraddress(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user=(UserT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if(user!=null){
 			DeliverAddressT d=new DeliverAddressT();
 			d.setAddressid(this.getSerial().Serialid(Serial.DELIVERADDRESS));
-			d.setUserid(user.getUserid());
-			d.setUsername(this.getUsername().trim());
+			d.setMemberid(user.getUserid());
+			d.setShippingusername(this.getUsername().trim());
 			d.setCountry(this.getCountry().trim());
 			d.setProvince(this.getProvince().trim());
 			d.setCity(this.getCity().trim());
@@ -260,13 +262,13 @@ public class DeliverAddressAction extends ActionSupport {
 	 * @return
 	 */
 	@Action(value = "GetUserDeliverAddress", results = { 
-			@Result(name = "success",type="chain",location = "InitOrder"),
+			@Result(name = "success",type="chain",location = "initOrder"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
 	public String GetUserDeliverAddress(){
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
-			List<DeliverAddressT> list=this.getDeliverAddressTService().findDeliverAddressByuserid(user.getUserid());
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			List<DeliverAddressT> list=this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
 			ActionContext.getContext().put("deliveraddress", list);
 			return SUCCESS;
 		}else{
@@ -280,21 +282,19 @@ public class DeliverAddressAction extends ActionSupport {
 	 *用户在用户中心删除收获地址
 	 * @return
 	 */
-	@Action(value = "UserDelDeliverAddress", results = { 
-			@Result(name = "success",type="chain",location = "GetUserDeliverAddressForUserCenter"),
+	@Action(value = "memberDelDeliverAddress", results = { 
+			@Result(name = "success",type="chain",location = "getmemberDeliverAddressForUserCenter"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
-	public String UserDelDeliverAddress(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
-			if(Validate.StrNotNull(this.getAddressid())){
-				String temp=this.getAddressid().trim()+",";
-				String []tempid=temp.split(",");
-				this.getDeliverAddressTService().delDeliverAddress(tempid);
-				return SUCCESS;
-			}else{
+	public String memberDelDeliverAddress(){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			if(StringUtils.isBlank(this.getAddressid())){
 				return INPUT;
 			}
+
+			return SUCCESS;
+			
 		}else{
 			return INPUT;
 		}
@@ -307,15 +307,12 @@ public class DeliverAddressAction extends ActionSupport {
 	 */
 	@Action(value = "delDeliverAddressByaddressid", results = { @Result(name = "json", type = "json") })
 	public String delDeliverAddressByaddressid(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
-			this.setSlogin(true);
-			if(Validate.StrNotNull(this.getAddressid())){
-				this.getDeliverAddressTService().delDeliverAddress(StringUtils.split(this.getAddressid(),","));
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			if(StringUtils.isBlank(this.getAddressid())){
+				String strs[]=StringUtils.split(this.getAddressid(), ",");
+				this.getDeliverAddressTService().delDeliverAddress(strs);
 				this.setSucflag(true);
-				return "json";
-			}else{
-				this.setSucflag(false);
 				return "json";
 			}
 		}

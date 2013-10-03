@@ -4,6 +4,8 @@ package com.jshop.service;
 import java.util.Date;
 import java.util.List;
 
+import com.jshop.entity.CartT;
+import com.jshop.entity.GoodsT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.ShippingAddressT;
 
@@ -225,6 +227,6 @@ public interface OrderTService {
 	 * @param ordert
 	 * @param sAddressT
 	 */
-	public void saveNormalOrderNeedInfoBack(OrderT ordert,ShippingAddressT sAddressT);
+	public void saveNormalOrderNeedInfoBack(OrderT ordert,ShippingAddressT sAddressT,List<CartT>cartLists);
 	
 }

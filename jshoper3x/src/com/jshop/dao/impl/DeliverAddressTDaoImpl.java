@@ -100,11 +100,11 @@ public class DeliverAddressTDaoImpl extends HibernateDaoSupport implements Deliv
 		}
 	}
 
-	public List<DeliverAddressT> findDeliverAddressByuserid(String userid) {
-		log.debug("find all DeliverAddressT by userid");
+	public List<DeliverAddressT> findDeliverAddressBymemberid(String memberid) {
+		log.debug("find all DeliverAddressT by memberid");
 		try {
-			String queryString = "from DeliverAddressT as d where d.userid=:userid order by createtime desc";
-			List<DeliverAddressT> list = this.getHibernateTemplate().findByNamedParam(queryString, "userid", userid);
+			String queryString = "from DeliverAddressT as d where d.memberid=:memberid order by createtime desc";
+			List<DeliverAddressT> list = this.getHibernateTemplate().findByNamedParam(queryString, "memberid", memberid);
 			return list;
 		} catch (RuntimeException re) {
 			log.error("find all DeliverAddressT  error", re);

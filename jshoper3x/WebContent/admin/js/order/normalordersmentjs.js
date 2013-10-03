@@ -3,6 +3,7 @@
  * flexigrid list 
  */
 $(function() {
+	$().button('loading');
 	/**
 	 * ui
 	 */
@@ -41,9 +42,12 @@ $(function() {
 	   * 重新计算订单商品应支付
 	   */
 	  recaluateshouldpay=function(memberprice){
-		 var oldshouldpay=$("#shouldpay").text()*1.0;
-		 $("#shouldpay").text(oldshouldpay-memberprice*1.0);
+		 var oldshouldpay=$("#shouldpayspan").text()*1.0;
+		 $("#shouldpayspan").text(oldshouldpay-memberprice*1.0);
+		 $("#shouldpay").val(oldshouldpay-memberprice*1.0);
 	  },
+
+	  
 	  /*
 		 * Delete Page elements According to rid 
 		 */
@@ -163,7 +167,7 @@ $(function() {
 					setGoodsToOrderForm(grid);
 				} 
 			}
-		},
+		}
 		/**
 		 * 将商品加入订单试图中
 		 * @param grid
@@ -206,13 +210,26 @@ $(function() {
 				}else{
 					$("#amount").text(oldamount+memberprice*1);
 				}
-				//应支付
-				$("#shouldpay").text($("#amount").text()*1);
+				//应支付 总金额+运费=订单总价（应支付）
+				var oldshouldpay=$("#shouldpayspan").text()*1.0;
+				if(oldshouldpay==0.0){
+					$("#shouldpayspan").text(memberprice);
+				}else{
+					$("#shouldpayspan").text(oldshouldpay+memberprice*1);
+				}
+				
 				//设置订单名称
 				var ordername=$("#ordername").val();
 				if(ordername==""){
 					$("#ordername").val(productName);
 				}
+				//设置运费
+				var freightspan=$("#freightspan").text()*1.0;
+				$("#freight").val(freightspan);
+				//应支付
+				$("#shouldpay").val(freightspan+$("#shouldpayspan").text()*1.0);
+			
+				
 			}else{
 				formwarning("#alerterror", "请选择一条商品");
 				return false;
@@ -352,8 +369,10 @@ $(function() {
 				window.location.href = "normalorder.jsp?operate=add&folder=orders";
 				return;
 			}
-		},
+		}
 
+		
+		
 		/**
 		 * 增加普通订单
 		 */
@@ -362,6 +381,42 @@ $(function() {
 		},
 		
 		$("#submitorder").click(function(){
+			
+		});
+	
+		/**
+		 * 点击修改订单总价
+		 */
+		$("#tomodifyshouldpay").click(function(){
+			$("#modifyshouldpay").show();
+		});
+		/**
+		 * 显示是否确认修改订单价格空间
+		 */
+		$("#confirmtoupdateshouldpay").click(function(){
+			$('#myModal').modal('hide');
+			//把填写的修改订单价格写入到页面
+			var mshouldpay=$("#mshouldpay").val();
+			$("#shouldpay").val(mshouldpay);
+		});
+		/**
+		 * 点击搜索可用发货地址
+		 */
+		$("#searchdeliveraddress").click(function(){
+			var membername=$("#membername").val();
+			if(membername==""){
+				$("#accountcheckinfo").text("请输入账号");
+				return false;
+			}
+//			$.post("findMemberByloginname.action",{"loginname":loginname},function(data){
+//				if(data.sucflag){
+//					$("#hidmemberid").val(data.bean.memberid);
+//					return true;
+//				}else{
+//					$("#accountcheckinfo").text("账号不存在");
+//					return true;
+//				}
+//			});
 			
 		});
 		/**

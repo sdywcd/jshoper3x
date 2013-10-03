@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-26 20:43:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,15 +36,14 @@ public class GoodsAttributeT implements java.io.Serializable {
 
 	public GoodsAttributeT(String goodsattributeid, String goodsattributename,
 			String goodsTypeId, String goodsTypeName, Date createtime,
-			String state, String creatorid, String attributeType,
-			String attributelist, String sort) {
+			String state, String attributeType, String attributelist,
+			String sort) {
 		this.goodsattributeid = goodsattributeid;
 		this.goodsattributename = goodsattributename;
 		this.goodsTypeId = goodsTypeId;
 		this.goodsTypeName = goodsTypeName;
 		this.createtime = createtime;
 		this.state = state;
-		this.creatorid = creatorid;
 		this.attributeType = attributeType;
 		this.attributelist = attributelist;
 		this.sort = sort;
@@ -126,7 +125,7 @@ public class GoodsAttributeT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "CREATORID", nullable = false, length = 20)
+	@Column(name = "CREATORID", length = 20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}

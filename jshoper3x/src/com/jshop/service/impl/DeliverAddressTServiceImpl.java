@@ -40,8 +40,8 @@ public class DeliverAddressTServiceImpl implements DeliverAddressTService {
 		return this.getDeliverAddressTDao().findAllDeliverAddress();
 	}
 
-	public List<DeliverAddressT> findDeliverAddressByuserid(String userid) {
-		return this.getDeliverAddressTDao().findDeliverAddressByuserid(userid);
+	public List<DeliverAddressT> findDeliverAddressBymemberid(String memberid) {
+		return this.getDeliverAddressTDao().findDeliverAddressBymemberid(memberid);
 	}
 
 	public DeliverAddressT findDeliverAddressById(String addressid) {

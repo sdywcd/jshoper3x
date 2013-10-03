@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-26 20:43:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -51,7 +51,7 @@ public class ArticleT implements java.io.Serializable {
 	}
 
 	public ArticleT(String articleid, String title, String contentvalue,
-			String status, Date createtime, String creatorid, String author,
+			String status, Date createtime, String author,
 			String ispublication, String isrecommend, String istop,
 			Date updatetime, int versiont, String mobilesync) {
 		this.articleid = articleid;
@@ -59,7 +59,6 @@ public class ArticleT implements java.io.Serializable {
 		this.contentvalue = contentvalue;
 		this.status = status;
 		this.createtime = createtime;
-		this.creatorid = creatorid;
 		this.author = author;
 		this.ispublication = ispublication;
 		this.isrecommend = isrecommend;
@@ -174,7 +173,7 @@ public class ArticleT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	@Column(name = "CREATORID", nullable = false, length = 20)
+	@Column(name = "CREATORID", length = 20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}

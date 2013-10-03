@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-26 20:43:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -41,8 +41,6 @@ public class OrderT implements java.io.Serializable {
 	private double shouldpay;
 	private double usepoints;
 	private String vouchersid;
-	private String goodid;
-	private String goodsname;
 	private int needquantity;
 	private String paystate;
 	private String shippingstate;
@@ -59,10 +57,10 @@ public class OrderT implements java.io.Serializable {
 	private String logisticsname;
 	private String errorOrderTag;
 	private String productinfo;
-	private String goodsinfo;
 	private Integer versiont;
 	private String ordername;
 	private String shopid;
+	private Date memberdelivertime;
 
 	public OrderT() {
 	}
@@ -73,7 +71,7 @@ public class OrderT implements java.io.Serializable {
 			double amount, double points, Date purchasetime, String isinvoice,
 			String orderTag, double shouldpay, double usepoints,
 			int needquantity, String paystate, String productinfo,
-			String goodsinfo, String ordername) {
+			String ordername) {
 		this.orderid = orderid;
 		this.memberid = memberid;
 		this.membername = membername;
@@ -93,7 +91,6 @@ public class OrderT implements java.io.Serializable {
 		this.needquantity = needquantity;
 		this.paystate = paystate;
 		this.productinfo = productinfo;
-		this.goodsinfo = goodsinfo;
 		this.ordername = ordername;
 	}
 
@@ -105,14 +102,13 @@ public class OrderT implements java.io.Serializable {
 			String customerordernotes, String logisticswebaddress,
 			Date paytime, String orderTag, String toBuyerNotes,
 			double shouldpay, double usepoints, String vouchersid,
-			String goodid, String goodsname, int needquantity, String paystate,
-			String shippingstate, String deliveraddressid,
-			String shippingusername, Date createtime, String isprintexpress,
-			String isprintinvoice, String isprintfpinvoice,
-			String expressnumber, String tradeNo, String userid,
-			String username, String logisticsname, String errorOrderTag,
-			String productinfo, String goodsinfo, Integer versiont,
-			String ordername, String shopid) {
+			int needquantity, String paystate, String shippingstate,
+			String deliveraddressid, String shippingusername, Date createtime,
+			String isprintexpress, String isprintinvoice,
+			String isprintfpinvoice, String expressnumber, String tradeNo,
+			String userid, String username, String logisticsname,
+			String errorOrderTag, String productinfo, Integer versiont,
+			String ordername, String shopid, Date memberdelivertime) {
 		this.orderid = orderid;
 		this.memberid = memberid;
 		this.membername = membername;
@@ -137,8 +133,6 @@ public class OrderT implements java.io.Serializable {
 		this.shouldpay = shouldpay;
 		this.usepoints = usepoints;
 		this.vouchersid = vouchersid;
-		this.goodid = goodid;
-		this.goodsname = goodsname;
 		this.needquantity = needquantity;
 		this.paystate = paystate;
 		this.shippingstate = shippingstate;
@@ -155,10 +149,10 @@ public class OrderT implements java.io.Serializable {
 		this.logisticsname = logisticsname;
 		this.errorOrderTag = errorOrderTag;
 		this.productinfo = productinfo;
-		this.goodsinfo = goodsinfo;
 		this.versiont = versiont;
 		this.ordername = ordername;
 		this.shopid = shopid;
+		this.memberdelivertime = memberdelivertime;
 	}
 
 	@Id
@@ -180,7 +174,7 @@ public class OrderT implements java.io.Serializable {
 		this.memberid = memberid;
 	}
 
-	@Column(name = "MEMBERNAME", nullable = false, length = 50)
+	@Column(name = "MEMBERNAME", nullable = false, length = 100)
 	public String getMembername() {
 		return this.membername;
 	}
@@ -381,24 +375,6 @@ public class OrderT implements java.io.Serializable {
 		this.vouchersid = vouchersid;
 	}
 
-	@Column(name = "GOODID", length = 1000)
-	public String getGoodid() {
-		return this.goodid;
-	}
-
-	public void setGoodid(String goodid) {
-		this.goodid = goodid;
-	}
-
-	@Column(name = "GOODSNAME", length = 5000)
-	public String getGoodsname() {
-		return this.goodsname;
-	}
-
-	public void setGoodsname(String goodsname) {
-		this.goodsname = goodsname;
-	}
-
 	@Column(name = "NEEDQUANTITY", nullable = false)
 	public int getNeedquantity() {
 		return this.needquantity;
@@ -508,7 +484,7 @@ public class OrderT implements java.io.Serializable {
 		this.userid = userid;
 	}
 
-	@Column(name = "USERNAME", length = 45)
+	@Column(name = "USERNAME", length = 100)
 	public String getUsername() {
 		return this.username;
 	}
@@ -544,15 +520,6 @@ public class OrderT implements java.io.Serializable {
 		this.productinfo = productinfo;
 	}
 
-	@Column(name = "GOODSINFO", nullable = false, length = 1000)
-	public String getGoodsinfo() {
-		return this.goodsinfo;
-	}
-
-	public void setGoodsinfo(String goodsinfo) {
-		this.goodsinfo = goodsinfo;
-	}
-
 	@Column(name = "VERSIONT")
 	public Integer getVersiont() {
 		return this.versiont;
@@ -578,6 +545,16 @@ public class OrderT implements java.io.Serializable {
 
 	public void setShopid(String shopid) {
 		this.shopid = shopid;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "MEMBERDELIVERTIME", length = 0)
+	public Date getMemberdelivertime() {
+		return this.memberdelivertime;
+	}
+
+	public void setMemberdelivertime(Date memberdelivertime) {
+		this.memberdelivertime = memberdelivertime;
 	}
 
 }

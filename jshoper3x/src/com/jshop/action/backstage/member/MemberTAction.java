@@ -440,7 +440,7 @@ public class MemberTAction extends ActionSupport {
 				mt.setPostingcount(0);//发布信息总数0
 				mt.setQuestion(this.getQuestion().trim());
 				mt.setAnswer(this.getAnswer().trim());
-				mt.setUserstate(StaticString.ONE);//激活
+				mt.setMemberstate(StaticString.MEMBERSTATE_ONE_NUM);//激活
 				mt.setHeadpath(this.getHeadpath().trim());
 				mt.setCreatetime(BaseTools.systemtime());
 				mt.setCreatorid(BaseTools.adminCreateId());
@@ -495,10 +495,10 @@ public class MemberTAction extends ActionSupport {
 			}else{
 				mt.setSex(StaticString.SEXFEMAL);
 			}
-			if(mt.getUserstate().equals(StaticString.ONE)){
-				mt.setUserstate(StaticString.DOACTIVE);
+			if(mt.getMemberstate().equals(StaticString.MEMBERSTATE_ONE_NUM)){
+				mt.setMemberstate(StaticString.DOACTIVE);
 			}else{
-				mt.setUserstate(StaticString.DONOTACTIVE);
+				mt.setMemberstate(StaticString.DONOTACTIVE);
 			}
 			Map<String,Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", mt.getId());
@@ -513,7 +513,7 @@ public class MemberTAction extends ActionSupport {
 				mt.getWeixin(),
 				mt.getSinaweibo(),
 				getPersonalTag(mt.getTag()),
-				mt.getUserstate(),
+				mt.getMemberstate(),
 				BaseTools.formateDbDate(mt.getCreatetime()),
 				mt.getCreatorid(),
 				"<a id='editmember' href='member.jsp?operate=edit&folder=member&id="+mt.getId()+"' name='editmember'>[编辑]</a>"
@@ -573,7 +573,7 @@ public class MemberTAction extends ActionSupport {
 			bean.setTag(this.getTag().trim());
 			bean.setQuestion(this.getQuestion().trim());
 			bean.setAnswer(this.getAnswer().trim());
-			bean.setUserstate(StaticString.ONE);//激活
+			bean.setMemberstate(StaticString.ONE);//激活
 			bean.setHeadpath(this.getHeadpath().trim());
 			bean.setUpdatetime(BaseTools.systemtime());
 			bean.setCreatorid(BaseTools.adminCreateId());
@@ -623,6 +623,23 @@ public class MemberTAction extends ActionSupport {
 		
 	}
 	
+	/**
+	 * 根据登录名查询会员
+	 * @return
+	 */
+	@Action(value = "findMemberByloginname", results = {@Result(name = "json",type="json")})
+	public String findMemberByloginname(){
+		if(StringUtils.isBlank(this.getLoginname())){
+			return "json";
+		}
+		List<MemberT>beanlist=this.getMemberTService().findMemberTByloginname(this.getLoginname());
+		if(!beanlist.isEmpty()){
+			this.setBean(beanlist.get(0));
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
 	
 	
 	

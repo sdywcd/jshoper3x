@@ -8,6 +8,9 @@ import com.jshop.entity.SerialT;
 import com.jshop.service.SerialTService;
 @Service("serial")
 public class Serial {
+	
+	
+	
 
 	// 模板主题表主键生成
 	public static final String TEMPLATETHEME = "templatetheme";

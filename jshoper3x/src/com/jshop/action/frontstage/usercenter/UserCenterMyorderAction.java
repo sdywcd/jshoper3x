@@ -21,10 +21,12 @@ import com.jshop.action.backstage.thirdpartyplatform.alipay.AlipayConfig;
 import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.LogisticsBusinessT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 import com.jshop.entity.ShippingAddressT;
@@ -339,7 +341,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "findAllUserOrder", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/myorder.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${hidurl}") })
 	public String findAllUserOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			int lineSize = 50;
 			String orderstate = "8";//8表示用户自己删除的订单
@@ -378,7 +380,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "DelOrderByorderid", results = { @Result(name = "success", type = "chain", location = "findAllUserOrder"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String DelOrderByorderid() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String orderstate = "8";//9表示用户自己删除的订单
 			@SuppressWarnings("unused")
@@ -397,7 +399,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "ConfirmGoodsReceive", results = { @Result(name = "success", type = "chain", location = "findAllUserOrder"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String ConfirmGoodsReceive() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String orderstate = "6";//6表示用户已经确认收货
 			@SuppressWarnings("unused")
@@ -417,7 +419,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "findAllUserOrderOn", results = { @Result(name = "success", type = "freemarker", location = "WEB-INF/theme/default/shop/myorder.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String findAllUserOrderOn() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			currentPage = 1;
 			lineSize = 5;
@@ -455,8 +457,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 	/**
 	 * 获取用户收获地址
 	 */
-	public void GetUserDeliverAddress(UserT user) {
-		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressByuserid(user.getUserid());
+	public void GetUserDeliverAddress(MemberT memberT) {
+		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
 		ActionContext.getContext().put("deliveraddress", list);
 		
 	}
@@ -506,10 +508,10 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "InitPayPage", results = { @Result(name = "success", type="freemarker", location = "/WEB-INF/theme/default/shop/confirmorderag.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String InitPayPage() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if (user != null) {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if (memberT != null) {
 			//获取用户收获地址
-			GetUserDeliverAddress(user);
+			GetUserDeliverAddress(memberT);
 			//获取物流商
 			GetDefaultLogistictsBusiness();
 			//获取支付方式
@@ -541,8 +543,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
 			s.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
-			s.setMemberid(list.getUserid());
-			s.setMembername(list.getUsername());
+			s.setMemberid(list.getMemberid());
+			s.setShippingusername(list.getShippingusername());
 			s.setCountry(list.getCountry());
 			s.setProvince(list.getProvince());
 			s.setCity(list.getCity());
@@ -561,9 +563,9 @@ public class UserCenterMyorderAction extends ActionSupport {
 				this.setSshoppingaddress(false);
 				order.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
 				order.setDeliveraddressid(list.getAddressid());//设置收货地址到订单中
-				order.setShippingusername(list.getUsername());//设置收货人到订单中
+				order.setShippingusername(list.getShippingusername());//设置收货人到订单中
 				//设置收货人信息给支付宝借口
-				AlipayConfig.receive_name = list.getUsername();
+				AlipayConfig.receive_name = list.getShippingusername();
 				AlipayConfig.receive_address = list.getProvince() + list.getCity() + list.getDistrict() + list.getStreet();
 				AlipayConfig.reveive_zip = list.getPostcode();
 				AlipayConfig.reveive_phone = list.getTelno();
@@ -593,7 +595,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 				order.setDeliveraddressid(oldorder.getDeliveraddressid());
 				order.setShippingusername(oldorder.getShippingusername());
 				//设置收货人信息给支付宝借口
-				AlipayConfig.receive_name = list.get(0).getMembername();
+				AlipayConfig.receive_name = list.get(0).getShippingusername();
 				AlipayConfig.receive_address = list.get(0).getProvince() + list.get(0).getCity() + list.get(0).getDistrict() + list.get(0).getStreet();
 				AlipayConfig.reveive_zip = list.get(0).getPostcode();
 				AlipayConfig.reveive_phone = list.get(0).getTelno();
@@ -660,8 +662,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 		order.setPaystate(oldorder.getPaystate());
 		order.setShippingstate(oldorder.getShippingstate());
 
-		order.setGoodid(oldorder.getGoodid());
-		order.setGoodsname(oldorder.getGoodsname());
+//		order.setGoodid(oldorder.getGoodid());
+//		order.setGoodsname(oldorder.getGoodsname());
 		order.setNeedquantity(oldorder.getNeedquantity());
 		order.setFreight(oldorder.getFreight());
 		order.setAmount(oldorder.getAmount());
@@ -686,8 +688,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 		try {
 			this.getOrderTService().updateOrder(order);
 			AlipayConfig.out_trade_no = order.getOrderid();
-			AlipayConfig.subject = order.getGoodsname();
-			AlipayConfig.body = order.getGoodsname();
+			AlipayConfig.subject = order.getOrdername();
+			AlipayConfig.body = order.getOrdername();
 			AlipayConfig.price = String.valueOf(order.getShouldpay());
 			AlipayConfig.logistics_fee = String.valueOf(order.getFreight());
 			this.setSupdateorder(false);
@@ -705,7 +707,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "InitAgAlipayandUpdateOrder", results = { @Result(name = "json", type = "json") })
 	public String InitAgAlipayandUpdateOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			//比较发货地址并更新

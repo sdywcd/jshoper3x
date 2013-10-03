@@ -23,6 +23,7 @@ import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.SaleGoodsrecordT;
 import com.jshop.entity.SalegoodsT;
 import com.jshop.entity.UserT;
@@ -269,7 +270,7 @@ public class SaleGoodsrecordAction extends ActionSupport {
 		//查询当前id商品最高价
 		Double hiprice=this.getSaleGoodsrecordService().hiprice(this.getSalegoodsid());
 		
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user=(UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if(this.getHiprice()<hiprice){
 			ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");  
 			try {

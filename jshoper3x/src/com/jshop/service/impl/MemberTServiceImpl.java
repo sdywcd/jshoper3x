@@ -71,4 +71,36 @@ public class MemberTServiceImpl implements MemberTService{
 		return this.getMemberTDao().findMemberTByloginname(loginname);
 	}
 
+	@Override
+	public List<MemberT> findMemberTByemail(String email) {
+		return this.getMemberTDao().findMemberTByemail(email);
+	}
+
+	@Override
+	public List<MemberT> findMemberTymid(String mid) {
+		return this.getMemberTDao().findMemberTymid(mid);
+	}
+
+	@Override
+	public List<MemberT> findMemberByQA(String loginname, String question,
+			String answer) {
+		return this.getMemberTDao().findMemberByQA(loginname, question, answer);
+	}
+
+	@Override
+	public List<MemberT> login(MemberT m) {
+		return this.getMemberTDao().login(m);
+	}
+
+	@Override
+	public int updateMemberHeadpathByid(MemberT m) {
+		return this.getMemberTDao().updateMemberHeadpathByid(m);
+	}
+
+	@Override
+	public int updateMemberPwdProctection(String id, String question,
+			String answer) {
+		return this.getMemberTDao().updateMemberPwdProctection(id, question, answer);
+	}
+
 }

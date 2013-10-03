@@ -146,7 +146,7 @@ public class PaymentMDaoImpl extends HibernateDaoSupport implements PaymentMDao 
 		try {
 			String queryString = "from PaymentM as pm where pm.paymentid=:paymentid";
 			List<PaymentM> list = this.getHibernateTemplate().findByNamedParam(queryString, "paymentid", paymentid);
-			if (list != null) {
+			if (list != null&&list.size()>0) {
 				return list.get(0);
 			}
 			return null;

@@ -8,14 +8,17 @@ import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.StaticString;
 
 import com.jshop.entity.GoodsT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
 import com.jshop.service.GoodsTService;
@@ -29,15 +32,15 @@ import edu.emory.mathcs.backport.java.util.Collections;
 @InterceptorRefs({
     @InterceptorRef("defaultStack")  
 })
-public class UserCenterIndexAction extends ActionSupport {
+public class MemberCenterIndexAction extends ActionSupport {
 
 	private String hidurl;
 	private DataCollectionTAction dataCollectionTAction;
 	private UserCenterMyorderAction userCenterMyorderAction;
 	private OrderTService orderTService;
 	private GoodsTService goodsTService;
-	private boolean slogin = false;
-
+	private boolean slogin;
+	@JSON(serialize=false) 
 	public GoodsTService getGoodsTService() {
 		return goodsTService;
 	}
@@ -45,7 +48,7 @@ public class UserCenterIndexAction extends ActionSupport {
 	public void setGoodsTService(GoodsTService goodsTService) {
 		this.goodsTService = goodsTService;
 	}
-
+	@JSON(serialize=false) 
 	public OrderTService getOrderTService() {
 		return orderTService;
 	}
@@ -53,7 +56,7 @@ public class UserCenterIndexAction extends ActionSupport {
 	public void setOrderTService(OrderTService orderTService) {
 		this.orderTService = orderTService;
 	}
-
+	@JSON(serialize=false) 
 	public UserCenterMyorderAction getUserCenterMyorderAction() {
 		return userCenterMyorderAction;
 	}
@@ -61,7 +64,7 @@ public class UserCenterIndexAction extends ActionSupport {
 	public void setUserCenterMyorderAction(UserCenterMyorderAction userCenterMyorderAction) {
 		this.userCenterMyorderAction = userCenterMyorderAction;
 	}
-
+	@JSON(serialize=false) 
 	public DataCollectionTAction getDataCollectionTAction() {
 		return dataCollectionTAction;
 	}
@@ -100,15 +103,15 @@ public class UserCenterIndexAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "InitUserCenterIndex", results = { 
+	@Action(value = "initUserCenterIndex", results = { 
 			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/memberindex.ftl"),
 			@Result(name = "input",location = "/html/default/shop/user/login.html")
 	})
 	public String InitUserCenterIndex() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if (user != null) {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if (memberT != null) {
 			//获取最近的订单信息
-			this.findAllUserOrderOn(user.getUserid());
+			this.findAllUserOrderOn(memberT.getId());
 			//乱序获取推荐商品
 			this.shuffleGoods();
 			//路径获取

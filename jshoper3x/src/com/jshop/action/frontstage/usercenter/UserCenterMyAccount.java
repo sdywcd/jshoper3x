@@ -1,5 +1,6 @@
 package com.jshop.action.frontstage.usercenter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -12,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
+import com.jshop.service.MemberTService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -24,7 +28,7 @@ import com.opensymphony.xwork2.ActionSupport;
     @InterceptorRef("defaultStack")  
 })
 public class UserCenterMyAccount extends ActionSupport {
-	private UsertService usertService;
+	private MemberTService memberTService;
 	private DataCollectionTAction dataCollectionTAction;
 	private String userid;
 	private String username;
@@ -33,7 +37,7 @@ public class UserCenterMyAccount extends ActionSupport {
 	private String password;
 	private String oldanswer;//原始答案
 	private boolean sucflag;
-
+	@JSON(serialize=false)
 	public DataCollectionTAction getDataCollectionTAction() {
 		return dataCollectionTAction;
 	}
@@ -41,14 +45,13 @@ public class UserCenterMyAccount extends ActionSupport {
 	public void setDataCollectionTAction(DataCollectionTAction dataCollectionTAction) {
 		this.dataCollectionTAction = dataCollectionTAction;
 	}
-
-	@JSON(serialize = false)
-	public UsertService getUsertService() {
-		return usertService;
+	@JSON(serialize=false)
+	public MemberTService getMemberTService() {
+		return memberTService;
 	}
 
-	public void setUsertService(UsertService usertService) {
-		this.usertService = usertService;
+	public void setMemberTService(MemberTService memberTService) {
+		this.memberTService = memberTService;
 	}
 
 	public String getUserid() {
@@ -123,14 +126,14 @@ public class UserCenterMyAccount extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String updateUserPasswordProtection() {
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			//先验证原始的密码保护问题是否正确
-			if(Validate.StrNotNull(user.getQuestion())){
+			if(StringUtils.isNotBlank(memberT.getQuestion())){
 				//验证输入的原始答案
-				if(user.getAnswer().equals(this.getOldanswer().trim())){
-					if (Validate.StrNotNull(this.getQuestion()) && Validate.StrNotNull(this.getAnswer())) {
-						this.getUsertService().updateUserPasswordProtection(user.getUserid(), this.getQuestion(), this.getAnswer());
+				if(memberT.getAnswer().equals(this.getOldanswer().trim())){
+					if (StringUtils.isNotBlank(this.getQuestion())&&StringUtils.isNotBlank(this.getAnswer())) {
+						this.getMemberTService().updateMemberPwdProctection(memberT.getId(), this.getQuestion(), this.getAnswer());
 						this.setSucflag(true);
 						return "json";
 					}
@@ -138,8 +141,8 @@ public class UserCenterMyAccount extends ActionSupport {
 					return "json";
 				}
 			}else{
-				if (Validate.StrNotNull(this.getQuestion()) && Validate.StrNotNull(this.getAnswer())) {
-					this.getUsertService().updateUserPasswordProtection(user.getUserid(), this.getQuestion(), this.getAnswer());
+				if (StringUtils.isNotBlank(this.getQuestion())&&StringUtils.isNotBlank(this.getAnswer())) {
+					this.getMemberTService().updateMemberPwdProctection(memberT.getId(), this.getQuestion(), this.getAnswer());
 					this.setSucflag(true);
 					return "json";
 				}
@@ -155,13 +158,13 @@ public class UserCenterMyAccount extends ActionSupport {
 	 * 初始化用户密码保护页面
 	 * @return
 	 */
-	@Action(value = "InitMyAccountProtection", results = { 
+	@Action(value = "initMyAccountProtection", results = { 
 			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/passwordprotection.ftl"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
 	public String InitMyAccountProtection(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据

@@ -1,9 +1,11 @@
 package com.jshop.action.frontstage.usercenter;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -18,8 +20,11 @@ import com.jshop.action.backstage.base.SendSystemEmail;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
+import com.jshop.service.MemberTService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -34,27 +39,21 @@ import freemarker.template.TemplateException;
     @InterceptorRef("defaultStack")  
 })
 public class RegisterAction extends ActionSupport {
-	private UsertService usertService;
+	private MemberTService memberTService;
 	private Serial serial;
 	private SendSystemEmail sendSystemEmail;
-	private UserT user;
-	private String username;
-	private String password;
+	private MemberT memberT;
+	private String loginname;
+	private String loginpwd;
 	private String email;
 	private String rand;
-	private String userid;
-	private String uid;
+	private String mid;
 	private String question;
 	private String answer;
+	private String nick;
 	private String msg;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public UsertService getUsertService() {
-		return usertService;
-	}
-	public void setUsertService(UsertService usertService) {
-		this.usertService = usertService;
-	}
+
 	@JSON(serialize = false)
 	public Serial getSerial() {
 		return serial;
@@ -63,29 +62,18 @@ public class RegisterAction extends ActionSupport {
 		this.serial = serial;
 	}
 	@JSON(serialize = false)
+	public MemberTService getMemberTService() {
+		return memberTService;
+	}
+	public void setMemberTService(MemberTService memberTService) {
+		this.memberTService = memberTService;
+	}
+	@JSON(serialize = false)
 	public SendSystemEmail getSendSystemEmail() {
 		return sendSystemEmail;
 	}
 	public void setSendSystemEmail(SendSystemEmail sendSystemEmail) {
 		this.sendSystemEmail = sendSystemEmail;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public String getRand() {
 		return rand;
@@ -99,20 +87,6 @@ public class RegisterAction extends ActionSupport {
 	}
 	public void setMsg(String msg) {
 		this.msg = msg;
-	}	
-	public UserT getUser() {
-		return user;
-	}
-	public void setUser(UserT user) {
-		this.user = user;
-	}
-	
-	
-	public String getUid() {
-		return uid;
-	}
-	public void setUid(String uid) {
-		this.uid = uid;
 	}
 	public boolean isSucflag() {
 		return sucflag;
@@ -120,13 +94,6 @@ public class RegisterAction extends ActionSupport {
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
 	}
-	public String getUserid() {
-		return userid;
-	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-	
 	public String getQuestion() {
 		return question;
 	}
@@ -138,6 +105,46 @@ public class RegisterAction extends ActionSupport {
 	}
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+	
+	public MemberT getMemberT() {
+		return memberT;
+	}
+	public void setMemberT(MemberT memberT) {
+		this.memberT = memberT;
+	}
+	public String getLoginname() {
+		return loginname;
+	}
+	public void setLoginname(String loginname) {
+		this.loginname = loginname;
+	}
+	public String getLoginpwd() {
+		return loginpwd;
+	}
+	public void setLoginpwd(String loginpwd) {
+		this.loginpwd = loginpwd;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+	
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
 	}
 	/**
 	 * 清理错误
@@ -154,11 +161,11 @@ public class RegisterAction extends ActionSupport {
 	public boolean registervalidation(){
 		boolean register=false;
 		this.setMsg("");
-		if(Validate.StrNotNull(this.getUsername())){
-			if(this.getUsername().length()<6){
+		if(StringUtils.isNotBlank(this.getLoginname())){
+			if(this.getLoginname().length()<6){
 				this.setMsg("1");
 				return register;
-			}else if(this.getUsername().length()>20){
+			}else if(this.getLoginname().length()>20){
 				this.setMsg("1");
 				return register;
 			}
@@ -166,11 +173,11 @@ public class RegisterAction extends ActionSupport {
 			this.setMsg("1");
 			return register;
 		}
-		if(Validate.StrNotNull(this.getPassword())){
-			if(this.getPassword().length()<6){
+		if(StringUtils.isNotBlank(this.getLoginpwd())){
+			if(this.getLoginpwd().length()<6){
 				this.setMsg("2");
 				return register;
-			}else if(this.getPassword().length()>20){
+			}else if(this.getLoginpwd().length()>20){
 				this.setMsg("2");
 				return register;
 			}
@@ -179,7 +186,7 @@ public class RegisterAction extends ActionSupport {
 			return register;
 		}
 		
-		if(!Validate.StrNotNull(this.getEmail())){
+		if(!StringUtils.isNotBlank(this.getEmail())){
 			this.setMsg("3");
 			return register;
 		}
@@ -192,130 +199,83 @@ public class RegisterAction extends ActionSupport {
 	/**
 	 * 增加新用户
 	 * @return
-	 * @throws EmailException 
-	 * @throws TemplateException 
-	 * @throws IOException 
-	 * @throws MessagingException 
 	 */
-	
 	@Action(value = "register", results = { 
 			@Result(name = "register_success",type="redirect",location = "/index.html"),
 			@Result(name = "register_error",type="redirect",location = "/html/default/shop/user/register.html?msg=${msg}"),
 			@Result(name = "useractivates",type="redirect",location = "/html/default/shop/user/register.html?msg=${msg}")
 	})
-
-	public String register() throws EmailException, MessagingException, IOException, TemplateException{
+	public String register() {
 		if(registervalidation()){
 			String rand=(String) ActionContext.getContext().getSession().get("rand");
 			String userstate=(String) ActionContext.getContext().getSession().get("userstate");
 			if(rand.equals(this.getRand())){
-				MD5Code md5 = new MD5Code();
-				UserT u=new UserT();
-				u.setUsername(this.getUsername().trim());
-				u.setEmail(this.getEmail().trim());
-				u=this.getUsertService().checkUserByUsername(u);
-				if(u!=null){
+				List<MemberT>m1=this.getMemberTService().findMemberTByloginname(this.getLoginname());
+				if(m1!=null&&m1.size()==0){
 					this.setMsg("4");
 					return "register_error";
-				}else{
-					u=new UserT();
-					u.setUsername(this.getUsername().trim());
-					u.setEmail(this.getEmail().trim());
-					u=this.getUsertService().checkUserByEmail(u);
-					if(u!=null){
-						this.setMsg("7");
-						return "register_error";
-					}
-					UserT user=new UserT();
-					user.setUserid(this.getSerial().Serialid(Serial.USER));
-					user.setUid(md5.getMD5ofStr(user.getUserid()));
-					user.setUsername(this.getUsername().trim());
-					user.setRealname(null);
-					user.setEmail(this.getEmail().trim());
-					user.setTelno(null);
-					user.setMobile(null);
-					user.setQuestion(null);
-					user.setAnswer(null);
-					user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));
-					user.setUserstate(userstate);//用户激活取决于用户是否开启了激活邮件设置
-					user.setSection(null);
-					user.setPosition(null);
-					user.setGroupid(null);
-					user.setParttime1(null);
-					user.setParttime2(null);
-					user.setParttime3(null);
-					user.setQq(null);
-					user.setState("1");
-					user.setRolemid("0");
-					user.setRolemname("");
-					user.setHeadpath("#");
-					if(this.getUsertService().save(user)>0){
-						//会员注册成功自动发送邮件
-						if(user.getUserstate().equals("0")){
-							this.getSendSystemEmail().sendTextMail(user);
-							this.setMsg("6");
-							return "useractivates";
-						}
-						return "register_success";
-					}
+				}
+				List<MemberT>m2=this.getMemberTService().findMemberTByemail(this.getEmail().trim());//新增根据邮箱差信息
+				if(m2!=null&&m2.size()==0){
+					this.setMsg("7");
 					return "register_error";
 				}
-			}else{
-				this.setMsg("5");
-				return "register_error";
+				MD5Code md5 = new MD5Code();
+				MemberT m=new MemberT();
+				m.setId(this.getSerial().Serialid(Serial.MEMBER));
+				m.setMid(md5.getMD5ofStr(m.getId()));
+				m.setLoginname(this.getLoginname().trim());
+				m.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
+				m.setNick(this.getNick().trim());
+				m.setMemberstate(StaticString.MEMBERSTATE_ZERO_NUM);
+				m.setHeadpath("#");
+				m.setCreatetime(BaseTools.systemtime());
+				m.setVersiont(1);
+				m.setUpdatetime(m.getCreatetime());
+				this.getMemberTService().saveMemberT(m);
+				return "register_success";
 			}
 		}else{
 			return "register_error";
 		}
+		return "register_error";
 	}
 
 	
 	/**
 	 * 激活用户
 	 */
-	@Action(value = "updateUserstate", results = { 
+	@Action(value = "updateMemberstate", results = { 
 			@Result(name = "json",type="json")
 	})
-	public String updateUserstate(){
-		if(Validate.StrNotNull(this.getUid())){
-			UserT user=new UserT();
-			user=this.getUsertService().finduserByuid(this.getUid());
-			if(user!=null){
-				if(user.getUserstate().equals("0")){
-					user.setUserstate("1");
-					this.getUsertService().updateUserstate(user);
-					
-					this.setSucflag(true);
-					return "json";
-				}else{
-					this.setSucflag(false);
-					return "json";
-				}
-			}
-			this.setSucflag(false);
+	public String updateMemberstate(){
+		if(StringUtils.isBlank(this.getMid())){
 			return "json";
 		}
-		this.setSucflag(false);
+		List<MemberT>memberTs=this.getMemberTService().findMemberTymid(this.getMid());
+		if(!memberTs.isEmpty()){
+			memberTs.get(0).setMemberstate(StaticString.MEMBERSTATE_ONE_NUM);
+			this.getMemberTService().updateMemberT(memberTs.get(0));
+			this.setSucflag(true);
+			return "json";
+		}
 		return "json";
 	}
 	/**
-	 * 
+	 * 根据安全问题和答案检查用户是否存在
 	 * @return
 	 */
-	@Action(value = "checkUserByAnswer", results = { 
+	@Action(value = "findMemberByQA", results = { 
 			@Result(name = "json",type="json")
 	})
-	public String checkUserByAnswer(){
-		if(Validate.StrNotNull(this.getUsername())&&Validate.StrNotNull(this.getQuestion())&&Validate.StrNotNull(this.getAnswer())){
-					UserT user=new UserT();
-					user=this.getUsertService().checkUserByAnswer(this.getUsername().trim(), this.getQuestion(), this.getAnswer());
-					if(user!=null){
-						this.setSucflag(true);
-						return "json";
-					}else{
-						this.setSucflag(false);
-						return "json";
-					}		
+	public String findMemberByQA(){
+		if(StringUtils.isBlank(this.getLoginname())||StringUtils.isBlank(this.getQuestion())||StringUtils.isBlank(this.getAnswer())){
+			return "json";
+		}
+		List<MemberT>memberTs=this.getMemberTService().findMemberByQA(this.getLoginname(), this.getQuestion(), this.getAnswer());
+		if(!memberTs.isEmpty()){
+			this.setSucflag(true);
+			return "json";
 		}
 		return "json";
 	}

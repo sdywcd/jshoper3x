@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-26 20:43:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -39,6 +39,11 @@ public class CartT implements java.io.Serializable {
 	private String htmlpath;
 	private String productid;
 	private String orderTag;
+	private String productName;
+	private String cartTag;
+	private String memberid;
+	private String membername;
+	private Integer storeTag;
 
 	public CartT() {
 	}
@@ -72,7 +77,8 @@ public class CartT implements java.io.Serializable {
 			double price, double favorable, Double changeprice, double points,
 			double subtotal, Date addtime, Integer quantity, String picture,
 			String usersetnum, String weight, String state, String htmlpath,
-			String productid, String orderTag) {
+			String productid, String orderTag, String productName,
+			String cartTag, String memberid, String membername, Integer storeTag) {
 		this.id = id;
 		this.cartid = cartid;
 		this.orderid = orderid;
@@ -95,6 +101,11 @@ public class CartT implements java.io.Serializable {
 		this.htmlpath = htmlpath;
 		this.productid = productid;
 		this.orderTag = orderTag;
+		this.productName = productName;
+		this.cartTag = cartTag;
+		this.memberid = memberid;
+		this.membername = membername;
+		this.storeTag = storeTag;
 	}
 
 	@Id
@@ -295,6 +306,51 @@ public class CartT implements java.io.Serializable {
 
 	public void setOrderTag(String orderTag) {
 		this.orderTag = orderTag;
+	}
+
+	@Column(name = "PRODUCT_NAME", length = 100)
+	public String getProductName() {
+		return this.productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	@Column(name = "CART_TAG", length = 1)
+	public String getCartTag() {
+		return this.cartTag;
+	}
+
+	public void setCartTag(String cartTag) {
+		this.cartTag = cartTag;
+	}
+
+	@Column(name = "MEMBERID", length = 20)
+	public String getMemberid() {
+		return this.memberid;
+	}
+
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
+	}
+
+	@Column(name = "MEMBERNAME", length = 100)
+	public String getMembername() {
+		return this.membername;
+	}
+
+	public void setMembername(String membername) {
+		this.membername = membername;
+	}
+
+	@Column(name = "STORE_TAG")
+	public Integer getStoreTag() {
+		return this.storeTag;
+	}
+
+	public void setStoreTag(Integer storeTag) {
+		this.storeTag = storeTag;
 	}
 
 }

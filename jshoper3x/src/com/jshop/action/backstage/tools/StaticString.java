@@ -5,6 +5,28 @@ package com.jshop.action.backstage.tools;
  *
  */
 public class  StaticString {
+	/**
+	 * 前台用户登录创建的session名称
+	 */
+	public static String MEMBER_SESSION_KEY = "member";
+	/**
+	 * 后台用户登录创建的session用户名称
+	 */
+	public static String BACK_USER_SESSION_KEY = "admin";
+	/**
+	 * 后台用户登录创建的session_key
+	 */
+	public static String BACK_SESSION_KEY = "sessionKey";
+	/**
+	 * 用户的可操作的方法权限
+	 */
+	public static String USERROLEFUNCTION = "userrolefunction";
+	/**
+	 * 所有定义的权限
+	 */
+	public static String ALLROLEFUNCTION = "allrolefunction";
+
+	public static String KEYFORAUTHORITY = "keyforauthority";
 	//flexigrid default search tag
 	public static final String EMPTY="";
 	
@@ -141,7 +163,7 @@ public class  StaticString {
 	
 	public static final String CARD="虚拟充值";
 	
-	//订单状态
+	//订单显示状态
 
 	public static final String ORDERSTATE_ONE="已确认";
 
@@ -162,7 +184,175 @@ public class  StaticString {
 	public static final String ORDERSTATE_NINE="成功";
 	
 	
+	//订单设置状态
+	/**
+	 * 订单状态0表示未确认
+	 */
+	public static final String ORDERSTATE_ZERO_NUM="0";
+	/**
+	 * 订单状态1表示已确认
+	 */
+	public static final String ORDERSTATE_ONE_NUM="1";
 	
+	public static final String ORDERSTATE_TWO_NUM="2";
+	
+	public static final String ORDERSTATE_THREE_NUM="3";
+	
+	public static final String ORDERSTATE_FOUR_NUM="4";
+	
+	public static final String ORDERSTATE_FIVE_NUM="5";
+	
+	public static final String ORDERSTATE_SIX_NUM="6";
+	
+	public static final String ORDERSTATE_SEVEN_NUM="7";
+	
+	public static final String ORDERSTATE_EIGHT_NUM="8";
+
+	public static final String ORDERSTATE_NINE_NUM="9";
+	//订单类型标记
+	/**
+	 * 订单标记1表示普通订单
+	 */
+	public static final String ORDERTAG_NORMAL="1";
+	
+	//支付状态标记
+	/**
+	 * 支付状态 0表示未付款
+	 */
+	public static final String PAYSTATE_ZERO_NUM="0";
+	/**
+	 * 支付状态 1等于已付款
+	 */
+	public static final String PAYSTATE_ONE_NUM="1";
+	/**
+	 * 支付状态 2=该支付由于订单被关闭而不需要支付
+	 */
+	public static final String PAYSTATE_TWO_NUM="2";
+	
+	//配送发货类型
+	/**
+	 * 配送发货状态 0表示配货中未发货
+	 */
+	public static final String SHIPPINGSTATE_ZERO_NUM="0";
+	/**
+	 * 配送发货状态 1表示已发货
+	 */
+	public static final String SHIPPINGSTATE_ONE_NUM="1";
+	/**
+	 * 配送发货状态 2表示由于订单被关闭就不需要发货
+	 */
+	public static final String SHIPPINGSTATE_TWO_NUM="2";
+	
+	//快递类型
+	/**
+	 * 发货类型 express表示快递
+	 */
+	public static final String DELIVERMODE_EXPRESS="EXPRESS";
+	
+	//快递单打印状态
+	/**
+	 * 快递单打印状态 0表示未打印
+	 */
+	public static final String ISPRINTEXPRESS_ZERO_NUM="0";
+	/**
+	 * 快递单打印状态 1表示已打印
+	 */
+	public static final String ISPRINTEXPRESS_ONE_NUM="1";
+	//发货单打印状态
+	/**
+	 * 发货单打印状态 0表示未打印
+	 */
+	public static final String ISPRINTINVOICE_ZERO_NUM="0";
+	
+	/**
+	 * 发货单打印状态 1表示已打印
+	 */
+	public static final String ISPRINTINVOICE_ONE_NUM="1";
+	//发票开具状态
+	/**
+	 * 发票开具状态 0表示发票未开
+	 */
+	public static final String ISPRINTFPINVOICE_ZERO_NUM="0";
+	/**
+	 * 发票开具状态 0表示发票已开
+	 */
+	public static final String ISPRINTFPINVOICE_ONE_NUM="1";
+	//订单错误标记状态
+	/**
+	 * 订单错误标记 0表示订单没有错误及问题
+	 */
+	public static final String ERRORORDERTAG_ZERO_NUM="0";
+	/**
+	 * 订单错误标记 1表示订单有错误及问题
+	 */
+	public static final String ERRORORDERTAG_ONE_NUM="1";
+	
+	
+	//购物车部分静态字段
+	/**
+	 * 表示新加入购物车的货物
+	 */
+	public static final String CARTSTATE_NEWADDTOCART="1";
+	/**
+	 * 加入购物车的货物属于订单的那种标记 0=普通货物对应普通订单
+	 */
+	public static final String CART_ORDER_TAG_NORMALPRODUCT="0";
+	/**
+	 * 购物车中货物的加入来源 0表示后台增加
+	 */
+	public static final String CARTTAG_PRODUCTFROM="0";
+	
+	//发货地址表部分静态字段
+	/**
+	 * 表示发货地址是否有对应的订单 1表示有
+	 */
+	public static final String SHIPPINGSTATE_HAVEORDER="1";
+	/**
+	 * 表示发货地址是否有对应的订单 0表示没有
+	 */
+	public static final String SHIPPINGSTATE_NOORDER="0";
+	
+	/**
+	 * 表示发货地址是否有对应的订单 2表示该地址有对应的订单并已经发过火处于可删除状态
+	 */
+	public static final String SHIPPINGSTATE_OLDORDER="2";
+	/**
+	 * 表示该发货地址是否有对应的收货地址信息，收货地址是会员自行维护的。0表示在会员的发货管理模块中没有对应的收货地址
+	 */
+	public static final String SHIPPINGADDRESS_DELIVERADDRESSID="0";
+	/**
+	 * 表示该发货地址是否已经发过货 0表示没有
+	 */
+	public static final String SHIPPINGISSEND_NOSEND="0";
+	
+	/**
+	 * 表示该发货地址是否已经发过货 0表示已经发货
+	 */
+	public static final String SHIPPINGISSEND_HAVESEND="1";
+	
+	/**
+	 * 该类表示支付方式的种类 PAYMENT_CODE_ALIPAY="zfb"//支付宝
+	 */
+	public static final String PAYMENT_CODE_ALIPAY="zfb";//支付宝
+	/**
+	 * 该类表示支付方式的种类 PAYMENT_CODE_TENPAY="cft";//财付通
+	 */
+	public static final String PAYMENT_CODE_TENPAY="cft";//财付通
+	/**
+	 * 支付宝支付接口类型 3表示双接口
+	 */
+	public static final String ALIPAY_INTERFACE_CODE_TWOPAY="3";
+			
+	
+	//会员信息静态字段
+	/**
+	 * 会员状态 0=未激活
+	 */
+	public static final String MEMBERSTATE_ZERO_NUM="0";
+	/**
+	 * 会员状态 1=激活
+	 */
+	public static final String MEMBERSTATE_ONE_NUM="1";
 	
 	
 	

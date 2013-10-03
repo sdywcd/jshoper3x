@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-26 20:43:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -38,6 +38,31 @@ public class CouponT implements java.io.Serializable {
 	private String coupontypeid;
 
 	public CouponT() {
+	}
+
+	public CouponT(String cid, String ctitle, String cimage, Date endtime,
+			String details, Date createtime, Date modifytime, Date begintime,
+			double lat, double lng, int zoom, int readcount, int starsum,
+			int starusersum, int replycount, int gousersum,
+			String coupontypename, String coupontypeid) {
+		this.cid = cid;
+		this.ctitle = ctitle;
+		this.cimage = cimage;
+		this.endtime = endtime;
+		this.details = details;
+		this.createtime = createtime;
+		this.modifytime = modifytime;
+		this.begintime = begintime;
+		this.lat = lat;
+		this.lng = lng;
+		this.zoom = zoom;
+		this.readcount = readcount;
+		this.starsum = starsum;
+		this.starusersum = starusersum;
+		this.replycount = replycount;
+		this.gousersum = gousersum;
+		this.coupontypename = coupontypename;
+		this.coupontypeid = coupontypeid;
 	}
 
 	public CouponT(String cid, String ctitle, String cimage, Date endtime,
@@ -143,7 +168,7 @@ public class CouponT implements java.io.Serializable {
 		this.begintime = begintime;
 	}
 
-	@Column(name = "CREATORID", nullable = false, length = 20)
+	@Column(name = "CREATORID", length = 20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}

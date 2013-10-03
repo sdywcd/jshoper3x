@@ -1,6 +1,7 @@
 package com.jshop.action.frontstage.usercenter;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -13,7 +14,10 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
+import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
+import com.jshop.service.MemberTService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -24,45 +28,54 @@ import com.opensymphony.xwork2.ActionSupport;
     @InterceptorRef("defaultStack")
 })
 public class LoginAction extends ActionSupport {
-	private UsertService usertService;
+	private MemberTService memberTService;
+	private MemberT memberT;
 	private String basepath;
-	private String username;
-	private String password;
+	private String loginname;
+	private String loginpwd;
 	private String hidurl;
 	private boolean loginflag;
 
-	
+
 	@JSON(serialize = false)
-	public UsertService getUsertService() {
-		return usertService;
+	public MemberT getMemberT() {
+		return memberT;
 	}
 
-	public void setUsertService(UsertService usertService) {
-		this.usertService = usertService;
+	public void setMemberT(MemberT memberT) {
+		this.memberT = memberT;
+	}
+	
+	@JSON(serialize = false)
+	public MemberTService getMemberTService() {
+		return memberTService;
+	}
+
+	public void setMemberTService(MemberTService memberTService) {
+		this.memberTService = memberTService;
 	}
 
 	public boolean isLoginflag() {
 		return loginflag;
 	}
-
 	public void setLoginflag(boolean loginflag) {
 		this.loginflag = loginflag;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getLoginname() {
+		return loginname;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLoginname(String loginname) {
+		this.loginname = loginname;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getLoginpwd() {
+		return loginpwd;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setLoginpwd(String loginpwd) {
+		this.loginpwd = loginpwd;
 	}
 
 	public String getHidurl() {
@@ -97,63 +110,44 @@ public class LoginAction extends ActionSupport {
 	 */
 	@Action(value="login", results={ @Result(name="json",type="json") })
 	public String login() {
-		
 		this.setBasepath(BaseTools.getBasePath());
 		
-		UserT ut = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(ut!=null){
-			ActionContext.getContext().getSession().remove(BaseTools.USER_SESSION_KEY);
+		MemberT m = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(m!=null){
+			ActionContext.getContext().getSession().remove(StaticString.MEMBER_SESSION_KEY);
 		}
 		MD5Code md5 = new MD5Code();
-		UserT u = new UserT();
-		UserT user = new UserT();
-		user.setUsername(this.getUsername().trim());
-		user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));
-		user.setState("1");//普通用户登录一般指pc用户
-		u = this.getUsertService().login(user);
-		if (u != null) {
+		MemberT memberT = new MemberT();
+		memberT.setLoginname(this.getLoginname().trim());
+		memberT.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
+		memberT.setMemberstate(StaticString.MEMBERSTATE_ONE_NUM);
+		List<MemberT>mlists=this.getMemberTService().login(memberT);
+		if (!mlists.isEmpty()) {
 			this.setLoginflag(true);
-			ActionContext.getContext().getSession().put(BaseTools.USER_SESSION_KEY, u);
+			ActionContext.getContext().getSession().put(StaticString.MEMBER_SESSION_KEY, mlists.get(0));
 			return "json";
-		} else {
-			//if no user when state=1,than search state=4 for mobile user
-			//the purpose is mobile user account can also use in website
-			user.setUsername(this.getUsername().trim());
-			user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));
-			user.setState("4");//手机用户登录
-			u = this.getUsertService().login(user);
-			if (u != null) {
-				this.setLoginflag(true);
-				ActionContext.getContext().getSession().put(BaseTools.USER_SESSION_KEY, u);
-				return "json";
-			} else {
-				this.setLoginflag(false);
-				return "json";
-			}
-
 		}
+		return "json";
 	}
 	/**
 	 * 前台登出 
 	 */
-	@Action(value = "userLogout", results = { 
+	@Action(value = "memberLogout", results = { 
 			@Result(name = "success",type="freemarker",location = "/html/default/shop/user/login.html")
 	})
-	public String userLogout() throws UnsupportedEncodingException {
-		this.setLoginflag(false);
-		ActionContext.getContext().getSession().remove(BaseTools.USER_SESSION_KEY);
+	public String memberLogout() throws UnsupportedEncodingException {
+		ActionContext.getContext().getSession().remove(StaticString.MEMBER_SESSION_KEY);
 		return "success";
 	}
 	
 	@Action(value="findUsernameFromSession", results={ @Result(name="json",type="json") })
 	public String findUsernameFromSession(){
-		UserT usert=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(usert!=null){
-			this.setUsername(usert.getUsername());
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			this.setLoginname(memberT.getLoginname());
 		}else{
-			this.setUsername("");
+			this.setLoginname("");
 		}
-		
 		return "json";
 	}
 	

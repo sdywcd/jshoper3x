@@ -119,17 +119,6 @@ public class PrintExpressSingleTAction extends ActionSupport {
 	}
 
 	/**
-	 * 验证登陆
-	 */
-	public void CheckLogin() {
-		String adminid = (String) ActionContext.getContext().getSession().get(BaseTools.BACK_USER_SESSION_KEY);
-		if (adminid != null) {
-			this.setSlogin(false);
-		} else {
-			this.setSlogin(true);
-		}
-	}
-	/**
 	 * 获取商家信息作为快递单内容
 	 */
 	public void GetJshopSendInfo() {
@@ -155,7 +144,7 @@ public class PrintExpressSingleTAction extends ActionSupport {
 	public void GetOrderShippingAddress(String orderid) {
 		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
 		if (st != null) {
-			pe.setRecipientName(st.getMembername());
+			pe.setRecipientName(st.getShippingusername());
 			pe.setRecipientCountry(st.getCountry());
 			pe.setRecipientProvince(st.getProvince());
 			pe.setRecipientCity(st.getCity());
@@ -164,7 +153,7 @@ public class PrintExpressSingleTAction extends ActionSupport {
 			pe.setRecipientTelno(st.getTelno());
 			pe.setRecipientMobile(st.getMobile());
 			pe.setRecipientPostcode(st.getPostcode());
-			pe.setRecipientContactor(st.getMembername());
+			pe.setRecipientContactor(st.getShippingusername());//可能有问题要根据具体业务来
 		}
 	}
 
@@ -214,24 +203,17 @@ public class PrintExpressSingleTAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitPrintExpress() {
-		this.CheckLogin();
-		if(!this.isSlogin()){
-			if (Validate.StrNotNull(this.getOrderid())) {
-				GetJshopSendInfo();
-				GetOrderShippingAddress(this.getOrderid().trim());
-				GetOrderDetailByOrderId(this.getOrderid().trim());
-				this.setSprintexpressflag(true);
-				//设定模板值
-				GetPrintExpressValue();
-				return "json";
-			} else {
-				this.setSprintexpressflag(false);
-				return "json";
-			}
-		}else{
+		if (Validate.StrNotNull(this.getOrderid())) {
+			GetJshopSendInfo();
+			GetOrderShippingAddress(this.getOrderid().trim());
+			GetOrderDetailByOrderId(this.getOrderid().trim());
+			this.setSprintexpressflag(true);
+			//设定模板值
+			GetPrintExpressValue();
+			return "json";
+		} else {
 			this.setSprintexpressflag(false);
 			return "json";
 		}
-		
 	}
 }

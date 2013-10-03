@@ -464,6 +464,38 @@ public class CartTDaoImpl extends HibernateDaoSupport implements CartTDao {
 			throw re;
 		}
 	}
+
+	@Override
+	public CartT findProductInCart(String memberid, String goodsid,String productid,
+			String state) {
+		log.debug("findGoodsInCartOrNot ");
+		try {
+			String queryString = "from CartT as c where c.memberid=:memberid and c.goodsid=:goodsid and c.productid=:productid and c.state=:state order by addtime desc";
+			@SuppressWarnings("unchecked")
+			List<CartT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "memberid", "goodsid","productid", "state" }, new Object[] { memberid, goodsid,productid, state });
+			if (!list.isEmpty()) {
+				return list.get(0);
+			}
+			return null;
+		} catch (RuntimeException re) {
+			log.error("find good or in CartT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<CartT> findAllCartByMemberId(String memberid, String state,
+			String orderTag) {
+		log.debug("findAllCartByMemberId ");
+		try {
+			String queryString = "from CartT as c where c.memberid=:memberid and c.state=:state and c.orderTag=:orderTag order by addtime desc";
+			List<CartT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"memberid","state","orderTag"}, new Object[]{memberid,state,orderTag});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findAllCartByMemberId  error", re);
+			throw re;
+		}
+	}
 	
 	
 	

@@ -132,20 +132,7 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 		this.clearErrorsAndMessages();
 
 	}
-	/**
-	 * 验证登陆
-	 * 
-	 * @return
-	 */
-	public void CheckLogin() {
-		String adminid = (String) ActionContext.getContext().getSession().get(BaseTools.BACK_USER_SESSION_KEY);
-		if (adminid != null) {
-			this.setSlogin(false);
-		} else {
-			this.setSlogin(true);
-		}
 
-	}
 	/**
 	 * 显示是否开具发票了
 	 * 
@@ -178,7 +165,7 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 	public void GetOrderShippingAddress(String orderid) {
 		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
 		if (st != null) {
-			pi.setShippingusername(st.getMembername());
+			pi.setShippingusername(st.getShippingusername());
 			pi.setCountry(st.getCountry());
 			pi.setProvince(st.getProvince());
 			pi.setCity(st.getCity());
@@ -244,23 +231,17 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitPrintInvoice() {
-		this.CheckLogin();
-		if(!this.isSlogin()){
-			if (Validate.StrNotNull(this.getOrderid())) {
-				String orderid = this.getOrderid().trim();
-				GetOrderDetailByOrderId(orderid);
-				GetOrderShippingAddress(orderid);
-				findCartGoodsByOrderid(orderid);
-				GetPrintInvoiceValue();
-				this.setSprintinvoiceflag(true);
-				return "json";
-			}
-			this.setSprintinvoiceflag(false);
-			return "json";
-		}else{
-			this.setSprintinvoiceflag(false);
+		if (Validate.StrNotNull(this.getOrderid())) {
+			String orderid = this.getOrderid().trim();
+			GetOrderDetailByOrderId(orderid);
+			GetOrderShippingAddress(orderid);
+			findCartGoodsByOrderid(orderid);
+			GetPrintInvoiceValue();
+			this.setSprintinvoiceflag(true);
 			return "json";
 		}
-
+		this.setSprintinvoiceflag(false);
+		return "json";
+		
 	}
 }

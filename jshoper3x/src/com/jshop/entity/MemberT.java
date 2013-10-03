@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-26 20:43:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -41,7 +41,7 @@ public class MemberT implements java.io.Serializable {
 	private Integer postingcount;
 	private String question;
 	private String answer;
-	private String userstate;
+	private String memberstate;
 	private String headpath;
 	private Date createtime;
 	private String creatorid;
@@ -53,14 +53,12 @@ public class MemberT implements java.io.Serializable {
 	public MemberT() {
 	}
 
-	public MemberT(String id, String loginname, String loginpwd, String nick,
-			Date createtime, String creatorid, Date updatetime, int versiont) {
+	public MemberT(String id, String loginname, String loginpwd,
+			Date createtime, Date updatetime, int versiont) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
-		this.nick = nick;
 		this.createtime = createtime;
-		this.creatorid = creatorid;
 		this.updatetime = updatetime;
 		this.versiont = versiont;
 	}
@@ -71,9 +69,9 @@ public class MemberT implements java.io.Serializable {
 			String constellation, String des, String email, String qq,
 			String weixin, String sinaweibo, String tag, Integer belove,
 			Integer loveother, Integer postingcount, String question,
-			String answer, String userstate, String headpath, Date createtime,
-			String creatorid, Date updatetime, String mobile, int versiont,
-			String mid) {
+			String answer, String memberstate, String headpath,
+			Date createtime, String creatorid, Date updatetime, String mobile,
+			int versiont, String mid) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
@@ -98,7 +96,7 @@ public class MemberT implements java.io.Serializable {
 		this.postingcount = postingcount;
 		this.question = question;
 		this.answer = answer;
-		this.userstate = userstate;
+		this.memberstate = memberstate;
 		this.headpath = headpath;
 		this.createtime = createtime;
 		this.creatorid = creatorid;
@@ -136,7 +134,7 @@ public class MemberT implements java.io.Serializable {
 		this.loginpwd = loginpwd;
 	}
 
-	@Column(name = "NICK", nullable = false, length = 45)
+	@Column(name = "NICK", length = 45)
 	public String getNick() {
 		return this.nick;
 	}
@@ -325,13 +323,13 @@ public class MemberT implements java.io.Serializable {
 		this.answer = answer;
 	}
 
-	@Column(name = "USERSTATE", length = 1)
-	public String getUserstate() {
-		return this.userstate;
+	@Column(name = "MEMBERSTATE", length = 1)
+	public String getMemberstate() {
+		return this.memberstate;
 	}
 
-	public void setUserstate(String userstate) {
-		this.userstate = userstate;
+	public void setMemberstate(String memberstate) {
+		this.memberstate = memberstate;
 	}
 
 	@Column(name = "HEADPATH")
@@ -353,7 +351,7 @@ public class MemberT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	@Column(name = "CREATORID", nullable = false, length = 20)
+	@Column(name = "CREATORID", length = 20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}

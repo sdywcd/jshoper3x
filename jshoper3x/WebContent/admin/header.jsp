@@ -245,6 +245,7 @@
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-collapse.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-carousel.js"></script>
 	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-typeahead.js"></script>
+
 	<script
 		src="<%=basePath%>admin/js/plugins/icheckmaster/jquery.icheck.min.js"></script>
 

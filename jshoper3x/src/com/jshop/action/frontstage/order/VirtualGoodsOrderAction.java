@@ -21,6 +21,7 @@ import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.PaymentCode;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.CartT;
 import com.jshop.entity.OrderT;
@@ -417,7 +418,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${hidurl}")
 	})
 	public String InitvirtualcardOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			//跟新下购物车的cartid（特殊）
 			updateCartidForVirtualGoodsCard();
@@ -462,7 +463,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${hidurl}")
 	})
 	public String InitvirtualmovieOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			//跟新下购物车的cartid（特殊）
 			updateCartidForVirtualGoodsCard();
@@ -573,8 +574,9 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		order.setShippingstate("0");//未发货
 		order.setLogisticsid("");//虚拟不需要物流商
 		order.setLogisticswebaddress("");//x
-		order.setGoodid(this.getCartgoodsid());//购物车中商品id串
-		order.setGoodsname(this.getCartgoodsname());//购物车中的商品名称串
+//		order.setGoodid(this.getCartgoodsid());//购物车中商品id串
+//		order.setGoodsname(this.getCartgoodsname());//购物车中的商品名称串
+		
 		order.setNeedquantity(this.getCartneedquantity());//购物车中的商品数量串
 		order.setFreight(0.0);//因为虚拟所以无运费
 		order.setAmount(Arith.sub(Arith.add(this.getTotal(), this.getFreight()),this.getVouchercontent()));
@@ -626,8 +628,8 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		order.setShippingstate("0");//未发货
 		order.setLogisticsid("");//虚拟不需要物流商
 		order.setLogisticswebaddress("");//x
-		order.setGoodid(this.getCartgoodsid());//购物车中商品id串
-		order.setGoodsname(this.getCartgoodsname());//购物车中的商品名称串
+//		order.setGoodid(this.getCartgoodsid());//购物车中商品id串
+//		order.setGoodsname(this.getCartgoodsname());//购物车中的商品名称串
 		order.setNeedquantity(this.getCartneedquantity());//购物车中的商品数量串
 		order.setFreight(0.0);//因为虚拟所以无运费
 		order.setAmount(Arith.sub(Arith.add(this.getTotal(), this.getFreight()),this.getVouchercontent()));
@@ -700,9 +702,9 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		TenPayConfig.out_trade_no=order.getOrderid();//订单号
 		int totalfee=(int)(order.getShouldpay()*100);
 		TenPayConfig.total_fee=String.valueOf(totalfee);
-		TenPayConfig.body=order.getGoodsname();
+		TenPayConfig.body=order.getOrdername();
 		TenPayConfig.bank_type="DEFAULT";
-		TenPayConfig.subject=order.getGoodsname();
+		TenPayConfig.subject=order.getOrdername();
 		TenPayConfig.goods_tag=order.getOrderTag();//手机充值虚拟卡
 		TenPayConfig.trade_mode="1";//即时到帐
 		TenPayConfig.trans_type="2";//虚拟交易
@@ -725,8 +727,8 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		AlipayConfig.key = this.getPm().getSafecode();
 		AlipayConfig.seller_email = this.getPm().getAccount();
 		AlipayConfig.out_trade_no = order.getOrderid();
-		AlipayConfig.subject = order.getGoodsname();
-		AlipayConfig.body = order.getGoodsname();
+		AlipayConfig.subject = order.getOrdername();
+		AlipayConfig.body = order.getOrdername();
 		AlipayConfig.price = String.valueOf(order.getShouldpay());
 		AlipayConfig.logistics_fee = String.valueOf(order.getFreight());
 		//设置收货人信息给支付宝借口
@@ -745,7 +747,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitpayneedInfoVirtualGoodsCard() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			
@@ -789,7 +791,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitpayneedInfoVirtualGoodsmovie() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			
@@ -832,7 +834,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 	 * @return
 	 */
 	public void updateCartidForVirtualGoodsCard(){
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String cartid=this.getSerial().Serialid(Serial.CART);//获取购物车信息id是可重复的。一次提交只有一个购物车信息id,标记这批商品被标记在同一个订单中
 			int i=this.getCartTService().updateCartIdBygoodsid(cartid, user.getUserid(), this.getGoodsid(), "1");

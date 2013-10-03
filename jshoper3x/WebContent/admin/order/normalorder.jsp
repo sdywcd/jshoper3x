@@ -58,10 +58,10 @@
 						<span class="label label-info">输入检索商品</span>
 					</div>
 					
-						<!-- flexigrid -->
-						<div id="flexproductsmanagement">
-							<table id="productsmanagement" style="display: none;"></table>
-						</div>
+					<!-- flexigrid -->
+					<div id="flexproductsmanagement">
+						<table id="productsmanagement" style="display: none;"></table>
+					</div>
 					<div class="line-dotted"></div>
 					<div class="span12" style="margin-left:0px;">
 						<table class="table table-bordered">
@@ -110,7 +110,7 @@
 								应付总额：
 							</dt>
 							<dd>
-								￥<span id="shouldpay">0.0</span>
+								￥<span id="shouldpayspan">0.0</span>
 							</dd>
 						</dl>
 						</div>
@@ -118,7 +118,7 @@
 					<div class="form-inline">
 						<span class="label label-required">订单名称: </span> <input
 							id="ordername" name="ordername" type="text" value="" class="medium"/> 
-						<span class="label label-info">你已经选择了2个商品</span>
+					
 					</div>
 					<div class="well">
 						<h4>订单价格信息</h4>
@@ -128,16 +128,15 @@
 							id="freight" name="freight" /><span class="label label-info">你可以自定义一个运费</span>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">应付款: </span> <input
-							id="shouldpay" name="shouldpay" type="text" value=""/> 
-						<button class="btn btn-primary" type="button">修改价格</button>
-						<span class="label label-info">价格修改成功</span>
+						<span class="label label-required">订单总价: </span> <input
+							id="shouldpay" name="shouldpay" type="text" value="" readonly/> 
+						<button id="tomodifyshouldpay" class="btn btn-primary" type="button">修改订单总价</button>
+						<span id="tomodifyshouldpayinfo" style="display:none;"  class="label label-info">订单总价修改成功</span>
 					</div>
-					<div id="modifyshouldpay" class="form-inline">
+					<div id="modifyshouldpay" style="display:none;" class="form-inline">
 						<span class="label label-required">修改价格: </span> <input
 							id="mshouldpay" name="mshouldpay" type="text" value=""/> 
-						<button class="btn btn-primary" type="button">确认</button>
-						<button class="btn btn-primary" type="button">取消</button>
+						<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">确认</a>
 						<span class="label label-info">请输入修改的价格</span>
 					</div>
 					
@@ -146,10 +145,15 @@
 						<h4>收货人信息</h4>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">jshoper平台账号: </span> <input
+						<span class="label label-required">搜索可用发货地址: </span> <input
 							id="membername" name="membername" type="text" value=""/> 
-						<button class="btn btn-primary" type="button">验证</button>
-						<span class="label label-info">账号可用</span>
+						<button id="searchdeliveraddress" class="btn btn-primary" type="button" >搜索</button>
+						<span id="accountcheckinfo" class="label label-info">请输入会员账号进行搜索</span>
+				
+					</div>
+					<!-- flexigrid -->
+					<div id="flexdeliveraddressmanagement">
+						<table id="deliveraddressmanagement" style="display: none;"></table>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">收货人: </span> <input
@@ -189,11 +193,7 @@
 						<span class="label label-required">邮箱:</span> <input type="text"
 							id="email" name="email" />
 					</div>
-					<div class="form-inline">
-						<label class="label label-submit"></label>
-						<!-- 如果查询到了收货地址则需要设置影藏的收货地址id -->
-						<input type="hidden" id="hidshippingaddressid" name="hidshippingaddressid" value="" />
-					</div>
+					
 					<div class="well">
 						<h4>支付及配送方式</h4>
 					</div>
@@ -231,7 +231,12 @@
 							for="radio-1">普通订单</label> 
 					</div>
 					<div class="form-inline">
-						<label class="label label-submit"></label> <input
+						<label class="label label-submit"></label>
+						<!-- 如果查询到了收货地址则需要设置影藏的收货地址id -->
+						<input type="hidden" id="hidshippingaddressid" name="hidshippingaddressid" value="" />
+						<!-- 如果查询到了平台账号则需要设置隐藏的会员id -->
+						<input type="hidden" id="hidmemberid" name="hidmemberid" value=""/>
+						 <input
 							class="btn btn-success" type="button" id="submitorder"
 							name="submitorder" value="提交" />
 					</div>
@@ -247,7 +252,20 @@
 		</div>
 
 	</div>
-
+	<!-- Modal -->
+	<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	    <h3 id="myModalLabel">订单价格修改提醒</h3>
+	  </div>
+	  <div class="modal-body">
+	    <p>是否确认修改订单价格</p>
+	  </div>
+	  <div class="modal-footer">
+	    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+	    <button id="confirmtoupdateshouldpay" class="btn btn-primary" >确认修改</button>
+	  </div>
+	</div>
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/order/normalordersmentjs.js"></script>
 

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.interceptor.UserRolemoduleInterecptor;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.user.UserTAction;
 import com.jshop.entity.UserT;
 import com.jshop.service.UsertService;
@@ -69,7 +70,7 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 		HttpServletRequest request = (HttpServletRequest) actionContext.get(StrutsStatics.HTTP_REQUEST);
 		HttpServletResponse response=(HttpServletResponse) actionContext.get(StrutsStatics.HTTP_RESPONSE);
 		Map session = actionContext.getSession();
-		if ((session != null) && (session.get(BaseTools.BACK_USER_SESSION_KEY) != null)) {
+		if ((session != null) && (session.get(StaticString.BACK_USER_SESSION_KEY) != null)) {
 //			String userid=(String) ActionContext.getContext().getSession().get(BaseTools.BACK_USER_SESSION_KEY);
 //			if("120100721001".equals(userid)){
 //				return invocation.invoke();

@@ -10,8 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jshop.action.backstage.tools.Serial;
+import com.jshop.dao.CartTDao;
 import com.jshop.dao.OrderTDao;
+import com.jshop.dao.ShippingAddressTDao;
 import com.jshop.dao.impl.OrderTDaoImpl;
+import com.jshop.entity.CartT;
+import com.jshop.entity.GoodsT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.ShippingAddressT;
 import com.jshop.service.OrderTService;
@@ -21,15 +26,35 @@ import com.jshop.service.OrderTService;
 public class OrderTServiceImpl implements OrderTService {
 	@Resource
 	private OrderTDao orderTDao;
-
+	private Serial serial;
+	private ShippingAddressTDao shippingAddressTDao;
+	private CartTDao cartTDao;
+	
+	public ShippingAddressTDao getShippingAddressTDao() {
+		return shippingAddressTDao;
+	}
+	public void setShippingAddressTDao(ShippingAddressTDao shippingAddressTDao) {
+		this.shippingAddressTDao = shippingAddressTDao;
+	}
+	public CartTDao getCartTDao() {
+		return cartTDao;
+	}
+	public void setCartTDao(CartTDao cartTDao) {
+		this.cartTDao = cartTDao;
+	}
 	public OrderTDao getOrderTDao() {
 		return orderTDao;
 	}
-
 	public void setOrderTDao(OrderTDao orderTDao) {
 		this.orderTDao = orderTDao;
 	}
 
+	public Serial getSerial() {
+		return serial;
+	}
+	public void setSerial(Serial serial) {
+		this.serial = serial;
+	}
 	public int addOrder(OrderT o) {
 		return this.getOrderTDao().addOrder(o);
 	}
@@ -144,15 +169,32 @@ public class OrderTServiceImpl implements OrderTService {
 	public List<OrderT> findAllreturnOrder(int currentPage, int lineSize, String orderstate) {
 		return this.getOrderTDao().findAllreturnOrder(currentPage, lineSize, orderstate);
 	}
-
+	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void saveNormalOrderNeedInfoBack(OrderT ordert,
-			ShippingAddressT sAddressT) {
-		// TODO Auto-generated method stub
+			ShippingAddressT sAddressT,List<CartT>cartLists) {
+		//生成一个订单号
+		String orderid=this.getSerial().Serialid(Serial.ORDER);
+		//生成一个同批次购物车号
+		String cartid=this.getSerial().Serialid(Serial.CART);
+		//加入购物车表
+		for(CartT c:cartLists){
+			c.setOrderid(orderid);
+			c.setCartid(cartid);
+			this.getCartTDao().addCart(c);
+		}
+		//加入到发货地址表中
+		sAddressT.setOrderid(orderid);
+		this.getShippingAddressTDao().addShoppingAddress(sAddressT);
+		//加入订单表
+		ordert.setOrderid(orderid);
+		this.getOrderTDao().addOrder(ordert);
 		
 	}
-	
+
+
+
 	
 	
 }

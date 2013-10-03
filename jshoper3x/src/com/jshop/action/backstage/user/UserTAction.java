@@ -700,9 +700,9 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	 */
 	@Action(value = "/checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
 	public String checklogin() {
-		String adminid = (String) ActionContext.getContext().getSession().get(BaseTools.BACK_USER_SESSION_KEY);
-		if (!adminid.isEmpty()) {
-			this.setCreatorid(adminid);
+		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticString.BACK_USER_SESSION_KEY);
+		if (admin!=null) {
+			this.setCreatorid(admin.getUserid());
 			this.setSlogin(false);
 			return "json";
 		} else {
@@ -739,16 +739,15 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		user.setState(StaticString.THREE);//超级管理员
 		user = this.getUsertService().login(user);
 		if (user != null) {
-			ActionContext.getContext().getSession().put(BaseTools.BACK_USER_SESSION_KEY, user.getUserid());
-			ActionContext.getContext().getSession().put(BaseTools.BACK_USER_NAME_SESSION_KEY, user.getUsername());
+			ActionContext.getContext().getSession().put(StaticString.BACK_USER_SESSION_KEY, user);
 			this.setParam(md5.getMD5ofStr(user.getUserid()));
-			ActionContext.getContext().getSession().put(BaseTools.BACK_SESSION_KEY, param);
+			ActionContext.getContext().getSession().put(StaticString.BACK_SESSION_KEY, param);
 			//获取默认主题
 			this.getInitTAction().InitDefaultThemeT();
 			//收集权限信息并放入内存
 			List<FunctionM> userfunctionlist = this.getUserRoleMAction().findUserRoleFunctionList(user.getUserid());
 			//List<FunctionM>allfunctionlist=this.getUserRoleMAction().findAllFunctionM();
-			ActionContext.getContext().getSession().put(BaseTools.USERROLEFUNCTION, userfunctionlist);
+			ActionContext.getContext().getSession().put(StaticString.USERROLEFUNCTION, userfunctionlist);
 			//ActionContext.getContext().getSession().put(BaseTools.ALLROLEFUNCTION, allfunctionlist);
 			return SUCCESS;
 		}
@@ -863,7 +862,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 			user.setRolemname("");
 			if (this.getUsertService().save(user) > 0) {
 				//重新获取后台登录时保存的加密session key
-				this.setParam(ActionContext.getContext().getSession().get(BaseTools.BACK_SESSION_KEY).toString());
+				this.setParam(ActionContext.getContext().getSession().get(StaticString.BACK_SESSION_KEY).toString());
 				this.setSucflag(true);
 				return "json";
 			}
@@ -1041,10 +1040,9 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	 */
 	@Action(value = "adminlogout", results = { @Result(name = "json", type = "json") })
 	public String adminlogout() {
-		ActionContext.getContext().getSession().remove(BaseTools.BACK_USER_SESSION_KEY);
-		ActionContext.getContext().getSession().remove(BaseTools.USERROLEFUNCTION);
-		ActionContext.getContext().getSession().remove(BaseTools.BACK_SESSION_KEY);
-		ActionContext.getContext().getSession().remove(BaseTools.BACK_USER_NAME_SESSION_KEY);
+		ActionContext.getContext().getSession().remove(StaticString.BACK_USER_SESSION_KEY);
+		ActionContext.getContext().getSession().remove(StaticString.USERROLEFUNCTION);
+		ActionContext.getContext().getSession().remove(StaticString.BACK_SESSION_KEY);
 		return "json";
 
 	}

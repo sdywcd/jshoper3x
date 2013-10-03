@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.jshop.dao.MemberTDao;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.TemplateT;
+import com.jshop.entity.UserT;
 
 @Repository("memberTDao")
 public class MemberTDaoImpl extends HibernateDaoSupport implements MemberTDao {
@@ -184,6 +185,104 @@ public class MemberTDaoImpl extends HibernateDaoSupport implements MemberTDao {
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findMemberTByloginname error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<MemberT> findMemberTByemail(String email) {
+		log.debug("findMemberTByemail");
+		try {
+			String queryString = "from MemberT as mt where mt.email=:email";
+			List<MemberT> list = this.getHibernateTemplate().findByNamedParam(queryString, "email", email);
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findMemberTByemail error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<MemberT> findMemberTymid(String mid) {
+		log.debug("findMemberTymid");
+		try {
+			String queryString = "from MemberT as mt where mt.mid=:mid";
+			List<MemberT> list = this.getHibernateTemplate().findByNamedParam(queryString, "mid", mid);
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findMemberTymid error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<MemberT> findMemberByQA(String loginname, String question,
+			String answer) {
+		log.debug("findMemberByQA");
+		try {
+			String queryString = "from MemberT as mt where mt.loginname=:loginname and mt.question=:question and mt.answer=:answer";
+			List<MemberT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"loginname","question","answer"}, new Object[]{loginname,question,answer});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findMemberByQA error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<MemberT> login(MemberT m) {
+		log.debug("login MemberT");
+		try {
+			String queryString = "from MemberT as mt where mt.loginname=:loginname and mt.loginpwd=:loginpwd and mt.memberstate=:memberstate";
+			List<MemberT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "loginname", "loginpwd", "memberstate" }, new Object[] { m.getLoginname(),m.getLoginpwd(),m.getMemberstate()});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("login user error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int updateMemberHeadpathByid(final MemberT m) {
+		try {
+			final String queryString="update MemberT as mt set mt.headpath=:headpath where mt.id=:id";
+			@SuppressWarnings("unchecked")
+			Integer integer=(Integer)this.getHibernateTemplate().execute(new HibernateCallback() {
+				
+				@Override
+				public Object doInHibernate(Session session) throws HibernateException,
+						SQLException {
+					Query query= session.createQuery(queryString);
+					query.setParameter("headpath", m.getHeadpath());
+					query.setParameter("id", m.getId());
+					return query.executeUpdate();
+				}
+			});
+			return integer;
+		} catch (RuntimeException e) {
+			throw e;
+		}
+	
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public int updateMemberPwdProctection(final String id,final String question, final String answer) {
+		log.debug("update updateMemberPwdProctection");
+		try {
+			final String queryString = "update MemberT as mt set mt.question=:question,mt.answer=:answer where mt.id=:id";
+			Integer integer=(Integer)this.getHibernateTemplate().execute(new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setParameter("id",id);
+					query.setParameter("question", question);
+					query.setParameter("answer",answer);
+					return query.executeUpdate();
+				}
+			});
+			return integer;
+		} catch (RuntimeException re) {
+			log.error("update  updateMemberPwdProctection error", re);
 			throw re;
 		}
 	}

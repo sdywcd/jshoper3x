@@ -165,21 +165,7 @@ public class PlaceoforiginTAction extends ActionSupport {
 		this.clearErrorsAndMessages();
 
 	}
-	
-	/**
-	 * 验证登陆
-	 */
-	public void CheckLogin() {
-		String adminid = (String) ActionContext.getContext().getSession().get(BaseTools.BACK_USER_SESSION_KEY);
-		String sessionKey = (String) ActionContext.getContext().getSession().get(BaseTools.BACK_SESSION_KEY);
-		if (adminid != null) {
-			this.setUsession(sessionKey);
-			this.setCreatorid(adminid);
-			this.setSlogin(false);
-		} else {
-			this.setSlogin(true);
-		}
-	}
+
 	
 	/**
 	 * 增加商品产地
@@ -191,20 +177,15 @@ public class PlaceoforiginTAction extends ActionSupport {
 			@Result(name = "input", type="redirect",location = "/jshop/admin/goods/goodsplacemanagement.jsp?session=${usession}")
 	})
 	public String addPlaceoforigint() {
-		this.CheckLogin();
-		if(!this.isSlogin()){
-			PlaceoforiginT p = new PlaceoforiginT();
-			p.setPlaceid(this.getSerial().Serialid(Serial.PLACEFORIGIN));
-			p.setPlacename(this.getPlacename().trim());
-			p.setCreatetime(BaseTools.systemtime());
-			p.setCreatorid(BaseTools.adminCreateId());
-			if (this.getPlaceoforiginTService().addPlaceoforigint(p) > 0) {
-				return SUCCESS;
-			}
-			return INPUT;
-		}else{
-			return INPUT;
+		PlaceoforiginT p = new PlaceoforiginT();
+		p.setPlaceid(this.getSerial().Serialid(Serial.PLACEFORIGIN));
+		p.setPlacename(this.getPlacename().trim());
+		p.setCreatetime(BaseTools.systemtime());
+		p.setCreatorid(BaseTools.adminCreateId());
+		if (this.getPlaceoforiginTService().addPlaceoforigint(p) > 0) {
+			return SUCCESS;
 		}
+		return INPUT;
 	}
 
 	/**
@@ -247,19 +228,13 @@ public class PlaceoforiginTAction extends ActionSupport {
 			@Result(name = "input",type="redirect", location = "/jshop/admin/goods/goodsplacemanagement.jsp?session=${usession}")
 	})
 	public String UpdatePlaceoforigint() {
-		this.CheckLogin();
-		if(!this.isSlogin()){
-			PlaceoforiginT p = new PlaceoforiginT();
-			p.setPlacename(this.getPlacename().trim());
-			p.setPlaceid(this.getPlaceid());
-			p.setCreatetime(BaseTools.systemtime());
-			p.setCreatorid(BaseTools.adminCreateId());
-			this.getPlaceoforiginTService().updatePlaceoforigint(p);
-			return SUCCESS;
-		}else{
-			return INPUT;
-		}
-	
+		PlaceoforiginT p = new PlaceoforiginT();
+		p.setPlacename(this.getPlacename().trim());
+		p.setPlaceid(this.getPlaceid());
+		p.setCreatetime(BaseTools.systemtime());
+		p.setCreatorid(BaseTools.adminCreateId());
+		this.getPlaceoforiginTService().updatePlaceoforigint(p);
+		return SUCCESS;
 	}
 
 	/**
@@ -271,20 +246,14 @@ public class PlaceoforiginTAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String findPlaceoforigintById() {
-		this.CheckLogin();
-		if(!this.isSlogin()){
-			if (Validate.StrNotNull(this.getPlaceid())) {
-				beanlist = this.getPlaceoforiginTService().findPlaceoforigintById(this.getPlaceid().trim());
-				if (beanlist != null) {
-					return "json";
-				}
+		if (Validate.StrNotNull(this.getPlaceid())) {
+			beanlist = this.getPlaceoforiginTService().findPlaceoforigintById(this.getPlaceid().trim());
+			if (beanlist != null) {
 				return "json";
 			}
 			return "json";
-		}else{
-			return "json";
 		}
-	
+		return "json";
 	}
 
 	/**
@@ -296,20 +265,16 @@ public class PlaceoforiginTAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String DelPlaceoforigint() {
-		this.CheckLogin();
-		if(!this.isSlogin()){
-			if (Validate.StrNotNull(this.getPlaceid())) {
-				String[] strs = this.getPlaceid().trim().split(",");
-				if (this.getPlaceoforiginTService().delPlaceoforigint(strs) > 0) {
-					return "json";
-				}
+		if (Validate.StrNotNull(this.getPlaceid())) {
+			String[] strs = this.getPlaceid().trim().split(",");
+			if (this.getPlaceoforiginTService().delPlaceoforigint(strs) > 0) {
 				return "json";
 			}
 			return "json";
-		}else{
-			return "json";
 		}
-		
+		return "json";
+	
+	
 	}
 
 	/**

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
 import com.jshop.entity.VouchersT;
 import com.jshop.service.VouchersTService;
@@ -72,16 +74,16 @@ public class MyVouchersAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/login.html")
 	})
 	public String findUserVouchers(){
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if (user != null) {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if (memberT != null) {
 			int currentPage = 1;
 			int lineSize = 50;
 			try {
 				currentPage = Integer.parseInt(this.getCp());
 			} catch (Exception e) {
 			}
-			List<VouchersT> list = this.getVouchersTService().findUserVouchers(user.getUserid(), currentPage, lineSize);
-			int allRecorders = this.getVouchersTService().countfindUserVouchers(user.getUserid());
+			List<VouchersT> list = this.getVouchersTService().findUserVouchers(memberT.getId(), currentPage, lineSize);
+			int allRecorders = this.getVouchersTService().countfindUserVouchers(memberT.getId());
 			//路径获取
 			ActionContext.getContext().put("basePath", this.getDataCollectionTAction().getBasePath());
 			//获取我的收藏

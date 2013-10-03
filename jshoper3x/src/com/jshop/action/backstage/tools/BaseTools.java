@@ -11,25 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.jshop.action.backstage.template.FreeMarkervariable;
+import com.jshop.entity.UserT;
 import com.opensymphony.xwork2.ActionContext;
 
 public class BaseTools {
-	/**
-	 * 前台用户登录创建的session名称
-	 */
-	public static String USER_SESSION_KEY = "user";
-	/**
-	 * 后台用户登录创建的session名称
-	 */
-	public static String BACK_USER_SESSION_KEY = "admin";
-	/**
-	 * 后台用户登录创建的session用户名称
-	 */
-	public static String BACK_USER_NAME_SESSION_KEY = "username";
-	/**
-	 * 后台用户登录创建的session_key
-	 */
-	public static String BACK_SESSION_KEY = "sessionKey";
+	
+
 
 	/**
 	 * 默认的用户ID，用于在没有登录的情况下生成静态页面，主要是在安装的时候使用
@@ -40,16 +27,6 @@ public class BaseTools {
 	 */
 	public static String DEFAULTADMINNAME = "sasasa";
 
-	/**
-	 * 用户的可操作的方法权限
-	 */
-	public static String USERROLEFUNCTION = "userrolefunction";
-	/**
-	 * 所有定义的权限
-	 */
-	public static String ALLROLEFUNCTION = "allrolefunction";
-
-	public static String KEYFORAUTHORITY = "keyforauthority";
 
 	// 默认时间
 	public static String DEFAULTTIME = "2010-06-25 12:48:21";
@@ -83,7 +60,24 @@ public class BaseTools {
 		return null;
 
 	}
-
+	/**
+	 * 转换用户填写的发货时间
+	 * @param memberdelivertime
+	 * @return
+	 */
+	public static Date getMemberDeliverTime(String memberdelivertime){
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = null;
+		try {
+			date = formatter.parse(memberdelivertime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return date;
+	}
+	
 	/**
 	 * 获取系统时间
 	 * 
@@ -117,26 +111,26 @@ public class BaseTools {
 	 * @return
 	 */
 	public static String adminCreateId() {
-		String adminid = (String) ActionContext.getContext().getSession()
-				.get(BACK_USER_SESSION_KEY);
-		if (!adminid.isEmpty()) {
-			return adminid;
+		UserT userT = (UserT) ActionContext.getContext().getSession()
+				.get(StaticString.BACK_USER_SESSION_KEY);
+		if (userT!=null) {
+			return userT.getUserid();
 		}
-		return DEFAULTADMINID;
+		return null;
 	}
 	/**
-	 * 获取登录用户保存在session中的username
+	 *获取登录用户保存在session中的username
 	 * 
 	 * @return
 	 */
-	public static  String adminCreatename(){
-		String username=(String) ActionContext.getContext().getSession().get(BACK_USER_NAME_SESSION_KEY);
-		if(!username.isEmpty()){
-			return username;
+	public static String adminCreateName() {
+		UserT userT = (UserT) ActionContext.getContext().getSession()
+				.get(StaticString.BACK_USER_SESSION_KEY);
+		if (userT!=null) {
+			return userT.getUsername();
 		}
-		return DEFAULTADMINNAME;
+		return null;
 	}
-	
 
 	/**
 	 * 获取默认的模板主题

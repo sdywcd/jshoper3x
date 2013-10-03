@@ -291,7 +291,7 @@ public class SystemMailTAction extends ActionSupport {
 		sm.setIsdefault(this.getIsdefault());
 		sm.setIsssl(this.getIsssl());
 		sm.setCreatorid(BaseTools.adminCreateId());
-		sm.setCreatorname(BaseTools.adminCreatename());
+		sm.setCreatorname(BaseTools.adminCreateName());
 		sm.setCreatetime(BaseTools.systemtime());
 		sm.setUpdatetime(BaseTools.systemtime());
 		if (this.getSystemMailTService().addSystemMail(sm) > 0) {

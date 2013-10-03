@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -17,8 +18,10 @@ import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.DeliverAddressT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
 import com.jshop.service.DeliverAddressTService;
 import com.opensymphony.xwork2.ActionContext;
@@ -51,8 +54,8 @@ public class UserCenterMyAddressAction extends ActionSupport {
 	private String state;
 	private String country;
 	private DeliverAddressT bean = new DeliverAddressT();
-	private boolean sucflag=false;
-	private boolean slogin=false;
+	private boolean sucflag;
+	private boolean slogin;
 	@JSON(serialize = false)
 	public Serial getSerial() {
 		return serial;
@@ -187,14 +190,14 @@ public class UserCenterMyAddressAction extends ActionSupport {
 	 * @throws IOException 
 	 * @throws TemplateException 
 	 */
-	@Action(value = "GetUserDeliverAddressForUserCenter", results = { 
+	@Action(value = "getMemberDeliverAddressForUserCenter", results = { 
 			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/deliveraddress.ftl"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
-	public String GetUserDeliverAddressForUserCenter() throws TemplateException, IOException{
-		UserT user=(UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
-			List<DeliverAddressT> list=this.getDeliverAddressTService().findDeliverAddressByuserid(user.getUserid());
+	public String getMemberDeliverAddressForUserCenter() throws TemplateException, IOException{
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			List<DeliverAddressT> list=this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取收货地址
@@ -220,10 +223,10 @@ public class UserCenterMyAddressAction extends ActionSupport {
 	 */
 	@Action(value = "findDeliverAddressByaddresid", results = { @Result(name = "json", type = "json") })
 	public String findDeliverAddressByaddresid(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			this.setSlogin(true);
-			if(Validate.StrNotNull(this.getAddressid())){
+			if(StringUtils.isNotBlank(this.getAddressid())){
 				bean = this.getDeliverAddressTService().findDeliverAddressById(this.getAddressid());
 				this.setSucflag(true);
 				return "json";
@@ -244,12 +247,12 @@ public class UserCenterMyAddressAction extends ActionSupport {
 	 */
 	@Action(value = "updateDeliverAddress", results = { @Result(name = "json", type = "json") })
 	public String updateDeliverAddress(){
-		UserT user = (UserT)ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if(user!=null){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if(memberT!=null){
 			this.setSlogin(true);
-			if(Validate.StrNotNull(this.getAddressid())){
+			if(StringUtils.isNotBlank(this.getAddressid())){
 				bean = this.getDeliverAddressTService().findDeliverAddressById(this.getAddressid());
-				bean.setUsername(this.getUsername().trim());
+				bean.setShippingusername(this.getUsername().trim());
 				bean.setCountry(this.getCountry());
 				bean.setProvince(this.getProvince());
 				bean.setCity(this.getCity());

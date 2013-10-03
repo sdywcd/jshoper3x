@@ -31,12 +31,14 @@ import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.PaymentCode;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.entity.GroupCartT;
 import com.jshop.entity.GroupOrderT;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.entity.LogisticsbusinessareaT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.PaymentM;
 import com.jshop.entity.ShippingAddressT;
 import com.jshop.entity.UserT;
@@ -591,8 +593,8 @@ public class GroupOrderAction extends ActionSupport {
 	/**
 	 * 获取用户收获地址
 	 */
-	public void GetUserDeliverAddress(UserT user) {
-		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressByuserid(user.getUserid());
+	public void GetUserDeliverAddress(MemberT memberT) {
+		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
 		ActionContext.getContext().put("deliveraddress", list);
 	
 	}
@@ -626,7 +628,7 @@ public class GroupOrderAction extends ActionSupport {
 	 * @param user
 	 */
 	public void initGroupOrder(UserT user){
-		user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		GoodsGroupT ggt = new GoodsGroupT();
 		if(user!=null){
 			
@@ -805,7 +807,7 @@ public class GroupOrderAction extends ActionSupport {
 		AlipayConfig.price = String.valueOf(got.getShouldpay());
 		AlipayConfig.logistics_fee = String.valueOf(got.getFreight());
 		//设置收货人信息给支付宝借口
-		AlipayConfig.receive_name = this.getDt().getUsername();
+		AlipayConfig.receive_name = this.getDt().getShippingusername();
 		AlipayConfig.receive_address = this.getDt().getProvince() + this.getDt().getCity() + this.getDt().getDistrict() + this.getDt().getStreet();
 		AlipayConfig.reveive_zip = this.getDt().getPostcode();
 		AlipayConfig.reveive_phone = this.getDt().getTelno();
@@ -841,8 +843,8 @@ public class GroupOrderAction extends ActionSupport {
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
 			s.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
-			s.setMemberid(list.getUserid());
-			s.setMembername(list.getUsername());
+			s.setMemberid(list.getMemberid());
+			s.setShippingusername(list.getShippingusername());
 			s.setCountry(list.getCountry());
 			s.setProvince(list.getProvince());
 			s.setCity(list.getCity());
@@ -861,9 +863,9 @@ public class GroupOrderAction extends ActionSupport {
 				this.setSshoppingaddress(false);
 				got.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
 				got.setDeliveraddressid(list.getAddressid());//设置收货地址到订单中
-				got.setShippingusername(list.getUsername());//设置收货人
+				got.setShippingusername(list.getShippingusername());//设置收货人
 				//设置收货人信息给支付宝借口
-				AlipayConfig.receive_name = list.getUsername();
+				AlipayConfig.receive_name = list.getShippingusername();
 				AlipayConfig.receive_address = list.getProvince() + list.getCity() + list.getDistrict() + list.getStreet();
 				AlipayConfig.reveive_zip = list.getPostcode();
 				AlipayConfig.reveive_phone = list.getTelno();
@@ -891,7 +893,7 @@ public class GroupOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitAlipayneedInfoGroup() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			//预先生成订单编号
@@ -930,16 +932,16 @@ public class GroupOrderAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}")
 	})
 	public String InitGroupOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(BaseTools.USER_SESSION_KEY);
-		if (user != null) {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		if (memberT != null) {
 			//获取用户收获地址
-			GetUserDeliverAddress(user);
+			GetUserDeliverAddress(memberT);
 			//获取物流商
 			GetDefaultLogistictsBusiness();
 			//获取支付方式
 			GetDefaultPayment();
 //			//获取购物车中的商品作为订单商品处理
-			GetMyCart(user);
+			//GetMyCart(memberT);
 			//计算运费
 			GetLogisticsPrice();
 			//获取总金额+运费
@@ -967,32 +969,32 @@ public class GroupOrderAction extends ActionSupport {
 	 * @param user
 	 */
 	public void GetMyCart(UserT user) {
-		List<GroupCartT> list = this.getGroupCartService().findAllGroupCartByUserId(user.getUserid());
-		GroupCartT gct = list.get(0);
-		if (gct != null) {
-			this.setTotal(0.0);
-			this.setTotalweight(0.0);
-			this.setTotalpoints(0.0);
-			this.setCartgoodsname("");
-			this.setCartgoodsid("");
-			this.setCartneedquantity(0);
-			
-			
-				total = Arith.add(total, Arith.mul(gct.getGroupprice(), Double.parseDouble(String.valueOf(gct.getNeedquantity()))));
-				totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(gct.getWeight()), Double.parseDouble(String.valueOf(gct.getNeedquantity()))));
-				totalpoints = Arith.add(totalpoints, Arith.mul(gct.getPoints(), Double.parseDouble(String.valueOf(gct.getNeedquantity()))));
-				cartgoodsname = gct.getGoodsname();
-				cartgoodsid = gct.getGoodsid() ;
-				cartneedquantity = gct.getNeedquantity();
-				cartid = gct.getCartid();
-			}
-			ActionContext.getContext().put("groupcart", gct);
-			ActionContext.getContext().put("totalprice", total);
-			ActionContext.getContext().put("totalpoints", totalpoints);
-			ActionContext.getContext().put("cartid", cartid);
-			ActionContext.getContext().put("cartgoodsid", cartgoodsid);
-			ActionContext.getContext().put("cartgoodsname", cartgoodsname);
-			ActionContext.getContext().put("cartneedquantity", cartneedquantity);
+//		List<GroupCartT> list = this.getGroupCartService().findAllGroupCartBymemberId(user.getUserid());
+//		GroupCartT gct = list.get(0);
+//		if (gct != null) {
+//			this.setTotal(0.0);
+//			this.setTotalweight(0.0);
+//			this.setTotalpoints(0.0);
+//			this.setCartgoodsname("");
+//			this.setCartgoodsid("");
+//			this.setCartneedquantity(0);
+//			
+//			
+//				total = Arith.add(total, Arith.mul(gct.getGroupprice(), Double.parseDouble(String.valueOf(gct.getNeedquantity()))));
+//				totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(gct.getWeight()), Double.parseDouble(String.valueOf(gct.getNeedquantity()))));
+//				totalpoints = Arith.add(totalpoints, Arith.mul(gct.getPoints(), Double.parseDouble(String.valueOf(gct.getNeedquantity()))));
+//				cartgoodsname = gct.getGoodsname();
+//				cartgoodsid = gct.getGoodsid() ;
+//				cartneedquantity = gct.getNeedquantity();
+//				cartid = gct.getCartid();
+//			}
+//			ActionContext.getContext().put("groupcart", gct);
+//			ActionContext.getContext().put("totalprice", total);
+//			ActionContext.getContext().put("totalpoints", totalpoints);
+//			ActionContext.getContext().put("cartid", cartid);
+//			ActionContext.getContext().put("cartgoodsid", cartgoodsid);
+//			ActionContext.getContext().put("cartgoodsname", cartgoodsname);
+//			ActionContext.getContext().put("cartneedquantity", cartneedquantity);
 		}
 	/**
 	 * 通过飞信发送短信	 
