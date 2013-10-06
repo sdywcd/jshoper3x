@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-10-6 17:36:02 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,42 +22,49 @@ public class OrderInvoiceT implements java.io.Serializable {
 	private String invType;
 	private String invPayee;
 	private String amount;
-	private String userid;
+	private String memberid;
 	private String state;
-	private String username;
+	private String membername;
 	private String invContent;
 	private Date createtime;
+	private Date updatetime;
+	private int versiont;
 
 	public OrderInvoiceT() {
 	}
 
 	public OrderInvoiceT(String orderInvoiceid, String orderid, String invType,
-			String invPayee, String amount, String userid, String state,
-			String username, Date createtime) {
+			String invPayee, String amount, String memberid, String state,
+			String membername, Date createtime, Date updatetime, int versiont) {
 		this.orderInvoiceid = orderInvoiceid;
 		this.orderid = orderid;
 		this.invType = invType;
 		this.invPayee = invPayee;
 		this.amount = amount;
-		this.userid = userid;
+		this.memberid = memberid;
 		this.state = state;
-		this.username = username;
+		this.membername = membername;
 		this.createtime = createtime;
+		this.updatetime = updatetime;
+		this.versiont = versiont;
 	}
 
 	public OrderInvoiceT(String orderInvoiceid, String orderid, String invType,
-			String invPayee, String amount, String userid, String state,
-			String username, String invContent, Date createtime) {
+			String invPayee, String amount, String memberid, String state,
+			String membername, String invContent, Date createtime,
+			Date updatetime, int versiont) {
 		this.orderInvoiceid = orderInvoiceid;
 		this.orderid = orderid;
 		this.invType = invType;
 		this.invPayee = invPayee;
 		this.amount = amount;
-		this.userid = userid;
+		this.memberid = memberid;
 		this.state = state;
-		this.username = username;
+		this.membername = membername;
 		this.invContent = invContent;
 		this.createtime = createtime;
+		this.updatetime = updatetime;
+		this.versiont = versiont;
 	}
 
 	@Id
@@ -106,13 +113,13 @@ public class OrderInvoiceT implements java.io.Serializable {
 		this.amount = amount;
 	}
 
-	@Column(name = "USERID", nullable = false, length = 20)
-	public String getUserid() {
-		return this.userid;
+	@Column(name = "MEMBERID", nullable = false, length = 20)
+	public String getMemberid() {
+		return this.memberid;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
 
 	@Column(name = "STATE", nullable = false, length = 1)
@@ -124,13 +131,13 @@ public class OrderInvoiceT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "USERNAME", nullable = false, length = 50)
-	public String getUsername() {
-		return this.username;
+	@Column(name = "MEMBERNAME", nullable = false, length = 50)
+	public String getMembername() {
+		return this.membername;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setMembername(String membername) {
+		this.membername = membername;
 	}
 
 	@Column(name = "INV_CONTENT", length = 45)
@@ -150,6 +157,25 @@ public class OrderInvoiceT implements java.io.Serializable {
 
 	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATETIME", nullable = false, length = 0)
+	public Date getUpdatetime() {
+		return this.updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	@Column(name = "VERSIONT", nullable = false)
+	public int getVersiont() {
+		return this.versiont;
+	}
+
+	public void setVersiont(int versiont) {
+		this.versiont = versiont;
 	}
 
 }

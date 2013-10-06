@@ -142,7 +142,7 @@
 					
 					
 					<div class="well">
-						<h4>收货人信息</h4>
+						<h4>选择发货人信息</h4>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">搜索可用发货地址: </span> <input
@@ -151,15 +151,19 @@
 						<span id="accountcheckinfo" class="label label-info">请输入会员账号进行搜索</span>
 				
 					</div>
-					<!-- flexigrid -->
+					
+					<!-- flexigrid 会员发货地址列表-->
 					<div id="flexdeliveraddressmanagement">
 						<table id="deliveraddressmanagement" style="display: none;"></table>
+					</div>
+					
+					<div class="line-dotted"></div>
+					<div class="well">
+						<h4>新增发货人信息</h4>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">收货人: </span> <input
 							id="shippingusername" name="shippingusername" type="text" value=""/> 
-						<button class="btn btn-primary" type="button">查询</button>
-						<span class="label label-info">未查询出改收货人信息</span>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">国家:</span> <input type="text"
@@ -193,23 +197,31 @@
 						<span class="label label-required">邮箱:</span> <input type="text"
 							id="email" name="email" />
 					</div>
-					
+					<div class="form-inline">
+						<label class="label label-submit"></label>
+					 	<input class="btn btn-success" type="button" id="savedeliveraddress"
+							name="savedeliveraddress" value="保存发货地址" />
+					</div>
 					<div class="well">
 						<h4>支付及配送方式</h4>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">支付方式:</span> <input
+						<span class="label label-required">支付方式:</span>
+						<span id="paystatearea"></span>
+						<!--  <input
 							type="radio" id="paystate" name="paystate" value="1" /> <label
 							for="radio-1">支付宝</label> <input type="radio" id="paystate"
 							name="paystate" value="0" /> <label for="radio-2">财付通 </label>
 							<input type="radio" id="paystate"
-							name="paystate" value="0" /> <label for="radio-2">货到付款 </label>
+							name="paystate" value="0" /> <label for="radio-2">货到付款 </label>--> 
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">快递运输:</span> <input
+						<span class="label label-required">快递运输:</span>
+						<span id="delivermodearea"></span>
+						<!-- <input
 							type="radio" id="delivermode" name="delivermode" value="1" /> <label
 							for="radio-1">顺丰速运 </label> <input type="radio" id="delivermode"
-							name="delivermode" value="0" /> <label for="radio-2">圆通 </label>
+							name="delivermode" value="0" /> <label for="radio-2">圆通 </label> -->
 					</div>
 					
 					<div class="well">
@@ -219,23 +231,34 @@
 						<span class="label label-required">发票类型:</span> <input
 							type="radio" id="isinvoice" name="isinvoice" value="1" checked/> <label
 							for="radio-1">个人</label> <input type="radio" id="isinvoice"
-							name="isinvoice" value="0" /> <label for="radio-2">明细 </label>
+							name="isinvoice" value="1" /> <label for="radio-2">明细 </label>
+							 <input type="radio" id="isinvoice"
+							name="isinvoice" value="0" /> <label for="radio-2">不开票 </label>
 					</div>
-					<div class="form-inline">
+				    <div class="form-inline">
 						<span class="label label-required">发票抬头:</span> <input type="text"
-							id="email" name="email" />
+							id="invPayee" name="invPayee" />
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">订单类型:</span> <input
-							type="radio" id="ordertag" name="ordertag" value="1" checked/> <label
+							type="radio" id="orderTag" name="orderTag" value="1" checked/> <label
 							for="radio-1">普通订单</label> 
+					</div>
+					<div class="well">
+						<h4>订单备注</h4>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">订单备注:</span> <input type="text"
+							id="customerordernotes" name="customerordernotes" class="large"/>
 					</div>
 					<div class="form-inline">
 						<label class="label label-submit"></label>
-						<!-- 如果查询到了收货地址则需要设置影藏的收货地址id -->
+						<!-- 如果查询到了发货地址则需要设置影藏的发货地址id -->
 						<input type="hidden" id="hidshippingaddressid" name="hidshippingaddressid" value="" />
 						<!-- 如果查询到了平台账号则需要设置隐藏的会员id -->
 						<input type="hidden" id="hidmemberid" name="hidmemberid" value=""/>
+						<!-- 隐藏的productids字符串 -->
+						<input type="hidden" id="hidproductid" name="hidproductid" value=""/>
 						 <input
 							class="btn btn-success" type="button" id="submitorder"
 							name="submitorder" value="提交" />

@@ -52,4 +52,5 @@ public interface DeliverAddressTDao {
 	 * @return
 	 */
 	public DeliverAddressT findDeliverAddressById(String addressid);
+
 }

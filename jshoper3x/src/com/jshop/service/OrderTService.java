@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.jshop.entity.CartT;
 import com.jshop.entity.GoodsT;
+import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.ShippingAddressT;
 
@@ -227,6 +228,6 @@ public interface OrderTService {
 	 * @param ordert
 	 * @param sAddressT
 	 */
-	public void saveNormalOrderNeedInfoBack(OrderT ordert,ShippingAddressT sAddressT,List<CartT>cartLists);
+	public void saveNormalOrderNeedInfoBack(OrderT ordert,ShippingAddressT sAddressT,List<CartT>cartLists,OrderInvoiceT oit);
 	
 }

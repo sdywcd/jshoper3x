@@ -355,5 +355,23 @@ public class  StaticString {
 	public static final String MEMBERSTATE_ONE_NUM="1";
 	
 	
+	//会员收货地址管理
+	public static final String DELIVERADDRESSSTATE_ZERO_NUM="0";
+	
+	public static final String DELIVERADDRESSSTATE_ZERO="非默认";
+	
+	public static final String DELIVERADDRESSSTATE_ONE_NUM="1";
+	
+	public static final String DELIVERADDRESSSTATE_ONE="默认";
+	
+	//订单发票信息管理
+	public static final String ORDERINVOICE_ONE_NUM="1";
+	
+	public static final String ORDERINVOICE_ONE="个人";
+	
+	public static final String ORDERINVOICE_TWO_NUM="2";
+	
+	public static final String ORDERINVOICE_TWO="公司";
+	
 	
 }

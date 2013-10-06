@@ -39,6 +39,7 @@ public class PaymentMAction extends ActionSupport {
 	private String isFast;
 	private String state;
 	private PaymentM bean = new PaymentM();
+	private List<PaymentM>beanlist=new ArrayList<PaymentM>();
 	private List rows = new ArrayList();
 	private int rp;
 	private int page = 1;
@@ -224,6 +225,14 @@ public class PaymentMAction extends ActionSupport {
 
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
+	}
+
+	public List<PaymentM> getBeanlist() {
+		return beanlist;
+	}
+
+	public void setBeanlist(List<PaymentM> beanlist) {
+		this.beanlist = beanlist;
 	}
 
 	/**
@@ -419,4 +428,22 @@ public class PaymentMAction extends ActionSupport {
 		return "json";
 
 	}
+	
+	
+	/**
+	 *  获取后台新增订单时所需要的支付方式信息
+	 */
+	@Action(value = "findAllPaymentForbsOrder", results = { @Result(name = "json", type = "json") })
+	public String findAllPaymentForbsOrder(){
+		beanlist=this.getPaymentMService().findAllPaymentWithoutPage();
+		if(!beanlist.isEmpty()){
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
+	
+	
+	
+	
 }

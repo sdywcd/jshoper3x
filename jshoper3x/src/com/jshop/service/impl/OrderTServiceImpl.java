@@ -12,11 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.dao.CartTDao;
+import com.jshop.dao.OrderInvoiceTDao;
 import com.jshop.dao.OrderTDao;
 import com.jshop.dao.ShippingAddressTDao;
 import com.jshop.dao.impl.OrderTDaoImpl;
 import com.jshop.entity.CartT;
 import com.jshop.entity.GoodsT;
+import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.ShippingAddressT;
 import com.jshop.service.OrderTService;
@@ -29,7 +31,14 @@ public class OrderTServiceImpl implements OrderTService {
 	private Serial serial;
 	private ShippingAddressTDao shippingAddressTDao;
 	private CartTDao cartTDao;
+	private OrderInvoiceTDao orderInvoiceTDao;
 	
+	public OrderInvoiceTDao getOrderInvoiceTDao() {
+		return orderInvoiceTDao;
+	}
+	public void setOrderInvoiceTDao(OrderInvoiceTDao orderInvoiceTDao) {
+		this.orderInvoiceTDao = orderInvoiceTDao;
+	}
 	public ShippingAddressTDao getShippingAddressTDao() {
 		return shippingAddressTDao;
 	}
@@ -173,7 +182,7 @@ public class OrderTServiceImpl implements OrderTService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void saveNormalOrderNeedInfoBack(OrderT ordert,
-			ShippingAddressT sAddressT,List<CartT>cartLists) {
+			ShippingAddressT sAddressT,List<CartT>cartLists,OrderInvoiceT oit) {
 		//生成一个订单号
 		String orderid=this.getSerial().Serialid(Serial.ORDER);
 		//生成一个同批次购物车号
@@ -190,7 +199,10 @@ public class OrderTServiceImpl implements OrderTService {
 		//加入订单表
 		ordert.setOrderid(orderid);
 		this.getOrderTDao().addOrder(ordert);
-		
+		//加入订单发票表
+		oit.setOrderInvoiceid(this.getSerial().Serialid(Serial.ORDERINVOICE));
+		oit.setOrderid(orderid);
+		this.getOrderInvoiceTDao().addOrderInvoice(oit);
 	}
 
 

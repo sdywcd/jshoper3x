@@ -182,6 +182,9 @@ $(function() {
 				var memberprice=0.0;
 				var store="";
 				var needquantity=1;
+				$('.trSelected', grid).each(function() {
+					productId = this.id.substr(3);
+				});
 				$(".trSelected td:nth-child(2) div", $('#productsmanagement')).each(function(i){
 					productSn=this.innerHTML;
 				});
@@ -196,6 +199,9 @@ $(function() {
 				});
 				html+="<tr id='orderinfo"+productSn+"' class='success'><td >"+productSn+"</td><td>"+productName+"</td><td>"+memberprice+"</td><td>1</td><td>"+store+"</td><td><a href='javascript:delParamPChildAndReOrderInfo("+productSn+","+memberprice+");'>删除</a></td></tr>"
 				$("#orderinfo").append(html);
+				//设置隐藏的货物id字符串
+				var oldproductid=$("#hidproductid").val();
+				$("#hidproductid").val(oldproductid+productId+",");
 				//商品件数
 				var oldneedquantity=$("#needquantity").text()*1;
 				if(oldneedquantity==0){
@@ -372,16 +378,202 @@ $(function() {
 		}
 
 		
+		/**
+		 * 根据会员名称查询可用的收货地址
+		 */
+		findDeliverAddressBymemberName=function(membername){
+			$("#deliveraddressmanagement").flexigrid( {
+				url : 'findDeliverAddressBymemberName.action?membername='+membername,
+				dataType : 'json',
+				cache : false,
+				colModel : [{
+					display : '收货人',
+					name : 'shippingusername',
+					width : 100,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '国家',
+					name : 'country',
+					width : 80,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '省份',
+					name : 'province',
+					width : 80,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '城市',
+					name : 'city',
+					width : 80,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '区域',
+					name : 'district',
+					width : 80,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '街道',
+					name : 'street',
+					width : 150,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '邮编',
+					name : 'postcode',
+					width : 80,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '手机号码',
+					name : 'mobile',
+					width : 100,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '状态',
+					name : 'state',
+					width : 100,
+					sortable : true,
+					align : 'center'
+				}, {
+					display : '会员ID',
+					name : 'memberid',
+					width : 100,
+					sortable : true,
+					align : 'center'
+				},{
+					display : '创建时间',
+					name : 'createtime',
+					width : 100,
+					sortable : true,
+					align : 'center'
+				}],
+				buttons : [ {
+					separator : true
+				} ],
+				buttons:[{
+					name:'选择这个收货地址',
+					bclass:'add',
+					onpress:action
+				}],
+				searchitems : [ {
+					display : '请选择搜索条件',
+					name : 'sc',
+					isdefault : true
+				}],
+				sortname : "createtime",
+				sortorder : "desc",
+				usepager : true,
+				title : '',
+				useRp : true,
+				rp : 20,
+				rpOptions : [ 5, 20, 40, 100 ],
+				showTableToggleBtn : true,
+				width : 'auto',
+				height : 'auto',
+				pagestat : '显示{from}到{to}条，共{total}条记录',
+				procmsg : '正在获取数据，请稍候...',
+				checkbox:true
+			});
+			function action(com,grid){
+				if(com=="选择这个收货地址"){
+					if($('.trSelected',grid).length==1){
+						var str="";
+						$('.trSelected',grid).each(function(){
+							str=this.id.substr(3);
+						});
+						$("#hidshippingaddressid").val(str);
+						var str1="";
+						$(".trSelected td:nth-child(11) div", $('#deliveraddressmanagement')).each(function(i){
+							str1=this.innerHTML;
+						});
+						$("#hidmemberid").val(str1);
+						return;
+					}else{
+						formwarning("#alerterror", "请选择一条发货地址信息");
+						return false;
+					}
+					
+				}
+			}
+		},
+		
+		
 		
 		/**
 		 * 增加普通订单
 		 */
 		saveNormalOrder=function(){
+			//获取货物id字符串
+			var productid=$("#hidproductid").val();
+			productid=productid.substring(0,productid.length-1);
+			//检查是否选择了发货地址
+			var hidshippingaddressid=$("#hidshippingaddressid").val();
+			if(hidshippingaddressid==""){
+				formwarning("#alerterror","请先搜索并选择可用的发货地址");
+				return false;
+			}
+			//获取隐藏的会员id通过搜索发货地址获取
+			var memberid=$("#hidmemberid").val();
+			//获取搜索收货地址填写的会员名称
+			var membername=$("#membername").val();
+			//获取选择的支付方式
+			var paymentid=$("input[name='paystate']:checked").val();
+			//获取物流商id
+			var logisticsid=$("input[name='delivermode']:checked").val();
+			//获取运费
+			var freight=$("#freight").val()*1.0;
+			//获取总金额
+			var amount=$("#amount").text()*1.0;
+			//获取是否开票
+			var isinvoice=$("input[name='isinvoice']:checked").val();
+			//获取订单备注
+			var customerordernotes=$("#customerordernotes").val();
+			if(customerordernotes==""){
+				customerordernotes="";
+			}
+			//获取订单类型
+			var orderTag=$("input[name='orderTag']:checked").val();
+			//获取应支付金额
+			var shouldpay=$("#shouldpay").val()*1.0;
+			//获取订单名称
+			var ordername=$("#ordername").val();
+			//获取发票相关信息
+			var invPayee=$("#invPayee").val();
+			$.post("InitNormalOrderNeedInfoBack.action",{
+				"productid":productid,
+				"hidshippingaddressid":hidshippingaddressid,
+				"memberid":memberid,
+				"membername":membername,
+				"paymentid":paymentid,
+				"logisticsid":logisticsid,
+				"freight":freight,
+				"amount":amount,
+				"isinvoice":isinvoice,
+				"customerordernotes":customerordernotes,
+				"orderTag":orderTag,
+				"shouldpay":shouldpay,
+				"ordername":ordername,
+				"invPayee":invPayee
+			},function(data){
+				if(data.sucflag){
+					window.location.href = "normalordersment.jsp?operate=find&folder=orders";
+					return;
+				}
+			})
 			
-		},
-		
+			
+		}
+		/**
+		 * 点击提交订单
+		 */
 		$("#submitorder").click(function(){
-			
+			saveNormalOrder();
 		});
 	
 		/**
@@ -408,23 +600,117 @@ $(function() {
 				$("#accountcheckinfo").text("请输入账号");
 				return false;
 			}
-//			$.post("findMemberByloginname.action",{"loginname":loginname},function(data){
-//				if(data.sucflag){
-//					$("#hidmemberid").val(data.bean.memberid);
-//					return true;
-//				}else{
-//					$("#accountcheckinfo").text("账号不存在");
-//					return true;
-//				}
-//			});
+			findDeliverAddressBymemberName(membername);
 			
 		});
+		/**
+		 * 获取系统中的物流商信息填充到页面中去
+		 */
+		findAllLogisticsBusinessForbsOrder=function(){
+			$.get("findAllLogisticsBusinessForbsOrder.action",function(data){
+				if(data.sucflag){
+					var html="";
+					$.each(data.logisticsbusiness,function(k,v){
+						html+="<input type='radio' id='delivermode' name='delivermode' value='"+v.logisticsid+"' />" +
+								"<label for='radio-1'>"+v.logisticsname+"</label>";
+					});
+					$("#delivermodearea").html(html);
+					
+				}
+			});
+		},
+		/**
+		 * 获取系统中的支付支持信息填充到页面中去
+		 */
+		findAllPaymentForbsOrder=function(){
+			$.get("findAllPaymentForbsOrder.action",function(data){
+				if(data.sucflag){
+					var html="";
+					$.each(data.beanlist,function(k,v){
+						html+="<input type='radio' id='paystate' name='paystate' value='"+v.paymentid+"' />" +
+						"<label for='radio-1'>"+v.paymentname+"</label>";
+					});
+					$("#paystatearea").html(html);
+				}
+			});
+		}
+		/**
+		 * 点击保存收货地址
+		 */
+		$("#savedeliveraddress").click(function(){
+			var membername=$("#membername").val();
+			if(membername==""){
+				formwarning("#alerterror","请填写一个会员名称以便新增的收货地址可以成功增加");
+				return false;
+			}
+			var shippingusername=$("#shippingusername").val();
+			if(shippingusername==""){
+				formwarning("#alerterror","请填写一个收货人");
+				return false;
+			}
+			var country=$("#country").val();
+			if(country==""){
+				formwarning("#alerterror","请填写国家");
+				return false;
+			}
+			var province=$("#province").val();
+			if(province==""){
+				formwarning("#alerterror","请填写省份");
+				return false;
+			}
+			var city=$("#city").val();
+			if(city==""){
+				formwarning("#alerterror","请填写城市");
+				return false;
+			}
+			var district=$("#district").val();
+			var street=$("#street").val();
+			if(street==""){
+				formwarning("#alerterror","请填写详细地址");
+				return false;
+			}
+			var postcode=$("#postcode").val();
+			var mobile=$("#mobile").val();
+			if(mobile==""){
+				formwarning("#alerterror","请填写手机号码");
+				return false;
+			}
+			var telno=$("#telno").val();
+			var email=$("#email").val();
+			this.value="提交中";
+			$.post("saveDeliverAddressbsOrder.action",{
+				"membername":membername,
+				"shippingusername":shippingusername,
+				"country":country,
+				"province":province,
+				"city":city,
+				"street":street,
+				"postcode":postcode,
+				"mobile":mobile,
+				"telno":telno,
+				"email":email,
+				"district":district
+			},function(data){
+				if(data.sucflag){
+					$("#deliveraddressmanagement").flexReload();
+				}
+			});
+			
+			
+			
+			
+		});
+		
+		
 		/**
 		 * main logic
 		 */
 		var operate = $.query.get("operate");
 		if (operate == "add") {
-			
+			//调用查询物流商方法
+			findAllLogisticsBusinessForbsOrder();
+			//调用查询支付方式方法
+			findAllPaymentForbsOrder();
 		}else if(operate=="edit"){
 		
 		}else if(operate=="find"){

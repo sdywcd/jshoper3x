@@ -246,7 +246,16 @@ public class OrderInvoiceTAction extends ActionSupport {
 
 			Map cellMap = new HashMap();
 			cellMap.put("id", oi.getOrderInvoiceid());
-			cellMap.put("cell", new Object[] {oi.getOrderid(), oi.getInvType(), oi.getInvPayee(), oi.getInvContent(), oi.getAmount(), oi.getState(), oi.getUsername(), BaseTools.formateDbDate(oi.getCreatetime()) });
+			cellMap.put("cell", new Object[] {
+					oi.getOrderid(), 
+					oi.getInvType(), 
+					oi.getInvPayee(), 
+					oi.getInvContent(), 
+					oi.getAmount(), 
+					oi.getState(), 
+					oi.getUsername(), 
+					BaseTools.formateDbDate(oi.getCreatetime()) 
+					});
 			rows.add(cellMap);
 		}
 	}

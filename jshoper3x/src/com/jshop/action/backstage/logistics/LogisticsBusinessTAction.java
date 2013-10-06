@@ -59,7 +59,6 @@ public class LogisticsBusinessTAction extends ActionSupport {
 	private String query;
 	private String qtype;
 	private boolean slogin = false;
-	private String usession;
 	private boolean sucflag;
 
 	@JSON(serialize = false)
@@ -295,14 +294,6 @@ public class LogisticsBusinessTAction extends ActionSupport {
 
 	public void setLogisticsjson(String logisticsjson) {
 		this.logisticsjson = logisticsjson;
-	}
-
-	public String getUsession() {
-		return usession;
-	}
-
-	public void setUsession(String usession) {
-		this.usession = usession;
 	}
 
 	public boolean isSucflag() {
@@ -542,4 +533,18 @@ public class LogisticsBusinessTAction extends ActionSupport {
 		}
 		return "json";
 	}
+	/**
+	 * 获取后台新增订单时所需要的物流商信息
+	 * @return
+	 */
+	@Action(value = "findAllLogisticsBusinessForbsOrder", results = { @Result(name = "json", type = "json") })
+	public String findAllLogisticsBusinessForbsOrder(){
+		logisticsbusiness=this.getLogisticsBusinessTService().findAllLogisticsBusinessWithoutPage();
+		if(!logisticsbusiness.isEmpty()){
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
+	
 }

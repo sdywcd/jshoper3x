@@ -20,8 +20,11 @@ import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.CartT;
+import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.LogisticsBusinessT;
+import com.jshop.entity.MemberT;
+import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 import com.jshop.entity.ProductT;
@@ -31,6 +34,7 @@ import com.jshop.service.CartTService;
 import com.jshop.service.DeliverAddressTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.LogisticsBusinessTService;
+import com.jshop.service.MemberTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
 import com.jshop.service.ProductTService;
@@ -51,6 +55,7 @@ public class OrderTAction extends ActionSupport {
 	private GoodsTService goodsTService;
 	private PaymentMService paymentMService;
 	private DeliverAddressTService deliverAddressTService;
+	private MemberTService memberTService;
 	private String orderid;
 	private String expressnumber;
 	private String invoicenumber;
@@ -84,6 +89,7 @@ public class OrderTAction extends ActionSupport {
 	private String hidshippingaddressid;//隐藏的发货地址id
 	private String ordername;
 	private String memberdelivertime;//会员指定的送货日期
+	private String invPayee;//发票抬头
 	private List rows = new ArrayList();
 	private int rp;
 	private int page = 1;
@@ -112,6 +118,14 @@ public class OrderTAction extends ActionSupport {
 	public void setDeliverAddressTService(
 			DeliverAddressTService deliverAddressTService) {
 		this.deliverAddressTService = deliverAddressTService;
+	}
+	@JSON(serialize = false)
+	public MemberTService getMemberTService() {
+		return memberTService;
+	}
+
+	public void setMemberTService(MemberTService memberTService) {
+		this.memberTService = memberTService;
 	}
 
 	@JSON(serialize = false)
@@ -543,6 +557,14 @@ public class OrderTAction extends ActionSupport {
 		this.memberdelivertime = memberdelivertime;
 	}
 
+	public String getInvPayee() {
+		return invPayee;
+	}
+
+	public void setInvPayee(String invPayee) {
+		this.invPayee = invPayee;
+	}
+
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();
@@ -624,7 +646,7 @@ public class OrderTAction extends ActionSupport {
 			cellMap.put("id", o.getOrderid());
 			cellMap.put("cell", new Object[] {
 					o.getOrderid(),
-					"<a id='orderdetial' href='InitOrdersDetail.action?orderid=" + o.getOrderid() + "' name='orderdetail'>" + o.getProductinfo() + "</a>",
+					"<a id='orderdetial' href='InitOrdersDetail.action?orderid=" + o.getOrderid() + "' name='orderdetail'>" + o.getOrdername() + "</a>",
 					
 					o.getAmount(), 
 					o.getNeedquantity(), 
@@ -1084,6 +1106,9 @@ public class OrderTAction extends ActionSupport {
 	 * 初始化普通订单所需数据
 	 * @return
 	 */
+	@Action(value="InitNormalOrderNeedInfoBack",results={
+			@Result(name="json",type="json")
+	})
 	public String InitNormalOrderNeedInfoBack(){
 		if(StringUtils.isBlank(this.getProductid())||StringUtils.isBlank(this.getPaymentid())||StringUtils.isBlank(this.getLogisticsid())){
 			return "json";
@@ -1095,7 +1120,8 @@ public class OrderTAction extends ActionSupport {
 		
 		//获取该购物信息购买者的id和收货人名称
 		String memberid=this.getMemberid().trim();
-		String shippingusername=this.getMembername().trim();
+		//获取页面传递过来的会员名称
+		String membername=this.getMembername().trim();
 		//购物车集合
 		List<CartT>cartlists=new ArrayList<CartT>();
 		//收集商品数据，加入购物车实体
@@ -1124,7 +1150,10 @@ public class OrderTAction extends ActionSupport {
 				t.setSubtotal(1.00*p.getMemberprice());//价格小计
 				t.setAddtime(BaseTools.systemtime());
 				t.setQuantity(p.getStore());//库存
-				t.setPicture(StringUtils.split(g.getPictureurl(),",")[0]);
+				if(g.getPictureurl()!=null&&g.getPictureurl().length()>0){//处理图片
+					t.setPicture(StringUtils.split(g.getPictureurl(),",")[0]);
+				}
+				t.setPicture("");
 				t.setUsersetnum(g.getUsersetnum());
 				t.setWeight(p.getWeight());
 				t.setState(StaticString.CARTSTATE_NEWADDTOCART);//新加入购物车的状态
@@ -1138,27 +1167,33 @@ public class OrderTAction extends ActionSupport {
 				cartlists.add(t);//将购物车信息加入购物车集合
 			}
 		}
-		//收集发货地址信息 后台增加发货地址不在从deliveraddress去获取而是直接从页面上获取并增加到shippingaddress
+		//收集发货地址信息 
+		//通过在会员的deliveraddress表中搜索id获取收货地址信息并加入到shippingaddress表中
 		//货发地址实体类
 		ShippingAddressT sAddressT=new ShippingAddressT();
-		sAddressT.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
-		sAddressT.setMemberid(memberid);
-		sAddressT.setShippingusername(shippingusername);
-		sAddressT.setProvince(this.getProvince().trim());
-		sAddressT.setCity(this.getCity().trim());
-		sAddressT.setDistrict(this.getDistrict().trim());
-		sAddressT.setStreet(this.getStreet().trim());
-		sAddressT.setPostcode(this.getPostcode().trim());
-		sAddressT.setTelno(this.getTelno().trim());
-		sAddressT.setMobile(this.getMobile().trim());
-		sAddressT.setEmail(this.getEmail().trim());
-		sAddressT.setCreatetime(BaseTools.systemtime());
-		sAddressT.setState(StaticString.SHIPPINGSTATE_HAVEORDER);//有对应订单的发货地址
-		sAddressT.setDeliveraddressid(StaticString.SHIPPINGADDRESS_DELIVERADDRESSID);
-		sAddressT.setIssend(StaticString.SHIPPINGISSEND_NOSEND);
-		sAddressT.setOrderid(null);
-		sAddressT.setCountry(this.getCountry().trim());
-		sAddressT.setShopid(null);//店铺id 未来支持入住模式时启用
+		DeliverAddressT deliverAddressTs=new DeliverAddressT();
+		deliverAddressTs=this.getDeliverAddressTService().findDeliverAddressById(this.getHidshippingaddressid());
+		if(deliverAddressTs!=null){
+			sAddressT.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
+			sAddressT.setMemberid(memberid);
+			sAddressT.setShippingusername(deliverAddressTs.getShippingusername());
+			sAddressT.setProvince(deliverAddressTs.getProvince());
+			sAddressT.setCity(deliverAddressTs.getCity());
+			sAddressT.setDistrict(deliverAddressTs.getDistrict());
+			sAddressT.setStreet(deliverAddressTs.getStreet());
+			sAddressT.setPostcode(deliverAddressTs.getPostcode());
+			sAddressT.setTelno(deliverAddressTs.getTelno());
+			sAddressT.setMobile(deliverAddressTs.getMobile());
+			sAddressT.setEmail(deliverAddressTs.getEmail());
+			sAddressT.setCreatetime(BaseTools.systemtime());
+			sAddressT.setState(StaticString.SHIPPINGSTATE_HAVEORDER);//有对应订单的发货地址
+			sAddressT.setDeliveraddressid(StaticString.SHIPPINGADDRESS_DELIVERADDRESSID);
+			sAddressT.setIssend(StaticString.SHIPPINGISSEND_NOSEND);
+			sAddressT.setOrderid(null);
+			sAddressT.setCountry(deliverAddressTs.getCountry());
+			sAddressT.setShopid(null);//店铺id 未来支持入住模式时启用
+		}
+		
 		//收集支付方式数据
 		PaymentM paymentM=this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
 		//收集物流商数据
@@ -1170,7 +1205,7 @@ public class OrderTAction extends ActionSupport {
 		StringBuffer psbBuffer=new StringBuffer();
 		for(CartT c:cartlists){
 			totalpoints=Arith.add(totalpoints, Arith.mul(c.getPoints(), Double.parseDouble(String.valueOf(c.getNeedquantity()))));
-			productinfo="{productid:"+c.getProductid()+",productname:"+c.getProductName()+",goodsid:"+c.getGoodsid()+"}";
+			productinfo="{\"productid\":\""+c.getProductid()+"\",\"productname\":\""+c.getProductName()+"\",\"goodsid\":\""+c.getGoodsid()+"\"}";
 			psbBuffer.append(productinfo).append(",");
 			needquantity+=c.getNeedquantity();
 		}
@@ -1220,11 +1255,33 @@ public class OrderTAction extends ActionSupport {
 		orderT.setVersiont(1);
 		orderT.setOrdername(this.getOrdername());
 		orderT.setShopid(null);//店铺id 未来支持入住模式时启用
-		orderT.setMemberdelivertime(BaseTools.getMemberDeliverTime(this.getMemberdelivertime()));
-		this.getOrderTService().saveNormalOrderNeedInfoBack(orderT, sAddressT, cartlists);
+		if(this.getMemberdelivertime()!=null){
+			orderT.setMemberdelivertime(BaseTools.getMemberDeliverTime(this.getMemberdelivertime()));
+		}else{
+			orderT.setMemberdelivertime(BaseTools.systemtime());
+			
+		}
+		
+		
+		//构建订单发票实体
+		OrderInvoiceT oit=new OrderInvoiceT();
+		oit.setInvType(this.getIsinvoice());
+		oit.setInvPayee(this.getInvPayee());
+		oit.setAmount(this.getAmount()+"");
+		oit.setMemberid(memberid);
+		oit.setState(StaticString.ZERO);
+		oit.setMembername(membername);
+		oit.setInvContent("");
+		oit.setCreatetime(BaseTools.systemtime());
+		oit.setUpdatetime(oit.getCreatetime());
+		oit.setVersiont(1);
+		
+		this.getOrderTService().saveNormalOrderNeedInfoBack(orderT, sAddressT, cartlists,oit);
+		//调用订单发票逻辑
 		this.setSucflag(true);
 		return "json";
 	}
+	
 	
 	/**
 	 * 开始对支付宝支付接口进行参数设置
@@ -1232,6 +1289,8 @@ public class OrderTAction extends ActionSupport {
 	private void BuildAlipayConfig(){
 		
 	}
+	
+
 	
 	
 	/**
@@ -1250,6 +1309,96 @@ public class OrderTAction extends ActionSupport {
 			}
 		}
 		return lists;
+	}
+	
+	/**
+	 * 根据会员名称查询收货地址
+	 * @return
+	 */
+	@Action(value="findDeliverAddressBymemberName",results={
+			@Result(name="json",type="json")
+	})
+	public String findDeliverAddressBymemberName(){
+		if(StringUtils.isBlank(this.getMembername())){
+			return "json";
+		}
+		this.findDefaultMemberDeliverAddress();
+		this.setSucflag(true);
+		return "json";
+	}
+	
+	
+	
+	private void findDefaultMemberDeliverAddress() {
+		List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getMembername());
+		if(!list.isEmpty()){
+			List<DeliverAddressT>deliverlists=this.getDeliverAddressTService().findDeliverAddressBymemberid(list.get(0).getId());
+			this.ProcessDeliverAddress(deliverlists);
+			total=deliverlists.size();
+		}
+	
+		
+	}
+
+	private void ProcessDeliverAddress(List<DeliverAddressT> list) {
+		for(Iterator it=list.iterator();it.hasNext();){
+			DeliverAddressT dt=(DeliverAddressT) it.next();
+			if(dt.getState().equals(StaticString.DELIVERADDRESSSTATE_ZERO_NUM)){
+				dt.setState(StaticString.DELIVERADDRESSSTATE_ZERO);
+			}else{
+				dt.setState(StaticString.DELIVERADDRESSSTATE_ONE);
+			}
+			Map<String,Object>cellMap=new HashMap<String, Object>();
+			cellMap.put("id", dt.getAddressid());
+			cellMap.put("cell", new Object[]{
+					dt.getShippingusername(),
+					dt.getCountry(),
+					dt.getProvince(),
+					dt.getCity(),
+					dt.getDistrict(),
+					dt.getStreet(),
+					dt.getPostcode(),
+					dt.getMobile(),
+					dt.getState(),
+					dt.getMemberid(),
+					BaseTools.formateDbDate(dt.getCreatetime())	
+			});
+			rows.add(cellMap);
+			
+		}
+	}
+	
+	/**
+	 * 后台订单新增收货地址
+	 * @return
+	 */
+	@Action(value="saveDeliverAddressbsOrder",results={
+			@Result(name="json",type="json")
+	})
+	public String saveDeliverAddressbsOrder(){
+		List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getMembername());
+		if(!list.isEmpty()){
+			DeliverAddressT dt=new DeliverAddressT();
+			dt.setAddressid(this.getSerial().Serialid(Serial.DELIVERADDRESS));
+			dt.setMemberid(list.get(0).getId());
+			dt.setShippingusername(this.getShippingusername().trim());
+			dt.setProvince(this.getProvince().trim());
+			dt.setCity(this.getCity().trim());
+			dt.setDistrict(this.getDistrict().trim());
+			dt.setStreet(this.getStreet().trim());
+			dt.setPostcode(this.getPostcode().trim());
+			dt.setTelno(this.getTelno().trim());
+			dt.setMobile(this.getMobile().trim());
+			dt.setEmail(this.getEmail().trim());
+			dt.setCreatetime(BaseTools.systemtime());
+			dt.setState(StaticString.DELIVERADDRESSSTATE_ZERO_NUM);
+			dt.setCountry(this.getCountry().trim());
+			this.getDeliverAddressTService().addDeliverAddress(dt);
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+		
 	}
 	
 

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-9-30 22:17:05 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-10-6 17:36:02 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -38,7 +38,7 @@ public class DeliverAddressT implements java.io.Serializable {
 	public DeliverAddressT(String addressid, String memberid,
 			String shippingusername, String province, String city,
 			String district, String street, String postcode, String mobile,
-			Date createtime, String state) {
+			Date createtime, String state, String country) {
 		this.addressid = addressid;
 		this.memberid = memberid;
 		this.shippingusername = shippingusername;
@@ -50,6 +50,7 @@ public class DeliverAddressT implements java.io.Serializable {
 		this.mobile = mobile;
 		this.createtime = createtime;
 		this.state = state;
+		this.country = country;
 	}
 
 	public DeliverAddressT(String addressid, String memberid,
@@ -92,7 +93,7 @@ public class DeliverAddressT implements java.io.Serializable {
 		this.memberid = memberid;
 	}
 
-	@Column(name = "SHIPPINGUSERNAME", nullable = false, length = 50)
+	@Column(name = "SHIPPINGUSERNAME", nullable = false, length = 45)
 	public String getShippingusername() {
 		return this.shippingusername;
 	}
@@ -192,7 +193,7 @@ public class DeliverAddressT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "COUNTRY", length = 20)
+	@Column(name = "COUNTRY", nullable = false, length = 20)
 	public String getCountry() {
 		return this.country;
 	}
