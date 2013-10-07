@@ -743,18 +743,16 @@ public class OrderTAction extends ActionSupport {
 	}
 
 	/**
-	 * 获取待发货订单
+	 * 获取默认的所有未付款需要发货的即货到付款的普通订单
 	 * 
 	 * @return
 	 */
-	@Action(value="findAllTobeShippedOrders",results={
+	@Action(value="findAllTobeShippedOrdersUnpay",results={
 			@Result(name="json",type="json")
 	})
-	public String findAllTobeShippedOrders() {
-		if (this.getQtype().equals("sc")) {
-			this.setTotal(0);
-			rows.clear();
-			this.finddefaultAllTobeShippedOrder();
+	public String findAllTobeShippedOrdersUnpay() {
+		if (this.getQtype().equals(StaticString.SC)) {
+			this.finddefaultAllUnpayTobeShippedOrder();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
 				return "json";
@@ -764,16 +762,53 @@ public class OrderTAction extends ActionSupport {
 		}
 		return "json";
 	}
+	/**
+	 * 获取默认的所有已付款需要发货的普通订单
+	 * @return
+	 */
+	@Action(value="findAllTobeShippedOrdersHavepay",results={
+			@Result(name="json",type="json")
+	})
+	public String findAllTobeShippedOrdersHavepay(){
+		if(StaticString.SC.equals(this.getQtype())){
+			this.finddefaultAllHavepayTobeShippedOrder();
+		}else{
+			if(StringUtils.isBlank(this.getQuery())){
+				return "json";
+			}else{
+				return "json";
+			}
+		}
+		return "json";
+	}
+	
+	/**
+	 *获取默认的所有已付款需要发货的普通订单
+	 */
+	private void finddefaultAllHavepayTobeShippedOrder() {
+		int currentPage=page;
+		int lineSize=rp;
+		String shippingstate=StaticString.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String orderstate=StaticString.ORDERSTATE_ONE_NUM;//订单状态已确认
+		String paystate=StaticString.PAYSTATE_ONE_NUM;//付款状态已支付
+		total=this.getOrderTService().countfindAllTobeShippedOrders(orderstate, paystate, shippingstate);
+		List<OrderT>orderTs=this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, orderstate, paystate, shippingstate);
+		if(orderTs!=null){
+			this.ProcessOrderList(orderTs);
+		}
+	}
 
 	/**
-	 *获取默认的所有待发货订单
+	 *获取默认的所有未付款需要发货的即货到付款的订单
 	 */
-	public void finddefaultAllTobeShippedOrder() {
+	public void finddefaultAllUnpayTobeShippedOrder() {
 		int currentPage = page;
 		int lineSize = rp;
-		String shippingstate = "0";//未发货状态
-		total = this.getOrderTService().countfindAllTobeShippedOrders(shippingstate);
-		List<OrderT> order = this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, shippingstate);
+		String shippingstate = StaticString.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String orderstate=StaticString.ORDERSTATE_TWO_NUM;//订单状态货到付款
+		String paystate=StaticString.PAYSTATE_ZERO_NUM;//付款状态未付款
+		total = this.getOrderTService().countfindAllTobeShippedOrders(orderstate,paystate,shippingstate);
+		List<OrderT> order = this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize,orderstate,paystate, shippingstate);
 		if (order != null) {
 			this.ProcessOrderList(order);
 		}

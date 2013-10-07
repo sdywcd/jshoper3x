@@ -411,11 +411,11 @@ public class OrderTDaoImpl extends HibernateDaoSupport implements OrderTDao {
 		return 0;
 	}
 
-	public int countfindAllTobeShippedOrders(String shippingstate) {
+	public int countfindAllTobeShippedOrders(String orderstate,String paystate,String shippingstate) {
 		log.debug("count all countfindAllTobeShippedOrders");
 		try {
-			String queryString = "select count(*) from OrderT as o  where o.orderstate='1' or o.orderstate='2' and o.paystate='0' or o.paystate='1' and o.shippingstate=:shippingstate order by purchasetime desc";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "shippingstate", shippingstate);
+			String queryString = "select count(*) from OrderT as o  where o.orderstate=:orderstate and o.paystate=:paystate and o.shippingstate=:shippingstate order by purchasetime desc";
+			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"orderstate","paystate","shippingstate"}, new Object[]{orderstate,paystate,shippingstate});
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -429,26 +429,25 @@ public class OrderTDaoImpl extends HibernateDaoSupport implements OrderTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<OrderT> findAllTobeShippedOrders(final int currentPage, final int lineSize, final String shippingstate) {
+	public List<OrderT> findAllTobeShippedOrders(final int currentPage, final int lineSize, final String orderstate,final String paystate,final String shippingstate) {
 		log.debug("find all findAllTobeShippedOrders");
 		try {
 			List<OrderT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
 
-				String queryString = "from OrderT as o  where o.orderstate='1' or o.orderstate='2' and o.paystate='0' or o.paystate='1' and o.shippingstate=:shippingstate order by purchasetime desc";
+				String queryString = "from OrderT as o  where o.orderstate=:orderstate and o.paystate=:paystate and o.shippingstate=:shippingstate order by purchasetime desc";
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					query.setFirstResult((currentPage - 1) * lineSize);
 					query.setMaxResults(lineSize);
+					query.setParameter("paystate", paystate);
+					query.setParameter("orderstate", orderstate);
 					query.setParameter("shippingstate", shippingstate);
 					List list = query.list();
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all findAllTobeShippedOrders ", re);
 			throw re;

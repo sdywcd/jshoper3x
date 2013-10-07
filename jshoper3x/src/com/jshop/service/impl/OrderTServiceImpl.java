@@ -129,12 +129,12 @@ public class OrderTServiceImpl implements OrderTService {
 		return this.getOrderTDao().updateOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
 	}
 
-	public int countfindAllTobeShippedOrders(String shippingstate) {
-		return this.getOrderTDao().countfindAllTobeShippedOrders(shippingstate);
+	public int countfindAllTobeShippedOrders(String orderstate,String paystate,String shippingstate) {
+		return this.getOrderTDao().countfindAllTobeShippedOrders(orderstate,paystate,shippingstate);
 	}
 
-	public List<OrderT> findAllTobeShippedOrders(int currentPage, int lineSize, String shippingstate) {
-		return this.getOrderTDao().findAllTobeShippedOrders(currentPage, lineSize, shippingstate);
+	public List<OrderT> findAllTobeShippedOrders(int currentPage, int lineSize, String orderstate,String paystate,String shippingstate) {
+		return this.getOrderTDao().findAllTobeShippedOrders(currentPage, lineSize, orderstate,paystate,shippingstate);
 	}
 
 	public int updateExpressnumberByOrderId(String orderid, String expressnumber) {

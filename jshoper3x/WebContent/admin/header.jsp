@@ -128,10 +128,8 @@
 							<ul class="dropdown-menu">
 								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/normalordersment.jsp?operate=find">普通订单</a>
 									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="#">待发货订单</a></li> 
-										<li><a tabindex="-1" href="#">已发货订单</a></li> 
-										<li><a tabindex="-1" href="#">需开票订单</a></li>
-										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+										<li><a tabindex="-1" href="<%=basePath%>admin/order/normalorderstobeshippedunpayment.jsp?operate=find">未付款——货到付款订单</a></li> 
+										<li><a tabindex="-1" href="<%=basePath%>admin/order/normalorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货订单</a></li> 
 									</ul>
 								</li>
 								
@@ -139,24 +137,21 @@
 									<ul class="dropdown-menu">
 										<li><a tabindex="-1" href="#">待发货订单</a></li> 
 										<li><a tabindex="-1" href="#">已发货订单</a></li> 
-										<li><a tabindex="-1" href="#">需开票订单</a></li>
-										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+							
 									</ul>
 								</li>
 								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/ordersment.jsp?operate=find">拍卖订单</a>
 									<ul class="dropdown-menu">
 										<li><a tabindex="-1" href="#">待发货订单</a></li> 
 										<li><a tabindex="-1" href="#">已发货订单</a></li> 
-										<li><a tabindex="-1" href="#">需开票订单</a></li>
-										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+										
 									</ul>
 								</li>
 								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/ordersment.jsp?operate=find">手机订单</a>
 									<ul class="dropdown-menu">
 										<li><a tabindex="-1" href="#">待发货订单</a></li> 
 										<li><a tabindex="-1" href="#">已发货订单</a></li> 
-										<li><a tabindex="-1" href="#">需开票订单</a></li>
-										<li><a tabindex="-1" href="#">需退货订单</a></li>  
+						
 									</ul>
 								</li>
 							</ul></li>

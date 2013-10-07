@@ -1,19 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=GBK"
 	pageEncoding="GBK"%>
 <%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler"%>
-<%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.ResponseHandler"%>
-<%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.ClientResponseHandler"%>
-<%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayHttpClient"%>
-<%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
-<%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil"%>
-<%@ page
-	import="com.jshop.frontstage.pay.action.CallBackAlipayOrderAction"%>
+	import="com.jshop.action.backstage.thirdpartyplatform.tenpay.*"%>
+	<%@ page import="com.jshop.action.frontstage.pay.*"%>
 <%@ include file="configformovie.jsp"%>
 
 

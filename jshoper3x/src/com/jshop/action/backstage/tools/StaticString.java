@@ -193,21 +193,37 @@ public class  StaticString {
 	 * 订单状态1表示已确认
 	 */
 	public static final String ORDERSTATE_ONE_NUM="1";
-	
+	/**
+	 * 订单状态2表示货到付款
+	 */
 	public static final String ORDERSTATE_TWO_NUM="2";
-	
+	/**
+	 * 订单状态3表示待确认收货
+	 */
 	public static final String ORDERSTATE_THREE_NUM="3";
-	
+	/**
+	 * 订单状态4表示退货
+	 */
 	public static final String ORDERSTATE_FOUR_NUM="4";
-	
+	/**
+	 * 订单状态5表示关闭
+	 */
 	public static final String ORDERSTATE_FIVE_NUM="5";
-	
+	/**
+	 * 订单状态6表示用户已收获
+	 */
 	public static final String ORDERSTATE_SIX_NUM="6";
-	
+	/**
+	 * 订单状态7表示缺货
+	 */
 	public static final String ORDERSTATE_SEVEN_NUM="7";
-	
+	/**
+	 * 订单状态8表示用户删除
+	 */
 	public static final String ORDERSTATE_EIGHT_NUM="8";
-
+	/**
+	 * 订单状态8表示成功
+	 */
 	public static final String ORDERSTATE_NINE_NUM="9";
 	//订单类型标记
 	/**

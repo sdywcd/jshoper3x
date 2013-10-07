@@ -195,15 +195,18 @@ public interface OrderTDao {
 	 * @return
 	 */
 	public List<OrderT> findAllTobeShippedOrders(final int currentPage,
-			final int lineSize, String shippingstate);
+			final int lineSize, String orderstate,String paystate, String shippingstate);
 
+	
+	
+	
 	/**
 	 * 统计获取待发货订单
 	 * 
 	 * @param shippingstate
 	 * @return
 	 */
-	public int countfindAllTobeShippedOrders(String shippingstate);
+	public int countfindAllTobeShippedOrders(String orderstate,String paystate,String shippingstate);
 
 	/**
 	 * 更新订单快递单号

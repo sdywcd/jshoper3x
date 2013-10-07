@@ -242,7 +242,16 @@
 					<div class="form-inline">
 						<span class="label label-required">订单类型:</span> <input
 							type="radio" id="orderTag" name="orderTag" value="1" checked/> <label
-							for="radio-1">普通订单</label> 
+							for="radio-1">普通订单</label>
+							<input
+							type="radio" id="orderTag" name="orderTag" value="2" /> <label
+							for="radio-1">团购订单</label> 
+							<input
+							type="radio" id="orderTag" name="orderTag" value="3" /> <label
+							for="radio-1">拍卖订单</label> 
+							<input
+							type="radio" id="orderTag" name="orderTag" value="4" /> <label
+							for="radio-1">手机订单</label> 
 					</div>
 					<div class="well">
 						<h4>订单备注</h4>

@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=GBK"
 	pageEncoding="GBK"%>
 <%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenpayUtil"%>
-<%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.RequestHandler"%>
-<%@ page
-	import="com.jshop.backstage.thirdpartyplatform.tenpay.TenPayConfig"%>
+	import="com.jshop.action.backstage.thirdpartyplatform.tenpay.*"%>
 <%@ include file="configformovie.jsp"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
