@@ -100,9 +100,9 @@ public class BaseTools {
 	 * @return
 	 */
 	public static String formateDbDate(Date object) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		String time = formatter.format(object);
-		return time;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateString = formatter.format(object);
+		return dateString;
 	}
 
 	/**

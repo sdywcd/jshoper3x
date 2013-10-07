@@ -844,7 +844,7 @@ public class OrderTAction extends ActionSupport {
 			map.put("orderdetail", o);
 
 			//获取买家信息
-			GetUserBuyerInfo(o.getUserid());
+			GetMemberBuyerInfo(o.getMemberid());
 		}
 	}
 
@@ -853,10 +853,10 @@ public class OrderTAction extends ActionSupport {
 	 * 
 	 * @param userid
 	 */
-	public void GetUserBuyerInfo(String userid) {
-		UserT user = this.getUsertService().findById(userid);
-		if (user != null) {
-			map.put("orderbuyerinfo", user);
+	public void GetMemberBuyerInfo(String memberid) {
+		MemberT memberT = this.getMemberTService().findMemberTById(memberid);
+		if (memberT != null) {
+			map.put("orderbuyerinfo", memberT);
 		}
 	}
 
@@ -890,8 +890,8 @@ public class OrderTAction extends ActionSupport {
 	 * @return
 	 */
 	@Action(value = "InitOrdersDetail", results = { 
-			@Result(name = "success",type="dispatcher",location = "/admin/order/ordersdetail.jsp?operate=find"),
-			@Result(name = "input",type="dispatcher",location = "/admin/order/ordersdetail.jsp?operate=error")
+			@Result(name = "success",type="dispatcher",location = "/admin/order/normalorderdetail.jsp?operate=edit"),
+			@Result(name = "input",type="dispatcher",location = "/admin/order/normalorderdetail.jsp?operate=error")
 	})
 	public String InitOrdersDetail() {
 		map.clear();

@@ -344,6 +344,10 @@ $(function() {
 				name:'添加普通订单',
 				bclass:'add',
 				onpress:action
+			},{
+				name:'编辑订单',
+				bclass:'edit',
+				onpress:action
 			}],
 			searchitems : [ {
 				display : '请选择搜索条件',
@@ -374,6 +378,15 @@ $(function() {
 			if(com=='添加普通订单'){
 				window.location.href = "normalorder.jsp?operate=add&folder=orders";
 				return;
+			}else if(com=="编辑订单"){
+				if ($('.trSelected', grid).length == 1) {
+					var str = "";
+					$('.trSelected', grid).each(function() {
+						str = this.id.substr(3);
+					});
+					window.location.href = "InitOrdersDetail.action?operate=edit&orderid="+str+"&folder=order";
+				return;
+				}
 			}
 		}
 

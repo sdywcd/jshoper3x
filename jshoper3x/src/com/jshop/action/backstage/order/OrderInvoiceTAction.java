@@ -253,7 +253,7 @@ public class OrderInvoiceTAction extends ActionSupport {
 					oi.getInvContent(), 
 					oi.getAmount(), 
 					oi.getState(), 
-					oi.getUsername(), 
+					oi.getMembername(), 
 					BaseTools.formateDbDate(oi.getCreatetime()) 
 					});
 			rows.add(cellMap);
