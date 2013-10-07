@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.dao.CartTDao;
 import com.jshop.dao.OrderInvoiceTDao;
 import com.jshop.dao.OrderTDao;
@@ -191,6 +192,7 @@ public class OrderTServiceImpl implements OrderTService {
 		for(CartT c:cartLists){
 			c.setOrderid(orderid);
 			c.setCartid(cartid);
+			c.setState(StaticString.CARTSTATE_RELBYORDER_NUM);
 			this.getCartTDao().addCart(c);
 		}
 		//加入到发货地址表中

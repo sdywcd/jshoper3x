@@ -40,12 +40,6 @@ function getSytimeForInvoiceNumber(){
 //flexigrid
 $(function() {
 	$('#orderupdatemsg').html("");
-	$.post("CheckLogin.action",function(data){
-		if(data.slogin){
-			top.location.href="jshop/admin/adminlogin.jsp";
-		}
-	});
-	
 	/**
 	 * 点击更新发货单号
 	 */

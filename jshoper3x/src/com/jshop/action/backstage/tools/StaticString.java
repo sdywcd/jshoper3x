@@ -290,9 +290,15 @@ public class  StaticString {
 	
 	//购物车部分静态字段
 	/**
-	 * 表示新加入购物车的货物
+	 * 表示新加入购物车的货物 state=1
 	 */
-	public static final String CARTSTATE_NEWADDTOCART="1";
+	public static final String CARTSTATE_NEWADDTOCART_NUM="1";
+	/**
+	 * 表示已经和订单关联的购物车 state=3
+	 */
+	public static final String CARTSTATE_RELBYORDER_NUM="3";
+	
+	
 	/**
 	 * 加入购物车的货物属于订单的那种标记 0=普通货物对应普通订单
 	 */

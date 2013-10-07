@@ -62,7 +62,7 @@
 			 <span class="label badge-success">订单物流操作</span>
 			<div class="row-fluid">
 				
-				<s:if test="#request.order.orderdetail.deliverynumber!=null">
+				<!--<s:if test="#request.order.orderdetail.deliverynumber!=null">
 				<div class="span2">
 						<span class="actionbutton">
 						<button id="print_invoice" name="print_invoice"  class="btn" type="button">打印发货单</button></span>
@@ -75,7 +75,7 @@
 					<span class="actionbutton">
 					<button id="print_express" name="print_express" class="btn" type="button">打印快递单</button></span>
 				</div>
-				</s:if>
+				</s:if>-->
 				
 				
 				<div class="span2">
@@ -90,7 +90,7 @@
 			</div>
 		</div>
 	</div>
-	
+	<br>
 			<div class="alert alert-info">
 				 <button type="button" class="close" data-dismiss="alert">×</button>
 					<h4>操作提醒</h4> 
@@ -212,7 +212,7 @@
 						</td>
 						<td>
 							<s:property value="#request.order.orderbuyerinfo.email" /><a
-						href="#?userid=<s:property value="#request.order.orderbuyerinfo.userid"/>">发送站内信</a>
+						href="#?memberid=<s:property value="#request.order.orderbuyerinfo.id"/>">发送站内信</a>
 						</td>
 						<td>
 							<s:property value="#request.order.orderdetail.paymentname" />
@@ -282,187 +282,129 @@
 				</tbody>
 			</table>
 			<p class="text-info">
-				订单详细——商品信息
+				订单详细——货物信息
 			</p>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>
-							编号
+							货物编号
 						</th>
 						<th>
-							产品
+							货物名称
 						</th>
 						<th>
-							交付时间
+							会员价
 						</th>
 						<th>
-							状态
+							赠送积分
 						</th>
+						<th>
+							数量
+						</th>
+						<th>
+							商品毛重
+						</th>
+						<th>
+							运费
+						</th>
+						
 					</tr>
 				</thead>
 				<tbody>
+				<s:iterator id="bean" value="#request.order.ordergoods" status="ordergoods">
 					<tr>
 						<td>
-							1
+							<s:property value="goodsid" />
 						</td>
 						<td>
-							TB - Monthly
+							<div class="pic-info">
+								<div class="pic">
+									<!--<a title="商品图片" target="_blank"
+										href="GetGoodsdetailBygoodsid.action?goodsid=<s:property value="goodsid"/>">
+										<img src="Uploads/<s:property value="picture"/>"
+										alt="商品图片">
+									</a>  -->
+								</div>
+							</div>
+							<div class="txt-info">
+								<div class="desc">
+									<!--<span class="name"> <a target="_blank"
+										title="<s:property value="goodsname"/>"
+										href="GetGoodsdetailBygoodsid.action?goodsid=<s:property value="goodsid"/>"><s:property
+												value="goodsname" /></a>
+									</span>-->
+									<span class="name"> 
+										<s:property value="goodsname" />
+									</span>
+								</div>
+							</div>
 						</td>
 						<td>
-							01/04/2012
+							<s:property value="favorable" />
 						</td>
 						<td>
-							Default
+							<s:property value="points" />
+						</td>
+						<td>
+							<s:property value="needquantity" />
+						</td>
+						<td>
+							<s:property value="weight" />
+						</td>
+						<td>
+							<s:property value="#request.order.orderdetail.freight" />
 						</td>
 					</tr>
-					<tr class="success">
-						<td>
-							1
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							01/04/2012
-						</td>
-						<td>
-							Approved
-						</td>
-					</tr>
-					<tr class="error">
-						<td>
-							2
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							02/04/2012
-						</td>
-						<td>
-							Declined
-						</td>
-					</tr>
-					<tr class="warning">
-						<td>
-							3
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							03/04/2012
-						</td>
-						<td>
-							Pending
-						</td>
-					</tr>
-					<tr class="info">
-						<td>
-							4
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							04/04/2012
-						</td>
-						<td>
-							Call in to confirm
-						</td>
+					</s:iterator>
+					<tr  class="error">
+						<td colspan="6"></td>
+						<td colspan="1">总价：<span><s:property
+									value="#request.order.orderdetail.shouldpay" /></span></td>
+
 					</tr>
 				</tbody>
 			</table>
 			<p class="text-info">
-				h3. 这是一套可视化布局系统.
+				订单详细——物流信息
 			</p>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>
-							编号
+							发货地址：
 						</th>
 						<th>
-							产品
+							运送方式：
 						</th>
 						<th>
-							交付时间
+							买家留言：
 						</th>
 						<th>
-							状态
+							物流信息：
 						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>
-							1
+							<s:property
+							value="#request.order.shipping.province" />,<s:property
+							value="#request.order.shipping.city" />,<s:property
+							value="#request.order.shipping.district" />,<s:property
+							value="#request.order.shipping.street" />,<s:property
+							value="#request.order.shipping.postcode" />,<s:property
+							value="#request.order.shipping.mobile" />,<s:property
+							value="#request.order.shipping.telno" />
 						</td>
 						<td>
-							TB - Monthly
+							<s:property value="#request.order.orderdetail.delivermode" />
 						</td>
 						<td>
-							01/04/2012
+							<s:property	value="#request.order.orderdetail.customernotes" />
 						</td>
 						<td>
-							Default
-						</td>
-					</tr>
-					<tr class="success">
-						<td>
-							1
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							01/04/2012
-						</td>
-						<td>
-							Approved
-						</td>
-					</tr>
-					<tr class="error">
-						<td>
-							2
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							02/04/2012
-						</td>
-						<td>
-							Declined
-						</td>
-					</tr>
-					<tr class="warning">
-						<td>
-							3
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							03/04/2012
-						</td>
-						<td>
-							Pending
-						</td>
-					</tr>
-					<tr class="info">
-						<td>
-							4
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							04/04/2012
-						</td>
-						<td>
-							Call in to confirm
+							<a href="#">查看详细</a>
 						</td>
 					</tr>
 				</tbody>
@@ -472,7 +414,7 @@
 </div>
 <div class="line-dotted"></div>
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/order/ordersmentjs.js"></script>
+		src="<%=basePath%>admin/js/order/ordersdetailjs.js"></script>
 	<%@include file="/admin/footer.jsp"%>
 
 </body>

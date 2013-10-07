@@ -1156,7 +1156,7 @@ public class OrderTAction extends ActionSupport {
 				t.setPicture("");
 				t.setUsersetnum(g.getUsersetnum());
 				t.setWeight(p.getWeight());
-				t.setState(StaticString.CARTSTATE_NEWADDTOCART);//新加入购物车的状态
+				t.setState(StaticString.CARTSTATE_NEWADDTOCART_NUM);//新加入购物车的状态
 				t.setHtmlpath(g.getHtmlPath());//货物的静态页沿用商品的静态页
 				t.setProductid(p.getProductid());
 				t.setOrderTag(StaticString.CART_ORDER_TAG_NORMALPRODUCT);
