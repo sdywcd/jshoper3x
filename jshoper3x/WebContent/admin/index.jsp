@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -147,13 +148,13 @@
 			</div>
 
 			<div class="span3">
-				<h4>最新订单</h4>
+				<h4>最新需发货订单</h4>
 				<ul class="nav nav-list bs-docs-sidenavh">
-					<li><a href="#dropdowns">最后400台！超值佳能5D Mark I </a></li>
-					<li><a href="#buttonGroups">酷冷至尊战斧二代主动式40</a></li>
-					<li><a href="#buttonDropdowns">康佳 LED 32英寸 高清窄边</a></li>
-					<li><a href="#navs">换季清仓19.9元抢限量红叶雨伞</a></li>
-					<li><a href="#navbar">专车专用全包围手缝脚垫</a></li>
+					<s:iterator id="bean" value="#session.newestorders" status="newestorders">
+						<li><a href="InitOrdersDetail.action?orderid=<s:property value="orderid"/>"><s:property value="ordername"/></a></li>
+					</s:iterator>
+					
+				
 				</ul>
 				<div class="line-dotted"></div>
 				<h4>销量 Top 5</h4>

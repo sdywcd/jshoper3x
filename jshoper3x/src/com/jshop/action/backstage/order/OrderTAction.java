@@ -1007,7 +1007,7 @@ public class OrderTAction extends ActionSupport {
 		String orderid = this.getOrderid().trim();
 		String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
 		String paystate = AllOrderState.PAYSTATE_ONE_NUM;//付款
-		String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
+		String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//未发货，这里需要斟酌
 		int i = this.getOrderTService().updateOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
 		//InitOrdersDetail();
 		return "json";
@@ -1024,6 +1024,10 @@ public class OrderTAction extends ActionSupport {
 	public String UpdateExpressnumberByOrderId() {
 		if (Validate.StrNotNull(this.getExpressnumber())&&Validate.StrNotNull(this.getOrderid())) {
 			int i = this.getOrderTService().updateExpressnumberByOrderId(this.getOrderid().trim(), this.getExpressnumber().trim());
+			//更新发货状态到已发货
+			String orderid = this.getOrderid().trim();
+			String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
+			this.getOrderTService().updateOrderShippingstateByorderid(orderid, shippingstate);
 			return "json";
 		}
 		return "json";

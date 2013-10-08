@@ -27,6 +27,12 @@ public class  StaticString {
 	public static String ALLROLEFUNCTION = "allrolefunction";
 
 	public static String KEYFORAUTHORITY = "keyforauthority";
+	
+	/**
+	 * 后台首页前5条订单记录
+	 */
+	public static String NEWESTORDERS="newestorders";
+	
 	//flexigrid default search tag
 	public static final String EMPTY="";
 	

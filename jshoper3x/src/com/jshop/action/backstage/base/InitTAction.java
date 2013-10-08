@@ -1,5 +1,7 @@
 package com.jshop.action.backstage.base;
 
+import java.util.List;
+
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.json.annotations.JSON;
@@ -7,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 
 import com.jshop.action.backstage.template.FreeMarkervariable;
+import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.entity.OrderT;
 import com.jshop.entity.TemplatethemeT;
+import com.jshop.service.OrderTService;
 import com.jshop.service.TemplatethemeTService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -17,9 +22,16 @@ import com.opensymphony.xwork2.ActionSupport;
 public class InitTAction extends ActionSupport {
 	private TemplatethemeTService templatethemeTService;
 	private TemplatethemeT tt;
-	private boolean slogin;
+	private OrderTService orderTService;
 	private boolean sucflag;
 	private String logmsg;
+	@JSON(serialize = false)
+	public OrderTService getOrderTService() {
+		return orderTService;
+	}
+	public void setOrderTService(OrderTService orderTService) {
+		this.orderTService = orderTService;
+	}
 	@JSON(serialize = false)
 	public TemplatethemeTService getTemplatethemeTService() {
 		return templatethemeTService;
@@ -33,12 +45,7 @@ public class InitTAction extends ActionSupport {
 	public void setTt(TemplatethemeT tt) {
 		this.tt = tt;
 	}
-	public boolean isSlogin() {
-		return slogin;
-	}
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
+
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -82,7 +89,6 @@ public class InitTAction extends ActionSupport {
 					tt.setSign("default");
 					ActionContext.getContext().getApplication().put(FreeMarkervariable.DEFAULTTHEMESIGN, tt.getSign());
 				}
-				
 			}
 		}catch(Exception e){
 			this.setLogmsg("<p style='color:red;'>"+e.getMessage()+"</p>");
@@ -90,6 +96,20 @@ public class InitTAction extends ActionSupport {
 			this.setLogmsg("<p>默认主题获取成功</p>");
 		}
 		
+	}
+	
+	/**
+	 * 获取前5条需要发货的订单
+	 * @return
+	 */
+	public List<OrderT>findNewestOrders(){
+		int currentPage=1;
+		int lineSize=5;
+		String shippingstate=StaticString.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String orderstate=StaticString.ORDERSTATE_ONE_NUM;//订单状态已确认
+		String paystate=StaticString.PAYSTATE_ONE_NUM;//付款状态已支付
+		List<OrderT>list=this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, orderstate, paystate, shippingstate);
+		return list;
 	}
 	
 	

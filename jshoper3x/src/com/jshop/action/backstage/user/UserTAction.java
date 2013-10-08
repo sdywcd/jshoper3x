@@ -30,6 +30,7 @@ import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.FunctionM;
+import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
@@ -749,6 +750,9 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 			//List<FunctionM>allfunctionlist=this.getUserRoleMAction().findAllFunctionM();
 			ActionContext.getContext().getSession().put(StaticString.USERROLEFUNCTION, userfunctionlist);
 			//ActionContext.getContext().getSession().put(BaseTools.ALLROLEFUNCTION, allfunctionlist);
+			//获取前5条需要发货的订单信息
+			List<OrderT>listOrderTs=this.getInitTAction().findNewestOrders();
+			ActionContext.getContext().getSession().put(StaticString.NEWESTORDERS, listOrderTs);
 			return SUCCESS;
 		}
 		this.setParam(StaticString.ONE);
