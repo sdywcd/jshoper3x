@@ -48,6 +48,11 @@ public class FreeMarkervariable {
 	 */
 	public static final String GOODSDETAIL="goodsdetail";
 	/**
+	 * 产品详细
+	 */
+	public static final String PRODUCTDETAIL="productdetail";
+	
+	/**
 	 * 文章详细
 	 */
 	public static final String ARTICLE="article";

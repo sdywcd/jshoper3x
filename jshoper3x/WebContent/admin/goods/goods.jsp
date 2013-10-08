@@ -60,7 +60,7 @@
 				<div class="form-actions">
 					<div class="form-inline">
 						<span class="label label-required">选择商品类型: </span> <select
-							id="goodsTypeId" name="goodsTypeId">
+							id="goodsTypeId" name="goodsTypeId"  >
 
 						</select> <span class="label label-info">请选择一个商品类型</span>
 					</div>

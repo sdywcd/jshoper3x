@@ -1630,7 +1630,7 @@ public class GoodsTAction extends ActionSupport {
 	 */
 	private void compareGoodsparameters(List<GoodsparameterlistModel>gmllist,GoodsparameterlistModel gml,String goodsParameterValue,String GoodsTypeParamid){
 		if(Validate.StrNotNull(goodsParameterValue)){
-			JSONArray ja=(JSONArray) JSONValue.parse("["+goodsParameterValue+"]");
+			JSONArray ja=(JSONArray) JSONValue.parse(goodsParameterValue);
 			for (int i = 0; i < ja.size(); i++) {
 				JSONObject jo = (JSONObject) ja.get(i);
 				if(jo.get("id").toString().equals(GoodsTypeParamid)){

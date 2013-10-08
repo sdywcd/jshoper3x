@@ -74,4 +74,9 @@ public class GoodsAttributeTServiceImpl implements GoodsAttributeTService {
 		return this.getGoodsAttributeTDao().updateGoodsAttributeissearchBygoodsattributeid(goodsattributeid, issearch);
 	}
 
+	@Override
+	public int countsortAllGoodsAttributeT(String queryString) {
+		return this.getGoodsAttributeTDao().countsortAllGoodsAttributeT(queryString);
+	}
+
 }

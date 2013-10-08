@@ -48,13 +48,16 @@
 				</div>
 				<!-- 开始会员分组form表单 -->
 				<div class="form-actions">
-					
+					<div class="form-inline">
+						<span class="label label-required">存放目录:</span> <input
+							type="text" id="imgdirpath" name="imgdirpath" class="small" />
+					</div>
 					<div class="form-inline">
 						<table>
 							<tr>
 								<td><span class="label label-required">上传图片素材:</span></td>
 								<td>
-									<div id="uploaderheadpath">
+									<div id="uploaderimagepath">
 										<noscript>
 											Please enable JavaScript to use file uploader.
 											<!-- or put a simple form for upload here -->
@@ -84,13 +87,20 @@
 	</div>
 
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/member/membermentjs.js"></script>
-	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
 	<script type="text/javascript">
+		var imgdirpath1
+			$(function(){
+			imgdirpath1=$.query.get('imgdirpath');
+			if(imgdirpath1==""){
+				return false;
+			}else{
+				$('#imgdirpath').attr("value",imgdirpath1);
+			}
+		});
  		function createUploader(){            
              var uploader = new qq.FileUploader({
-                 element: document.getElementById('uploaderheadpath'),
+                 element: document.getElementById('uploaderimagepath'),
                  action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
                  debug: true,
                  minSizeLimit:1024,

@@ -203,10 +203,7 @@ public class GoodsAttributeTDaoImpl extends HibernateDaoSupport implements Goods
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all GoodsAttributeT error", re);
 			throw re;
@@ -292,6 +289,23 @@ public class GoodsAttributeTDaoImpl extends HibernateDaoSupport implements Goods
 			throw re;
 		}
 		return 0;
+	}
+
+	@Override
+	public int countsortAllGoodsAttributeT(String queryString) {
+		log.debug("countsortAllGoodsAttributeT");
+		try {
+			List list = this.getHibernateTemplate().find(queryString);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countsortAllGoodsAttributeT error", re);
+			throw re;
+		}
 	}
 	
 	

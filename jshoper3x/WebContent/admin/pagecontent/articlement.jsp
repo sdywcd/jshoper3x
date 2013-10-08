@@ -35,7 +35,7 @@
 			<div class="span10">
 				<div class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">×</button>
-					<strong>说明</strong> 请根据需要定义文章
+					<strong>说明</strong> 请根据需要定义文章 
 				</div>
 				<div id="alertinfo" style="display: none;" class="alert alert-info">
 					<a class="close" data-dismiss="alert" href="#">&times;</a> <strong></strong>

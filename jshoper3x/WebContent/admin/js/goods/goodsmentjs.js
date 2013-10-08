@@ -634,7 +634,7 @@ $(function() {
 					$('#metaKeywords').val(data.bean.metaKeywords);
 					$('#metaDes').val(data.bean.metaDescription);
 					$("#hidgoodsid").val(data.bean.goodsid);
-					$("#hidproductid").val(data.bean.productid);
+					$("#hidproductid").val(data.productid);
 					$("#goodscategory").show();
 					$("#modifygoodscategory").show();
 					$("#selectgoodscategory").hide();

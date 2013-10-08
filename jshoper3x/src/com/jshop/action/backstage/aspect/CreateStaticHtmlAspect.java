@@ -41,7 +41,7 @@ public class CreateStaticHtmlAspect {
 	 * @throws TemplateException 
 	 * @throws IOException 
 	 */
-	@After("execution(String com.jshop.action.GoodsTNAction.updateGoods())||execution(String com.jshop.action.GoodsTNAction.addGoods())")
+	@After("execution(String com.jshop.action.backstage.goods.GoodsTAction.updateGoods())||execution(String com.jshop.action.backstage.goods.GoodsTAction.saveGoods())")
 	public void aftergoodsIUCreatestatichtml(JoinPoint joinPoint) throws IOException, TemplateException{
 		GoodsTAction gtn=(GoodsTAction) joinPoint.getThis();
 		if(gtn.getBean()!=null){

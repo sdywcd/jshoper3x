@@ -650,7 +650,7 @@ public class ArticleTAction extends ActionSupport {
 			
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", at.getArticleid());
-			cellMap.put("cell", new Object[] { at.getTitle(), at.getNname(),at.getIsnotice(), at.getIspublication(), at.getIsrecommend(), at.getIstop(), BaseTools.formateDbDate(at.getCreatetime()), "<a id='editarticle' href='article.jsp?operate=edit&folder=pagecontent&articleid=" + at.getArticleid() + "' name='editarticle'>[编辑]</a><a id='showarticle' href="+BaseTools.getBasePath()+"/"+at.getHtmlPath()+" name='showarticle'>[预览]</a><a id='showarticle' href='wo#' name='showarticle'>[静态化]</a>" });
+			cellMap.put("cell", new Object[] { at.getTitle(), at.getNname(),at.getIsnotice(), at.getIspublication(), at.getIsrecommend(), at.getIstop(), BaseTools.formateDbDate(at.getCreatetime()), "<a id='editarticle' href='article.jsp?operate=edit&folder=pagecontent&articleid=" + at.getArticleid() + "' name='editarticle'>[编辑]</a><a id='showarticle' href="+BaseTools.getBasePath()+"/"+at.getHtmlPath()+" name='showarticle'>[预览]</a>" });
 			rows.add(cellMap);
 		}
 	}

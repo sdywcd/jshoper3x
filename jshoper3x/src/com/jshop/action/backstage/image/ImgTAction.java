@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.ServerFileInfo;
 import com.jshop.action.backstage.tools.Validate;
 import com.opensymphony.xwork2.ActionSupport;
@@ -286,7 +287,7 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 			ServerFileInfo sfi = (ServerFileInfo) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sfi.getDirectoryname());
-			cellMap.put("cell", new Object[] {"<img width='100px' height='100px' src='" + sfi.getImgfilepath() + "'/><br/><a target='_blank' href='" + sfi.getImgfilepath() + "'>" + sfi.getDirectoryname() + "</a>", sfi.getCreatetime() });
+			cellMap.put("cell", new Object[] {"<img width='100px' height='100px' src='"+BaseTools.getBasePath()+ sfi.getImgfilepath() + "'/><br/><a target='_blank' href='"+BaseTools.getBasePath() + sfi.getImgfilepath() + "'>" + sfi.getDirectoryname() + "</a>", sfi.getCreatetime() });
 			rows.add(cellMap);
 		}
 	}
@@ -298,9 +299,9 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 	 */
 	@Action(value = "createDirectory", results = { @Result(name = "json", type = "json") })
 	public String createDirectory() {
-		String savedir = "/Uploads/";
+		String savedir = File.separator+"Uploads"+File.separator;
 		String savePath = ServletActionContext.getServletContext().getRealPath("");
-		savePath = savePath + savedir + this.getImgdirpath() + "/";
+		savePath = savePath + savedir + this.getImgdirpath() +File.separator;
 		File dir = new File(savePath);
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -458,7 +459,7 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 			ServerFileInfo sfi = (ServerFileInfo) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sfi.getDirectoryname());
-			cellMap.put("cell", new Object[] { "<a href='serverimglistmanagement.jsp?directoryname=" + sfi.getDirectoryname() + "#images&session=true" + "'>" + sfi.getDirectoryname() + "</a>", sfi.getCount(), sfi.getCreatetime() });
+			cellMap.put("cell", new Object[] { "<a href='imagematerialfolderlistment.jsp?directoryname=" + sfi.getDirectoryname() + "&folder=images" + "'>" + sfi.getDirectoryname() + "</a>", sfi.getCount(), sfi.getCreatetime() });
 			rows.add(cellMap);
 		}
 	}

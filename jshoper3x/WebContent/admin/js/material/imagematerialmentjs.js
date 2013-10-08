@@ -76,26 +76,26 @@ $(function() {
 			if (com == '上传图片') {
 					if ($('.trSelected', grid).length == 1) {
 						var str = $('.trSelected', grid)[0].id.substr(3);
-						window.location.href = "imagematerialment.jsp?operate=add&folder=material&imgdirpath=" + str;
+						window.location.href = "imagematerial.jsp?operate=add&folder=material&imgdirpath=" + str;
 					} else {
-						window.location.href = "imagematerialment.jsp?operate=add&folder=material";
+						window.location.href = "imagematerial.jsp?operate=add&folder=material";
 					}
 				} else if (com == '创建分类') {
-					jPrompt('请输入分类名称:', '', '分类信息', function(r) {
-						if (r != null && r != "") {
-							$.post("createDirectory.action", {
-								"imgdirpath" : r
-							}, function(data) {
-								if (data.sucflag) {
-									$('#serverimgmanagement').flexReload();
-									if (r)
-										jAlert('您创建了分类 ' + r, '信息提示');
-								} else {
-									jAlert("分类已经存在", "信息提示");
-								}
-							});
-						}
-					});
+//					jPrompt('请输入分类名称:', '', '分类信息', function(r) {
+//						if (r != null && r != "") {
+//							$.post("createDirectory.action", {
+//								"imgdirpath" : r
+//							}, function(data) {
+//								if (data.sucflag) {
+//									$('#serverimgmanagement').flexReload();
+//									if (r)
+//										jAlert('您创建了分类 ' + r, '信息提示');
+//								} else {
+//									jAlert("分类已经存在", "信息提示");
+//								}
+//							});
+//						}
+//					});
 
 				} else if (com == '删除') {
 					if ($('.trSelected', grid).length > 0) {

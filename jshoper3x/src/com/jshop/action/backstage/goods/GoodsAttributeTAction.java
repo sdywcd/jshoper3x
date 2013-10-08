@@ -52,6 +52,8 @@ public class GoodsAttributeTAction extends ActionSupport {
 	private int rp;
 	private int page = 1;
 	private int total = 0;
+	private String sortname;
+	private String sortorder;
 	private boolean slogin;
 	private boolean sucflag;
 
@@ -280,6 +282,26 @@ public class GoodsAttributeTAction extends ActionSupport {
 	}
 
 
+	public String getSortname() {
+		return sortname;
+	}
+
+
+	public void setSortname(String sortname) {
+		this.sortname = sortname;
+	}
+
+
+	public String getSortorder() {
+		return sortorder;
+	}
+
+
+	public void setSortorder(String sortorder) {
+		this.sortorder = sortorder;
+	}
+
+
 	/**
 	 * 清理错误
 	 */
@@ -340,12 +362,29 @@ public class GoodsAttributeTAction extends ActionSupport {
 			if (Validate.StrisNull(this.getQuery())) {
 				return "json";
 			} else {
+				if(this.getQtype().equals("goodsTypeName")){
+					findGoodsAttributeByParams();
+				}
 				return "json";
 			}
 		}
 		return "json";
 
 	}
+
+	private void findGoodsAttributeByParams() {
+		int currentPage=page;
+		int lineSize=rp;
+		String qs="select count(*) from GoodsAttributeT where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
+		total=this.getGoodsAttributeTService().countsortAllGoodsAttributeT(qs);
+		if(StringUtils.isNotBlank(sortname) &&StringUtils.isNotBlank(sortorder)){
+			String queryString="from GoodsAttributeT as gat where gat."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + sortname + " " + sortorder + "";
+			List<GoodsAttributeT>list=this.getGoodsAttributeTService().sortAllGoodsAttributeT(currentPage, lineSize, queryString);
+			this.ProcessGoodsAttributeTList(list);
+		}
+		
+	}
+
 
 	public void findDefaultAllGoodsAttributeT() {
 		int currentPage = page;
