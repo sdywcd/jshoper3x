@@ -17,7 +17,6 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.base.InitTAction;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.ContentTag;
 
 import com.jshop.dao.impl.GoodsAttributeTDaoImpl;
 import com.jshop.entity.TemplatesetT;
@@ -210,19 +209,19 @@ public class InitAllHtml extends ActionSupport {
 						this.setProcessbar(this.getProcessbar()+5);
 					}
 					TemplatesetT tt=(TemplatesetT)it.next();
-					if(tt.getSign().equals(BaseTools.getApplicationthemesig()+"_"+ContentTag.TEMPLATENAMEFORGOODSDETAIL)){
+					if(tt.getSign().equals(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORGOODSDETAIL)){
 						this.getCreateHtml().buildGoodsdetailsPage(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
-					}else if(tt.getSign().equals(BaseTools.getApplicationthemesig()+"_"+ContentTag.TEMPLATENAMEFORARTICLE)){
+					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORARTICLE)){
 						this.getCreateHtml().buildArticlesPage(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
-					}else if(tt.getSign().equals(BaseTools.getApplicationthemesig()+"_"+ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST)){
+					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST)){
 						this.getCreateHtml().buildGoodsCategoryPage(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
-					}else if(tt.getSign().equals(BaseTools.getApplicationthemesig() + "_" + ContentTag.TEMPLATENAMEFORGOODSGROUPT)){
+					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSGROUPT)){
 						this.getCreateHtml().buildGoodsGroupT(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
-					}else if(tt.getSign().equals(BaseTools.getApplicationthemesig() + "_" + ContentTag.TEMPLATENAMEFORNOTICE)){
+					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORNOTICE)){
 						this.getCreateHtml().buildNoticeArticlesPage(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
 					}else{

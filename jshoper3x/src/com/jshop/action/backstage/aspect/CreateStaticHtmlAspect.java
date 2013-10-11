@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 import com.jshop.action.backstage.content.article.ArticleTAction;
 import com.jshop.action.backstage.goods.GoodsCategoryTAction;
 import com.jshop.action.backstage.goods.GoodsTAction;
+import com.jshop.action.backstage.template.ContentTag;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.ContentTag;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsT;
 
@@ -72,7 +72,7 @@ public class CreateStaticHtmlAspect {
 			//获取关联商品
 			map.put(FreeMarkervariable.GOODSBELINKED, gtn.getDataCollectionTAction().findGoodsBelinkedTBygoodsid(gtn.getBean()));
 			
-			String htmlPath = gtn.getCreateHtml().createGoodsT(BaseTools.getApplicationthemesig() + "_" + ContentTag.TEMPLATENAMEFORGOODSDETAIL, gtn.getBean().getGoodsid(), map);
+			String htmlPath = gtn.getCreateHtml().createGoodsT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSDETAIL, gtn.getBean().getGoodsid(), map);
 			if (Validate.StrNotNull(htmlPath)) {
 				gtn.getGoodsTService().updateHtmlPath(gtn.getBean().getGoodsid(), htmlPath);
 			}
@@ -120,7 +120,7 @@ public class CreateStaticHtmlAspect {
 			}
 			map.put(FreeMarkervariable.GOODSCATEGORY, gcta.getBean());
 			//更新商品分类静态页路径
-			String htmlPath = gcta.getCreateHtml().createGoodsCategoryT(BaseTools.getApplicationthemesig()+"_"+ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gcta.getBean().getSign(), map);
+			String htmlPath = gcta.getCreateHtml().createGoodsCategoryT(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gcta.getBean().getSign(), map);
 			gcta.getGoodsCategoryTService().updateHtmlPath(gcta.getBean().getGoodsCategoryTid(), htmlPath);
 		}
 		
@@ -152,11 +152,11 @@ public class CreateStaticHtmlAspect {
 			map.put(FreeMarkervariable.ARTICLE, ata.getBean());
 			if("1".equals(ata.getBean().getIsnotice())){
 				//更新文章静态路径
-				String htmlPath = ata.getCreateHtml().createArticleT(BaseTools.getApplicationthemesig()+"_"+ContentTag.TEMPLATENAMEFORNOTICE, ata.getBean().getArticleid(), map);
+				String htmlPath = ata.getCreateHtml().createArticleT(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORNOTICE, ata.getBean().getArticleid(), map);
 				ata.getArticleTService().updateHtmlPath(ata.getBean().getArticleid(), htmlPath);
 			}else{
 				//更新文章静态路径
-				String htmlPath = ata.getCreateHtml().createArticleT(BaseTools.getApplicationthemesig()+"_"+ContentTag.TEMPLATENAMEFORARTICLE, ata.getBean().getArticleid(), map);
+				String htmlPath = ata.getCreateHtml().createArticleT(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORARTICLE, ata.getBean().getArticleid(), map);
 				ata.getArticleTService().updateHtmlPath(ata.getBean().getArticleid(), htmlPath);
 			}
 		}

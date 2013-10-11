@@ -137,7 +137,7 @@ public class BaseTools {
 	 * 
 	 * @return
 	 */
-	public static String getApplicationthemesig() {
+	public static String getApplicationthemesign() {
 		String defaultthemesign = (String) ActionContext.getContext()
 				.getApplication().get(FreeMarkervariable.DEFAULTTHEMESIGN);
 		if (defaultthemesign != null) {
