@@ -875,19 +875,32 @@ $(function() {
 				return false;
 			}
 		} else if (com == '删除') {
+			
 			if ($('.trSelected', grid).length > 0) {
-				var str = "";
-				$('.trSelected', grid).each(function() {
-					str += this.id.substr(3) + ",";
+				var str="";
+				$(".trSelected td:nth-child(2) div", $('#goodsmanagement')).each(function(i){
+					str+=this.innerHTML+"  ";
 				});
-				$.post("delGoods.action", {
-					"goodsid" : str
-				}, function(data) {
-					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
-						forminfo("#alertinfo", "删除商品成功");
-					}
+				$("#contentp").text(str);
+				$("#goodsdelModal").modal({
+					keyboard:true,
+					show:true,
 				});
+				$("#goodsbtnok").click(function(){
+					var str = "";
+					$('.trSelected', grid).each(function() {
+						str += this.id.substr(3) + ",";
+					});
+					$.post("delGoods.action", {
+						"goodsid" : str
+					}, function(data) {
+						if (data.sucflag) {
+							$('#goodsmanagement').flexReload();
+							forminfo("#alertinfo", "删除商品成功");
+						}
+					});
+				});
+				
 			} else {
 				formwarning("#alerterror", "请选择要删除的信息");
 				return false;
