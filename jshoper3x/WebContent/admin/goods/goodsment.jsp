@@ -51,7 +51,6 @@
 				</div>
 				<div class="line-dotted"></div>
 				<!-- 提示框 -->
-				
 				<div id="goodsdelModal" class="modal hide fade">
 				  <div class="modal-header">
 				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

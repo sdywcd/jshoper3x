@@ -1,72 +1,77 @@
 
 //商品评论列表
 $(function() {
-	findAllGoodsComment=function
-	$("#goodscommentmanagement").flexigrid( {
-		url : 'findAllGoodsComment.action',
-		dataType : 'json',
-		cache : false,
-		colModel : [{
-			display : '被评论的商品',
-			name : 'goodsname',
-			width : 500,
-			sortable : true,
-			align : 'center'
-		},{
-			display : '状态',
-			name : 'state',
-			width : 100,
-			sortable : true,
-			align : 'center'
-		},{
-            display : '操作',
-            name : 'operating',
-            width : 200,
-            sortable : true,
-            align : 'center'
-        }],
-		buttons : [ {
-			name : '设置商品分值和评论数据',
-			bclass : 'add',
-			onpress : action
-		}, {
-			name : '删除',
-			bclass : 'delete',
-			onpress : action
-		}, {
-			separator : true
-		} ],
-
-		searchitems : [ {
-			display : '请选择搜索条件',
-			name : 'sc',
-			isdefault : true
-		}, {
-			display : '评论内容',
-			name : 'commentcontent'
-		}, {
-			display : '商品名称',
-			name : 'goodsname'
-		} ],
-		sortname : "posttime",
-		sortorder : "desc",
-		usepager : true,
-		title : '商品评论列表',
-		useRp : true,
-		rp : 20,
-		rpOptions : [ 5, 20, 40, 100 ],
-		showTableToggleBtn : true,
-		width : 'auto',
-		height : 'auto',
-		pagestat : '显示{from}到{to}条，共{total}条记录',
-		procmsg : '正在获取数据，请稍候...',
-		checkbox:true
-	});
-	function action(com, grid) {
-		if (com == '删除') {
-			if ($('.trSelected', grid).length > 0) {
-				jConfirm('确定删除此项吗！确定要删除此项吗?', '信息提示', function(r) {
-					if (r) {
+	findAllGoodsComment=function(){
+		$("#goodscommentmanagement").flexigrid({
+			url : 'findAllGoodsComment.action',
+			dataType : 'json',
+			cache : false,
+			colModel : [{
+				display : '被评论的商品',
+				name : 'goodsname',
+				width : 300,
+				sortable : true,
+				align : 'center'
+			},{
+				display : '状态',
+				name : 'state',
+				width : 100,
+				sortable : true,
+				align : 'center'
+			},{
+	            display : '操作',
+	            name : 'operating',
+	            width : 200,
+	            sortable : true,
+	            align : 'center'
+	        }],
+			buttons : [ {
+				name : '查看',
+				bclass : 'add',
+				onpress : action
+			}, {
+				name : '删除',
+				bclass : 'del',
+				onpress : action
+			}, {
+				separator : true
+			} ],
+	
+			searchitems : [ {
+				display : '请选择搜索条件',
+				name : 'sc',
+				isdefault : true
+			}, {
+				display : '商品名称',
+				name : 'goodsname'
+			} ],
+			sortname : "posttime",
+			sortorder : "desc",
+			usepager : true,
+			title : '',
+			useRp : true,
+			rp : 20,
+			rpOptions : [ 5, 20, 40, 100 ],
+			showTableToggleBtn : true,
+			width : 'auto',
+			height : 'auto',
+			pagestat : '显示{from}到{to}条，共{total}条记录',
+			procmsg : '正在获取数据，请稍候...',
+			checkbox:true
+		});
+		function action(com, grid) {
+			if (com == '删除') {
+				if ($('.trSelected', grid).length > 0) {
+					var str="";
+					$(".trSelected td:nth-child(2) div", $('#goodscommentmanagement')).each(function(i){
+						str+=this.innerHTML+"  ";
+					});
+					$("#contentp").text(str);
+					$("#goodscommentdelModal").modal({
+						keyboard:true,
+						show:true,
+					});
+					$("#goodscommentbtnok").click(function(){
 						var str = "";
 						$('.trSelected', grid).each(function() {
 							str += this.id.substr(3) + ",";
@@ -74,21 +79,38 @@ $(function() {
 						$.post("DelGoodsComment.action", {
 							"commentid" : str
 						}, function(data) {
-							$('#goodscommentmanagement').flexReload();
+							if (data.sucflag) {
+								$('#goodscommentdelModal').modal('hide');
+								$('#goodscommentmanagement').flexReload();
+								forminfo("#alertinfo", "删除商品成功");
+							}
 						});
-					}
-				});
+					});
+					$("#goodscommentbtnclose").click(function(){
+						$('#goodscommentdelModal').modal('hide');
+						
+					});
+					
+				} else {
+					formwarning("#alerterror", "请选择要删除的信息");
+					return false;
+				}
+			} else if (com == '查看') {
+				if ($('.trSelected', grid).length == 1) {
+					var str = "";
+					$('.trSelected', grid).each(function() {
+						str = this.id.substr(3);
+					});
+					window.location.href = "goodscomment.jsp?operate=edit&goodsid="+str;
+					return;
+				} else {
+					formwarning("#alerterror", "请选择一条信息");
+					return false;
+				}
 				return;
-			} else {
-				jAlert('请选择要删除的信息!', '信息提示');
-				return false;
 			}
-		} else if (com == '设置商品分值和评论数据') {
-			window.location.href = "addgoodscommentandmark.jsp?session="+session+"#goods";
-			return;
 		}
 	}
-
 
 	$('#updatestarsum').click(function(){
 		var goodsid=$('#hidgoodsid').val();
@@ -164,7 +186,7 @@ $(function(){
 		findGoodsTypeTNById();
 		return;
 	}else if(operate=="find"){
-		
+		findAllGoodsComment();
 	}
 });
 

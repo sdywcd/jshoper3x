@@ -895,10 +895,14 @@ $(function() {
 						"goodsid" : str
 					}, function(data) {
 						if (data.sucflag) {
+							$("#goodsdelModal").modal('hide');
 							$('#goodsmanagement').flexReload();
 							forminfo("#alertinfo", "删除商品成功");
 						}
 					});
+				});
+				$("#goodsbtnclose").click(function(){
+					$("#goodsdelModal").modal('hide');
 				});
 				
 			} else {
