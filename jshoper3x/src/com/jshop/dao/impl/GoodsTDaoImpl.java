@@ -108,10 +108,7 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all GoodsT error", re);
 			throw re;
@@ -119,15 +116,14 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> sortAllGoods(final int currentPage, final int lineSize, final String creatorid, final String queryString) {
-		log.debug("sortAllGoods");
+	public List<GoodsT> findAllGoodsBysql(final int currentPage, final int lineSize, final String queryString) {
+		log.debug("findAllGoodsBysql");
 		try {
 			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					query.setFirstResult((currentPage - 1) * lineSize);
 					query.setMaxResults(lineSize);
-					query.setParameter("creatorid", creatorid);
 					List list = query.list();
 					return list;
 					
@@ -135,7 +131,7 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			});
 			return list;
 		} catch (RuntimeException re) {
-			log.error("sortAllGoods error", re);
+			log.error("findAllGoodsBysql error", re);
 			throw re;
 			
 		}
@@ -179,10 +175,7 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all GoodsT by goodname error", re);
 			throw re;
@@ -1620,7 +1613,7 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@Override
-	public List<GoodsT> findAllGoodsByNoTerm() {	
+	public List<GoodsT> findAllGoods() {	
 		 
 		try {
 			final String queryString="from GoodsT";
@@ -1642,6 +1635,64 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			throw e;
 		}
 		
+	}
+
+	@Override
+	public int countAllGoodsBysql(String queryString) {
+		log.debug("countAllGoodsBysql");
+		try {
+			List list = this.getHibernateTemplate().find(queryString);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countAllGoodsBysql error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int countAllGoods() {
+		log.debug("countAllGoods");
+		try {
+			String queryString = "select count(*) from GoodsT";
+			List list = this.getHibernateTemplate().find(queryString);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countAllGoods error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize) {
+		log.debug("find all GoodsT");
+		try {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+
+				String queryString = "from GoodsT  order by createtime desc";
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setFirstResult((currentPage - 1) * lineSize);
+					query.setMaxResults(lineSize);
+					List list = query.list();
+					return list;
+				}
+			});
+			return list;	
+		} catch (RuntimeException re) {
+			log.error("find all GoodsT error", re);
+			throw re;
+		}
 	}
 
 

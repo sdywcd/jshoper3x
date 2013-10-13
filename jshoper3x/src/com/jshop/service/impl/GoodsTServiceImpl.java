@@ -346,8 +346,8 @@ public class GoodsTServiceImpl implements GoodsTService {
 		return getGoodsTDao().findAllGoodsByLtypeidorderbyParams(ltypeid, salestate, sales, memberprice, totalcomment, bargainprice, hotsale, recommended, isNew, value);
 	}
 
-	public List<GoodsT> sortAllGoods(int currentPage, int lineSize, String creatorid, String queryString) {
-		return this.getGoodsTDao().sortAllGoods(currentPage, lineSize, creatorid, queryString);
+	public List<GoodsT> findAllGoodsBysql(int currentPage, int lineSize,String queryString) {
+		return this.getGoodsTDao().findAllGoodsBysql(currentPage, lineSize,queryString);
 	}
 
 	public int updateGoodsTypeNameBygoodsTypeId(String goodsTypeName, String goodsTypeId) {
@@ -396,8 +396,8 @@ public class GoodsTServiceImpl implements GoodsTService {
 	}
 
 	@Override
-	public List<GoodsT> findAllGoodsByNoTerm() {
-		return this.getGoodsTDao().findAllGoodsByNoTerm();
+	public List<GoodsT> findAllGoods() {
+		return this.getGoodsTDao().findAllGoods();
 	}
 
 	@Override
@@ -434,6 +434,24 @@ public class GoodsTServiceImpl implements GoodsTService {
 		
 		
 	}
+
+	@Override
+	public int countAllGoodsBysql(String queryString) {
+		return this.getGoodsTDao().countAllGoodsBysql(queryString);
+	}
+
+	@Override
+	public int countAllGoods() {
+		return this.getGoodsTDao().countAllGoods();
+	}
+
+	@Override
+	public List<GoodsT> findAllGoods(int currentPage, int lineSize) {
+		return this.getGoodsTDao().findAllGoods(currentPage, lineSize);
+	}
+
+
+
 
 
 }

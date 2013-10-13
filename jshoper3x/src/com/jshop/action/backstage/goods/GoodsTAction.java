@@ -1201,12 +1201,18 @@ public class GoodsTAction extends ActionSupport {
 				return "json";
 			} else {
 				if (this.getQtype().equals("goodsname")) {
-					//findGoodsByGoodsname();
+					findGoodsByGoodsname();
 				}
 			}
 		}
 		return "json";
 
+	}
+
+	private void findGoodsByGoodsname() {
+		int currentPage=page;
+		int lineSize=rp;
+	
 	}
 
 	/**
@@ -1215,13 +1221,12 @@ public class GoodsTAction extends ActionSupport {
 	private void finddefaultAllGoods() {
 		int currentPage = page;
 		int lineSize = rp;
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from GoodsT as gt where gt.creatorid=:creatorid order by " + sortname + " " + sortorder + "";
-			List<GoodsT> list = this.getGoodsTService().sortAllGoods(currentPage, lineSize, BaseTools.adminCreateId(), queryString);
-			if (!list.isEmpty()) {
-				ProcessGoodsList(list);
-			}
+		total=this.getGoodsTService().countAllGoods();
+		List<GoodsT> list = this.getGoodsTService().findAllGoods(currentPage, lineSize);
+		if (!list.isEmpty()) {
+			ProcessGoodsList(list);
 		}
+		
 	}
 
 	/**

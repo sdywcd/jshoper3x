@@ -54,7 +54,6 @@ public class GoodsAttributeTAction extends ActionSupport {
 	private int total = 0;
 	private String sortname;
 	private String sortorder;
-	private boolean slogin;
 	private boolean sucflag;
 
 
@@ -172,14 +171,6 @@ public class GoodsAttributeTAction extends ActionSupport {
 
 	public void setBean(GoodsAttributeT bean) {
 		this.bean = bean;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public boolean isSucflag() {

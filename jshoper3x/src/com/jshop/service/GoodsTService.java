@@ -44,13 +44,20 @@ public interface GoodsTService {
 	 */
 	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize,
 			final String creatorid);
-
+	/**
+	 * 查询所有商品信息
+	 * 
+	 * @param currentPage
+	 * @param lineSize
+	 * @return
+	 */
+	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize);
 	/**
 	 * 查询所有没有条件商品
 	 * 
 	 * @return
 	 */
-	public List<GoodsT> findAllGoodsByNoTerm();
+	public List<GoodsT> findAllGoods();
 
 	/**
 	 * 统计所有商品信息
@@ -59,7 +66,17 @@ public interface GoodsTService {
 	 * @return
 	 */
 	public int countAllGoods(String creatorid);
-
+	/**
+	 * 统计所有商品
+	 * @return
+	 */
+	public int countAllGoods();
+	/**
+	 * 根据sql统计商品
+	 * @param queryString
+	 * @return
+	 */
+	public int countAllGoodsBysql(String queryString);
 	/**
 	 * 根据id获取商品信息
 	 * 
@@ -625,17 +642,6 @@ public interface GoodsTService {
 			String totalcomment, String bargainprice, String hotsale,
 			String recommended, String isNew, String value);
 
-	/**
-	 * 根据排序字段按照排序方式排序
-	 * 
-	 * @param currentPage
-	 * @param lineSize
-	 * @param queryString
-	 * @param creatorid
-	 * @return
-	 */
-	public List<GoodsT> sortAllGoods(final int currentPage, final int lineSize,
-			final String creatorid, final String queryString);
 
 	/**
 	 * 根据商品类型ID更新商品类型名称

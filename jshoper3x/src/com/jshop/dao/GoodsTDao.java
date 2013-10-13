@@ -41,13 +41,20 @@ public interface GoodsTDao {
 	 */
 	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize,
 			final String creatorid);
-
+	/**
+	 * 查询所有商品信息
+	 * 
+	 * @param currentPage
+	 * @param lineSize
+	 * @return
+	 */
+	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize);
 	/**
 	 * 查询所有没有条件商品
 	 * 
 	 * @return
 	 */
-	public List<GoodsT> findAllGoodsByNoTerm();
+	public List<GoodsT> findAllGoods();
 
 	/**
 	 * 统计所有商品信息
@@ -56,7 +63,19 @@ public interface GoodsTDao {
 	 * @return
 	 */
 	public int countAllGoods(String creatorid);
-
+	/**
+	 * 统计所有商品
+	 * @return
+	 */
+	public int countAllGoods();
+	
+	/**
+	 * 根据sql统计商品
+	 * @param queryString
+	 * @return
+	 */
+	public int countAllGoodsBysql(String queryString);
+	
 	/**
 	 * 根据id获取商品信息
 	 * 
@@ -643,8 +662,7 @@ public interface GoodsTDao {
 	 * @param creatorid
 	 * @return
 	 */
-	public List<GoodsT> sortAllGoods(final int currentPage, final int lineSize,
-			final String creatorid, final String queryString);
+	public List<GoodsT> findAllGoodsBysql(final int currentPage, final int lineSize,final String queryString);
 
 	/**
 	 * 根据商品类型ID更新商品类型名称
@@ -736,6 +754,5 @@ public interface GoodsTDao {
 	public List<GoodsT> findAllGoodsBynavidandltypeidandstypeid(String navid,
 			String ltypeid, String stypeid, String salestate,
 			String isSpecificationsOpen);
-	//
-	// public List<GoodsT> findGoodsByLikePrice(String price);
+
 }
