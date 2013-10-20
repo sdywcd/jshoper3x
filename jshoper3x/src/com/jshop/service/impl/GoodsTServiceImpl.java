@@ -450,6 +450,18 @@ public class GoodsTServiceImpl implements GoodsTService {
 		return this.getGoodsTDao().findAllGoods(currentPage, lineSize);
 	}
 
+	@Override
+	public List<GoodsT> findAllGoodsByattribute(int currentPage, int lineSize,
+			String queryString) {
+		return this.getGoodsTDao().findAllGoodsByattribute(currentPage, lineSize, queryString);
+			
+	}
+
+	@Override
+	public int countfindAllGoodsByattribute(String queryString) {
+		return this.getGoodsTDao().countfindAllGoodsByattribute(queryString);
+	}
+
 
 
 

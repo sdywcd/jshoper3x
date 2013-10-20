@@ -1193,7 +1193,7 @@ public class GoodsTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllGoods", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
 	public String findAllGoods() {
-		if ("sc".equals(this.getQtype())) {
+		if (StaticString.SC.equals(this.getQtype())) {
 			finddefaultAllGoods();
 
 		} else {
@@ -1208,11 +1208,19 @@ public class GoodsTAction extends ActionSupport {
 		return "json";
 
 	}
-
+	/**
+	 * 根据商品名称查询商品
+	 */
 	private void findGoodsByGoodsname() {
 		int currentPage=page;
 		int lineSize=rp;
-	
+		String qs="select count(*) from GoodsT where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
+		total=this.getGoodsTService().countfindAllGoodsByattribute(qs);
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			String queryString="from GoodsT as gt where gt."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " +this.getSortname()+" "+this.getSortorder()+"";
+			List<GoodsT>list=this.getGoodsTService().findAllGoodsByattribute(currentPage, lineSize, queryString);
+			this.ProcessGoodsList(list);
+		}
 	}
 
 	/**
@@ -1820,7 +1828,26 @@ public class GoodsTAction extends ActionSupport {
 			return realpath;
 		}
 	}
-	
-	
+	/**
+	 * 根据商品名称搜索商品
+	 * @return
+	 */
+	@Action(value = "searchGoodsBygoodsname", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
+	public String searchGoodsBygoodsname(){
+		if(StringUtils.isBlank(this.getGoodsname())){
+			return "json";
+		}
+		int currentPage=1;
+		int lineSize=100;
+		String queryString="from GoodsT as gt where gt.goodsname like '%"+this.getGoodsname()+"%' order by " +this.getSortname()+" "+this.getSortorder()+"";
+		beanlist=this.getGoodsTService().findAllGoodsByattribute(currentPage, lineSize, queryString);
+		if(!beanlist.isEmpty()){
+			this.ProcessGoodsList(beanlist);
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+		
+	}
 	
 }

@@ -17,12 +17,14 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsCommentT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsCommentTService;
 import com.jshop.service.GoodsTService;
 import com.opensymphony.xwork2.ActionSupport;
+
 @Namespace("")
 @ParentPackage("jshop")
 public class GoodsCommentTAction extends ActionSupport {
@@ -43,15 +45,14 @@ public class GoodsCommentTAction extends ActionSupport {
 	private String emailable;
 	private String userid;
 	private GoodsT g = new GoodsT();
-	private String query;//text
-	private String qtype;//select
+	private String query;// text
+	private String qtype;// select
 	private GoodsCommentT bean = new GoodsCommentT();
-	private List<GoodsCommentT>beanlist=new ArrayList<GoodsCommentT>();
+	private List<GoodsCommentT> beanlist = new ArrayList<GoodsCommentT>();
 	private List rows = new ArrayList();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
 	private boolean sucflag;
 
 	@JSON(serialize = false)
@@ -59,9 +60,11 @@ public class GoodsCommentTAction extends ActionSupport {
 		return goodsCommentTService;
 	}
 
-	public void setGoodsCommentTService(GoodsCommentTService goodsCommentTService) {
+	public void setGoodsCommentTService(
+			GoodsCommentTService goodsCommentTService) {
 		this.goodsCommentTService = goodsCommentTService;
 	}
+
 	@JSON(serialize = false)
 	public GoodsTService getGoodsTService() {
 		return goodsTService;
@@ -192,7 +195,6 @@ public class GoodsCommentTAction extends ActionSupport {
 		this.qtype = qtype;
 	}
 
-
 	public GoodsCommentT getBean() {
 		return bean;
 	}
@@ -231,14 +233,6 @@ public class GoodsCommentTAction extends ActionSupport {
 
 	public void setTotal(int total) {
 		this.total = total;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public GoodsT getG() {
@@ -289,36 +283,51 @@ public class GoodsCommentTAction extends ActionSupport {
 	 */
 	@Action(value = "addvirtualGoodsComment", results = { @Result(name = "json", type = "json") })
 	public String addvirtualGoodsComment() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			g = this.getGoodsTService().findGoodsById(this.getGoodsid());
-			if (g != null) {
-				GoodsCommentT gct = new GoodsCommentT();
-				gct.setCommentid(this.getSerial().Serialid(Serial.GOODSCOMMENT));
-				gct.setGoodsid(this.getGoodsid().trim());
-				gct.setGoodsname(g.getGoodsname());
-				gct.setReplyorcommentusername(this.getReplyorcommentusername());
-				gct.setReplyorcommentuserid(BaseTools.adminCreateId());
-				gct.setPosttime(BaseTools.systemtime());
-				gct.setCommentcontent(this.getCommentcontent());
-				gct.setScore(0);
-				gct.setState("1");
-				gct.setReplyorcomment("1");
-				gct.setReplyid("0");
-				gct.setEmailable("0");
-				gct.setVirtualadd("1");
-				if (this.getGoodsCommentTService().addGoodsComment(gct) > 0) {
-					this.setSucflag(true);
-					return "json";
-				} else {
-					this.setSucflag(false);
-					return "json";
-				}
-			}
+		if (StringUtils.isBlank(this.getGoodsid())) {
+			return "json";
 		}
-		this.setSucflag(false);
+		GoodsCommentT gct = new GoodsCommentT();
+		gct.setCommentid(this.getSerial().Serialid(Serial.GOODSCOMMENT));
+		gct.setGoodsid(this.getGoodsid().trim());
+		gct.setGoodsname(this.getGoodsname().trim());
+		gct.setReplyorcommentusername(this.getReplyorcommentusername());
+		gct.setReplyorcommentuserid(BaseTools.adminCreateId());
+		gct.setPosttime(BaseTools.systemtime());
+		gct.setCommentcontent(this.getCommentcontent());
+		gct.setScore(this.getScore());
+		gct.setState(StaticString.COMMENT_STATE_ONE_NUM);
+		gct.setReplyorcomment(StaticString.COMMENT_REPLY_TWO_NUM);
+		gct.setReplyid(StaticString.COMMENT_DEFAULT_REPLYID);
+		gct.setEmailable(StaticString.COMMENT_EMAILABLE_ONE_NUM);
+		gct.setVirtualadd(StaticString.COMMENT_VIRTUALADD_ONE_NUM);
+		if (this.getGoodsCommentTService().addGoodsComment(gct) > 0) {
+			this.setSucflag(true);
+			return "json";
+
+		}
 		return "json";
 	}
-
+	/**
+	 * 更新商品评论
+	 * @return
+	 */
+	@Action(value = "updateGoodsComment", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsComment(){
+		if(StringUtils.isBlank(this.getCommentid())){
+			return "json";
+		}
+		bean=this.getGoodsCommentTService().findGoodsCommentById(this.getCommentid());
+		bean.setReplyorcommentusername(this.getReplyorcommentusername());
+		bean.setReplyorcommentuserid(BaseTools.adminCreateId());
+		bean.setCommentcontent(this.getCommentcontent());
+		bean.setScore(this.getScore());
+		this.getGoodsCommentTService().updateGoodsComment(bean);
+		this.setSucflag(true);
+		return "json";
+		
+	}
+	
+	
 	/**
 	 * 处理商品评论迭代
 	 * 
@@ -329,14 +338,20 @@ public class GoodsCommentTAction extends ActionSupport {
 		total = this.getGoodsCommentTService().countfindAllGoodsComment();
 		for (Iterator it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
-			if (gctt.getState().equals("1")) {
-				gctt.setState("显示");
+			if (gctt.getState().equals(StaticString.ONE)) {
+				gctt.setState(StaticString.SHOW);
 			} else {
-				gctt.setState("禁止");
+				gctt.setState(StaticString.HIDDEN);
 			}
 			Map cellMap = new HashMap();
-			cellMap.put("id", gctt.getCommentid());
-			cellMap.put("cell", new Object[] { gctt.getGoodsname(), gctt.getState(), "<a id='showgoodscomment' href='showdetailcomment.jsp?goodsid=" + gctt.getGoodsid() + "' name='showgoodscomment'>[查看详细]</a>"});
+			cellMap.put("id", gctt.getGoodsid());
+			cellMap.put("cell",
+					new Object[] {
+							gctt.getGoodsname(),
+							gctt.getState(),
+							"<a id='showgoodscomment' href='goodscommentlistment.jsp?operate=edit&goodsname="+gctt.getGoodsname()+"&goodsid="
+									+ gctt.getGoodsid()
+									+ "' name='showgoodscomment'>[查看详细]</a>" });
 			rows.add(cellMap);
 		}
 	}
@@ -347,7 +362,8 @@ public class GoodsCommentTAction extends ActionSupport {
 	public void finddefaultAllGoodsComment() {
 		int currentPage = page;
 		int lineSize = rp;
-		List<GoodsCommentT> gct = this.getGoodsCommentTService().findAllGoodsComment(currentPage, lineSize);
+		List<GoodsCommentT> gct = this.getGoodsCommentTService()
+				.findAllGoodsComment(currentPage, lineSize);
 		if (gct != null) {
 			ProcessGoodsCommentList(gct);
 		}
@@ -361,7 +377,7 @@ public class GoodsCommentTAction extends ActionSupport {
 	@Action(value = "findAllGoodsComment", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsComment() {
 		if ("sc".equals(this.getQtype())) {
-			//获取默认的所有商品评论
+			// 获取默认的所有商品评论
 			this.setTotal(0);
 			rows.clear();
 			finddefaultAllGoodsComment();
@@ -376,30 +392,111 @@ public class GoodsCommentTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "DelGoodsComment", results = { @Result(name = "json", type = "json") })
-	public String DelGoodsComment() {
-		if (Validate.StrNotNull(this.getCommentid())) {
-			String[] strs = this.getCommentid().trim().split(",");
+	@Action(value = "delGoodsComment", results = { @Result(name = "json", type = "json") })
+	public String delGoodsComment() {
+		if (StringUtils.isNotBlank(this.getCommentid())) {
+			String[] strs = StringUtils.split(this.getCommentid(), ",");
 			if (this.getGoodsCommentTService().delGoodsComment(strs) > 0) {
+				this.setSucflag(true);
 				return "json";
 			}
 			return "json";
 		}
 		return "json";
 	}
-	
+
+	/**
+	 * 根据goodsid查询所有评论数据
+	 * 
+	 * @return
+	 */
+	@Action(value = "findAllGoodsCommentListByGoodsId", results = { @Result(name = "json", type = "json") })
+	public String findAllGoodsCommentListByGoodsId() {
+		if (StaticString.SC.equals(this.getQtype())) {
+			this.finddefaultAllGoodsCommentByGoodsId();
+		} else {
+			if (StringUtils.isBlank(this.getQuery())) {
+				return "json";
+			} else {
+
+				return "json";
+			}
+		}
+		return "json";
+	}
+
+	private void finddefaultAllGoodsCommentByGoodsId() {
+		int currentPage = page;
+		int lineSize = rp;
+		total = this.getGoodsCommentTService().countfindGoodsCommentByGoodsid(
+				this.getGoodsid());
+		List<GoodsCommentT> list = this.getGoodsCommentTService()
+				.findGoodsCommentByGoodsid(this.getGoodsid(), currentPage,
+						lineSize);
+		ProcessGoodsCommentListByGoodsid(list);
+
+	}
+
+	/**
+	 * 单个商品评论
+	 * 
+	 * @param gct
+	 */
+	@SuppressWarnings("unchecked")
+	public void ProcessGoodsCommentListByGoodsid(List<GoodsCommentT> gct) {
+		total = this.getGoodsCommentTService().countfindAllGoodsComment();
+		for (Iterator it = gct.iterator(); it.hasNext();) {
+			GoodsCommentT gctt = (GoodsCommentT) it.next();
+			if (gctt.getState().equals(StaticString.ONE)) {
+				gctt.setState(StaticString.SHOW);
+			} else {
+				gctt.setState(StaticString.HIDDEN);
+			}
+			if (gctt.getVirtualadd().equals(
+					StaticString.COMMENT_VIRTUALADD_ONE_NUM)) {
+				gctt.setVirtualadd(StaticString.COMMENT_VIRTULADD);
+			} else {
+				gctt.setVirtualadd(StaticString.COMMENT_NOTVIRTULADD);
+			}
+			if (gctt.getReplyorcomment().equals(
+					StaticString.COMMENT_REPLY_ONE_NUM)) {
+				gctt.setReplyorcomment(StaticString.COMMENT_REPLY_ONE);
+			} else {
+				gctt.setReplyorcomment(StaticString.COMMENT_REPLY_TWO);
+			}
+			Map cellMap = new HashMap();
+			cellMap.put("id", gctt.getCommentid());
+			cellMap.put(
+					"cell",
+					new Object[] {
+							gctt.getCommentcontent(),
+							gctt.getReplyorcommentusername(),
+							gctt.getScore(),
+							gctt.getReplyorcomment(),
+							gctt.getVirtualadd(),
+							gctt.getState(),
+							BaseTools.formateDbDate(gctt.getPosttime()),
+							"<a id='goodscommentdetail' href='goodscommentdetail.jsp?operate=editdetail&commentid="
+									+ gctt.getCommentid()
+									+ "' name='goodscommentdetail'>[编辑]</a>" });
+			rows.add(cellMap);
+		}
+	}
+
 	/**
 	 * 后台获取商品的详细评论数据
+	 * 
 	 * @return
 	 */
 	@Action(value = "getGoodscommentDetails", results = { @Result(name = "json", type = "json") })
-	public String getGoodscommentDetails(){
-		if(Validate.StrNotNull(this.getGoodsid())){
-			String goodsid=this.getGoodsid().trim();
-			int currentPage=1;
-			int lineSize=65535;
-			List<GoodsCommentT>list=this.getGoodsCommentTService().findGoodsCommentByGoodsid(goodsid, currentPage, lineSize);
-			if(!list.isEmpty()){
+	public String getGoodscommentDetails() {
+		if (Validate.StrNotNull(this.getGoodsid())) {
+			String goodsid = this.getGoodsid().trim();
+			int currentPage = 1;
+			int lineSize = 65535;
+			List<GoodsCommentT> list = this.getGoodsCommentTService()
+					.findGoodsCommentByGoodsid(goodsid, currentPage, lineSize);
+			if (!list.isEmpty()) {
 				this.setBeanlist(list);
 				this.setSucflag(true);
 				return "json";
@@ -408,25 +505,44 @@ public class GoodsCommentTAction extends ActionSupport {
 		this.setSucflag(false);
 		return "json";
 	}
-	
+
 	/**
 	 * 更新评论或者回复的显示状态
+	 * 
 	 * @return
 	 */
 	@Action(value = "updateGoodsCommentorReplyByState", results = { @Result(name = "json", type = "json") })
-	public String updateGoodsCommentorReplyByState(){
-		if(Validate.StrNotNull(this.getCommentid())){
-			String []strs=StringUtils.split(this.getCommentid().trim(), ',');
-			String state=this.getState().trim();
-			this.getGoodsCommentTService().updateGoodsCommentorReplyByState(state, strs);
+	public String updateGoodsCommentorReplyByState() {
+		if (Validate.StrNotNull(this.getCommentid())) {
+			String[] strs = StringUtils.split(this.getCommentid().trim(), ',');
+			String state = this.getState().trim();
+			this.getGoodsCommentTService().updateGoodsCommentorReplyByState(
+					state, strs);
 			this.setSucflag(true);
 			return "json";
-		
+
 		}
 		this.setSucflag(false);
 		return "json";
 	}
 
-	
-	
+	/**
+	 * 根据id获取商品评论
+	 * 
+	 * @return
+	 */
+	@Action(value = "findGoodsCommentById", results = { @Result(name = "json", type = "json") })
+	public String findGoodsCommentById() {
+		if (StringUtils.isBlank(this.getCommentid())) {
+			return "json";
+		}
+		bean = this.getGoodsCommentTService().findGoodsCommentById(
+				this.getCommentid());
+		if(bean!=null){
+			this.setSucflag(true);
+			return "json";
+		}
+		return "json";
+	}
+
 }

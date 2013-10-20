@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.GoodsCommentTDao;
+import com.jshop.entity.FunctionM;
 import com.jshop.entity.GoodsCommentT;
 
 /**
@@ -89,10 +90,7 @@ public class GoodsCommentTDaoImpl extends HibernateDaoSupport implements GoodsCo
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all findAllGoodsComment error", re);
 			throw re;
@@ -200,10 +198,32 @@ public class GoodsCommentTDaoImpl extends HibernateDaoSupport implements GoodsCo
 				return list;
 			}
 		});
-		if (list.size() > 0 && list != null) {
-			return list;
-		}
-		return null;
+		return list;
 
+	}
+
+	@Override
+	public GoodsCommentT findGoodsCommentById(String id) {
+		log.debug("findGoodsCommentById");
+		try {
+			GoodsCommentT instance = (GoodsCommentT) this.getHibernateTemplate().get("com.jshop.entity.GoodsCommentT", id);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("findGoodsCommentById failed", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public void updateGoodsComment(GoodsCommentT gct) {
+		log.debug("updateGoodsComment");
+		try {
+			this.getHibernateTemplate().update(gct);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("updateGoodsComment failed", re);
+			throw re;
+		}
+		
 	}
 }

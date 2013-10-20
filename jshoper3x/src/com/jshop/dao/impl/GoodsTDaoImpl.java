@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.GoodsTDao;
+import com.jshop.entity.GoodsAttributeT;
 import com.jshop.entity.GoodsT;
 
 /**
@@ -1691,6 +1692,44 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			return list;	
 		} catch (RuntimeException re) {
 			log.error("find all GoodsT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<GoodsT> findAllGoodsByattribute(final int currentPage, final int lineSize,
+			final String queryString) {
+		log.debug("findAllGoodsByattribute");
+		try {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setFirstResult((currentPage - 1) * lineSize);
+					query.setMaxResults(lineSize);
+					List list = query.list();
+					return list;
+				}
+			});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findAllGoodsByattribute error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int countfindAllGoodsByattribute(String queryString) {
+		log.debug("countfindAllGoodsByattribute");
+		try {
+			List list = this.getHibernateTemplate().find(queryString);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countfindAllGoodsByattribute error", re);
 			throw re;
 		}
 	}

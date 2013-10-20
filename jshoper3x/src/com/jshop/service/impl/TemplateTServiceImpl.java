@@ -90,5 +90,4 @@ public class TemplateTServiceImpl implements TemplateTService {
 		return this.getTemplateTDao().countTemplateTBYLikeNmae(name);
 	}
 	
-	
 }

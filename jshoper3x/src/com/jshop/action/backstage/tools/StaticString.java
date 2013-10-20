@@ -401,5 +401,25 @@ public class  StaticString {
 	
 	public static final String ORDERINVOICE_TWO="公司";
 	
+	//商品评论管理
+	public static final String COMMENT_STATE_ONE_NUM="1";
+	
+	public static final String COMMENT_REPLY_ONE_NUM="1";
+	
+	public static final String COMMENT_REPLY_TWO_NUM="2";
+	
+	public static final String COMMENT_REPLY_ONE="来自用户的评论";
+	
+	public static final String COMMENT_REPLY_TWO="来自官方的回复";
+	public static final String COMMENT_DEFAULT_REPLYID="0";
+	
+	public static final String COMMENT_EMAILABLE_ONE_NUM="0";
+	
+	public static final String COMMENT_VIRTUALADD_ONE_NUM="1";
+	
+	public static final String COMMENT_VIRTULADD="虚拟";
+	
+	public static final String COMMENT_NOTVIRTULADD="非虚拟";
+
 	
 }

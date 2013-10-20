@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-10-6 17:36:02 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-10-15 23:10:00 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -48,14 +48,13 @@ public class CartT implements java.io.Serializable {
 	public CartT() {
 	}
 
-	public CartT(String id, String goodsid, String goodsname, String userid,
-			String username, int needquantity, double price, double favorable,
-			double points, double subtotal, Date addtime, String picture,
-			String usersetnum, String state, String productid, String orderTag) {
+	public CartT(String id, String goodsid, String goodsname, String username,
+			int needquantity, double price, double favorable, double points,
+			double subtotal, Date addtime, String picture, String usersetnum,
+			String state, String productid, String orderTag) {
 		this.id = id;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
-		this.userid = userid;
 		this.username = username;
 		this.needquantity = needquantity;
 		this.price = price;
@@ -152,7 +151,7 @@ public class CartT implements java.io.Serializable {
 		this.goodsname = goodsname;
 	}
 
-	@Column(name = "USERID", nullable = false, length = 20)
+	@Column(name = "USERID", length = 20)
 	public String getUserid() {
 		return this.userid;
 	}

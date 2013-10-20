@@ -755,4 +755,21 @@ public interface GoodsTDao {
 			String ltypeid, String stypeid, String salestate,
 			String isSpecificationsOpen);
 
+	/**
+	 * 根据属性查询商品信息
+	 * @param currentPage
+	 * @param lineSize
+	 * @param queryString
+	 * @return
+	 */
+	public List<GoodsT>findAllGoodsByattribute(int currentPage,int lineSize,String queryString); 
+	/**
+	 * 统计根据属性查询商品信息
+	 * @param queryString
+	 * @return
+	 */
+	public int countfindAllGoodsByattribute(String queryString);
+	
+	
+	
 }

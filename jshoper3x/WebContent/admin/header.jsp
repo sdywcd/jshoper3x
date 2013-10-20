@@ -120,6 +120,7 @@
 									</ul>
 								</li>-->
 								<li class="divider"></li>
+								<li><a href="<%=basePath%>admin/goods/goodscomment.jsp?operate=add">添加商品评论</a></li>
 								<li><a href="<%=basePath%>admin/goods/goodscommentment.jsp?operate=find">商品评论</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"

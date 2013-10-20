@@ -31,7 +31,8 @@ public class GoodsCommentTServiceImpl implements GoodsCommentTService {
 	}
 
 	public int updateGoodsCommentorReplyByState(String state, String[] list) {
-		return this.getGoodsCommentTDao().updateGoodsCommentorReplyByState(state, list);
+		return this.getGoodsCommentTDao().updateGoodsCommentorReplyByState(
+				state, list);
 	}
 
 	public int addGoodsComment(GoodsCommentT gct) {
@@ -39,22 +40,38 @@ public class GoodsCommentTServiceImpl implements GoodsCommentTService {
 	}
 
 	public List<GoodsCommentT> findAllGoodsComment(int currentPage, int lineSize) {
-		return this.getGoodsCommentTDao().findAllGoodsComment(currentPage, lineSize);
+		return this.getGoodsCommentTDao().findAllGoodsComment(currentPage,
+				lineSize);
 	}
 
 	public int countfindGoodsCommentByGoodsid(String goodsid) {
-		return this.getGoodsCommentTDao().countfindGoodsCommentByGoodsid(goodsid);
+		return this.getGoodsCommentTDao().countfindGoodsCommentByGoodsid(
+				goodsid);
 	}
 
-	public List<GoodsCommentT> findGoodsCommentByGoodsid(String goodsid, int currentPage, int lineSize) {
-		return this.getGoodsCommentTDao().findGoodsCommentByGoodsid(goodsid, currentPage, lineSize);
+	public List<GoodsCommentT> findGoodsCommentByGoodsid(String goodsid,
+			int currentPage, int lineSize) {
+		return this.getGoodsCommentTDao().findGoodsCommentByGoodsid(goodsid,
+				currentPage, lineSize);
 	}
 
 	public int countfindAllGoodsComment() {
 		return this.getGoodsCommentTDao().countfindAllGoodsComment();
 	}
 
-	public List<GoodsCommentT> sortAllGoodsComment(int currentPage, int lineSize, String queryString) {
-		return this.getGoodsCommentTDao().sortAllGoodsComment(currentPage, lineSize, queryString);
+	public List<GoodsCommentT> sortAllGoodsComment(int currentPage,
+			int lineSize, String queryString) {
+		return this.getGoodsCommentTDao().sortAllGoodsComment(currentPage,
+				lineSize, queryString);
+	}
+
+	@Override
+	public GoodsCommentT findGoodsCommentById(String id) {
+		return this.getGoodsCommentTDao().findGoodsCommentById(id);
+	}
+
+	@Override
+	public void updateGoodsComment(GoodsCommentT gct) {
+		this.getGoodsCommentTDao().updateGoodsComment(gct);
 	}
 }

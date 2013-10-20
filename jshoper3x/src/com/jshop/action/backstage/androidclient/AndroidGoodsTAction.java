@@ -267,8 +267,8 @@ ServletRequestAware, ServletResponseAware {
 					//json.append("\"goodsAttrVal29\":\"").append(gt.getGoodsAttrVal29()).append("\",");
 					//json.append("\"usersetnum\":\"").append(gt.getUsersetnum()).append("\",");
 					json.append("\"isSpecificationsOpen\":\"").append(gt.getIsSpecificationsOpen()).append("\",");
-					json.append("\"star\":\"").append(gt.getStar()).append("\",");
-					json.append("\"staruser\":\"").append(gt.getStaruser()).append("\",");
+					json.append("\"star\":\"").append(gt.getTotalstar()).append("\",");
+					json.append("\"staruser\":\"").append(gt.getTotalstaruser()).append("\",");
 					json.append("\"totalcomment\":\"").append(gt.getTotalcomment()).append("\",");
 					//json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
 					json.append("\"ismobileplatformgoods\":\"").append(gt.getIsmobileplatformgoods()).append("\",");
@@ -425,8 +425,8 @@ ServletRequestAware, ServletResponseAware {
 //					json.append("\"goodsAttrVal29\":\"").append(gt.getGoodsAttrVal29()).append("\",");
 					json.append("\"usersetnum\":\"").append(gt.getUsersetnum()).append("\",");
 					json.append("\"isSpecificationsOpen\":\"").append(gt.getIsSpecificationsOpen()).append("\",");
-					json.append("\"star\":\"").append(gt.getStar()).append("\",");
-					json.append("\"staruser\":\"").append(gt.getStaruser()).append("\",");
+					json.append("\"star\":\"").append(gt.getTotalstar()).append("\",");
+					json.append("\"staruser\":\"").append(gt.getTotalstaruser()).append("\",");
 					json.append("\"totalcomment\":\"").append(gt.getTotalcomment()).append("\"");
 					//json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
 					json.append("\"ismobileplatformgoods\":\"").append(gt.getIsmobileplatformgoods()).append("\",");
@@ -544,8 +544,8 @@ ServletRequestAware, ServletResponseAware {
 //				json.append("\"goodsAttrVal29\":\"").append(gt.getGoodsAttrVal29()).append("\",");
 				json.append("\"usersetnum\":\"").append(gt.getUsersetnum()).append("\",");
 				json.append("\"isSpecificationsOpen\":\"").append(gt.getIsSpecificationsOpen()).append("\",");
-				json.append("\"star\":\"").append(gt.getStar()).append("\",");
-				json.append("\"staruser\":\"").append(gt.getStaruser()).append("\",");
+				json.append("\"star\":\"").append(gt.getTotalstar()).append("\",");
+				json.append("\"staruser\":\"").append(gt.getTotalstaruser()).append("\",");
 				json.append("\"totalcomment\":\"").append(gt.getTotalcomment()).append("\",");
 				//json.append("\"virtualsale\":\"").append(gt.getVirtualsale()).append("\",");
 				json.append("\"ismobileplatformgoods\":\"").append(gt.getIsmobileplatformgoods()).append("\",");

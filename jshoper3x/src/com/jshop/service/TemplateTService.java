@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.TemplateT;
 
-public interface TemplateTService {
+public interface TemplateTService  {
 
 	/**
 	 * 增加模板

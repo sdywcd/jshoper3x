@@ -19,7 +19,7 @@
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
 				height="30" alt=""></a> <a class="brand" href="#">商品评论</a> <a
-				class="brand2">所有商品评论列表</a>
+				id="dttitle" class="brand2">所有商品评论列表</a>
 		</div>
 
 	</div>

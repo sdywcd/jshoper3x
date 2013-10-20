@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.TemplateT;
 
-public interface TemplateTDao {
+public interface TemplateTDao{
 
 	/**
 	 * 增加模板

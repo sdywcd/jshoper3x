@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-10-6 17:36:02 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-10-15 23:10:00 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -62,8 +62,8 @@ public class GoodsT implements java.io.Serializable {
 	private String goodsTypeName;
 	private String usersetnum;
 	private String isSpecificationsOpen;
-	private Integer star;
-	private Integer staruser;
+	private Integer totalstar;
+	private Integer totalstaruser;
 	private Integer totalcomment;
 	private String isvirtualsale;
 	private String ismobileplatformgoods;
@@ -112,8 +112,8 @@ public class GoodsT implements java.io.Serializable {
 			double saleprice, String isNew, String htmlPath, String productSn,
 			String goodsParameterValue, Integer freezeStore, String keywordid,
 			String unitnameid, String goodsTypeId, String goodsTypeName,
-			String usersetnum, String isSpecificationsOpen, Integer star,
-			Integer staruser, Integer totalcomment, String isvirtualsale,
+			String usersetnum, String isSpecificationsOpen, Integer totalstar,
+			Integer totalstaruser, Integer totalcomment, String isvirtualsale,
 			String ismobileplatformgoods, Integer sales, Integer realsales,
 			Date updatetime, int versiont, String commoditylist) {
 		this.goodsid = goodsid;
@@ -161,8 +161,8 @@ public class GoodsT implements java.io.Serializable {
 		this.goodsTypeName = goodsTypeName;
 		this.usersetnum = usersetnum;
 		this.isSpecificationsOpen = isSpecificationsOpen;
-		this.star = star;
-		this.staruser = staruser;
+		this.totalstar = totalstar;
+		this.totalstaruser = totalstaruser;
 		this.totalcomment = totalcomment;
 		this.isvirtualsale = isvirtualsale;
 		this.ismobileplatformgoods = ismobileplatformgoods;
@@ -580,22 +580,22 @@ public class GoodsT implements java.io.Serializable {
 		this.isSpecificationsOpen = isSpecificationsOpen;
 	}
 
-	@Column(name = "STAR")
-	public Integer getStar() {
-		return this.star;
+	@Column(name = "TOTALSTAR")
+	public Integer getTotalstar() {
+		return this.totalstar;
 	}
 
-	public void setStar(Integer star) {
-		this.star = star;
+	public void setTotalstar(Integer totalstar) {
+		this.totalstar = totalstar;
 	}
 
-	@Column(name = "STARUSER")
-	public Integer getStaruser() {
-		return this.staruser;
+	@Column(name = "TOTALSTARUSER")
+	public Integer getTotalstaruser() {
+		return this.totalstaruser;
 	}
 
-	public void setStaruser(Integer staruser) {
-		this.staruser = staruser;
+	public void setTotalstaruser(Integer totalstaruser) {
+		this.totalstaruser = totalstaruser;
 	}
 
 	@Column(name = "TOTALCOMMENT")
