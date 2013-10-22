@@ -159,10 +159,6 @@ $(function() {
 						bclass : 'add',
 						onpress : action
 					}, {
-						name : '删除该商品所有评论',
-						bclass : 'del',
-						onpress : action
-					}, {
 						separator : true
 					} ],
 
@@ -189,48 +185,7 @@ $(function() {
 					checkbox : true
 				});
 				function action(com, grid) {
-					if (com == '删除该商品所有评论') {
-						if ($('.trSelected', grid).length > 0) {
-							var str = "";
-							$(".trSelected td:nth-child(2) div",
-									$('#goodscommentmanagement')).each(
-									function(i) {
-										str += this.innerHTML + "  ";
-									});
-							$("#contentp").text(str);
-							$("#goodscommentdelModal").modal({
-								keyboard : true,
-								show : true,
-							});
-							$("#goodscommentbtnok").click(
-									function() {
-										var str = "";
-										$('.trSelected', grid).each(function() {
-											str += this.id.substr(3) + ",";
-										});
-										$.post("DelGoodsComment.action", {
-											"commentid" : str
-										}, function(data) {
-											if (data.sucflag) {
-												$('#goodscommentdelModal')
-														.modal('hide');
-												$('#goodscommentmanagement')
-														.flexReload();
-												forminfo("#alertinfo",
-														"删除该商品所有评论成功");
-											}
-										});
-									});
-							$("#goodscommentbtnclose").click(function() {
-								$('#goodscommentdelModal').modal('hide');
-
-							});
-
-						} else {
-							formwarning("#alerterror", "请选择要删除的信息");
-							return false;
-						}
-					} else if (com == '查看该商品所有评论') {
+					if (com == '查看该商品所有评论') {
 						if ($('.trSelected', grid).length == 1) {
 							var str = "";
 							var name = "";
@@ -492,13 +447,15 @@ $(function() {
 						$("#hidgoodsid").val(data.bean.goodsid);
 						$("#hidgoodsname").val(data.bean.goodsname);
 						$("#hidcommentid").val(data.bean.commentid);
-				
+						$("#submit").hide();
+						$("#update").show();
 				});
 			},
 			/**
 			 * 更新评论
 			 */
 			updateGoodsComment=function(){
+				var commentid=$("#hidcommentid").val();
 				var goodsid = $("#hidgoodsid").val();
 				var goodsname=$("#hidgoodsname").val();
 				var replyorcommentusername = $("#replyorcommentusername").val();
@@ -517,7 +474,8 @@ $(function() {
 				$.post("updateGoodsComment.action",{
 					"replyorcommentusername":replyorcommentusername,
 					"commentcontent":commentcontent,
-					"score":score
+					"score":score,
+					"commentid":commentid
 					},function(data){
 						if(data.sucflag){
 							window.location.href = "goodscommentlistment.jsp?operate=edit&goodsid="
@@ -536,7 +494,12 @@ $(function() {
 	$("#submit").click(function() {
 		savevirtualGoodsComment();
 	});
-
+	/**
+	 * 更新商品评论
+	 */
+	$("#update").click(function(){
+		updateGoodsComment();
+	});
 });
 /*
  * ===========================================Gorgeous

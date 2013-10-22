@@ -140,27 +140,10 @@ public class GradeTDaoImpl extends HibernateDaoSupport implements GradeTDao {
 		}
 	}
 
-	public int updateGradeById(final GradeT gt) {
+	public void updateGradeById(GradeT gt) {
 		log.debug("update GradeT");
 		try {
-
-			final String queryString = "update GradeT as gt set gt.gradevalue=:gradevalue,gt.gradename=:gradename,gt.needcost=:needcost,gt.discount=:discount,gt.createtime=:createtime,gt.creatorid=:creatorid where gt.gradeid=:gradeid ";
-			Integer integer=(Integer)this.getHibernateTemplate().execute(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					int i = 0;
-					Query query = session.createQuery(queryString);
-					query.setParameter("gradeid", gt.getGradeid());
-					query.setParameter("gradevalue", gt.getGradevalue());
-					query.setParameter("gradename", gt.getGradename());
-					query.setParameter("needcost", gt.getNeedcost());
-					query.setParameter("discount", gt.getDiscount());
-					query.setParameter("createtime", gt.getCreatetime());
-					query.setParameter("creatorid", gt.getCreatorid());
-					i = query.executeUpdate();
-					return i;
-				}
-			});
-			return integer;
+			this.getHibernateTemplate().update(gt);
 		} catch (RuntimeException re) {
 			log.error("update  GradeT error", re);
 			throw re;

@@ -13,7 +13,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
@@ -322,7 +321,7 @@ public class GoodsCommentTAction extends ActionSupport {
 		bean.setCommentcontent(this.getCommentcontent());
 		bean.setScore(this.getScore());
 		this.getGoodsCommentTService().updateGoodsComment(bean);
-		this.setSucflag(true);
+		//this.setSucflag(true);
 		return "json";
 		
 	}

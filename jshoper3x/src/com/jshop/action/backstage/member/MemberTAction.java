@@ -22,6 +22,8 @@ import com.jshop.action.backstage.tools.MD5Code;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.MemberT;
+import com.jshop.redis.dao.RedisMemberDao;
+import com.jshop.redis.service.RedisMemberService;
 import com.jshop.service.MemberTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
@@ -30,6 +32,7 @@ public class MemberTAction extends ActionSupport {
 	
 	private Serial serial;
 	private MemberTService memberTService;
+	private RedisMemberService redisMemberService;
 	private String id;
 	private String loginname;
 	private String loginpwd;
@@ -77,6 +80,15 @@ public class MemberTAction extends ActionSupport {
 	public void setSerial(Serial serial) {
 		this.serial = serial;
 	}
+	@JSON(serialize = false)
+	public RedisMemberService getRedisMemberService() {
+		return redisMemberService;
+	}
+
+	public void setRedisMemberService(RedisMemberService redisMemberService) {
+		this.redisMemberService = redisMemberService;
+	}
+
 	@JSON(serialize = false)
 	public MemberTService getMemberTService() {
 		return memberTService;
@@ -447,6 +459,8 @@ public class MemberTAction extends ActionSupport {
 				mt.setUpdatetime(mt.getCreatetime());
 				mt.setVersiont(0);
 				this.getMemberTService().saveMemberT(mt);
+				//放置到redis中去
+				this.getRedisMemberService().save(mt);
 				this.setSucflag(true);
 				return "json";
 			}else{
@@ -467,6 +481,7 @@ public class MemberTAction extends ActionSupport {
 	public String findAllMemberT(){
 		if(StaticString.SC.equals(this.getQtype())){
 			this.findDefaultAllMemberT();
+			
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
 				return "json";
@@ -593,6 +608,10 @@ public class MemberTAction extends ActionSupport {
 	public String findMemberTById(){
 		if(StringUtils.isBlank(this.getId())){
 			return "json";
+		}
+		MemberT mt=this.getRedisMemberService().read(this.getId());
+		if(mt!=null){
+			System.out.println(mt.getNick());
 		}
 		bean=this.getMemberTService().findMemberTById(this.getId().trim());
 		if(bean!=null){

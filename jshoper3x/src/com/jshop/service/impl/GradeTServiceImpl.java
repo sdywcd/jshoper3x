@@ -50,8 +50,8 @@ public class GradeTServiceImpl implements GradeTService {
 		return this.getGradeTDao().findGradeById(gradeid);
 	}
 
-	public int updateGradeById(GradeT gt) {
-		return this.getGradeTDao().updateGradeById(gt);
+	public void updateGradeById(GradeT gt) {
+		this.getGradeTDao().updateGradeById(gt);
 	}
 
 	@Override

@@ -205,13 +205,13 @@ public class GradeTAction extends ActionSupport {
 	@Action(value = "addGradet", results = { @Result(name = "json", type = "json") })
 	public String addGradet() {
 		GradeT gt = new GradeT();
-		gt.setGradeid(this.getSerial().Serialid(Serial.GRADE));
-		gt.setGradevalue("0");
-		gt.setGradename(this.getGradename().trim());
-		gt.setNeedcost(Double.parseDouble(this.getNeedcost().trim()));
-		gt.setDiscount(Double.parseDouble(this.getDiscount().trim()));
-		gt.setCreatetime(BaseTools.systemtime());
-		gt.setCreatorid(BaseTools.adminCreateId());
+//		gt.setGradeid(this.getSerial().Serialid(Serial.GRADE));
+//		gt.setGradevalue("0");
+//		gt.setGradename(this.getGradename().trim());
+//		gt.setNeedcost(Double.parseDouble(this.getNeedcost().trim()));
+//		gt.setDiscount(Double.parseDouble(this.getDiscount().trim()));
+//		gt.setCreatetime(BaseTools.systemtime());
+//		gt.setCreatorid(BaseTools.adminCreateId());
 		if (this.getGradeTService().addGradet(gt) > 0) {
 			this.setSucflag(true);
 			return "json";
@@ -229,27 +229,27 @@ public class GradeTAction extends ActionSupport {
 	@Action(value = "findAllGrade", results = { @Result(name = "json", type = "json") })
 	public String findAllGrade() {
 		int currentPage = page;
-		int lineSize = rp;
-		List<GradeT> list = this.getGradeTService().findAllGrade(currentPage,lineSize);
-		if (!list.isEmpty()) {
-			total = this.getGradeTService().countfindAllGrade();
-			rows.clear();
-			for (Iterator it = list.iterator(); it.hasNext();) {
-				GradeT gt = (GradeT) it.next();
-				Map cellMap = new HashMap();
-				cellMap.put("id", gt.getGradeid());
-				cellMap.put("cell",new Object[] {
-						gt.getGradename(), 
-						gt.getNeedcost(),
-						gt.getDiscount(),
-						BaseTools.formateDbDate(gt.getCreatetime()),
-						gt.getCreatorid() });
-				rows.add(cellMap);
-			}
-			return "json";
-		}
-		this.setTotal(0);
-		rows.clear();
+//		int lineSize = rp;
+//		List<GradeT> list = this.getGradeTService().findAllGrade(currentPage,lineSize);
+//		if (!list.isEmpty()) {
+//			total = this.getGradeTService().countfindAllGrade();
+//			rows.clear();
+//			for (Iterator it = list.iterator(); it.hasNext();) {
+//				GradeT gt = (GradeT) it.next();
+//				Map cellMap = new HashMap();
+//				cellMap.put("id", gt.getGradeid());
+//				cellMap.put("cell",new Object[] {
+//						gt.getGradename(), 
+//						gt.getNeedcost(),
+//						gt.getDiscount(),
+//						BaseTools.formateDbDate(gt.getCreatetime()),
+//						gt.getCreatorid() });
+//				rows.add(cellMap);
+//			}
+//			return "json";
+//		}
+//		this.setTotal(0);
+//		rows.clear();
 		return "json";
 	}
 
@@ -279,17 +279,17 @@ public class GradeTAction extends ActionSupport {
 	@Action(value = "UpdateGradeById", results = { @Result(name = "json", type = "json") })
 	public String UpdateGradeById() {
 		GradeT gt = new GradeT();
-		gt.setGradeid(this.getGradeid().trim());
-		gt.setGradevalue("0");
-		gt.setGradename(this.getGradename().trim());
-		gt.setNeedcost(Double.parseDouble(this.getNeedcost().trim()));
-		gt.setDiscount(Double.parseDouble(this.getDiscount().trim()));
-		gt.setCreatetime(BaseTools.systemtime());
-		gt.setCreatorid(BaseTools.adminCreateId());
-		if(this.getGradeTService().updateGradeById(gt)>0){
-			this.setSucflag(true);
-			return "json";
-		}
+//		gt.setGradeid(this.getGradeid().trim());
+//		gt.setGradevalue("0");
+//		gt.setGradename(this.getGradename().trim());
+//		gt.setNeedcost(Double.parseDouble(this.getNeedcost().trim()));
+//		gt.setDiscount(Double.parseDouble(this.getDiscount().trim()));
+//		gt.setCreatetime(BaseTools.systemtime());
+//		gt.setCreatorid(BaseTools.adminCreateId());
+//		if(this.getGradeTService().updateGradeById(gt)>0){
+//			this.setSucflag(true);
+//			return "json";
+//		}
 		this.setSucflag(false);
 		return "json";
 
