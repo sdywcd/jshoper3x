@@ -77,13 +77,13 @@
 >
 
 ##关于技术选型
->struts2,spring3.0,hibernate4,freemarker,jsp,jquery,dwr,js,html5,css,mysql5,android4这些事我们目前用到的
+>struts2,spring3.0,hibernate4,freemarker,jsp,jquery,dwr,js,html5,css,mysql5,android4,Redis 这些事我们目前用到的
 >我们乐于使用新技术，我们也在系统中使用了很多国内的开源组件
 
 ##关于未来想加入的技术
 >搜索技术 lucene
 >
->缓存 redius
+>缓存 Redis（已加入）
 >
 >nosql
 >
