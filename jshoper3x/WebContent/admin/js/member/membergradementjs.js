@@ -14,10 +14,7 @@ $(function() {
 	});
 
 });
-/*
- * ===========================================Gorgeous
- * split-line==============================================
- */
+
 
 /**
  * flexigrid list
@@ -168,9 +165,7 @@ $(function() {
 	});
 });
 
-/**
- * main logic
- */
+
 $(function(){
 	/**
 	 * 查询所有会员等级
@@ -265,7 +260,7 @@ $(function(){
 				}
 
 			}else if(com=="添加"){
-	            window.location.href="addgrade.jsp?session="+session+"#member";
+	            window.location.href="membergrade.jsp?operate=add&folder=member";
 	            return;
 	        }else if(com=="删除"){
 	            if ($('.trSelected', grid).length > 0) {
