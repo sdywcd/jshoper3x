@@ -420,6 +420,13 @@ public class  StaticString {
 	public static final String COMMENT_VIRTULADD="虚拟";
 	
 	public static final String COMMENT_NOTVIRTULADD="非虚拟";
-
+	
+	//会员等级管理
+	
+	public static final String CREDITVALUE="信用值";
+	
+	public static final String EMPIRICALVALUE="经验值";
+	
+	
 	
 }

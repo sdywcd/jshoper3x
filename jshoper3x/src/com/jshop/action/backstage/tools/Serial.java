@@ -54,8 +54,8 @@ public class Serial {
 	public static final String GOODSTYPE="goodstype";
 	//单位表主键生成
 	public static final String UNIT="unit";
-	//用户等级表主键生成
-	public static final String GRADE="grade";
+	//会员等级表主键生成
+	public static final String MEMBERGRADE="membergrade";
 	//图片表主键生成（可能以后去除）
 	public static final String IMG="img";
 	//发货单模板表主键生成

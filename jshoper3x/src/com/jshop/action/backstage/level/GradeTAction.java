@@ -13,44 +13,43 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
-import com.jshop.entity.GradeT;
-import com.jshop.service.GradeTService;
+import com.jshop.entity.MemberGradeT;
+import com.jshop.service.MemberGradeTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 public class GradeTAction extends ActionSupport {
-	private GradeTService gradeTService;
+	private MemberGradeTService memberGradeTService;
 	private Serial serial;
-	private String gradeid;
-	private String gradevalue;
-	private String gradename;
-	private String needcost;
-	private String discount;
-	private Date createttime;
-	private String creatorid;
-	private GradeT bean = new GradeT();
-	private List<GradeT>beanlist=new ArrayList<GradeT>();
+	private String id;
+	private String type;
+	private String name;
+	private double start;
+	private double end;
+	private Double increment;
+	private Double multiplypower;
+	private String mpstate;
+	private Double mpchangepower;
+	private Date updatetime;
+	private int versiont;
+	private Double discount;
+	private MemberGradeT bean = new MemberGradeT();
+	private List<MemberGradeT>beanlist=new ArrayList<MemberGradeT>();
 	private List rows = new ArrayList();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
-	private String usession;
+	private String query;
+	private String qtype;
+	private String sortname;
+	private String sortorder;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public GradeTService getGradeTService() {
-		return gradeTService;
-	}
-
-	public void setGradeTService(GradeTService gradeTService) {
-		this.gradeTService = gradeTService;
-	}
-
+	
 	@JSON(serialize = false)
 	public Serial getSerial() {
 		return serial;
@@ -59,61 +58,126 @@ public class GradeTAction extends ActionSupport {
 	public void setSerial(Serial serial) {
 		this.serial = serial;
 	}
-
-	public String getGradeid() {
-		return gradeid;
+	@JSON(serialize = false)
+	public MemberGradeTService getMemberGradeTService() {
+		return memberGradeTService;
 	}
 
-	public void setGradeid(String gradeid) {
-		this.gradeid = gradeid;
+	public void setMemberGradeTService(MemberGradeTService memberGradeTService) {
+		this.memberGradeTService = memberGradeTService;
 	}
 
-	public String getGradevalue() {
-		return gradevalue;
+	
+	public String getId() {
+		return id;
 	}
 
-	public void setGradevalue(String gradevalue) {
-		this.gradevalue = gradevalue;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getGradename() {
-		return gradename;
+	public String getType() {
+		return type;
 	}
 
-	public void setGradename(String gradename) {
-		this.gradename = gradename;
+	public void setType(String type) {
+		this.type = type;
 	}
 
-	public String getNeedcost() {
-		return needcost;
+	public String getName() {
+		return name;
 	}
 
-	public void setNeedcost(String needcost) {
-		this.needcost = needcost;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getDiscount() {
+	public double getStart() {
+		return start;
+	}
+
+	public void setStart(double start) {
+		this.start = start;
+	}
+
+	public double getEnd() {
+		return end;
+	}
+
+	public void setEnd(double end) {
+		this.end = end;
+	}
+
+	public Double getIncrement() {
+		return increment;
+	}
+
+	public void setIncrement(Double increment) {
+		this.increment = increment;
+	}
+
+	public Double getMultiplypower() {
+		return multiplypower;
+	}
+
+	public void setMultiplypower(Double multiplypower) {
+		this.multiplypower = multiplypower;
+	}
+
+	public String getMpstate() {
+		return mpstate;
+	}
+
+	public void setMpstate(String mpstate) {
+		this.mpstate = mpstate;
+	}
+
+	public Double getMpchangepower() {
+		return mpchangepower;
+	}
+
+	public void setMpchangepower(Double mpchangepower) {
+		this.mpchangepower = mpchangepower;
+	}
+
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	public int getVersiont() {
+		return versiont;
+	}
+
+	public void setVersiont(int versiont) {
+		this.versiont = versiont;
+	}
+
+	public Double getDiscount() {
 		return discount;
 	}
 
-	public void setDiscount(String discount) {
+	public void setDiscount(Double discount) {
 		this.discount = discount;
 	}
 
-	public Date getCreatettime() {
-		return createttime;
+	public MemberGradeT getBean() {
+		return bean;
 	}
 
-	public void setCreatettime(Date createttime) {
-		this.createttime = createttime;
+	public void setBean(MemberGradeT bean) {
+		this.bean = bean;
 	}
 
-	public String getCreatorid() {
-		return creatorid;
+	public List<MemberGradeT> getBeanlist() {
+		return beanlist;
 	}
 
-	public void setCreatorid(String creatorid) {
-		this.creatorid = creatorid;
+	public void setBeanlist(List<MemberGradeT> beanlist) {
+		this.beanlist = beanlist;
 	}
 
 	public List getRows() {
@@ -148,30 +212,6 @@ public class GradeTAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public GradeT getBean() {
-		return bean;
-	}
-
-	public void setBean(GradeT bean) {
-		this.bean = bean;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
-	public String getUsession() {
-		return usession;
-	}
-
-	public void setUsession(String usession) {
-		this.usession = usession;
-	}
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -180,12 +220,36 @@ public class GradeTAction extends ActionSupport {
 		this.sucflag = sucflag;
 	}
 
-	public List<GradeT> getBeanlist() {
-		return beanlist;
+	public String getQuery() {
+		return query;
 	}
 
-	public void setBeanlist(List<GradeT> beanlist) {
-		this.beanlist = beanlist;
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+	public String getQtype() {
+		return qtype;
+	}
+
+	public void setQtype(String qtype) {
+		this.qtype = qtype;
+	}
+
+	public String getSortname() {
+		return sortname;
+	}
+
+	public void setSortname(String sortname) {
+		this.sortname = sortname;
+	}
+
+	public String getSortorder() {
+		return sortorder;
+	}
+
+	public void setSortorder(String sortorder) {
+		this.sortorder = sortorder;
 	}
 
 	/**
@@ -202,21 +266,25 @@ public class GradeTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "addGradet", results = { @Result(name = "json", type = "json") })
-	public String addGradet() {
-		GradeT gt = new GradeT();
-//		gt.setGradeid(this.getSerial().Serialid(Serial.GRADE));
-//		gt.setGradevalue("0");
-//		gt.setGradename(this.getGradename().trim());
-//		gt.setNeedcost(Double.parseDouble(this.getNeedcost().trim()));
-//		gt.setDiscount(Double.parseDouble(this.getDiscount().trim()));
-//		gt.setCreatetime(BaseTools.systemtime());
-//		gt.setCreatorid(BaseTools.adminCreateId());
-		if (this.getGradeTService().addGradet(gt) > 0) {
-			this.setSucflag(true);
-			return "json";
-		}
-		this.setSucflag(false);
+	@Action(value = "addMemberGradeT", results = { @Result(name = "json", type = "json") })
+	public String addMemberGradeT() {
+		MemberGradeT mgt = new MemberGradeT();
+		mgt.setId(this.getSerial().Serialid(Serial.MEMBERGRADE));
+		mgt.setType(this.getType());
+		mgt.setName(this.getName());
+		mgt.setStart(this.getStart());
+		mgt.setEnd(this.getEnd());
+		mgt.setIncrement(this.getIncrement());
+		mgt.setMultiplypower(this.getMultiplypower());
+		mgt.setMpstate(this.getMpstate());
+		mgt.setMpchangepower(this.getMpchangepower());
+		mgt.setDiscount(this.getDiscount());
+		mgt.setCreatetime(BaseTools.systemtime());
+		mgt.setCreatorid(BaseTools.adminCreateId());
+		mgt.setUpdatetime(mgt.getCreatetime());
+		mgt.setVersiont(0);
+		this.getMemberGradeTService().addMemberGradeT(mgt);
+		this.setSucflag(true);
 		return "json";
 	}
 
@@ -226,8 +294,11 @@ public class GradeTAction extends ActionSupport {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@Action(value = "findAllGrade", results = { @Result(name = "json", type = "json") })
-	public String findAllGrade() {
+	@Action(value = "findAllMemberGradeT", results = { @Result(name = "json", type = "json") })
+	public String findAllMemberGradeT() {
+		if(StaticString.SC.equals(this.getQtype())){
+			this.findDefaultAllMemberGradeT();
+		}
 		int currentPage = page;
 //		int lineSize = rp;
 //		List<GradeT> list = this.getGradeTService().findAllGrade(currentPage,lineSize);
@@ -253,21 +324,62 @@ public class GradeTAction extends ActionSupport {
 		return "json";
 	}
 
+	private void findDefaultAllMemberGradeT() {
+		int currentPage=page;
+		int lineSize=rp;
+		total=this.getMemberGradeTService().countfindAllMemberGradeT();
+		List<MemberGradeT>list=this.getMemberGradeTService().findAllMemberGradeT(currentPage, lineSize);
+		this.ProcessMemberGradeTList(list);
+		
+	}
+
+	private void ProcessMemberGradeTList(List<MemberGradeT> list) {
+		for(Iterator it=list.iterator();it.hasNext();){
+			MemberGradeT mgt=(MemberGradeT) it.next();
+			if(StaticString.ONE.equals(mgt.getType())){
+				mgt.setType(StaticString.CREDITVALUE);
+			}else{
+				mgt.setType(StaticString.EMPIRICALVALUE);
+			}
+			if(StaticString.ZERO.equals(mgt.getMpstate())){
+				mgt.setMpstate(StaticString.UNUSING);
+			}else{
+				mgt.setMpstate(StaticString.USEING);
+			}
+			Map<String,Object>cellMap=new HashMap<String, Object>();
+			cellMap.put("id", mgt.getId());
+			cellMap.put("cell", new Object[]{
+				mgt.getType(),
+				mgt.getName(),
+				mgt.getStart(),
+				mgt.getEnd(),
+				mgt.getIncrement(),
+				mgt.getMultiplypower(),
+				mgt.getDiscount(),
+				mgt.getMpchangepower(),
+				mgt.getMpstate(),
+				"<a id='editmembergrade' name='editmembergrade' href='membergrade.jsp?operate=edit&id="+mgt.getId()+"'>编辑</a>"				
+			});
+			rows.add(cellMap);
+			
+		}
+	}
+
 	/**
 	 * 根据用户等级id获取用户等级设置信息
 	 * 
 	 * @return
 	 */
-	@Action(value = "findGradeById", results = { @Result(name = "json", type = "json") })
-	public String findGradeById() {
-		if (Validate.StrNotNull(this.getGradeid())) {
-			bean = this.getGradeTService().findGradeById(this.getGradeid().trim());
-			if (bean!= null) {
-				this.setSucflag(true);
-				return "json";
-			}
+	@Action(value = "findMemberGradeTById", results = { @Result(name = "json", type = "json") })
+	public String findMemberGradeTById() {
+		if(StringUtils.isBlank(this.getId())){
+			return "json";
 		}
-		this.setSucflag(false);
+		bean=this.getMemberGradeTService().findMemberGradeTById(this.getId());
+		if(bean!=null){
+			this.setSucflag(true);
+			return "json";
+		}
 		return "json";
 	}
 
@@ -276,41 +388,42 @@ public class GradeTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "UpdateGradeById", results = { @Result(name = "json", type = "json") })
-	public String UpdateGradeById() {
-		GradeT gt = new GradeT();
-//		gt.setGradeid(this.getGradeid().trim());
-//		gt.setGradevalue("0");
-//		gt.setGradename(this.getGradename().trim());
-//		gt.setNeedcost(Double.parseDouble(this.getNeedcost().trim()));
-//		gt.setDiscount(Double.parseDouble(this.getDiscount().trim()));
-//		gt.setCreatetime(BaseTools.systemtime());
-//		gt.setCreatorid(BaseTools.adminCreateId());
-//		if(this.getGradeTService().updateGradeById(gt)>0){
-//			this.setSucflag(true);
-//			return "json";
-//		}
-		this.setSucflag(false);
+	@Action(value = "updateMemberGradeTById", results = { @Result(name = "json", type = "json") })
+	public String updateMemberGradeTById() {
+		if(StringUtils.isBlank(this.getId())){
+			return "json";
+		}
+		bean=this.getMemberGradeTService().findMemberGradeTById(this.getId());
+		bean.setType(this.getType());
+		bean.setName(this.getName());
+		bean.setStart(this.getStart());
+		bean.setEnd(this.getEnd());
+		bean.setIncrement(this.getIncrement());
+		bean.setMultiplypower(this.getMultiplypower());
+		bean.setMpstate(this.getMpstate());
+		bean.setMpchangepower(this.getMpchangepower());
+		bean.setUpdatetime(BaseTools.systemtime());
+		bean.setVersiont(bean.getVersiont()+1);
+		bean.setDiscount(this.getDiscount());
+		bean.setCreatorid(BaseTools.adminCreateId());
+		this.getMemberGradeTService().updateMemberGradeTById(bean);
+		this.setSucflag(true);
 		return "json";
-
 	}
 	/**
-	 * 批量删除用户等级设置
+	 * 批量删除会员等级设置
 	 * @return
 	 */
-	@Action(value = "delGradet", results = { @Result(name = "json", type = "json") })
-	public String delGradet(){
-		if(Validate.StrNotNull(this.getGradeid())){
-			String []strs=StringUtils.split(this.getGradeid().trim(),',');
-			if(this.getGradeTService().delGradet(strs)>0){
-				this.setSucflag(true);
-				return "json";
-			}else{
-				this.setSucflag(false);
-				return "json";
-			}
+	@Action(value = "delMemberGradeT", results = { @Result(name = "json", type = "json") })
+	public String delMemberGradeT(){
+		if(StringUtils.isBlank(this.getId())){
+			return "json";
 		}
-		this.setSucflag(false);
+		String strs[]=StringUtils.split(this.getId(), ",");
+		if(this.getMemberGradeTService().delMemberGradeT(strs)>0){
+			this.setSucflag(true);
+			return "json";
+		}
 		return "json";
 	}
 	/**
@@ -319,7 +432,7 @@ public class GradeTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllGradeForselect", results = { @Result(name = "json", type = "json") })
 	public String findAllGradeForselect(){
-		List<GradeT>list=this.getGradeTService().findAllGrade();
+		List<MemberGradeT>list=this.getMemberGradeTService().findAllMemberGradeT();
 		if(!list.isEmpty()){
 			this.setSucflag(true);
 			this.setBeanlist(list);

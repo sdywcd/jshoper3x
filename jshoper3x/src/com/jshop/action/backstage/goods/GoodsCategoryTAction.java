@@ -866,7 +866,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gct.getGoodsCategoryTid());
-			cellMap.put("cell", new Object[] {"<a href='goodscategory.jsp?operate=edit&goods&goodsCategoryTid=" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</a>", gct.getParentName(), gct.getGrade(), gct.getSign(), gct.getSort(), BaseTools.formateDbDate(gct.getCreatetime()), gct.getCreatorid(), "<a href='goodscategory.jsp?operate=edit&goods&goodsCategoryTid=" + gct.getGoodsCategoryTid() + "'>编辑</a>" });
+			cellMap.put("cell", new Object[] {"<a href='goodscategory.jsp?operate=edit&folder=goods&goodsCategoryTid=" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</a>", gct.getParentName(), gct.getGrade(), gct.getSign(), gct.getSort(), BaseTools.formateDbDate(gct.getCreatetime()), gct.getCreatorid(), "<a href='goodscategory.jsp?operate=edit&goods&goodsCategoryTid=" + gct.getGoodsCategoryTid() + "'>编辑</a>" });
 			rows.add(cellMap);
 		}
 

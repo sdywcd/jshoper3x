@@ -5,7 +5,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.thirdpartyplatform.alifh.AlipayConfig;
 import com.jshop.action.backstage.tools.AllOrderState;

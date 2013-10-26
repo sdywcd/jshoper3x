@@ -12,8 +12,8 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.jshop.dao.GradeTDao;
-import com.jshop.entity.GradeT;
+import com.jshop.dao.MemberGradeTDao;
+import com.jshop.entity.MemberGradeT;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -26,28 +26,28 @@ import com.jshop.entity.GradeT;
  * @see com.jshop.entity.GradeT
  * @author MyEclipse Persistence Tools
  */
-@Repository("gradeTDao")
-public class GradeTDaoImpl extends HibernateDaoSupport implements GradeTDao {
+@Repository("memberGradeTDao")
+public class MemberGradeTImpl extends HibernateDaoSupport implements MemberGradeTDao {
 	
-	private static final Log log = LogFactory.getLog(GradeTDaoImpl.class);
+	private static final Log log = LogFactory.getLog(MemberGradeTImpl.class);
 	
 
-	public int addGradet(GradeT gt) {
+	public void addMemberGradeT(MemberGradeT mgt) {
 		log.debug("save GradeT");
 		try {
-			this.getHibernateTemplate().save(gt);
+			this.getHibernateTemplate().save(mgt);
 			log.debug("save successful");
-			return 1;
+		
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
 		}
 	}
 
-	public int countfindAllGrade() {
-		log.debug("count all GradeT");
+	public int countfindAllMemberGradeT() {
+		log.debug("count all MemberGradeT");
 		try {
-			String queryString = "select count(*) from GradeT";
+			String queryString = "select count(*) from MemberGradeT";
 			List list = this.getHibernateTemplate().find(queryString);
 			if (list.size() > 0) {
 				Object o = list.get(0);
@@ -56,27 +56,26 @@ public class GradeTDaoImpl extends HibernateDaoSupport implements GradeTDao {
 			}
 			return 0;
 		} catch (RuntimeException re) {
-			log.error("count all GradeT error", re);
+			log.error("count all MemberGradeT error", re);
 			throw re;
 		}
 	}
 
-	public int delGradet(final String[] list) {
-		log.debug("del GradeT");
+	public int delMemberGradeT(final String[] strs) {
+		log.debug("del MemberGradeT");
 		try {
 
-			final String queryString = "delete from GradeT as gt where gt.gradeid=:gradeid";
+			final String queryString = "delete from MemberGradeT as gt where gt.id=:id";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
-
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
-					for (String s : list) {
-						query.setParameter("gradeid", s);
+					for (String s : strs) {
+						query.setParameter("id", s);
 						i = query.executeUpdate();
 						i++;
 					}
-					if (list.length == i) {
+					if (strs.length == i) {
 						return i;
 					} else {
 						return 0;
@@ -84,19 +83,19 @@ public class GradeTDaoImpl extends HibernateDaoSupport implements GradeTDao {
 				}
 			});
 		} catch (RuntimeException re) {
-			log.error("del GradeT failed", re);
+			log.error("del MemberGradeT failed", re);
 			throw re;
 		}
 		return 0;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GradeT> findAllGrade(final int currentPage, final int lineSize) {
-		log.debug("find all GradeT");
+	public List<MemberGradeT> findAllMemberGradeT(final int currentPage, final int lineSize) {
+		log.debug("find all MemberGradeT");
 		try {
-			List<GradeT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<MemberGradeT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
 
-				String queryString = "from GradeT  order by createtime desc";
+				String queryString = "from MemberGradeT  order by createtime desc";
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
@@ -108,57 +107,45 @@ public class GradeTDaoImpl extends HibernateDaoSupport implements GradeTDao {
 			});
 			return list;
 		} catch (RuntimeException re) {
-			log.error("find all GradeT error", re);
+			log.error("find all MemberGradeT error", re);
 			throw re;
 		}
 	}
 
-	public List<GradeT> findAllGradeByValue(String gradevalue) {
-		log.debug("find all GradeT");
+	public MemberGradeT findMemberGradeTById(String id) {
+		log.debug("find by id MemberGradeT");
 		try {
-			String queryString = "from GradeT as gt where gt.gradevalue=:gradevalue";
-			List<GradeT> list = this.getHibernateTemplate().findByNamedParam(queryString, "gradevalue", gradevalue);
-			return list;
-		} catch (RuntimeException re) {
-			log.error("find all VouchersT error", re);
-			throw re;
-		}
-	}
-
-	public GradeT findGradeById(String gradeid) {
-		log.debug("find by id GradeT");
-		try {
-			String queryString = "from GradeT as gt where gt.gradeid=:gradeid";
-			List<GradeT> list = this.getHibernateTemplate().findByNamedParam(queryString, "gradeid", gradeid);
+			String queryString = "from MemberGradeT as gt where gt.id=:id";
+			List<MemberGradeT> list = this.getHibernateTemplate().findByNamedParam(queryString, "id", id);
 			if (list != null) {
 				return list.get(0);
 			}
 			return null;
 		} catch (RuntimeException re) {
-			log.error("find by id GradeT error", re);
+			log.error("find by id MemberGradeT error", re);
 			throw re;
 		}
 	}
 
-	public void updateGradeById(GradeT gt) {
-		log.debug("update GradeT");
+	public void updateMemberGradeTById(MemberGradeT mgt) {
+		log.debug("update MemberGradeT");
 		try {
-			this.getHibernateTemplate().update(gt);
+			this.getHibernateTemplate().update(mgt);
 		} catch (RuntimeException re) {
-			log.error("update  GradeT error", re);
+			log.error("update  MemberGradeT error", re);
 			throw re;
 		}
 	}
 
 	@Override
-	public List<GradeT> findAllGrade() {
-		log.debug("findAllGrade");
+	public List<MemberGradeT> findAllMemberGradeT() {
+		log.debug("findAllMemberGradeT");
 		try {
-			String queryString = "from GradeT";
-			List<GradeT> list = this.getHibernateTemplate().find(queryString);
+			String queryString = "from MemberGradeT";
+			List<MemberGradeT> list = this.getHibernateTemplate().find(queryString);
 			return list;
 		} catch (RuntimeException re) {
-			log.error("find by id GradeT error", re);
+			log.error("find by id findAllMemberGradeT error", re);
 			throw re;
 		}
 	}
