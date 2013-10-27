@@ -23,7 +23,7 @@ import com.jshop.service.MemberGradeTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GradeTAction extends ActionSupport {
+public class MemberGradeTAction extends ActionSupport {
 	private MemberGradeTService memberGradeTService;
 	private Serial serial;
 	private String id;
@@ -298,29 +298,14 @@ public class GradeTAction extends ActionSupport {
 	public String findAllMemberGradeT() {
 		if(StaticString.SC.equals(this.getQtype())){
 			this.findDefaultAllMemberGradeT();
+		}else{
+			if(StringUtils.isBlank(this.getQuery())){
+				return "json";
+			}else{
+				return "json";
+			}
 		}
-		int currentPage = page;
-//		int lineSize = rp;
-//		List<GradeT> list = this.getGradeTService().findAllGrade(currentPage,lineSize);
-//		if (!list.isEmpty()) {
-//			total = this.getGradeTService().countfindAllGrade();
-//			rows.clear();
-//			for (Iterator it = list.iterator(); it.hasNext();) {
-//				GradeT gt = (GradeT) it.next();
-//				Map cellMap = new HashMap();
-//				cellMap.put("id", gt.getGradeid());
-//				cellMap.put("cell",new Object[] {
-//						gt.getGradename(), 
-//						gt.getNeedcost(),
-//						gt.getDiscount(),
-//						BaseTools.formateDbDate(gt.getCreatetime()),
-//						gt.getCreatorid() });
-//				rows.add(cellMap);
-//			}
-//			return "json";
-//		}
-//		this.setTotal(0);
-//		rows.clear();
+		
 		return "json";
 	}
 
@@ -351,13 +336,15 @@ public class GradeTAction extends ActionSupport {
 			cellMap.put("cell", new Object[]{
 				mgt.getType(),
 				mgt.getName(),
+				mgt.getDiscount(),
 				mgt.getStart(),
 				mgt.getEnd(),
 				mgt.getIncrement(),
 				mgt.getMultiplypower(),
-				mgt.getDiscount(),
 				mgt.getMpchangepower(),
 				mgt.getMpstate(),
+				mgt.getCreatetime(),
+				mgt.getCreatorid(),
 				"<a id='editmembergrade' name='editmembergrade' href='membergrade.jsp?operate=edit&id="+mgt.getId()+"'>编辑</a>"				
 			});
 			rows.add(cellMap);

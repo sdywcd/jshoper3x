@@ -31,58 +31,7 @@ $(function() {
  * Add Function
  */
 $(function(){
-    $("#submit").click(function(){
-        var gradename = $("#gradename").val();
-        var needcost = $("#needcost").val();
-        var discount = $("#discount").val();
-        var regnotascii = /^[\x00-\xff]$/g ;  //两个字节的字符
-        var regunexpect = /[^a-zA-Z0-9\u4e00-\u9fa5_]/g; //中文英文数字都下划线ok
-        var regvalue = /^[1-9][\d]{1,8}\.[\d]{1,2}|(^0\.)[\d]{1,2}/;//匹配积分10位,两位小数
-        var regdiscount = /(^0\.)[\d]{1,2}|1\.([0]{1,2})/; //匹配积分10位,两位小数
-        if(gradename){
-        	if(gradename.match(regunexpect)){
-        		jAlert('等级名可以以"中文英文数字下划线的组合"','信息提示');
-        		return false;
-        	}
-        	var gnamelength = 0;
-        	for(var i=0;i<gradename.length;i++)
-        		{
-        			var curcode = gradename.substring(i,1); 
-        			if(regnotascii.test(curcode)) 
-        				{
-        					gnamelength += 2;
-        				}
-        			else{
-        					gnamelength++;
-        			}
-        		}
-        	if(gnamelength > 45){
-        		jAlert('字符串不能大于50','信息提示');
-        		return false;
-        	}
-        }else{
-        	jAlert('等级名字不能为空','信息提示');
-        	return false;
-        }
-        if(!regvalue.test(needcost)){
-        	jAlert('所需积分是10位,两位小数','信息提示');
-        	return false;
-        }
-        if(!regdiscount.test(discount)){
-        	jAlert('折扣格式不正确','信息提示');
-        	return false;
-        }
-        
-        $.post("addGradet.action",{
-            "gradename":gradename,
-            "needcost":needcost,
-            "discount":discount
-        },function(data){
-            if(data.sucflag){
-                window.location.href="grademanagement.jsp?session="+session+"#member";
-            }
-        });
-    });
+   
 });
 /*
  * ===========================================Gorgeous
@@ -94,119 +43,216 @@ $(function(){
 
 // 点击编辑更新内容
 $(function() {
-    var gradeid=$.query.get("gradeid");
-    if(gradeid==""){
-        return false;
-    }
-    $.post("findGradeById.action",{"gradeid":gradeid},function(data){
-        if(data.sucflag){
-            $("#gradename").val(data.bean.gradename);
-            $("#needcost").val(data.bean.needcost);
-            $("#discount").val(data.bean.discount);
-            $("#gradeid").val(data.bean.gradeid);
-            $("#editgrade").show();
-            $("#submit").hide();
-        }
-    });
     
-	$("#editgrade").click(function() {
-		var gradename = $("#gradename").val();
-        var needcost = $("#needcost").val();
-        var discount = $("#discount").val();
-		var gradeid = $("#gradeid").val();
-        var regnotascii = /^[\x00-\xff]$/g ;  //两个字节的字符
-        var regunexpect = /[^a-zA-Z0-9\u4e00-\u9fa5_]/g; //中文英文数字都下划线ok
-        var regvalue = /^[1-9][\d]{1,8}\.[\d]{1,2}|(^0\.)[\d]{1,2}/;//匹配积分10位,两位小数
-        var regdiscount = /(^0\.)[\d]{1,2}|1\.([0]{1,2})/; //匹配积分10位,两位小数
-        if(gradename){
-        	if(gradename.match(regunexpect)){
-        		jAlert('等级名可以以"中文英文数字下划线的组合"','信息提示');
-        		return false;
-        	}
-        	var gnamelength = 0;
-        	for(var i=0;i<gradename.length;i++)
-        		{
-        			var curcode = gradename.substring(i,1); 
-        			if(regnotascii.test(curcode)) 
-        				{
-        					gnamelength += 2;
-        				}
-        			else{
-        					gnamelength++;
-        			}
-        		}
-        	if(gnamelength > 45){
-        		jAlert('字符串不能大于50','信息提示');
-        		return false;
-        	}
-        }else{
-        	jAlert('等级名字不能为空','信息提示');
-        	return false;
-        }
-        if(!regvalue.test(needcost)){
-        	jAlert('所需积分是10位,两位小数','信息提示');
-        	return false;
-        }
-        if(!regdiscount.test(discount)){
-        	jAlert('折扣格式不正确','信息提示');
-        	return false;
-        }
-        
-		$.post("UpdateGradeById.action", {
-			"gradeid" : gradeid,
-			"gradename" : gradename,
-			"needcost" : needcost,
-			"discount" : discount
-		}, function(data) {
-			 if(data.sucflag){
-                window.location.href="grademanagement.jsp?session="+session+"#member";
-            }
-		});
-	});
+    
+	
 });
 
 
 $(function(){
 	/**
+	 * 根据id获取会员等级信息
+	 */
+	findMemberGradeTById=function(){
+		var id=$.query.get("id");
+	    if(id==""){
+	        return false;
+	    }
+	    $.post("findMemberGradeTById.action",{"id":id},function(data){
+	        if(data.sucflag){
+	            $("#hid").val(data.bean.id);
+	            if(data.bean.type=="1"){
+					$("input[name='type']").get(0).checked=true;
+				}else{
+					$("input[name='type']").get(1).checked=true;
+				}
+	            $("#name").val(data.bean.name);
+	            $("#start").val(data.bean.start);
+	            $("#end").val(data.bean.end);
+	            $("#increment").val(data.bean.increment);
+	            $("#multiplypower").val(data.bean.multiplypower);
+	            $("#mpchangepower").val(data.bean.mpchangepower);
+	            if(data.bean.mpstate=="0"){
+					$("input[name='mpstate']").get(0).checked=true;
+				}else{
+					$("input[name='mpstate']").get(1).checked=true;
+				}
+	            $("#discount").val(data.bean.discount);
+	            $("#update").show();
+	            $("#submit").hide();
+	        }
+	    });
+	},
+	/**
+	 * 更新会员等级信息
+	 */
+	updateMemberGradeTById=function(){
+		var id=$("#hid").val();
+		var type = $("#type").val();
+        var name = $("#name").val();
+        if(""==name){
+        	forminfo("#alertinfo", "请填写等级名称");
+            return false;
+        }
+        var start=$("#start").val();
+        if(""==start){
+        	forminfo("#alertinfo", "请填写等级范围开始值");
+            return false;
+        }
+        var end=$("#end").val();
+        if(""==end){
+        	forminfo("#alertinfo", "请填写等级范围结束值");
+            return false;
+        }
+        var increment=$("#increment").val();
+        if(""==increment){
+        	forminfo("#alertinfo", "请填写增量");
+            return false;
+        }
+        var multiplypower=$("#multiplypower").val();
+        var mpchangepower=$("#mpchangepower").val();
+        var discount = $("#discount").val();
+        var mpstate=$("input[name='mpstate']:checked").val();
+        $.post("addMemberGradeT.action",{
+        	"id":id,
+            "type":type,
+            "name":name,
+            "start":start,
+            "end":end,
+            "increment":increment,
+            "multiplypower":multiplypower,
+            "discount":discount,
+            "mpstate":mpstate
+        },function(data){
+            if(data.sucflag){
+                window.location.href="membergradement.jsp?operate=find&folder=member";
+            }
+        });
+	},
+	/**
+	 * 增加会员等级信息
+	 */
+	addMemberGradeT=function(){
+		var type = $("#type").val();
+        var name = $("#name").val();
+        if(""==name){
+        	forminfo("#alertinfo", "请填写等级名称");
+            return false;
+        }
+        var start=$("#start").val();
+        if(""==start){
+        	forminfo("#alertinfo", "请填写等级范围开始值");
+            return false;
+        }
+        var end=$("#end").val();
+        if(""==end){
+        	forminfo("#alertinfo", "请填写等级范围结束值");
+            return false;
+        }
+        var increment=$("#increment").val();
+        if(""==increment){
+        	forminfo("#alertinfo", "请填写增量");
+            return false;
+        }
+        var multiplypower=$("#multiplypower").val();
+        var mpchangepower=$("#mpchangepower").val();
+        var discount = $("#discount").val();
+        var mpstate=$("input[name='mpstate']:checked").val();
+        $.post("addMemberGradeT.action",{
+            "type":type,
+            "name":name,
+            "start":start,
+            "end":end,
+            "increment":increment,
+            "multiplypower":multiplypower,
+            "discount":discount,
+            "mpstate":mpstate
+        },function(data){
+            if(data.sucflag){
+                window.location.href="membergradement.jsp?operate=find&folder=member";
+            }
+        });
+	},
+
+	
+	/**
 	 * 查询所有会员等级
 	 */
-	findAllGrade=function(){
+	findAllMemberGradeT=function(){
 		$("#membergrademanagement").flexigrid( {
-			url : 'findAllGrade.action',
+			url : 'findAllMemberGradeT.action',
 			dataType : 'json',
 			cache : false,
 			colModel : [ {
-				display : '等级名称',
-				name : 'gradename',
-				width : 315,
+				display : '等级类型',
+				name : 'type',
+				width : 100,
 				sortable : true,
 				align : 'center'
 			}, {
-				display : '购物金额要求',
-				name : 'needcost',
-				width : 315,
+				display : '等级名称',
+				name : 'name',
+				width : 100,
 				sortable : true,
 				align : 'center'
 			}, {
 				display : '折扣',
 				name : 'discount',
-				width : 115,
+				width : 100,
 				sortable : true,
 				align : 'center'
 			}, {
-				display : '创建时间',
-				name : 'createtime',
-				width : 214,
+				display : '该等级开始值',
+				name : 'start',
+				width : 100,
 				sortable : true,
 				align : 'center'
 
-			}, {
-				display : '创建者编号',
-				name : 'creatorid',
-				width : 200,
+			},{
+				display : '该等级结束值',
+				name : 'end',
+				width : 100,
 				sortable : true,
 				align : 'center'
-			} ],
+
+			},{
+				display : '增量',
+				name : 'increment',
+				width : 100,
+				sortable : true,
+				align : 'center'
+
+			},{
+				display : '倍率',
+				name : 'multiplypower',
+				width : 100,
+				sortable : true,
+				align : 'center'
+			},{
+				display : '积分兑换比率(1:x)',
+				name : 'mpchangepower',
+				width : 150,
+				sortable : true,
+				align : 'center'
+			},{
+				display : '倍率状态',
+				name : 'mpstate',
+				width : 100,
+				sortable : true,
+				align : 'center'
+			},{
+				display : '创建时间',
+				name : 'createtime',
+				width : 150,
+				sortable : true,
+				align : 'center'
+			},{
+				display : '创建人',
+				name : 'creatorid',
+				width : 100,
+				sortable : true,
+				align : 'center'
+			}  ],
 			buttons : [ {
 	            name : '添加',
 	            bclass : 'add',
@@ -217,7 +263,7 @@ $(function(){
 				onpress : action
 			}, {
 	            name : '删除',
-	            bclass : 'delete',
+	            bclass : 'del',
 	            onpress : action
 	        }, {
 				separator : true
@@ -246,41 +292,48 @@ $(function(){
 		function action(com, grid) {
 			if (com == '编辑') {
 				if ($('.trSelected', grid).length ==1) {
-					jConfirm('确定编辑此项吗?', '信息提示', function(r) {
-						if (r) {
-							var str =$('.trSelected', grid)[0].id.substr(3);
-							window.location.href="addgrade.jsp?session="+session+"#member&gradeid="+str;
-	                        return;
-						}
-					});
-					return;
+				var str =$('.trSelected', grid)[0].id.substr(3);
+				window.location.href="membergrade.jsp?operate=edit&folder=member&id="+str;
+                return;
 				} else {
-					jAlert('请选择一条信息', '信息提示');
+					forminfo("#alertinfo", "请选择一条信息");
 	                return false;
 				}
-
 			}else if(com=="添加"){
 	            window.location.href="membergrade.jsp?operate=add&folder=member";
 	            return;
 	        }else if(com=="删除"){
-	            if ($('.trSelected', grid).length > 0) {
-	                jConfirm('确定删除此项吗?', '信息提示', function(r) {
-	                    if (r) {
-	                        var str = "";
-	                        $('.trSelected', grid).each(function() {
-	                            str += this.id.substr(3) + ",";
-	                        });
-	                        $.post("delGradet.action", {
-	                            "gradeid" : str
-	                        }, function(data) {
-	                            $('#grademanagement').flexReload();
-	                        });
-	                    }
-	                });
-	                return;
+	        	var str="";
+				$(".trSelected td:nth-child(2) div", $('#membergrademanagement')).each(function(i){
+					str+=this.innerHTML+"  ";
+				});
+				$("#contentp").text(str);
+				$("#delModal").modal({
+					keyboard:true,
+					show:true,
+				});
+				$("#btnok").click(function(){
+					var str = "";
+					$('.trSelected', grid).each(function() {
+						str += this.id.substr(3) + ",";
+					});
+					$.post("delMemberGradeT.action", {
+						"id" : str
+					}, function(data) {
+						if (data.sucflag) {
+							$("#delModal").modal('hide');
+							$('#membergrademanagement').flexReload();
+							forminfo("#alertinfo", "删除成功");
+						}
+					});
+				});
+				$("#btnclose").click(function(){
+					$("#delModal").modal('hide');
+				});
+				
 	            } else {
-	                jAlert('请选择要删除的信息!', '信息提示');
-	                return false;
+	            	formwarning("#alerterror", "请选择要删除的信息");
+					return false;
 	            }
 	        }
 		}
@@ -290,9 +343,9 @@ $(function(){
 	if(operate=="add"){
 		
 	}else if(operate=="edit"){
-		
+		findMemberGradeTById();
 	}else if(operate=="find"){
-		findAllGrade();
+		findAllMemberGradeT();
 	}
 });
 
