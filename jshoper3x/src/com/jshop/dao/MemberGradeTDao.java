@@ -20,7 +20,7 @@ public interface MemberGradeTDao {
 	 * @param list
 	 * @return
 	 */
-	public int delMemberGradeT(String[] strs);
+	public void delMemberGradeT(String[] strs);
 
 	/**
 	 * 查询所有会员等级信息

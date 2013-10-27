@@ -1,54 +1,4 @@
 
-/**
- * Required to initialize the page data
- */
-$(function() {
-	$('#gradevalue').change(function() {
-		var gradevalue = $("#gradevalue").val();
-		if (gradevalue == "0") {
-			return false;
-		}
-		var gradename = $("#gradevalue").find("option:selected").text();
-		$('#gradename').attr("value", gradename);
-
-	});
-
-});
-
-
-/**
- * flexigrid list
- */
-$(function() {
-
-	
-});
-/*
- * ===========================================Gorgeous
- * split-line==============================================
- */
-/**
- * Add Function
- */
-$(function(){
-   
-});
-/*
- * ===========================================Gorgeous
- * split-line==============================================
- */
-/**
- * Update Function
- */
-
-// 点击编辑更新内容
-$(function() {
-    
-    
-	
-});
-
-
 $(function(){
 	/**
 	 * 根据id获取会员等级信息
@@ -61,18 +11,14 @@ $(function(){
 	    $.post("findMemberGradeTById.action",{"id":id},function(data){
 	        if(data.sucflag){
 	            $("#hid").val(data.bean.id);
-	            if(data.bean.type=="1"){
-					$("input[name='type']").get(0).checked=true;
-				}else{
-					$("input[name='type']").get(1).checked=true;
-				}
+	            $("#type").val(data.bean.type);
 	            $("#name").val(data.bean.name);
 	            $("#start").val(data.bean.start);
 	            $("#end").val(data.bean.end);
 	            $("#increment").val(data.bean.increment);
 	            $("#multiplypower").val(data.bean.multiplypower);
 	            $("#mpchangepower").val(data.bean.mpchangepower);
-	            if(data.bean.mpstate=="0"){
+	            if(data.bean.mpstate=="1"){
 					$("input[name='mpstate']").get(0).checked=true;
 				}else{
 					$("input[name='mpstate']").get(1).checked=true;
@@ -113,7 +59,7 @@ $(function(){
         var mpchangepower=$("#mpchangepower").val();
         var discount = $("#discount").val();
         var mpstate=$("input[name='mpstate']:checked").val();
-        $.post("addMemberGradeT.action",{
+        $.post("updateMemberGradeTById.action",{
         	"id":id,
             "type":type,
             "name":name,
@@ -165,6 +111,7 @@ $(function(){
             "end":end,
             "increment":increment,
             "multiplypower":multiplypower,
+            "mpchangepower":mpchangepower,
             "discount":discount,
             "mpstate":mpstate
         },function(data){
@@ -252,7 +199,13 @@ $(function(){
 				width : 100,
 				sortable : true,
 				align : 'center'
-			}  ],
+			},{
+				display : '操作',
+				name : 'operate',
+				width : 100,
+				sortable : true,
+				align : 'center'
+			}],
 			buttons : [ {
 	            name : '添加',
 	            bclass : 'add',
@@ -337,7 +290,15 @@ $(function(){
 	            }
 	        }
 		}
-	}
+	
+	
+	$("#submit").click(function(){
+		addMemberGradeT();
+	});
+	$("#update").click(function(){
+		updateMemberGradeTById();
+	});
+	
 	
 	var operate= $.query.get("operate");
 	if(operate=="add"){
@@ -347,5 +308,6 @@ $(function(){
 	}else if(operate=="find"){
 		findAllMemberGradeT();
 	}
+	
 });
 

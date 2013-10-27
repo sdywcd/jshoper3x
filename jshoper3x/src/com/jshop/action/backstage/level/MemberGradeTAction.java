@@ -407,10 +407,8 @@ public class MemberGradeTAction extends ActionSupport {
 			return "json";
 		}
 		String strs[]=StringUtils.split(this.getId(), ",");
-		if(this.getMemberGradeTService().delMemberGradeT(strs)>0){
-			this.setSucflag(true);
-			return "json";
-		}
+		this.getMemberGradeTService().delMemberGradeT(strs);
+		this.setSucflag(true);
 		return "json";
 	}
 	/**

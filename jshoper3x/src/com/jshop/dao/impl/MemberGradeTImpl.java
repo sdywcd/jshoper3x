@@ -61,32 +61,17 @@ public class MemberGradeTImpl extends HibernateDaoSupport implements MemberGrade
 		}
 	}
 
-	public int delMemberGradeT(final String[] strs) {
+	public void delMemberGradeT(final String[] strs) {
 		log.debug("del MemberGradeT");
 		try {
-
-			final String queryString = "delete from MemberGradeT as gt where gt.id=:id";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					int i = 0;
-					for (String s : strs) {
-						query.setParameter("id", s);
-						i = query.executeUpdate();
-						i++;
-					}
-					if (strs.length == i) {
-						return i;
-					} else {
-						return 0;
-					}
-				}
-			});
+			for(String s:strs){
+				MemberGradeT memberGradeT=this.getHibernateTemplate().load(MemberGradeT.class,s);
+				this.getHibernateTemplate().delete(memberGradeT);
+			}
 		} catch (RuntimeException re) {
 			log.error("del MemberGradeT failed", re);
 			throw re;
 		}
-		return 0;
 	}
 
 	@SuppressWarnings("unchecked")

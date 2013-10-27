@@ -31,8 +31,8 @@ public class MemberGradeTServiceImpl implements MemberGradeTService {
 	}
 
 	@Override
-	public int delMemberGradeT(String[] strs) {
-		return this.getMemberGradeTDao().delMemberGradeT(strs);
+	public void delMemberGradeT(String[] strs) {
+		this.getMemberGradeTDao().delMemberGradeT(strs);
 	}
 
 	@Override
