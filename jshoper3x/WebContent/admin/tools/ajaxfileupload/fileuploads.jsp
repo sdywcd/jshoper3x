@@ -10,8 +10,8 @@
 <%@ page
 	import="org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper"%>
 <%@ page import="org.json.simple.*"%>
-<%@ page import="com.jshop.backstage.tools.FileUploadTool"%>
-<%@ page import="com.jshop.backstage.tools.BaseTools"%>
+<%@ page import="com.jshop.action.backstage.tools.FileUploadTool"%>
+<%@ page import="com.jshop.action.backstage.tools.BaseTools"%>
 <%
 	String patha = request.getContextPath();
 

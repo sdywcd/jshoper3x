@@ -44,34 +44,18 @@ public class BrandTDaoImpl extends HibernateDaoSupport implements BrandTDao {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public int delBrandt(final String[] list, final String creatorid) {
+	public void delBrandt(final String[] strs, final String creatorid) {
 		log.debug("del brandt");
 		try {
-
 			final String queryString = "delete from BrandT as bt where bt.brandid=:brandid and bt.creatorid=:creatorid";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					int i = 0;
-					for (String s : list) {
-						query.setParameter("brandid", s);
-						query.setParameter("creatorid", creatorid);
-						i = query.executeUpdate();
-						i++;
-					}
-					if (list.length == i) {
-						return i;
-					} else {
-						return 0;
-					}
-				}
-			});
+			for(String s:strs){
+				List<BrandT>list=this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"brandid","creatorid"}, new Object[]{s,creatorid});
+				this.getHibernateTemplate().delete(list.get(0));
+			}
 		} catch (RuntimeException re) {
 			log.error("del brandt failed", re);
 			throw re;
 		}
-		return 0;
 	}
 
 	public void updateBrandt(final BrandT bt) {

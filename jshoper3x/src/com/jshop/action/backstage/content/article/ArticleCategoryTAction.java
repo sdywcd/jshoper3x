@@ -763,13 +763,6 @@ public class ArticleCategoryTAction extends ActionSupport {
 	public String delArticleCategoryT() {
 		if (StringUtils.isNotBlank(this.getArticleCategoryTid())) {
 			String[] strs = StringUtils.split(this.getArticleCategoryTid().trim(),",");
-//			for (String s : strs) {  
-//				bean=this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(s);
-//			    bean.setArticleCategoryTid(s);
-//			    bean.setStatus("0");
-//			    bean.setCreatorid(BaseTools.adminCreateId());
-//			    this.getArticleCategoryTService().delArticleCategoryT(bean);
-//			}
 			this.getArticleCategoryTService().delArticleCategoryT(strs);
 			this.setSucflag(true);
 			return "json";

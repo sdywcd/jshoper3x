@@ -75,7 +75,7 @@ public interface ArticleCategoryTService {
 	 * @param strs
 	 * @return
 	 */
-	public int delArticleCategoryT(String strs[]);
+	public void delArticleCategoryT(String strs[]);
 	/**
 	 * 更新文章分类
 	 * 

@@ -416,9 +416,8 @@ public class BrandTAction extends ActionSupport {
 	public String delBrandt() {
 		if (StringUtils.isNotBlank(this.getBrandid())) {
 			String[] strs = StringUtils.split(this.getBrandid(), ",");
-			if (this.getBrandTService().delBrandt(strs, BaseTools.adminCreateId()) > 0) {
-				return "json";
-			}
+			this.getBrandTService().delBrandt(strs, BaseTools.adminCreateId());
+			this.setSucflag(true);
 			return "json";
 		}
 		return "json";

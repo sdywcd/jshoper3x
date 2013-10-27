@@ -19,7 +19,7 @@ public interface ArticleTService {
 	 * @param list
 	 * @return
 	 */
-	public int delArticleT(String[] list);
+	public void delArticleT(String[] strs);
 
 	/**
 	 * 根据articleid获取文章

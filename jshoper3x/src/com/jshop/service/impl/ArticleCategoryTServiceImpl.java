@@ -146,8 +146,8 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 	}
 
 	@Override
-	public int delArticleCategoryT(String[] strs) {
-		return this.getArticleCategoryTDao().delArticleCategoryT(strs);
+	public void delArticleCategoryT(String[] strs) {
+		this.getArticleCategoryTDao().delArticleCategoryT(strs);
 	}
 
 

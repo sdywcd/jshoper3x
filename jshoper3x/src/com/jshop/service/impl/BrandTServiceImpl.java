@@ -25,8 +25,8 @@ public class BrandTServiceImpl implements BrandTService {
 		this.brandTDao = brandTDao;
 	}
 
-	public int delBrandt(String[] list, String creatorid) {
-		return this.getBrandTDao().delBrandt(list, creatorid);
+	public void delBrandt(String[] strs, String creatorid) {
+		this.getBrandTDao().delBrandt(strs, creatorid);
 	}
 
 	public void updateBrandt(BrandT bt) {
@@ -41,8 +41,10 @@ public class BrandTServiceImpl implements BrandTService {
 		return this.getBrandTDao().countfindAllBrandt(creatorid);
 	}
 
-	public List<BrandT> findAllBrandt(int currentPage, int lineSize, String creatorid) {
-		return this.getBrandTDao().findAllBrandt(currentPage, lineSize, creatorid);
+	public List<BrandT> findAllBrandt(int currentPage, int lineSize,
+			String creatorid) {
+		return this.getBrandTDao().findAllBrandt(currentPage, lineSize,
+				creatorid);
 	}
 
 	public BrandT findBrandById(String brandid) {
@@ -53,8 +55,10 @@ public class BrandTServiceImpl implements BrandTService {
 		return this.getBrandTDao().findAllBrandt();
 	}
 
-	public List<BrandT> sortAllBrandt(int currentPage, int lineSize, String creatorid, String queryString) {
+	public List<BrandT> sortAllBrandt(int currentPage, int lineSize,
+			String creatorid, String queryString) {
 
-		return this.getBrandTDao().sortAllBrandt(currentPage, lineSize, creatorid, queryString);
+		return this.getBrandTDao().sortAllBrandt(currentPage, lineSize,
+				creatorid, queryString);
 	}
 }

@@ -107,34 +107,17 @@ public class ArticleTDaoImpl extends HibernateDaoSupport implements ArticleTDao 
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	public int delArticleT(final String[] list) {
+	public void delArticleT(final String[] strs) {
 		log.debug("delArticleT");
 		try {
-
-			final String queryString = "delete from ArticleT as at where at.articleid=:articleid";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					int i = 0;
-					for (String s : list) {
-						query.setParameter("articleid", s);
-						i = query.executeUpdate();
-						i++;
-					}
-					if (list.length == i) {
-						return i;
-					} else {
-						return 0;
-					}
-				}
-			});
+			for(String s:strs){
+				ArticleT articleT=this.getHibernateTemplate().load(ArticleT.class, s);
+				this.getHibernateTemplate().delete(articleT);
+			}
 		} catch (RuntimeException re) {
 			log.error("delArticleT failed", re);
 			throw re;
 		}
-		return 0;
 	}
 
 	public int updateHtmlPath(final String articleid, final String htmlPath) {

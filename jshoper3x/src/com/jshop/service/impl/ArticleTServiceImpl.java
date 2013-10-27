@@ -65,10 +65,9 @@ public class ArticleTServiceImpl implements ArticleTService {
 		return this.getArticleTDao().sortAllArticleT(currentPage, lineSize, creatorid, queryString);
 	}
 
-	@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
-	public int delArticleT(String[] list) {
-		System.out.print("shiwu kaishi");
-		return this.getArticleTDao().delArticleT(list);
+
+	public void delArticleT(String[] strs) {
+	    this.getArticleTDao().delArticleT(strs);
 	}
 
 	public int updateArticlepositionByarticleCategoryTid(String articleCategoryTid, String position) {
