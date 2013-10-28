@@ -299,7 +299,7 @@
 	  </div>
 	</div>
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/order/normalordersmentjs.js"></script>
+		src="<%=basePath%>admin/js/order/ordersjs.js"></script>
 
 	<%@include file="/admin/footer.jsp"%>
 
