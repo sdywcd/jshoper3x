@@ -5,6 +5,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,7 +52,7 @@ public class BaseTools {
 
 	public static Date defaulttime() {
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA);
 			Date date = sdf.parse(DEFAULTTIME);
 			return date;
 		} catch (ParseException e) {
@@ -67,7 +68,7 @@ public class BaseTools {
 	 */
 	public static Date getMemberDeliverTime(String memberdelivertime){
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd",Locale.CHINA);
 		Date date = null;
 		try {
 			date = formatter.parse(memberdelivertime);
@@ -86,7 +87,7 @@ public class BaseTools {
 	 */
 	public static Date systemtime() {
 		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA);
 		String dateString = formatter.format(date);
 		ParsePosition pos = new ParsePosition(0);
 		Date currenttime = formatter.parse(dateString, pos);
@@ -100,7 +101,7 @@ public class BaseTools {
 	 * @return
 	 */
 	public static String formateDbDate(Date object) {
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA);
 		String dateString = formatter.format(object);
 		return dateString;
 	}

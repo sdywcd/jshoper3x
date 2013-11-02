@@ -110,6 +110,9 @@
 									href="<%=basePath%>admin/goods/goodsment.jsp?operate=find">所有商品
 								</a></li>
 								<li class="divider"></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodsbelinkedsale.jsp?operate=add">添加关联销售商品
+								</a></li>
 								
 								<!--  <li><a href="#">团购商品 </a></li>
 								<li><a href="#">团购订单管理 </a></li>-->

@@ -73,8 +73,8 @@ public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
 	public UserT login(UserT transientInstance) {
 		log.debug("login user");
 		try {
-			String queryString = "from UserT as u where u.username=:username and u.password=:password and  u.state=:state and u.userstate='1'";
-			List<UserT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "username", "password", "state" }, new Object[] { transientInstance.getUsername(), transientInstance.getPassword(), transientInstance.getState() });
+			String queryString = "from UserT as u where u.username=:username and u.password=:password and u.userstate='1'";
+			List<UserT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "username", "password"}, new Object[] { transientInstance.getUsername(), transientInstance.getPassword() });
 			if (list.size() > 0) {
 				return list.get(0);
 			} else {
@@ -92,7 +92,7 @@ public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
 		try {
 			List<UserT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
 
-				String queryString = "from UserT  order by registtime desc";
+				String queryString = "from UserT  order by createtime desc";
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
@@ -102,10 +102,7 @@ public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
 					return list;
 				}
 			});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all UserT error", re);
 			throw re;
@@ -454,6 +451,17 @@ public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
 			throw e;
 		}
 		return 0;
+	}
+
+	@Override
+	public void updateUserT(UserT usert) {
+		try {
+			this.getHibernateTemplate().update(usert);
+		} catch (RuntimeException re) {
+			log.error("check user answer error", re);
+			throw re;
+		}
+
 	}
 
 }

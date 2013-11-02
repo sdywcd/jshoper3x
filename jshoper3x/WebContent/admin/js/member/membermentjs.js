@@ -9,7 +9,7 @@ $(function() {
 	});
 	 
 	/**
-	 * 增加用户分组
+	 * 增加用户
 	 */
 	saveMemberT=function(){
 		var loginname=$("#loginname").val();
@@ -95,7 +95,7 @@ $(function() {
 					formwarning("#alerterror",data.message);
 					return false;
 				}else{
-					formwarning("#alerterror", "用户分组增加失败");
+					formwarning("#alerterror", "用户增加失败");
 					return false;
 				}
 			}

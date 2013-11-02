@@ -427,6 +427,20 @@ public class  StaticString {
 	
 	public static final String EMPIRICALVALUE="经验值";
 	
+	//系统用户管理
+	public static final String NORMALUSER="普通用户";
+	
+	public static final String MANAGERUSER="管理员";
+	
+	public static final String SUPERMANAGER="超级管理员";
+	
+	public static final String USERSTATEACTIVE="激活";
+	
+	public static final String USERSTATEUNACTIVE="未激活";
+	
+	
+	
+	
 	
 	
 }

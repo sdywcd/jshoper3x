@@ -122,4 +122,10 @@ public class UsertServiceImpl implements UsertService {
 		return this.getUserTDao().updateUserHeadPathByUserId(user);
 	}
 
+	@Override
+	public void updateUserT(UserT usert) {
+		this.getUserTDao().updateUserT(usert);
+		
+	}
+
 }

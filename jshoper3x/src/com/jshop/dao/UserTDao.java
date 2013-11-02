@@ -184,5 +184,9 @@ public interface UserTDao {
 	 * @return
 	 */
 	public int updateUserHeadPathByUserId(UserT user);
-
+	/**
+	 * 更新系统用户
+	 * @param usert
+	 */
+	public void updateUserT(UserT usert);
 }

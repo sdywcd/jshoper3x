@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -40,15 +41,13 @@ import com.opensymphony.xwork2.ActionSupport;
 import freemarker.template.TemplateException;
 @Namespace("/admin/user")
 @ParentPackage("jshop")
-public class UserTAction extends ActionSupport implements ServletResponseAware, ServletRequestAware, SessionAware, CookiesAware {
-
+public class UserTAction extends ActionSupport {
 	private UsertService usertService;
-	private SendSystemEmail sendSystemEmail;
 	private Serial serial;
 	private InitTAction initTAction;
 	private UserRoleMService userRoleMService;
 	private UserRoleMAction userRoleMAction;
-	private UserT beanlist = new UserT();
+	private UserT bean = new UserT();
 	private String param;
 	private List<UserT> user = new ArrayList<UserT>();
 	private List rows = new ArrayList();
@@ -57,10 +56,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	private int total = 0;
 	private HttpServletResponse response;
 	private HttpServletRequest request;
-	private Map session;
-	private Map cookies;
 	private String goingToURL;
-	private String remember;
 	private String userid;
 	private String username;
 	private String realname;
@@ -70,45 +66,31 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	private String question;
 	private String answer;
 	private String password;
-	private String newpassword;
 	private String userstate;
-	private String points;
-	private String postingcount;
-	private String sex;
-	private Date registtime;
-	private Date disablebegin;
-	private Date disableend;
+	private Date postingcount;
 	private String section;
 	private String position;
 	private String groupid;
 	private String parttime1;
 	private String parttime2;
 	private String parttime3;
-	private String parttime4;
-	private String parttime5;
-	private String parttime6;
-	private String hobby;
 	private String qq;
-	private String msn;
-	private String othercontract;
-	private String address;
-	private String postcode;
-	private String birthday;
-	private String grade;
-	private String gradetime;
+	private String sinaweibo;
 	private String state;
-	private String gradename;
+	private String uid;
 	private String rolemname;
 	private String rolemid;
-	private String creatorid;
-	private String msg;
-
+	private String headpath;
+	private String weixin;
+	private String newpassword;
+	private String message;
+	private String query;//text
+	private String qtype;//select
+	private String sortname;//排序字段
+	private String sortorder;//排序方式
 	private String roleid;
 	private boolean slogin = false;
 	private boolean sucflag;
-	private String usession;
-	private String sortname;
-	private String sortorder;
 
 	private String baseurl;
 	@JSON(serialize = false)
@@ -128,16 +110,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	public void setUserRoleMService(UserRoleMService userRoleMService) {
 		this.userRoleMService = userRoleMService;
 	}
-
-	@JSON(serialize = false)
-	public SendSystemEmail getSendSystemEmail() {
-		return sendSystemEmail;
-	}
-
-	public void setSendSystemEmail(SendSystemEmail sendSystemEmail) {
-		this.sendSystemEmail = sendSystemEmail;
-	}
-
 	@JSON(serialize = false)
 	public InitTAction getInitTAction() {
 		return initTAction;
@@ -191,16 +163,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	@JSON(serialize = false)
-	public String getRemember() {
-		return remember;
-	}
-
-	public void setRemember(String remember) {
-		this.remember = remember;
-	}
-
 	@JSON(serialize = false)
 	public HttpServletResponse getResponse() {
 		return response;
@@ -218,16 +180,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
-
-	@JSON(serialize = false)
-	public Map getCookies() {
-		return cookies;
-	}
-
-	public void setCookies(Map cookies) {
-		this.cookies = cookies;
-	}
-
 	public String getRealname() {
 		return realname;
 	}
@@ -284,30 +236,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		this.userstate = userstate;
 	}
 
-	public String getPoints() {
-		return points;
-	}
-
-	public void setPoints(String points) {
-		this.points = points;
-	}
-
-	public String getPostingcount() {
-		return postingcount;
-	}
-
-	public void setPostingcount(String postingcount) {
-		this.postingcount = postingcount;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
 	public String getParam() {
 		return param;
 	}
@@ -315,31 +243,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	public void setParam(String param) {
 		this.param = param;
 	}
-
-	public Date getRegisttime() {
-		return registtime;
-	}
-
-	public void setRegisttime(Date registtime) {
-		this.registtime = registtime;
-	}
-
-	public Date getDisablebegin() {
-		return disablebegin;
-	}
-
-	public void setDisablebegin(Date disablebegin) {
-		this.disablebegin = disablebegin;
-	}
-
-	public Date getDisableend() {
-		return disableend;
-	}
-
-	public void setDisableend(Date disableend) {
-		this.disableend = disableend;
-	}
-
+	
 	public String getSection() {
 		return section;
 	}
@@ -388,125 +292,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		this.parttime3 = parttime3;
 	}
 
-	public String getParttime4() {
-		return parttime4;
-	}
-
-	public void setParttime4(String parttime4) {
-		this.parttime4 = parttime4;
-	}
-
-	public String getParttime5() {
-		return parttime5;
-	}
-
-	public void setParttime5(String parttime5) {
-		this.parttime5 = parttime5;
-	}
-
-	public String getParttime6() {
-		return parttime6;
-	}
-
-	public void setParttime6(String parttime6) {
-		this.parttime6 = parttime6;
-	}
-
-	@JSON(serialize = false)
-	public String getHobby() {
-		return hobby;
-	}
-
-	public void setHobby(String hobby) {
-		this.hobby = hobby;
-	}
-
-	@JSON(serialize = false)
-	public String getQq() {
-		return qq;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
-	}
-
-	@JSON(serialize = false)
-	public String getMsn() {
-		return msn;
-	}
-
-	public void setMsn(String msn) {
-		this.msn = msn;
-	}
-
-	@JSON(serialize = false)
-	public String getOthercontract() {
-		return othercontract;
-	}
-
-	public void setOthercontract(String othercontract) {
-		this.othercontract = othercontract;
-	}
-
-	@JSON(serialize = false)
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	@JSON(serialize = false)
-	public String getPostcode() {
-		return postcode;
-	}
-
-	public void setPostcode(String postcode) {
-		this.postcode = postcode;
-	}
-
-	@JSON(serialize = false)
-	public String getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
-
-	@JSON(serialize = false)
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
-	@JSON(serialize = false)
-	public String getGradetime() {
-		return gradetime;
-	}
-
-	public void setGradetime(String gradetime) {
-		this.gradetime = gradetime;
-	}
-
-	@JSON(serialize = false)
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	@JSON(serialize = false)
-	public Map getSession() {
-		return session;
-	}
-
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
 
@@ -514,14 +299,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 
 	public void setServletResponse(HttpServletResponse response) {
 		this.response = response;
-	}
-
-	public void setSession(Map session) {
-		this.session = session;
-	}
-
-	public void setCookiesMap(Map cookies) {
-		this.cookies = cookies;
 	}
 
 	public String getGoingToURL() {
@@ -532,12 +309,12 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		this.goingToURL = goingToURL;
 	}
 
-	public UserT getBeanlist() {
-		return beanlist;
+	public UserT getBean() {
+		return bean;
 	}
 
-	public void setBeanlist(UserT beanlist) {
-		this.beanlist = beanlist;
+	public void setBean(UserT bean) {
+		this.bean = bean;
 	}
 
 	public List<UserT> getUser() {
@@ -588,21 +365,12 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	public void setSlogin(boolean slogin) {
 		this.slogin = slogin;
 	}
-
-	public String getCreatorid() {
-		return creatorid;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setCreatorid(String creatorid) {
-		this.creatorid = creatorid;
-	}
-
-	public String getMsg() {
-		return msg;
-	}
-
-	public void setMsg(String msg) {
-		this.msg = msg;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public boolean isSucflag() {
@@ -611,22 +379,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
-	}
-
-	public String getNewpassword() {
-		return newpassword;
-	}
-
-	public void setNewpassword(String newpassword) {
-		this.newpassword = newpassword;
-	}
-
-	public String getUsession() {
-		return usession;
-	}
-
-	public void setUsession(String usession) {
-		this.usession = usession;
 	}
 
 	public String getSortname() {
@@ -660,15 +412,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	public void setBaseurl(String baseurl) {
 		this.baseurl = baseurl;
 	}
-
-	public String getGradename() {
-		return gradename;
-	}
-
-	public void setGradename(String gradename) {
-		this.gradename = gradename;
-	}
-
 	public String getRolemname() {
 		return rolemname;
 	}
@@ -685,6 +428,85 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		this.rolemid = rolemid;
 	}
 
+	public Date getPostingcount() {
+		return postingcount;
+	}
+
+	public void setPostingcount(Date postingcount) {
+		this.postingcount = postingcount;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getSinaweibo() {
+		return sinaweibo;
+	}
+
+	public void setSinaweibo(String sinaweibo) {
+		this.sinaweibo = sinaweibo;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
+	public String getHeadpath() {
+		return headpath;
+	}
+
+	public void setHeadpath(String headpath) {
+		this.headpath = headpath;
+	}
+
+	public String getWeixin() {
+		return weixin;
+	}
+
+	public void setWeixin(String weixin) {
+		this.weixin = weixin;
+	}
+
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+	public String getQtype() {
+		return qtype;
+	}
+
+	public void setQtype(String qtype) {
+		this.qtype = qtype;
+	}
+
+	public String getNewpassword() {
+		return newpassword;
+	}
+
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
+	}
 
 	/**
 	 * 清理错误
@@ -703,7 +525,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	public String checklogin() {
 		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticString.BACK_USER_SESSION_KEY);
 		if (admin!=null) {
-			this.setCreatorid(admin.getUserid());
 			this.setSlogin(false);
 			return "json";
 		} else {
@@ -724,12 +545,11 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	@SuppressWarnings("unchecked")
 	@Action(value = "adminlogin", results = { @Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
 	public String adminlogin() throws Exception {
-
-		if(Validate.StrisNull(this.getUsername())){
+		if(StringUtils.isBlank(this.getUsername())){
 			this.setParam(StaticString.ONE);
 			return INPUT;
 		}
-		if(Validate.StrisNull(this.getPassword())){
+		if(StringUtils.isBlank(this.getPassword())){
 			this.setParam(StaticString.ONE);
 			return INPUT;
 		}
@@ -737,7 +557,7 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		UserT user = new UserT();
 		user.setUsername(username);
 		user.setPassword(md5.getMD5ofStr(password));
-		user.setState(StaticString.THREE);//超级管理员
+		//user.setState(StaticString.THREE);//超级管理员
 		user = this.getUsertService().login(user);
 		if (user != null) {
 			ActionContext.getContext().getSession().put(StaticString.BACK_USER_SESSION_KEY, user);
@@ -765,53 +585,62 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@Action(value = "/findAllUsert", results = { @Result(name = "json", type = "json") })
+	@Action(value = "findAllUsert", results = { @Result(name = "json", type = "json") })
 	public String findAllUsert() {
-		int currentPage = page;
-		int lineSize = rp;
-		String queryString = "from UserT order by " + sortname + " " + sortorder + " ";
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			List<UserT> list = this.getUsertService().sortAllUsert(currentPage, lineSize, queryString);
-			if (list != null) {
-				total = this.getUsertService().countfindAllUsert();
-				rows.clear();
-				for (Iterator it = list.iterator(); it.hasNext();) {
-					UserT u = (UserT) it.next();
-					if ("1".equals(u.getState())) {
-						u.setState("普通用户");
-					}
-					if ("2".equals(u.getState())) {
-						u.setState("管理员");
-					}
-					if ("3".equals(u.getState())) {
-						u.setState("超级管理员");
-					}
-					if ("4".equals(u.getState())) {
-						u.setState("手机用户");
-					}
-					if ("0".equals(u.getUserstate())) {
-						u.setUserstate("未激活");
-					}
-					if ("1".equals(u.getUserstate())) {
-						u.setUserstate("激活");
-					}
-					if ("2".equals(u.getUserstate())) {
-						u.setUserstate("禁止访问");
-					}
-					if ("3".equals(u.getUserstate())) {
-						u.setUserstate("禁止发帖");
-					}
-					Map cellMap = new HashMap();
-					cellMap.put("id", u.getUserid());
-					cellMap.put("cell", new Object[] { u.getUsername(), u.getRealname(), u.getEmail(),  u.getQq(),  u.getUserstate() });
-					rows.add(cellMap);
-				}
+		if(StaticString.SC.equals(this.getQtype())){
+			finddefaultAllUserT();
+		}else{
+			if(StringUtils.isBlank(this.getQtype())){
+				return "json";
+			}else{
 				return "json";
 			}
 		}
-		this.setTotal(0);
-		rows.clear();
 		return "json";
+	}
+
+	private void finddefaultAllUserT() {
+		int currentPage = page;
+		int lineSize = rp;
+		total=this.getUsertService().countfindAllUsert();
+		List<UserT>list=this.getUsertService().findAllUsert(currentPage, lineSize);
+		if(!list.isEmpty()){
+			processUserList(list);
+		}
+	}
+
+	private void processUserList(List<UserT> list) {
+		for (Iterator it = list.iterator(); it.hasNext();) {
+			UserT u = (UserT) it.next();
+			if (StaticString.ONE.equals(u.getState())) {
+				u.setState(StaticString.NORMALUSER);
+			}
+			if (StaticString.TWO.equals(u.getState())) {
+				u.setState(StaticString.MANAGERUSER);
+			}
+			if (StaticString.THREE.equals(u.getState())) {
+				u.setState(StaticString.SUPERMANAGER);
+			}
+			if (StaticString.ZERO.equals(u.getUserstate())) {
+				u.setUserstate(StaticString.USERSTATEUNACTIVE);
+			}
+			if (StaticString.ONE.equals(u.getUserstate())) {
+				u.setUserstate(StaticString.USERSTATEACTIVE);
+			}
+			Map<String,Object> cellMap = new HashMap<String, Object>();
+			cellMap.put("id", u.getUserid());
+			cellMap.put("cell", new Object[] { 
+					u.getUsername(), 
+					u.getRealname(), 
+					u.getEmail(),
+					u.getMobile(),
+					u.getState(),
+					u.getUserstate(),
+					"<a id='edituser' href='user.jsp?operate=edit&folder=user&userid="+u.getUserid()+"' name='edituser'>[编辑]</a>"
+					});
+			rows.add(cellMap);
+		}
+		
 	}
 
 	/**
@@ -819,62 +648,89 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	 * 
 	 * @return
 	 */
-	@Action(value = "adminregister", results = { @Result(name = "json", type = "json") })
-	public String adminregister() {
-		if(Validate.StrisNull(this.getUsername())||Validate.StrisNull(this.getEmail())||Validate.StrisNull(this.getPoints())||Validate.StrisNull(this.getGradename())||Validate.StrisNull(this.getGrade())){
-			this.setSucflag(false);
-			return "json";
-		}
-		MD5Code md5 = new MD5Code();
-		UserT u = new UserT();
-		u.setUsername(this.getUsername().trim());
-		u.setEmail(this.getEmail().trim());
-		u = this.getUsertService().checkUserByUsername(u);
-		if (u != null) {
-			this.setMsg("4");//表示用户已经存在
-			return "json";
-		} else {
-			u = new UserT();
+	@Action(value = "saveUserT", results = { @Result(name = "json", type = "json") })
+	public String saveUserT() {
+		if(StringUtils.isNotBlank(this.getUsername())&&StringUtils.isNotBlank(this.getPassword())){
+			MD5Code md5 = new MD5Code();
+			UserT u = new UserT();
 			u.setUsername(this.getUsername().trim());
 			u.setEmail(this.getEmail().trim());
-			u = this.getUsertService().checkUserByEmail(u);
+			u = this.getUsertService().checkUserByUsername(u);
 			if (u != null) {
-				this.setMsg("5");//表示用户邮箱存在
+				this.setMessage("用户已经存在");//表示用户已经存在
+				return "json";
+			} else {
+				u = new UserT();
+				u.setUsername(this.getUsername().trim());
+				u.setEmail(this.getEmail().trim());
+				u = this.getUsertService().checkUserByEmail(u);
+				if (u != null) {
+					this.setMessage("用户邮箱已经存在");//表示用户邮箱存在
+					return "json";
+				}
+				UserT user = new UserT();
+				user.setUserid(this.getSerial().Serialid(Serial.USER));
+				user.setUid(md5.getMD5ofStr(user.getUserid()));
+				user.setUsername(this.getUsername().trim());
+				user.setRealname(this.getRealname().trim());
+				user.setEmail(this.getEmail().trim());
+				user.setTelno(null);
+				user.setMobile(this.getMobile().trim());
+				user.setQuestion(this.getQuestion().trim());
+				user.setAnswer(this.getAnswer().trim());
+				user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));//默认密码6个1
+				user.setUserstate(this.getUserstate());
+				user.setSection(StaticString.EMPTY);
+				user.setPosition(StaticString.EMPTY);
+				user.setGroupid(StaticString.EMPTY);
+				user.setParttime1(StaticString.EMPTY);
+				user.setParttime2(StaticString.EMPTY);
+				user.setParttime3(StaticString.EMPTY);
+				user.setQq(this.getQq().trim());
+				user.setState(this.getState());
+				user.setRolemid(StaticString.ZERO);
+				user.setRolemname(StaticString.EMPTY);
+				user.setHeadpath(this.getHeadpath().trim());
+				user.setCreatorid(BaseTools.adminCreateId());
+				user.setCreatetime(BaseTools.systemtime());
+				user.setUpdatetime(user.getCreatetime());
+				if (this.getUsertService().save(user) > 0) {
+					this.setSucflag(true);
+					return "json";
+				}
 				return "json";
 			}
-			UserT user = new UserT();
-			user.setUserid(this.getSerial().Serialid(Serial.USER));
-			user.setUid(md5.getMD5ofStr(user.getUserid()));
-			user.setUsername(this.getUsername().trim());
-			user.setRealname(null);
-			user.setEmail(this.getEmail().trim());
-			user.setTelno(null);
-			user.setMobile(null);
-			user.setQuestion(null);
-			user.setAnswer(null);
-			user.setPassword(md5.getMD5ofStr("111111"));//默认密码6个1
-			user.setUserstate(this.getUserstate());
-			user.setSection(null);
-			user.setPosition(null);
-			user.setGroupid(null);
-			user.setParttime1(null);
-			user.setParttime2(null);
-			user.setParttime3(null);
-			user.setQq(null);
-			user.setState(this.getState());
-			user.setRolemid("0");
-			user.setRolemname("");
-			if (this.getUsertService().save(user) > 0) {
-				//重新获取后台登录时保存的加密session key
-				this.setParam(ActionContext.getContext().getSession().get(StaticString.BACK_SESSION_KEY).toString());
-				this.setSucflag(true);
-				return "json";
-			}
-			this.setSucflag(false);
+		}
+		return "json";
+		
+	}
+	/**
+	 * 更新系统用户
+	 * @return
+	 */
+	@Action(value = "updateUserT", results = { @Result(name = "json", type = "json") })
+	public String updateUserT(){
+		if(StringUtils.isBlank(this.getUserid())){
 			return "json";
 		}
+		bean=this.getUsertService().findById(this.getUserid());
+		bean.setPassword(this.getPassword().trim());
+		bean.setRealname(this.getRealname());
+		bean.setMobile(this.getMobile());
+		bean.setQq(this.getQq());
+		bean.setWeixin(this.getWeixin());
+		bean.setSinaweibo(this.getSinaweibo());
+		bean.setHeadpath(this.getHeadpath());
+		bean.setEmail(this.getEmail());
+		bean.setQuestion(this.getQuestion());
+		bean.setAnswer(this.getAnswer());
+		bean.setUserstate(this.getUserstate());
+		bean.setState(this.getState());
+		this.getUsertService().updateUserT(bean);
+		this.setSucflag(true);
+		return "json";
 	}
-
+	
 	/**
 	 * 根据用户id获取用户信息
 	 * 
@@ -882,10 +738,11 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	 */
 	@Action(value = "findUserById", results = { @Result(name = "json", type = "json") })
 	public String findUserById() {
-		if (Validate.StrNotNull(this.getUserid())) {
-			beanlist = this.getUsertService().findById(this.getUserid());
-			if (beanlist != null) {
-				beanlist.setHeadpath(BaseTools.getBasePath()+beanlist.getHeadpath());
+		if (StringUtils.isNotBlank(this.getUserid())) {
+			bean = this.getUsertService().findById(this.getUserid());
+			if (bean != null) {
+				bean.setHeadpath(BaseTools.getBasePath()+bean.getHeadpath());
+				this.setSucflag(true);
 				return "json";
 			}
 		}
@@ -986,22 +843,22 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 	 * @throws TemplateException
 	 * @throws javax.mail.MessagingException
 	 */
-	@Action(value = "sendeMail", results = { @Result(name = "json", type = "json") })
-	public String sendeMail() throws IOException, TemplateException, javax.mail.MessagingException {
-		this.findUserById();
-		if (beanlist.getUserstate().equals("1")) {
-			this.setSlogin(false);
-			return "json";
-		} else {
-			sendSystemEmail.sendTextMail(beanlist);
-			this.setSlogin(true);
-			return "json";
-		}
-	}
+//	@Action(value = "sendeMail", results = { @Result(name = "json", type = "json") })
+//	public String sendeMail() throws IOException, TemplateException, javax.mail.MessagingException {
+//		this.findUserById();
+//		if (beanlist.getUserstate().equals("1")) {
+//			this.setSlogin(false);
+//			return "json";
+//		} else {
+//			sendSystemEmail.sendTextMail(beanlist);
+//			this.setSlogin(true);
+//			return "json";
+//		}
+//	}
 
 	@Action(value = "updateUserbyuserstate", results = { @Result(name = "json", type = "json") })
 	public String updateUserbyuserstate() {
-		if (Validate.StrNotNull(this.getUserid())) {
+		if (StringUtils.isNotBlank(this.getUserid())) {
 			UserT user = new UserT();
 			user = this.getUsertService().findById(this.getUserid());
 			if (user != null) {
@@ -1050,5 +907,6 @@ public class UserTAction extends ActionSupport implements ServletResponseAware, 
 		return "json";
 
 	}
+
 
 }

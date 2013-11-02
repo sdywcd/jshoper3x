@@ -1244,7 +1244,7 @@ public class GoodsTAction extends ActionSupport {
 	 */
 	@SuppressWarnings("unchecked")
 	public void ProcessGoodsList(List<GoodsT> list) {
-		total = this.getGoodsTService().countAllGoods(BaseTools.adminCreateId());
+		total = this.getGoodsTService().countAllGoods();
 		rows.clear();
 		for (Iterator it = list.iterator(); it.hasNext();) {
 			GoodsT gt = (GoodsT) it.next();
@@ -1276,7 +1276,18 @@ public class GoodsTAction extends ActionSupport {
 
 			Map cellMap = new HashMap();
 			cellMap.put("id", gt.getGoodsid());
-			cellMap.put("cell", new Object[] { gt.getGoodsname(), gt.getUsersetnum(), gt.getMemberprice(),gt.getNname(),  gt.getSalestate(), gt.getIsNew(), gt.getBargainprice(), gt.getHotsale(), gt.getRecommended(), gt.getQuantity(), "<a id='editgoods' href='goods.jsp?operate=edit&folder=setting&goodsid="+gt.getGoodsid()+"' name='editgoods'>[编辑]</a>"});
+			cellMap.put("cell", new Object[] { 
+					gt.getGoodsname(), 
+					gt.getUsersetnum(), 
+					gt.getMemberprice(),
+					gt.getNname(),  
+					gt.getSalestate(), 
+					gt.getIsNew(), 
+					gt.getBargainprice(), 
+					gt.getHotsale(), 
+					gt.getRecommended(), 
+					gt.getQuantity(), 
+					"<a id='editgoods' href='goods.jsp?operate=edit&folder=setting&goodsid="+gt.getGoodsid()+"' name='editgoods'>[编辑]</a>"});
 			rows.add(cellMap);
 		}
 	}

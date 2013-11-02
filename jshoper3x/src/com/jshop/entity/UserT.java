@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-10-26 17:12:40 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-11-2 20:20:00 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -42,12 +42,16 @@ public class UserT implements java.io.Serializable {
 	private String rolemid;
 	private String headpath;
 	private String weixin;
+	private Date createtime;
+	private Date updatetime;
+	private String creatorid;
 
 	public UserT() {
 	}
 
 	public UserT(String userid, String username, String email, String password,
-			String userstate, Date postingcount, String rolemid, String headpath) {
+			String userstate, Date postingcount, String rolemid,
+			String headpath, Date createtime, Date updatetime, String creatorid) {
 		this.userid = userid;
 		this.username = username;
 		this.email = email;
@@ -56,6 +60,9 @@ public class UserT implements java.io.Serializable {
 		this.postingcount = postingcount;
 		this.rolemid = rolemid;
 		this.headpath = headpath;
+		this.createtime = createtime;
+		this.updatetime = updatetime;
+		this.creatorid = creatorid;
 	}
 
 	public UserT(String userid, String username, String realname, String email,
@@ -64,7 +71,8 @@ public class UserT implements java.io.Serializable {
 			String section, String position, String groupid, String parttime1,
 			String parttime2, String parttime3, String qq, String sinaweibo,
 			String state, String uid, String rolemname, String rolemid,
-			String headpath, String weixin) {
+			String headpath, String weixin, Date createtime, Date updatetime,
+			String creatorid) {
 		this.userid = userid;
 		this.username = username;
 		this.realname = realname;
@@ -90,6 +98,9 @@ public class UserT implements java.io.Serializable {
 		this.rolemid = rolemid;
 		this.headpath = headpath;
 		this.weixin = weixin;
+		this.createtime = createtime;
+		this.updatetime = updatetime;
+		this.creatorid = creatorid;
 	}
 
 	@Id
@@ -317,6 +328,35 @@ public class UserT implements java.io.Serializable {
 
 	public void setWeixin(String weixin) {
 		this.weixin = weixin;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATETIME", nullable = false, length = 0)
+	public Date getCreatetime() {
+		return this.createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATETIME", nullable = false, length = 0)
+	public Date getUpdatetime() {
+		return this.updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	@Column(name = "CREATORID", nullable = false, length = 20)
+	public String getCreatorid() {
+		return this.creatorid;
+	}
+
+	public void setCreatorid(String creatorid) {
+		this.creatorid = creatorid;
 	}
 
 }
