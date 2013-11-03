@@ -39,7 +39,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.TemplateException;
-@Namespace("/admin/user")
+@Namespace("")
 @ParentPackage("jshop")
 public class UserTAction extends ActionSupport {
 	private UsertService usertService;
@@ -91,7 +91,7 @@ public class UserTAction extends ActionSupport {
 	private String roleid;
 	private boolean slogin = false;
 	private boolean sucflag;
-
+	private boolean sauthority;
 	private String baseurl;
 	@JSON(serialize = false)
 	public UserRoleMAction getUserRoleMAction() {
@@ -508,6 +508,14 @@ public class UserTAction extends ActionSupport {
 		this.newpassword = newpassword;
 	}
 
+	public boolean isSauthority() {
+		return sauthority;
+	}
+
+	public void setSauthority(boolean sauthority) {
+		this.sauthority = sauthority;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -521,7 +529,7 @@ public class UserTAction extends ActionSupport {
 	/**
 	 * 验证登陆
 	 */
-	@Action(value = "/checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
+	@Action(value = "checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
 	public String checklogin() {
 		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticString.BACK_USER_SESSION_KEY);
 		if (admin!=null) {
@@ -533,7 +541,23 @@ public class UserTAction extends ActionSupport {
 			return "json";
 		}
 	}
-
+	
+	
+	@Action(value = "checkAuthorityException", results = { @Result(name = "json", type = "json", params = { "includeProperties", "sauthority" }) })
+	public String checkAuthorityException(){
+		String authorityE=(String) ActionContext.getContext().getSession().get(StaticString.AUTHORITYEXCEPTION);
+		if(authorityE!=null){
+			if(StaticString.ONE.equals(authorityE)){
+				this.setSauthority(true);
+				ActionContext.getContext().getSession().remove(StaticString.AUTHORITYEXCEPTION);
+				return "json";
+			}
+		}else{
+			this.setSauthority(false);
+			return "json";
+		}
+		return "json";
+	}
 
 
 	/**

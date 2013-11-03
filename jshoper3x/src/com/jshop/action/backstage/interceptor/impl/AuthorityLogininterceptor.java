@@ -1,5 +1,7 @@
 package com.jshop.action.backstage.interceptor.impl;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -15,6 +17,7 @@ import com.jshop.action.backstage.interceptor.UserRolemoduleInterecptor;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.user.UserTAction;
+import com.jshop.entity.FunctionM;
 import com.jshop.entity.UserT;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
@@ -27,6 +30,7 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 	public static final String COOKIE_REMEMBER_KEY = "cookieadminid";
 	public static final String GOING_TO_URL_KEY = "going_to";
 	public boolean authority;
+	public boolean authorityflag;
 	private UsertService usertService;
 	private UserRolemoduleInterecptor userRolemoduleInterecptor;
 	private UserTAction userTAction;
@@ -71,66 +75,42 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 		HttpServletResponse response=(HttpServletResponse) actionContext.get(StrutsStatics.HTTP_RESPONSE);
 		Map session = actionContext.getSession();
 		if ((session != null) && (session.get(StaticString.BACK_USER_SESSION_KEY) != null)) {
-//			String userid=(String) ActionContext.getContext().getSession().get(BaseTools.BACK_USER_SESSION_KEY);
-//			if("120100721001".equals(userid)){
-//				return invocation.invoke();
-//			}
-//			//获取post过来的url和actionname
-//			
-//			String actionname = invocation.getInvocationContext().getName();
-//			String referer = request.getHeader("Referer");
-//			String ref=referer.substring(referer.lastIndexOf("/")+1);
-//			String spref[]=StringUtils.split(ref, "?");
-//			
-//			//去读取内存中的权限信息和上下文在url和action上做判断
-//			List<FunctionM> userfunctionlist = (List<FunctionM>) ActionContext.getContext().getSession().get(BaseTools.USERROLEFUNCTION);
-//			for (Iterator it = userfunctionlist.iterator(); it.hasNext();) {
-//				FunctionM fm = (FunctionM) it.next();
-//				if(fm.getVisiturl().length()>0){
-//					if(spref[0].toString().equals(fm.getVisiturl().trim())){
-//						return invocation.invoke();
-//					}
-//				}else{
-//					if(fm.getVisitmethodname().length()>0){
-//						if(fm.getVisitmethodname().equals(actionname)){
-//							return invocation.invoke();
-//						}
-//					}
-//				}
-//			}
-//			ActionContext.getContext().getSession().put(BaseTools.KEYFORAUTHORITY, "1");
-			return invocation.invoke();
+			UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticString.BACK_USER_SESSION_KEY);
+			//如果是超级管理员就不验证权限state=3表示超级管理员
+			if(StaticString.THREE.equals(admin.getState())){
+				return invocation.invoke();
+			}
+			//获取post过来的url和actionname
+			
+			String actionname = invocation.getInvocationContext().getName();
+			String referer = request.getHeader("Referer");
+			String ref=referer.substring(referer.lastIndexOf("/")+1);
+			String spref[]=StringUtils.split(ref, "?");
+			
+			//去读取内存中的权限信息和上下文在url和action上做判断
+			List<FunctionM> userfunctionlist = (List<FunctionM>) ActionContext.getContext().getSession().get(StaticString.USERROLEFUNCTION);
+			if(!userfunctionlist.isEmpty()){
+				for (Iterator it = userfunctionlist.iterator(); it.hasNext();) {
+					
+					FunctionM fm = (FunctionM) it.next();
+					if(StringUtils.isNotBlank(fm.getVisiturl())){
+						if(spref[0].toString().equals(fm.getVisiturl())){
+							return invocation.invoke();
+						}
+					}else{
+						if(StringUtils.isNotBlank(fm.getVisitmethodname())){
+							if(fm.getVisitmethodname().equals(actionname)){
+								return invocation.invoke();
+							}
+						}
+					}
+				}
+			}
+			//权限异常标记
+			ActionContext.getContext().getSession().put(StaticString.AUTHORITYEXCEPTION, StaticString.ONE);
+			return "authorityfalied";
 		} else {
-//			Cookie[] cookies = request.getCookies();
-//			if (cookies != null) {
-//				for (Cookie cookie : cookies) {
-//					if (COOKIE_REMEMBER_KEY.equals(cookie.getName())) {
-//						String value = cookie.getValue();
-//						if (StringUtils.isNotEmpty(value)) {
-//							String[] split = value.split("==");
-//							String userName = split[0];
-//							String password = split[1];
-//							try {
-//								UserT user = new UserT();
-//								user.setUsername(userName);
-//								user.setPassword(password);
-//								user.setState("3");
-//								user = this.getUsertService().login(user);
-//								if (user != null) {
-//									session.put(BaseTools.BACK_USER_SESSION_KEY, user.getUserid());
-//								} else {
-//									//setGoingToUrl(session,invocation);
-//									return "adminlogin";
-//								}
-//							} catch (Exception e) {
-//								//setGoingToUrl(session,invocation);
-//								return "adminlogin";
-//							}
-//						}
-//					}
-//				}
-//			}
-			return "adminlogin";
+			return "adminloginfailed";
 		}
 		//setGoingToUrl(session,invocation);
 	}

@@ -27,6 +27,10 @@ public class  StaticString {
 	public static String ALLROLEFUNCTION = "allrolefunction";
 
 	public static String KEYFORAUTHORITY = "keyforauthority";
+	/**
+	 *权限异常标记
+	 */
+	public static String AUTHORITYEXCEPTION="authorityexception";
 	
 	/**
 	 * 后台首页前5条订单记录

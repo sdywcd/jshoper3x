@@ -64,7 +64,7 @@ $(function(){
  * 检测用户是否登录并实行跳转控制
  */
 $(function() {
-	$.post("user/checklogin.action", function(data) {
+	$.post("checklogin.action", function(data) {
 		if (data.slogin) {
 			
 			var pathnamearray = window.location.pathname.split("/");
@@ -87,6 +87,31 @@ $(function() {
 		}
 
 	});
+	
+	$.post("checkAuthorityException.action",function(data){
+		if (data.sauthority) {
+			
+			var pathnamearray = window.location.pathname.split("/");
+			var pathname = pathnamearray[1] + "/";
+			if (pathname == "jshop/") {
+				pathname = "";
+			}
+			top.location.href = "http://" + window.location.host + "/" + pathname + "admin/authorityjump.jsp";
+		} else {
+			if (data.length > 0) {
+				var pathnamearray = window.location.pathname.split("/");
+				var pathname = pathnamearray[1] + "/";
+				if (pathname == "jshop/") {
+					pathname = "";
+				}
+				top.location.href = "http://" + window.location.host + "/" + pathname + "admin/authorityjump.jsp";
+			} else {
+				return;
+			}
+		}
+	
+	});
+	
 	
 	/**
 	 * 当点击注销并确认退出时
