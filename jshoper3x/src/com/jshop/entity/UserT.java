@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-2 20:20:00 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-11-3 11:06:14 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -27,7 +27,6 @@ public class UserT implements java.io.Serializable {
 	private String answer;
 	private String password;
 	private String userstate;
-	private Date postingcount;
 	private String section;
 	private String position;
 	private String groupid;
@@ -45,19 +44,19 @@ public class UserT implements java.io.Serializable {
 	private Date createtime;
 	private Date updatetime;
 	private String creatorid;
+	private Integer postingcount;
 
 	public UserT() {
 	}
 
 	public UserT(String userid, String username, String email, String password,
-			String userstate, Date postingcount, String rolemid,
-			String headpath, Date createtime, Date updatetime, String creatorid) {
+			String userstate, String rolemid, String headpath, Date createtime,
+			Date updatetime, String creatorid) {
 		this.userid = userid;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.userstate = userstate;
-		this.postingcount = postingcount;
 		this.rolemid = rolemid;
 		this.headpath = headpath;
 		this.createtime = createtime;
@@ -67,12 +66,12 @@ public class UserT implements java.io.Serializable {
 
 	public UserT(String userid, String username, String realname, String email,
 			String telno, String mobile, String question, String answer,
-			String password, String userstate, Date postingcount,
-			String section, String position, String groupid, String parttime1,
-			String parttime2, String parttime3, String qq, String sinaweibo,
-			String state, String uid, String rolemname, String rolemid,
-			String headpath, String weixin, Date createtime, Date updatetime,
-			String creatorid) {
+			String password, String userstate, String section, String position,
+			String groupid, String parttime1, String parttime2,
+			String parttime3, String qq, String sinaweibo, String state,
+			String uid, String rolemname, String rolemid, String headpath,
+			String weixin, Date createtime, Date updatetime, String creatorid,
+			Integer postingcount) {
 		this.userid = userid;
 		this.username = username;
 		this.realname = realname;
@@ -83,7 +82,6 @@ public class UserT implements java.io.Serializable {
 		this.answer = answer;
 		this.password = password;
 		this.userstate = userstate;
-		this.postingcount = postingcount;
 		this.section = section;
 		this.position = position;
 		this.groupid = groupid;
@@ -101,6 +99,7 @@ public class UserT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.updatetime = updatetime;
 		this.creatorid = creatorid;
+		this.postingcount = postingcount;
 	}
 
 	@Id
@@ -192,16 +191,6 @@ public class UserT implements java.io.Serializable {
 
 	public void setUserstate(String userstate) {
 		this.userstate = userstate;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "POSTINGCOUNT", nullable = false, length = 0)
-	public Date getPostingcount() {
-		return this.postingcount;
-	}
-
-	public void setPostingcount(Date postingcount) {
-		this.postingcount = postingcount;
 	}
 
 	@Column(name = "SECTION", length = 20)
@@ -357,6 +346,15 @@ public class UserT implements java.io.Serializable {
 
 	public void setCreatorid(String creatorid) {
 		this.creatorid = creatorid;
+	}
+
+	@Column(name = "POSTINGCOUNT")
+	public Integer getPostingcount() {
+		return this.postingcount;
+	}
+
+	public void setPostingcount(Integer postingcount) {
+		this.postingcount = postingcount;
 	}
 
 }

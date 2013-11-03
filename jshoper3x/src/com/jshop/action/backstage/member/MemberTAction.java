@@ -459,8 +459,8 @@ public class MemberTAction extends ActionSupport {
 				mt.setUpdatetime(mt.getCreatetime());
 				mt.setVersiont(0);
 				this.getMemberTService().saveMemberT(mt);
-				//放置到redis中去
-				this.getRedisMemberService().save(mt);
+//				//放置到redis中去
+//				this.getRedisMemberService().save(mt);
 				this.setSucflag(true);
 				return "json";
 			}else{
@@ -609,10 +609,10 @@ public class MemberTAction extends ActionSupport {
 		if(StringUtils.isBlank(this.getId())){
 			return "json";
 		}
-		MemberT mt=this.getRedisMemberService().read(this.getId());
-		if(mt!=null){
-			System.out.println(mt.getNick());
-		}
+//		MemberT mt=this.getRedisMemberService().read(this.getId());
+//		if(mt!=null){
+//			System.out.println(mt.getNick());
+//		}
 		bean=this.getMemberTService().findMemberTById(this.getId().trim());
 		if(bean!=null){
 			bean.setTag(this.getPersonalTag(bean.getTag()));

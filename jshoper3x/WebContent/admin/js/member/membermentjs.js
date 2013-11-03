@@ -1,13 +1,13 @@
 $(function() {
-	/**
-	 * ui
-	 */
-	$('input').iCheck({
-	    checkboxClass: 'icheckbox_square-blue',
-	    radioClass: 'iradio_square-blue',
-	    increaseArea: '20%' // optional
-	});
-	 
+//	/**
+//	 * ui
+//	 */
+//	$('input').iCheck({
+//	    checkboxClass: 'icheckbox_square-blue',
+//	    radioClass: 'iradio_square-blue',
+//	    increaseArea: '20%' // optional
+//	});
+//	 
 	/**
 	 * 增加用户
 	 */
@@ -61,7 +61,7 @@ $(function() {
 		var email=$("#email").val();
 		var question=$("#question").val();
 		var answer=$("#answer").val();
-		var userstate=$("input[name='userstate']:checked").val();
+		var memberstate=$("input[name='memberstate']:checked").val();
 		$.post("saveMemberT.action",{
 			"loginname":loginname,
 			"loginpwd":loginpwd,
@@ -85,7 +85,7 @@ $(function() {
 			"email":email,
 			"question":question,
 			"answer":answer,
-			"userstate":userstate
+			"memberstate":memberstate
 		},function(data){
 			if(data.sucflag){
 				window.location.href="memberment.jsp?operate=find&folder=member";
@@ -169,10 +169,10 @@ $(function() {
 				$("#email").val(data.bean.email);
 				$("#question").val(data.bean.question);
 				$("#answer").val(data.bean.answer);
-				if("1"==data.bean.userstate){
-					$("input[name='userstate']").get(0).checked=true;
+				if("1"==data.bean.memberstate){
+					$("input[name='memberstate']").get(0).checked=true;
 				}else{
-					$("input[name='userstate']").get(1).checked=true;
+					$("input[name='memberstate']").get(1).checked=true;
 				}
 				$("#loginname").attr("readonly",true);
 				$("#loginpwd").attr("readonly",true);
@@ -220,7 +220,7 @@ $(function() {
 		var email=$("#email").val();
 		var question=$("#question").val();
 		var answer=$("#answer").val();
-		var userstate=$("input[name='userstate']:checked").val();
+		var memberstate=$("input[name='memberstate']:checked").val();
 		$.post("updateMemberT.action",{
 			"id":id,
 			"nick":nick,
@@ -243,7 +243,7 @@ $(function() {
 			"email":email,
 			"question":question,
 			"answer":answer,
-			"userstate":userstate
+			"memberstate":memberstate
 		},function(data){
 			if(data.sucflag){
 				window.location.href="memberment.jsp?operate=find&folder=member";
@@ -333,7 +333,7 @@ $(function() {
 				align:'center'
 			},{ 
 				display:'状态',
-				name:'userstate',
+				name:'memberstate',
 				width:150,
 				sortable:true,
 				align:'center'

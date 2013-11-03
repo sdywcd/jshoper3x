@@ -1,15 +1,37 @@
 
 $(function(){
+//	/**
+//	 * ui
+//	 */
+//	  $('input').iCheck({
+//		    checkboxClass: 'icheckbox_square-blue',
+//		    radioClass: 'iradio_square-blue',
+//		    increaseArea: '20%' // optional
+//		  });
+	
+	
+	$("#delpc").click(function() {
+		var str = "";
+		var sum = 0;
+		$(":checkbox[name='pcpath']").each(function() {
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		if (sum == 0) {
+			alert('只有在选择图片后才能删除');
+			return false;
+		}
+		var array = new Array();
+		array = str.split(",");
+		$(array).each(function(k, v) {
+			$("#triggers img").remove("img[id=" + v + "]");
+			$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
+		});
+	});
+	
 	updateUserT=function(){
-		var password=$("#password").val();
-		if(password==""){
-			formwarning("#alerterror", "密码必须填写");
-			return false;
-		}
-		if(password.length<7||password.length>16){
-			formwarning("#alerterror", "密码长度必须大于等于7位小于16位");
-			return false;
-		}
 		var realname=$("#realname").val();
 		var mobile=$("#mobile").val();
 		var qq=$("#qq").val();
@@ -30,7 +52,6 @@ $(function(){
 		var userstate=$("input[name='userstate']:checked").val();
 		var hiduserid=$("#hiduserid").val();
 		$.post("updateUserT.action",{
-			"password":password,
 			"realname":realname,
 			"mobile":mobile,
 			"qq":qq,
@@ -92,6 +113,8 @@ $(function(){
 					$("input[name='userstate']").get(1).checked=true;
 				}
 				$('#hiduserid').attr("value",data.bean.userid);
+				$("#password").attr("readonly",true);
+				$('#username').attr("readonly",true);
 				$('#submit').hide();
 				$('#update').show();	
 				
@@ -196,13 +219,19 @@ $(function(){
 				sortable:true,
 				align:'center'
 			},{ 
-				display:'角色状态',
+				display:'角色',
+				name:'rolemname',
+				width:115,
+				sortable:true,
+				align:'center'
+			},{ 
+				display:'状态',
 				name:'state',
 				width:115,
 				sortable:true,
 				align:'center'
 			},{ 
-				display:'操作状态',
+				display:'账户状态',
 				name:'userstate',
 				width:115,
 				sortable:true,
@@ -234,7 +263,7 @@ $(function(){
 				bclass:'edit',
 				onpress:action
 			},{
-				name:'设置权限',
+				name:'设置角色',
 				bclass:'edit',
 				onpress:action
 			},{
@@ -346,10 +375,10 @@ $(function(){
 					formwarning("#alerterror", "请选择一条信息");
 					return false;
 				}
-			}else if(com=='设置权限'){
+			}else if(com=='设置角色'){
 				if ($('.trSelected', grid).length == 1) {
 					var str = $('.trSelected', grid)[0].id.substr(3);
-					window.location.href="adduserrole.jsp?operate=edit&folder=user&userid="+str;
+					window.location.href="userrole.jsp?operate=edit&folder=user&userid="+str;
 				} else {
 					formwarning("#alerterror", "请选择一条信息");
 					return false;
@@ -394,6 +423,4 @@ $(function(){
 	}else if(operate=="find"){
 		findAllUser();
 	}
-	
-	
 });

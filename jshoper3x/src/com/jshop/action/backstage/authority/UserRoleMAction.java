@@ -158,7 +158,6 @@ public class UserRoleMAction extends ActionSupport {
 	 * @return
 	 */
 	public List<FunctionM> findUserRoleFunctionList(String userid){
-		String roleid=this.getUserRoleMService().findUserRoleMByuserid(userid).get(0).getRoleid();
 		List<RoleFunctionM>list=this.getRoleFunctionMService().findAllRoleFunctionMByroleid(roleid);
 		FunctionM fm=new FunctionM();
 		List<FunctionM>userfunctionlist=new ArrayList<FunctionM>();

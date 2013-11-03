@@ -112,6 +112,11 @@
 
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="delpc" name="delpc"
+							value="删除所选图片" />
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">安全邮箱: </span> <input
 							id="email" name="email" type="text" value=""
 							class="small" /> 

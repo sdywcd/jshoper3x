@@ -172,7 +172,11 @@
 						<div id="triggers"></div>
 
 					</div>
-					
+					<div class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="delpc" name="delpc"
+							value="删除所选图片" />
+					</div>
 					
 					
 					<div class="form-inline">
@@ -201,9 +205,9 @@
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">用户状态:</span> <input
-							type="radio" id="userstate" name=userstate value="1"
+							type="radio" id="memberstate" name=memberstate value="1"
 							checked="checked" /> <label for="radio-1">激活 </label> <input
-							type="radio" id="userstate" name="userstate" value="0" /> <label
+							type="radio" id="memberstate" name="memberstate" value="0" /> <label
 							for="radio-2">禁止</label>
 					</div>
 					<div class="form-inline">

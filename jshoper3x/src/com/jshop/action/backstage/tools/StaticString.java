@@ -430,7 +430,7 @@ public class  StaticString {
 	//系统用户管理
 	public static final String NORMALUSER="普通用户";
 	
-	public static final String MANAGERUSER="管理员";
+	public static final String MANAGERUSER="店铺管理员";
 	
 	public static final String SUPERMANAGER="超级管理员";
 	

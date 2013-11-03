@@ -634,6 +634,7 @@ public class UserTAction extends ActionSupport {
 					u.getRealname(), 
 					u.getEmail(),
 					u.getMobile(),
+					u.getRolemname(),
 					u.getState(),
 					u.getUserstate(),
 					"<a id='edituser' href='user.jsp?operate=edit&folder=user&userid="+u.getUserid()+"' name='edituser'>[编辑]</a>"
@@ -650,7 +651,7 @@ public class UserTAction extends ActionSupport {
 	 */
 	@Action(value = "saveUserT", results = { @Result(name = "json", type = "json") })
 	public String saveUserT() {
-		if(StringUtils.isNotBlank(this.getUsername())&&StringUtils.isNotBlank(this.getPassword())){
+		if(StringUtils.isNotBlank(this.getUsername())&&StringUtils.isNotBlank(this.getPassword())&&StringUtils.isNotBlank(this.getEmail())){
 			MD5Code md5 = new MD5Code();
 			UserT u = new UserT();
 			u.setUsername(this.getUsername().trim());
@@ -680,6 +681,7 @@ public class UserTAction extends ActionSupport {
 				user.setAnswer(this.getAnswer().trim());
 				user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));//默认密码6个1
 				user.setUserstate(this.getUserstate());
+				user.setPostingcount(0);
 				user.setSection(StaticString.EMPTY);
 				user.setPosition(StaticString.EMPTY);
 				user.setGroupid(StaticString.EMPTY);
@@ -701,6 +703,7 @@ public class UserTAction extends ActionSupport {
 				return "json";
 			}
 		}
+		this.setMessage("邮箱，用户名，密码必须填写");
 		return "json";
 		
 	}
@@ -714,7 +717,6 @@ public class UserTAction extends ActionSupport {
 			return "json";
 		}
 		bean=this.getUsertService().findById(this.getUserid());
-		bean.setPassword(this.getPassword().trim());
 		bean.setRealname(this.getRealname());
 		bean.setMobile(this.getMobile());
 		bean.setQq(this.getQq());
@@ -726,6 +728,7 @@ public class UserTAction extends ActionSupport {
 		bean.setAnswer(this.getAnswer());
 		bean.setUserstate(this.getUserstate());
 		bean.setState(this.getState());
+		bean.setUpdatetime(BaseTools.systemtime());
 		this.getUsertService().updateUserT(bean);
 		this.setSucflag(true);
 		return "json";
@@ -892,7 +895,6 @@ public class UserTAction extends ActionSupport {
 				return "json";
 			}
 		}
-		this.setSucflag(false);
 		return "json";
 	}
 
