@@ -1115,7 +1115,7 @@ public class GoodsTAction extends ActionSupport {
 		gt.setBargainprice(this.getBargainprice());
 		gt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
 		gt.setSalestate(this.getSalestate());
-		gt.setIsSpecificationsOpen(this.getIsSpecificationsOpen());
+		gt.setIsSpecificationsOpen(StaticString.ONE);//默认开启规格值
 		gt.setPictureurl(this.getPictureurl());
 		gt.setCommoditylist(this.getCommoditylist());
 		gt.setMetaDescription(this.getMetaDescription());
@@ -1671,45 +1671,44 @@ public class GoodsTAction extends ActionSupport {
 	 * 根据顶级分类获取商品列表传送到前台给关联商品部分
 	 * @return
 	 */
-	@Action(value = "findAllGoodsBelinkedGoods", results = { @Result(name = "json", type = "json") })
-	public String findAllGoodsBelinkedGoods(){
-		if(!"0".equals(this.getNavid())&&"0".equals(this.getLtypeid())&&"0".equals(this.getStypeid())){
+	@Action(value = "findAllGoodsByCategory", results = { @Result(name = "json", type = "json") })
+	public String findAllGoodsByCategory(){
+		if(!"-1".equals(this.getNavid())&&"-1".equals(this.getLtypeid())&&"-1".equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
-			String salestate="1";//上架
-			String isSpecificationsOpen="0";//未开启规格
+			String salestate=StaticString.ONE;//上架
+			String isSpecificationsOpen=StaticString.ONE;//默认都开启规格
 			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavid(navid, salestate,isSpecificationsOpen);
 			if(!list.isEmpty()){
-				this.setBeanlist(list);
+				this.ProcessGoodsList(list);
 			}
 			this.setSucflag(true);
 			return "json";
 		}
-		if(!"0".equals(this.getNavid())&&!"0".equals(this.getLtypeid())&&"0".equals(this.getStypeid())){
+		if(!"-1".equals(this.getNavid())&&!"-1".equals(this.getLtypeid())&&"-1".equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
 			String ltypeid=this.getLtypeid().trim();
-			String salestate="1";//上架
-			String isSpecificationsOpen="0";//未开启规格
+			String salestate=StaticString.ONE;//上架
+			String isSpecificationsOpen=StaticString.ONE;//开启规格
 			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavidandltypeid(navid, ltypeid, salestate, isSpecificationsOpen);
 			if(!list.isEmpty()){
-				this.setBeanlist(list);
+				this.ProcessGoodsList(list);
 			}
 			this.setSucflag(true);
 			return "json";
 		}
-		if(!"0".equals(this.getNavid())&&!"0".equals(this.getLtypeid())&&!"0".equals(this.getStypeid())){
+		if(!"-1".equals(this.getNavid())&&!"-1".equals(this.getLtypeid())&&!"-1".equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
 			String ltypeid=this.getLtypeid().trim();
 			String stypeid=this.getStypeid().trim();
-			String salestate="1";//上架
-			String isSpecificationsOpen="0";//未开启规格
+			String salestate=StaticString.ONE;//上架
+			String isSpecificationsOpen=StaticString.ONE;//开启规格
 			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavidandltypeidandstypeid(navid, ltypeid, stypeid, salestate, isSpecificationsOpen);
 			if(!list.isEmpty()){
-				this.setBeanlist(list);
+				this.ProcessGoodsList(list);
 			}
 			this.setSucflag(true);
 			return "json";
 		}
-		this.setSucflag(false);
 		return "json";
 	}
 	
