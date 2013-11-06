@@ -574,7 +574,7 @@ public class DataCollectionTAction extends ActionSupport {
 		List<GoodsBelinkedT>list=this.getGoodsBelinkedTService().findGoodsBelinkedBymaingoodsid(gt.getGoodsid());
 		if(!list.isEmpty()){
 			List<GoodsBelinkedModel> gbmlist=new ArrayList<GoodsBelinkedModel>();
-			JSONArray ja = (JSONArray) JSONValue.parse(list.get(0).getBelinkedgoods().toString());
+			JSONArray ja = (JSONArray) JSONValue.parse(list.get(0).getBelinkedproductinfo().toString());
 			
 			for(int i=0;i<ja.size();i++){
 				GoodsBelinkedModel gbm=new GoodsBelinkedModel();

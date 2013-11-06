@@ -95,9 +95,9 @@ public class GoodsTAspect {
 			belinkedjson.deleteCharAt(belinkedjson.length()-1);
 			belinkedjson.append("]");
 			GoodsBelinkedT gbl=new GoodsBelinkedT();
-			gbl.setBelinkedid(gtn.getSerial().Serialid(Serial.GOODSBELINKED));
+			gbl.setId(gtn.getSerial().Serialid(Serial.GOODSBELINKED));
 			gbl.setMaingoodsid(gtn.getBean().getGoodsid());
-			gbl.setBelinkedgoods(belinkedjson.toString());
+			gbl.setBelinkedproductinfo(belinkedjson.toString());
 			gbl.setMode("1");//默认单向模式
 			gbl.setState("1");//开启关联
 			gbl.setCreatorid(BaseTools.adminCreateId());
@@ -140,9 +140,9 @@ public class GoodsTAspect {
 			GoodsBelinkedT gbl=new GoodsBelinkedT();
 			List<GoodsBelinkedT>list=gtn.getGoodsBelinkedTService().findGoodsBelinkedBymaingoodsid(gtn.getBean().getGoodsid());
 			if(!list.isEmpty()){
-				gbl.setBelinkedid(list.get(0).getBelinkedid());
+				gbl.setId(list.get(0).getId());
 				gbl.setMaingoodsid(gtn.getBean().getGoodsid());
-				gbl.setBelinkedgoods(belinkedjson.toString());
+				gbl.setBelinkedproductinfo(belinkedjson.toString());
 				gbl.setMode("1");//默认单向模式
 				gbl.setState("1");//开启关联
 				gbl.setCreatorid(BaseTools.adminCreateId());
@@ -153,9 +153,9 @@ public class GoodsTAspect {
 				@SuppressWarnings("unused")
 				int i=gtn.getGoodsBelinkedTService().updateGoodsBelinked(gbl);
 			}else{
-				gbl.setBelinkedid(gtn.getSerial().Serialid(Serial.GOODSBELINKED));
+				gbl.setId(gtn.getSerial().Serialid(Serial.GOODSBELINKED));
 				gbl.setMaingoodsid(gtn.getBean().getGoodsid());
-				gbl.setBelinkedgoods(belinkedjson.toString());
+				gbl.setBelinkedproductinfo(belinkedjson.toString());
 				gbl.setMode("1");//默认单向模式
 				gbl.setState("1");//开启关联
 				gbl.setCreatorid(BaseTools.adminCreateId());

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-3 11:06:14 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-11-6 21:30:30 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -17,9 +17,9 @@ import javax.persistence.TemporalType;
 @Table(name = "goods_belinked_t", catalog = "jshoper3")
 public class GoodsBelinkedT implements java.io.Serializable {
 
-	private String belinkedid;
+	private String id;
 	private String maingoodsid;
-	private String belinkedgoods;
+	private String belinkedproductinfo;
 	private String mode;
 	private String state;
 	private String creatorid;
@@ -27,17 +27,18 @@ public class GoodsBelinkedT implements java.io.Serializable {
 	private Date updatetime;
 	private int versiont;
 	private String sxlinkedgoodsid;
+	private String mainproductid;
 
 	public GoodsBelinkedT() {
 	}
 
-	public GoodsBelinkedT(String belinkedid, String maingoodsid,
-			String belinkedgoods, String mode, String state, String creatorid,
-			Date createtime, Date updatetime, int versiont,
+	public GoodsBelinkedT(String id, String maingoodsid,
+			String belinkedproductinfo, String mode, String state,
+			String creatorid, Date createtime, Date updatetime, int versiont,
 			String sxlinkedgoodsid) {
-		this.belinkedid = belinkedid;
+		this.id = id;
 		this.maingoodsid = maingoodsid;
-		this.belinkedgoods = belinkedgoods;
+		this.belinkedproductinfo = belinkedproductinfo;
 		this.mode = mode;
 		this.state = state;
 		this.creatorid = creatorid;
@@ -47,14 +48,31 @@ public class GoodsBelinkedT implements java.io.Serializable {
 		this.sxlinkedgoodsid = sxlinkedgoodsid;
 	}
 
-	@Id
-	@Column(name = "BELINKEDID", unique = true, nullable = false, length = 20)
-	public String getBelinkedid() {
-		return this.belinkedid;
+	public GoodsBelinkedT(String id, String maingoodsid,
+			String belinkedproductinfo, String mode, String state,
+			String creatorid, Date createtime, Date updatetime, int versiont,
+			String sxlinkedgoodsid, String mainproductid) {
+		this.id = id;
+		this.maingoodsid = maingoodsid;
+		this.belinkedproductinfo = belinkedproductinfo;
+		this.mode = mode;
+		this.state = state;
+		this.creatorid = creatorid;
+		this.createtime = createtime;
+		this.updatetime = updatetime;
+		this.versiont = versiont;
+		this.sxlinkedgoodsid = sxlinkedgoodsid;
+		this.mainproductid = mainproductid;
 	}
 
-	public void setBelinkedid(String belinkedid) {
-		this.belinkedid = belinkedid;
+	@Id
+	@Column(name = "ID", unique = true, nullable = false, length = 20)
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Column(name = "MAINGOODSID", nullable = false, length = 20)
@@ -66,13 +84,13 @@ public class GoodsBelinkedT implements java.io.Serializable {
 		this.maingoodsid = maingoodsid;
 	}
 
-	@Column(name = "BELINKEDGOODS", nullable = false, length = 500)
-	public String getBelinkedgoods() {
-		return this.belinkedgoods;
+	@Column(name = "BELINKEDPRODUCTINFO", nullable = false, length = 5000)
+	public String getBelinkedproductinfo() {
+		return this.belinkedproductinfo;
 	}
 
-	public void setBelinkedgoods(String belinkedgoods) {
-		this.belinkedgoods = belinkedgoods;
+	public void setBelinkedproductinfo(String belinkedproductinfo) {
+		this.belinkedproductinfo = belinkedproductinfo;
 	}
 
 	@Column(name = "MODE", nullable = false, length = 1)
@@ -138,6 +156,15 @@ public class GoodsBelinkedT implements java.io.Serializable {
 
 	public void setSxlinkedgoodsid(String sxlinkedgoodsid) {
 		this.sxlinkedgoodsid = sxlinkedgoodsid;
+	}
+
+	@Column(name = "MAINPRODUCTID", length = 20)
+	public String getMainproductid() {
+		return this.mainproductid;
+	}
+
+	public void setMainproductid(String mainproductid) {
+		this.mainproductid = mainproductid;
 	}
 
 }

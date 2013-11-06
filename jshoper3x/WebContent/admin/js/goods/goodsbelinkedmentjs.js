@@ -151,7 +151,7 @@ $(function(){
 				align : 'center'
 			} ],
 			buttons : [ {
-				name : '选择为父商品',
+				name : '选择为主商品',
 				bclass : 'add',
 				onpress : action
 			},{
@@ -190,10 +190,13 @@ $(function(){
 			checkbox : true
 		});
 		function action(com, grid) {
-			if (com == '选择为父商品') {
-				window.location.href = "goods.jsp?operate=add&folder=goods";
+			if (com == '选择为主商品') {
+				setMainProduct(grid);
 				return;
 
+			}else if(com=="选择为子商品"){
+				setSubProduct(grid);
+				return;
 			}else if (com == '查看货物') {
 				if ($('.trSelected', grid).length == 1) {
 					var str = "";
@@ -216,6 +219,92 @@ $(function(){
 
 		}
 	},
+	/**
+	 * 删除主商品
+	 */
+	delParamChildMainInfo=function(rid){
+		$('#belinkedmaininfo'+rid).remove();
+		$("#maintag").val("");
+	},
+	/**
+	 * 删除子商品
+	 */
+	delParamChildSubInfo=function(rid){
+		$('#belinkedsubinfo'+rid).remove();
+		$("#subtag").val("");
+	},
+	delParamPChildAndReBelinkedMainInfo=function(goodsid){
+		delParamChildMainInfo(goodsid);
+	},
+	delParamPChildAndReBelinkedSubInfo=function(goodsid){
+		delParamChildSubInfo(goodsid);
+	}
+	
+	/**
+	 * 设置成主商品货物
+	 */
+	setMainProduct=function(grid){
+		if($('.trSelected',grid).length==1){
+			var maintag=$("#maintag").val();
+			if(maintag!==""){
+				formwarning("#alerterror", "只能选择一个主商品");
+				return false;
+			}
+			
+			var html="";
+			var goodsid="";
+			var goodsName="";
+			var memberprice=0.0;
+			$('.trSelected', grid).each(function() {
+				goodsid = this.id.substr(3);
+			});
+			$(".trSelected td:nth-child(2) div", $('#goodsmanagement')).each(function(i){
+				goodsName=this.innerHTML;
+			});
+			$(".trSelected td:nth-child(4) div", $('#goodsmanagement')).each(function(i){
+				memberprice=this.innerHTML;
+			});
+			html+="<tr id='belinkedmaininfo"+goodsid+"' class='success'><td>"+goodsName+"</td><td>"+memberprice+"</td><td><a href='javascript:delParamPChildAndReBelinkedMainInfo("+goodsid+");'>删除</a></td></tr>"
+			$("#belinkedmaininfo").append(html);
+			$("#maintag").val(goodsid);
+		}else{
+			formwarning("#alerterror", "请选择一条商品");
+			return false;
+		}
+	},
+	/**
+	 * 设置成子商品货物
+	 */
+	setSubProduct=function(grid){
+		if($('.trSelected',grid).length==1){
+			
+			var html="";
+			var goodsid="";
+			var goodsName="";
+			var memberprice=0.0;
+			$('.trSelected', grid).each(function() {
+				goodsid = this.id.substr(3);
+			});
+			var subtag=$("#subtag").val();
+			if(subtag===goodsid){
+				formwarning("#alerterror", "请不要选择重复的子商品");
+				return false;
+			}
+			$(".trSelected td:nth-child(2) div", $('#goodsmanagement')).each(function(i){
+				goodsName=this.innerHTML;
+			});
+			$(".trSelected td:nth-child(4) div", $('#goodsmanagement')).each(function(i){
+				memberprice=this.innerHTML;
+			});
+			html+="<tr id='belinkedsubinfo"+goodsid+"' class='success'><td>"+goodsName+"</td><td>"+memberprice+"</td><td><a href='javascript:delParamPChildAndReBelinkedSubInfo("+goodsid+");'>删除</a></td></tr>"
+			
+			$("#belinkedsubinfo").append(html);
+			$("#subtag").val(goodsid);
+		}else{
+			formwarning("#alerterror", "请选择一条商品");
+			return false;
+		}
+	}
 	
 	
 	/**

@@ -69,7 +69,58 @@
 						<table id="goodsmanagement" style="display: none;"></table>
 					</div>
 					<div class="line-dotted"></div>
+					<div class="well">
+						<h4>主商品</h4>
+					</div>
+					<div class="span12" style="margin-left:0px;">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>
+										货物名称
+									</th>
+									<th>
+										会员价
+									</th>
+									<th>
+										操作
+									</th>
+								</tr>
+							</thead>
+							<tbody id="belinkedmaininfo">
+								<!-- 主商品标记 -->
+								<input type="hidden"  id="maintag" name="maintag" value="" />
+								
+							</tbody>
+						</table>
 					
+					<div class="line-dotted"></div>
+					
+					<div class="well">
+						<h4>子商品</h4>
+					</div>
+					
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>
+										货物名称
+									</th>
+									<th>
+										会员价
+									</th>
+									<th>
+										操作
+									</th>
+								</tr>
+							</thead>
+							<tbody id="belinkedsubinfo">
+								<!-- 子商品标记 -->
+								<input type="hidden"  id="subtag" name="subtag" value="" />
+								
+							</tbody>
+						</table>
+					</div>
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
 							id="hidproductid" name="hidproductid" value="">
