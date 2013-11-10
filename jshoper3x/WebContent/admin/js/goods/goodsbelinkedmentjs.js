@@ -1,4 +1,8 @@
 $(function(){
+	//全局关联子商品id
+	var belinkedproductid="";
+	$("#maintag").val("");
+	$("#subtag").val("");
 	/**
 	 * 读取商品一级分类
 	 */
@@ -158,10 +162,6 @@ $(function(){
 				name : '选择为子商品',
 				bclass : 'add',
 				onpress : action
-			},{
-				name : '查看货物',
-				bclass : 'edit',
-				onpress : action
 			}, {
 				separator : true
 			} ],
@@ -197,24 +197,6 @@ $(function(){
 			}else if(com=="选择为子商品"){
 				setSubProduct(grid);
 				return;
-			}else if (com == '查看货物') {
-				if ($('.trSelected', grid).length == 1) {
-					var str = "";
-					var name="";
-					$('.trSelected', grid).each(function() {
-						str = this.id.substr(3);
-					});
-					$(".trSelected td:nth-child(2) div", $('#goodsmanagement')).each(function(i){
-						name=this.innerHTML;
-					});
-					
-					window.location.href = "../products/productment.jsp?operate=find&goodsid="
-							+ str+"&goodsname="+name+"&folder=goods";
-					return;
-				} else {
-					formwarning("#alerterror", "请选择需要编辑货物的商品");
-					return false;
-				}
 			}
 
 		}
@@ -300,12 +282,37 @@ $(function(){
 			
 			$("#belinkedsubinfo").append(html);
 			$("#subtag").val(goodsid);
+			belinkedproductid+=goodsid+",";
 		}else{
 			formwarning("#alerterror", "请选择一条商品");
 			return false;
 		}
 	}
 	
+	
+	saveOrUpdateGoodsBelinkedT=function(){
+		var belinkedproductinfo=belinkedproductid.substring(0,belinkedproductid.length-1);
+		$.post("saveOrUpdateGoodsBelinkedT.action",{
+			"belinkedproductinfo":belinkedproductinfo
+		},function(data){
+			if(data.sucflag){
+				formwarning("#alertinfo", "增加关联商品成功");
+				return false;
+			}
+		})
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * 增加新关联商品商品
+	 */
+	$("#submit").click(function(){
+		saveOrUpdateGoodsBelinkedT();
+	}),
 	
 	/**
 	 * 搜索商品
