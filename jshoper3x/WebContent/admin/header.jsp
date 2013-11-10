@@ -75,7 +75,7 @@
 								<li><a href="#"><i class="icon-star"></i> 授权</a></li>
 								<li><a href="#"><i class="icon-wrench"></i> 技术支持</a></li>
 								<li class="divider"></li>
-								<li><a href="#"><i class="icon-user"></i> 账号（管理员）</a></li>
+								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i> 账号（管理员）</a></li>
 								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>系统用户列表</i></a></li>
 								<li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li>
 							</ul></li>

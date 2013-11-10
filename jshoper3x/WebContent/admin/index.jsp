@@ -27,14 +27,14 @@
 
 			<div class="span2">
 				<a href="#" class="thumbnail"><img
-					src="http://i.360buy.com/commons/img/no-img_mid_.jpg" alt=""
+					src="<s:property value="#session.admin.headpath"/>" alt=""
 					class="caption"> </a>
 				<div class="well well-small smallt">
-					<h4>陈达，你好！</h4>
+					<h4><s:property value="#session.admin.realname"/> ，你好！</h4>
 					<p>
-						上次登录时间<br />2012年12月18日15:01:25
+						欢迎您再次来到<br />Jshoper3x
 					</p>
-					<button class="btn btn-block btn-primary" type="button">我的jshooper</button>
+					<button class="btn btn-block btn-primary" type="button">我的工作</button>
 				</div>
 
 
@@ -86,7 +86,7 @@
 					<tbody>
 						<tr>
 							<td class="left_2">系统版本号：</td>
-							<td>jshoper Enterprise 4.6.0.0 <a href="#"><span
+							<td>jshoper Enterprise 3.0.0.0 <a href="#"><span
 									class="label label-info">有可用的更新！</span> </a>
 							</td>
 						</tr>
