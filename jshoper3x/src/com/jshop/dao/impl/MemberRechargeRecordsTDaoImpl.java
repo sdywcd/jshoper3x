@@ -19,7 +19,7 @@ public class MemberRechargeRecordsTDaoImpl extends HibernateDaoSupport implement
 	private static final Logger log = LoggerFactory.getLogger(MemberRechargeRecordsTDaoImpl.class);
 	
 	@Override
-	public void saveMemberRechargeRecordsT(MemberRechargeRecordsTDao mrrt) {
+	public void saveMemberRechargeRecordsT(MemberRechargeRecordsT mrrt) {
 		log.debug("save MemberRechargeRecordsTDao");
 		try {
 			this.getHibernateTemplate().save(mrrt);

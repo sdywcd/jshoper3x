@@ -24,7 +24,7 @@ public class MemberRechargeRecordsTServiceImpl implements
 	}
 
 	@Override
-	public void saveMemberRechargeRecordsT(MemberRechargeRecordsTDao mrrt) {
+	public void saveMemberRechargeRecordsT(MemberRechargeRecordsT mrrt) {
 		this.getMemberRechargeRecordsTDao().saveMemberRechargeRecordsT(mrrt);
 
 	}

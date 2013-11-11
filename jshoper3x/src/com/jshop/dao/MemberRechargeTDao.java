@@ -32,8 +32,18 @@ public interface MemberRechargeTDao {
 	 * @param strs
 	 */
 	public void delMemberRechargeT(String[]strs);
-	
-	
+	/**
+	 * 根据id查询
+	 * @param id
+	 * @return
+	 */
+	public MemberRechargeT findMemberRechargeTById(String id);
+	/**
+	 * 根据会员id查询
+	 * @param memberid
+	 * @return
+	 */
+	public MemberRechargeT findMemberRechargeTByMemberId(String memberid);
 	
 	
 	
