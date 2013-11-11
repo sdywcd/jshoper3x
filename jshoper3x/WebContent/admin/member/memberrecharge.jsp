@@ -50,8 +50,7 @@
 				<div class="form-actions">
 					<div class="form-inline">
 						<div id="selectgoodscategory" class="form-inline">
-							<span class="label label-required">选择会员: </span> <select
-								id="navid" name="navid"></select>
+							<span class="label label-required">选择会员: </span> 
 							<input id="membername" name="membername" type="text" value="" class="small" /> 
 							<button id="search" name="search" class="btn btn-primary" type="button">查询</button>
 							<span class="label label-info">输入会员账号查询</span>
@@ -69,6 +68,7 @@
 						<label for="radio-1">增加金额</label> <input type="radio"
 							id="operatetype" name="operatetype" value="0" /> <label
 							for="radio-2">扣除金额</label>
+							
 					</div>
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
@@ -85,7 +85,7 @@
 	</div>
 
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/member/membergradementjs.js"></script>	
+		src="<%=basePath%>admin/js/member/memberrechargementjs.js"></script>	
  
 	<%@include file="/admin/footer.jsp"%>
 

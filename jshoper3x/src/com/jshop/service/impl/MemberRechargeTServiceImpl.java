@@ -51,4 +51,14 @@ public class MemberRechargeTServiceImpl implements MemberRechargeTService {
 
 	}
 
+	@Override
+	public MemberRechargeT findMemberRechargeTById(String id) {
+		return this.getMemberRechargeTDao().findMemberRechargeTById(id);
+	}
+
+	@Override
+	public MemberRechargeT findMemberRechargeTByMemberId(String memberid) {
+		return this.getMemberRechargeTDao().findMemberRechargeTByMemberId(memberid);
+	}
+
 }

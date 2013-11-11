@@ -57,7 +57,7 @@
 
 	</div>
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/member/membergradementjs.js"></script>
+		src="<%=basePath%>admin/js/member/memberrechargementjs.js"></script>
 	<%@include file="/admin/footer.jsp"%>
 
 </body>

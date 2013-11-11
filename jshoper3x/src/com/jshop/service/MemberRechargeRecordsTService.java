@@ -10,7 +10,7 @@ public interface MemberRechargeRecordsTService {
 	 * 增加充值记录
 	 * @param mrrt
 	 */
-	public void saveMemberRechargeRecordsT(MemberRechargeRecordsTDao mrrt);
+	public void saveMemberRechargeRecordsT(MemberRechargeRecordsT mrrt);
 	/**
 	 * 查询所有充值记录
 	 * @param currentPage

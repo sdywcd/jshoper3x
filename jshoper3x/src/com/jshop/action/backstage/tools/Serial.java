@@ -161,6 +161,10 @@ public class Serial {
 	public static String MEMBERGROUP="membergroup";
 	//会员表
 	public static String MEMBER="member";
+	//账户充值表
+	public static String MEMBERRECHARGET="memberrecharget";
+	//账户充值记录表
+	public static String MEMBERRECHARGETRECORDS="memberrechargetrecords";
 	@Resource
 	private SerialTService serialTService;
 	

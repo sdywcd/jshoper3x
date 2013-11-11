@@ -16,6 +16,7 @@ import com.jshop.dao.MemberRechargeTDao;
 import com.jshop.entity.ArticleT;
 import com.jshop.entity.MemberGradeT;
 import com.jshop.entity.MemberRechargeT;
+import com.jshop.entity.UserT;
 @Repository("memberRechargeTDao")
 public class MemberRechargeTDaoImpl extends HibernateDaoSupport implements MemberRechargeTDao {
 	private static final Logger log = LoggerFactory.getLogger(MemberRechargeTDaoImpl.class);
@@ -99,6 +100,34 @@ public class MemberRechargeTDaoImpl extends HibernateDaoSupport implements Membe
 			throw re;
 		}
 
+	}
+
+	@Override
+	public MemberRechargeT findMemberRechargeTById(String id) {
+		log.debug("getting MemberRechargeT instance with id: " + id);
+		try {
+			MemberRechargeT instance = (MemberRechargeT) this.getHibernateTemplate().get("com.jshop.entity.MemberRechargeT", id);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public MemberRechargeT findMemberRechargeTByMemberId(String memberid) {
+		log.debug("findAllArticleBycreatorid");
+		try {
+			String queryString = "from MemberRechargeT as mrt where  mrt.memberid=:memberid";
+			List<MemberRechargeT> list = this.getHibernateTemplate().findByNamedParam(queryString, "memberid", memberid);
+			if (!list.isEmpty()) {
+				return list.get(0);
+			}
+			return null;
+		} catch (RuntimeException re) {
+			log.error("countfindAllArticle error", re);
+			throw re;
+		}
 	}
 
 }
