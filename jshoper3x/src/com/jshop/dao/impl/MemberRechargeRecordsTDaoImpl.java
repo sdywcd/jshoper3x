@@ -1,3 +1,4 @@
+
 package com.jshop.dao.impl;
 
 import java.sql.SQLException;
@@ -87,3 +88,4 @@ public class MemberRechargeRecordsTDaoImpl extends HibernateDaoSupport implement
 	}
 
 }
+

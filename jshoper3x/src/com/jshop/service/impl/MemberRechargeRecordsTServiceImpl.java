@@ -8,12 +8,13 @@ import org.springframework.stereotype.Service;
 import com.jshop.dao.MemberRechargeRecordsTDao;
 import com.jshop.entity.MemberRechargeRecordsT;
 import com.jshop.service.MemberRechargeRecordsTService;
+
 @Service("memberRechargeRecordsTService")
 @Scope("prototype")
 public class MemberRechargeRecordsTServiceImpl implements
 		MemberRechargeRecordsTService {
 	private MemberRechargeRecordsTDao memberRechargeRecordsTDao;
-	
+
 	public MemberRechargeRecordsTDao getMemberRechargeRecordsTDao() {
 		return memberRechargeRecordsTDao;
 	}
@@ -32,12 +33,14 @@ public class MemberRechargeRecordsTServiceImpl implements
 	@Override
 	public List<MemberRechargeRecordsT> findAllMemberRechargeRecordsT(
 			int currentPage, int lineSize) {
-		return this.getMemberRechargeRecordsTDao().findAllMemberRechargeRecordsT(currentPage, lineSize);
+		return this.getMemberRechargeRecordsTDao()
+				.findAllMemberRechargeRecordsT(currentPage, lineSize);
 	}
 
 	@Override
 	public int countfindAllMemberRechargeRecordsT() {
-		return this.getMemberRechargeRecordsTDao().countfindAllMemberRechargeRecordsT();
+		return this.getMemberRechargeRecordsTDao()
+				.countfindAllMemberRechargeRecordsT();
 	}
 
 	@Override
