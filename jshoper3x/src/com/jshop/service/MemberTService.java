@@ -103,5 +103,11 @@ public interface MemberTService {
 	 * @return
 	 */
 	public int updateMemberPwdProctection(String id,String question,String answer);
+	/**
+	 * 根据会员名模糊查询
+	 * @param loginname
+	 * @return
+	 */
+	public List<MemberT>findMemberLikeLoginname(String loginname);
 	
 }

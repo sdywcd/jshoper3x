@@ -1,4 +1,3 @@
-
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
 <html>
@@ -51,14 +50,20 @@
 				<div class="form-actions">
 					<div class="form-inline">
 						<div id="selectgoodscategory" class="form-inline">
-							<span class="label label-required">选择会员: </span> <select
-								id="navid" name="navid"></select> <input id="membername"
+							<span class="label label-required">选择会员: </span> 
+							 <input id="membername"
 								name="membername" type="text" value="" class="small" />
 							<button id="search" name="search" class="btn btn-primary"
 								type="button">查询</button>
 							<span class="label label-info">输入会员账号查询</span>
 						</div>
 					</div>
+					
+						<!-- flexigrid -->
+						<div id="flexmembermanagement">
+							<table id="membermanagement" style="display: none;"></table>
+						</div>
+					
 					<div class="form-inline">
 						<span class="label label-required">充值金额: </span> <input
 							id="balance" name="balance" type="text" value="" class="small" />
@@ -72,7 +77,9 @@
 							for="radio-2">扣除金额</label>
 					</div>
 					<div class="form-inline">
-						<label class="label label-submit"></label> <input type="hidden"
+						<label class="label label-submit"></label>
+						<input type="hidden"
+							id="hidmemberid" name="hidmemberid" value="" /> <input type="hidden"
 							id="hidid" name="hidid" value="" /> <input
 							class="btn btn-success" type="button" id="submit" name="submit"
 							value="提交" />
@@ -92,7 +99,3 @@
 
 </body>
 </html>
-
-
-
->>>>>>> dc127ff193a14dc817c492e2fa17d68c0d58e586

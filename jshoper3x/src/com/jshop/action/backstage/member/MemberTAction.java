@@ -659,7 +659,21 @@ public class MemberTAction extends ActionSupport {
 		}
 		return "json";
 	}
-	
-	
+	/**
+	 * 根据会员名称模糊查询
+	 * @return
+	 */
+	@Action(value = "findMemberLikeloginname", results = {@Result(name = "json",type="json")})
+	public String findMemberLikeloginname(){
+		if(StringUtils.isBlank(this.getLoginname())){
+			return "json";
+		}
+		List<MemberT>list=this.getMemberTService().findMemberLikeLoginname(this.getLoginname());
+		if(!list.isEmpty()){
+			ProcessMemberList(list);
+		}
+		this.setSucflag(true);
+		return "json";
+	}
 	
 }

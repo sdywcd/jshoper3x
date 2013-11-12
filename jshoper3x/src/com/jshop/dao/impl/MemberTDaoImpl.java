@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.MemberTDao;
 import com.jshop.entity.MemberT;
+import com.jshop.entity.ProductT;
 import com.jshop.entity.TemplateT;
 import com.jshop.entity.UserT;
 
@@ -283,6 +284,28 @@ public class MemberTDaoImpl extends HibernateDaoSupport implements MemberTDao {
 			return integer;
 		} catch (RuntimeException re) {
 			log.error("update  updateMemberPwdProctection error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<MemberT> findMemberLikeLoginname(final String loginname) {
+		log.debug("findMemberLikeLoginname");
+		try {
+			List<MemberT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+
+				String queryString = "from MemberT as mt where mt.loginname like :loginname order by mt.createtime desc";
+
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setParameter("loginname", "%"+loginname+"%");
+					List list = query.list();
+					return list;
+				}
+			});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findMemberLikeLoginname error", re);
 			throw re;
 		}
 	}

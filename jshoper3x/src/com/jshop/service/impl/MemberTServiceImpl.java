@@ -103,4 +103,9 @@ public class MemberTServiceImpl implements MemberTService{
 		return this.getMemberTDao().updateMemberPwdProctection(id, question, answer);
 	}
 
+	@Override
+	public List<MemberT> findMemberLikeLoginname(String loginname) {
+		return this.getMemberTDao().findMemberLikeLoginname(loginname);
+	}
+
 }

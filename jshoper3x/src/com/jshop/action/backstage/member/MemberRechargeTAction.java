@@ -195,7 +195,7 @@ public class MemberRechargeTAction extends ActionSupport {
 			mrtt.setMembername(this.getMembername());
 			mrtt.setBalance(this.getBalance());
 			mrtt.setCreatetime(BaseTools.systemtime());
-			mrtt.setUpdatetime(mrt.getCreatetime());
+			mrtt.setUpdatetime(mrtt.getCreatetime());
 			mrtt.setVersiont(0);
 			this.getMemberRechargeTService().saveMemberRechargeT(mrtt);
 			this.setSucflag(true);
