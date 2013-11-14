@@ -579,7 +579,9 @@ public class DataCollectionTAction extends ActionSupport {
 			for(int i=0;i<ja.size();i++){
 				GoodsBelinkedModel gbm=new GoodsBelinkedModel();
 				JSONObject jo = (JSONObject) ja.get(i);
-				gbm.setBelinkedgoodsid(jo.get("goodsid").toString());
+				gbm.setMaingoodsid(jo.get("goodsid").toString());
+				gbm.setProductid(jo.get("productid").toString());
+				gbm.setProductName(jo.get("productName").toString());
 				gbm.setGoodsname(jo.get("goodsname").toString());
 				gbm.setMemberprice(jo.get("memberprice").toString());
 				gbm.setPrice(jo.get("price").toString());

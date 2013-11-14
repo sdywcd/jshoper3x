@@ -50,4 +50,15 @@ public class GoodsBelinkedTServiceImpl implements GoodsBelinkedTService {
 		return this.getGoodsBelinkedTDao().delGoodsBelinkedBymaingoodsidandsxlinkedgoodsid(maingoodsid, sxlinkedgoodsid);
 	}
 
+	@Override
+	public List<GoodsBelinkedT> findAllGoodsBelinked(int currentPage,
+			int lineSize) {
+		return this.getGoodsBelinkedTDao().findAllGoodsBelinked(currentPage, lineSize);
+	}
+
+	@Override
+	public int countfindAllGoodsBelinked() {
+		return this.getGoodsBelinkedTDao().countfindAllGoodsBelinked();
+	}
+
 }

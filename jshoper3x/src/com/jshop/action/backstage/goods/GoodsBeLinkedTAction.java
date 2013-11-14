@@ -1,7 +1,11 @@
 package com.jshop.action.backstage.goods;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -9,8 +13,11 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
+import com.jshop.action.backstage.modelbean.GoodsBelinkedModel;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
@@ -40,7 +47,14 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 	private String sxlinkedgoodsid;
 	private String mainproductid;
 	private GoodsBelinkedT bean=new GoodsBelinkedT();
-	
+	private String query;
+	private String qtype;
+	private String sortname;
+	private String sortorder;
+	private List rows = new ArrayList();
+	private int rp;
+	private int page = 1;
+	private int total = 0;
 	private boolean sucflag;
 	
 	@JSON(serialize = false)
@@ -152,6 +166,55 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 	public void setBean(GoodsBelinkedT bean) {
 		this.bean = bean;
 	}
+	
+	public String getQuery() {
+		return query;
+	}
+	public void setQuery(String query) {
+		this.query = query;
+	}
+	public String getQtype() {
+		return qtype;
+	}
+	public void setQtype(String qtype) {
+		this.qtype = qtype;
+	}
+	public String getSortname() {
+		return sortname;
+	}
+	public void setSortname(String sortname) {
+		this.sortname = sortname;
+	}
+	public String getSortorder() {
+		return sortorder;
+	}
+	public void setSortorder(String sortorder) {
+		this.sortorder = sortorder;
+	}
+	public List getRows() {
+		return rows;
+	}
+	public void setRows(List rows) {
+		this.rows = rows;
+	}
+	public int getRp() {
+		return rp;
+	}
+	public void setRp(int rp) {
+		this.rp = rp;
+	}
+	public int getPage() {
+		return page;
+	}
+	public void setPage(int page) {
+		this.page = page;
+	}
+	public int getTotal() {
+		return total;
+	}
+	public void setTotal(int total) {
+		this.total = total;
+	}
 	/**
 	 * 清理错误
 	 */
@@ -252,6 +315,70 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 		this.setSucflag(true);
 		return "json";
 	}
+	
+	/**
+	 * 查询所有的关联商品
+	 * @return
+	 */
+	@Action(value = "findAllGoodsBelinked", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
+	public String findAllGoodsBelinked(){
+		if(StaticString.SC.equals(this.getQtype())){
+			finddefaultAllGoodsBelinked();
+		}else{
+			if(StringUtils.isBlank(this.getQtype())){
+				return "json";
+			}
+		}
+		return "json";
+	}
+	private void finddefaultAllGoodsBelinked() {
+		int currentPage=page;
+		int lineSize=rp;
+		total=this.getGoodsBelinkedTService().countfindAllGoodsBelinked();
+		List<GoodsBelinkedT>list=this.getGoodsBelinkedTService().findAllGoodsBelinked(currentPage, lineSize);
+		processGoodsBelinkedList(list);
+	}
+	private void processGoodsBelinkedList(List<GoodsBelinkedT> list) {
+		for(Iterator it=list.iterator();it.hasNext();){
+			GoodsBelinkedT gbt=(GoodsBelinkedT) it.next();
+			GoodsBelinkedModel gbm=new GoodsBelinkedModel();
+			gbm.setId(gbt.getId());
+			gbm.setMaingoodsid(gbt.getMaingoodsid());
+			gbm.setProductid(gbt.getMaingoodsid());
+			JSONArray ja=(JSONArray)JSONValue.parse(gbt.getBelinkedproductinfo());
+			StringBuilder sbu=new StringBuilder();
+			sbu.append("[");
+		
+			for(int i=0;i<ja.size();i++){
+				JSONObject jo=(JSONObject) ja.get(i);
+				if(jo.get("goodsName")!=null){
+					gbm.setGoodsname(jo.get("goodsName").toString());
+				}
+				if(jo.get("productName")!=null){
+					sbu.append(jo.get("productName").toString()).append("--");
+				}
+				if(jo.get("memberprice")!=null){
+					sbu.append(jo.get("memberprice").toString()).append("--");
+				}
+			}
+			sbu.append("]");
+			gbm.setProductName(sbu.toString());
+			
+			Map<String,Object> cellMap=new HashMap<String,Object>();
+			cellMap.put("id", gbm.getId());
+			cellMap.put("cell", new Object[]{
+					gbm.getGoodsname(),
+					gbm.getProductName(),
+					BaseTools.formateDbDate(gbt.getCreatetime())
+			});
+			rows.add(cellMap);
+		}
+		
+	}
+	
+	
+	
+	
 	
 	
 	

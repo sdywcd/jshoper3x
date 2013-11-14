@@ -30,7 +30,23 @@ public interface GoodsBelinkedTDao {
 	 */
 	public List<GoodsBelinkedT> findGoodsBelinkedBymaingoodsid(
 			String maingoodsid);
-
+	/**
+	 * 查询所有关联商品
+	 * @param currentPage
+	 * @param lineSize
+	 * @return
+	 */
+	public List<GoodsBelinkedT>findAllGoodsBelinked(int currentPage,int lineSize);
+	/**
+	 * 统计所有关联商品
+	 * @param currentPage
+	 * @param lineSize
+	 * @return
+	 */
+	public int countfindAllGoodsBelinked();
+	
+	
+	
 	/**
 	 * 根据主商品id单向删除关联商品
 	 * 

@@ -59,7 +59,6 @@ public class ProductTAction extends ActionSupport {
 	private List<ProductT> beanlist = new ArrayList<ProductT>();
 	private ProductT bean = new ProductT();
 
-	private boolean slogin;
 	private boolean sucflag;
 	
 	@JSON(serialize = false)
@@ -113,15 +112,6 @@ public class ProductTAction extends ActionSupport {
 	public void setSpecificationsName(String specificationsName) {
 		this.specificationsName = specificationsName;
 	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
