@@ -1,3 +1,5 @@
+
+
 >这是ostocyjshop计划下的一个新版本，主要是重构并增强App部分的功能。希望可以制作成一个可以稳定在线上运行的系统。
 >ostocyjshop更名为jshoper3x简称jshoper。取义行走在java上的人。3x标示版本号
 
