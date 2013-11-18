@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.jshop.dao.GoodsBelinkedTDao;
 import com.jshop.entity.FavoriteT;
 import com.jshop.entity.GoodsBelinkedT;
+import com.jshop.entity.MemberGradeT;
 @Repository("goodsBelinkedTDao")
 public class GoodsBelinkedTDaoImpl extends HibernateDaoSupport implements GoodsBelinkedTDao {
 
@@ -124,7 +125,7 @@ public class GoodsBelinkedTDaoImpl extends HibernateDaoSupport implements GoodsB
 			});
 			return list;
 		} catch (RuntimeException re) {
-			log.error("find all FavoriteT by userid error", re);
+			log.error("find all GoodsBelinkedT by userid error", re);
 			throw re;
 		}
 	}
@@ -143,6 +144,20 @@ public class GoodsBelinkedTDaoImpl extends HibernateDaoSupport implements GoodsB
 			return 0;
 		} catch (RuntimeException re) {
 			log.error("count all countfindAllGoodsBelinked error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public void delGoodsBelinked(String[] strs) {
+		log.debug("del delGoodsBelinked");
+		try {
+			for(String s:strs){
+				GoodsBelinkedT goodsBelinkedT=this.getHibernateTemplate().load(GoodsBelinkedT.class,s);
+				this.getHibernateTemplate().delete(goodsBelinkedT);
+			}
+		} catch (RuntimeException re) {
+			log.error("del delGoodsBelinked failed", re);
 			throw re;
 		}
 	}

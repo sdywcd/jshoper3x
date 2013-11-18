@@ -1515,7 +1515,7 @@ CREATE TABLE `goods_belinked_t` (
 
 LOCK TABLES `goods_belinked_t` WRITE;
 /*!40000 ALTER TABLE `goods_belinked_t` DISABLE KEYS */;
-INSERT INTO `goods_belinked_t` VALUES ('20120617004','2012061700383','[{\"goodsid\":\"2012051600358\",\"goodsname\":\"  小米（MI）MI-ONE Plus 3G手机\"}]','1','1','20100721001','2012-06-17 18:25:59','2012-06-17 19:10:59',0,'0',NULL),('20120620005','2012051600357','[{\"goodsid\":\"2012051600355\",\"goodsname\":\"智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  \",\"htmlpath\":\"html/default/shop/2012051600355.html\",\"memberprice\":\"1460.0\",\"price\":\"1500.0\",\"pictureurl\":\"/Uploads/20120516/2012051611453844954.jpg\"},{\"goodsid\":\"2012051600359\",\"goodsname\":\"希捷（Seagate）GoFlex Desk 睿品 STAC4000300 3.5英寸 4TB外置硬盘（USB3.0）黑色 \",\"htmlpath\":\"html/default/shop/2012051600359.html\",\"memberprice\":\"1899.0\",\"price\":\"1899.0\",\"pictureurl\":\"/Uploads/20120516/2012051621383672922.jpg\"}]','1','1','20100721001','2012-06-20 08:17:58','2012-06-20 08:47:36',0,'0',NULL);
+INSERT INTO `goods_belinked_t` VALUES ('20120620005','2012051600357','[{\"goodsid\":\"2012051600355\",\"goodsName\":\"智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  \",\"htmlpath\":\"html/default/shop/2012051600355.html\",\"memberprice\":\"1460.0\",\"price\":\"1500.0\",\"pictureurl\":\"/Uploads/20120516/2012051611453844954.jpg\"},{\"goodsid\":\"2012051600359\",\"goodsname\":\"希捷（Seagate）GoFlex Desk 睿品 STAC4000300 3.5英寸 4TB外置硬盘（USB3.0）黑色 \",\"htmlpath\":\"html/default/shop/2012051600359.html\",\"memberprice\":\"1899.0\",\"price\":\"1899.0\",\"pictureurl\":\"/Uploads/20120516/2012051621383672922.jpg\"}]','1','1','20100721001','2012-06-20 08:17:58','2012-06-20 08:47:36',0,'0',NULL);
 /*!40000 ALTER TABLE `goods_belinked_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2390,6 +2390,62 @@ INSERT INTO `member_group_t` VALUES ('20130911001','3333','1','2013-09-11 21:41:
 UNLOCK TABLES;
 
 --
+-- Table structure for table `member_recharge_records_t`
+--
+
+DROP TABLE IF EXISTS `member_recharge_records_t`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member_recharge_records_t` (
+  `ID` varchar(20) NOT NULL,
+  `MEMBERID` varchar(20) NOT NULL,
+  `MEMBERNAME` varchar(100) NOT NULL,
+  `MONEY` double(10,2) NOT NULL,
+  `CREATETIME` datetime NOT NULL,
+  `TYPE` varchar(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员充值记录表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `member_recharge_records_t`
+--
+
+LOCK TABLES `member_recharge_records_t` WRITE;
+/*!40000 ALTER TABLE `member_recharge_records_t` DISABLE KEYS */;
+/*!40000 ALTER TABLE `member_recharge_records_t` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `member_recharge_t`
+--
+
+DROP TABLE IF EXISTS `member_recharge_t`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member_recharge_t` (
+  `ID` varchar(20) NOT NULL,
+  `MEMBERID` varchar(20) NOT NULL,
+  `MEMBERNAME` varchar(100) NOT NULL,
+  `BALANCE` double(10,2) NOT NULL,
+  `CREATETIME` datetime NOT NULL,
+  `UPDATETIME` datetime NOT NULL,
+  `VERSIONT` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员充值表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `member_recharge_t`
+--
+
+LOCK TABLES `member_recharge_t` WRITE;
+/*!40000 ALTER TABLE `member_recharge_t` DISABLE KEYS */;
+INSERT INTO `member_recharge_t` VALUES ('20131112004','201310220011','reds0018',10099.99,'2013-11-12 22:29:29','2013-11-12 22:34:42',1);
+/*!40000 ALTER TABLE `member_recharge_t` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `member_t`
 --
 
@@ -3056,7 +3112,7 @@ CREATE TABLE `serial_t` (
 
 LOCK TABLES `serial_t` WRITE;
 /*!40000 ALTER TABLE `serial_t` DISABLE KEYS */;
-INSERT INTO `serial_t` VALUES ('adcontent','00','1',1,'2010-06-25 12:48:21'),('adposition','00','1',1,'2010-06-25 12:48:21'),('article','00','97',1,'2010-06-25 12:48:21'),('articlecategory','00','17',1,'2010-06-25 12:48:21'),('brand','00','218',1,'2010-06-25 12:48:21'),('cart','00','172',1,'2010-06-25 12:48:21'),('cartinfo','00','157',1,'2010-06-25 12:48:21'),('consult','00','1',1,'2010-06-25 12:48:21'),('deliver','00','1',1,'2010-06-25 12:48:21'),('deliveraddress','00','34',1,'2010-06-25 12:48:21'),('ecoupon','00','1',1,'2010-06-25 12:48:21'),('ecoupont','00','8',1,'2010-06-25 12:48:21'),('electable','00','8',1,'2010-06-25 12:48:21'),('electronicmenucartt','00','1',1,'2010-06-25 12:48:21'),('electronicmenucarttinfo','00','12',1,'2010-06-25 12:48:21'),('electronicmenuorder','00','23',1,'2010-06-25 12:48:21'),('expresstemplete','00','23',1,'2010-06-25 12:48:21'),('favoriteinfo','00','16',1,'2010-06-25 12:48:21'),('friendlink','00','2',1,'2010-06-25 12:48:21'),('function','00','15',1,'2010-06-25 12:48:21'),('goodsattribute','00','500545',1,'2010-06-25 12:48:21'),('goodsattributerp','00','37',1,'2010-06-25 12:48:21'),('goodsbargain','00','1',1,'2010-06-25 12:48:21'),('goodsbelinked','00','6',1,'2010-06-25 12:48:21'),('goodscategory','00','345',1,'2010-06-25 12:48:21'),('goodscomment','00','53',1,'2010-06-25 12:48:21'),('goodsdetailrp','00','16',1,'2010-06-25 12:48:21'),('goodsgif','00','8',1,'2010-06-25 12:48:21'),('goodsgroupt','00','38',1,'2010-06-25 12:48:21'),('goodsinfo','00','412',1,'2010-06-25 12:48:21'),('goodslimit','00','2',1,'2010-06-25 12:48:21'),('goodspoint','00','1',1,'2010-06-25 12:48:21'),('goodsproperty','00','1',1,'2010-06-25 12:48:21'),('goodspropertyvalue','00','1',1,'2010-06-25 12:48:21'),('goodsqrcode','00','6',1,'2010-06-25 12:48:21'),('goodsquestion','00','1',1,'2010-06-25 12:48:21'),('goodsredemption','00','1',1,'2010-06-25 12:48:21'),('goodssort','00','1',1,'2010-06-25 12:48:21'),('goodsspecifications','00','1',1,'2010-06-25 12:48:21'),('goodsspecificationsproductrpt','00','37',1,'2010-06-25 12:48:21'),('goodstype','00','133',1,'2010-06-25 12:48:21'),('goodstypebrand','00','152',1,'2010-06-25 12:48:21'),('groupbuy','00','1',1,'2010-06-25 12:48:21'),('groupcart','00','2',1,'2010-06-25 12:48:21'),('groupcartinfo','00','34',1,'2010-06-25 12:48:21'),('grouporder','00','60',1,'2010-06-25 12:48:21'),('helpcontent','00','9',1,'2010-06-25 12:48:21'),('img','00','2',1,'2010-06-25 12:48:21'),('imgtype','00','1',1,'2010-06-25 12:48:21'),('invoiceprint','00','1',1,'2010-06-25 12:48:21'),('invoicetemplete','00','8',1,'2010-06-25 12:48:21'),('jshopbasicinfo','00','11',1,'2010-06-25 12:48:21'),('jshophelp','00','8',1,'2010-06-25 12:48:21'),('keyword','00','5',1,'2010-06-25 12:48:21'),('location','00','1',1,'2010-06-25 12:48:21'),('logbusarea','00','20',1,'2010-06-25 12:48:21'),('logistics','00','25',1,'2010-06-25 12:48:21'),('member','00','12',1,'2010-06-25 12:48:21'),('membergrade','00','9',1,'2010-06-25 12:48:21'),('membergroup','00','6',1,'2010-06-25 12:48:21'),('module','00','6',1,'2010-06-25 12:48:21'),('msgtext','00','20',1,'2010-06-25 12:48:21'),('notice','00','3',1,'2010-06-25 12:48:21'),('order','00','88',1,'2010-06-25 12:48:21'),('orderaction','00','1',1,'2010-06-25 12:48:21'),('orderinvoice','00','5',1,'2010-06-25 12:48:21'),('organization','00','1',1,'2010-06-25 12:48:21'),('origin','00','40',1,'2010-06-25 12:48:21'),('outsidegoods','00','11',1,'2010-06-25 12:48:21'),('outsidegoodsqrcode','00','2',1,'2010-06-25 12:48:21'),('pageeditarea','00','37',1,'2010-06-25 12:48:21'),('pageinfo','00','4',1,'2010-06-25 12:48:21'),('payment','00','14',1,'2010-06-25 12:48:21'),('product','00','86',1,'2010-06-25 12:48:21'),('productspecifications','00','33',1,'2010-06-25 12:48:21'),('questionnaire','00','3',1,'2010-06-25 12:48:21'),('returngoods','00','1',1,'2010-06-25 12:48:21'),('role','00','13',1,'2010-06-25 12:48:21'),('rolefunction','00','27',1,'2010-06-25 12:48:21'),('SALEGOODSRECORDT','00','150',1,'2010-06-25 12:48:21'),('salegoodst','00','118',1,'2010-06-25 12:48:21'),('shippingaddress','00','107',1,'2010-06-25 12:48:21'),('sitenavigation','00','18',1,'2010-06-25 12:48:21'),('starcomment','00','1',1,'2010-06-25 12:48:21'),('systemmail','00','17',1,'2010-06-25 12:48:21'),('template','00','55',1,'2010-06-25 12:48:21'),('templateset','00','36',1,'2010-06-25 12:48:21'),('templatetheme','00','13',1,'2010-06-25 12:48:21'),('unit','00','5',1,'2010-06-25 12:48:21'),('user','00','37',1,'2010-06-25 12:48:21'),('userrole','00','5',1,'2010-06-25 12:48:21'),('virtualshippingaddress','00','44',1,'2010-06-25 12:48:21'),('vouchers','00','2',1,'2010-06-25 12:48:21'),('websitemsg','00','20',1,'2010-06-25 12:48:21');
+INSERT INTO `serial_t` VALUES ('adcontent','00','1',1,'2010-06-25 12:48:21'),('adposition','00','1',1,'2010-06-25 12:48:21'),('article','00','97',1,'2010-06-25 12:48:21'),('articlecategory','00','17',1,'2010-06-25 12:48:21'),('brand','00','218',1,'2010-06-25 12:48:21'),('cart','00','172',1,'2010-06-25 12:48:21'),('cartinfo','00','157',1,'2010-06-25 12:48:21'),('consult','00','1',1,'2010-06-25 12:48:21'),('deliver','00','1',1,'2010-06-25 12:48:21'),('deliveraddress','00','34',1,'2010-06-25 12:48:21'),('ecoupon','00','1',1,'2010-06-25 12:48:21'),('ecoupont','00','8',1,'2010-06-25 12:48:21'),('electable','00','8',1,'2010-06-25 12:48:21'),('electronicmenucartt','00','1',1,'2010-06-25 12:48:21'),('electronicmenucarttinfo','00','12',1,'2010-06-25 12:48:21'),('electronicmenuorder','00','23',1,'2010-06-25 12:48:21'),('expresstemplete','00','23',1,'2010-06-25 12:48:21'),('favoriteinfo','00','16',1,'2010-06-25 12:48:21'),('friendlink','00','2',1,'2010-06-25 12:48:21'),('function','00','15',1,'2010-06-25 12:48:21'),('goodsattribute','00','500545',1,'2010-06-25 12:48:21'),('goodsattributerp','00','37',1,'2010-06-25 12:48:21'),('goodsbargain','00','1',1,'2010-06-25 12:48:21'),('goodsbelinked','00','8',1,'2010-06-25 12:48:21'),('goodscategory','00','345',1,'2010-06-25 12:48:21'),('goodscomment','00','53',1,'2010-06-25 12:48:21'),('goodsdetailrp','00','16',1,'2010-06-25 12:48:21'),('goodsgif','00','8',1,'2010-06-25 12:48:21'),('goodsgroupt','00','38',1,'2010-06-25 12:48:21'),('goodsinfo','00','412',1,'2010-06-25 12:48:21'),('goodslimit','00','2',1,'2010-06-25 12:48:21'),('goodspoint','00','1',1,'2010-06-25 12:48:21'),('goodsproperty','00','1',1,'2010-06-25 12:48:21'),('goodspropertyvalue','00','1',1,'2010-06-25 12:48:21'),('goodsqrcode','00','6',1,'2010-06-25 12:48:21'),('goodsquestion','00','1',1,'2010-06-25 12:48:21'),('goodsredemption','00','1',1,'2010-06-25 12:48:21'),('goodssort','00','1',1,'2010-06-25 12:48:21'),('goodsspecifications','00','1',1,'2010-06-25 12:48:21'),('goodsspecificationsproductrpt','00','37',1,'2010-06-25 12:48:21'),('goodstype','00','133',1,'2010-06-25 12:48:21'),('goodstypebrand','00','152',1,'2010-06-25 12:48:21'),('groupbuy','00','1',1,'2010-06-25 12:48:21'),('groupcart','00','2',1,'2010-06-25 12:48:21'),('groupcartinfo','00','34',1,'2010-06-25 12:48:21'),('grouporder','00','60',1,'2010-06-25 12:48:21'),('helpcontent','00','9',1,'2010-06-25 12:48:21'),('img','00','2',1,'2010-06-25 12:48:21'),('imgtype','00','1',1,'2010-06-25 12:48:21'),('invoiceprint','00','1',1,'2010-06-25 12:48:21'),('invoicetemplete','00','8',1,'2010-06-25 12:48:21'),('jshopbasicinfo','00','11',1,'2010-06-25 12:48:21'),('jshophelp','00','8',1,'2010-06-25 12:48:21'),('keyword','00','5',1,'2010-06-25 12:48:21'),('location','00','1',1,'2010-06-25 12:48:21'),('logbusarea','00','20',1,'2010-06-25 12:48:21'),('logistics','00','25',1,'2010-06-25 12:48:21'),('member','00','12',1,'2010-06-25 12:48:21'),('membergrade','00','9',1,'2010-06-25 12:48:21'),('membergroup','00','6',1,'2010-06-25 12:48:21'),('memberrecharget','00','5',1,'2010-06-25 12:48:21'),('memberrechargetrecords','00','1',1,'2010-06-25 12:48:21'),('module','00','6',1,'2010-06-25 12:48:21'),('msgtext','00','20',1,'2010-06-25 12:48:21'),('notice','00','3',1,'2010-06-25 12:48:21'),('order','00','88',1,'2010-06-25 12:48:21'),('orderaction','00','1',1,'2010-06-25 12:48:21'),('orderinvoice','00','5',1,'2010-06-25 12:48:21'),('organization','00','1',1,'2010-06-25 12:48:21'),('origin','00','40',1,'2010-06-25 12:48:21'),('outsidegoods','00','11',1,'2010-06-25 12:48:21'),('outsidegoodsqrcode','00','2',1,'2010-06-25 12:48:21'),('pageeditarea','00','37',1,'2010-06-25 12:48:21'),('pageinfo','00','4',1,'2010-06-25 12:48:21'),('payment','00','14',1,'2010-06-25 12:48:21'),('product','00','86',1,'2010-06-25 12:48:21'),('productspecifications','00','33',1,'2010-06-25 12:48:21'),('questionnaire','00','3',1,'2010-06-25 12:48:21'),('returngoods','00','1',1,'2010-06-25 12:48:21'),('role','00','13',1,'2010-06-25 12:48:21'),('rolefunction','00','27',1,'2010-06-25 12:48:21'),('salegoodsrecordt','00','150',1,'2010-06-25 12:48:21'),('salegoodst','00','118',1,'2010-06-25 12:48:21'),('shippingaddress','00','107',1,'2010-06-25 12:48:21'),('sitenavigation','00','18',1,'2010-06-25 12:48:21'),('starcomment','00','1',1,'2010-06-25 12:48:21'),('systemmail','00','17',1,'2010-06-25 12:48:21'),('template','00','55',1,'2010-06-25 12:48:21'),('templateset','00','36',1,'2010-06-25 12:48:21'),('templatetheme','00','13',1,'2010-06-25 12:48:21'),('unit','00','5',1,'2010-06-25 12:48:21'),('user','00','37',1,'2010-06-25 12:48:21'),('userrole','00','5',1,'2010-06-25 12:48:21'),('virtualshippingaddress','00','44',1,'2010-06-25 12:48:21'),('vouchers','00','2',1,'2010-06-25 12:48:21'),('websitemsg','00','20',1,'2010-06-25 12:48:21');
 /*!40000 ALTER TABLE `serial_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3366,7 +3422,7 @@ CREATE TABLE `user_t` (
 
 LOCK TABLES `user_t` WRITE;
 /*!40000 ALTER TABLE `user_t` DISABLE KEYS */;
-INSERT INTO `user_t` VALUES ('20100721001','sasasa','111111','5424@aa.com','3344555','111111','111111','生日？','53B76CC34444F5B08F9A0A333437E32D','1','20100721005','201007210035','201007210027','20100721001','201007210030',NULL,'111111','1111111','3',NULL,NULL,'','/Uploads/20131103/20131103110004108780.jpg','111111','2010-06-25 12:48:21','2013-11-03 11:00:08','',NULL),('201311030034','gm001','商品录入员001','11',NULL,'111111','11','11','7FA8282AD93047A4D6FE6111C93B308A','1','','','','','','','111111',NULL,'2','2EDEE668AA5A096C6343E273D0E09245','商品业务员','201310310010','',NULL,'2013-11-03 11:11:27','2013-11-03 11:11:27','20100721001',0),('201311030035','gm002','111111','',NULL,'111111','','','7FA8282AD93047A4D6FE6111C93B308A','1','','','','','','','111111',NULL,'2','84FE7DB543CFDB1F5718A0EE1448DAF3','','0','',NULL,'2013-11-03 11:11:49','2013-11-03 11:11:49','20100721001',0),('201311030036','gm003','订单审核员','111',NULL,'111111','','','7FA8282AD93047A4D6FE6111C93B308A','1','','','','','','','111111',NULL,'2','F3B75E7361BE1084935D2CC9C1E63377','','0','',NULL,'2013-11-03 11:14:11','2013-11-03 11:14:11','20100721001',0);
+INSERT INTO `user_t` VALUES ('20100721001','sasasa','超级管理员','5424@aa.com','3344555','111111','111111','生日？','53B76CC34444F5B08F9A0A333437E32D','1','20100721005','201007210035','201007210027','20100721001','201007210030',NULL,'111111','1111111','3',NULL,NULL,'','/jshoper3x/Uploads/20131103/20131103110004108780.jpg','111111','2010-06-25 12:48:21','2013-11-10 23:55:06','',NULL),('201311030034','gm001','商品录入员001','11',NULL,'111111','11','11','7FA8282AD93047A4D6FE6111C93B308A','1','','','','','','','111111',NULL,'2','2EDEE668AA5A096C6343E273D0E09245','商品业务员','201310310010','',NULL,'2013-11-03 11:11:27','2013-11-03 11:11:27','20100721001',0),('201311030035','gm002','111111','',NULL,'111111','','','7FA8282AD93047A4D6FE6111C93B308A','1','','','','','','','111111',NULL,'2','84FE7DB543CFDB1F5718A0EE1448DAF3','','0','',NULL,'2013-11-03 11:11:49','2013-11-03 11:11:49','20100721001',0),('201311030036','gm003','订单审核员','111',NULL,'111111','','','7FA8282AD93047A4D6FE6111C93B308A','1','','','','','','','111111',NULL,'2','F3B75E7361BE1084935D2CC9C1E63377','','0','',NULL,'2013-11-03 11:14:11','2013-11-03 11:14:11','20100721001',0);
 /*!40000 ALTER TABLE `user_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3475,4 +3531,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-06 21:34:52
+-- Dump completed on 2013-11-18 21:47:13

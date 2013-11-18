@@ -64,5 +64,11 @@ public interface GoodsBelinkedTDao {
 	 */
 	public int delGoodsBelinkedBymaingoodsidandsxlinkedgoodsid(
 			String maingoodsid, String sxlinkedgoodsid);
+	/**
+	 * 根据主键删除关联商品记录
+	 * @param strs
+	 */
+	public void delGoodsBelinked(String []strs);
+	
 
 }

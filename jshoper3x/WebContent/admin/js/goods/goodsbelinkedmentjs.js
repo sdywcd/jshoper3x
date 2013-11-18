@@ -361,6 +361,10 @@ $(function(){
 				bclass : 'add',
 				onpress : action
 			}, {
+				name : '删除',
+				bclass : 'del',
+				onpress : action
+			}, {
 				separator : true
 			} ],
 
@@ -388,6 +392,21 @@ $(function(){
 			if (com == '增加关联商品') {
 				window.location.href="goodsbelinkedsale.jsp?operate=add&folder=goods";
 				return;
+			}else if(com=='删除'){
+				if($('.trSelected',grid).length>0){
+					var str="";
+					$('.trSelected',grid).each(function(){
+						str+=this.id.substr(3)+",";
+					});
+					$.post("delGoodsBelinked.action",{"id":str},function(data){
+						$('#goodsbelinkedment').flexReload();
+						forminfo("#alertinfo","删除成功");
+					});
+					return;
+				}else{
+					formwarning("#alerterror", "请选择要删除的信息");
+					return false;
+				}
 			}
 
 		}

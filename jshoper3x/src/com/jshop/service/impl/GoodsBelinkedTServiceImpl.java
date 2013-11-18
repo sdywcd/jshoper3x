@@ -61,4 +61,10 @@ public class GoodsBelinkedTServiceImpl implements GoodsBelinkedTService {
 		return this.getGoodsBelinkedTDao().countfindAllGoodsBelinked();
 	}
 
+	@Override
+	public void delGoodsBelinked(String[] strs) {
+		this.getGoodsBelinkedTDao().delGoodsBelinked(strs);
+		
+	}
+
 }

@@ -375,9 +375,20 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 		}
 		
 	}
-	
-	
-	
+	/**
+	 * 删除关联商品
+	 * @return
+	 */
+	@Action(value = "delGoodsBelinked", results = {@Result(name = "json",type="json")})
+	public String delGoodsBelinked(){
+		if(StringUtils.isBlank(this.getId())){
+			return "json";
+		}
+		String []strs=StringUtils.split(this.getId(),",");
+		this.getGoodsBelinkedTService().delGoodsBelinked(strs);
+		this.setSucflag(true);
+		return "json";
+	}
 	
 	
 	
