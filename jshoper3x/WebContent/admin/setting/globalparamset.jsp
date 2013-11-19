@@ -479,6 +479,14 @@
 							关闭 </label>
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">外链商品支持:</span> <input
+							type="radio" id="outlinkgoodssupport"
+							name="outlinkgoodssupport" value="1" /> <label for="radio-1">开启
+						</label> <input type="radio" id="outlinkgoodssupport"
+							name="outlinkgoodssupport" value="0" /> <label for="radio-2">
+							关闭 </label>
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">规格商品支持:</span> <input
 							type="radio" id="isspecificationsupport"
 							name="isspecificationsupport" value="1" /> <label for="radio-1">开启

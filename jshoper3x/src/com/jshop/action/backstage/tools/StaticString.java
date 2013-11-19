@@ -31,6 +31,10 @@ public class  StaticString {
 	 *权限异常标记
 	 */
 	public static String AUTHORITYEXCEPTION="authorityexception";
+	/**
+	 * 系统配置标记
+	 */
+	public static String GLOBALPARAMS="globalparams";
 	
 	/**
 	 * 后台首页前5条订单记录

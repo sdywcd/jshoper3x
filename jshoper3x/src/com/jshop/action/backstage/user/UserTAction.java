@@ -33,6 +33,7 @@ import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
+import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
@@ -47,6 +48,7 @@ public class UserTAction extends ActionSupport {
 	private InitTAction initTAction;
 	private UserRoleMService userRoleMService;
 	private UserRoleMAction userRoleMAction;
+	private GlobalParamService globalParamService;
 	private UserT bean = new UserT();
 	private String param;
 	private List<UserT> user = new ArrayList<UserT>();
@@ -93,6 +95,15 @@ public class UserTAction extends ActionSupport {
 	private boolean sucflag;
 	private boolean sauthority;
 	private String baseurl;
+	@JSON(serialize = false)
+	public GlobalParamService getGlobalParamService() {
+		return globalParamService;
+	}
+
+	public void setGlobalParamService(GlobalParamService globalParamService) {
+		this.globalParamService = globalParamService;
+	}
+
 	@JSON(serialize = false)
 	public UserRoleMAction getUserRoleMAction() {
 		return userRoleMAction;
