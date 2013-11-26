@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-10 22:13:34 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,6 +30,11 @@ public class AdvertiseT implements java.io.Serializable {
 	private Date createtime;
 	private String creatorid;
 	private String state;
+	private String templateName;
+	private int sort;
+	private int height;
+	private int width;
+	private int versiont;
 
 	public AdvertiseT() {
 	}
@@ -37,7 +42,8 @@ public class AdvertiseT implements java.io.Serializable {
 	public AdvertiseT(String id, String type, String advPath,
 			String showPosition, int showAmount, double showCount,
 			String showWhere, String alt, Date begintime, Date endtime,
-			Date createtime, String state) {
+			Date createtime, String state, int sort, int height, int width,
+			int versiont) {
 		this.id = id;
 		this.type = type;
 		this.advPath = advPath;
@@ -50,12 +56,17 @@ public class AdvertiseT implements java.io.Serializable {
 		this.endtime = endtime;
 		this.createtime = createtime;
 		this.state = state;
+		this.sort = sort;
+		this.height = height;
+		this.width = width;
+		this.versiont = versiont;
 	}
 
 	public AdvertiseT(String id, String type, String advPath,
 			String showPosition, int showAmount, double showCount,
 			String showWhere, String alt, Date begintime, Date endtime,
-			Date createtime, String creatorid, String state) {
+			Date createtime, String creatorid, String state,
+			String templateName, int sort, int height, int width, int versiont) {
 		this.id = id;
 		this.type = type;
 		this.advPath = advPath;
@@ -69,6 +80,11 @@ public class AdvertiseT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.creatorid = creatorid;
 		this.state = state;
+		this.templateName = templateName;
+		this.sort = sort;
+		this.height = height;
+		this.width = width;
+		this.versiont = versiont;
 	}
 
 	@Id
@@ -190,6 +206,51 @@ public class AdvertiseT implements java.io.Serializable {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	@Column(name = "TEMPLATE_NAME", length = 45)
+	public String getTemplateName() {
+		return this.templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
+	}
+
+	@Column(name = "SORT", nullable = false)
+	public int getSort() {
+		return this.sort;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
+	}
+
+	@Column(name = "HEIGHT", nullable = false)
+	public int getHeight() {
+		return this.height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	@Column(name = "WIDTH", nullable = false)
+	public int getWidth() {
+		return this.width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	@Column(name = "VERSIONT", nullable = false)
+	public int getVersiont() {
+		return this.versiont;
+	}
+
+	public void setVersiont(int versiont) {
+		this.versiont = versiont;
 	}
 
 }

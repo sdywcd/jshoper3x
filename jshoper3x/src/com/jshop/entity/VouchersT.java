@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-10 22:13:34 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -29,6 +29,7 @@ public class VouchersT implements java.io.Serializable {
 	private String state;
 	private Date createtime;
 	private String creatorid;
+	private String mobilesync;
 
 	public VouchersT() {
 	}
@@ -53,7 +54,7 @@ public class VouchersT implements java.io.Serializable {
 	public VouchersT(String vouchersid, String vouchersname, String begintime,
 			String endtime, String voucherscontent, double limitprice,
 			String givenuserid, String voucherstate, String voucheruseway,
-			String state, Date createtime, String creatorid) {
+			String state, Date createtime, String creatorid, String mobilesync) {
 		this.vouchersid = vouchersid;
 		this.vouchersname = vouchersname;
 		this.begintime = begintime;
@@ -66,6 +67,7 @@ public class VouchersT implements java.io.Serializable {
 		this.state = state;
 		this.createtime = createtime;
 		this.creatorid = creatorid;
+		this.mobilesync = mobilesync;
 	}
 
 	@Id
@@ -176,6 +178,15 @@ public class VouchersT implements java.io.Serializable {
 
 	public void setCreatorid(String creatorid) {
 		this.creatorid = creatorid;
+	}
+
+	@Column(name = "MOBILESYNC", length = 1)
+	public String getMobilesync() {
+		return this.mobilesync;
+	}
+
+	public void setMobilesync(String mobilesync) {
+		this.mobilesync = mobilesync;
 	}
 
 }

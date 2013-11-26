@@ -174,7 +174,7 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 			f.setGoodsid(this.getGoodsid().trim());
 			f.setTag(null);
 			f.setDescript(null);  
-			f.setUserid(memberT.getId());
+			f.setMemberid(memberT.getId());
 			f.setState("0");
 			f.setAddtime(BaseTools.systemtime());
 			f.setReadcount(Integer.parseInt(this.getReadcount().trim()));

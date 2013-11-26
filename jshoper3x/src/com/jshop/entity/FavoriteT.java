@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-10 22:13:34 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,37 +22,40 @@ public class FavoriteT implements java.io.Serializable {
 	private String goodsid;
 	private String tag;
 	private String descript;
-	private String userid;
+	private String memberid;
 	private String state;
 	private Date addtime;
 	private Integer readcount;
 	private String memberprice;
+	private String productid;
 
 	public FavoriteT() {
 	}
 
-	public FavoriteT(String favoriteid, String title, String userid,
+	public FavoriteT(String favoriteid, String title, String memberid,
 			String state, Date addtime) {
 		this.favoriteid = favoriteid;
 		this.title = title;
-		this.userid = userid;
+		this.memberid = memberid;
 		this.state = state;
 		this.addtime = addtime;
 	}
 
 	public FavoriteT(String favoriteid, String title, String goodsid,
-			String tag, String descript, String userid, String state,
-			Date addtime, Integer readcount, String memberprice) {
+			String tag, String descript, String memberid, String state,
+			Date addtime, Integer readcount, String memberprice,
+			String productid) {
 		this.favoriteid = favoriteid;
 		this.title = title;
 		this.goodsid = goodsid;
 		this.tag = tag;
 		this.descript = descript;
-		this.userid = userid;
+		this.memberid = memberid;
 		this.state = state;
 		this.addtime = addtime;
 		this.readcount = readcount;
 		this.memberprice = memberprice;
+		this.productid = productid;
 	}
 
 	@Id
@@ -65,7 +68,7 @@ public class FavoriteT implements java.io.Serializable {
 		this.favoriteid = favoriteid;
 	}
 
-	@Column(name = "TITLE", nullable = false, length = 50)
+	@Column(name = "TITLE", nullable = false, length = 100)
 	public String getTitle() {
 		return this.title;
 	}
@@ -101,13 +104,13 @@ public class FavoriteT implements java.io.Serializable {
 		this.descript = descript;
 	}
 
-	@Column(name = "USERID", nullable = false, length = 20)
-	public String getUserid() {
-		return this.userid;
+	@Column(name = "MEMBERID", nullable = false, length = 20)
+	public String getMemberid() {
+		return this.memberid;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
 
 	@Column(name = "STATE", nullable = false, length = 1)
@@ -145,6 +148,15 @@ public class FavoriteT implements java.io.Serializable {
 
 	public void setMemberprice(String memberprice) {
 		this.memberprice = memberprice;
+	}
+
+	@Column(name = "PRODUCTID", length = 20)
+	public String getProductid() {
+		return this.productid;
+	}
+
+	public void setProductid(String productid) {
+		this.productid = productid;
 	}
 
 }
