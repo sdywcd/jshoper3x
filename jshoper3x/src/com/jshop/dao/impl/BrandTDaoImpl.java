@@ -47,7 +47,7 @@ public class BrandTDaoImpl extends HibernateDaoSupport implements BrandTDao {
 	public void delBrandt(final String[] strs, final String creatorid) {
 		log.debug("del brandt");
 		try {
-			final String queryString = "delete from BrandT as bt where bt.brandid=:brandid and bt.creatorid=:creatorid";
+			final String queryString = "from BrandT as bt where bt.brandid=:brandid and bt.creatorid=:creatorid";
 			for(String s:strs){
 				List<BrandT>list=this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"brandid","creatorid"}, new Object[]{s,creatorid});
 				this.getHibernateTemplate().delete(list.get(0));
