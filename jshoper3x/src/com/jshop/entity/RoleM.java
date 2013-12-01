@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-1 22:37:45 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-1 23:33:32 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -57,7 +57,7 @@ public class RoleM implements java.io.Serializable {
 		this.rolename = rolename;
 	}
 
-	@Column(name = "NOTE", length = 500)
+	@Column(name = "NOTE", length = 100)
 	public String getNote() {
 		return this.note;
 	}
