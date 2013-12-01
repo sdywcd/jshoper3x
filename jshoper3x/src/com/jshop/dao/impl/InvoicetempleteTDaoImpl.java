@@ -120,7 +120,7 @@ public class InvoicetempleteTDaoImpl extends HibernateDaoSupport implements Invo
 		log.debug("update InvoicetempleteT");
 		try {
 
-			final String queryString = "update InvoicetempleteT as it set it.logisticsid=:logisticsid,it.state=:state,it.kindeditorCode=:kindeditorCode where it.invoicetempleteid=:invoicetempleteid ";
+			final String queryString = "update InvoicetempleteT as it set it.logisticsid=:logisticsid,it.state=:state,it.code=:code where it.invoicetempleteid=:invoicetempleteid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
@@ -129,7 +129,7 @@ public class InvoicetempleteTDaoImpl extends HibernateDaoSupport implements Invo
 					query.setParameter("invoicetempleteid", it.getInvoicetempleteid());
 					query.setParameter("logisticsid", it.getLogisticsid());
 					query.setParameter("state", it.getState());
-					query.setParameter("kindeditorCode", it.getKindeditorCode());
+					query.setParameter("code", it.getCode());
 					i = query.executeUpdate();
 					++i;
 					return i;

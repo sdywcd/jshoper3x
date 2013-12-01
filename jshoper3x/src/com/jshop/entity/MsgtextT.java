@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-1 22:37:45 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -40,7 +40,7 @@ public class MsgtextT implements java.io.Serializable {
 		this.msgtextid = msgtextid;
 	}
 
-	@Column(name = "TEXT", nullable = false, length = 65535)
+	@Column(name = "TEXT", nullable = false, length = 2000)
 	public String getText() {
 		return this.text;
 	}

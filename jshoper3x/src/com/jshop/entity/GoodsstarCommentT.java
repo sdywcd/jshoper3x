@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-1 22:37:45 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -20,18 +20,18 @@ public class GoodsstarCommentT implements java.io.Serializable {
 	private String starcommentid;
 	private String goodsid;
 	private int starnum;
-	private String userid;
+	private String memberid;
 	private Date createtime;
 
 	public GoodsstarCommentT() {
 	}
 
 	public GoodsstarCommentT(String starcommentid, String goodsid, int starnum,
-			String userid, Date createtime) {
+			String memberid, Date createtime) {
 		this.starcommentid = starcommentid;
 		this.goodsid = goodsid;
 		this.starnum = starnum;
-		this.userid = userid;
+		this.memberid = memberid;
 		this.createtime = createtime;
 	}
 
@@ -63,13 +63,13 @@ public class GoodsstarCommentT implements java.io.Serializable {
 		this.starnum = starnum;
 	}
 
-	@Column(name = "USERID", nullable = false, length = 20)
-	public String getUserid() {
-		return this.userid;
+	@Column(name = "MEMBERID", nullable = false, length = 20)
+	public String getMemberid() {
+		return this.memberid;
 	}
 
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

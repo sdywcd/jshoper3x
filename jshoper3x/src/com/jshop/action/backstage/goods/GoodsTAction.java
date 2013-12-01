@@ -38,7 +38,7 @@ import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
-import com.jshop.entity.GoodsTwocodeRelationshipT;
+import com.jshop.entity.GoodsTwocodeRpT;
 import com.jshop.entity.GoodsTypeTN;
 import com.jshop.entity.ProductT;
 import com.jshop.service.ArticleCategoryTService;
@@ -1764,8 +1764,8 @@ public class GoodsTAction extends ActionSupport {
 					File imgFile= new File(codePath);
 					// 生成二维码QRCode图片
 					ImageIO.write(bufImg, "png", imgFile);
-					GoodsTwocodeRelationshipT list = this.getGoodsTwocodeRelationshipTService().findGoodsQRCodeByGoodsid(goods.getGoodsid());
-					GoodsTwocodeRelationshipT goodscode = new GoodsTwocodeRelationshipT();
+					GoodsTwocodeRpT list = this.getGoodsTwocodeRelationshipTService().findGoodsQRCodeByGoodsid(goods.getGoodsid());
+					GoodsTwocodeRpT goodscode = new GoodsTwocodeRpT();
 					//当数据里面存在此记录的时候，只修改二维码路径
 					if(list!=null){						
 						this.getGoodsTwocodeRelationshipTService().updateGoodsQRCode(goods.getGoodsid(), code);
@@ -1774,7 +1774,7 @@ public class GoodsTAction extends ActionSupport {
 					}else{
 						//生成商品与二维码关系的记录
 						
-						goodscode.setGoodsname(goods.getGoodsname());
+						goodscode.setProductname(goods.getGoodsname());
 						goodscode.setGoodsid(goods.getGoodsid());
 						goodscode.setId(this.getSerial().Serialid(Serial.GOODSQRCODE));
 						goodscode.setState("1");

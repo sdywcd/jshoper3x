@@ -172,7 +172,7 @@ public class InvoicetempleteTAction extends ActionSupport {
 			it.setInvoicetempleteid(this.getSerial().Serialid(Serial.INVOICETEMPLATE));
 			it.setLogisticsid(null);//暂无
 			it.setState("1");//启用
-			it.setKindeditorCode(this.getInvoiceCode());
+			it.setCode(this.getInvoiceCode());
 			if (this.getInvoicetempleteTService().addInvoiceTemplete(it) > 0) {
 				return SUCCESS;
 			} else {
@@ -233,7 +233,7 @@ public class InvoicetempleteTAction extends ActionSupport {
 			it.setInvoicetempleteid(this.getInvoicetempleteid().trim());
 			it.setState(this.getState());
 			it.setLogisticsid(null);
-			it.setKindeditorCode(this.getInvoiceCode());
+			it.setCode(this.getInvoiceCode());
 			int i = this.getInvoicetempleteTService().updateInvoicetempleteT(it);
 			return SUCCESS;
 	

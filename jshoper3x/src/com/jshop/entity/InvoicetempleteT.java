@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-1 22:37:45 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,24 +17,23 @@ public class InvoicetempleteT implements java.io.Serializable {
 	private String invoicetempleteid;
 	private String logisticsid;
 	private String state;
-	private String kindeditorCode;
+	private String code;
 
 	public InvoicetempleteT() {
 	}
 
-	public InvoicetempleteT(String invoicetempleteid, String state,
-			String kindeditorCode) {
+	public InvoicetempleteT(String invoicetempleteid, String state, String code) {
 		this.invoicetempleteid = invoicetempleteid;
 		this.state = state;
-		this.kindeditorCode = kindeditorCode;
+		this.code = code;
 	}
 
 	public InvoicetempleteT(String invoicetempleteid, String logisticsid,
-			String state, String kindeditorCode) {
+			String state, String code) {
 		this.invoicetempleteid = invoicetempleteid;
 		this.logisticsid = logisticsid;
 		this.state = state;
-		this.kindeditorCode = kindeditorCode;
+		this.code = code;
 	}
 
 	@Id
@@ -65,13 +64,13 @@ public class InvoicetempleteT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "KINDEDITOR_CODE", nullable = false, length = 65535)
-	public String getKindeditorCode() {
-		return this.kindeditorCode;
+	@Column(name = "CODE", nullable = false, length = 65535)
+	public String getCode() {
+		return this.code;
 	}
 
-	public void setKindeditorCode(String kindeditorCode) {
-		this.kindeditorCode = kindeditorCode;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

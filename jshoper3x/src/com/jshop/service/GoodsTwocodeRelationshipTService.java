@@ -1,6 +1,6 @@
 package com.jshop.service;
 
-import com.jshop.entity.GoodsTwocodeRelationshipT;
+import com.jshop.entity.GoodsTwocodeRpT;
 
 public interface GoodsTwocodeRelationshipTService {
 	/**
@@ -8,13 +8,13 @@ public interface GoodsTwocodeRelationshipTService {
 	 * @param qrcode
 	 * @return
 	 */
-	public int addGoodsQRCode(GoodsTwocodeRelationshipT qrcode);
+	public int addGoodsQRCode(GoodsTwocodeRpT qrcode);
 	/**
 	 * 根据goodsid查询信息
 	 * @param goodsid
 	 * @return
 	 */
-	public GoodsTwocodeRelationshipT findGoodsQRCodeByGoodsid(String goodsid);
+	public GoodsTwocodeRpT findGoodsQRCodeByGoodsid(String goodsid);
 	/**
 	 * 根据goodsid修改二维码路径
 	 * @param goodsqrcode

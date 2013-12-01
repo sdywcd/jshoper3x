@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-1 22:37:45 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,7 +19,7 @@ public class InvoicePrintT implements java.io.Serializable {
 
 	private String invoiceprintid;
 	private Date invoiceprinttime;
-	private String username;
+	private String name;
 	private String orderid;
 	private String shippingaddressid;
 	private String state;
@@ -33,12 +33,12 @@ public class InvoicePrintT implements java.io.Serializable {
 	}
 
 	public InvoicePrintT(String invoiceprintid, Date invoiceprinttime,
-			String username, String orderid, String shippingaddressid,
+			String name, String orderid, String shippingaddressid,
 			String state, String logisticsid, String operatorname,
 			String ordername) {
 		this.invoiceprintid = invoiceprintid;
 		this.invoiceprinttime = invoiceprinttime;
-		this.username = username;
+		this.name = name;
 		this.orderid = orderid;
 		this.shippingaddressid = shippingaddressid;
 		this.state = state;
@@ -48,12 +48,12 @@ public class InvoicePrintT implements java.io.Serializable {
 	}
 
 	public InvoicePrintT(String invoiceprintid, Date invoiceprinttime,
-			String username, String orderid, String shippingaddressid,
+			String name, String orderid, String shippingaddressid,
 			String state, String logisticsid, String logisticsnumber,
 			String invoicenumber, String operatorname, String ordername) {
 		this.invoiceprintid = invoiceprintid;
 		this.invoiceprinttime = invoiceprinttime;
-		this.username = username;
+		this.name = name;
 		this.orderid = orderid;
 		this.shippingaddressid = shippingaddressid;
 		this.state = state;
@@ -84,13 +84,13 @@ public class InvoicePrintT implements java.io.Serializable {
 		this.invoiceprinttime = invoiceprinttime;
 	}
 
-	@Column(name = "USERNAME", nullable = false, length = 50)
-	public String getUsername() {
-		return this.username;
+	@Column(name = "NAME", nullable = false, length = 45)
+	public String getName() {
+		return this.name;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	@Column(name = "ORDERID", nullable = false, length = 20)
@@ -129,7 +129,7 @@ public class InvoicePrintT implements java.io.Serializable {
 		this.logisticsid = logisticsid;
 	}
 
-	@Column(name = "LOGISTICSNUMBER", length = 50)
+	@Column(name = "LOGISTICSNUMBER", length = 45)
 	public String getLogisticsnumber() {
 		return this.logisticsnumber;
 	}
@@ -138,7 +138,7 @@ public class InvoicePrintT implements java.io.Serializable {
 		this.logisticsnumber = logisticsnumber;
 	}
 
-	@Column(name = "INVOICENUMBER", length = 50)
+	@Column(name = "INVOICENUMBER", length = 45)
 	public String getInvoicenumber() {
 		return this.invoicenumber;
 	}
@@ -147,7 +147,7 @@ public class InvoicePrintT implements java.io.Serializable {
 		this.invoicenumber = invoicenumber;
 	}
 
-	@Column(name = "OPERATORNAME", nullable = false, length = 50)
+	@Column(name = "OPERATORNAME", nullable = false, length = 45)
 	public String getOperatorname() {
 		return this.operatorname;
 	}

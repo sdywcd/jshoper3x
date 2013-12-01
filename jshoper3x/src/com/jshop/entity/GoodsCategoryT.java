@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-1 22:37:45 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -168,7 +168,7 @@ public class GoodsCategoryT implements java.io.Serializable {
 		this.sign = sign;
 	}
 
-	@Column(name = "GOODS_TYPE_ID", nullable = false, length = 45)
+	@Column(name = "GOODS_TYPE_ID", nullable = false, length = 20)
 	public String getGoodsTypeId() {
 		return this.goodsTypeId;
 	}
@@ -177,7 +177,7 @@ public class GoodsCategoryT implements java.io.Serializable {
 		this.goodsTypeId = goodsTypeId;
 	}
 
-	@Column(name = "PARENT_ID", length = 45)
+	@Column(name = "PARENT_ID", length = 20)
 	public String getParentId() {
 		return this.parentId;
 	}

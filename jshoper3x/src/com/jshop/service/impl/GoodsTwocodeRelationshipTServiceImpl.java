@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.jshop.dao.GoodsTwocodeRelationshipTDao;
-import com.jshop.entity.GoodsTwocodeRelationshipT;
+import com.jshop.entity.GoodsTwocodeRpT;
 import com.jshop.service.GoodsTwocodeRelationshipTService;
 @Service("goodsTwocodeRelationshipTService")
 @Scope("prototype")
@@ -28,14 +28,14 @@ public class GoodsTwocodeRelationshipTServiceImpl implements
 
 
 	@Override
-	public int addGoodsQRCode(GoodsTwocodeRelationshipT qrcode) {
+	public int addGoodsQRCode(GoodsTwocodeRpT qrcode) {
 		
 		return this.getGoodsTwocodeRelationshipTDao().addGoodsQRCode(qrcode);
 	}
 
 
 	@Override
-	public GoodsTwocodeRelationshipT findGoodsQRCodeByGoodsid(String goodsid) {
+	public GoodsTwocodeRpT findGoodsQRCodeByGoodsid(String goodsid) {
 		
 		return this.getGoodsTwocodeRelationshipTDao().findGoodsQRCodeByGoodsid(goodsid);
 	}

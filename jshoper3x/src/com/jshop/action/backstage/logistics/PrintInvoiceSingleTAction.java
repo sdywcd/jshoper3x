@@ -219,7 +219,7 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 	 */
 	public void GetPrintInvoiceValue() {
 		InvoicetempleteT it = this.getInvoicetempleteTService().findInvoicetempleteByState("1");
-		pi.setKindeditorCode(it.getKindeditorCode());
+		pi.setKindeditorCode(it.getCode());
 	}
 
 	/**

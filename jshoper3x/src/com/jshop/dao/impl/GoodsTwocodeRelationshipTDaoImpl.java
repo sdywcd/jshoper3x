@@ -13,14 +13,14 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.GoodsTwocodeRelationshipTDao;
-import com.jshop.entity.GoodsTwocodeRelationshipT;
+import com.jshop.entity.GoodsTwocodeRpT;
 @Repository("goodsTwocodeRelationshipTDao")
 public class GoodsTwocodeRelationshipTDaoImpl extends HibernateDaoSupport implements
 		GoodsTwocodeRelationshipTDao {
 	private static final Logger log = LoggerFactory.getLogger(GoodsTwocodeRelationshipTDaoImpl.class);
 	
 	@Override
-	public int addGoodsQRCode(GoodsTwocodeRelationshipT qrcode) {
+	public int addGoodsQRCode(GoodsTwocodeRpT qrcode) {
 		try {
 			log.debug("add GoodsTwocodeRelationship success");
 			this.getHibernateTemplate().save(qrcode);
@@ -32,10 +32,10 @@ public class GoodsTwocodeRelationshipTDaoImpl extends HibernateDaoSupport implem
 	}
 
 	@Override
-	public GoodsTwocodeRelationshipT findGoodsQRCodeByGoodsid(final String goodsid) {
+	public GoodsTwocodeRpT findGoodsQRCodeByGoodsid(final String goodsid) {
 		try {
-			final String queryString="from GoodsTwocodeRelationshipT as gc where gc.goodsid=:goodsid";
-			List<GoodsTwocodeRelationshipT> list = this.getHibernateTemplate().findByNamedParam(queryString, "goodsid", goodsid);
+			final String queryString="from GoodsTwocodeRpT as gc where gc.goodsid=:goodsid";
+			List<GoodsTwocodeRpT> list = this.getHibernateTemplate().findByNamedParam(queryString, "goodsid", goodsid);
 			if(!list.isEmpty()){
 				return list.get(0);
 			}
@@ -48,7 +48,7 @@ public class GoodsTwocodeRelationshipTDaoImpl extends HibernateDaoSupport implem
 	@Override
 	public int updateGoodsQRCode(final String goodsid,final String twocodepath) {
 		try {
-			final String queryString="update GoodsTwocodeRelationshipT as gc set gc.twocodepath=:twocodepath where gc.goodsid=:goodsid ";
+			final String queryString="update GoodsTwocodeRpT as gc set gc.twocodepath=:twocodepath where gc.goodsid=:goodsid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 				
 				@Override

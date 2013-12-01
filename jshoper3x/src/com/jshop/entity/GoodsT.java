@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-11-26 21:02:17 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-1 22:37:45 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,7 +28,7 @@ public class GoodsT implements java.io.Serializable {
 	private String ltypeid;
 	private String stypeid;
 	private Double price;
-	private Double memberprice;
+	private double memberprice;
 	private Double points;
 	private String pictureurl;
 	private int quantity;
@@ -78,7 +78,7 @@ public class GoodsT implements java.io.Serializable {
 
 	public GoodsT(String goodsid, String goodsname, String brandname,
 			String nname, String lname, String navid, String ltypeid,
-			String pictureurl, int quantity, String recommended,
+			double memberprice, String pictureurl, int quantity,
 			Date createtime, String creatorid, double saleprice,
 			Date updatetime, int versiont, String commoditylist) {
 		this.goodsid = goodsid;
@@ -88,9 +88,9 @@ public class GoodsT implements java.io.Serializable {
 		this.lname = lname;
 		this.navid = navid;
 		this.ltypeid = ltypeid;
+		this.memberprice = memberprice;
 		this.pictureurl = pictureurl;
 		this.quantity = quantity;
-		this.recommended = recommended;
 		this.createtime = createtime;
 		this.creatorid = creatorid;
 		this.saleprice = saleprice;
@@ -102,7 +102,7 @@ public class GoodsT implements java.io.Serializable {
 	public GoodsT(String goodsid, String goodsname, String brandname,
 			String nname, String lname, String sname, String fname,
 			String navid, String ltypeid, String stypeid, Double price,
-			Double memberprice, Double points, String pictureurl, int quantity,
+			double memberprice, Double points, String pictureurl, int quantity,
 			String salestate, String unitname, String keywordname,
 			String weight, Integer readcount, String relatedproductid,
 			String recommended, String hotsale, String bargainprice,
@@ -273,12 +273,12 @@ public class GoodsT implements java.io.Serializable {
 		this.price = price;
 	}
 
-	@Column(name = "MEMBERPRICE", precision = 22, scale = 0)
-	public Double getMemberprice() {
+	@Column(name = "MEMBERPRICE", nullable = false, precision = 22, scale = 0)
+	public double getMemberprice() {
 		return this.memberprice;
 	}
 
-	public void setMemberprice(Double memberprice) {
+	public void setMemberprice(double memberprice) {
 		this.memberprice = memberprice;
 	}
 
@@ -363,7 +363,7 @@ public class GoodsT implements java.io.Serializable {
 		this.relatedproductid = relatedproductid;
 	}
 
-	@Column(name = "RECOMMENDED", nullable = false, length = 1)
+	@Column(name = "RECOMMENDED", length = 1)
 	public String getRecommended() {
 		return this.recommended;
 	}
