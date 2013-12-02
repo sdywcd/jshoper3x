@@ -1507,7 +1507,7 @@ CREATE TABLE `goods_t` (
   `LTYPEID` varchar(20) NOT NULL,
   `STYPEID` varchar(20) DEFAULT NULL,
   `PRICE` double DEFAULT NULL,
-  `MEMBERPRICE` double DEFAULT NULL,
+  `MEMBERPRICE` double NOT NULL,
   `POINTS` double unsigned DEFAULT NULL,
   `PICTUREURL` varchar(2000) NOT NULL,
   `QUANTITY` int(10) unsigned NOT NULL,
@@ -1517,7 +1517,7 @@ CREATE TABLE `goods_t` (
   `WEIGHT` varchar(20) DEFAULT NULL,
   `READCOUNT` int(10) unsigned DEFAULT '0',
   `RELATEDPRODUCTID` varchar(500) DEFAULT NULL,
-  `RECOMMENDED` varchar(1) NOT NULL,
+  `RECOMMENDED` varchar(1) DEFAULT NULL,
   `HOTSALE` varchar(1) DEFAULT NULL,
   `BARGAINPRICE` varchar(1) DEFAULT NULL,
   `SORT` int(10) unsigned DEFAULT '0',
@@ -1566,29 +1566,30 @@ INSERT INTO `goods_t` VALUES ('2013101300410','12','海尔(haier)','电脑、办
 UNLOCK TABLES;
 
 --
--- Table structure for table `goods_twocode_relationship_t`
+-- Table structure for table `goods_twocode_rp_t`
 --
 
-DROP TABLE IF EXISTS `goods_twocode_relationship_t`;
+DROP TABLE IF EXISTS `goods_twocode_rp_t`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `goods_twocode_relationship_t` (
+CREATE TABLE `goods_twocode_rp_t` (
   `ID` varchar(20) NOT NULL,
   `GOODSID` varchar(20) NOT NULL,
-  `GOODSNAME` varchar(100) NOT NULL,
+  `PRODUCTNAME` varchar(100) NOT NULL,
   `TWOCODEPATH` varchar(255) NOT NULL,
   `STATE` varchar(1) NOT NULL,
+  `PRODUCTID` varchar(20) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `goods_twocode_relationship_t`
+-- Dumping data for table `goods_twocode_rp_t`
 --
 
-LOCK TABLES `goods_twocode_relationship_t` WRITE;
-/*!40000 ALTER TABLE `goods_twocode_relationship_t` DISABLE KEYS */;
-/*!40000 ALTER TABLE `goods_twocode_relationship_t` ENABLE KEYS */;
+LOCK TABLES `goods_twocode_rp_t` WRITE;
+/*!40000 ALTER TABLE `goods_twocode_rp_t` DISABLE KEYS */;
+/*!40000 ALTER TABLE `goods_twocode_rp_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1656,7 +1657,7 @@ CREATE TABLE `goodsstar_comment_t` (
   `STARCOMMENTID` varchar(20) NOT NULL,
   `GOODSID` varchar(20) NOT NULL,
   `STARNUM` int(10) unsigned NOT NULL,
-  `USERID` varchar(20) NOT NULL,
+  `MEMBERID` varchar(20) NOT NULL,
   `CREATETIME` datetime NOT NULL,
   PRIMARY KEY (`STARCOMMENTID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1871,14 +1872,14 @@ DROP TABLE IF EXISTS `invoice_print_t`;
 CREATE TABLE `invoice_print_t` (
   `INVOICEPRINTID` varchar(20) NOT NULL,
   `INVOICEPRINTTIME` datetime NOT NULL,
-  `USERNAME` varchar(50) NOT NULL,
+  `NAME` varchar(45) NOT NULL,
   `ORDERID` varchar(20) NOT NULL,
   `SHIPPINGADDRESSID` varchar(20) NOT NULL,
   `STATE` varchar(1) NOT NULL,
   `LOGISTICSID` varchar(20) NOT NULL,
-  `LOGISTICSNUMBER` varchar(50) DEFAULT NULL,
-  `INVOICENUMBER` varchar(50) DEFAULT NULL,
-  `OPERATORNAME` varchar(50) NOT NULL,
+  `LOGISTICSNUMBER` varchar(45) DEFAULT NULL,
+  `INVOICENUMBER` varchar(45) DEFAULT NULL,
+  `OPERATORNAME` varchar(45) NOT NULL,
   `ORDERNAME` varchar(1000) NOT NULL,
   PRIMARY KEY (`INVOICEPRINTID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1894,31 +1895,6 @@ LOCK TABLES `invoice_print_t` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `invoice_printing_t`
---
-
-DROP TABLE IF EXISTS `invoice_printing_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `invoice_printing_t` (
-  `INVOICE_PRINTING_ID` varchar(20) NOT NULL,
-  `ORDERID` varchar(20) NOT NULL,
-  `OPERATORNAME` varchar(50) NOT NULL,
-  `CREATE_PRINTING_TIME` date NOT NULL,
-  PRIMARY KEY (`INVOICE_PRINTING_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `invoice_printing_t`
---
-
-LOCK TABLES `invoice_printing_t` WRITE;
-/*!40000 ALTER TABLE `invoice_printing_t` DISABLE KEYS */;
-/*!40000 ALTER TABLE `invoice_printing_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `invoicetemplete_t`
 --
 
@@ -1929,7 +1905,7 @@ CREATE TABLE `invoicetemplete_t` (
   `INVOICETEMPLETEID` varchar(20) NOT NULL,
   `LOGISTICSID` varchar(20) DEFAULT NULL,
   `STATE` varchar(1) NOT NULL,
-  `KINDEDITOR_CODE` text NOT NULL,
+  `CODE` text NOT NULL,
   PRIMARY KEY (`INVOICETEMPLETEID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2017,34 +1993,6 @@ CREATE TABLE `keyword_t` (
 LOCK TABLES `keyword_t` WRITE;
 /*!40000 ALTER TABLE `keyword_t` DISABLE KEYS */;
 /*!40000 ALTER TABLE `keyword_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `location_t`
---
-
-DROP TABLE IF EXISTS `location_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `location_t` (
-  `LID` varchar(20) NOT NULL,
-  `USERID` varchar(20) NOT NULL,
-  `USERNAME` varchar(50) NOT NULL,
-  `LAT` double NOT NULL,
-  `LNG` double NOT NULL,
-  `ZOOM` int(10) unsigned NOT NULL,
-  `VERSIONT` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`LID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `location_t`
---
-
-LOCK TABLES `location_t` WRITE;
-/*!40000 ALTER TABLE `location_t` DISABLE KEYS */;
-/*!40000 ALTER TABLE `location_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2185,6 +2133,35 @@ LOCK TABLES `member_group_t` WRITE;
 /*!40000 ALTER TABLE `member_group_t` DISABLE KEYS */;
 INSERT INTO `member_group_t` VALUES ('20130911001','3333','1','2013-09-11 21:41:21','20100721001','2013-09-12 23:36:00',1,''),('20130912004','2','1','2013-09-12 23:35:27','20100721001','2013-09-12 23:35:27',0,''),('20130919005','333','0','2013-09-19 19:54:50','20100721001','2013-09-19 20:02:25',1,'');
 /*!40000 ALTER TABLE `member_group_t` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `member_location_t`
+--
+
+DROP TABLE IF EXISTS `member_location_t`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member_location_t` (
+  `LID` varchar(20) NOT NULL,
+  `MEMBERID` varchar(20) NOT NULL,
+  `ADDRESS` varchar(255) NOT NULL,
+  `LAT` double NOT NULL,
+  `LNG` double NOT NULL,
+  `CREATETIME` datetime NOT NULL,
+  `VERSIONT` int(10) unsigned NOT NULL,
+  `UPDATETIME` datetime NOT NULL,
+  PRIMARY KEY (`LID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `member_location_t`
+--
+
+LOCK TABLES `member_location_t` WRITE;
+/*!40000 ALTER TABLE `member_location_t` DISABLE KEYS */;
+/*!40000 ALTER TABLE `member_location_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2331,7 +2308,7 @@ DROP TABLE IF EXISTS `msgtext_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `msgtext_t` (
   `MSGTEXTID` varchar(20) NOT NULL,
-  `TEXT` text NOT NULL,
+  `TEXT` varchar(2000) NOT NULL,
   `SENDTIME` datetime NOT NULL,
   PRIMARY KEY (`MSGTEXTID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -2345,34 +2322,6 @@ LOCK TABLES `msgtext_t` WRITE;
 /*!40000 ALTER TABLE `msgtext_t` DISABLE KEYS */;
 INSERT INTO `msgtext_t` VALUES ('20110516001','1212<br />','2011-05-16 19:30:24'),('20110516002','1212<br />','2011-05-16 19:30:38'),('20110516003','','2011-05-16 19:31:09'),('20110516004','1212<br />','2011-05-16 19:35:15'),('20110516005','qwdqwdqwdqwdqwd<br />','2011-05-16 21:43:29'),('20110516006','<p>1211212121http://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsp</p>\n<p>http://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsp</p>','2011-05-16 21:53:30'),('20110516007','<p>1211212121http://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsp</p>\n<p>http://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsp</p>','2011-05-16 21:53:30'),('20110516008','<p>1211212121http://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsp</p>\n<p>http://localhost:8088/jshop/1212121212usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsphttp://localhost:8088/jshop/usercenter/businessmag/mycart.jsp</p>','2011-05-16 22:20:15'),('20120927001','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-27 16:21:55'),('201209290010','131232112313','2012-09-29 11:30:23'),('201209290011','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 15:36:04'),('201209290012','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 15:36:37'),('201209290013','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 15:49:08'),('201209290014','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 15:49:23'),('201209290015','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 15:49:39'),('201209290016','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 15:52:36'),('201209290017','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 15:52:52'),('201209290018','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-27T16:21:25到2012-09-29T16:21:27之间购智器（SmartQ）Ten19 8G 平板电脑（黑色 10.1英寸 IPS屏 Android 4.0系统）  物品就可以抵扣20','2012-09-29 16:07:50'),('20120929002','23134564562313245432124562345642345645456','2012-09-29 10:57:04'),('20120929003','23134564562313245432124562345642345645456','2012-09-29 11:11:02'),('20120929004','23134564562313245432124562345642345645456','2012-09-29 11:14:47'),('20120929005','23134564562313245432124562345642345645456','2012-09-29 11:16:59'),('20120929006','23134564562313245432124562345642345645456','2012-09-29 11:20:19'),('20120929007','131232112313','2012-09-29 11:24:43'),('20120929008','131232112313','2012-09-29 11:26:47'),('20120929009','131232112313','2012-09-29 11:30:08'),('201210090019','尊敬的用户，您好！恭喜您！获得了购物抵扣券。现在您只要在2012-09-13T16:04:18到2012-09-28T16:04:20之间购北美电器（ACA） AB-PN6810 1000g 面包机（白色）  物品就可以抵扣0','2012-10-09 09:16:02');
 /*!40000 ALTER TABLE `msgtext_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `notice_t`
---
-
-DROP TABLE IF EXISTS `notice_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `notice_t` (
-  `NOTICEID` varchar(20) NOT NULL,
-  `TITLE` varchar(50) NOT NULL,
-  `CONTENT` text NOT NULL,
-  `CREATETIME` datetime NOT NULL,
-  `CREATORID` varchar(20) NOT NULL,
-  `NOTICENLNAME` varchar(50) NOT NULL,
-  `NOTICENLID` varchar(20) NOT NULL,
-  PRIMARY KEY (`NOTICEID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `notice_t`
---
-
-LOCK TABLES `notice_t` WRITE;
-/*!40000 ALTER TABLE `notice_t` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notice_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2476,72 +2425,6 @@ INSERT INTO `order_t` VALUES ('201310060086','201112130018','2','20120105007','�
 UNLOCK TABLES;
 
 --
--- Table structure for table `outside_goods_t`
---
-
-DROP TABLE IF EXISTS `outside_goods_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `outside_goods_t` (
-  `id` varchar(20) NOT NULL,
-  `GOODSNAME` varchar(100) NOT NULL,
-  `NNAME` varchar(50) NOT NULL,
-  `LNAME` varchar(50) NOT NULL,
-  `SNAME` varchar(50) NOT NULL,
-  `FNAME` varchar(50) NOT NULL,
-  `NAVID` varchar(20) NOT NULL,
-  `LTYPEID` varchar(20) NOT NULL,
-  `STYPEID` varchar(20) NOT NULL,
-  `PICTUREURL` varchar(255) NOT NULL,
-  `SALESTATE` varchar(1) NOT NULL,
-  `SORT` int(10) unsigned NOT NULL,
-  `LINK_URL` varchar(225) NOT NULL,
-  `CREATETIME` datetime NOT NULL,
-  `CREATORID` varchar(20) NOT NULL,
-  `UPDATETIME` datetime NOT NULL,
-  `VERSIONT` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 PACK_KEYS=1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `outside_goods_t`
---
-
-LOCK TABLES `outside_goods_t` WRITE;
-/*!40000 ALTER TABLE `outside_goods_t` DISABLE KEYS */;
-INSERT INTO `outside_goods_t` VALUES ('20121024008','惠普','手机数码','对讲机','---请选择---','四级分类','201108160058','2012050600125','0','/Uploads/20121025/2012102515041053228.jpg','1',1,'http://blog.csdn.net/shbgreenery/article/details/7434590','2012-10-24 15:51:21','20100721001','2012-10-25 15:21:16',123),('20121025009','面包','烘培','---请选择---','\n												---请选择---\n											','四级分类','201108160059','0','0','/Uploads/20121025/2012102509153667984.jpg','1',1,'http://my.buy.qq.com/index.php?act=order','2012-10-25 09:15:38','20100721001','2012-10-25 09:15:38',0);
-/*!40000 ALTER TABLE `outside_goods_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `outsidegoods_twocode_relationship_t`
---
-
-DROP TABLE IF EXISTS `outsidegoods_twocode_relationship_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `outsidegoods_twocode_relationship_t` (
-  `ID` varchar(20) NOT NULL,
-  `GOODSID` varchar(20) NOT NULL,
-  `GOODSNAME` varchar(100) NOT NULL,
-  `TWOCODEPATH` varchar(255) NOT NULL,
-  `STATE` varchar(1) NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `outsidegoods_twocode_relationship_t`
---
-
-LOCK TABLES `outsidegoods_twocode_relationship_t` WRITE;
-/*!40000 ALTER TABLE `outsidegoods_twocode_relationship_t` DISABLE KEYS */;
-INSERT INTO `outsidegoods_twocode_relationship_t` VALUES ('20121024008','20121025001','惠普','/outsideQRcode/20121024008.png','1');
-/*!40000 ALTER TABLE `outsidegoods_twocode_relationship_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `payment_m`
 --
 
@@ -2572,38 +2455,6 @@ LOCK TABLES `payment_m` WRITE;
 /*!40000 ALTER TABLE `payment_m` DISABLE KEYS */;
 INSERT INTO `payment_m` VALUES ('20120105007','支付宝','zfb','0','3','cxlmc@qq.com','cqpvatw3271iudi63176b7em28b60f','2088102579269997','支付宝信息','1','1'),('201207230010','财付通','cft','0','3','1213912301','zdw11111111112222222222333333333','1213912301','11','1','1'),('201310050013','货到付款','hdfk','0','1','1','1','1','','1','1');
 /*!40000 ALTER TABLE `payment_m` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `placeoforigin_t`
---
-
-DROP TABLE IF EXISTS `placeoforigin_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `placeoforigin_t` (
-  `PLACEID` varchar(20) NOT NULL,
-  `PLACENAME` varchar(50) NOT NULL,
-  `CREATORID` varchar(20) NOT NULL,
-  `CREATETIME` datetime NOT NULL,
-  `PARENT_ID` varchar(20) NOT NULL,
-  `GRADE` varchar(1) NOT NULL,
-  `SORT` int(10) unsigned NOT NULL,
-  `PARENT_NAME` varchar(45) NOT NULL,
-  `UPDATETIME` datetime NOT NULL,
-  `VERSIONT` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`PLACEID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `placeoforigin_t`
---
-
-LOCK TABLES `placeoforigin_t` WRITE;
-/*!40000 ALTER TABLE `placeoforigin_t` DISABLE KEYS */;
-INSERT INTO `placeoforigin_t` VALUES ('20110318001','台湾','20100721001','2011-03-18 21:21:37','','',0,'','2012-05-06 11:34:29',0),('201104060010','四川成都','20100721001','2011-04-06 18:01:02','','',0,'','2012-05-06 11:34:29',0),('201104060011','四川','20100721001','2011-04-06 18:03:50','','',0,'','2012-05-06 11:34:29',0),('201104060012','广西','20100721001','2011-04-06 18:03:57','','',0,'','2012-05-06 11:34:29',0),('201104060013','河北','20100721001','2011-04-06 18:04:06','','',0,'','2012-05-06 11:34:29',0),('201104060014','东北','20100721001','2011-04-06 18:04:13','','',0,'','2012-05-06 11:34:29',0),('201104060015','广东','20100721001','2011-04-06 18:05:10','','',0,'','2012-05-06 11:34:29',0),('201104060016','美国原料 上海制造','20100721001','2011-04-06 18:07:58','','',0,'','2012-05-06 11:34:29',0),('201104060017','日本','20100721001','2011-04-06 18:10:48','','',0,'','2012-05-06 11:34:29',0),('201104060018','浙江','20100721001','2011-04-06 18:11:01','','',0,'','2012-05-06 11:34:29',0),('201104060019','菲律宾','20100721001','2011-04-06 18:12:24','','',0,'','2012-05-06 11:34:29',0),('20110406002','重庆','20100721001','2011-04-06 17:50:12','','',0,'','2012-05-06 11:34:29',0),('201104060020','韩国','20100721001','2011-04-06 18:25:59','','',0,'','2012-05-06 11:34:29',0),('201104060021','靖江','20100721001','2011-04-06 18:27:02','','',0,'','2012-05-06 11:34:29',0),('201104060022','马来西亚','20100721001','2011-04-06 18:32:41','','',0,'','2012-05-06 11:34:29',0),('201104060023','云南','20100721001','2011-04-06 18:33:21','','',0,'','2012-05-06 11:34:29',0),('201104060024','苏州','20100721001','2011-04-06 18:35:40','','',0,'','2012-05-06 11:34:29',0),('201104060025','印尼','20100721001','2011-04-06 18:38:06','','',0,'','2012-05-06 11:34:29',0),('201104060026','泰国','20100721001','2011-04-06 18:42:28','','',0,'','2012-05-06 11:34:29',0),('201104060027','香港','20100721001','2011-04-06 18:45:30','','',0,'','2012-05-06 11:34:29',0),('201104060028','美国','20100721001','2011-04-06 18:48:33','','',0,'','2012-05-06 11:34:29',0),('201104060029','法国','20100721001','2011-04-06 18:48:42','','',0,'','2012-05-06 11:34:29',0),('20110406003','山东','20100721001','2011-04-06 17:51:16','','',0,'','2012-05-06 11:34:29',0),('201104060030','比利时','20100721001','2011-04-06 18:48:54','','',0,'','2012-05-06 11:34:29',0),('201104060031','德国','20100721001','2011-04-06 18:49:01','','',0,'','2012-05-06 11:34:29',0),('201104060032','意大利','20100721001','2011-04-06 18:51:52','','',0,'','2012-05-06 11:34:29',0),('20110406004','越南','20100721001','2011-04-06 17:53:21','','',0,'','2012-05-06 11:34:29',0),('20110406005','上海','20100721001','2011-04-06 17:53:58','','',0,'','2012-05-06 11:34:29',0),('20110406006','江门','20100721001','2011-04-06 17:55:25','','',0,'','2012-05-06 11:34:29',0),('20110406007','澳门','20100721001','2011-04-06 17:56:42','','',0,'','2012-05-06 11:34:29',0),('201104090033','温州','20100721001','2011-04-09 00:41:24','','',0,'','2012-05-06 11:34:29',0),('201104130034','江苏','20100721001','2011-04-13 22:00:26','','',0,'','2012-05-06 11:34:29',0),('201104130035','江苏无锡','20100721001','2011-04-13 22:03:16','','',0,'','2012-05-06 11:34:29',0);
-/*!40000 ALTER TABLE `placeoforigin_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2682,40 +2533,6 @@ INSERT INTO `product_t` VALUES ('201310130084',212,212,12,12,0,0,'1','1','12','1
 UNLOCK TABLES;
 
 --
--- Table structure for table `questionnaire_t`
---
-
-DROP TABLE IF EXISTS `questionnaire_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questionnaire_t` (
-  `QID` varchar(20) NOT NULL,
-  `QUESTION` varchar(255) NOT NULL,
-  `CHOOSETAG` varchar(10) NOT NULL,
-  `ANSWER` varchar(255) NOT NULL,
-  `INPUTTYPE` varchar(45) NOT NULL,
-  `STATE` varchar(1) NOT NULL,
-  `STATISTICS` int(10) unsigned NOT NULL,
-  `GOODSID` varchar(20) NOT NULL,
-  `CREATETIME` datetime NOT NULL,
-  `CREATORID` varchar(20) NOT NULL,
-  `VERSIONT` int(10) unsigned NOT NULL,
-  `TITLE` varchar(255) NOT NULL,
-  PRIMARY KEY (`QID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `questionnaire_t`
---
-
-LOCK TABLES `questionnaire_t` WRITE;
-/*!40000 ALTER TABLE `questionnaire_t` DISABLE KEYS */;
-INSERT INTO `questionnaire_t` VALUES ('20120706001','对布局满意吗？','A','满意','inputtype','1',0,'0','2012-07-06 15:33:34','20100721001',0,'欧斯塔克在线商城系统问卷'),('20120706002','对布局满意吗？','B','较满意','inputtype','1',0,'0','2012-07-06 18:32:13','20100721001',0,'欧斯塔克在线商城系统问卷');
-/*!40000 ALTER TABLE `questionnaire_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `role_function_m`
 --
 
@@ -2752,7 +2569,7 @@ DROP TABLE IF EXISTS `role_m`;
 CREATE TABLE `role_m` (
   `ID` varchar(20) NOT NULL COMMENT 'role',
   `ROLENAME` varchar(45) NOT NULL,
-  `NOTE` varchar(500) DEFAULT NULL,
+  `NOTE` varchar(100) DEFAULT NULL,
   `CREATETIME` datetime NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
@@ -2766,125 +2583,6 @@ LOCK TABLES `role_m` WRITE;
 /*!40000 ALTER TABLE `role_m` DISABLE KEYS */;
 INSERT INTO `role_m` VALUES ('20120406006','系统管理员','可以使用后台的所有功能','2012-09-07 09:26:18'),('201310310010','商品业务员','负责添加商品信息','2013-11-03 21:51:14'),('201310310011','商品审核员','负责审核商品','2013-10-31 22:59:31'),('201310310012','订单审核员','负责审核订单','2013-10-31 22:59:41');
 /*!40000 ALTER TABLE `role_m` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `role_t`
---
-
-DROP TABLE IF EXISTS `role_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `role_t` (
-  `ROLEID` varchar(20) NOT NULL,
-  `ROLENAME` varchar(45) NOT NULL,
-  `NOTE` varchar(100) NOT NULL,
-  `CREATETIME` datetime NOT NULL,
-  `CREATORID` varchar(20) NOT NULL,
-  PRIMARY KEY (`ROLEID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `role_t`
---
-
-LOCK TABLES `role_t` WRITE;
-/*!40000 ALTER TABLE `role_t` DISABLE KEYS */;
-/*!40000 ALTER TABLE `role_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `sale_goodsrecord_t`
---
-
-DROP TABLE IF EXISTS `sale_goodsrecord_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `sale_goodsrecord_t` (
-  `SALERECORDID` varchar(200) NOT NULL,
-  `USERNAME` varchar(20) DEFAULT NULL,
-  `REALNAME` varchar(20) DEFAULT NULL,
-  `SALEGOODSNUMBER` varchar(50) NOT NULL,
-  `SALEGOODSNAME` varchar(45) DEFAULT NULL,
-  `SALESTARTINGPRICE` double DEFAULT NULL,
-  `SALETRADETIME` datetime NOT NULL,
-  `SALEPRICE` double(10,2) DEFAULT NULL,
-  `SALEPEOPLE` varchar(20) DEFAULT NULL,
-  `TELNO` varchar(30) DEFAULT NULL,
-  `MOBILE` varchar(30) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `SEX` varchar(1) DEFAULT NULL,
-  `EMAIL` varchar(30) DEFAULT NULL,
-  `POINTS` varchar(200) DEFAULT NULL,
-  `HIPRICE` double(10,2) DEFAULT '0.00',
-  `JOINNUMBER` int(10) DEFAULT '0',
-  `MARKETPRICE` double DEFAULT NULL,
-  `SALEGOODSID` varchar(20) DEFAULT NULL,
-  `SALEGOODSPICTUREURL` varchar(225) DEFAULT NULL,
-  `SALEGOODSINFORMATION` varchar(200) DEFAULT NULL,
-  `BEGINGTIME` datetime DEFAULT NULL,
-  `ENDINGTIME` datetime DEFAULT NULL,
-  `SALEGOODSMESSAGE` varchar(50) DEFAULT NULL,
-  `LOWPRICE` double DEFAULT NULL,
-  `PLACE` varchar(30) DEFAULT NULL,
-  `MANUFACTURER` varchar(30) DEFAULT NULL,
-  `HTMLPATH` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`SALERECORDID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `sale_goodsrecord_t`
---
-
-LOCK TABLES `sale_goodsrecord_t` WRITE;
-/*!40000 ALTER TABLE `sale_goodsrecord_t` DISABLE KEYS */;
-INSERT INTO `sale_goodsrecord_t` VALUES ('2012110400121','2222222',NULL,'125642','htc1008系列',1,'2012-11-04 16:01:59',0.00,'管理员',NULL,NULL,NULL,'2222222@qq.com','0.0',2000.00,1,2300,'2012102300104','/Uploads/20121023/20121023131405103337.jpg','最新的系统，最好的体验效果，可以玩众多的安卓游戏，例如（愤怒小鸟，and so on）<br />','2012-10-23 13:14:07','2012-10-26 13:14:09','安卓系统，超薄手机外壳，超轻的，\n拥有双核处理系统',100,'上海','htc',''),('2012110400122','1111111',NULL,'125642','htc1008系列',1,'2012-11-04 16:07:41',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',200000.00,1,2300,'2012102300104','/Uploads/20121023/20121023131405103337.jpg','最新的系统，最好的体验效果，可以玩众多的安卓游戏，例如（愤怒小鸟，and so on）<br />','2012-10-23 13:14:07','2012-10-26 13:14:09','安卓系统，超薄手机外壳，超轻的，\n拥有双核处理系统',100,'上海','htc',''),('2012110500123','1111111',NULL,'125642','htc1008系列',1,'2012-11-05 10:00:27',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',210000.00,1,2300,'2012102300104','/Uploads/20121023/20121023131405103337.jpg','最新的系统，最好的体验效果，可以玩众多的安卓游戏，例如（愤怒小鸟，and so on）<br />','2012-10-23 13:14:07','2012-10-26 13:14:09','安卓系统，超薄手机外壳，超轻的，\n拥有双核处理系统',100,'上海','htc',''),('2012110500124','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:40:02',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',200.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500125','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:42:05',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',230.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500126','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:43:56',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',250.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500127','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:45:52',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',470.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500128','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:47:17',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',500.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500129','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:48:52',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',550.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500130','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:50:49',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',1111.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500131','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:53:19',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',2000.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500132','2222222',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:55:47',0.00,'管理员',NULL,NULL,NULL,'2222222@qq.com','0.0',2580.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500133','2222222',NULL,'102354','惠普(G5246111)',1,'2012-11-05 10:57:21',0.00,'管理员',NULL,NULL,NULL,'2222222@qq.com','0.0',2900.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500145','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 12:17:13',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',3000.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500146','1111111',NULL,'102354','惠普(G5246111)',1,'2012-11-05 12:17:29',0.00,'管理员',NULL,NULL,NULL,'6656564@qq.com','0.0',3500.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500147','2222222',NULL,'102354','惠普(G5246111)',1,'2012-11-05 13:00:12',0.00,'管理员',NULL,NULL,NULL,'2222222@qq.com','0.0',25555.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500148','2222222',NULL,'102354','惠普(G5246111)',1,'2012-11-05 13:08:43',0.00,'管理员',NULL,NULL,NULL,'2222222@qq.com','0.0',30000.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司',''),('2012110500149','2222222',NULL,'102354','惠普(G5246111)',1,'2012-11-05 13:13:04',0.00,'管理员',NULL,NULL,NULL,'2222222@qq.com','0.0',30007.00,1,2000,'2012102300103','','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','2012-10-23 13:08:50','2012-10-31 13:08:52','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100,'上海','惠普上海分公司','');
-/*!40000 ALTER TABLE `sale_goodsrecord_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `salegoods_t`
---
-
-DROP TABLE IF EXISTS `salegoods_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `salegoods_t` (
-  `SALEGOODSID` varchar(20) NOT NULL,
-  `SALEGOODSNAME` varchar(20) NOT NULL,
-  `SALEGOODSNUMBER` varchar(50) NOT NULL,
-  `SALEGOODSPICTUREURL` varchar(225) NOT NULL,
-  `SALEGOODSINFORMATION` varchar(200) DEFAULT NULL,
-  `SALEGOODSSTATE` varchar(1) NOT NULL,
-  `BEGINGTIME` datetime DEFAULT NULL,
-  `ENDINGTIME` datetime DEFAULT NULL,
-  `SALEPEOPLE` varchar(20) DEFAULT NULL,
-  `SALESTARTINGPRICE` double(10,2) NOT NULL,
-  `SALEJOINPEOPLE` int(11) NOT NULL,
-  `SALEBUDGET` varchar(200) DEFAULT NULL,
-  `REALNAME` varchar(20) NOT NULL,
-  `USERID` varchar(20) NOT NULL,
-  `SALEPRICE` double(10,2) NOT NULL,
-  `HTMLPATH` varchar(45) DEFAULT NULL,
-  `MARKETPRICE` double(10,2) DEFAULT NULL,
-  `NEWORNOT` varchar(10) DEFAULT NULL,
-  `SALEGOODSMESSAGE` varchar(50) DEFAULT NULL,
-  `LOWPRICE` double(10,2) DEFAULT NULL,
-  `PLACE` varchar(30) DEFAULT NULL,
-  `MANUFACTURER` varchar(35) DEFAULT NULL,
-  PRIMARY KEY (`SALEGOODSID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `salegoods_t`
---
-
-LOCK TABLES `salegoods_t` WRITE;
-/*!40000 ALTER TABLE `salegoods_t` DISABLE KEYS */;
-INSERT INTO `salegoods_t` VALUES ('2012102300103','惠普(G5246111)','102354','/Uploads/20121105/2012110513212931831.jpg','惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上海分公司惠普上惠普上海分公司惠普上海分公司惠普上海分公司惠普<br />','1','2012-10-23 13:08:50','2012-10-31 13:08:52','管理员',1.00,1000,'','','',0.00,'',2000.00,'1','超薄外壳，双核处理器，1G独立显卡，17寸显示屏',100.00,'上海','惠普上海分公司'),('2012102300104','htc1008系列','125642','','最新的系统，最好的体验效果，可以玩众多的安卓游戏，例如（愤怒小鸟，and so on）<img src=\"/Uploads/20121105/20121105140220_485.jpg\" alt=\"\" border=\"0\" /><img src=\"/Uploads/20121105/20121105140231_366.jpg\" alt=\"\" border=\"0\" /><br />','1','2012-11-05 14:02:37','2012-11-15 14:02:40','管理员',1.00,2000,'','','',0.00,'',2300.00,'1','安卓系统，超薄手机外壳，超轻的，\n拥有双核处理系统',100.00,'上海','htc'),('2012102300105','劳力士手表','545842','/Uploads/20121023/2012102313172327513.jpg','厂家让利销售<br />','1','2012-10-23 13:17:24','2012-10-25 13:17:26','系统',1.00,500,'','','',0.00,'',20000.00,'1','超炫的手机，劳力士公司金品手表',100.00,'上海','劳力士'),('2012110600107','5646','456','/Uploads/20121106/20121106093913101002.jpg','546666666666666666666666666666666','1','2012-11-28 09:37:53','2012-11-07 09:37:59','456456',456.00,6546,'','','',0.00,'',456456.00,'1','456546',456456.00,'456456','45654'),('2012110600108','8765865','456456','','6546','0','2012-11-20 09:39:58','2012-11-27 09:40:00','54654',54645.00,6,'','','',0.00,'',456.00,'1','546',456.00,'6546','54654'),('2012110600109','245245','245245','','452452','0','2012-11-07 09:49:32','2012-11-07 09:49:33','25425',4245245.00,2452452,'','','',0.00,'',452.00,'1','4522542542',2542.00,'2452','45245'),('2012110600110','76546','5463456','','456546','0','2012-11-27 09:54:17','2012-11-22 09:54:21','456',456456.00,45645,'','','',0.00,'',546.00,'1','546456',546.00,'654','54654654'),('2012110600111','65','3563','/Uploads/20121106/20121106102018104736.jpg','3563','1','2012-11-06 10:00:38','2012-11-28 10:00:42','56365',356.00,3563653,'','','',0.00,'',6353.00,'1','653',563.00,'56356','53'),('2012110600112','456456','54654','/Uploads/20121106/2012110610025029669.jpg','45654','0','2012-11-15 10:02:37','2012-11-08 10:02:41','6546',6546.00,546456,'','','',0.00,'',6456456.00,'1','4565',6546.00,'54654654','546'),('2012110600113','756456','546546','','54654','0','2012-11-27 10:05:38','2012-11-07 10:05:41','645645',645645.00,6546546,'','','',0.00,'',45654.00,'1','6456',46.00,'546','546546'),('2012110600114','@！#','546','/Uploads/20121106/2012110610115778203.jpg','546','0','2012-12-18 10:11:58','2012-11-20 10:12:01','654645',456456.00,54645,'','','',0.00,'',456.00,'1','54654',456.00,'456','456'),('2012110600115','@！~#','53543','','4534','0','2012-11-27 10:12:42','2012-11-07 10:12:45','453',3453.00,345,'','','',0.00,'',3453.00,'1','543',3543.00,'453','453543'),('2012110600116','@!#!@#','42','','24<br />','0','2012-11-13 10:16:03','2012-11-27 10:16:04','42',24.00,4242,'','','',0.00,'',42424.00,'1','24242',242.00,'2424','424'),('2012110600117','456456','456456','','456456','0','2012-11-06 10:31:15','2012-11-06 10:31:17','46546',546456.00,546456,'','','',0.00,'',456546.00,'1','456',456.00,'54645','546');
-/*!40000 ALTER TABLE `salegoods_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -3021,40 +2719,6 @@ INSERT INTO `system_mail_t` VALUES ('201304110015','1','1','21','1','1','0','0',
 UNLOCK TABLES;
 
 --
--- Table structure for table `table_t`
---
-
-DROP TABLE IF EXISTS `table_t`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `table_t` (
-  `TABLEID` varchar(20) NOT NULL,
-  `TABLE_NUMBER` varchar(20) NOT NULL,
-  `ROOM_NAME` varchar(45) NOT NULL,
-  `ANDROID_DEVICES_COUNT` int(10) unsigned DEFAULT NULL,
-  `NOTE` varchar(500) DEFAULT NULL,
-  `CREATETIME` datetime NOT NULL,
-  `CREATORID` varchar(20) NOT NULL,
-  `NOP` int(10) unsigned DEFAULT NULL,
-  `TABLESTATE` varchar(1) NOT NULL,
-  `FLOOR` int(10) unsigned NOT NULL DEFAULT '0',
-  `RNOP` int(11) DEFAULT NULL,
-  PRIMARY KEY (`TABLEID`),
-  UNIQUE KEY `TABLE_NUMBER` (`TABLE_NUMBER`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='餐桌表';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `table_t`
---
-
-LOCK TABLES `table_t` WRITE;
-/*!40000 ALTER TABLE `table_t` DISABLE KEYS */;
-INSERT INTO `table_t` VALUES ('20120530006','22','33',NULL,NULL,'2012-05-30 08:20:33','20100721001',55,'1',44,NULL),('20120530007','11','22',NULL,NULL,'2012-05-30 12:35:26','20100721001',44,'0',33,NULL);
-/*!40000 ALTER TABLE `table_t` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `template_t`
 --
 
@@ -3071,7 +2735,7 @@ CREATE TABLE `template_t` (
   `TYPE` varchar(1) DEFAULT NULL,
   `THEMEID` varchar(20) DEFAULT NULL,
   `THEMENAME` varchar(45) DEFAULT NULL,
-  `TVALUE` longtext,
+  `TVALUE` longtext NOT NULL,
   `SIGN` varchar(100) DEFAULT NULL,
   `STATUS` varchar(1) DEFAULT NULL,
   PRIMARY KEY (`TID`)
@@ -3183,13 +2847,13 @@ DROP TABLE IF EXISTS `user_t`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_t` (
   `USERID` varchar(20) NOT NULL,
-  `USERNAME` varchar(50) NOT NULL,
-  `REALNAME` varchar(50) DEFAULT NULL,
+  `USERNAME` varchar(45) NOT NULL,
+  `REALNAME` varchar(45) DEFAULT NULL,
   `EMAIL` varchar(100) NOT NULL,
   `TELNO` varchar(20) DEFAULT NULL,
   `MOBILE` varchar(20) DEFAULT NULL,
-  `QUESTION` varchar(50) DEFAULT NULL,
-  `ANSWER` varchar(50) DEFAULT NULL,
+  `QUESTION` varchar(45) DEFAULT NULL,
+  `ANSWER` varchar(45) DEFAULT NULL,
   `PASSWORD` varchar(32) NOT NULL,
   `USERSTATE` varchar(1) NOT NULL,
   `SECTION` varchar(20) DEFAULT NULL,
@@ -3241,6 +2905,8 @@ CREATE TABLE `virtual_shipping_address_t` (
   `STATE` varchar(1) NOT NULL,
   `ISSEND` varchar(1) NOT NULL,
   `ORDERID` varchar(20) NOT NULL,
+  `UPDATETIME` datetime NOT NULL,
+  `SENDTIME` datetime NOT NULL,
   PRIMARY KEY (`VIRTUALSHIPPINGADDRESSID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3251,7 +2917,7 @@ CREATE TABLE `virtual_shipping_address_t` (
 
 LOCK TABLES `virtual_shipping_address_t` WRITE;
 /*!40000 ALTER TABLE `virtual_shipping_address_t` DISABLE KEYS */;
-INSERT INTO `virtual_shipping_address_t` VALUES ('20120724001','201204160025','sdywcd','11','','2012-07-24 22:17:35','1','0','201207240012'),('201207240010','201204160025','sdywcd','121212','','2012-07-24 22:41:55','1','0','201207240021'),('201207240011','201204160025','sdywcd','121212','','2012-07-24 22:48:36','1','0','201207240022'),('201207240012','201204160025','sdywcd','123123','','2012-07-24 22:49:39','1','0','201207240023'),('201207240013','201204160025','sdywcd','123123','','2012-07-24 22:52:34','1','0','201207240024'),('201207240014','201204160025','sdywcd','1','','2012-07-24 22:59:11','1','0','201207240025'),('201207240015','201204160025','sdywcd','2','','2012-07-24 23:00:29','1','0','201207240026'),('20120724002','201204160025','sdywcd','11','','2012-07-24 22:20:36','1','0','201207240013'),('20120724003','201204160025','sdywcd','121212','','2012-07-24 22:23:33','1','0','201207240014'),('20120724004','201204160025','sdywcd','121212','','2012-07-24 22:24:11','1','0','201207240015'),('20120724005','201204160025','sdywcd','121212','','2012-07-24 22:24:38','1','0','201207240016'),('20120724006','201204160025','sdywcd','121212','','2012-07-24 22:26:04','1','0','201207240017'),('20120724007','201204160025','sdywcd','121212','','2012-07-24 22:28:29','1','0','201207240018'),('20120724008','201204160025','sdywcd','121212','','2012-07-24 22:37:00','1','0','201207240019'),('20120724009','201204160025','sdywcd','121212','','2012-07-24 22:39:49','1','0','201207240020'),('201207250016','201204160025','sdywcd','1212','','2012-07-25 00:04:18','1','0','201207250027'),('201207250017','201204160025','sdywcd','121','','2012-07-25 00:09:50','1','0','201207250028'),('201207250018','201204160025','sdywcd','121','','2012-07-25 00:11:57','1','0','201207250029'),('201207250019','201204160025','sdywcd','1212','','2012-07-25 00:18:00','1','0','201207250030'),('201207250020','201204160025','sdywcd','121','','2012-07-25 00:19:48','1','0','201207250031'),('201207250021','201204160025','sdywcd','12','','2012-07-25 00:23:30','1','0','201207250032'),('201207250022','201204160025','sdywcd','2','','2012-07-25 00:30:34','1','0','201207250033'),('201207250023','201204160025','sdywcd','1','','2012-07-25 00:37:33','1','0','201207250034'),('201207250024','201204160025','sdywcd','3','','2012-07-25 00:42:24','1','0','201207250035'),('201207250025','201204160025','sdywcd','1','','2012-07-25 00:43:22','1','0','201207250036'),('201207250026','201204160025','sdywcd','1','','2012-07-25 11:34:45','1','0','201207250037'),('201207250027','201204160025','sdywcd','1','','2012-07-25 11:36:28','1','0','201207250038'),('201207250028','201204160025','sdywcd','1','','2012-07-25 11:39:39','1','0','201207250039'),('201207250029','201204160025','sdywcd','1','','2012-07-25 11:39:39','1','0','201207250040'),('201207250030','201204160025','sdywcd','1','','2012-07-25 13:57:15','1','0','201207250041'),('201207250031','201204160025','sdywcd','1','','2012-07-25 13:58:17','1','0','201207250042'),('201207250032','201204160025','sdywcd','1','','2012-07-25 13:58:52','1','0','201207250043'),('201207250033','201204160025','sdywcd','1','','2012-07-25 13:59:22','1','0','201207250044'),('201207250034','201204160025','sdywcd','1','','2012-07-25 14:08:15','1','0','201207250045'),('201207260035','201204160025','sdywcd','13671892195','','2012-07-26 00:04:40','1','0','201207260046'),('201207260036','201204160025','sdywcd','13671892195','','2012-07-26 00:04:43','1','0','201207260047'),('201207260037','201204160025','sdywcd','13671892195','','2012-07-26 00:16:37','1','0','201207260048'),('201207260038','201204160025','sdywcd','13671892195','','2012-07-26 00:19:08','1','0','201207260049'),('201207260039','201204160025','sdywcd','1','','2012-07-26 00:25:06','1','0','201207260050'),('201207260040','201204160025','sdywcd','13671892195','','2012-07-26 00:29:16','1','0','201207260051'),('201207260041','201204160025','sdywcd','13671892195','','2012-07-26 00:36:13','1','0','201207260052'),('201207260042','201204160025','sdywcd','13671892195','','2012-07-26 00:47:58','1','0','201207260053'),('201207280043','201204160025','sdywcd','','2','2012-07-28 12:06:15','1','0','201207280059');
+INSERT INTO `virtual_shipping_address_t` VALUES ('20120724001','201204160025','sdywcd','11','','2012-07-24 22:17:35','1','0','201207240012','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207240010','201204160025','sdywcd','121212','','2012-07-24 22:41:55','1','0','201207240021','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207240011','201204160025','sdywcd','121212','','2012-07-24 22:48:36','1','0','201207240022','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207240012','201204160025','sdywcd','123123','','2012-07-24 22:49:39','1','0','201207240023','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207240013','201204160025','sdywcd','123123','','2012-07-24 22:52:34','1','0','201207240024','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207240014','201204160025','sdywcd','1','','2012-07-24 22:59:11','1','0','201207240025','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207240015','201204160025','sdywcd','2','','2012-07-24 23:00:29','1','0','201207240026','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724002','201204160025','sdywcd','11','','2012-07-24 22:20:36','1','0','201207240013','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724003','201204160025','sdywcd','121212','','2012-07-24 22:23:33','1','0','201207240014','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724004','201204160025','sdywcd','121212','','2012-07-24 22:24:11','1','0','201207240015','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724005','201204160025','sdywcd','121212','','2012-07-24 22:24:38','1','0','201207240016','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724006','201204160025','sdywcd','121212','','2012-07-24 22:26:04','1','0','201207240017','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724007','201204160025','sdywcd','121212','','2012-07-24 22:28:29','1','0','201207240018','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724008','201204160025','sdywcd','121212','','2012-07-24 22:37:00','1','0','201207240019','0000-00-00 00:00:00','0000-00-00 00:00:00'),('20120724009','201204160025','sdywcd','121212','','2012-07-24 22:39:49','1','0','201207240020','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250016','201204160025','sdywcd','1212','','2012-07-25 00:04:18','1','0','201207250027','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250017','201204160025','sdywcd','121','','2012-07-25 00:09:50','1','0','201207250028','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250018','201204160025','sdywcd','121','','2012-07-25 00:11:57','1','0','201207250029','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250019','201204160025','sdywcd','1212','','2012-07-25 00:18:00','1','0','201207250030','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250020','201204160025','sdywcd','121','','2012-07-25 00:19:48','1','0','201207250031','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250021','201204160025','sdywcd','12','','2012-07-25 00:23:30','1','0','201207250032','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250022','201204160025','sdywcd','2','','2012-07-25 00:30:34','1','0','201207250033','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250023','201204160025','sdywcd','1','','2012-07-25 00:37:33','1','0','201207250034','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250024','201204160025','sdywcd','3','','2012-07-25 00:42:24','1','0','201207250035','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250025','201204160025','sdywcd','1','','2012-07-25 00:43:22','1','0','201207250036','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250026','201204160025','sdywcd','1','','2012-07-25 11:34:45','1','0','201207250037','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250027','201204160025','sdywcd','1','','2012-07-25 11:36:28','1','0','201207250038','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250028','201204160025','sdywcd','1','','2012-07-25 11:39:39','1','0','201207250039','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250029','201204160025','sdywcd','1','','2012-07-25 11:39:39','1','0','201207250040','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250030','201204160025','sdywcd','1','','2012-07-25 13:57:15','1','0','201207250041','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250031','201204160025','sdywcd','1','','2012-07-25 13:58:17','1','0','201207250042','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250032','201204160025','sdywcd','1','','2012-07-25 13:58:52','1','0','201207250043','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250033','201204160025','sdywcd','1','','2012-07-25 13:59:22','1','0','201207250044','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207250034','201204160025','sdywcd','1','','2012-07-25 14:08:15','1','0','201207250045','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260035','201204160025','sdywcd','13671892195','','2012-07-26 00:04:40','1','0','201207260046','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260036','201204160025','sdywcd','13671892195','','2012-07-26 00:04:43','1','0','201207260047','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260037','201204160025','sdywcd','13671892195','','2012-07-26 00:16:37','1','0','201207260048','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260038','201204160025','sdywcd','13671892195','','2012-07-26 00:19:08','1','0','201207260049','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260039','201204160025','sdywcd','1','','2012-07-26 00:25:06','1','0','201207260050','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260040','201204160025','sdywcd','13671892195','','2012-07-26 00:29:16','1','0','201207260051','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260041','201204160025','sdywcd','13671892195','','2012-07-26 00:36:13','1','0','201207260052','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207260042','201204160025','sdywcd','13671892195','','2012-07-26 00:47:58','1','0','201207260053','0000-00-00 00:00:00','0000-00-00 00:00:00'),('201207280043','201204160025','sdywcd','','2','2012-07-28 12:06:15','1','0','201207280059','0000-00-00 00:00:00','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `virtual_shipping_address_t` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3269,7 +2935,7 @@ CREATE TABLE `vouchers_t` (
   `ENDTIME` varchar(20) NOT NULL,
   `VOUCHERSCONTENT` varchar(45) NOT NULL,
   `LIMITPRICE` double(10,2) NOT NULL,
-  `GIVENUSERID` varchar(20) DEFAULT NULL,
+  `GIVENMEMBERID` varchar(20) DEFAULT NULL,
   `VOUCHERSTATE` varchar(1) NOT NULL,
   `VOUCHERUSEWAY` varchar(1) NOT NULL,
   `STATE` varchar(1) NOT NULL,
@@ -3306,7 +2972,8 @@ CREATE TABLE `website_msg_t` (
   `STATE` varchar(1) NOT NULL,
   `TITLE` varchar(50) NOT NULL,
   `CREATETIME` datetime NOT NULL,
-  `MSGSTATE` varchar(20) NOT NULL,
+  `MSGSTATE` varchar(1) NOT NULL,
+  `READTIME` datetime NOT NULL,
   PRIMARY KEY (`MSGID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3317,7 +2984,7 @@ CREATE TABLE `website_msg_t` (
 
 LOCK TABLES `website_msg_t` WRITE;
 /*!40000 ALTER TABLE `website_msg_t` DISABLE KEYS */;
-INSERT INTO `website_msg_t` VALUES ('201209290018','ttzj5201314','20100721001','sasasa','201209290018','1','jshop','2012-09-29 16:07:50','0'),('20120929005','sasasa','201206220028','ttzj5201314','20120929005','0','测试','2012-09-29 11:16:59','1'),('20120929006','sasasa','201206220028','ttzj5201314','20120929006','0','测试','2012-09-29 11:20:19','1'),('20120929009','testuser','201206220028','ttzj5201314','20120929009','0','test','2012-09-29 11:30:08','1'),('201210090019','ttzj5201314','20100721001','sasasa','201210090019','1','塔克商城优惠券','2012-10-09 09:16:02','0');
+INSERT INTO `website_msg_t` VALUES ('201209290018','ttzj5201314','20100721001','sasasa','201209290018','1','jshop','2012-09-29 16:07:50','0','0000-00-00 00:00:00'),('20120929005','sasasa','201206220028','ttzj5201314','20120929005','0','测试','2012-09-29 11:16:59','1','0000-00-00 00:00:00'),('20120929006','sasasa','201206220028','ttzj5201314','20120929006','0','测试','2012-09-29 11:20:19','1','0000-00-00 00:00:00'),('20120929009','testuser','201206220028','ttzj5201314','20120929009','0','test','2012-09-29 11:30:08','1','0000-00-00 00:00:00'),('201210090019','ttzj5201314','20100721001','sasasa','201210090019','1','塔克商城优惠券','2012-10-09 09:16:02','0','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `website_msg_t` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -3330,4 +2997,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-27 19:45:20
+-- Dump completed on 2013-12-02 20:48:05
