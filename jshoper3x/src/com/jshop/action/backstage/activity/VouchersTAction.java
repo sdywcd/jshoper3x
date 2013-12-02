@@ -246,7 +246,7 @@ public class VouchersTAction extends ActionSupport {
 			vt.setEndtime(this.getEndtime());
 			vt.setVoucherscontent(this.getVoucherscontent());
 			vt.setLimitprice(Double.parseDouble(this.getLimitprice()));
-			vt.setGivenuserid("");
+			vt.setGivenmemberid("");
 			vt.setVoucherstate(this.getVoucherstate());
 			vt.setVoucheruseway(this.getVoucheruseway());
 			vt.setState("0");
@@ -293,12 +293,12 @@ public class VouchersTAction extends ActionSupport {
 				} else {
 					vt.setVoucheruseway("绑定商品编号");
 				}
-				if (vt.getGivenuserid().equals("")) {
-					vt.setGivenuserid("未分配");
+				if (vt.getGivenmemberid().equals("")) {
+					vt.setGivenmemberid("未分配");
 				}
 				Map cellMap = new HashMap();
 				cellMap.put("id", vt.getVouchersid());
-				cellMap.put("cell", new Object[] { "<input id='id' name='firstcol' class='firstvouchersid' type='checkbox' value='" + vt.getVouchersid() + "'></input>", vt.getVouchersname(), vt.getBegintime(), vt.getEndtime(), vt.getVoucherscontent(), vt.getLimitprice(), vt.getVoucherstate(), vt.getVoucheruseway(), vt.getState(), vt.getGivenuserid(), vt.getCreatetime(), vt.getCreatorid() });
+				cellMap.put("cell", new Object[] { "<input id='id' name='firstcol' class='firstvouchersid' type='checkbox' value='" + vt.getVouchersid() + "'></input>", vt.getVouchersname(), vt.getBegintime(), vt.getEndtime(), vt.getVoucherscontent(), vt.getLimitprice(), vt.getVoucherstate(), vt.getVoucheruseway(), vt.getState(), vt.getGivenmemberid(), vt.getCreatetime(), vt.getCreatorid() });
 				rows.add(cellMap);
 			}
 			return "json";

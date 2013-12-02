@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-1 23:33:32 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-2 20:43:53 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,13 +26,16 @@ public class VirtualShippingAddressT implements java.io.Serializable {
 	private String state;
 	private String issend;
 	private String orderid;
+	private Date updatetime;
+	private Date sendtime;
 
 	public VirtualShippingAddressT() {
 	}
 
 	public VirtualShippingAddressT(String virtualshippingaddressid,
 			String userid, String username, String mobile, String email,
-			Date createtime, String state, String issend, String orderid) {
+			Date createtime, String state, String issend, String orderid,
+			Date updatetime, Date sendtime) {
 		this.virtualshippingaddressid = virtualshippingaddressid;
 		this.userid = userid;
 		this.username = username;
@@ -42,6 +45,8 @@ public class VirtualShippingAddressT implements java.io.Serializable {
 		this.state = state;
 		this.issend = issend;
 		this.orderid = orderid;
+		this.updatetime = updatetime;
+		this.sendtime = sendtime;
 	}
 
 	@Id
@@ -125,6 +130,26 @@ public class VirtualShippingAddressT implements java.io.Serializable {
 
 	public void setOrderid(String orderid) {
 		this.orderid = orderid;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "UPDATETIME", nullable = false, length = 0)
+	public Date getUpdatetime() {
+		return this.updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "SENDTIME", nullable = false, length = 0)
+	public Date getSendtime() {
+		return this.sendtime;
+	}
+
+	public void setSendtime(Date sendtime) {
+		this.sendtime = sendtime;
 	}
 
 }

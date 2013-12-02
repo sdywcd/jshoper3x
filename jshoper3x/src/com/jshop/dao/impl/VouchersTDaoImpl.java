@@ -134,7 +134,7 @@ public class VouchersTDaoImpl extends HibernateDaoSupport implements VouchersTDa
 					query.setParameter("endtime", vt.getEndtime());
 					query.setParameter("voucherscontent", vt.getVoucherscontent());
 					query.setParameter("limitprice", vt.getLimitprice());
-					query.setParameter("givenuserid", vt.getGivenuserid());
+					query.setParameter("givenuserid", vt.getGivenmemberid());
 					query.setParameter("voucherstate", vt.getVoucherstate());
 					query.setParameter("voucheruseway", vt.getVoucheruseway());
 					query.setParameter("state", vt.getState());

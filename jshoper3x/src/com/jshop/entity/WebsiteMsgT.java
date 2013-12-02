@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-1 23:33:32 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-2 20:43:53 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,13 +26,15 @@ public class WebsiteMsgT implements java.io.Serializable {
 	private String title;
 	private Date createtime;
 	private String msgstate;
+	private Date readtime;
 
 	public WebsiteMsgT() {
 	}
 
 	public WebsiteMsgT(String msgid, String msgtousername,
 			String msgfromuserid, String msgfromusrname, String msgtextid,
-			String state, String title, Date createtime, String msgstate) {
+			String state, String title, Date createtime, String msgstate,
+			Date readtime) {
 		this.msgid = msgid;
 		this.msgtousername = msgtousername;
 		this.msgfromuserid = msgfromuserid;
@@ -42,6 +44,7 @@ public class WebsiteMsgT implements java.io.Serializable {
 		this.title = title;
 		this.createtime = createtime;
 		this.msgstate = msgstate;
+		this.readtime = readtime;
 	}
 
 	@Id
@@ -118,13 +121,23 @@ public class WebsiteMsgT implements java.io.Serializable {
 		this.createtime = createtime;
 	}
 
-	@Column(name = "MSGSTATE", nullable = false, length = 20)
+	@Column(name = "MSGSTATE", nullable = false, length = 1)
 	public String getMsgstate() {
 		return this.msgstate;
 	}
 
 	public void setMsgstate(String msgstate) {
 		this.msgstate = msgstate;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "READTIME", nullable = false, length = 0)
+	public Date getReadtime() {
+		return this.readtime;
+	}
+
+	public void setReadtime(Date readtime) {
+		this.readtime = readtime;
 	}
 
 }

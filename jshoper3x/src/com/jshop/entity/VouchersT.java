@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-1 23:33:32 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-2 20:43:53 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ public class VouchersT implements java.io.Serializable {
 	private String endtime;
 	private String voucherscontent;
 	private double limitprice;
-	private String givenuserid;
+	private String givenmemberid;
 	private String voucherstate;
 	private String voucheruseway;
 	private String state;
@@ -53,7 +53,7 @@ public class VouchersT implements java.io.Serializable {
 
 	public VouchersT(String vouchersid, String vouchersname, String begintime,
 			String endtime, String voucherscontent, double limitprice,
-			String givenuserid, String voucherstate, String voucheruseway,
+			String givenmemberid, String voucherstate, String voucheruseway,
 			String state, Date createtime, String creatorid, String mobilesync) {
 		this.vouchersid = vouchersid;
 		this.vouchersname = vouchersname;
@@ -61,7 +61,7 @@ public class VouchersT implements java.io.Serializable {
 		this.endtime = endtime;
 		this.voucherscontent = voucherscontent;
 		this.limitprice = limitprice;
-		this.givenuserid = givenuserid;
+		this.givenmemberid = givenmemberid;
 		this.voucherstate = voucherstate;
 		this.voucheruseway = voucheruseway;
 		this.state = state;
@@ -125,13 +125,13 @@ public class VouchersT implements java.io.Serializable {
 		this.limitprice = limitprice;
 	}
 
-	@Column(name = "GIVENUSERID", length = 20)
-	public String getGivenuserid() {
-		return this.givenuserid;
+	@Column(name = "GIVENMEMBERID", length = 20)
+	public String getGivenmemberid() {
+		return this.givenmemberid;
 	}
 
-	public void setGivenuserid(String givenuserid) {
-		this.givenuserid = givenuserid;
+	public void setGivenmemberid(String givenmemberid) {
+		this.givenmemberid = givenmemberid;
 	}
 
 	@Column(name = "VOUCHERSTATE", nullable = false, length = 1)

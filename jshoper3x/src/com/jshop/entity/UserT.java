@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-1 23:33:32 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-2 20:43:53 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -112,7 +112,7 @@ public class UserT implements java.io.Serializable {
 		this.userid = userid;
 	}
 
-	@Column(name = "USERNAME", nullable = false, length = 50)
+	@Column(name = "USERNAME", nullable = false, length = 45)
 	public String getUsername() {
 		return this.username;
 	}
@@ -121,7 +121,7 @@ public class UserT implements java.io.Serializable {
 		this.username = username;
 	}
 
-	@Column(name = "REALNAME", length = 50)
+	@Column(name = "REALNAME", length = 45)
 	public String getRealname() {
 		return this.realname;
 	}
@@ -157,7 +157,7 @@ public class UserT implements java.io.Serializable {
 		this.mobile = mobile;
 	}
 
-	@Column(name = "QUESTION", length = 50)
+	@Column(name = "QUESTION", length = 45)
 	public String getQuestion() {
 		return this.question;
 	}
@@ -166,7 +166,7 @@ public class UserT implements java.io.Serializable {
 		this.question = question;
 	}
 
-	@Column(name = "ANSWER", length = 50)
+	@Column(name = "ANSWER", length = 45)
 	public String getAnswer() {
 		return this.answer;
 	}
