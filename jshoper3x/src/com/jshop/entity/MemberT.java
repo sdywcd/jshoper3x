@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-2 20:43:53 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-7 17:08:38 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -49,6 +49,7 @@ public class MemberT implements java.io.Serializable {
 	private String mobile;
 	private int versiont;
 	private String mid;
+	private String paypassword;
 
 	public MemberT() {
 	}
@@ -71,7 +72,7 @@ public class MemberT implements java.io.Serializable {
 			Integer loveother, Integer postingcount, String question,
 			String answer, String memberstate, String headpath,
 			Date createtime, String creatorid, Date updatetime, String mobile,
-			int versiont, String mid) {
+			int versiont, String mid, String paypassword) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
@@ -104,6 +105,7 @@ public class MemberT implements java.io.Serializable {
 		this.mobile = mobile;
 		this.versiont = versiont;
 		this.mid = mid;
+		this.paypassword = paypassword;
 	}
 
 	@Id
@@ -395,6 +397,15 @@ public class MemberT implements java.io.Serializable {
 
 	public void setMid(String mid) {
 		this.mid = mid;
+	}
+
+	@Column(name = "PAYPASSWORD", length = 32)
+	public String getPaypassword() {
+		return this.paypassword;
+	}
+
+	public void setPaypassword(String paypassword) {
+		this.paypassword = paypassword;
 	}
 
 }
