@@ -1,14 +1,5 @@
 
 $(function(){
-//	/**
-//	 * ui
-//	 */
-//	  $('input').iCheck({
-//		    checkboxClass: 'icheckbox_square-blue',
-//		    radioClass: 'iradio_square-blue',
-//		    increaseArea: '20%' // optional
-//		  });
-	
 	
 	$("#delpc").click(function() {
 		var str = "";
@@ -225,7 +216,7 @@ $(function(){
 				sortable:true,
 				align:'center'
 			},{ 
-				display:'状态',
+				display:'账号类型',
 				name:'state',
 				width:115,
 				sortable:true,
@@ -266,11 +257,13 @@ $(function(){
 				name:'设置角色',
 				bclass:'edit',
 				onpress:action
-			},{
-				name:'查看权限',
-				bclass:'edit',
-				onpress:action
-			},{
+			}
+//			,{
+//				name:'查看权限',
+//				bclass:'edit',
+//				onpress:action
+//			}
+			,{
 				separator : true
 			} ],
 
@@ -383,24 +376,25 @@ $(function(){
 					formwarning("#alerterror", "请选择一条信息");
 					return false;
 				}
-			}else if(com='查看权限'){
-				//这里要进入权限列表
-				if ($('.trSelected', grid).length == 1) {
-					var str = $('.trSelected', grid)[0].id.substr(3);
-					$.post("findUserRoleMByuserid.action",{"userid":str},function(data){
-						if(data.sucflag){
-							jAlert(data.bean.rolename,"信息提示");
-							return ;				
-						}else{
-							jAlert("操作失败","信息提示");
-							return ;
-						}
-					});
-				} else {
-					formwarning("#alerterror", "请选择一条信息");
-					return false;
-				}
 			}
+//			else if(com='查看权限'){
+//				//这里要进入权限列表
+//				if ($('.trSelected', grid).length == 1) {
+//					var str = $('.trSelected', grid)[0].id.substr(3);
+//					$.post("findUserRoleMByuserid.action",{"userid":str},function(data){
+//						if(data.sucflag){
+//							jAlert(data.bean.rolename,"信息提示");
+//							return ;				
+//						}else{
+//							jAlert("操作失败","信息提示");
+//							return ;
+//						}
+//					});
+//				} else {
+//					formwarning("#alerterror", "请选择一条信息");
+//					return false;
+//				}
+//			}
 		}
 	}
 	

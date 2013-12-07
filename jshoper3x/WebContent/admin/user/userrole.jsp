@@ -48,7 +48,7 @@
 				<div class="btn-group">
 					<button id="btnback" type="button" class="btn btn-success">返回</button>
 				</div>
-				<!-- 开始会员分组form表单 -->
+
 				<div class="form-actions">
 					<div class="form-inline">
 						<span class="label label-required">选择角色: </span>

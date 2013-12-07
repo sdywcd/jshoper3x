@@ -636,6 +636,12 @@ public class OrderTAction extends ActionSupport {
 				o.setOrderTag(AllOrderState.ORDERTAG_ONE);
 			} else if (o.getOrderTag().equals("2")) {
 				o.setOrderTag(AllOrderState.ORDERTAG_TWO);
+			}else if(o.getOrderTag().equals("3")){
+				o.setOrderTag(AllOrderState.ORDERTAG_THREE);
+			}else if(o.getOrderTag().equals("4")){
+				o.setOrderTag(AllOrderState.ORDERTAG_FOUR);
+			}else if(o.getOrderTag().equals("5")){
+				o.setOrderTag(AllOrderState.ORDERTAG_FIVE);
 			}
 			if(o.getDeliverytime()!=null){
 				this.setFormatedeliverytime(BaseTools.formateDbDate(o.getDeliverytime()));

@@ -63,8 +63,15 @@ public class AllOrderState {
 	
 	//订单来源
 	public static final String ORDERTAG_ONE="普通订单";
+
+	public static final String ORDERTAG_TWO="团购订单";
 	
-	public static final String ORDERTAG_TWO="组合商品订单";
+	public static final String ORDERTAG_THREE="拍卖订单";
+	
+	public static final String ORDERTAG_FOUR="手机订单";
+	
+	public static final String ORDERTAG_FIVE="组合商品订单";
+
 	
 	//开票
 	public static final String INVOICE_ZERO="不开";
