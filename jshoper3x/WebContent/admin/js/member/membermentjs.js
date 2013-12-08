@@ -1,13 +1,30 @@
 $(function() {
-//	/**
-//	 * ui
-//	 */
-//	$('input').iCheck({
-//	    checkboxClass: 'icheckbox_square-blue',
-//	    radioClass: 'iradio_square-blue',
-//	    increaseArea: '20%' // optional
-//	});
-//	 
+	
+	/**
+	 * 密码强度控制
+	 */
+	pwdStrongReg=function(paypassword){
+		var strongRegex = new RegExp("^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*\\W).*$", "g");
+	    var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$", "g");
+	    var enoughRegex = new RegExp("(?=.{7,}).*", "g");
+	    if (false == enoughRegex.test(paypassword)) {
+            $('#paypasswordstrong').text('密码长度必须大于等于7位小于16位');
+	    } else if (strongRegex.test(paypassword)) {
+	            $('#paypasswordstrong').text("强");
+	    } else if (mediumRegex.test(paypassword)) {
+	            $('#paypasswordstrong').text("中");
+	    } else {
+	            $('#paypasswordstrong').text("弱");
+	    }
+	    return true;
+	},
+	/**
+	 * 调用密码强度控制
+	 */
+	$("#paypassword").blur(function(){
+		var paypassword=$("#paypassword").val();
+		pwdStrongReg(paypassword);
+	});
 	/**
 	 * 增加用户
 	 */
@@ -26,6 +43,7 @@ $(function() {
 			formwarning("#alerterror", "密码长度必须大于等于7位小于16位");
 			return false;
 		}
+		var paypassword=$("#paypassword").val();
 		var nick=$("#nick").val();
 		var realname=$("#realname").val();
 		var city=$("#city").val();
@@ -65,6 +83,7 @@ $(function() {
 		$.post("saveMemberT.action",{
 			"loginname":loginname,
 			"loginpwd":loginpwd,
+			"paypassword":paypassword,
 			"nick":nick,
 			"realname":realname,
 			"city":city,
@@ -176,6 +195,7 @@ $(function() {
 				}
 				$("#loginname").attr("readonly",true);
 				$("#loginpwd").attr("readonly",true);
+				$("#paypassword").attr("readonly",true);
 				$("#submit").hide();
 				$("#update").show();
 			}

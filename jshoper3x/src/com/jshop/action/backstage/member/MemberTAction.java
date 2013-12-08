@@ -36,6 +36,7 @@ public class MemberTAction extends ActionSupport {
 	private String id;
 	private String loginname;
 	private String loginpwd;
+	private String paypassword;
 	private String nick;
 	private String realname;
 	private String city;
@@ -410,6 +411,14 @@ public class MemberTAction extends ActionSupport {
 		this.basepath = basepath;
 	}
 
+	public String getPaypassword() {
+		return paypassword;
+	}
+
+	public void setPaypassword(String paypassword) {
+		this.paypassword = paypassword;
+	}
+
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();
@@ -430,6 +439,7 @@ public class MemberTAction extends ActionSupport {
 				mt.setId(this.getSerial().Serialid(Serial.MEMBER));
 				mt.setLoginname(this.getLoginname().trim());
 				mt.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
+				mt.setPaypassword(md5.getMD5ofStr(this.getPaypassword().trim()));
 				mt.setNick(this.getNick().trim());
 				mt.setRealname(this.getRealname().trim());
 				mt.setCity(this.getCity().trim());

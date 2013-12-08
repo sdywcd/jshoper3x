@@ -61,6 +61,12 @@
 							<span class="label label-info">用于前端登录的密码</span>
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">支付密码: </span> <input
+							id="paypassword" name="paypassword" type="password" value=""
+							class="small" /> 
+							<span id="paypasswordstrong" class="label label-info">用于前端支付时的密码</span>
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">昵称: </span> <input
 							id="nick" name="nick" type="text" value=""
 							class="small" /> 
