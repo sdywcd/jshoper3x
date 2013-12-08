@@ -1,7 +1,18 @@
 package com.jshop.action.backstage.aspect;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
+import javax.servlet.ServletContext;
+
+import org.apache.struts2.ServletActionContext;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,14 +31,26 @@ public class GlobalParamSetTAspect {
 	/**
 	 * 在后台登陆后读取jshoper配置信息
 	 * @param joinPoint
+	 * @throws IOException 
 	 */
 	@After("execution(String com.jshop.action.backstage.user.UserTAction.adminlogin())")
-	public void afterAdminLogin(JoinPoint joinPoint){
-		UserTAction userTAction=(UserTAction) joinPoint.getThis();
-		List<GlobalParamM>list=userTAction.getGlobalParamService().findAllGlobalParam();
-		if(!list.isEmpty()){
-			ActionContext.getContext().getSession().put(StaticString.GLOBALPARAMS, list);
-		}
+	public void afterAdminLogin(JoinPoint joinPoint) throws IOException{
+		Map<String,Object> config=new HashMap<String, Object>();
+		String filePath="";
+		ActionContext ac=ActionContext.getContext();
+		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
+		filePath=sc.getRealPath("/")+"admin/jshoperconfig.properties";
+		InputStream inputStream = new FileInputStream(filePath);
+		Properties p = new Properties();
+		p.load(inputStream);
+		Enumeration en = p.propertyNames();
+		while (en.hasMoreElements()) {
+			String key = (String) en.nextElement();
+            String value = p.getProperty (key);
+            config.put(key, value);
+        }
+		ActionContext.getContext().getSession().remove(StaticString.GLOBALPARAMS);
+		ActionContext.getContext().getSession().put(StaticString.GLOBALPARAMS, config);
 	}
 	
 }

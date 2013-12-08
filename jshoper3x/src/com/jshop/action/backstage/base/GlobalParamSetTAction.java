@@ -1,10 +1,21 @@
 package com.jshop.action.backstage.base;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
+import javax.servlet.ServletContext;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -15,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import com.jshop.action.backstage.tools.GlobalParam;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Namespace("")
@@ -620,9 +632,10 @@ public class GlobalParamSetTAction extends ActionSupport {
 	 * 根据gkey更新全局参数
 	 * 
 	 * @return
+	 * @throws IOException 
 	 */
 	@Action(value = "updateGolbalParambygkey", results = { @Result(name = "json", type = "json") })
-	public String updateGolbalParambygkey() {
+	public String updateGolbalParambygkey() throws IOException {
 		// 查询一次所有全局参数
 		List<GlobalParamM> list = this.getGlobalParamService().findAllGlobalParam();
 		for (Iterator<GlobalParamM> it = list.iterator(); it.hasNext();) {
@@ -985,7 +998,32 @@ public class GlobalParamSetTAction extends ActionSupport {
 			}
 		}
 		this.setSucflag(true);
+		updateGlobalParamProperties();
 		return "json";
+	}
+	
+	/**
+	 * 将配置文件保存
+	 * @throws IOException
+	 */
+	private void updateGlobalParamProperties() throws IOException{
+		String filePath="";
+		ActionContext ac=ActionContext.getContext();
+		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
+		filePath=sc.getRealPath("/")+"admin/jshoperconfig.properties";
+		InputStream inputStream = new FileInputStream(filePath);
+		Properties p = new Properties();
+		p.load(inputStream);
+		OutputStream outputStream = new FileOutputStream(filePath);
+		List<GlobalParamM>list=this.getGlobalParamService().findAllGlobalParam();
+		for (Iterator<GlobalParamM> it = list.iterator(); it.hasNext();) {
+			GlobalParamM gm = (GlobalParamM) it.next();
+			p.setProperty(gm.getGkey(), gm.getGvalue());
+		}
+		p.store(outputStream, "update_config");
+		outputStream.close();
+		inputStream.close();
+		
 	}
 
 }
