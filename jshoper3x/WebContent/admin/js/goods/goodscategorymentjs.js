@@ -1,14 +1,5 @@
 
 $(function() {
-	/**
-	 * ui
-	 */
-	  $('input').iCheck({
-		    checkboxClass: 'icheckbox_square-blue',
-		    radioClass: 'iradio_square-blue',
-		    increaseArea: '20%' // optional
-		  });
-	 
 	/*
 	 * 删除图片按钮
 	 */

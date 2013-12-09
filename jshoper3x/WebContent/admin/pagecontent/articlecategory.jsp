@@ -53,11 +53,6 @@
 				<!-- 开始显示商品类型form表单 -->
 				<div class="form-actions">
 					<div class="form-inline">
-						<span class="label label-required">分类名称: </span> <input
-							id="name" name="name" type="text" value=""
-							class="small" />
-					</div>
-					<div class="form-inline">
 						<span class="label label-required">选择分类: </span> <select
 							id="parentId" name="parentId"></select> <select id="parentId1"
 							name="parentId1"></select> <span class="label label-info">请选择一个商品分类</span>
@@ -66,6 +61,33 @@
 						<span class="label label-required">上级分类: </span> <span id="modfl"><input
 							type="text" id="parentName" name="parentName" value="" readonly /></span>
 					</div>
+					
+					<div class="form-inline">
+						<span class="label label-required">分类名称: </span> <input
+							id="name" name="name" type="text" value=""
+							class="small" />
+					</div>
+					<div class="form-inline">
+						<table>
+							<tr>
+								<td><span class="label label-required">分类图标:</span></td>
+								<td>
+									<div id="uploadercategorylogo">
+										<noscript>
+											Please enable JavaScript to use file uploader.
+											<!-- or put a simple form for upload here -->
+										</noscript>
+
+									</div>
+								</td>
+							</tr>
+						</table>
+						<!-- trigger elements -->
+						<div id="triggers"></div>
+
+					</div>
+					
+					
 					<div class="form-inline">
 						<span class="label label-required">静态化标示:</span> <input
 							type="text" id="sign" name="sign" class="small" reg="^[A-Za-z]+$" tip="只能由英文组成" />
@@ -114,6 +136,30 @@
 
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/pagecontent/articlecategorymentjs.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
+	<script type="text/javascript">
+ 		function createUploader(){            
+             var uploader = new qq.FileUploader({
+                 element: document.getElementById('uploadercategorylogo'),
+                 action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
+                 debug: true,
+                 minSizeLimit:1024,
+                 sizeLimit: 1073741824,
+                 allowedExtensions: ['jpeg','jpg','gif','png'],
+                 onComplete: function(id, fileName, responseJSON){
+                	var pcpath1="<%=basePath%>"+responseJSON.success;
+                	var pcpath=responseJSON.success;
+  					var htm="<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
+  					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
+  					$("#triggers").append(htm).append(checkpc);
+                 },
+             });           
+         }
+ 		window.onload = createUploader; 
+ 
+ 	</script>
+	
 	<%@include file="/admin/footer.jsp"%>
 
 </body>

@@ -3,19 +3,31 @@
  * flexigrid list 
  */
 $(function() {
-	
-	/**
-	 * ui
+	/*
+	 * 删除图片按钮
 	 */
-	  $('input').iCheck({
-		    checkboxClass: 'icheckbox_square-blue',
-		    radioClass: 'iradio_square-blue',
-		    increaseArea: '20%' // optional
-		  });
-	 
-	  
-	  
-	  
+	$("#delpc").click(function() {
+		var str = "";
+		var sum = 0;
+		$(":checkbox[name='pcpath']").each(function() {
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		if (sum == 0) {
+			alert('只有在选择图片后才能删除');
+			return false;
+		}
+		var array = new Array();
+		array = str.split(",");
+		$(array).each(function(k, v) {
+			$("#triggers img").remove("img[id=" + v + "]");
+			$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
+		});
+	});
+	
+	
 	$("#articlecategorymanagement").flexigrid( {
 		url : 'findAllArticleCategoryT.action',
 		dataType : 'json',
@@ -190,6 +202,13 @@ $(function() {
 		var metaKeywords = $('#metaKeywords').val();
 		var metaDes = $('#metaDes').val();
 		var mobilesync=$("input[name='mobilesync']:checked").val();
+		 // 获logo路径集合
+		var logoPath = "";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				logoPath=this.value;
+			}
+		});
 		if (grade == "0") {
 			$.post("addArticleCategoryT.action",
 			{
@@ -200,7 +219,8 @@ $(function() {
 				"sort" : sort,
 				"sign" : sign,
 				"position" : position,
-				"mobilesync":mobilesync
+				"mobilesync":mobilesync,
+				"logo":logoPath
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
@@ -222,7 +242,8 @@ $(function() {
 				"sort" : sort,
 				"sign" : sign,
 				"position" : position,
-				"mobilesync":mobilesync
+				"mobilesync":mobilesync,
+				"logo":logoPath
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
@@ -244,7 +265,8 @@ $(function() {
 				"sort" : sort,
 				"sign" : sign,
 				"position" : position,
-				"mobilesync":mobilesync
+				"mobilesync":mobilesync,
+				"logo":logoPath
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
@@ -301,6 +323,13 @@ $(function() {
 			}
 		}
 		var mobilesync=$("input[name='mobilesync']:checked").val();
+		// 获logo路径集合
+		var logoPath = "";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				logoPath=this.value;
+			}
+		});
 		if (grade == "0") {
 			$.post("updateArticleCategory.action",{
 				"grade":grade,
@@ -311,7 +340,8 @@ $(function() {
 				"sign" : sign,
 				"articleCategoryTid" : articleCategoryTid,
 				"position" : position,
-				"mobilesync":mobilesync
+				"mobilesync":mobilesync,
+				"logo":logoPath
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
@@ -332,7 +362,8 @@ $(function() {
 				"position" : position,
 				"parentName" : parentName,
 				"parentId" : parentId,
-				"mobilesync":mobilesync
+				"mobilesync":mobilesync,
+				"logo":logoPath
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
@@ -354,7 +385,8 @@ $(function() {
 				"parentName1" : parentName1,
 				"parentId" : parentId,
 				"parentId1" : parentId1,
-				"mobilesync":mobilesync
+				"mobilesync":mobilesync,
+				"logo":logoPath
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "articlecategoryment.jsp?operate=find&folder=pagecontent";
@@ -401,6 +433,16 @@ $(function(){
 					} else {
 						$("#position").attr("checked", false);
 					}
+					if(data.bean.logo!=""){
+						 var htm = "<img id='logo' src='" + data.basepath+data.bean.logo + "'/>";
+				         var checkpc = "<input id='logo' name='pcpath' type='checkbox' value='" + data.bean.logo+ "' checked='true' />";
+				         $("#triggers").html(htm).append(checkpc);
+					}
+		            if(data.bean.mobilesync=="1"){
+		            	$("input[name='mobilesync']").get(0).checked=true;
+		            }else{
+		            	$("input[name='mobilesync']").get(1).checked=true;
+		            }
 					$('#hidarticleCategoryTid').attr("value", data.bean.articleCategoryTid);
 				}
 			});

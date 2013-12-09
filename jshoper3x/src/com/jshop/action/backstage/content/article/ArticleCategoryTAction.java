@@ -26,10 +26,10 @@ import com.jshop.service.ArticleCategoryTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-@InterceptorRefs({  
-    @InterceptorRef("articlemoduleArticleInterecptor"),  
-    @InterceptorRef("defaultStack")
-})
+//@InterceptorRefs({  
+//    @InterceptorRef("articlemoduleArticleInterecptor"),  
+//    @InterceptorRef("defaultStack")
+//})
 public class ArticleCategoryTAction extends ActionSupport {
 	private ArticleCategoryTService articleCategoryTService;
 	private Serial serial;
@@ -48,6 +48,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 	private String sign;
 	private String position;
 	private String mobilesync;
+	private String logo;
 	private String parentName;
 	private String parentName1;
 	private String articlecategoryzero;
@@ -69,7 +70,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 	private boolean sucflag;
 	private String sortname;
 	private String sortorder;
-
+	private String basepath;
 
 	@JSON(serialize = false)
 	public ArticleCategoryTService getArticleCategoryTService() {
@@ -380,6 +381,22 @@ public class ArticleCategoryTAction extends ActionSupport {
 		this.mobilesync = mobilesync;
 	}
 
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public String getBasepath() {
+		return basepath;
+	}
+
+	public void setBasepath(String basepath) {
+		this.basepath = basepath;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -467,6 +484,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setParentName(StaticString.EMPTY);
 				act.setPosition(this.getPosition());
 				act.setMobilesync(this.getMobilesync());
+				act.setLogo(this.getLogo().trim());
 				this.getArticleCategoryTService().addArticleCategoryT(act);
 				this.setSucflag(true);
 				return "json";
@@ -513,6 +531,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(act.getVersiont()+1);
 				act.setMobilesync(this.getMobilesync());
+				act.setLogo(this.getLogo().trim());
 				this.getArticleCategoryTService().updateArticleCategoryT(act);
 				this.setSucflag(true);
 				return "json";
@@ -554,6 +573,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setParentName(this.getParentName());
 				act.setPosition(this.getPosition());
 				act.setMobilesync(this.getMobilesync());
+				act.setLogo(this.getLogo().trim());
 				this.getArticleCategoryTService().addArticleCategoryT(act);
 				this.setSucflag(true);
 				return "json";
@@ -594,6 +614,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(act.getVersiont()+1);
 				act.setMobilesync(this.getMobilesync());
+				act.setLogo(this.getLogo().trim());
 				this.getArticleCategoryTService().updateArticleCategoryT(act);
 				this.setSucflag(true);
 				return "json";
@@ -632,6 +653,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setParentName(this.getParentName1());
 				act.setPosition(this.getPosition());
 				act.setMobilesync(this.getMobilesync());
+				act.setLogo(this.getLogo().trim());
 				this.getArticleCategoryTService().addArticleCategoryT(act);
 				this.setSucflag(true);
 				return "json";
@@ -672,6 +694,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(act.getVersiont()+1);
 				act.setMobilesync(this.getMobilesync());
+				act.setLogo(this.getLogo().trim());
 				this.getArticleCategoryTService().updateArticleCategoryT(act);
 				this.setSucflag(true);
 				return "json";
@@ -709,6 +732,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 		if (Validate.StrNotNull(this.getArticleCategoryTid())) {
 			bean = this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(this.getArticleCategoryTid());
 			if (bean != null) {
+				this.setBasepath(BaseTools.getBasePath());
 				return "json";
 			}
 		}
