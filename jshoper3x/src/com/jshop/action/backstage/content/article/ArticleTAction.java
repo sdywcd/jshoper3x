@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -34,6 +36,7 @@ import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.TemplateException;
@@ -73,6 +76,7 @@ public class ArticleTAction extends ActionSupport {
 	private Date updatetime;
 	private Integer version;
 	private String sort;
+	private String mainpicture;
 	private ArticleT bean = new ArticleT();
 	private ArticleCategoryT actbean = new ArticleCategoryT();
 	private Map<String, Object> map = new HashMap<String, Object>();
@@ -83,7 +87,7 @@ public class ArticleTAction extends ActionSupport {
 	private String query;
 	private String qtype;
 	private boolean sucflag;
-	
+	private String basepath;
 	@JSON(serialize = false)
 	public ArticleTService getArticleTService() {
 		return articleTService;
@@ -435,6 +439,22 @@ public class ArticleTAction extends ActionSupport {
 		this.sort = sort;
 	}
 
+	public String getMainpicture() {
+		return mainpicture;
+	}
+
+	public void setMainpicture(String mainpicture) {
+		this.mainpicture = mainpicture;
+	}
+
+	public String getBasepath() {
+		return basepath;
+	}
+
+	public void setBasepath(String basepath) {
+		this.basepath = basepath;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -483,6 +503,7 @@ public class ArticleTAction extends ActionSupport {
 		at.setTipcontent(this.getTipcontent());
 		at.setHtmlPath("#");
 		at.setSort(Integer.parseInt(this.getSort()));
+		at.setMainpicture(this.getMainpicture().trim());
 		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
 		if(!list.isEmpty()){
 			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {
@@ -518,6 +539,7 @@ public class ArticleTAction extends ActionSupport {
 		if(StringUtils.isNotBlank(this.getArticleid())){
 			bean = this.getArticleTService().findArticleByarticleid(this.getArticleid().trim());
 			if (bean != null) {
+				this.setBasepath(BaseTools.getBasePath());
 				this.setSucflag(true);
 				return "json";
 			}
@@ -562,6 +584,7 @@ public class ArticleTAction extends ActionSupport {
 		at.setMobilesync(this.getMobilesync());
 		at.setTipcontent(this.getTipcontent());
 		at.setSort(Integer.parseInt(this.getSort()));
+		at.setMainpicture(this.getMainpicture().trim());
 		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
 		if(!list.isEmpty()){
 			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {

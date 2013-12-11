@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-9 16:30:46 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-11 20:29:18 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -46,6 +46,7 @@ public class ArticleT implements java.io.Serializable {
 	private String ltypeid;
 	private String stypeid;
 	private Integer sort;
+	private String mainpicture;
 
 	public ArticleT() {
 	}
@@ -76,7 +77,7 @@ public class ArticleT implements java.io.Serializable {
 			String position, String isnotice, Date updatetime, int versiont,
 			String mobilesync, String tipcontent, String nname, String lname,
 			String sname, String fname, String navid, String ltypeid,
-			String stypeid, Integer sort) {
+			String stypeid, Integer sort, String mainpicture) {
 		this.articleid = articleid;
 		this.title = title;
 		this.metaKeywords = metaKeywords;
@@ -106,6 +107,7 @@ public class ArticleT implements java.io.Serializable {
 		this.ltypeid = ltypeid;
 		this.stypeid = stypeid;
 		this.sort = sort;
+		this.mainpicture = mainpicture;
 	}
 
 	@Id
@@ -370,6 +372,15 @@ public class ArticleT implements java.io.Serializable {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+
+	@Column(name = "MAINPICTURE")
+	public String getMainpicture() {
+		return this.mainpicture;
+	}
+
+	public void setMainpicture(String mainpicture) {
+		this.mainpicture = mainpicture;
 	}
 
 }

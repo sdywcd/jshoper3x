@@ -86,7 +86,11 @@
 						<div id="triggers"></div>
 
 					</div>
-					
+					<div class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="delpc" name="delpc"
+							value="删除所选图片" />
+					</div>
 					
 					<div class="form-inline">
 						<span class="label label-required">静态化标示:</span> <input

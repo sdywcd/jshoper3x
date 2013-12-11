@@ -98,6 +98,30 @@
 							id="author" name="author" class="small" />
 					</div>
 					<div class="form-inline">
+						<table>
+							<tr>
+								<td><span class="label label-required">主图:</span></td>
+								<td>
+									<div id="uploaderarticlemainpicture">
+										<noscript>
+											Please enable JavaScript to use file uploader.
+											<!-- or put a simple form for upload here -->
+										</noscript>
+
+									</div>
+								</td>
+							</tr>
+						</table>
+						<!-- trigger elements -->
+						<div id="triggers"></div>
+
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="delpc" name="delpc"
+							value="删除所选图片" />
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">排序:</span> <input type="text"
 							id="sort" name="sort" class="small" />
 					</div>
@@ -175,7 +199,7 @@
 		src="<%=basePath%>admin/js/pagecontent/articlementjs.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/kindeditor/kindeditor-min.js"></script>
-	<%@include file="/admin/footer.jsp"%>
+
 	<script type="text/javascript">
  		KE.show({
 			id : 'contentvalue',
@@ -189,6 +213,30 @@
 			}
 		});
  	</script>
+ 	<script type="text/javascript"
+		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
+	<script type="text/javascript">
+ 		function createUploader(){            
+             var uploader = new qq.FileUploader({
+                 element: document.getElementById('uploaderarticlemainpicture'),
+                 action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
+                 debug: true,
+                 minSizeLimit:1024,
+                 sizeLimit: 1073741824,
+                 allowedExtensions: ['jpeg','jpg','gif','png'],
+                 onComplete: function(id, fileName, responseJSON){
+                	var pcpath1="<%=basePath%>"+responseJSON.success;
+                	var pcpath=responseJSON.success;
+  					var htm="<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
+  					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
+  					$("#triggers").append(htm).append(checkpc);
+                 },
+             });           
+         }
+ 		window.onload = createUploader; 
+ 
+ 	</script>
+ 	<%@include file="/admin/footer.jsp"%>
 </body>
 </html>
 

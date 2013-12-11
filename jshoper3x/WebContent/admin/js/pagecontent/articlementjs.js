@@ -9,7 +9,29 @@ $(function(){
 		    radioClass: 'iradio_square-blue',
 		    increaseArea: '20%' // optional
 		  });
-	 
+	  /*
+		 * 删除图片按钮
+		 */
+		$("#delpc").click(function() {
+			var str = "";
+			var sum = 0;
+			$(":checkbox[name='pcpath']").each(function() {
+				if ($(this).attr("checked")) {
+					sum++;
+					str += this.id + ",";
+				}
+			});
+			if (sum == 0) {
+				alert('只有在选择图片后才能删除');
+				return false;
+			}
+			var array = new Array();
+			array = str.split(",");
+			$(array).each(function(k, v) {
+				$("#triggers img").remove("img[id=" + v + "]");
+				$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
+			});
+		});
 	  
 	 /**
 	 * 读取文章一级分类
@@ -140,6 +162,13 @@ $(function(){
 		var metaKeywords=$('#metaKeywords').val();
 		var metaDes=$('#metaDes').val();
 		var sort=$("#sort").val();
+		 // 获主图路径集合
+		var mainpicture = "";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				mainpicture=this.value;
+			}
+		});
 		this.value="提交中";
 		this.disabled=true;
 		$.post("addArticleT.action",{
@@ -161,7 +190,8 @@ $(function(){
 			"tipcontent":tipcontent,
 			"metaKeywords":metaKeywords,
 			"metaDes":metaDes,
-			"sort":sort
+			"sort":sort,
+			"mainpicture":mainpicture
 			},function(data){
 			if(data.sucflag){
 				window.location.href="articlement.jsp?operate=find&folder=pagecontent";
@@ -223,6 +253,11 @@ $(function(){
 				}
 				$('#tipcontent').attr("value",data.bean.tipcontent);
 				$('#sort').attr("value",data.bean.sort);
+				if(data.bean.mainpicture!=""){
+					 var htm = "<img id='logo' src='" + data.basepath+data.bean.mainpicture + "'/>";
+			         var checkpc = "<input id='logo' name='pcpath' type='checkbox' value='" + data.bean.mainpicture+ "' checked='true' />";
+			         $("#triggers").html(htm).append(checkpc);
+				}
 				KE.html("contentvalue",data.bean.contentvalue);
 				$('#metaKeywords').attr("value",data.bean.metaKeywords);
 				$('#metaDes').attr("value",data.bean.metaDes);
@@ -294,6 +329,13 @@ $(function(){
 		var metaKeywords=$('#metaKeywords').val();
 		var metaDes=$('#metaDes').val();
 		var sort=$("#sort").val();
+		 // 获主图路径集合
+		var mainpicture = "";
+		$(":checkbox[name='pcpath']").each(function() {
+			if($(this).attr("checked")){
+				mainpicture=this.value;
+			}
+		});
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateArticleT.action",{
@@ -316,7 +358,8 @@ $(function(){
 			"tipcontent":tipcontent,
 			"metaKeywords":metaKeywords,
 			"metaDes":metaDes,
-			"sort":sort
+			"sort":sort,
+			"mainpicture":mainpicture
 			},function(data){
 			if(data.sucflag){
 				window.location.href="articlement.jsp?operate=find&folder=pagecontent";

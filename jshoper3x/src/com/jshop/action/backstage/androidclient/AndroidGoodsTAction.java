@@ -18,6 +18,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.json.annotations.JSON;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
@@ -447,6 +448,18 @@ ServletRequestAware, ServletResponseAware {
 		
 		}
 		
+	}
+	@Action(value="textJson")
+	public void textJson() throws IOException{
+		JSONObject jsonObj = new JSONObject(); 
+		jsonObj.put("users", "1"); 
+		jsonObj.put("u","2"); 
+		response.setContentType("text/html");
+		response.setCharacterEncoding("utf-8");
+		PrintWriter out=response.getWriter();
+		out.write(jsonObj.toJSONString());
+		out.flush();
+		out.close();
 	}
 	
 	
