@@ -26,10 +26,6 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 		this.articleCategoryTDao = articleCategoryTDao;
 	}
 
-	public void addArticleCategoryT(ArticleCategoryT act) {
-		getArticleCategoryTDao().addArticleCategoryT(act);
-	}
-
 	public int checkArticleCategoryName(String name, String creatorid) {
 		return getArticleCategoryTDao().checkArticleCategoryName(name, creatorid);
 	}
@@ -148,6 +144,23 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 	@Override
 	public void delArticleCategoryT(String[] strs) {
 		this.getArticleCategoryTDao().delArticleCategoryT(strs);
+	}
+
+	@Override
+	public void save(ArticleCategoryT m) {
+		this.getArticleCategoryTDao().save(m);
+	}
+
+	@Override
+	public void update(ArticleCategoryT m) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(ArticleCategoryT m) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

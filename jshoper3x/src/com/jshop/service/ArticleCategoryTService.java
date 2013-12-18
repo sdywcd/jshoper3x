@@ -4,14 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.ArticleCategoryT;
 
-public interface ArticleCategoryTService {
-	/**
-	 * 增加文章分类
-	 * 
-	 * @param act
-	 * @return
-	 */
-	public void addArticleCategoryT(ArticleCategoryT act);
+public interface ArticleCategoryTService extends BaseService<ArticleCategoryT>{
+
 
 	/**
 	 * 获取父路径数据

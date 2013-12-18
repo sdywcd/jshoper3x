@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-11 20:29:18 by Hibernate Tools 3.4.0.CR1
+// Generated 2013-12-14 18:15:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,13 +26,16 @@ public class ProductSpecificationsT implements java.io.Serializable {
 	private Date createtime;
 	private String creatorid;
 	private String state;
+	private String goodsTypeId;
+	private String goodsTypeName;
 
 	public ProductSpecificationsT() {
 	}
 
 	public ProductSpecificationsT(String specificationsid, String name,
 			String specificationsType, String specificationsValue,
-			Date createtime, String creatorid, String state) {
+			Date createtime, String creatorid, String state,
+			String goodsTypeId, String goodsTypeName) {
 		this.specificationsid = specificationsid;
 		this.name = name;
 		this.specificationsType = specificationsType;
@@ -40,12 +43,14 @@ public class ProductSpecificationsT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.creatorid = creatorid;
 		this.state = state;
+		this.goodsTypeId = goodsTypeId;
+		this.goodsTypeName = goodsTypeName;
 	}
 
 	public ProductSpecificationsT(String specificationsid, String name,
 			String note, String sort, String specificationsType,
 			String specificationsValue, Date createtime, String creatorid,
-			String state) {
+			String state, String goodsTypeId, String goodsTypeName) {
 		this.specificationsid = specificationsid;
 		this.name = name;
 		this.note = note;
@@ -55,6 +60,8 @@ public class ProductSpecificationsT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.creatorid = creatorid;
 		this.state = state;
+		this.goodsTypeId = goodsTypeId;
+		this.goodsTypeName = goodsTypeName;
 	}
 
 	@Id
@@ -138,6 +145,24 @@ public class ProductSpecificationsT implements java.io.Serializable {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	@Column(name = "GOODS_TYPE_ID", nullable = false, length = 20)
+	public String getGoodsTypeId() {
+		return this.goodsTypeId;
+	}
+
+	public void setGoodsTypeId(String goodsTypeId) {
+		this.goodsTypeId = goodsTypeId;
+	}
+
+	@Column(name = "GOODS_TYPE_NAME", nullable = false, length = 45)
+	public String getGoodsTypeName() {
+		return this.goodsTypeName;
+	}
+
+	public void setGoodsTypeName(String goodsTypeName) {
+		this.goodsTypeName = goodsTypeName;
 	}
 
 }

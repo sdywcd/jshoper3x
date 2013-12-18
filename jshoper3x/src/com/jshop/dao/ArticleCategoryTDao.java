@@ -5,14 +5,9 @@ import java.util.List;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.GoodsCategoryT;
 
-public interface ArticleCategoryTDao {
+public interface ArticleCategoryTDao extends BaseDao<ArticleCategoryT> {
 
-	/**
-	 * 增加文章分类
-	 * 
-	 * @param act
-	 */
-	public void addArticleCategoryT(ArticleCategoryT act);
+	
 
 	/**
 	 * 获取父路径数据

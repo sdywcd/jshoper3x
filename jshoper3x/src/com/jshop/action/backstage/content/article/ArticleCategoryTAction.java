@@ -485,7 +485,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setPosition(this.getPosition());
 				act.setMobilesync(this.getMobilesync());
 				act.setLogo(this.getLogo().trim());
-				this.getArticleCategoryTService().addArticleCategoryT(act);
+				this.getArticleCategoryTService().save(act);
 				this.setSucflag(true);
 				return "json";
 			} else {
@@ -574,7 +574,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setPosition(this.getPosition());
 				act.setMobilesync(this.getMobilesync());
 				act.setLogo(this.getLogo().trim());
-				this.getArticleCategoryTService().addArticleCategoryT(act);
+				this.getArticleCategoryTService().save(act);
 				this.setSucflag(true);
 				return "json";
 			}
@@ -654,7 +654,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setPosition(this.getPosition());
 				act.setMobilesync(this.getMobilesync());
 				act.setLogo(this.getLogo().trim());
-				this.getArticleCategoryTService().addArticleCategoryT(act);
+				this.getArticleCategoryTService().save(act);
 				this.setSucflag(true);
 				return "json";
 			} 

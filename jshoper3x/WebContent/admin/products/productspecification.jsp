@@ -52,6 +52,12 @@
 				<!-- 开始显示商品类型form表单 -->
 				<div class="form-actions">
 					<div class="form-inline">
+						<span class="label label-required">选择商品类型: </span> <select
+							id="goodstypetn" name="goodstypetn">
+
+						</select> <span class="label label-info">请选择一个商品类型并增加其属性</span>
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">选择规格类型: </span> <select
 							id="specificationsType" name="specificationsType">
 							<option value="1">文字类型</option>

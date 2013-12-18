@@ -8,6 +8,22 @@ $(function(){
 		rid = myDate.getSeconds().toString() + myDate.getMilliseconds().toString();
 	},
 	/*
+	 * Get Goods Type for select elements
+	 */
+	findGoodsTypeTNForSelect=function(){
+		$.ajax({
+			url:"findGoodsTypeTNForSelect.action",
+			type:"post",
+			dataType:'json',
+			async:false,
+			success:function(data){
+			if(data.goodstypetnlist!=""){
+				$('#goodstypetn').append(data.goodstypetnlist);
+				}
+			}
+		});
+	},
+	/*
 	 * Delete Page elements According to rid 
 	 */
 	delParamPChild=function(rid){
@@ -215,6 +231,12 @@ $(function(){
 	 * 增加文字类型规格参数
 	 */
 	addspecificationsTypeWord=function(){
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var name = $('#name').val();
 		if (name == "") {
 			formwarning("#alerterror","请填写规格名称");
@@ -261,7 +283,9 @@ $(function(){
 				"sort" : sort,
 				"specificationsType" : specificationsType,
 				"specificationsValue" : rjson,
-				"note" : note
+				"note" : note,
+				"goodsTypeId":goodsTypeId,
+				"goodsTypeName":goodsTypeName
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "productspecificationment.jsp?operate=find&folder=goods";
@@ -273,6 +297,12 @@ $(function(){
 	 * 更新文字类型规格参数
 	 */
 	updatespecificationsTypeWord=function(){
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var name = $('#name').val();
 		if (name == "") {
 			formwarning("#alerterror","请填写规格名称");
@@ -321,7 +351,9 @@ $(function(){
 				"specificationsType" : specificationsType,
 				"specificationsValue" : rjson,
 				"note" : note,
-				"specificationsid":specificationsid
+				"specificationsid":specificationsid,
+				"goodsTypeId":goodsTypeId,
+				"goodsTypeName":goodsTypeName
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "productspecificationment.jsp?operate=find&folder=goods";
@@ -334,6 +366,12 @@ $(function(){
 	 * 增加图片规格
 	 */
 	addspecificationsTypePicture=function(){
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var name = $('#name').val();
 		if (name == "") {
 			formwarning("#alerterror","请填写规格名称");
@@ -380,7 +418,9 @@ $(function(){
 				"sort" : sort,
 				"specificationsType" : specificationsType,
 				"specificationsValue" : rjson,
-				"note" : note
+				"note" : note,
+				"goodsTypeId":goodsTypeId,
+				"goodsTypeName":goodsTypeName
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "productspecificationment.jsp?operate=find&folder=goods";
@@ -392,6 +432,12 @@ $(function(){
 	 * 更新图片规格
 	 */
 	updatespecificationsTypePicture=function(){
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var name = $('#name').val();
 		if (name == "") {
 			formwarning("#alerterror","请填写规格名称");
@@ -440,7 +486,9 @@ $(function(){
 				"specificationsType" : specificationsType,
 				"specificationsValue" : rjson,
 				"note" : note,
-				"specificationsid":specificationsid
+				"specificationsid":specificationsid,
+				"goodsTypeId":goodsTypeId,
+				"goodsTypeName":goodsTypeName
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "productspecificationment.jsp?operate=find&folder=goods";
@@ -452,6 +500,12 @@ $(function(){
 	 * 增加颜色类型规格参数
 	 */
 	addspecificationsTypeColor=function(){
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var name = $('#name').val();
 		if (name == "") {
 			formwarning("#alerterror","请填写规格名称");
@@ -494,7 +548,9 @@ $(function(){
 				"sort" : sort,
 				"specificationsType" : specificationsType,
 				"specificationsValue" : rjson,
-				"note" : note
+				"note" : note,
+				"goodsTypeId":goodsTypeId,
+				"goodsTypeName":goodsTypeName
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "productspecificationment.jsp?operate=find&folder=goods";
@@ -505,6 +561,12 @@ $(function(){
 	 * 更新颜色类型规格参数
 	 */
 	updatespecificationsTypeColor=function(){
+		var goodsTypeId=$('#goodstypetn').val();
+		if(goodsTypeId=="0"){
+			formwarning("#alerterror","请选择商品类型");
+			return false;
+		}
+		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var name = $('#name').val();
 		if (name == "") {
 			formwarning("#alerterror","请填写规格名称");
@@ -549,7 +611,9 @@ $(function(){
 				"specificationsType" : specificationsType,
 				"specificationsValue" : rjson,
 				"note" : note,
-				"specificationsid":specificationsid
+				"specificationsid":specificationsid,
+				"goodsTypeId":goodsTypeId,
+				"goodsTypeName":goodsTypeName
 			}, function(data) {
 				if (data.sucflag) {
 					window.location.href = "productspecificationment.jsp?operate=find&folder=goods";
@@ -576,6 +640,7 @@ $(function(){
 				$('#sort').val(data.bean.sort);
 				$('#specificationsType').val(data.bean.specificationsType);
 				$('#hidspecificationsid').val(data.bean.specificationsid);
+				$('#goodstypetn').val(data.bean.goodsTypeId);
 				var specificationsid=data.bean.specificationsid;
 				var jsonstr;//js处理json
 				jsonstr = $.parseJSON(data.bean.specificationsValue);
@@ -617,6 +682,7 @@ $(function(){
 				} else {
 					$('#selectcolordiv').show();
 				}
+				
 				$('.table tbody').append(html);
 				
 			}
@@ -689,9 +755,11 @@ $(function(){
 $(function(){
 	var operate = $.query.get("operate");
 	if (operate == "add") {
+		findGoodsTypeTNForSelect();
 		initfarbtastic();
 		return;
 	}else if(operate=="edit"){
+		findGoodsTypeTNForSelect();
 		initfarbtastic();
 		findProductSpecificationsTByspecificationsid();
 	}

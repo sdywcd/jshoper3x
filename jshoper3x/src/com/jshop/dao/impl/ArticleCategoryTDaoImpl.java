@@ -35,18 +35,6 @@ public class ArticleCategoryTDaoImpl extends HibernateDaoSupport implements Arti
 
 	private static final Logger log = LoggerFactory.getLogger(ArticleCategoryTDaoImpl.class);
 
-
-	public void addArticleCategoryT(ArticleCategoryT act) {
-		log.debug("save GoodsCategoryT");
-		try {
-			this.getHibernateTemplate().save(act);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public int checkArticleCategoryName(String name, String creatorid) {
 		log.debug("checkArticleCategoryName");
 		try {
@@ -490,6 +478,30 @@ public class ArticleCategoryTDaoImpl extends HibernateDaoSupport implements Arti
 			throw re;
 		}
 	
+	}
+
+	@Override
+	public void save(ArticleCategoryT m) {
+		log.debug("save GoodsCategoryT");
+		try {
+			this.getHibernateTemplate().save(m);
+			log.debug("save successful");
+		} catch (RuntimeException re) {
+			log.error("save failed", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public void update(ArticleCategoryT m) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(ArticleCategoryT m) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

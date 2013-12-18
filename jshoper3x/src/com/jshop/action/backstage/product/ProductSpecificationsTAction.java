@@ -42,6 +42,8 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	private Date createtime;
 	private String creatorid;
 	private String state;
+	private String goodsTypeId;
+	private String goodsTypeName;
 	private ProductSpecificationsT bean = new ProductSpecificationsT();
 	private List beanlist = new ArrayList();
 	private List<ProductSpecificationsT> specificationList = new ArrayList<ProductSpecificationsT>();
@@ -269,6 +271,22 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		this.sortorder = sortorder;
 	}
 
+	public String getGoodsTypeId() {
+		return goodsTypeId;
+	}
+
+	public void setGoodsTypeId(String goodsTypeId) {
+		this.goodsTypeId = goodsTypeId;
+	}
+
+	public String getGoodsTypeName() {
+		return goodsTypeName;
+	}
+
+	public void setGoodsTypeName(String goodsTypeName) {
+		this.goodsTypeName = goodsTypeName;
+	}
+
 	/**
 	 * 清楚错误
 	 */
@@ -294,7 +312,9 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		pst.setSpecificationsValue(this.getSpecificationsValue());
 		pst.setCreatetime(BaseTools.systemtime());
 		pst.setCreatorid(BaseTools.adminCreateId());
-		pst.setState("1");
+		pst.setState(StaticString.ONE);
+		pst.setGoodsTypeId(this.getGoodsTypeId());
+		pst.setGoodsTypeName(this.getGoodsTypeName());
 		this.getProductSpecificationsTService().addProductSpecification(pst);
 		this.setSucflag(true);
 		return "json";
@@ -405,6 +425,8 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		pst.setSpecificationsValue(this.getSpecificationsValue());
 		pst.setCreatetime(BaseTools.systemtime());
 		pst.setCreatorid(BaseTools.adminCreateId());
+		pst.setGoodsTypeId(this.getGoodsTypeId());
+		pst.setGoodsTypeName(this.getGoodsTypeName());
 		@SuppressWarnings("unused")
 		int i = this.getProductSpecificationsTService().updateProductSpecification(pst);
 		this.setSucflag(true);
@@ -439,7 +461,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	 */
 	@Action(value = "findAllSpecificationsforjson", results = { @Result(name = "json", type = "json") })
 	public String findAllSpecificationsforjson() {
-		String state="1";//可用状态
+		String state=StaticString.ONE;//可用状态
 		specificationList = this.getProductSpecificationsTService().findAllProductSpecificationsT(state);
 		if (!specificationList.isEmpty()) {
 			this.setSucflag(true);
