@@ -100,14 +100,14 @@
 							for="radio-2">关闭 </label>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">用户注册:</span> <input
+						<span class="label label-required">会员注册:</span> <input
 							type="radio" id="isusercanregister" name="isusercanregister"
 							value="1" /> <label for="radio-1">开启 </label> <input
 							type="radio" id="isusercanregister" name="isusercanregister"
 							value="0" /> <label for="radio-2">关闭 </label>
 					</div>
 					<div class="form-inline">
-						<span class="label label-required">发送邮件激活用户:</span> <input
+						<span class="label label-required">发送邮件激活会员:</span> <input
 							type="radio" id="issendactivatemail" name="issendactivatemail"
 							value="1" /> <label for="radio-1">开启 </label> <input
 							type="radio" id="issendactivatemail" name="issendactivatemail"

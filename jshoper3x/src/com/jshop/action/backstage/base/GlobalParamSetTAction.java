@@ -24,10 +24,12 @@ import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.GlobalParam;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.org.glassfish.external.statistics.Stats;
 
 @Namespace("")
 @ParentPackage("jshop")
@@ -1010,7 +1012,7 @@ public class GlobalParamSetTAction extends ActionSupport {
 		String filePath="";
 		ActionContext ac=ActionContext.getContext();
 		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
-		filePath=sc.getRealPath("/")+"admin/jshoperconfig.properties";
+		filePath=sc.getRealPath("/")+StaticString.SYSTEM_CONFIG_FILE;
 		InputStream inputStream = new FileInputStream(filePath);
 		Properties p = new Properties();
 		p.load(inputStream);
