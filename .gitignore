@@ -257,3 +257,7 @@ pip-log.txt
 .DS_Store
 /ROOT
 /jshoper3x/WebContent/Uploads
+/jshoper3x/WebContent/html
+/jshoper3x/.classpath
+/jshoper3x/.project
+/jshoper3x/.settings
