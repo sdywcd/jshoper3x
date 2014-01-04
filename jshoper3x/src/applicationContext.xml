@@ -12,7 +12,7 @@
           http://www.springframework.org/schema/context/spring-context-3.1.xsd 
           http://www.springframework.org/schema/aop 
           http://www.springframework.org/schema/aop/spring-aop-3.1.xsd"
-	default-autowire="byName">
+	default-autowire="byName" default-lazy-init="true">
 
 	<aop:aspectj-autoproxy />
 
@@ -95,6 +95,7 @@
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
+		
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -131,21 +132,33 @@
 		<property name="maxPoolSize" value="30"></property>
 	</bean>
 
-	<!-- 配置activiti工作流引擎 <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration"> 
-		<property name="dataSource" ref="dataSource" /> <property name="transactionManager" 
-		ref="transactionManager"></property> <property name="databaseSchemaUpdate" 
-		value="true" /> <property name="mailServerHost" value="localhost" /> <property 
-		name="mailServerPort" value="5025" /> <property name="jpaHandleTransaction" 
-		value="true" /> <property name="jpaCloseEntityManager" value="true" /> <property 
-		name="jobExecutorActivate" value="false" /> </bean> <bean id="processEngine" 
-		class="org.activiti.spring.ProcessEngineFactoryBean" destroy-method="destroy"> 
-		<property name="processEngineConfiguration" ref="processEngineConfiguration" 
-		/> </bean> <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" 
-		/> <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" 
-		/> <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" 
-		/> <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" 
-		/> <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" 
-		/> <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" 
-		/> -->
+	<!-- 配置activiti工作流引擎 -->
+	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="databaseSchemaUpdate" value="true" />
+		<property name="mailServerHost" value="localhost" />
+		<property name="mailServerPort" value="5025" />
+		<property name="jpaHandleTransaction" value="true" />
+		<property name="jpaCloseEntityManager" value="true" />
+		<property name="jobExecutorActivate" value="false" />
+		 <property name="databaseType" value="mysql" />    
+	</bean>
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"
+		destroy-method="destroy">
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
+	</bean>
+	<bean id="repositoryService" factory-bean="processEngine"
+		factory-method="getRepositoryService" />
+	<bean id="runtimeService" factory-bean="processEngine"
+		factory-method="getRuntimeService" />
+	<bean id="taskService" factory-bean="processEngine"
+		factory-method="getTaskService" />
+	<bean id="historyService" factory-bean="processEngine"
+		factory-method="getHistoryService" />
+	<bean id="managementService" factory-bean="processEngine"
+		factory-method="getManagementService" />
+	<bean id="identityService" factory-bean="processEngine"
+		factory-method="getIdentityService" />
 </beans>
 	
