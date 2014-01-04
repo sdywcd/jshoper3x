@@ -41,6 +41,14 @@ public class  StaticString {
 	 */
 	public static String NEWESTORDERS="newestorders";
 	
+	/**
+	 * 系统配置文件
+	 * 
+	 */
+	public static String SYSTEM_CONFIG_FILE="admin/jshoperconfig.properties";
+	
+	
+	
 	//flexigrid default search tag
 	public static final String EMPTY="";
 	

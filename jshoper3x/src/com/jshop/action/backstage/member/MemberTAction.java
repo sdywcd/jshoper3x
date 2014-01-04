@@ -73,6 +73,7 @@ public class MemberTAction extends ActionSupport {
 	private int total = 0;
 	private String message;
 	private boolean sucflag;
+	private boolean doingTag;//用于aspect的标记
 	@JSON(serialize = false)
 	public Serial getSerial() {
 		return serial;
@@ -425,12 +426,24 @@ public class MemberTAction extends ActionSupport {
 
 	}
 	
+	public boolean isDoingTag() {
+		return doingTag;
+	}
+
+	public void setDoingTag(boolean doingTag) {
+		this.doingTag = doingTag;
+	}
+
 	/**
 	 * 增加会员
 	 * @return
 	 */
 	@Action(value = "saveMemberT", results = { @Result(name = "json", type = "json") })
 	public String saveMemberT(){
+		if(!doingTag){
+			this.setMessage("系统关闭了注册服务,请在系统管理/全局参数设置/基础相关中开启注册服务");
+			return "json";
+		}
 		if(StringUtils.isNotBlank(this.getLoginname())&&StringUtils.isNotBlank(this.getLoginpwd())){
 			List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getLoginname().trim());
 			if(list.isEmpty()){

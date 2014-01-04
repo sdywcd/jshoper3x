@@ -5,13 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
 
@@ -21,9 +19,9 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.GlobalParam;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
 import com.opensymphony.xwork2.ActionContext;
@@ -1010,7 +1008,7 @@ public class GlobalParamSetTAction extends ActionSupport {
 		String filePath="";
 		ActionContext ac=ActionContext.getContext();
 		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
-		filePath=sc.getRealPath("/")+"admin/jshoperconfig.properties";
+		filePath=sc.getRealPath("/")+StaticString.SYSTEM_CONFIG_FILE;
 		InputStream inputStream = new FileInputStream(filePath);
 		Properties p = new Properties();
 		p.load(inputStream);
