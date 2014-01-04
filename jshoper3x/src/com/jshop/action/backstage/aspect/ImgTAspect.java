@@ -9,30 +9,30 @@ import javax.servlet.ServletContext;
 
 import org.apache.struts2.ServletActionContext;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 
-import com.jshop.action.backstage.member.MemberTAction;
+import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.tools.GlobalParam;
+import com.jshop.action.backstage.tools.ImgCutTools;
 import com.jshop.action.backstage.tools.StaticString;
 import com.opensymphony.xwork2.ActionContext;
 /**
- * 会员相关的切片
+ * 图片上传切片
  * @author sdywcd
  *
  */
 @Aspect
-public class MemberTAspect {
-
+public class ImgTAspect {
 	/**
-	 * 检测系统是否允许新会员注册
+	 * 保存图片缩略图
 	 * @param joinPoint
 	 */
-	@Before("execution(String com.jshop.action.backstage.member.MemberTAction.saveMemberT())")
-	public void checkWhetherRegiterMember(JoinPoint joinPoint){
-		MemberTAction memberTAction=(MemberTAction) joinPoint.getThis();
-		//是否允许注册的标记
-		boolean isCanRegister=false;
+	@After("execution(String com.jshop.action.backstage.image.ImgTAction.ajaxFileUploads())")
+	public void saveDifferentSizeImg(JoinPoint joinPoint){
+		ImgTAction imgTAction=(ImgTAction) joinPoint.getThis();
+		String needCutImgPath=imgTAction.getmNewImgPath();
+		String targetSavePath=imgTAction.getTargetSavePath();
 		String filePath="";
 		Properties p=new Properties();
 		ActionContext ac=ActionContext.getContext();
@@ -40,19 +40,20 @@ public class MemberTAspect {
 		filePath=sc.getRealPath("/")+StaticString.SYSTEM_CONFIG_FILE;
 		try {
 			p.load(new FileInputStream(filePath));
-			String isUsercanRegister=p.getProperty(GlobalParam.ISUSERCANREGISTER, "0");
-			if(isUsercanRegister.equals(StaticString.ONE)){
-				isCanRegister=true;
+			String isimagecompression=p.getProperty(GlobalParam.ISIMAGECOMPRESSION, "0");
+			if(isimagecompression.equals(StaticString.ONE)){
+				//只有当开启压缩时才执行压缩方法并保存缩略图
+				int width=Integer.parseInt(p.getProperty(GlobalParam.THUMBNAILWIDTH, "0"));
+				int height=Integer.parseInt(p.getProperty(GlobalParam.THUMBNAILHEIGHT,"0"));
+				ImgCutTools.compressImages(needCutImgPath, targetSavePath, width, height);
 			}
-			memberTAction.setDoingTag(isCanRegister);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
-		
 	}
 	
 }

@@ -29,7 +29,6 @@ import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.json.annotations.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.ServerFileInfo;
@@ -38,6 +37,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 public class ImgTAction extends ActionSupport implements ServletResponseAware, ServletRequestAware {
+
 	private static final Logger log = LoggerFactory.getLogger(ImgTAction.class);
 	private File fileupload;
 	private String fileuploadFileName;
@@ -59,8 +59,32 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 	private List rows = new ArrayList();
 	private String creatorid;
 	private String imgdirpath;
+	/**
+	 * 上传图片后保存的路径
+	 */
+	private String mNewImgPath;
+	/**
+	 * 图片文件保存的目录
+	 */
+	private String targetSavePath;
 	private boolean slogin;
 	private boolean sucflag;
+
+	public String getTargetSavePath() {
+		return targetSavePath;
+	}
+
+	public void setTargetSavePath(String targetSavePath) {
+		this.targetSavePath = targetSavePath;
+	}
+
+	public String getmNewImgPath() {
+		return mNewImgPath;
+	}
+
+	public void setmNewImgPath(String mNewImgPath) {
+		this.mNewImgPath = mNewImgPath;
+	}
 
 	public File getFileupload() {
 		return fileupload;
@@ -344,8 +368,8 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 	 * 
 	 * @throws IOException
 	 */
-	@Action(value = "ajaxFileUploads", results = {})
-	public void ajaxFileUploads() throws IOException {
+	@Action(value ="ajaxFileUploads",results = { @Result(name = "json", type = "json") })
+	public String ajaxFileUploads() {
 		String extName = "";
 		String newFilename = "";
 		String nowTimeStr = "";
@@ -381,15 +405,17 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 			is = request.getInputStream();
 			fos = new FileOutputStream(new File(savePath + newFilename));
 			IOUtils.copy(is, fos);
-			response.setStatus(response.SC_OK);
+			this.setmNewImgPath(savePath+newFilename);
+			this.setTargetSavePath(savePath);
+			response.setStatus(HttpServletResponse.SC_OK);
 			writer.print("{success:'" + realpath + newFilename + "'}");
 			//writer.print("{savepath:'"+savePath+newFilename+"'}");
 		} catch (FileNotFoundException ex) {
-			response.setStatus(response.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			writer.print("{success: false}");
 			log.debug(ImgTAction.class.getName() + "has thrown an exception: " + ex.getMessage());
 		} catch (IOException ex) {
-			response.setStatus(response.SC_INTERNAL_SERVER_ERROR);
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			writer.print("{success: false}");
 			log.debug(ImgTAction.class.getName() + "has thrown an exception: " + ex.getMessage());
 		} finally {
@@ -403,6 +429,7 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 		}
 		writer.flush();
 		writer.close();
+		return "json";
 	}
 
 	/**
