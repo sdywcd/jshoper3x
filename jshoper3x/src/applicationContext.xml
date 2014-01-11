@@ -95,6 +95,7 @@
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
+		
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -134,16 +135,17 @@
 	<!-- 配置activiti工作流引擎 -->
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
 		<property name="dataSource" ref="dataSource" />
-		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionManager" ref="transactionManager"/>
 		<property name="databaseSchemaUpdate" value="true" />
 		<property name="mailServerHost" value="localhost" />
 		<property name="mailServerPort" value="5025" />
 		<property name="jpaHandleTransaction" value="true" />
 		<property name="jpaCloseEntityManager" value="true" />
 		<property name="jobExecutorActivate" value="false" />
-		<property name="databaseType" value="mysql"/>
+		 <property name="databaseType" value="mysql" />    
 	</bean>
-	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"
+		destroy-method="destroy">
 		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
 	</bean>
 	<bean id="repositoryService" factory-bean="processEngine"
@@ -158,5 +160,6 @@
 		factory-method="getManagementService" />
 	<bean id="identityService" factory-bean="processEngine"
 		factory-method="getIdentityService" />
+
 </beans>
 	
