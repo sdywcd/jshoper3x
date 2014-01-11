@@ -13,7 +13,7 @@ import com.jshop.service.ExpresstempleteTService;
 
 @Service("expresstempleteTService")
 @Scope("prototype")
-public class ExpresstempleteTServiceImpl implements ExpresstempleteTService {
+public class ExpresstempleteTServiceImpl extends BaseTServiceImpl<ExpresstempleteT> implements ExpresstempleteTService {
 	@Resource
 	private ExpresstempleteTDao expresstempleteTDao;
 
@@ -31,10 +31,6 @@ public class ExpresstempleteTServiceImpl implements ExpresstempleteTService {
 
 	public int updateExpresstemplete(ExpresstempleteT et) {
 		return this.getExpresstempleteTDao().updateExpresstemplete(et);
-	}
-
-	public int addExpresstemplete(ExpresstempleteT et) {
-		return this.getExpresstempleteTDao().addExpresstemplete(et);
 	}
 
 	public int countfindAllExpresstempleteT() {

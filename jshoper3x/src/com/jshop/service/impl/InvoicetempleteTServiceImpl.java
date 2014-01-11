@@ -14,7 +14,7 @@ import com.jshop.service.InvoicetempleteTService;
 
 @Service("invoicetempleteTService")
 @Scope("prototype")
-public class InvoicetempleteTServiceImpl implements InvoicetempleteTService {
+public class InvoicetempleteTServiceImpl extends BaseTServiceImpl<InvoicetempleteT>implements InvoicetempleteTService {
 	@Resource
 	private InvoicetempleteTDao invoicetempleteTDao;
 
@@ -34,9 +34,7 @@ public class InvoicetempleteTServiceImpl implements InvoicetempleteTService {
 		return this.getInvoicetempleteTDao().updateInvoicetempleteT(it);
 	}
 
-	public int addInvoiceTemplete(InvoicetempleteT it) {
-		return this.getInvoicetempleteTDao().addInvoiceTemplete(it);
-	}
+
 
 	public int countfindAllInvoicetempleteT() {
 		return this.getInvoicetempleteTDao().countfindAllInvoicetempleteT();

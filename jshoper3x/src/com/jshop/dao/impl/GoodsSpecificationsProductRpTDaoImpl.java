@@ -28,7 +28,7 @@ import com.jshop.entity.GoodsSpecificationsProductRpT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("goodsSpecificationsProductRpTDao")
-public class GoodsSpecificationsProductRpTDaoImpl extends HibernateDaoSupport implements GoodsSpecificationsProductRpTDao{
+public class GoodsSpecificationsProductRpTDaoImpl extends BaseTDaoImpl<GoodsSpecificationsProductRpT> implements GoodsSpecificationsProductRpTDao{
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsSpecificationsProductRpTDaoImpl.class);
 
@@ -53,17 +53,6 @@ public class GoodsSpecificationsProductRpTDaoImpl extends HibernateDaoSupport im
 		}
 	}
 
-	@Override
-	public void addGoodsAssociatedProductById(GoodsSpecificationsProductRpT gsrt) {
-		log.debug("add Goods Associated products");
-		try{
-			this.getHibernateTemplate().save(gsrt);
-			log.debug("add successful");
-		}catch(RuntimeException re){
-			log.error("add failed", re);
-			throw re;
-		}
-	}
 
 	@Override
 	public void updateGoodsAssociatedProductById(

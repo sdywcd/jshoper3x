@@ -13,7 +13,7 @@ import com.jshop.service.GoodsGroupTService;
 
 @Service("goodsGroupTService")
 @Scope("prototype")
-public class GoodsGroupTServiceImpl implements GoodsGroupTService {
+public class GoodsGroupTServiceImpl extends BaseTServiceImpl<GoodsGroupT> implements GoodsGroupTService {
 	@Resource
 	public GoodsGroupTDao goodsGroupTDao;
 
@@ -25,11 +25,6 @@ public class GoodsGroupTServiceImpl implements GoodsGroupTService {
 		this.goodsGroupTDao = goodsGroupTDao;
 	}
 
-	@Override
-	public int addGoodsGroupT(GoodsGroupT group) {
-
-		return this.getGoodsGroupTDao().addGoodsGroupT(group);
-	}
 
 	@Override
 	public int updateGoodsGroupT(GoodsGroupT group) {

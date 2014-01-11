@@ -1181,7 +1181,7 @@ public class GoodsTAction extends ActionSupport {
 			gart.setGoodsid(gt.getGoodsid());
 			JSONObject jo=(JSONObject) ja.get(i);
 			gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
-			this.getGoodsAttributeRpTService().saveGoodsAttributeRpT(gart);
+			this.getGoodsAttributeRpTService().save(gart);
 		}
 	}
 
@@ -1423,7 +1423,7 @@ public class GoodsTAction extends ActionSupport {
 				gart.setGoodsid(gt.getGoodsid());
 				JSONObject jo=(JSONObject) ja.get(i);
 				gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
-				this.getGoodsAttributeRpTService().saveGoodsAttributeRpT(gart);
+				this.getGoodsAttributeRpTService().save(gart);
 			}
 		}
 		
@@ -1779,8 +1779,7 @@ public class GoodsTAction extends ActionSupport {
 						goodscode.setId(this.getSerial().Serialid(Serial.GOODSQRCODE));
 						goodscode.setState("1");
 						goodscode.setTwocodepath(code);
-						this.getGoodsTwocodeRelationshipTService().addGoodsQRCode(goodscode);
-						
+						this.getGoodsTwocodeRelationshipTService().save(goodscode);
 						this.setFlag(true);
 						return "json";
 					}

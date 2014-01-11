@@ -8,15 +8,7 @@ import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.ProductT;
 
-public interface GoodsTService {
-
-	/**
-	 * 增加商品
-	 * 
-	 * @param g
-	 * @return
-	 */
-	public void saveGoods(GoodsT g);
+public interface GoodsTService extends BaseTService<GoodsT>{
 
 	/**
 	 * 批量删除商品

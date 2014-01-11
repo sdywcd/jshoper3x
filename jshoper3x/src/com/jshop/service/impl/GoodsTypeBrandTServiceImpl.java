@@ -14,7 +14,8 @@ import com.jshop.service.GoodsTypeBrandTService;
 
 @Service("goodsTypeBrandTService")
 @Scope("prototype")
-public class GoodsTypeBrandTServiceImpl implements GoodsTypeBrandTService {
+public class GoodsTypeBrandTServiceImpl extends
+		BaseTServiceImpl<GoodsTypeBrandT> implements GoodsTypeBrandTService {
 	@Resource
 	private GoodsTypeBrandTDao goodsTypeBrandTDao;
 
@@ -30,30 +31,33 @@ public class GoodsTypeBrandTServiceImpl implements GoodsTypeBrandTService {
 		return this.getGoodsTypeBrandTDao().delGoodsTypeBrand(list);
 	}
 
-	public int addGoodsTypeBrand(GoodsTypeBrandT gtbt) {
-		return this.getGoodsTypeBrandTDao().addGoodsTypeBrand(gtbt);
-	}
-
-	public List<GoodsTypeBrandT> findAllGoodsTypeBrand(int currentPage, int lineSize) {
-		return this.getGoodsTypeBrandTDao().findAllGoodsTypeBrand(currentPage, lineSize);
+	public List<GoodsTypeBrandT> findAllGoodsTypeBrand(int currentPage,
+			int lineSize) {
+		return this.getGoodsTypeBrandTDao().findAllGoodsTypeBrand(currentPage,
+				lineSize);
 	}
 
 	public int countfindAllGoodsTypeBrand() {
 		return this.getGoodsTypeBrandTDao().countfindAllGoodsTypeBrand();
 	}
 
-	public GoodsTypeBrandT findGoodsTypeBrandByBrandid(String brandid, String goodsTypeId) {
-		return this.getGoodsTypeBrandTDao().findGoodsTypeBrandByBrandid(brandid, goodsTypeId);
+	public GoodsTypeBrandT findGoodsTypeBrandByBrandid(String brandid,
+			String goodsTypeId) {
+		return this.getGoodsTypeBrandTDao().findGoodsTypeBrandByBrandid(
+				brandid, goodsTypeId);
 	}
 
-	public List<GoodsTypeBrandT> sortAllGoodsTypeBrand(int currentPage, int lineSize, String queryString) {
+	public List<GoodsTypeBrandT> sortAllGoodsTypeBrand(int currentPage,
+			int lineSize, String queryString) {
 
-		return this.getGoodsTypeBrandTDao().sortAllGoodsTypeBrand(currentPage, lineSize, queryString);
+		return this.getGoodsTypeBrandTDao().sortAllGoodsTypeBrand(currentPage,
+				lineSize, queryString);
 	}
 
 	public int updateGoodsTypeBrandTname(String name, String goodsTypeId) {
 
-		return this.getGoodsTypeBrandTDao().updateGoodsTypeBrandTname(name, goodsTypeId);
+		return this.getGoodsTypeBrandTDao().updateGoodsTypeBrandTname(name,
+				goodsTypeId);
 	}
 
 	public List<GoodsTypeBrandT> findBrandBygoodsTypeId(String goodsTypeId) {

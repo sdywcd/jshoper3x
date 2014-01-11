@@ -27,7 +27,7 @@ import com.jshop.entity.GlobalParamM;
  * @author MyEclipse Persistence Tools
  */
 @Repository("globalParamMDao")
-public class GlobalParamMDaoImpl extends HibernateDaoSupport implements GlobalParamMDao {
+public class GlobalParamMDaoImpl extends BaseTDaoImpl<GlobalParamM> implements GlobalParamMDao {
 	
 
 	private static final Logger log = LoggerFactory.getLogger(GlobalParamMDaoImpl.class);

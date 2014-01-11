@@ -4,13 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.GoodsGroupT;
 
-public interface GoodsGroupTService {
-	/**
-	 * 增加团购商品
-	 * @param group
-	 * @return
-	 */
-	public int addGoodsGroupT(GoodsGroupT group);
+public interface GoodsGroupTService extends BaseTService<GoodsGroupT>{
+
 	/**
 	 * 修改团购商品参数
 	 * @param group

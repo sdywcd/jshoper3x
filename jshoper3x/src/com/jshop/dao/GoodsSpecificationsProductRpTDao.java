@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 
-public interface GoodsSpecificationsProductRpTDao {
+public interface GoodsSpecificationsProductRpTDao extends BaseTDao<GoodsSpecificationsProductRpT> {
 
 	
 	/**
@@ -25,13 +25,6 @@ public interface GoodsSpecificationsProductRpTDao {
 	 */
 	public List<GoodsSpecificationsProductRpT>checkSpecificationRelationshipByproductid(String productid);
 
-	/**
-	 * 增加商品规格
-	 * @param goodsSetId
-	 * @param specidicationsId
-	 * @return
-	 */
-	public void addGoodsAssociatedProductById(GoodsSpecificationsProductRpT gsrt);
 	
 	/**
 	 * 更新商品规格

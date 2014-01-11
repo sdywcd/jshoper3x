@@ -13,7 +13,8 @@ import com.jshop.service.GlobalParamService;
 
 @Service("globalParamService")
 @Scope("prototype")
-public class GlobalParamServiceImpl implements GlobalParamService {
+public class GlobalParamServiceImpl extends BaseTServiceImpl<GlobalParamM>
+		implements GlobalParamService {
 	@Resource
 	private GlobalParamMDao globalParamMDao;
 

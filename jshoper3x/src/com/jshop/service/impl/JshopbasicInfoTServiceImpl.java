@@ -14,7 +14,7 @@ import com.jshop.service.JshopbasicInfoTService;
 
 @Service("jshopbasicInfoTService")
 @Scope("prototype")
-public class JshopbasicInfoTServiceImpl implements JshopbasicInfoTService {
+public class JshopbasicInfoTServiceImpl extends BaseTServiceImpl<JshopbasicInfoT> implements JshopbasicInfoTService {
 	@Resource
 	private JshopbasicInfoTDao jshopbasicInfoTDao;
 
@@ -32,10 +32,6 @@ public class JshopbasicInfoTServiceImpl implements JshopbasicInfoTService {
 
 	public void updateJshopbasicInfo(JshopbasicInfoT jbit) {
 		this.getJshopbasicInfoTDao().updateJshopbasicInfo(jbit);
-	}
-
-	public int addJshopbasicInfoT(JshopbasicInfoT jbit) {
-		return this.getJshopbasicInfoTDao().addJshopbasicInfoT(jbit);
 	}
 
 	public int countfindAllJshopbasicInfo(String creatorid) {

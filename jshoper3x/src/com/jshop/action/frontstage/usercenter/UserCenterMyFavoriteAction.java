@@ -179,13 +179,10 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 			f.setAddtime(BaseTools.systemtime());
 			f.setReadcount(Integer.parseInt(this.getReadcount().trim()));
 			f.setMemberprice(this.getMemberprice());
-			if(this.getFavoriteTService().addFavorite(f)>0){
-				this.setSucflag(true);
-				return "json";
-			}else{
-				this.setSucflag(false);
-				return "json";
-			}
+			this.getFavoriteTService().save(f);
+			this.setSucflag(true);
+			return "json";
+			
 		}else{
 			this.setSlogin(false);
 			return "json";

@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.jshop.entity.OrderT;
 
-public interface OrderTDao {
+public interface OrderTDao extends BaseTDao<OrderT> {
 
 	/**
 	 * 增加订单

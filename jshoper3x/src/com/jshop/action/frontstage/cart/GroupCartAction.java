@@ -325,14 +325,9 @@ public class GroupCartAction extends ActionSupport {
 			gct.setHtmlpath(ggt.getHtmlpath());
 			gct.setProductid("0");
 			gct.setGoodsname(ggt.getGoodsname());
-			if (this.getGroupCartService().addgroupcart(gct) > 0) {
-				this.setSucflag(true);
-				this.setSlogin(true);
-				return "json";
-			} else {
-				this.setSlogin(false);
-				return "json";
-			}
+			this.getGroupCartService().save(gct);
+			this.setSucflag(true);
+			return "json";
 		}
 		return "json";
 	}

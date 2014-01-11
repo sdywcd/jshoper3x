@@ -283,11 +283,10 @@ public class GoodsGroupTAction extends ActionSupport {
 		ggt.setDetail(this.getDetail().trim());		
 		ggt.setPictureurl(this.getPictureurl());
 		ggt.setHtmlpath(" ");
-		if(this.getGoodsGroupTService().addGoodsGroupT(ggt)>0){
-			this.setGoodsgroup(true);
-			return "json";			
-		}	
-		return "json";
+		this.getGoodsGroupTService().save(ggt);
+		this.setGoodsgroup(true);
+		return "json";			
+		
 	}
 
 	/**

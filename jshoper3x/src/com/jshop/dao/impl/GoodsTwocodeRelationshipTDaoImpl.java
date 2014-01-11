@@ -14,29 +14,20 @@ import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.GoodsTwocodeRelationshipTDao;
 import com.jshop.entity.GoodsTwocodeRpT;
+
 @Repository("goodsTwocodeRelationshipTDao")
-public class GoodsTwocodeRelationshipTDaoImpl extends HibernateDaoSupport implements
-		GoodsTwocodeRelationshipTDao {
-	private static final Logger log = LoggerFactory.getLogger(GoodsTwocodeRelationshipTDaoImpl.class);
-	
-	@Override
-	public int addGoodsQRCode(GoodsTwocodeRpT qrcode) {
-		try {
-			log.debug("add GoodsTwocodeRelationship success");
-			this.getHibernateTemplate().save(qrcode);
-			return 1;
-		} catch (RuntimeException e) {
-			log.error("add GoodsTwocodeRelationshipT failed");
-			throw e;
-		}
-	}
+public class GoodsTwocodeRelationshipTDaoImpl extends
+		BaseTDaoImpl<GoodsTwocodeRpT> implements GoodsTwocodeRelationshipTDao {
+	private static final Logger log = LoggerFactory
+			.getLogger(GoodsTwocodeRelationshipTDaoImpl.class);
 
 	@Override
 	public GoodsTwocodeRpT findGoodsQRCodeByGoodsid(final String goodsid) {
 		try {
-			final String queryString="from GoodsTwocodeRpT as gc where gc.goodsid=:goodsid";
-			List<GoodsTwocodeRpT> list = this.getHibernateTemplate().findByNamedParam(queryString, "goodsid", goodsid);
-			if(!list.isEmpty()){
+			final String queryString = "from GoodsTwocodeRpT as gc where gc.goodsid=:goodsid";
+			List<GoodsTwocodeRpT> list = this.getHibernateTemplate()
+					.findByNamedParam(queryString, "goodsid", goodsid);
+			if (!list.isEmpty()) {
 				return list.get(0);
 			}
 			return null;
@@ -46,19 +37,19 @@ public class GoodsTwocodeRelationshipTDaoImpl extends HibernateDaoSupport implem
 	}
 
 	@Override
-	public int updateGoodsQRCode(final String goodsid,final String twocodepath) {
+	public int updateGoodsQRCode(final String goodsid, final String twocodepath) {
 		try {
-			final String queryString="update GoodsTwocodeRpT as gc set gc.twocodepath=:twocodepath where gc.goodsid=:goodsid ";
+			final String queryString = "update GoodsTwocodeRpT as gc set gc.twocodepath=:twocodepath where gc.goodsid=:goodsid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
-				
+
 				@Override
-				public Object doInHibernate(Session seesion) throws HibernateException,
-						SQLException {
-					int i=0;
+				public Object doInHibernate(Session seesion)
+						throws HibernateException, SQLException {
+					int i = 0;
 					Query query = seesion.createQuery(queryString);
 					query.setParameter("goodsid", goodsid);
 					query.setParameter("twocodepath", twocodepath);
-					i=query.executeUpdate();
+					i = query.executeUpdate();
 					return i;
 				}
 			});
@@ -66,7 +57,7 @@ public class GoodsTwocodeRelationshipTDaoImpl extends HibernateDaoSupport implem
 		} catch (RuntimeException e) {
 			throw e;
 		}
-	
+
 	}
 
 }

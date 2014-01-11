@@ -5,14 +5,14 @@ import java.util.List;
 
 import com.jshop.entity.ArticleT;
 
-public interface ArticleTDao {
+public interface ArticleTDao extends BaseTDao<ArticleT>{
 
 	/**
 	 * 增加文章
 	 * 
 	 * @param at
 	 */
-	public void addArticleT(ArticleT at);
+	public void save(ArticleT at);
 
 	/**
 	 * 批量删除文章

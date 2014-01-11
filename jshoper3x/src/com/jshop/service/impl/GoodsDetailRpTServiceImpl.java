@@ -10,7 +10,7 @@ import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.service.GoodsDetailRpTService;
 @Service("goodsDetailRpTService")
 @Scope("prototype")
-public class GoodsDetailRpTServiceImpl implements GoodsDetailRpTService {
+public class GoodsDetailRpTServiceImpl extends BaseTServiceImpl<GoodsDetailRpT>implements GoodsDetailRpTService {
 	@Resource
 	private GoodsDetailRpTDao goodsDetailRpTDao;
 	
@@ -20,11 +20,6 @@ public class GoodsDetailRpTServiceImpl implements GoodsDetailRpTService {
 
 	public void setGoodsDetailRpTDao(GoodsDetailRpTDao goodsDetailRpTDao) {
 		this.goodsDetailRpTDao = goodsDetailRpTDao;
-	}
-
-	@Override
-	public void saveGoodsDetailRpT(GoodsDetailRpT gdrt) {
-		this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
 	}
 
 	@Override

@@ -595,7 +595,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 				gct.setParentName(StaticString.EMPTY);
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().addGoodsCategory(gct);
+				this.getGoodsCategoryTService().save(gct);
 				this.setSucflag(true);
 				return "json";
 			}
@@ -679,7 +679,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 				gct.setParentName(this.getParentName());
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().addGoodsCategory(gct);
+				this.getGoodsCategoryTService().save(gct);
 				this.setSucflag(true);
 				return "json";
 			}
@@ -765,7 +765,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 				gct.setParentName(this.getParentName1());
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().addGoodsCategory(gct);
+				this.getGoodsCategoryTService().save(gct);
 				this.setSucflag(true);
 				return "json";
 			}

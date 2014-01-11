@@ -27,22 +27,10 @@ import com.jshop.entity.GoodsAttributeT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("goodsAttributeTDao")
-public class GoodsAttributeTDaoImpl extends HibernateDaoSupport implements GoodsAttributeTDao {
+public class GoodsAttributeTDaoImpl extends BaseTDaoImpl<GoodsAttributeT> implements GoodsAttributeTDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsAttributeTDaoImpl.class);
 	
-	public int addGoodsAttributeT(GoodsAttributeT gat) {
-		log.debug("save GoodsAttributeT");
-		log.info("save GoodsAttributeT");
-		try {
-			this.getHibernateTemplate().save(gat);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public GoodsAttributeT findGoodsAttributeTBygoodstypeId(String goodsTypeId) {
 		log.debug("find by id GoodsAttributeT");

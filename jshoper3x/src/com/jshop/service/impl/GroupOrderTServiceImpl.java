@@ -14,7 +14,7 @@ import com.jshop.service.GroupOrderTService;
 
 @Service("groupOrderTService")
 @Scope("prototype")
-public class GroupOrderTServiceImpl implements GroupOrderTService {
+public class GroupOrderTServiceImpl extends BaseTServiceImpl<GroupOrderT>implements GroupOrderTService {
 	@Resource
 	private GroupOrderTDao groupOrderTDao;
 
@@ -24,12 +24,6 @@ public class GroupOrderTServiceImpl implements GroupOrderTService {
 
 	public void setGroupOrderTDao(GroupOrderTDao groupOrderTDao) {
 		this.groupOrderTDao = groupOrderTDao;
-	}
-
-	@Override
-	public int addGroupOrder(GroupOrderT got) {
-
-		return this.getGroupOrderTDao().addGroupOrder(got);
 	}
 
 	@Override

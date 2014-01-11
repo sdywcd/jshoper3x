@@ -27,24 +27,10 @@ import com.jshop.entity.GoodsCategoryT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("goodsCategoryTDao")
-public class GoodsCategoryTDaoImpl extends HibernateDaoSupport implements GoodsCategoryTDao {
+public class GoodsCategoryTDaoImpl extends BaseTDaoImpl<GoodsCategoryT> implements GoodsCategoryTDao {
 	
 
 	private static final Logger log = LoggerFactory.getLogger(GoodsCategoryTDaoImpl.class);
-	
-
-	public int addGoodsCategory(GoodsCategoryT gct) {
-		log.debug("save GoodsCategoryT");
-		try {
-			this.getHibernateTemplate().save(gct);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public GoodsCategoryT findPathParentIdByParentId(String parentId) {
 		log.debug("find by id GoodsCategoryT");
 		try {

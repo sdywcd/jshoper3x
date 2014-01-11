@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.jshop.dao.GroupCartDao;
 import com.jshop.entity.GroupCartT;
 @Repository("groupCartDao")
-public class GroupCatTDaoImpl extends HibernateDaoSupport implements GroupCartDao {
+public class GroupCatTDaoImpl extends BaseTDaoImpl<GroupCartT> implements GroupCartDao {
 	private static final Log log = LogFactory.getLog(CartTDaoImpl.class);
 	@Override
 	public List<GroupCartT> findGroupById(final String cartid) {
@@ -32,16 +32,6 @@ public class GroupCatTDaoImpl extends HibernateDaoSupport implements GroupCartDa
 		}
 	}
 
-	
-	@Override
-	public int addgroupcart(GroupCartT gc) {
-		try {
-			this.getHibernateTemplate().save(gc);
-			return 1;
-		} catch (DataAccessException e) {
-			throw e;
-		}
-	}
 
 	@Override
 	public int delGroupCart(final String cartid) {

@@ -13,7 +13,7 @@ import com.jshop.service.GoodsTypeTNService;
 
 @Service("goodsTypeTNService")
 @Scope("prototype")
-public class GoodsTypeTNServiceImpl implements GoodsTypeTNService {
+public class GoodsTypeTNServiceImpl extends BaseTServiceImpl<GoodsTypeTN> implements GoodsTypeTNService {
 	@Resource
 	private GoodsTypeTNDao goodsTypeTNDao;
 
@@ -27,10 +27,6 @@ public class GoodsTypeTNServiceImpl implements GoodsTypeTNService {
 
 	public int updateGoodsTypeTN(GoodsTypeTN gtn) {
 		return this.getGoodsTypeTNDao().updateGoodsTypeTN(gtn);
-	}
-
-	public int addGoodsTypeTN(GoodsTypeTN gtn) {
-		return this.getGoodsTypeTNDao().addGoodsTypeTN(gtn);
 	}
 
 	public int countfindAllGoodsTypeTN() {

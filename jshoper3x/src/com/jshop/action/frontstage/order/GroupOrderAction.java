@@ -679,7 +679,7 @@ public class GroupOrderAction extends ActionSupport {
 			got.setHasprintinvoice("0");//未打印发货单
 			got.setHasprintfpinvoice("0");//未开具发票
 			got.setExpressnumber(null);//快递单号
-			if (this.getGroupOrderTService().addGroupOrder(got) > 0) {
+			this.getGroupOrderTService().save(got);
 			//	this.getGroupCartService().updateGroupCartStateByGoodsId(this.getCartgoodsid(), "3");
 				AlipayConfig.out_trade_no = got.getOrderid();
 				AlipayConfig.subject = got.getGoodsname();
@@ -706,7 +706,7 @@ public class GroupOrderAction extends ActionSupport {
 			} else {
 				this.setSaddorder(false);
 			}
-		}
+		
 		
 		
 	}

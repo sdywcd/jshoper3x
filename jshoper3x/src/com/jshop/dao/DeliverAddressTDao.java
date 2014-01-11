@@ -4,15 +4,9 @@ import java.util.List;
 
 import com.jshop.entity.DeliverAddressT;
 
-public interface DeliverAddressTDao {
+public interface DeliverAddressTDao extends BaseTDao<DeliverAddressT>{
 
-	/**
-	 * 增加收获地址
-	 * 
-	 * @param d
-	 * @return
-	 */
-	public int addDeliverAddress(DeliverAddressT d);
+
 
 	/**
 	 * 删除收获地址

@@ -14,7 +14,7 @@ import com.jshop.service.GoodsCommentTService;
 
 @Service("goodsCommentTService")
 @Scope("prototype")
-public class GoodsCommentTServiceImpl implements GoodsCommentTService {
+public class GoodsCommentTServiceImpl extends BaseTServiceImpl<GoodsCommentT>implements GoodsCommentTService {
 	@Resource
 	private GoodsCommentTDao goodsCommentTDao;
 
@@ -35,9 +35,6 @@ public class GoodsCommentTServiceImpl implements GoodsCommentTService {
 				state, list);
 	}
 
-	public int addGoodsComment(GoodsCommentT gct) {
-		return this.getGoodsCommentTDao().addGoodsComment(gct);
-	}
 
 	public List<GoodsCommentT> findAllGoodsComment(int currentPage, int lineSize) {
 		return this.getGoodsCommentTDao().findAllGoodsComment(currentPage,

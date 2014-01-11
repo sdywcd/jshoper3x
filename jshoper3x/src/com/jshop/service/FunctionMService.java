@@ -4,12 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.FunctionM;
 
-public interface FunctionMService {
-	/**
-	 * 增加模块功能
-	 * @param fm
-	 */
-	public abstract void addFunctionM(FunctionM fm);
+public interface FunctionMService extends BaseTService<FunctionM>{
+
 	/**
 	 * 更新模块功能
 	 * @param fm

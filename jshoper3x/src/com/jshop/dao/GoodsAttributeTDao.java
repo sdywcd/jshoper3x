@@ -4,15 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.GoodsAttributeT;
 
-public interface GoodsAttributeTDao {
-
-	/**
-	 * 增加商品参数
-	 * 
-	 * @param gat
-	 * @return
-	 */
-	public int addGoodsAttributeT(GoodsAttributeT gat);
+public interface GoodsAttributeTDao extends BaseTDao<GoodsAttributeT>{
 
 	/**
 	 * 更新商品参数
@@ -72,12 +64,15 @@ public interface GoodsAttributeTDao {
 	 */
 	public List<GoodsAttributeT> findGoodsAttributeTBygoodsTypeId(
 			String goodsTypeId);
+
 	/**
 	 * 根据参数统计搜索结果计数
+	 * 
 	 * @param queryString
 	 * @return
 	 */
 	public int countsortAllGoodsAttributeT(String queryString);
+
 	/**
 	 * 根据排序方式进行排序
 	 * 

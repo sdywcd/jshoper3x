@@ -27,22 +27,10 @@ import com.jshop.entity.ExpresstempleteT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("expresstempleteTDao")
-public class ExpresstempleteTDaoImpl extends HibernateDaoSupport implements ExpresstempleteTDao {
+public class ExpresstempleteTDaoImpl extends BaseTDaoImpl<ExpresstempleteT> implements ExpresstempleteTDao {
 	
 	private static final Log log = LogFactory.getLog(ExpresstempleteTDaoImpl.class);
 	
-
-	public int addExpresstemplete(ExpresstempleteT et) {
-		log.debug("save ExpresstempleteT");
-		try {
-			this.getHibernateTemplate().save(et);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int delExpresstemplete(final String[] list) {
 		log.debug("del ExpresstempleteT");

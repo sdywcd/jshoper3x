@@ -13,7 +13,9 @@ import com.jshop.service.GoodsSpecificationsProductRpTService;
 
 @Service("goodsSpecificationsProductRpTService")
 @Scope("prototype")
-public class GoodsSpecificationsProductRpTServiceImpl implements GoodsSpecificationsProductRpTService {
+public class GoodsSpecificationsProductRpTServiceImpl extends
+		BaseTServiceImpl<GoodsSpecificationsProductRpT> implements
+		GoodsSpecificationsProductRpTService {
 	@Resource
 	private GoodsSpecificationsProductRpTDao goodsSpecificationsProductRpTDao;
 
@@ -29,38 +31,37 @@ public class GoodsSpecificationsProductRpTServiceImpl implements GoodsSpecificat
 	@Override
 	public List<GoodsSpecificationsProductRpT> checkSpecificationRelationshipByspecificationsid(
 			String specificationsid) {
-		return this.getGoodsSpecificationsProductRpTDao().checkSpecificationRelationshipByspecificationsid(specificationsid);
+		return this.getGoodsSpecificationsProductRpTDao()
+				.checkSpecificationRelationshipByspecificationsid(
+						specificationsid);
 	}
 
 	@Override
 	public List<GoodsSpecificationsProductRpT> checkSpecificationRelationshipBygoodssetid(
 			String goodsid) {
-		return this.getGoodsSpecificationsProductRpTDao().checkSpecificationRelationshipBygoodssetid(goodsid);
-	}
-
-	@Override
-	public void addGoodsAssociatedProductById(GoodsSpecificationsProductRpT gsrt) {
-		this.getGoodsSpecificationsProductRpTDao().addGoodsAssociatedProductById(gsrt);
+		return this.getGoodsSpecificationsProductRpTDao()
+				.checkSpecificationRelationshipBygoodssetid(goodsid);
 	}
 
 	@Override
 	public void updateGoodsAssociatedProductById(
 			GoodsSpecificationsProductRpT gsrt) {
-		this.getGoodsSpecificationsProductRpTDao().updateGoodsAssociatedProductById(gsrt);
-		
+		this.getGoodsSpecificationsProductRpTDao()
+				.updateGoodsAssociatedProductById(gsrt);
+
 	}
 
 	@Override
 	public int delGoodsAssociatedProductById(String goodsid) {
-		return this.getGoodsSpecificationsProductRpTDao().delGoodsAssociatedProductById(goodsid);
+		return this.getGoodsSpecificationsProductRpTDao()
+				.delGoodsAssociatedProductById(goodsid);
 	}
 
 	@Override
 	public List<GoodsSpecificationsProductRpT> checkSpecificationRelationshipByproductid(
 			String productid) {
-		return this.getGoodsSpecificationsProductRpTDao().checkSpecificationRelationshipByproductid(productid);
+		return this.getGoodsSpecificationsProductRpTDao()
+				.checkSpecificationRelationshipByproductid(productid);
 	}
 
-
-	
 }

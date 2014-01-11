@@ -31,7 +31,7 @@ import com.taobao.api.domain.Product;
 
 @Service("goodsTService")
 @Scope("prototype")
-public class GoodsTServiceImpl implements GoodsTService {
+public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsTService {
 	@Resource
 	private GoodsTDao goodsTDao;
 	@Resource
@@ -162,9 +162,6 @@ public class GoodsTServiceImpl implements GoodsTService {
 		return getGoodsTDao().updateFiveGoodsState(goodsid, recommended, hotsale, bargainprice, isNew, ismobileplatformgoods);
 	}
 
-	public void saveGoods(GoodsT g) {
-		this.getGoodsTDao().saveGoods(g);
-	}
 
 	public int countAllGoods(String creatorid) {
 		return getGoodsTDao().countAllGoods(creatorid);
@@ -404,11 +401,11 @@ public class GoodsTServiceImpl implements GoodsTService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void saveGoodsProcess(GoodsT gt,
 			GoodsDetailRpT gdpt,ProductT pt,GoodsSpecificationsProductRpT gspt) {
-			this.getGoodsTDao().saveGoods(gt);
-			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdpt);
+			this.getGoodsTDao().save(gt);
+			this.getGoodsDetailRpTDao().save(gdpt);
 			this.getProductTDao().saveProductT(pt);
 			//增加规格商品和货物关系表
-			this.getGoodsSpecificationsProductRpTService().addGoodsAssociatedProductById(gspt);
+			this.getGoodsSpecificationsProductRpTService().save(gspt);
 			
 	}
 
@@ -427,7 +424,7 @@ public class GoodsTServiceImpl implements GoodsTService {
 			gdrt=new GoodsDetailRpT();
 			gdrt.setGoodsid(gt.getGoodsid());
 			gdrt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
-			this.getGoodsDetailRpTDao().saveGoodsDetailRpT(gdrt);
+			this.getGoodsDetailRpTDao().save(gdrt);
 		}
 		this.getProductTDao().updateProductT(pt);
 		

@@ -13,7 +13,7 @@ import com.jshop.service.FunctionMService;
 
 @Service("functionMService")
 @Scope("prototype")
-public class FunctionMServiceImpl implements FunctionMService {
+public class FunctionMServiceImpl extends BaseTServiceImpl<FunctionM>implements FunctionMService {
 	@Resource
 	private FunctionMDao functionMDao;
 
@@ -25,10 +25,6 @@ public class FunctionMServiceImpl implements FunctionMService {
 		this.functionMDao = functionMDao;
 	}
 
-	public void addFunctionM(FunctionM fm) {
-		this.getFunctionMDao().addFunctionM(fm);
-
-	}
 
 	public int delFunctionM(String[] strs) {
 		return this.getFunctionMDao().delFunctionM(strs);

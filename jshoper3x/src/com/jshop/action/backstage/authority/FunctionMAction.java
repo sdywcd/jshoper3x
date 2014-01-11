@@ -176,7 +176,7 @@ public class FunctionMAction extends ActionSupport {
 		fm.setVisiturl(this.getVisiturl());
 		fm.setModuleid(this.getModuleid());
 		fm.setCreatetime(BaseTools.systemtime());
-		this.getFunctionMService().addFunctionM(fm);
+		this.getFunctionMService().save(fm);
 		this.setSucflag(true);
 		return "json";
 	}

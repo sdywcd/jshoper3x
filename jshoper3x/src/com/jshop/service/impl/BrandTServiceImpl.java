@@ -6,16 +6,31 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.dao.BrandTDao;
 import com.jshop.entity.BrandT;
+import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.service.BrandTService;
+import com.jshop.service.GoodsTypeBrandTService;
 
 @Service("brandTService")
 @Scope("prototype")
-public class BrandTServiceImpl implements BrandTService {
+public class BrandTServiceImpl extends BaseTServiceImpl<BrandT>implements BrandTService {
 	@Resource
 	private BrandTDao brandTDao;
+	
+	private GoodsTypeBrandTService goodsTypeBrandTService;
+	
+	public GoodsTypeBrandTService getGoodsTypeBrandTService() {
+		return goodsTypeBrandTService;
+	}
+
+	public void setGoodsTypeBrandTService(
+			GoodsTypeBrandTService goodsTypeBrandTService) {
+		this.goodsTypeBrandTService = goodsTypeBrandTService;
+	}
 
 	public BrandTDao getBrandTDao() {
 		return brandTDao;
@@ -33,9 +48,7 @@ public class BrandTServiceImpl implements BrandTService {
 		this.getBrandTDao().updateBrandt(bt);
 	}
 
-	public int addBrandt(BrandT bt) {
-		return this.getBrandTDao().addBrandt(bt);
-	}
+
 
 	public int countfindAllBrandt(String creatorid) {
 		return this.getBrandTDao().countfindAllBrandt(creatorid);
@@ -60,5 +73,14 @@ public class BrandTServiceImpl implements BrandTService {
 
 		return this.getBrandTDao().sortAllBrandt(currentPage, lineSize,
 				creatorid, queryString);
+	}
+
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void saveBrandTransaction(BrandT brand,
+			GoodsTypeBrandT goodsTypeBrandT) {
+		this.getBrandTDao().save(brand);
+		this.getGoodsTypeBrandTService().save(goodsTypeBrandT);
+		
 	}
 }

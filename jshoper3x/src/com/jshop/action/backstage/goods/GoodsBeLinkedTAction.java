@@ -308,7 +308,7 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 				gbl.setUpdatetime(BaseTools.systemtime());
 				gbl.setVersiont(0);
 				gbl.setSxlinkedgoodsid(StaticString.ONE);//单向关联模式时设置成0
-				this.getGoodsBelinkedTService().addGoodsBelinkedT(gbl);
+				this.getGoodsBelinkedTService().save(gbl);
 			}
 			
 		}

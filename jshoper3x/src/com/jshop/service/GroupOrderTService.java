@@ -5,14 +5,8 @@ import java.util.List;
 
 import com.jshop.entity.GroupOrderT;
 
-public interface GroupOrderTService {
-	/**
-	 * 添加团购订单
-	 * 
-	 * @param got
-	 * @return
-	 */
-	public int addGroupOrder(GroupOrderT got);
+public interface GroupOrderTService extends BaseTService<GroupOrderT> {
+
 	/**
 	 * 查询所有订单（后台）
 	 * @param currentPage

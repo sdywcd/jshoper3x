@@ -375,13 +375,10 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		jbi.setCreatetime(BaseTools.systemtime());
 		jbi.setMetaDes(this.getMetaDes());
 		jbi.setMetaKeywords(this.getMetaKeywords());
-		if (this.getJshopbasicInfoTService().addJshopbasicInfoT(jbi) > 0) {
-			this.setSucflag(true);
-			return "json";
-		}
-		this.setSucflag(false);
+		this.getJshopbasicInfoTService().save(jbi);
+		this.setSucflag(true);
 		return "json";
-
+		
 	}
 
 	/**

@@ -16,7 +16,7 @@ import com.jshop.service.ArticleTService;
 
 @Service("articleTService")
 @Scope("prototype")
-public class ArticleTServiceImpl implements ArticleTService {
+public class ArticleTServiceImpl extends BaseTServiceImpl<ArticleT> implements ArticleTService {
 	@Resource
 	private ArticleTDao articleTDao;
 
@@ -28,9 +28,7 @@ public class ArticleTServiceImpl implements ArticleTService {
 		this.articleTDao = articleTDao;
 	}
 
-	public void addArticleT(ArticleT at) {
-		this.getArticleTDao().addArticleT(at);
-	}
+
 
 	public int countfindAllArticle(String creatorid) {
 		return this.getArticleTDao().countfindAllArticle(creatorid);
@@ -94,6 +92,12 @@ public class ArticleTServiceImpl implements ArticleTService {
 	public int countfindAllArticle() {
 		return this.getArticleTDao().countfindAllArticle();
 				
+	}
+
+	@Override
+	public void save(ArticleT t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

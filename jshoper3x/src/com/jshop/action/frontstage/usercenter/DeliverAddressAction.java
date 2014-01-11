@@ -245,13 +245,9 @@ public class DeliverAddressAction extends ActionSupport {
 			d.setEmail(this.getEmail().trim());
 			d.setCreatetime(BaseTools.systemtime());
 			d.setState("0");
-			if(this.getDeliverAddressTService().addDeliverAddress(d)>0){
-				this.setSucflag(true);
-				return "json";
-			}else{
-				this.setSucflag(false);
-				return "json";
-			}
+			this.getDeliverAddressTService().save(d);
+			this.setSucflag(true);
+			return "json";
 		}
 		this.setSucflag(true);
 		return "json";

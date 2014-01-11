@@ -27,23 +27,11 @@ import com.jshop.entity.DeliverAddressT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("deliverAddressTDao")
-public class DeliverAddressTDaoImpl extends HibernateDaoSupport implements DeliverAddressTDao {
+public class DeliverAddressTDaoImpl extends BaseTDaoImpl<DeliverAddressT> implements DeliverAddressTDao {
 	
 
 	private static final Log log = LogFactory.getLog(DeliverAddressTDaoImpl.class);
 	
-	public int addDeliverAddress(DeliverAddressT d) {
-		log.debug("save DeliverAddressT");
-		try {
-			this.getHibernateTemplate().save(d);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public int delDeliverAddress(final String[] list) {
 		log.debug("del DeliverAddressT");
 		try {

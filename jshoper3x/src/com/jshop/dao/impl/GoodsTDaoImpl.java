@@ -29,26 +29,16 @@ import com.jshop.entity.GoodsT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("goodsTDao")
-public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
-	
+public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
+
 	private static final Log log = LogFactory.getLog(GoodsTDaoImpl.class);
-	
-	public void saveGoods(GoodsT g) {
-		log.debug("save goodst");
-		try {
-			this.getHibernateTemplate().save(g);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countAllGoods(String creatorid) {
 		log.debug("count all GoodsT");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.creatorid=:creatorid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "creatorid", creatorid);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "creatorid", creatorid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -69,7 +59,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			final String queryString = "delete from GoodsT as gt where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : list) {
@@ -93,22 +84,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize, final String creatorid) {
+	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize,
+			final String creatorid) {
 		log.debug("find all GoodsT");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.creatorid=:creatorid order by createtime desc";
+						String queryString = "from GoodsT as gt where gt.creatorid=:creatorid order by createtime desc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("creatorid", creatorid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("creatorid", creatorid);
+							List list = query.list();
+							return list;
+						}
+					});
 			return list;
 		} catch (RuntimeException re) {
 			log.error("find all GoodsT error", re);
@@ -117,24 +111,27 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findAllGoodsBysql(final int currentPage, final int lineSize, final String queryString) {
+	public List<GoodsT> findAllGoodsBysql(final int currentPage,
+			final int lineSize, final String queryString) {
 		log.debug("findAllGoodsBysql");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					List list = query.list();
-					return list;
-					
-				}
-			});
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							List list = query.list();
+							return list;
+
+						}
+					});
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findAllGoodsBysql error", re);
 			throw re;
-			
+
 		}
 	}
 
@@ -143,8 +140,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("find by id GoodsT");
 		try {
 			String queryString = "from GoodsT as gt where gt.goodsid=:goodsid";
-			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(queryString, "goodsid", goodsid);
-			if(!list.isEmpty()){
+			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "goodsid", goodsid);
+			if (!list.isEmpty()) {
 				return list.get(0);
 			}
 			return null;
@@ -160,22 +158,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findGoodsByGoodsname(final int currentPage, final int lineSize, final String goodsname) {
+	public List<GoodsT> findGoodsByGoodsname(final int currentPage,
+			final int lineSize, final String goodsname) {
 		log.debug("find all GoodsT by goodsname");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as g where g.goodsname like ? order by createtime desc";
+						String queryString = "from GoodsT as g where g.goodsname like ? order by createtime desc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter(0, "%" + goodsname + "%");
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter(0, "%" + goodsname + "%");
+							List list = query.list();
+							return list;
+						}
+					});
 			return list;
 		} catch (RuntimeException re) {
 			log.error("find all GoodsT by goodname error", re);
@@ -184,22 +185,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findGoodsByKeyword(final String keywordid, final int currentPage, final int lineSize) {
+	public List<GoodsT> findGoodsByKeyword(final String keywordid,
+			final int currentPage, final int lineSize) {
 		log.debug("find all findGoodsByKeyword");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1'and gt.keywordid=:keywordid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1'and gt.keywordid=:keywordid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("keywordid", keywordid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("keywordid", keywordid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -214,7 +218,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindGoodsByKeyword");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate='1' and gt.keywordid=:keywordid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "keywordid", keywordid);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "keywordid", keywordid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -228,23 +233,26 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findGoodsByLtypeid(final String ltypeid, final String salestate, final int currentPage, final int lineSize) {
+	public List<GoodsT> findGoodsByLtypeid(final String ltypeid,
+			final String salestate, final int currentPage, final int lineSize) {
 		log.debug("find all findGoodsByLtypeid");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.ltypeid=:ltypeid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.ltypeid=:ltypeid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("ltypeid", ltypeid);
-					query.setParameter("salestate", salestate);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("ltypeid", ltypeid);
+							query.setParameter("salestate", salestate);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -259,7 +267,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindGoodsByLtypeid");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate=:salestate and gt.ltypeid=:ltypeid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "salestate", "ltypeid" }, new Object[] { salestate, ltypeid });
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "salestate", "ltypeid" },
+					new Object[] { salestate, ltypeid });
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -277,24 +287,27 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return null;
 	}
 
-	public List<GoodsT> findGoodsByNavid(final String navid, final String salestate, final int currentPage, final int lineSize) {
+	public List<GoodsT> findGoodsByNavid(final String navid,
+			final String salestate, final int currentPage, final int lineSize) {
 		log.debug("find all findGoodsByLtypeid");
 		try {
 			@SuppressWarnings("unchecked")
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.navid=:navid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.navid=:navid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("navid", navid);
-					query.setParameter("salestate", salestate);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("navid", navid);
+							query.setParameter("salestate", salestate);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -309,7 +322,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindGoodsByNavid");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate=:salestate and gt.navid=:navid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "salestate", "navid" }, new Object[] { salestate, navid });
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "salestate", "navid" },
+					new Object[] { salestate, navid });
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -331,7 +346,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("findGoodsByStypeid");
 		try {
 			String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.stypeid=:stypeid";
-			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "salestate", "stypeid" }, new Object[] { salestate, stypeid });
+			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "salestate", "stypeid" },
+					new Object[] { salestate, stypeid });
 			if (list != null && list.size() > 0) {
 				return list;
 			}
@@ -357,14 +374,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		}
 	}
 
-	public int updateGoodsbargainprice(final String[] goodsid, final String bargainprice, final String creatorid) {
+	public int updateGoodsbargainprice(final String[] goodsid,
+			final String bargainprice, final String creatorid) {
 		log.debug("update updateGoodsbargainprice");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.bargainprice=:bargainprice where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : goodsid) {
@@ -388,14 +407,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updateGoodshotsale(final String[] goodsid, final String hotsale, final String creatorid) {
+	public int updateGoodshotsale(final String[] goodsid, final String hotsale,
+			final String creatorid) {
 		log.debug("updateGoodshotsale");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.hotsale=:hotsale where gt.goodsid=:goodsid where gt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : goodsid) {
@@ -425,7 +446,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			final String queryString = "update GoodsT as gt set gt.readcount=readcount+1 where gt.goodsid=:goodsid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("goodsid", goodsid);
@@ -441,14 +463,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updateGoodsrecommended(final String[] goodsid, final String recommended, final String creatorid) {
+	public int updateGoodsrecommended(final String[] goodsid,
+			final String recommended, final String creatorid) {
 		log.debug("update updateGoodsrecommended");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.recommended=:recommended where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : goodsid) {
@@ -472,14 +496,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updateGoodsisNew(final String[] goodsid, final String isNew, final String creatorid) {
+	public int updateGoodsisNew(final String[] goodsid, final String isNew,
+			final String creatorid) {
 		log.debug("updateGoodsisNew");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.isNew=:isNew where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : goodsid) {
@@ -503,19 +529,22 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updateGoodsismobileplatformgoods(final String[] goodsid, final String ismobileplatformgoods, final String creatorid) {
+	public int updateGoodsismobileplatformgoods(final String[] goodsid,
+			final String ismobileplatformgoods, final String creatorid) {
 		log.debug("updateGoodsismobileplatformgoods");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.ismobileplatformgoods=:ismobileplatformgoods where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : goodsid) {
 						query.setParameter("goodsid", s);
-						query.setParameter("ismobileplatformgoods", ismobileplatformgoods);
+						query.setParameter("ismobileplatformgoods",
+								ismobileplatformgoods);
 						query.setParameter("creatorid", creatorid);
 						i = query.executeUpdate();
 						i++;
@@ -545,7 +574,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			final String queryString = "update GoodsT as gt set gt.relatedgoodsid=:relatedgoodsid where gt.goodsid=:goodsid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("goodsid", goodsid);
@@ -568,14 +598,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updateGoodsSaleState(final String[] goodsid, final String salestate, final String creatorid) {
+	public int updateGoodsSaleState(final String[] goodsid,
+			final String salestate, final String creatorid) {
 		log.debug("update UpdateGoodsSaleState");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.salestate=:salestate where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : goodsid) {
@@ -599,12 +631,14 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updateGoodsSaleState(final String goodsTypeId, final String salestate) {
+	public int updateGoodsSaleState(final String goodsTypeId,
+			final String salestate) {
 		log.debug("update UpdateGoodsSaleState");
 		try {
 			final String queryString = "update GoodsT as gt set gt.salestate=:salestate where gt.goodsTypeId=:goodsTypeId";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					query.setParameter("salestate", salestate);
@@ -635,14 +669,18 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updateFiveGoodsState(final String[] goodsid, final String recommended, final String hotsale, final String bargainprice, final String isNew, final String ismobileplatformgoods) {
+	public int updateFiveGoodsState(final String[] goodsid,
+			final String recommended, final String hotsale,
+			final String bargainprice, final String isNew,
+			final String ismobileplatformgoods) {
 		log.debug("updateFiveGoodsState");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.bargainprice=:bargainprice,gt.recommended=:recommended,gt.hotsale=:hotsale,gt.isNew=:isNew,gt.ismobileplatformgoods=:ismobileplatformgoods where gt.goodsid=:goodsid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : goodsid) {
@@ -651,7 +689,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 						query.setParameter("recommended", recommended);
 						query.setParameter("hotsale", hotsale);
 						query.setParameter("isNew", isNew);
-						query.setParameter("ismobileplatformgoods", ismobileplatformgoods);
+						query.setParameter("ismobileplatformgoods",
+								ismobileplatformgoods);
 						i = query.executeUpdate();
 						i++;
 					}
@@ -670,23 +709,27 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findGoodsForoptiontransferselect(final String navid, final String ltypeid, final String stypeid, final String goodsname) {
+	public List<GoodsT> findGoodsForoptiontransferselect(final String navid,
+			final String ltypeid, final String stypeid, final String goodsname) {
 		log.debug("find all GoodsT");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT  as gt where gt.salestate='1' and gt.navid=:navid and gt.ltypeid=:ltypeid and gt.stypeid=:stypeid and gt.goodsname like :goodsname order by createtime desc";
+						String queryString = "from GoodsT  as gt where gt.salestate='1' and gt.navid=:navid and gt.ltypeid=:ltypeid and gt.stypeid=:stypeid and gt.goodsname like :goodsname order by createtime desc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setParameter("navid", navid);
-					query.setParameter("ltypeid", ltypeid);
-					query.setParameter("stypeid", stypeid);
-					query.setParameter("goodsname", "%" + goodsname + "%");
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setParameter("navid", navid);
+							query.setParameter("ltypeid", ltypeid);
+							query.setParameter("stypeid", stypeid);
+							query.setParameter("goodsname", "%" + goodsname
+									+ "%");
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -713,21 +756,24 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findGoodsLimitByGoodsType(final String nlstypeid, final int limit) {
+	public List<GoodsT> findGoodsLimitByGoodsType(final String nlstypeid,
+			final int limit) {
 		log.debug("find all GoodsT nlstypeid��limit");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT  as gt where gt.salestate='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid  order by createtime desc";
+						String queryString = "from GoodsT  as gt where gt.salestate='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid  order by createtime desc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setMaxResults(limit);
-					query.setParameter("nlstypeid", nlstypeid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setMaxResults(limit);
+							query.setParameter("nlstypeid", nlstypeid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -739,23 +785,26 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findSamepriceGoods(final int limit, final double minprice, final double maxprice, final String goodsid) {
+	public List<GoodsT> findSamepriceGoods(final int limit,
+			final double minprice, final double maxprice, final String goodsid) {
 		log.debug("find all GoodsT Sameprice��limit");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT  as gt where gt.memberprice between :minprice and :maxprice and gt.goodsid!=:goodsid and gt.salestate='1' order by createtime desc";
+						String queryString = "from GoodsT  as gt where gt.memberprice between :minprice and :maxprice and gt.goodsid!=:goodsid and gt.salestate='1' order by createtime desc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setMaxResults(limit);
-					query.setParameter("minprice", minprice);
-					query.setParameter("maxprice", maxprice);
-					query.setParameter("goodsid", goodsid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setMaxResults(limit);
+							query.setParameter("minprice", minprice);
+							query.setParameter("maxprice", maxprice);
+							query.setParameter("goodsid", goodsid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -767,22 +816,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findMoreGoodsByGoodsType(final String nlstypeid, final int currentPage, final int lineSize) {
+	public List<GoodsT> findMoreGoodsByGoodsType(final String nlstypeid,
+			final int currentPage, final int lineSize) {
 		log.debug("find all findMoreGoodsByGoodsTyp");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1'and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1'and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("nlstypeid", nlstypeid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("nlstypeid", nlstypeid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -797,7 +849,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindMoreGoodsByGoodsType");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate='1'and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "nlstypeid", nlstypeid);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "nlstypeid", nlstypeid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -814,17 +867,19 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	public int countfindSearchGoods(final String goodsname) {
 		log.debug("find all findSearchGoods");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1'and gt.goodsname like ? order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1'and gt.goodsname like ? order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setParameter(0, "%" + goodsname + "%");
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setParameter(0, "%" + goodsname + "%");
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				int i = list.size();
 				return i;
@@ -837,22 +892,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findSearchGoods(final String goodsname, final int currentPage, final int lineSize) {
+	public List<GoodsT> findSearchGoods(final String goodsname,
+			final int currentPage, final int lineSize) {
 		log.debug("find all findSearchGoods");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1'and gt.goodsname like ? order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1'and gt.goodsname like ? order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter(0, "%" + goodsname + "%");
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter(0, "%" + goodsname + "%");
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -867,7 +925,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindAllGoodslistMore");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate=:salestate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "salestate", salestate);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "salestate", salestate);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -881,22 +940,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findAllGoodslistMore(final int currentPage, final int lineSize, final String salestate) {
+	public List<GoodsT> findAllGoodslistMore(final int currentPage,
+			final int lineSize, final String salestate) {
 		log.debug("find all findSearchGoods");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate=:salestate order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate=:salestate order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("salestate", salestate);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("salestate", salestate);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -928,7 +990,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindMoreBargainPriceGoodsByGoodsType");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate='1'and gt.bargainprice='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "nlstypeid", nlstypeid);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "nlstypeid", nlstypeid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -936,7 +999,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			return 0;
 		} catch (RuntimeException re) {
-			log.error("count all countfindMoreBargainPriceGoodsByGoodsType error", re);
+			log.error(
+					"count all countfindMoreBargainPriceGoodsByGoodsType error",
+					re);
 			throw re;
 		}
 	}
@@ -945,7 +1010,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindMoreHotSaleGoodsByGoodsType");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate='1'and gt.hotsale='1'and  gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "nlstypeid", nlstypeid);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "nlstypeid", nlstypeid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -953,7 +1019,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			return 0;
 		} catch (RuntimeException re) {
-			log.error("count all countfindMoreHotSaleGoodsByGoodsType error", re);
+			log.error("count all countfindMoreHotSaleGoodsByGoodsType error",
+					re);
 			throw re;
 		}
 	}
@@ -962,7 +1029,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindMoreRecommendedGoodsByGoodsType");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate='1'and gt.recommended='1'and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "nlstypeid", nlstypeid);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "nlstypeid", nlstypeid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -970,27 +1038,32 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			return 0;
 		} catch (RuntimeException re) {
-			log.error("count all countfindMoreRecommendedGoodsByGoodsType error", re);
+			log.error(
+					"count all countfindMoreRecommendedGoodsByGoodsType error",
+					re);
 			throw re;
 		}
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findMoreBargainPriceGoods(final int currentPage, final int lineSize) {
+	public List<GoodsT> findMoreBargainPriceGoods(final int currentPage,
+			final int lineSize) {
 		log.debug("find all findMoreBargainPriceGoods");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1' and gt.bargainprice='1' order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1' and gt.bargainprice='1' order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -1002,22 +1075,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findMoreBargainPriceGoodsByGoodsType(final String nlstypeid, final int currentPage, final int lineSize) {
+	public List<GoodsT> findMoreBargainPriceGoodsByGoodsType(
+			final String nlstypeid, final int currentPage, final int lineSize) {
 		log.debug("find all findMoreBargainPriceGoodsByGoodsType");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1' and gt.bargainprice='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1' and gt.bargainprice='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("nlstypeid", nlstypeid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("nlstypeid", nlstypeid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -1029,22 +1105,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findMoreHotSaleGoodsByGoodsType(final String nlstypeid, final int currentPage, final int lineSize) {
+	public List<GoodsT> findMoreHotSaleGoodsByGoodsType(final String nlstypeid,
+			final int currentPage, final int lineSize) {
 		log.debug("find all findMoreHotSaleGoodsByGoodsType");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1' and gt.hotsale='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1' and gt.hotsale='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("nlstypeid", nlstypeid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("nlstypeid", nlstypeid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -1056,22 +1135,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findMoreRecommendedGoodsByGoodsType(final String nlstypeid, final int currentPage, final int lineSize) {
+	public List<GoodsT> findMoreRecommendedGoodsByGoodsType(
+			final String nlstypeid, final int currentPage, final int lineSize) {
 		log.debug("find all findMoreHotSaleGoodsByGoodsType");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1' and gt.recommended='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1' and gt.recommended='1' and gt.navid=:nlstypeid or gt.ltypeid=:nlstypeid or gt.stypeid=:nlstypeid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("nlstypeid", nlstypeid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("nlstypeid", nlstypeid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -1083,22 +1165,25 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findAllGoodsByismobileplatformgoods(final int currentPage, final int lineSize, final String creatorid) {
+	public List<GoodsT> findAllGoodsByismobileplatformgoods(
+			final int currentPage, final int lineSize, final String creatorid) {
 		log.debug("findAllGoodsByismobileplatformgoods");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate='1' and gt.ismobileplatformgoods='1' and gt.creatorid=:creatorid order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate='1' and gt.ismobileplatformgoods='1' and gt.creatorid=:creatorid order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("creatorid", creatorid);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("creatorid", creatorid);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -1108,25 +1193,29 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			throw re;
 		}
 	}
-	
 
 	@Override
 	public List<GoodsT> findAllGoodsByismobileplatformgoodsBynavid(
-			final String navid, final String salestate, final String ismobileplatformgoods) {
+			final String navid, final String salestate,
+			final String ismobileplatformgoods) {
 		log.debug("findAllGoodsByismobileplatformgoods");
 		try {
 			@SuppressWarnings("unchecked")
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
-				String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.ismobileplatformgoods=:ismobileplatformgoods and gt.navid=:navid order by createtime asc";
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setParameter("navid", navid);
-					query.setParameter("ismobileplatformgoods", ismobileplatformgoods);
-					query.setParameter("salestate", salestate);
-					List list = query.list();
-					return list;
-				}
-			});
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.ismobileplatformgoods=:ismobileplatformgoods and gt.navid=:navid order by createtime asc";
+
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setParameter("navid", navid);
+							query.setParameter("ismobileplatformgoods",
+									ismobileplatformgoods);
+							query.setParameter("salestate", salestate);
+							List list = query.list();
+							return list;
+						}
+					});
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findAllGoodsByismobileplatformgoods error", re);
@@ -1138,7 +1227,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("count all countfindAllGoodsByismobileplatformgoods");
 		try {
 			String queryString = "select count(*) from GoodsT as gt where gt.salestate='1'and gt.ismobileplatformgoods='1' and gt.creatorid=:creatorid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "creatorid", creatorid);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "creatorid", creatorid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -1146,7 +1236,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			return 0;
 		} catch (RuntimeException re) {
-			log.error("count all countfindAllGoodsByismobileplatformgoods error", re);
+			log.error(
+					"count all countfindAllGoodsByismobileplatformgoods error",
+					re);
 			throw re;
 		}
 	}
@@ -1170,7 +1262,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("findAllGoodsBynavid");
 		try {
 			String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate";
-			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate" }, new Object[] { navid, salestate });
+			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "navid", "salestate" },
+					new Object[] { navid, salestate });
 			return list;
 		} catch (RuntimeException re) {
 			log.error(" findAllGoodsBynaviderror", re);
@@ -1182,7 +1276,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("findGoodsByLtypeid");
 		try {
 			String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate" }, new Object[] { ltypeid, salestate });
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "ltypeid", "salestate" },
+					new Object[] { ltypeid, salestate });
 			if (list != null && list.size() > 0) {
 				return list;
 			}
@@ -1200,7 +1296,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			final String queryString = "update GoodsT as gt set gt.htmlPath=:htmlPath where gt.goodsid=:goodsid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("goodsid", goodsid);
@@ -1218,14 +1315,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@Override
-	public int updateHtmlPath(final String goodsid, final String htmlPath, final Date updatetime) {
+	public int updateHtmlPath(final String goodsid, final String htmlPath,
+			final Date updatetime) {
 		log.debug("updateHtmlPath");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.htmlPath=:htmlPath, gt.updatetime=:updatetime where gt.goodsid=:goodsid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("goodsid", goodsid);
@@ -1246,7 +1345,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("finaAllGoodsT");
 		try {
 			String queryString = "from GoodsT as gt where gt.salestate=:salestate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "salestate", salestate);
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "salestate", salestate);
 			if (list != null && list.size() > 0) {
 				return list;
 			}
@@ -1257,14 +1357,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		}
 	}
 
-	public int updatecommentsumBygoodsid(final String goodsid, final int totalcomment) {
+	public int updatecommentsumBygoodsid(final String goodsid,
+			final int totalcomment) {
 		log.debug("updatetotalcomment");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.totalcomment=:totalcomment  where gt.goodsid=:goodsid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("totalcomment", totalcomment);
@@ -1288,13 +1390,14 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			final String queryString = "update GoodsT as gt set gt.star=:star  where gt.goodsid=:goodsid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("star", star);
 					query.setParameter("goodsid", goodsid);
 					i = query.executeUpdate();
-				
+
 					return i;
 				}
 			});
@@ -1305,14 +1408,16 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public int updatestarusersumBygoodsid(final String goodsid, final int staruser) {
+	public int updatestarusersumBygoodsid(final String goodsid,
+			final int staruser) {
 		log.debug("updatestarusersum");
 		try {
 
 			final String queryString = "update GoodsT as gt set gt.staruser=:staruser  where gt.goodsid=:goodsid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("staruser", staruser);
@@ -1329,12 +1434,17 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		return 0;
 	}
 
-	public List<GoodsT> findAllGoodsBynavidorderbyParams(String navid, String salestate, String sales, String memberprice, String totalcomment, String bargainprice, String hotsale, String recommended, String isNew, String value) {
+	public List<GoodsT> findAllGoodsBynavidorderbyParams(String navid,
+			String salestate, String sales, String memberprice,
+			String totalcomment, String bargainprice, String hotsale,
+			String recommended, String isNew, String value) {
 		log.debug("findAllGoodsBynavidorderbyParams");
 		try {
 			if (sales != null) {
 				String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate order by sales asc";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate" }, new Object[] { navid, salestate });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString, new String[] { "navid", "salestate" },
+						new Object[] { navid, salestate });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1342,7 +1452,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (memberprice != null) {
 				String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate order by memberprice asc";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate" }, new Object[] { navid, salestate });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString, new String[] { "navid", "salestate" },
+						new Object[] { navid, salestate });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1350,7 +1462,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (totalcomment != null) {
 				String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate order by totalcomment asc";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate" }, new Object[] { navid, salestate });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString, new String[] { "navid", "salestate" },
+						new Object[] { navid, salestate });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1358,7 +1472,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (bargainprice != null) {
 				String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate and gt.bargainprice=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate", "value" }, new Object[] { navid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "navid", "salestate", "value" },
+						new Object[] { navid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1366,7 +1483,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (hotsale != null) {
 				String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate and gt.hotsale=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate", "value" }, new Object[] { navid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "navid", "salestate", "value" },
+						new Object[] { navid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1375,7 +1495,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (recommended != null) {
 				String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate and gt.recommended=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate", "value" }, new Object[] { navid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "navid", "salestate", "value" },
+						new Object[] { navid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1383,7 +1506,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (isNew != null) {
 				String queryString = "from GoodsT as gt where gt.navid=:navid and gt.salestate=:salestate and gt.isNew=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "navid", "salestate", "value" }, new Object[] { navid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "navid", "salestate", "value" },
+						new Object[] { navid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1396,12 +1522,17 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		}
 	}
 
-	public List<GoodsT> findAllGoodsByLtypeidorderbyParams(String ltypeid, String salestate, String sales, String memberprice, String totalcomment, String bargainprice, String hotsale, String recommended, String isNew, String value) {
+	public List<GoodsT> findAllGoodsByLtypeidorderbyParams(String ltypeid,
+			String salestate, String sales, String memberprice,
+			String totalcomment, String bargainprice, String hotsale,
+			String recommended, String isNew, String value) {
 		log.debug("findGoodsByLtypeidorderbyParams");
 		try {
 			if (sales != null) {
 				String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate order by sales asc";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate" }, new Object[] { ltypeid, salestate });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString, new String[] { "ltypeid", "salestate" },
+						new Object[] { ltypeid, salestate });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1409,7 +1540,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (memberprice != null) {
 				String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate order by memberprice asc";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate" }, new Object[] { ltypeid, salestate });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString, new String[] { "ltypeid", "salestate" },
+						new Object[] { ltypeid, salestate });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1417,7 +1550,9 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (totalcomment != null) {
 				String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate order by totalcomment asc";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate" }, new Object[] { ltypeid, salestate });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString, new String[] { "ltypeid", "salestate" },
+						new Object[] { ltypeid, salestate });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1425,7 +1560,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (bargainprice != null) {
 				String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate and gt.bargainprice=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate", "value" }, new Object[] { ltypeid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "ltypeid", "salestate", "value" },
+						new Object[] { ltypeid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1433,7 +1571,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (hotsale != null) {
 				String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate and gt.hotsale=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate", "value" }, new Object[] { ltypeid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "ltypeid", "salestate", "value" },
+						new Object[] { ltypeid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1442,7 +1583,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (recommended != null) {
 				String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate and gt.recommended=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate", "value" }, new Object[] { ltypeid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "ltypeid", "salestate", "value" },
+						new Object[] { ltypeid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1450,7 +1594,10 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			}
 			if (isNew != null) {
 				String queryString = "from GoodsT as gt where gt.ltypeid=:ltypeid and gt.salestate=:salestate and gt.isNew=:value";
-				List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "ltypeid", "salestate", "value" }, new Object[] { ltypeid, salestate, value });
+				List list = this.getHibernateTemplate().findByNamedParam(
+						queryString,
+						new String[] { "ltypeid", "salestate", "value" },
+						new Object[] { ltypeid, salestate, value });
 				if (list != null && list.size() > 0) {
 					return list;
 				}
@@ -1461,16 +1608,18 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 			log.error("findGoodsByLtypeidorderbyParams", re);
 			throw re;
 		}
-		
+
 	}
 
-	public int updateGoodsTypeNameBygoodsTypeId(final String goodsTypeName, final String goodsTypeId) {
+	public int updateGoodsTypeNameBygoodsTypeId(final String goodsTypeName,
+			final String goodsTypeId) {
 		log.debug("updateGoodsTypeNameBygoodsTypeId");
 		try {
 			final String queryString = "update GoodsT as gt set gt.goodsTypeName=:goodsTypeName  where gt.goodsTypeId=:goodsTypeId ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("goodsTypeName", goodsTypeName);
@@ -1490,7 +1639,8 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("updateGoodsCategoryBynlsid");
 		try {
 			this.getHibernateTemplate().execute(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					i = query.executeUpdate();
@@ -1505,23 +1655,26 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findshuffleGoods(final int currentPage, final int lineSize, final String salestate, final String recommended) {
+	public List<GoodsT> findshuffleGoods(final int currentPage,
+			final int lineSize, final String salestate, final String recommended) {
 		log.debug("findshuffleGoods");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.recommended=:recommended order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.recommended=:recommended order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("salestate", salestate);
-					query.setParameter("recommended", recommended);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("salestate", salestate);
+							query.setParameter("recommended", recommended);
+							List list = query.list();
+							return list;
+						}
+					});
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findshuffleGoods error", re);
@@ -1530,23 +1683,26 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsT> findGoodsByattrs(final int currentPage, final int lineSize, final String attr, final String salestate) {
+	public List<GoodsT> findGoodsByattrs(final int currentPage,
+			final int lineSize, final String attr, final String salestate) {
 		log.debug("findGoodsByattrs");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.goodsAttrVal0=:attr or gt.goodsAttrVal1=:attr or gt.goodsAttrVal2=:attr or gt.goodsAttrVal3=:attr or gt.goodsAttrVal4=:attr or gt.goodsAttrVal5=:attr or gt.goodsAttrVal6=:attr or gt.goodsAttrVal7=:attr or gt.goodsAttrVal8=:attr or gt.goodsAttrVal9=:attr or gt.goodsAttrVal10=:attr or gt.goodsAttrVal11=:attr or gt.goodsAttrVal12=:attr or gt.goodsAttrVal13=:attr or gt.goodsAttrVal14=:attr or gt.goodsAttrVal15=:attr or gt.goodsAttrVal16=:attr or gt.goodsAttrVal17=:attr or gt.goodsAttrVal18=:attr or gt.goodsAttrVal19=:attr or gt.goodsAttrVal20=:attr or gt.goodsAttrVal21=:attr or gt.goodsAttrVal22=:attr or gt.goodsAttrVal23=:attr or gt.goodsAttrVal24=:attr or gt.goodsAttrVal25=:attr or gt.goodsAttrVal26=:attr or gt.goodsAttrVal27=:attr or gt.goodsAttrVal28=:attr or gt.goodsAttrVal29=:attr  order by createtime asc";
+						String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.goodsAttrVal0=:attr or gt.goodsAttrVal1=:attr or gt.goodsAttrVal2=:attr or gt.goodsAttrVal3=:attr or gt.goodsAttrVal4=:attr or gt.goodsAttrVal5=:attr or gt.goodsAttrVal6=:attr or gt.goodsAttrVal7=:attr or gt.goodsAttrVal8=:attr or gt.goodsAttrVal9=:attr or gt.goodsAttrVal10=:attr or gt.goodsAttrVal11=:attr or gt.goodsAttrVal12=:attr or gt.goodsAttrVal13=:attr or gt.goodsAttrVal14=:attr or gt.goodsAttrVal15=:attr or gt.goodsAttrVal16=:attr or gt.goodsAttrVal17=:attr or gt.goodsAttrVal18=:attr or gt.goodsAttrVal19=:attr or gt.goodsAttrVal20=:attr or gt.goodsAttrVal21=:attr or gt.goodsAttrVal22=:attr or gt.goodsAttrVal23=:attr or gt.goodsAttrVal24=:attr or gt.goodsAttrVal25=:attr or gt.goodsAttrVal26=:attr or gt.goodsAttrVal27=:attr or gt.goodsAttrVal28=:attr or gt.goodsAttrVal29=:attr  order by createtime asc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					query.setParameter("attr", attr);
-					query.setParameter("salestate", salestate);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("attr", attr);
+							query.setParameter("salestate", salestate);
+							List list = query.list();
+							return list;
+						}
+					});
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findGoodsByattrs error", re);
@@ -1560,7 +1716,11 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("findGoodsByNavidforandroid");
 		try {
 			String queryString = "from GoodsT as gt where gt.navid=:navid and gt.ismobileplatformgoods=:ismobileplatformgoods and gt.salestate=:salestate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"navid","ismobileplatformgoods","salestate"}, new Object[]{navid,ismobileplatformgoods,salestate});
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString,
+					new String[] { "navid", "ismobileplatformgoods",
+							"salestate" },
+					new Object[] { navid, ismobileplatformgoods, salestate });
 			return list;
 		} catch (RuntimeException re) {
 			log.error(" findGoodsByNavidforandroid", re);
@@ -1568,15 +1728,19 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		}
 	}
 
-
-
 	@Override
 	public List<GoodsT> findAllGoodsBynavid(String navid, String salestate,
 			String isSpecificationsOpen) {
 		log.debug("findGoodsByNavidforandroid");
 		try {
 			String queryString = "from GoodsT as gt where gt.navid=:navid and gt.isSpecificationsOpen=:isSpecificationsOpen and gt.salestate=:salestate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"navid","isSpecificationsOpen","salestate"}, new Object[]{navid,isSpecificationsOpen,salestate});
+			List list = this.getHibernateTemplate()
+					.findByNamedParam(
+							queryString,
+							new String[] { "navid", "isSpecificationsOpen",
+									"salestate" },
+							new Object[] { navid, isSpecificationsOpen,
+									salestate });
 			return list;
 		} catch (RuntimeException re) {
 			log.error(" findGoodsByNavidforandroid", re);
@@ -1590,7 +1754,12 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("findAllGoodsBynavidandltypeid");
 		try {
 			String queryString = "from GoodsT as gt where gt.navid=:navid and gt.ltypeid=:ltypeid and gt.isSpecificationsOpen=:isSpecificationsOpen and gt.salestate=:salestate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"navid","ltypeid","isSpecificationsOpen","salestate"}, new Object[]{navid,ltypeid,isSpecificationsOpen,salestate});
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString,
+					new String[] { "navid", "ltypeid", "isSpecificationsOpen",
+							"salestate" },
+					new Object[] { navid, ltypeid, isSpecificationsOpen,
+							salestate });
 			return list;
 		} catch (RuntimeException re) {
 			log.error(" findAllGoodsBynavidandltypeid error ", re);
@@ -1605,7 +1774,12 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		log.debug("findAllGoodsBynavidandltypeidandstypeid");
 		try {
 			String queryString = "from GoodsT as gt where gt.navid=:navid and gt.ltypeid=:ltypeid and gt.stypeid=:stypeid and gt.isSpecificationsOpen=:isSpecificationsOpen and gt.salestate=:salestate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"navid","ltypeid","stypeid","isSpecificationsOpen","salestate"}, new Object[]{navid,ltypeid,stypeid,isSpecificationsOpen,salestate});
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString,
+					new String[] { "navid", "ltypeid", "stypeid",
+							"isSpecificationsOpen", "salestate" },
+					new Object[] { navid, ltypeid, stypeid,
+							isSpecificationsOpen, salestate });
 			return list;
 		} catch (RuntimeException re) {
 			log.error(" findAllGoodsBynavidandltypeidandstypeid error ", re);
@@ -1614,28 +1788,29 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@Override
-	public List<GoodsT> findAllGoods() {	
-		 
+	public List<GoodsT> findAllGoods() {
+
 		try {
-			final String queryString="from GoodsT";
+			final String queryString = "from GoodsT";
 			@SuppressWarnings("unchecked")
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {			
-			 	@Override
-				public Object doInHibernate(Session session) throws HibernateException,
-						SQLException {
-					Query query = session.createQuery(queryString);
-					List list = query.list();
-					return list;
-				}
-			});
-			if(list.size()>0){
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						@Override
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							List list = query.list();
+							return list;
+						}
+					});
+			if (list.size() > 0) {
 				return list;
 			}
 			return null;
 		} catch (RuntimeException e) {
 			throw e;
 		}
-		
+
 	}
 
 	@Override
@@ -1677,19 +1852,21 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	public List<GoodsT> findAllGoods(final int currentPage, final int lineSize) {
 		log.debug("find all GoodsT");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsT  order by createtime desc";
+						String queryString = "from GoodsT  order by createtime desc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					List list = query.list();
-					return list;
-				}
-			});
-			return list;	
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							List list = query.list();
+							return list;
+						}
+					});
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find all GoodsT error", re);
 			throw re;
@@ -1697,19 +1874,21 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 	}
 
 	@Override
-	public List<GoodsT> findAllGoodsByattribute(final int currentPage, final int lineSize,
-			final String queryString) {
+	public List<GoodsT> findAllGoodsByattribute(final int currentPage,
+			final int lineSize, final String queryString) {
 		log.debug("findAllGoodsByattribute");
 		try {
-			List<GoodsT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					List list = query.list();
-					return list;
-				}
-			});
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							List list = query.list();
+							return list;
+						}
+					});
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findAllGoodsByattribute error", re);
@@ -1734,9 +1913,4 @@ public class GoodsTDaoImpl extends HibernateDaoSupport implements GoodsTDao {
 		}
 	}
 
-
-
-
-	
-	
 }

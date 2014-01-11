@@ -13,7 +13,7 @@ import com.jshop.service.GoodsAttributeTService;
 
 @Service("goodsAttributeTService")
 @Scope("prototype")
-public class GoodsAttributeTServiceImpl implements GoodsAttributeTService {
+public class GoodsAttributeTServiceImpl extends BaseTServiceImpl<GoodsAttributeT>implements GoodsAttributeTService {
 	@Resource
 	private GoodsAttributeTDao goodsAttributeTDao;
 
@@ -27,10 +27,6 @@ public class GoodsAttributeTServiceImpl implements GoodsAttributeTService {
 
 	public int updateGoodsAttributeT(GoodsAttributeT gat) {
 		return this.getGoodsAttributeTDao().updateGoodsAttributeT(gat);
-	}
-
-	public int addGoodsAttributeT(GoodsAttributeT gat) {
-		return this.getGoodsAttributeTDao().addGoodsAttributeT(gat);
 	}
 
 	public GoodsAttributeT findGoodsAttributeTBygoodstypeId(String goodstypeid) {

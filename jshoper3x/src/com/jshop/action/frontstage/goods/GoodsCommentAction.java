@@ -184,10 +184,10 @@ public class GoodsCommentAction extends ActionSupport {
 			gct.setReplyid("0");//回复的评论id
 			gct.setEmailable("0");//不进行邮件提醒
 			gct.setVirtualadd("0");
-			if(this.getGoodsCommentTService().addGoodsComment(gct)>0){
-				this.setSucflag(true);
-				return "json";
-			}
+			this.getGoodsCommentTService().save(gct);
+			this.setSucflag(true);
+			return "json";
+			
 		}
 		this.setSucflag(false);
 		return "json";

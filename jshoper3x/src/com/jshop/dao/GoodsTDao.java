@@ -5,15 +5,8 @@ import java.util.List;
 
 import com.jshop.entity.GoodsT;
 
-public interface GoodsTDao {
+public interface GoodsTDao extends BaseTDao<GoodsT>{
 
-	/**
-	 * 增加商品
-	 * 
-	 * @param g
-	 * @return
-	 */
-	public void saveGoods(GoodsT g);
 
 	/**
 	 * 批量删除商品

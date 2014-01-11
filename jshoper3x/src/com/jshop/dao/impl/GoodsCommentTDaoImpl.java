@@ -28,22 +28,10 @@ import com.jshop.entity.GoodsCommentT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("goodsCommentTDao")
-public class GoodsCommentTDaoImpl extends HibernateDaoSupport implements GoodsCommentTDao {
+public class GoodsCommentTDaoImpl extends BaseTDaoImpl<GoodsCommentT> implements GoodsCommentTDao {
 	
 	private static final Log log = LogFactory.getLog(GoodsCommentTDaoImpl.class);
 	
-
-	public int addGoodsComment(GoodsCommentT gct) {
-		log.debug("save GoodsCommentT");
-		try {
-			this.getHibernateTemplate().save(gct);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int delGoodsComment(final String[] list) {
 		log.debug("del GoodsCommentT");

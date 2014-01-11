@@ -27,22 +27,10 @@ import com.jshop.entity.ImgT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("imgTDao")
-public class ImgTDaoImpl extends HibernateDaoSupport implements ImgTDao {
+public class ImgTDaoImpl extends BaseTDaoImpl<ImgT> implements ImgTDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(ImgTDaoImpl.class);
 	
-
-	public int addImgT(ImgT i) {
-		log.debug("save ImgT");
-		try {
-			this.getHibernateTemplate().save(i);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllImgT() {
 		log.debug("countfindAllImgT");

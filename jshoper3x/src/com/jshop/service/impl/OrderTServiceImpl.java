@@ -193,7 +193,7 @@ public class OrderTServiceImpl implements OrderTService {
 			c.setOrderid(orderid);
 			c.setCartid(cartid);
 			c.setState(StaticString.CARTSTATE_RELBYORDER_NUM);
-			this.getCartTDao().addCart(c);
+			this.getCartTDao().save(c);
 		}
 		//加入到发货地址表中
 		sAddressT.setOrderid(orderid);

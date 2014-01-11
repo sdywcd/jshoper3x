@@ -13,7 +13,7 @@ import com.jshop.service.GroupCartService;
 
 @Service("groupCartService")
 @Scope("prototype")
-public class GroupCartServiceImpl implements GroupCartService {
+public class GroupCartServiceImpl extends BaseTServiceImpl<GroupCartT> implements GroupCartService {
 	@Resource
 	private GroupCartDao groupCartDao;
 
@@ -30,10 +30,6 @@ public class GroupCartServiceImpl implements GroupCartService {
 		return this.getGroupCartDao().findGroupById(cartid);
 	}
 
-	public int addgroupcart(GroupCartT gc) {
-
-		return this.getGroupCartDao().addgroupcart(gc);
-	}
 
 	public int delGroupCart(String cartid) {
 

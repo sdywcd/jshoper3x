@@ -14,7 +14,7 @@ import com.jshop.service.GoodsunitTService;
 
 @Service("goodsunitTService")
 @Scope("prototype")
-public class GoodsunitTServiceImpl implements GoodsunitTService {
+public class GoodsunitTServiceImpl extends BaseTServiceImpl<GoodsunitT>implements GoodsunitTService {
 	@Resource
 	private GoodsunitTDao goodsunitTDao;
 
@@ -34,9 +34,6 @@ public class GoodsunitTServiceImpl implements GoodsunitTService {
 		return this.getGoodsunitTDao().updateGoodsunit(u);
 	}
 
-	public int addGoodsunit(GoodsunitT u) {
-		return this.getGoodsunitTDao().addGoodsunit(u);
-	}
 
 	public int countfindAllGoodsunit() {
 		return this.getGoodsunitTDao().countfindAllGoodsunit();

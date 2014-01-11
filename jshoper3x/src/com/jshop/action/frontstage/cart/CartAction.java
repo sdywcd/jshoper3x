@@ -390,9 +390,10 @@ public class CartAction extends ActionSupport {
 						}
 						t.setOrderTag(this.getOrderTag());
 						t.setHtmlpath(gtlist.getHtmlPath());
-						if (this.getCartTService().addCart(t) > 0) {
-							this.setSucflag(true);
-						}
+						this.getCartTService().save(t);
+						//要通过事务处理
+						this.setSucflag(true);
+						
 					}
 				}else{
 					CartT cart = this.getCartTService().findGoodsInCartOrNot(user.getUserid(), gtlist.getGoodsid(), "1");
@@ -440,9 +441,8 @@ public class CartAction extends ActionSupport {
 						t.setProductid("");//表示非规格商品即为空
 						t.setHtmlpath(gtlist.getHtmlPath());//
 						t.setOrderTag(this.getOrderTag());
-						if (this.getCartTService().addCart(t) > 0) {
-							this.setSucflag(true);
-						}
+						this.getCartTService().save(t);
+						
 					}
 				}
 				

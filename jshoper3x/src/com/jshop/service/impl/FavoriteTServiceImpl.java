@@ -14,7 +14,7 @@ import com.jshop.service.FavoriteTService;
 
 @Service("favoriteTService")
 @Scope("prototype")
-public class FavoriteTServiceImpl implements FavoriteTService {
+public class FavoriteTServiceImpl extends BaseTServiceImpl<FavoriteT>implements FavoriteTService {
 	@Resource
 	private FavoriteTDao favoriteTDao;
 
@@ -28,10 +28,6 @@ public class FavoriteTServiceImpl implements FavoriteTService {
 
 	public int delFavorite(String[] list) {
 		return this.getFavoriteTDao().delFavorite(list);
-	}
-
-	public int addFavorite(FavoriteT f) {
-		return this.getFavoriteTDao().addFavorite(f);
 	}
 
 	public int countfindAllFavoriteByUserid(String userid) {

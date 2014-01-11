@@ -196,7 +196,6 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 	 */
 	@Action(value = "addGoodsTypeBrand", results = { @Result(name = "json", type = "json") })
 	public String addGoodsTypeBrand() {
-		int i = 0;
 		String brandidarray[] = this.getBrandid().split(",");
 		String brandnamearray[] = this.getBrandname().split(",");
 		GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
@@ -210,7 +209,7 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 				this.setSucflag(false);
 			} else {
 				gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
-				i = this.getGoodsTypeBrandTService().addGoodsTypeBrand(gtbt);
+				this.getGoodsTypeBrandTService().save(gtbt);
 			}
 
 		}

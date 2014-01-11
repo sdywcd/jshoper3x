@@ -10,7 +10,7 @@ import com.jshop.entity.GoodsTwocodeRpT;
 import com.jshop.service.GoodsTwocodeRelationshipTService;
 @Service("goodsTwocodeRelationshipTService")
 @Scope("prototype")
-public class GoodsTwocodeRelationshipTServiceImpl implements
+public class GoodsTwocodeRelationshipTServiceImpl extends BaseTServiceImpl<GoodsTwocodeRpT>implements
 		GoodsTwocodeRelationshipTService {
 	@Resource
 	private GoodsTwocodeRelationshipTDao goodsTwocodeRelationshipTDao;
@@ -26,12 +26,6 @@ public class GoodsTwocodeRelationshipTServiceImpl implements
 		this.goodsTwocodeRelationshipTDao = goodsTwocodeRelationshipTDao;
 	}
 
-
-	@Override
-	public int addGoodsQRCode(GoodsTwocodeRpT qrcode) {
-		
-		return this.getGoodsTwocodeRelationshipTDao().addGoodsQRCode(qrcode);
-	}
 
 
 	@Override

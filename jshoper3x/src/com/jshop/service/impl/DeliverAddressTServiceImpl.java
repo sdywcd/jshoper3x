@@ -12,7 +12,7 @@ import com.jshop.entity.DeliverAddressT;
 import com.jshop.service.DeliverAddressTService;
 @Service("deliverAddressTService")
 @Scope("prototype")
-public class DeliverAddressTServiceImpl implements DeliverAddressTService {
+public class DeliverAddressTServiceImpl extends BaseTServiceImpl<DeliverAddressT> implements DeliverAddressTService {
 	@Resource
 	private DeliverAddressTDao deliverAddressTDao;
 	
@@ -30,10 +30,6 @@ public class DeliverAddressTServiceImpl implements DeliverAddressTService {
 
 	public int updateDeliverAddress(DeliverAddressT d) {
 		return this.getDeliverAddressTDao().updateDeliverAddress(d);
-	}
-
-	public int addDeliverAddress(DeliverAddressT d) {
-		return this.getDeliverAddressTDao().addDeliverAddress(d);
 	}
 
 	public List<DeliverAddressT> findAllDeliverAddress() {

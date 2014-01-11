@@ -513,7 +513,7 @@ public class ArticleTAction extends ActionSupport {
 			}
 		}
 		at.setIsnotice(this.getIsnotice());
-		this.getArticleTService().addArticleT(at);
+		this.getArticleTService().save(at);
 		this.setBean(at);
 		this.setSucflag(true);
 		return "json";

@@ -299,11 +299,8 @@ public class GoodsCommentTAction extends ActionSupport {
 		gct.setReplyid(StaticString.COMMENT_DEFAULT_REPLYID);
 		gct.setEmailable(StaticString.COMMENT_EMAILABLE_ONE_NUM);
 		gct.setVirtualadd(StaticString.COMMENT_VIRTUALADD_ONE_NUM);
-		if (this.getGoodsCommentTService().addGoodsComment(gct) > 0) {
-			this.setSucflag(true);
-			return "json";
-
-		}
+		this.getGoodsCommentTService().save(gct);
+		this.setSucflag(true);
 		return "json";
 	}
 	/**

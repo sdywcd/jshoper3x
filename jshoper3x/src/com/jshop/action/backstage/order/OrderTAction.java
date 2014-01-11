@@ -1438,7 +1438,7 @@ public class OrderTAction extends ActionSupport {
 			dt.setCreatetime(BaseTools.systemtime());
 			dt.setState(StaticString.DELIVERADDRESSSTATE_ZERO_NUM);
 			dt.setCountry(this.getCountry().trim());
-			this.getDeliverAddressTService().addDeliverAddress(dt);
+			this.getDeliverAddressTService().save(dt);
 			this.setSucflag(true);
 			return "json";
 		}

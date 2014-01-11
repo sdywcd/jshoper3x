@@ -4,15 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.GoodsBelinkedT;
 
-public interface GoodsBelinkedTService {
-
-	/**
-	 * 增加关联商品
-	 * 
-	 * @param gbel
-	 * @return
-	 */
-	public int addGoodsBelinkedT(GoodsBelinkedT gbel);
+public interface GoodsBelinkedTService extends BaseTService<GoodsBelinkedT>{
 
 	/**
 	 * 更新关联商品（只在单向关联时使用）

@@ -4,15 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.BrandT;
 
-public interface BrandTDao {
+public interface BrandTDao extends BaseTDao<BrandT> {
 
-	/**
-	 * 增加商品品牌
-	 * 
-	 * @param bt
-	 * @return
-	 */
-	public int addBrandt(BrandT bt);
 
 	/**
 	 * 删除商品品牌

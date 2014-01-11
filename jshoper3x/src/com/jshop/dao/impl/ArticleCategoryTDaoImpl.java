@@ -31,9 +31,10 @@ import com.jshop.entity.GoodsCategoryT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("articleCategoryTDao")
-public class ArticleCategoryTDaoImpl extends HibernateDaoSupport implements ArticleCategoryTDao {
+public class ArticleCategoryTDaoImpl extends BaseTDaoImpl<ArticleCategoryT> implements ArticleCategoryTDao {
 
 	private static final Logger log = LoggerFactory.getLogger(ArticleCategoryTDaoImpl.class);
+
 
 	public int checkArticleCategoryName(String name, String creatorid) {
 		log.debug("checkArticleCategoryName");
@@ -480,29 +481,8 @@ public class ArticleCategoryTDaoImpl extends HibernateDaoSupport implements Arti
 	
 	}
 
-	@Override
-	public void save(ArticleCategoryT m) {
-		log.debug("save GoodsCategoryT");
-		try {
-			this.getHibernateTemplate().save(m);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
-	@Override
-	public void update(ArticleCategoryT m) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void delete(ArticleCategoryT m) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

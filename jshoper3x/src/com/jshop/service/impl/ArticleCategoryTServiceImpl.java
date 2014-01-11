@@ -14,7 +14,7 @@ import com.jshop.service.ArticleCategoryTService;
 
 @Service("articleCategoryTService")
 @Scope("prototype")
-public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
+public class ArticleCategoryTServiceImpl extends BaseTServiceImpl<ArticleCategoryT>implements ArticleCategoryTService {
 	@Resource
 	private ArticleCategoryTDao articleCategoryTDao;
 
@@ -144,23 +144,6 @@ public class ArticleCategoryTServiceImpl implements ArticleCategoryTService {
 	@Override
 	public void delArticleCategoryT(String[] strs) {
 		this.getArticleCategoryTDao().delArticleCategoryT(strs);
-	}
-
-	@Override
-	public void save(ArticleCategoryT m) {
-		this.getArticleCategoryTDao().save(m);
-	}
-
-	@Override
-	public void update(ArticleCategoryT m) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(ArticleCategoryT m) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

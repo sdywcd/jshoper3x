@@ -27,19 +27,9 @@ import com.jshop.entity.FunctionM;
  * @author MyEclipse Persistence Tools
  */
 @Repository("functionMDao")
-public class FunctionMDaoImpl extends HibernateDaoSupport implements FunctionMDao {
+public class FunctionMDaoImpl extends BaseTDaoImpl<FunctionM> implements FunctionMDao {
 	private static final Logger log = LoggerFactory.getLogger(FunctionMDaoImpl.class);
 
-	public void addFunctionM(FunctionM fm) {
-		log.debug("save FunctionM");
-		try {
-			this.getHibernateTemplate().save(fm);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	@SuppressWarnings("unchecked")
 	public int delFunctionM(final String[] strs) {

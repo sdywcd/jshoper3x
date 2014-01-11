@@ -105,8 +105,7 @@ public class GoodsTAspect {
 			gbl.setUpdatetime(BaseTools.systemtime());
 			gbl.setVersiont(0);
 			gbl.setSxlinkedgoodsid("0");
-			@SuppressWarnings("unused")
-			int i=gtn.getGoodsBelinkedTService().addGoodsBelinkedT(gbl);
+			gtn.getGoodsBelinkedTService().save(gbl);
 		}
 	}
 	/**
@@ -163,8 +162,7 @@ public class GoodsTAspect {
 				gbl.setUpdatetime(BaseTools.systemtime());
 				gbl.setVersiont(0);
 				gbl.setSxlinkedgoodsid("0");
-				@SuppressWarnings("unused")
-				int i=gtn.getGoodsBelinkedTService().addGoodsBelinkedT(gbl);
+				gtn.getGoodsBelinkedTService().save(gbl);
 			}
 		}
 	}

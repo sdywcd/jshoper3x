@@ -27,21 +27,10 @@ import com.jshop.entity.CartT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("cartTDao")
-public class CartTDaoImpl extends HibernateDaoSupport implements CartTDao {
+public class CartTDaoImpl extends BaseTDaoImpl<CartT> implements CartTDao {
 	
 	private static final Log log = LogFactory.getLog(CartTDaoImpl.class);
 	
-	public int addCart(CartT c) {
-		log.debug("save CartT");
-		try {
-			this.getHibernateTemplate().save(c);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllCart() {
 		log.debug("count all brand");

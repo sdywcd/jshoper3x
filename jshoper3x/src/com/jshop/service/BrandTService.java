@@ -3,16 +3,11 @@ package com.jshop.service;
 import java.util.List;
 
 import com.jshop.entity.BrandT;
+import com.jshop.entity.GoodsTypeBrandT;
+import com.taobao.api.domain.Brand;
 
-public interface BrandTService {
+public interface BrandTService extends BaseTService<BrandT>{
 
-	/**
-	 * 增加商品品牌
-	 * 
-	 * @param bt
-	 * @return
-	 */
-	public int addBrandt(BrandT bt);
 
 	/**
 	 * 删除商品品牌
@@ -73,5 +68,11 @@ public interface BrandTService {
 	 */
 	public List<BrandT> sortAllBrandt(final int currentPage,
 			final int lineSize, final String creatorid, final String queryString);
-
+	/**
+	 * 保存品牌及商品品牌和商品类型的关系
+	 * @param brand
+	 * @param goodsTypeBrandT
+	 */
+	public void saveBrandTransaction(BrandT brandT,GoodsTypeBrandT goodsTypeBrandT);
+	
 }

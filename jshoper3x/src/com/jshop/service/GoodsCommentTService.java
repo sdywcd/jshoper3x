@@ -4,14 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.GoodsCommentT;
 
-public interface GoodsCommentTService {
-	/**
-	 * 增加商品评论和用户回复此评论
-	 * 
-	 * @param gct
-	 * @return
-	 */
-	public int addGoodsComment(GoodsCommentT gct);
+public interface GoodsCommentTService extends BaseTService<GoodsCommentT>{
 
 	/**
 	 * 删除评论和用户回复的评论

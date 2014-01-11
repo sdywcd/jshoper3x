@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.CartT;
 
-public interface CartTDao {
+public interface CartTDao extends BaseTDao<CartT> {
 
 	/**
 	 * 查询所有购物车 后台
@@ -35,13 +35,7 @@ public interface CartTDao {
 	public List<CartT> findAllCartByUserId(String userid, String state,
 			String orderTag);
 
-	/**
-	 * 增加购物车内容
-	 * 
-	 * @param c
-	 * @return
-	 */
-	public int addCart(CartT c);
+
 
 	/**
 	 * 查询商品是否已经在购物车中

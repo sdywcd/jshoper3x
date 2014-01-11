@@ -28,21 +28,10 @@ import com.jshop.entity.GoodsTypeTN;
  */
 
 @Repository("goodsTypeTNDao")
-public class GoodsTypeTNDaoImpl extends HibernateDaoSupport implements GoodsTypeTNDao {
+public class GoodsTypeTNDaoImpl extends BaseTDaoImpl<GoodsTypeTN> implements GoodsTypeTNDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsTypeTNDaoImpl.class);
 	
-	public int addGoodsTypeTN(GoodsTypeTN gtn) {
-		log.debug("save GoodsTypeTN");
-		try {
-			this.getHibernateTemplate().save(gtn);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllGoodsTypeTN() {
 		log.debug("count all GoodsTypeTN");

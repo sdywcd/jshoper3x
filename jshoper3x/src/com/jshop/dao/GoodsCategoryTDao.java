@@ -4,15 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.GoodsCategoryT;
 
-public interface GoodsCategoryTDao {
-
-	/**
-	 * 增加商品分类
-	 * 
-	 * @param gct
-	 * @return
-	 */
-	public int addGoodsCategory(GoodsCategoryT gct);
+public interface GoodsCategoryTDao extends BaseTDao<GoodsCategoryT> {
 
 	/**
 	 * 获取父路径数据
@@ -54,14 +46,15 @@ public interface GoodsCategoryTDao {
 	 * @param goodscategoryid
 	 */
 	public int delGoodscategoryT(String goodsCategoryTid, String state);
+
 	/**
 	 * 删除商品分类
+	 * 
 	 * @param strs
 	 * @return
 	 */
 	public int delGoodscategoryT(String strs[]);
-	
-	
+
 	/**
 	 * 更新商品分类
 	 * 

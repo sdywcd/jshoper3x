@@ -27,22 +27,10 @@ import com.jshop.entity.BrandT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("brandTDao")
-public class BrandTDaoImpl extends HibernateDaoSupport implements BrandTDao {
+public class BrandTDaoImpl extends BaseTDaoImpl<BrandT> implements BrandTDao {
 	
 	private static final Log log = LogFactory.getLog(BrandTDaoImpl.class);
 	
-
-	public int addBrandt(BrandT bt) {
-		log.debug("save brand");
-		try {
-			this.getHibernateTemplate().save(bt);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public void delBrandt(final String[] strs, final String creatorid) {
 		log.debug("del brandt");

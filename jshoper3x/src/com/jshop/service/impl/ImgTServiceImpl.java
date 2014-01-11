@@ -13,7 +13,7 @@ import com.jshop.service.ImgTService;
 
 @Service("imgTService")
 @Scope("prototype")
-public class ImgTServiceImpl implements ImgTService {
+public class ImgTServiceImpl extends BaseTServiceImpl<ImgT>implements ImgTService {
 	@Resource
 	private ImgTDao imgTDao;
 
@@ -25,9 +25,6 @@ public class ImgTServiceImpl implements ImgTService {
 		this.imgTDao = imgTDao;
 	}
 
-	public int addImgT(ImgT i) {
-		return this.getImgTDao().addImgT(i);
-	}
 
 	public int countfindAllImgT() {
 		return this.getImgTDao().countfindAllImgT();

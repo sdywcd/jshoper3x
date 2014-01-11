@@ -4,15 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.GoodsCommentT;
 
-public interface GoodsCommentTDao {
+public interface GoodsCommentTDao extends BaseTDao<GoodsCommentT>{
 
-	/**
-	 * 增加商品评论和用户回复此评论
-	 * 
-	 * @param gct
-	 * @return
-	 */
-	public int addGoodsComment(GoodsCommentT gct);
 
 	/**
 	 * 删除评论和用户回复的评论

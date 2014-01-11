@@ -5,13 +5,7 @@ import java.util.List;
 
 import com.jshop.entity.ArticleT;
 
-public interface ArticleTService {
-	/**
-	 * 增加文章
-	 * 
-	 * @param at
-	 */
-	public void addArticleT(ArticleT at);
+public interface ArticleTService extends BaseTService<ArticleT> {
 
 	/**
 	 * 批量删除文章

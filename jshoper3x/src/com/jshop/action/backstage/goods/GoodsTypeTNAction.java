@@ -245,10 +245,10 @@ public class GoodsTypeTNAction extends ActionSupport {
 			gtn.setCreatetime(BaseTools.systemtime());
 			gtn.setCreatorid(BaseTools.adminCreateId());
 			gtn.setGoodsParameter(this.getGoodsParameter());
-			if (this.getGoodsTypeTNService().addGoodsTypeTN(gtn) > 0) {
-				this.setSucflag(true);
-				return "json";
-			}
+			this.getGoodsTypeTNService().save(gtn);
+			this.setSucflag(true);
+			return "json";
+			
 		}
 		return "json";
 	}

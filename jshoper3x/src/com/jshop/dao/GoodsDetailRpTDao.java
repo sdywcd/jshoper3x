@@ -2,12 +2,7 @@ package com.jshop.dao;
 
 import com.jshop.entity.GoodsDetailRpT;
 
-public interface GoodsDetailRpTDao {
-
-	/**
-	 * 增加商品详细介绍
-	 */
-	public void saveGoodsDetailRpT(GoodsDetailRpT gdrt);
+public interface GoodsDetailRpTDao extends BaseTDao<GoodsDetailRpT>{
 
 	/**
 	 * 根据商品id获取商品详细介绍

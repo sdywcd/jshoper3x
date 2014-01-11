@@ -29,22 +29,11 @@ import edu.emory.mathcs.backport.java.util.Collections;
  * @author MyEclipse Persistence Tools
  */
 @Repository("goodsTypeBrandTDao")
-public class GoodsTypeBrandTDaoImpl extends HibernateDaoSupport implements GoodsTypeBrandTDao {
+public class GoodsTypeBrandTDaoImpl extends BaseTDaoImpl<GoodsTypeBrandT> implements GoodsTypeBrandTDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsTypeBrandTDaoImpl.class);
 	
 
-	public int addGoodsTypeBrand(GoodsTypeBrandT gtbt) {
-		log.debug("save GoodsTypeBrandT");
-		try {
-			this.getHibernateTemplate().save(gtbt);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int delGoodsTypeBrand(final String[] list) {
 		log.debug("del DelGoodsTypeBrand");

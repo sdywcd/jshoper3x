@@ -16,20 +16,9 @@ import com.jshop.dao.GoodsAttributeRpTDao;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.GoodsAttributeRpT;
 @Repository("goodsAttributeRpTDao")
-public class GoodsAttributeRpTDaoImpl extends HibernateDaoSupport  implements GoodsAttributeRpTDao {
+public class GoodsAttributeRpTDaoImpl extends BaseTDaoImpl<GoodsAttributeRpT>  implements GoodsAttributeRpTDao {
 	private static final Logger log = LoggerFactory.getLogger(TemplatesetTDaoImpl.class);
-	
-	@Override
-	public void saveGoodsAttributeRpT(GoodsAttributeRpT gart) {
-		log.debug("save TemplatesetT");
-		try {
-			this.getHibernateTemplate().save(gart);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
+
 
 	@Override
 	public List<GoodsAttributeRpT> findGoodsAttributeRpTBygoodsid(String goodsid) {

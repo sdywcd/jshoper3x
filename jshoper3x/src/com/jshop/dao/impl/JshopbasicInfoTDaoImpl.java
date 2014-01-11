@@ -27,23 +27,10 @@ import com.jshop.entity.JshopbasicInfoT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("jshopbasicInfoTDao")
-public class JshopbasicInfoTDaoImpl extends HibernateDaoSupport implements JshopbasicInfoTDao {
+public class JshopbasicInfoTDaoImpl extends BaseTDaoImpl<JshopbasicInfoT> implements JshopbasicInfoTDao {
 	
 	private static final Log log = LogFactory.getLog(JshopbasicInfoTDaoImpl.class);
 	
-
-	public int addJshopbasicInfoT(JshopbasicInfoT jbit) {
-		log.debug("save JshopbasicInfoT");
-		try {
-			this.getHibernateTemplate().save(jbit);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public int countfindAllJshopbasicInfo(String creatorid) {
 		log.debug("count all countfindAllJshopbasicInfo");
 		try {

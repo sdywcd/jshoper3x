@@ -27,21 +27,9 @@ import com.jshop.entity.FavoriteT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("favoriteTDao")
-public class FavoriteTDaoImpl extends HibernateDaoSupport implements FavoriteTDao {
+public class FavoriteTDaoImpl extends BaseTDaoImpl<FavoriteT> implements FavoriteTDao {
 	
 	private static final Log log = LogFactory.getLog(FavoriteTDaoImpl.class);
-	
-	public int addFavorite(FavoriteT f) {
-		log.debug("save FavoriteT");
-		try {
-			this.getHibernateTemplate().save(f);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllFavoriteByUserid(String userid) {
 		log.debug("count all FavoriteT");

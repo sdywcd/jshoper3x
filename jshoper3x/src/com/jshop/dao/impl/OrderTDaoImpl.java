@@ -32,7 +32,7 @@ import com.jshop.entity.OrderT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("orderTDao")
-public class OrderTDaoImpl extends HibernateDaoSupport implements OrderTDao {
+public class OrderTDaoImpl extends BaseTDaoImpl<OrderT> implements OrderTDao {
 	
 
 	private static final Log log = LogFactory.getLog(OrderTDaoImpl.class);
@@ -652,4 +652,6 @@ public class OrderTDaoImpl extends HibernateDaoSupport implements OrderTDao {
 
 		}
 	}
+
+
 }

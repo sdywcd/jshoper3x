@@ -173,11 +173,9 @@ public class InvoicetempleteTAction extends ActionSupport {
 			it.setLogisticsid(null);//暂无
 			it.setState("1");//启用
 			it.setCode(this.getInvoiceCode());
-			if (this.getInvoicetempleteTService().addInvoiceTemplete(it) > 0) {
-				return SUCCESS;
-			} else {
-				return INPUT;
-			}
+			this.getInvoicetempleteTService().save(it);
+			return SUCCESS;
+			
 		
 		
 	}

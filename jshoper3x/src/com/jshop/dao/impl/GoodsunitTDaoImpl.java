@@ -27,21 +27,10 @@ import com.jshop.entity.GoodsunitT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("goodsunitTDao")
-public class GoodsunitTDaoImpl extends HibernateDaoSupport implements GoodsunitTDao {
-	
+public class GoodsunitTDaoImpl extends BaseTDaoImpl<GoodsunitT> implements
+		GoodsunitTDao {
+
 	private static final Log log = LogFactory.getLog(GoodsunitTDaoImpl.class);
-	
-	public int addGoodsunit(GoodsunitT transientInstance) {
-		log.debug("saving GoodsunitT instance");
-		try {
-			this.getHibernateTemplate().save(transientInstance);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllGoodsunit() {
 		log.debug("count all Goodsunit");
@@ -67,7 +56,8 @@ public class GoodsunitTDaoImpl extends HibernateDaoSupport implements GoodsunitT
 			final String queryString = "delete from GoodsunitT as u where u.unitid=:unitid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					for (String s : list) {
@@ -90,21 +80,24 @@ public class GoodsunitTDaoImpl extends HibernateDaoSupport implements GoodsunitT
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsunitT> findAllGoodsunit(final int currentPage, final int lineSize) {
+	public List<GoodsunitT> findAllGoodsunit(final int currentPage,
+			final int lineSize) {
 		log.debug("find all GoodsunitT");
 		try {
-			List<GoodsunitT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+			List<GoodsunitT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
 
-				String queryString = "from GoodsunitT  order by createtime desc";
+						String queryString = "from GoodsunitT  order by createtime desc";
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					List list = query.list();
-					return list;
-				}
-			});
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}
@@ -119,7 +112,8 @@ public class GoodsunitTDaoImpl extends HibernateDaoSupport implements GoodsunitT
 		log.debug("find by id GoodsunitT");
 		try {
 			String queryString = "from GoodsunitT as u where u.unitid=:unitid";
-			List<GoodsunitT> list = this.getHibernateTemplate().findByNamedParam(queryString, "unitid", unitid);
+			List<GoodsunitT> list = this.getHibernateTemplate()
+					.findByNamedParam(queryString, "unitid", unitid);
 			if (list != null) {
 				return list.get(0);
 			}
@@ -136,7 +130,8 @@ public class GoodsunitTDaoImpl extends HibernateDaoSupport implements GoodsunitT
 			final String queryString = "update GoodsunitT as u set u.unitname=:unitname,u.creatorid=:creatorid,u.createtime=:createtime where u.unitid=:unitid ";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("unitname", u.getUnitname());
@@ -159,7 +154,8 @@ public class GoodsunitTDaoImpl extends HibernateDaoSupport implements GoodsunitT
 		log.debug("find by id GoodsunitT json");
 		try {
 			String queryString = "from GoodsunitT  order by createtime desc";
-			List<GoodsunitT> list = this.getHibernateTemplate().find(queryString);
+			List<GoodsunitT> list = this.getHibernateTemplate().find(
+					queryString);
 			if (list != null) {
 				return list;
 			}
@@ -171,18 +167,21 @@ public class GoodsunitTDaoImpl extends HibernateDaoSupport implements GoodsunitT
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<GoodsunitT> sortAllGoodsunit(final int currentPage, final int lineSize, final String queryString) {
+	public List<GoodsunitT> sortAllGoodsunit(final int currentPage,
+			final int lineSize, final String queryString) {
 		log.debug("find all GoodsunitT");
 		try {
-			List<GoodsunitT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					query.setFirstResult((currentPage - 1) * lineSize);
-					query.setMaxResults(lineSize);
-					List list = query.list();
-					return list;
-				}
-			});
+			List<GoodsunitT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							List list = query.list();
+							return list;
+						}
+					});
 			if (list.size() > 0) {
 				return list;
 			}

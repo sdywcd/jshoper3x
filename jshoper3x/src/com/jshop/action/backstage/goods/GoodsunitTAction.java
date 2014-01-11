@@ -200,10 +200,9 @@ public class GoodsunitTAction extends ActionSupport {
 		u.setUnitname(this.getUnitname().trim());
 		u.setCreatorid(BaseTools.adminCreateId());
 		u.setCreatetime(BaseTools.systemtime());
-		if (this.getGoodsunitTService().addGoodsunit(u) > 0) {
-			return SUCCESS;
-		}
-		return INPUT;
+		this.getGoodsunitTService().save(u);
+		return SUCCESS;
+	
 	}
 
 	/**

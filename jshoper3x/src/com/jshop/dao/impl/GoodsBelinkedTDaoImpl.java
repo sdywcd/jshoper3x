@@ -17,22 +17,10 @@ import com.jshop.entity.FavoriteT;
 import com.jshop.entity.GoodsBelinkedT;
 import com.jshop.entity.MemberGradeT;
 @Repository("goodsBelinkedTDao")
-public class GoodsBelinkedTDaoImpl extends HibernateDaoSupport implements GoodsBelinkedTDao {
+public class GoodsBelinkedTDaoImpl extends BaseTDaoImpl<GoodsBelinkedT> implements GoodsBelinkedTDao {
 
 	private static final Log log=LogFactory.getLog(GoodsBelinkedTDaoImpl.class);
-	
-	@Override
-	public int addGoodsBelinkedT(GoodsBelinkedT gbel) {
-		log.debug("save GoodsBelinkedT");
-		try {
-			this.getHibernateTemplate().save(gbel);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
+
 
 	@Override
 	public int updateGoodsBelinked(GoodsBelinkedT gbel) {

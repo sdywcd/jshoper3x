@@ -5,13 +5,7 @@ import java.util.List;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.entity.GoodsT;
 
-public interface GoodsGroupTDao {
-	/**
-	 * 增加团购商品
-	 * @param group
-	 * @return
-	 */
-	public int addGoodsGroupT(GoodsGroupT group);
+public interface GoodsGroupTDao extends BaseTDao<GoodsGroupT> {
 	/**
 	 * 修改团购商品参数
 	 * @param group

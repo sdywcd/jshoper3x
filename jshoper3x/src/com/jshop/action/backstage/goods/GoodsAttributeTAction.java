@@ -333,7 +333,7 @@ public class GoodsAttributeTAction extends ActionSupport {
 				
 			if(gat.getGoodsattributeid().length()==0){
 				gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
-				this.getGoodsAttributeTService().addGoodsAttributeT(gat);
+				this.getGoodsAttributeTService().save(gat);
 			}else{
 				this.getGoodsAttributeTService().updateGoodsAttributeT(gat);
 			}

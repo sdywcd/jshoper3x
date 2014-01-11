@@ -456,11 +456,9 @@ public class ExpresstempleteTAction extends ActionSupport {
 			et.setExpressCss(null);
 			et.setExpressImg(null);
 			et.setKindeditorCode(this.getKindeditorCode());
-			if (this.getExpresstempleteTService().addExpresstemplete(et) > 0) {
-				return SUCCESS;
-			}else{
-				return INPUT;
-			}
+			this.getExpresstempleteTService().save(et);
+			return SUCCESS;
+			
 	}
 
 	/**

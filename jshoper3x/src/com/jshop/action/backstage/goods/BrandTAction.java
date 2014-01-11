@@ -300,22 +300,16 @@ public class BrandTAction extends ActionSupport {
 		bt.setLogoPath(this.getLogoPath().trim());
 		bt.setSort(Integer.parseInt(this.getSort().trim()));
 		bt.setUrl(this.getUrl().trim());
-		if (this.getBrandTService().addBrandt(bt) > 0) {
-			//增加商品品牌和商品类型的关系
-			GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
-			gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
-			gtbt.setBrandid(bt.getBrandid());
-			gtbt.setBrandname(bt.getBrandname());
-			gtbt.setGoodsTypeId(this.getGoodsTypeId());
-			gtbt.setName(this.getGoodsTypeName());
-			this.getGoodsTypeBrandTService().addGoodsTypeBrand(gtbt);
-			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
-
+		//增加商品品牌和商品类型的关系
+		GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
+		gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
+		gtbt.setBrandid(bt.getBrandid());
+		gtbt.setBrandname(bt.getBrandname());
+		gtbt.setGoodsTypeId(this.getGoodsTypeId());
+		gtbt.setName(this.getGoodsTypeName());
+		this.getBrandTService().saveBrandTransaction(bt, gtbt);
+		this.setSucflag(true);
+		return "json";
 	}
 
 	/**
@@ -374,7 +368,7 @@ public class BrandTAction extends ActionSupport {
 			gtbt.setBrandname(bt.getBrandname());
 			gtbt.setGoodsTypeId(this.getGoodsTypeId());
 			gtbt.setName(this.getGoodsTypeName());
-			this.getGoodsTypeBrandTService().addGoodsTypeBrand(gtbt);
+			this.getGoodsTypeBrandTService().save(gtbt);
 			this.setSucflag(true);
 			return "json";
 		}

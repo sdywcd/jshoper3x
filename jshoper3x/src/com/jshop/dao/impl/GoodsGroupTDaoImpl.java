@@ -16,23 +16,10 @@ import org.springframework.stereotype.Repository;
 import com.jshop.dao.GoodsGroupTDao;
 import com.jshop.entity.GoodsGroupT;
 @Repository("goodsGroupTDao")
-public class GoodsGroupTDaoImpl extends HibernateDaoSupport implements GoodsGroupTDao {
+public class GoodsGroupTDaoImpl extends BaseTDaoImpl<GoodsGroupT> implements GoodsGroupTDao {
 	private static final Logger log = LoggerFactory.getLogger(GoodsGroupTDaoImpl.class);
 	
 
-	@Override
-	public int addGoodsGroupT(GoodsGroupT group) {
-		log.debug("add GoodsGroupT");
-		try {
-			this.getHibernateTemplate().save(group);
-			log.debug("add GoodsGroupT success");
-			return 1;
-		} catch (DataAccessException e) {			
-			log.debug("add failed");
-			throw e;
-		}		
-		
-	}
 
 	@Override
 	public int updateGoodsGroupT(final GoodsGroupT group) {

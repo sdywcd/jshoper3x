@@ -108,7 +108,7 @@ public class ProductTServiceImpl implements ProductTService {
 	public void saveProductProcess(ProductT pt,
 			GoodsSpecificationsProductRpT gsrt) {
 		this.getProductTDao().saveProductT(pt);
-		this.getGoodsSpecificationsProductRpTService().addGoodsAssociatedProductById(gsrt);
+		this.getGoodsSpecificationsProductRpTService().save(gsrt);
 	}
 
 	@Override

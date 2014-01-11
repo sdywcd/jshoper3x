@@ -4,15 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.GoodsCategoryT;
 
-public interface GoodsCategoryTService {
+public interface GoodsCategoryTService extends BaseTService<GoodsCategoryT>{
 
-	/**
-	 * 增加商品分类
-	 * 
-	 * @param gct
-	 * @return
-	 */
-	public int addGoodsCategory(GoodsCategoryT gct);
 
 	/**
 	 * 获取父路径数据

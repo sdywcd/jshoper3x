@@ -13,7 +13,7 @@ import com.jshop.service.GoodsAttributeRpTService;
 
 @Service("goodsAttributeRpTService")
 @Scope("prototype")
-public class GoodsAttributeRpTServiceImpl implements GoodsAttributeRpTService {
+public class GoodsAttributeRpTServiceImpl extends BaseTServiceImpl<GoodsAttributeRpT> implements GoodsAttributeRpTService {
 	@Resource
 	private GoodsAttributeRpTDao goodsAttributeRpTDao;
 
@@ -23,11 +23,6 @@ public class GoodsAttributeRpTServiceImpl implements GoodsAttributeRpTService {
 
 	public void setGoodsAttributeRpTDao(GoodsAttributeRpTDao goodsAttributeRpTDao) {
 		this.goodsAttributeRpTDao = goodsAttributeRpTDao;
-	}
-
-	@Override
-	public void saveGoodsAttributeRpT(GoodsAttributeRpT gart) {
-		this.getGoodsAttributeRpTDao().saveGoodsAttributeRpT(gart);
 	}
 
 	@Override

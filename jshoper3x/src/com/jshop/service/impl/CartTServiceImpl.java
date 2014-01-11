@@ -13,7 +13,7 @@ import com.jshop.service.CartTService;
 
 @Service("cartTService")
 @Scope("prototype")
-public class CartTServiceImpl implements CartTService {
+public class CartTServiceImpl extends BaseTServiceImpl<CartT> implements CartTService {
 	@Resource
 	private CartTDao cartTDao;
 
@@ -23,10 +23,6 @@ public class CartTServiceImpl implements CartTService {
 
 	public void setCartTDao(CartTDao cartTDao) {
 		this.cartTDao = cartTDao;
-	}
-
-	public int addCart(CartT c) {
-		return this.getCartTDao().addCart(c);
 	}
 
 	public int countfindAllCart() {

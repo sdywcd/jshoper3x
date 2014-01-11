@@ -28,20 +28,10 @@ import com.jshop.entity.ArticleT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("articleTDao")
-public class ArticleTDaoImpl extends HibernateDaoSupport implements ArticleTDao {
+public class ArticleTDaoImpl extends BaseTDaoImpl<ArticleT> implements ArticleTDao {
 
 	private static final Logger log = LoggerFactory.getLogger(ArticleTDaoImpl.class);
-	
-	public void addArticleT(ArticleT at) {
-		log.debug("save GoodsCategoryT");
-		try {
-			this.getHibernateTemplate().save(at);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
+
 
 	public int countfindAllArticle(String creatorid) {
 		log.debug("countfindAllArticle");

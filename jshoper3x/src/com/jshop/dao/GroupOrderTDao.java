@@ -9,15 +9,7 @@ import com.jshop.entity.GroupCartT;
 import com.jshop.entity.GroupOrderT;
 import com.jshop.entity.OrderT;
 
-public interface GroupOrderTDao {
-	/**
-	 * 添加团购订单
-	 * 
-	 * @param got
-	 * @return
-	 */
-	
-	public int addGroupOrder(GroupOrderT got);
+public interface GroupOrderTDao extends BaseTDao<GroupOrderT> {
 	/**
 	 * 查询所有订单（后台）
 	 * @param currentPage

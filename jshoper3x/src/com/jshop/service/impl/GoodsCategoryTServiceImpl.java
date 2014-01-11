@@ -13,7 +13,7 @@ import com.jshop.service.GoodsCategoryTService;
 
 @Service("goodsCategoryTService")
 @Scope("prototype")
-public class GoodsCategoryTServiceImpl implements GoodsCategoryTService {
+public class GoodsCategoryTServiceImpl extends BaseTServiceImpl<GoodsCategoryT> implements GoodsCategoryTService {
 	@Resource
 	private GoodsCategoryTDao goodsCategoryTDao;
 
@@ -23,10 +23,6 @@ public class GoodsCategoryTServiceImpl implements GoodsCategoryTService {
 
 	public void setGoodsCategoryTDao(GoodsCategoryTDao goodsCategoryTDao) {
 		this.goodsCategoryTDao = goodsCategoryTDao;
-	}
-
-	public int addGoodsCategory(GoodsCategoryT gct) {
-		return this.getGoodsCategoryTDao().addGoodsCategory(gct);
 	}
 
 	public GoodsCategoryT findPathParentIdByParentId(String parentId) {
