@@ -20,6 +20,7 @@ $(function(){
 			auto: true
 	   });
 	},
+	myJFlow();
 	$('#list_product').carouFredSel({
 		prev: '#prev_c1',
 		next: '#next_c1',

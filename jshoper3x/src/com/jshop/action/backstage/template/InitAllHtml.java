@@ -16,16 +16,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.base.InitTAction;
+import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.tools.Validate;
 
 import com.jshop.dao.impl.GoodsAttributeTDaoImpl;
+import com.jshop.entity.CartT;
 import com.jshop.entity.TemplatesetT;
+import com.jshop.entity.UserT;
 import com.jshop.service.TemplatesetTService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.TemplateException;
 @Namespace("")
-@ParentPackage("json-default")
+@ParentPackage("jshop")
 public class InitAllHtml extends ActionSupport {
 	private CreateHtml createHtml;
 	private DataCollectionTAction dataCollectionTAction;
@@ -249,6 +255,20 @@ public class InitAllHtml extends ActionSupport {
 		
 		
 	}
+	/**
+	 * 根据userid获取购物车信息(给普通商品使用ordertag=1)
+	 * 
+	 * @return
+	 */
+	@Action(value = "showindex", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/index.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}") })
+	public String findAllCartByUserId() {
+		//路径获取
+		ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
+			return SUCCESS;
+		
+	}
+	
+	
 	
 	
 
