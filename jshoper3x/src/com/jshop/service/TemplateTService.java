@@ -4,15 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.TemplateT;
 
-public interface TemplateTService  {
-
-	/**
-	 * 增加模板
-	 * 
-	 * @param tt
-	 * @return
-	 */
-	public int addTemplate(TemplateT tt);
+public interface TemplateTService extends BaseTService<TemplateT> {
 
 	/**
 	 * 查询所有模板
@@ -21,7 +13,8 @@ public interface TemplateTService  {
 	 * @param lineSize
 	 * @return
 	 */
-	public List<TemplateT> findAllTemplate(final int currentPage, final int lineSize, final String creatorid);
+	public List<TemplateT> findAllTemplate(final int currentPage,
+			final int lineSize, final String creatorid);
 
 	/**
 	 * 统计查询所有模板
@@ -60,7 +53,8 @@ public interface TemplateTService  {
 	 * @param status
 	 * @return
 	 */
-	public List<TemplateT> findAllTemplateWithNoParam(String creatorid, String status);
+	public List<TemplateT> findAllTemplateWithNoParam(String creatorid,
+			String status);
 
 	/**
 	 * 检测模板文件唯一性
@@ -70,7 +64,8 @@ public interface TemplateTService  {
 	 * @param name
 	 * @return
 	 */
-	public int findTemplateBynameandnote(String creatorid, String note, String name);
+	public int findTemplateBynameandnote(String creatorid, String note,
+			String name);
 
 	/**
 	 * 根据name和creatorid获取模板文件
@@ -122,7 +117,8 @@ public interface TemplateTService  {
 	 * @param name
 	 * @return
 	 */
-	public List<TemplateT> findTemplateTByLikeName(final int currentPage, final int lineSize, final String name);
+	public List<TemplateT> findTemplateTByLikeName(final int currentPage,
+			final int lineSize, final String name);
 
 	/**
 	 * 统计所有根据迷糊查询的数据

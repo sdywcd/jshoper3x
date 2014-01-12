@@ -227,11 +227,9 @@ public class KeywordTAction extends ActionSupport {
 		kt.setType(this.getType());
 		kt.setCreatetime(BaseTools.systemtime());
 		kt.setCreatorid(BaseTools.adminCreateId());
-		if (this.getKeywordTService().addKeywordT(kt) > 0) {
-			this.setSlogin(true);
-			return "json";
-
-		}
+		this.getKeywordTService().save(kt);
+		this.setSlogin(true);
+			
 		return "json";
 	}
 

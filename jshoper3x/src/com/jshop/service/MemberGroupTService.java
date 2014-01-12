@@ -4,12 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.MemberGroupT;
 
-public interface MemberGroupTService {
-	/**
-	 * 增加用户分组
-	 * @param mgt
-	 */
-	public void saveMemberGroupT(MemberGroupT mgt);
+public interface MemberGroupTService extends BaseTService<MemberGroupT>{
+	
 	/**
 	 * 查询所有用户分组
 	 * @param currentPage

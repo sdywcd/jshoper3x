@@ -19,20 +19,9 @@ import com.jshop.entity.MemberGradeT;
 import com.jshop.entity.MemberRechargeT;
 import com.jshop.entity.UserT;
 @Repository("memberRechargeTDao")
-public class MemberRechargeTDaoImpl extends HibernateDaoSupport implements MemberRechargeTDao {
+public class MemberRechargeTDaoImpl extends BaseTDaoImpl<MemberRechargeT> implements MemberRechargeTDao {
 	private static final Logger log = LoggerFactory.getLogger(MemberRechargeTDaoImpl.class);
 	
-	@Override
-	public void saveMemberRechargeT(MemberRechargeT mrt) {
-		log.debug("save MemberRechargeT");
-		try {
-			this.getHibernateTemplate().save(mrt);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	@Override
 	public List<MemberRechargeT> findAllMemberRechargeT(final int currentPage,

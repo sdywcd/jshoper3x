@@ -19,19 +19,8 @@ import com.jshop.entity.TemplateT;
 import com.jshop.entity.UserT;
 
 @Repository("memberTDao")
-public class MemberTDaoImpl extends HibernateDaoSupport implements MemberTDao {
+public class MemberTDaoImpl extends BaseTDaoImpl<MemberT> implements MemberTDao {
 	private static final Logger log = LoggerFactory.getLogger(MemberTDaoImpl.class);
-	@Override
-	public void saveMemberT(MemberT mt) {
-		log.debug("save MemberT");
-		try {
-			this.getHibernateTemplate().save(mt);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override

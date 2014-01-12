@@ -414,13 +414,10 @@ public class TemplatesetTAction extends ActionSupport {
 			tst.setThemename(tt.getThemename());
 			tst.setStatus(tt.getStatus());
 		}
-		if (this.getTemplatesetTService().addTemplatesetT(tst) > 0) {
-			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+		this.getTemplatesetTService().save(tst);
+		this.setSucflag(true);
+		return "json";
+		
 
 	}
 

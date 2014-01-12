@@ -14,7 +14,7 @@ import com.jshop.service.LogisticsbusinessareaTService;
 
 @Service("logisticsbusinessareaTService")
 @Scope("prototype")
-public class LogisticsbusinessareaTServiceImpl implements LogisticsbusinessareaTService {
+public class LogisticsbusinessareaTServiceImpl extends BaseTServiceImpl<LogisticsbusinessareaT>implements LogisticsbusinessareaTService {
 	@Resource
 	private LogisticsbusinessareaTDao logisticsbusinessareaTDao;
 
@@ -26,9 +26,6 @@ public class LogisticsbusinessareaTServiceImpl implements LogisticsbusinessareaT
 		this.logisticsbusinessareaTDao = logisticsbusinessareaTDao;
 	}
 
-	public int addLogisticsbusinessarea(LogisticsbusinessareaT lba) {
-		return this.getLogisticsbusinessareaTDao().addLogisticsbusinessarea(lba);
-	}
 
 	public int countfindAllLogisticsbusinessareaT() {
 		return this.getLogisticsbusinessareaTDao().countfindAllLogisticsbusinessareaT();

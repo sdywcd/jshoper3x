@@ -28,20 +28,9 @@ import com.jshop.entity.ProductT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("productTDao")
-public class ProductTDaoImpl extends HibernateDaoSupport implements ProductTDao {
+public class ProductTDaoImpl extends BaseTDaoImpl<ProductT> implements ProductTDao {
 	private static final Logger log = LoggerFactory.getLogger(ProductTDaoImpl.class);
-	public int saveProductT(ProductT pt) {
-		log.debug("save ProductT");
-		try {
-			log.debug("save successful");
-			this.getHibernateTemplate().save(pt);
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
+	
 	public int countfindAllProductT(String creatorid) {
 		log.debug("countfindAllProductT");
 		try {

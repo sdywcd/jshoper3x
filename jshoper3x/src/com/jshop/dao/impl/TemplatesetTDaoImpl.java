@@ -28,21 +28,10 @@ import com.jshop.entity.TemplatesetT;
  */
 
 @Repository("templatesetTDao")
-public class TemplatesetTDaoImpl extends HibernateDaoSupport implements TemplatesetTDao {
+public class TemplatesetTDaoImpl extends BaseTDaoImpl<TemplatesetT> implements TemplatesetTDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(TemplatesetTDaoImpl.class);
 	
-	public int addTemplatesetT(TemplatesetT tst) {
-		log.debug("save TemplatesetT");
-		try {
-			this.getHibernateTemplate().save(tst);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllTemplatesetT(String creatorid) {
 		log.debug("countfindAllTemplatesetT");

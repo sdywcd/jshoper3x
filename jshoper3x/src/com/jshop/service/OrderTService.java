@@ -10,14 +10,9 @@ import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.ShippingAddressT;
 
-public interface OrderTService {
+public interface OrderTService extends BaseTService<OrderT>{
 
-	/**
-	 * 增加订单
-	 * @param o
-	 * @return
-	 */
-	public  int addOrder(OrderT o);
+
 	
 	/**
 	 * 根据订单状态获取订单信息

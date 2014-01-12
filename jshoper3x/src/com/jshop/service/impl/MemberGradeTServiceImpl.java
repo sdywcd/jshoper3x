@@ -13,7 +13,7 @@ import com.jshop.service.MemberGradeTService;
 
 @Service("memberGradeTService")
 @Scope("prototype")
-public class MemberGradeTServiceImpl implements MemberGradeTService {
+public class MemberGradeTServiceImpl extends BaseTServiceImpl<MemberGradeT>implements MemberGradeTService {
 	@Resource
 	private MemberGradeTDao memberGradeTDao;
 
@@ -25,10 +25,6 @@ public class MemberGradeTServiceImpl implements MemberGradeTService {
 		this.memberGradeTDao = memberGradeTDao;
 	}
 
-	@Override
-	public void addMemberGradeT(MemberGradeT mgt) {
-		this.getMemberGradeTDao().addMemberGradeT(mgt);
-	}
 
 	@Override
 	public void delMemberGradeT(String[] strs) {

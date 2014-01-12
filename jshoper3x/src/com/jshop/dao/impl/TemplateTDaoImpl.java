@@ -29,26 +29,11 @@ import com.jshop.entity.TemplateT;
  */
 
 @Repository("templateTDao")
-public class TemplateTDaoImpl extends HibernateDaoSupport implements TemplateTDao {
+public class TemplateTDaoImpl extends BaseTDaoImpl<TemplateT> implements TemplateTDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(TemplateTDaoImpl.class);
-	// property constants
-	public static final String URL = "url";
-	public static final String NOTE = "note";
-	public static final String NAME = "name";
-	public static final String CREATORID = "creatorid";
 
-	public int addTemplate(TemplateT tt) {
-		log.debug("save TemplateT");
-		try {
-			this.getHibernateTemplate().save(tt);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
+	
 
 	public int countfindAllTemplate(String creatorid) {
 		log.debug("count all TemplateT");

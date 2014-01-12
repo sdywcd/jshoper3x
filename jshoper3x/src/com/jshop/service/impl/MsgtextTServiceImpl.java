@@ -14,7 +14,7 @@ import com.jshop.service.MsgtextTService;
 
 @Service("msgtextTService")
 @Scope("prototype")
-public class MsgtextTServiceImpl implements MsgtextTService {
+public class MsgtextTServiceImpl extends BaseTServiceImpl<MsgtextT>implements MsgtextTService {
 	@Resource
 	public MsgtextTDao msgtextTDao;
 
@@ -32,10 +32,6 @@ public class MsgtextTServiceImpl implements MsgtextTService {
 
 	public int updateMsgtext(MsgtextT mt) {
 		return this.getMsgtextTDao().updateMsgtext(mt);
-	}
-
-	public int addMsgtext(MsgtextT mt) {
-		return this.getMsgtextTDao().addMsgtext(mt);
 	}
 
 	public int countfindAllMsgtext() {

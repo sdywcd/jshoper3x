@@ -13,7 +13,7 @@ import com.jshop.service.MemberTService;
 
 @Service("memberTService")
 @Scope("prototype")
-public class MemberTServiceImpl implements MemberTService{
+public class MemberTServiceImpl extends BaseTServiceImpl<MemberT> implements MemberTService{
 	@Resource
 	private MemberTDao memberTDao;
 	
@@ -23,11 +23,6 @@ public class MemberTServiceImpl implements MemberTService{
 
 	public void setMemberTDao(MemberTDao memberTDao) {
 		this.memberTDao = memberTDao;
-	}
-
-	@Override
-	public void saveMemberT(MemberT mt) {
-		this.getMemberTDao().saveMemberT(mt);
 	}
 
 	@Override

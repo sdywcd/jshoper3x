@@ -4,16 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.MemberGradeT;
 
-public interface MemberGradeTService {
-
-
-	/**
-	 * 增加会员等级
-	 * 
-	 * @param gt
-	 * @return
-	 */
-	public void addMemberGradeT(MemberGradeT mgt);
+public interface MemberGradeTService extends BaseTService<MemberGradeT>{
 
 	/**
 	 * 删除会员等级

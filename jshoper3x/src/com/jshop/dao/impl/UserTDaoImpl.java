@@ -28,21 +28,9 @@ import com.jshop.entity.UserT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("userTDao")
-public class UserTDaoImpl extends HibernateDaoSupport implements UserTDao {
+public class UserTDaoImpl extends BaseTDaoImpl<UserT> implements UserTDao {
 
 	private static final Log log = LogFactory.getLog(UserTDaoImpl.class);
-
-	public int save(UserT transientInstance) {
-		log.debug("saving UserT instance");
-		try {
-			this.getHibernateTemplate().save(transientInstance);
-			
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int delete(UserT persistentInstance) {
 		log.debug("deleting UserT instance");

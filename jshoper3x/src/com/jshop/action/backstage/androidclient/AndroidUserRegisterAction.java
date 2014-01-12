@@ -166,23 +166,14 @@ ServletRequestAware, ServletResponseAware {
 			user.setParttime3(null);
 			user.setQq(null);
 			user.setState("4");//register from mobile
-			if(this.getUsertService().save(user)>0){
-				this.setSucflag("1");//表示注册成功
-				response.setContentType("text/html");
-				PrintWriter out=response.getWriter();
-				out.write(this.getSucflag());
-				out.flush();
-				out.close();
-				return SUCCESS;
-			}else{
-				this.setSucflag("2");//标示注册失败
-				response.setContentType("text/html");
-				PrintWriter out=response.getWriter();
-				out.write(this.getSucflag());
-				out.flush();
-				out.close();
-				return SUCCESS;
-			}
+			this.getUsertService().save(user);
+			this.setSucflag("1");//表示注册成功
+			response.setContentType("text/html");
+			PrintWriter out=response.getWriter();
+			out.write(this.getSucflag());
+			out.flush();
+			out.close();
+			return SUCCESS;//this.setSucflag("2");//标示注册失败
 		}
 	}
 	

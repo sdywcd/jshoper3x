@@ -31,22 +31,11 @@ import com.jshop.entity.WebsiteMsgT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("websiteMsgTDao")
-public class WebsiteMsgTDaoImpl extends HibernateDaoSupport implements WebsiteMsgTDao {
+public class WebsiteMsgTDaoImpl extends BaseTDaoImpl<WebsiteMsgT> implements WebsiteMsgTDao {
 	
 	private static final Log log = LogFactory.getLog(WebsiteMsgTDaoImpl.class);
 	
 
-	public int addWebsiteMsgT(WebsiteMsgT wm) {
-		log.debug("save WebsiteMsgT");
-		try {
-			this.getHibernateTemplate().save(wm);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllWebsiteMsgByFromUserid(String userid) {
 		log.debug("count all countfindAllWebsiteMsgBySenduserid");

@@ -4,14 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.LogisticsBusinessT;
 
-public interface LogisticsBusinessTDao {
-
-	/**
-	 * 增加物流商
-	 * @param lb
-	 * @return
-	 */
-	public  int addLogisticsBusiness(LogisticsBusinessT lb);
+public interface LogisticsBusinessTDao extends BaseTDao<LogisticsBusinessT>{
 
 	/**
 	 * 删除物流商

@@ -27,24 +27,12 @@ import com.jshop.entity.ShippingAddressT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("shippingAddressTDao")
-public class ShippingAddressTDaoImpl extends HibernateDaoSupport implements ShippingAddressTDao {
+public class ShippingAddressTDaoImpl extends BaseTDaoImpl<ShippingAddressT> implements ShippingAddressTDao {
 
 	
 
 	private static final Log log = LogFactory.getLog(ShippingAddressTDaoImpl.class);
 	
-
-	public int addShoppingAddress(ShippingAddressT s) {
-		log.debug("save ShippingAddressT");
-		try {
-			this.getHibernateTemplate().save(s);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	@SuppressWarnings("unchecked")
 	public List<ShippingAddressT> findShippingAddressByDeliveraddressidAndstate(final String deliveraddressid, final String state, final String orderid) {

@@ -27,25 +27,9 @@ import com.jshop.entity.TemplatethemeT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("templatethemeTDao")
-public class TemplatethemeTDaoImpl extends HibernateDaoSupport implements TemplatethemeTDao {
+public class TemplatethemeTDaoImpl extends BaseTDaoImpl<TemplatethemeT> implements TemplatethemeTDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(TemplatethemeTDaoImpl.class);
-	//property constants
-	public static final String NOTE = "note";
-	public static final String THEMENAME = "themename";
-	public static final String CREATORID = "creatorid";
-	public static final String SIGN = "sign";
-	public int addTemplatetheme(TemplatethemeT tt) {
-		log.debug("save TemplatethemeT");
-		try {
-			this.getHibernateTemplate().save(tt);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 	
 	public int countfindAllTemplatetheme(String creatorid) {
 		log.debug("countfindAllTemplatetheme");

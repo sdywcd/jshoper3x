@@ -481,7 +481,7 @@ public class MemberTAction extends ActionSupport {
 				mt.setCreatorid(BaseTools.adminCreateId());
 				mt.setUpdatetime(mt.getCreatetime());
 				mt.setVersiont(0);
-				this.getMemberTService().saveMemberT(mt);
+				this.getMemberTService().save(mt);
 //				//放置到redis中去
 //				this.getRedisMemberService().save(mt);
 				this.setSucflag(true);

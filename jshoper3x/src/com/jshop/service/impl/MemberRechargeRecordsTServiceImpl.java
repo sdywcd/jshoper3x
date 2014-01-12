@@ -11,7 +11,7 @@ import com.jshop.service.MemberRechargeRecordsTService;
 
 @Service("memberRechargeRecordsTService")
 @Scope("prototype")
-public class MemberRechargeRecordsTServiceImpl implements
+public class MemberRechargeRecordsTServiceImpl extends BaseTServiceImpl<MemberRechargeRecordsT>implements
 		MemberRechargeRecordsTService {
 	private MemberRechargeRecordsTDao memberRechargeRecordsTDao;
 
@@ -24,11 +24,6 @@ public class MemberRechargeRecordsTServiceImpl implements
 		this.memberRechargeRecordsTDao = memberRechargeRecordsTDao;
 	}
 
-	@Override
-	public void saveMemberRechargeRecordsT(MemberRechargeRecordsT mrrt) {
-		this.getMemberRechargeRecordsTDao().saveMemberRechargeRecordsT(mrrt);
-
-	}
 
 	@Override
 	public List<MemberRechargeRecordsT> findAllMemberRechargeRecordsT(

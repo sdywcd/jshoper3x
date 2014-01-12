@@ -731,11 +731,10 @@ public class UserTAction extends ActionSupport {
 				user.setCreatorid(BaseTools.adminCreateId());
 				user.setCreatetime(BaseTools.systemtime());
 				user.setUpdatetime(user.getCreatetime());
-				if (this.getUsertService().save(user) > 0) {
-					this.setSucflag(true);
-					return "json";
-				}
+				this.getUsertService().save(user);
+				this.setSucflag(true);
 				return "json";
+				
 			}
 		}
 		this.setMessage("邮箱，用户名，密码必须填写");

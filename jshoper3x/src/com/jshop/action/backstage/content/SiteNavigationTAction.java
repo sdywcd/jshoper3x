@@ -324,15 +324,10 @@ public class SiteNavigationTAction extends ActionSupport {
 		sn.setHtmlPath(this.getHtmlPath());
 		sn.setSort(Integer.parseInt(this.getSort()));
 		sn.setSign(this.getSign());
-		if (this.getSiteNavigationTService().addSiteNavigationT(sn) > 0) {
-			//这里需要对应模板生成静态页面
-			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
-
+		this.getSiteNavigationTService().save(sn);
+		//这里需要对应模板生成静态页面
+		this.setSucflag(true);
+		return "json";
 	}
 
 	/**

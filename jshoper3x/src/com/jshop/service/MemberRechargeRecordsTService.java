@@ -4,13 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.MemberRechargeRecordsT;
 
-public interface MemberRechargeRecordsTService {
-	/**
-	 * 增加充值记录
-	 * 
-	 * @param mrrt
-	 */
-	public void saveMemberRechargeRecordsT(MemberRechargeRecordsT mrrt);
+public interface MemberRechargeRecordsTService extends BaseTService<MemberRechargeRecordsT> {
 
 	/**
 	 * 查询所有充值记录

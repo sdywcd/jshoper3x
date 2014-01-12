@@ -27,23 +27,10 @@ import com.jshop.entity.MemberGradeT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("memberGradeTDao")
-public class MemberGradeTImpl extends HibernateDaoSupport implements MemberGradeTDao {
+public class MemberGradeTImpl extends BaseTDaoImpl<MemberGradeT> implements MemberGradeTDao {
 	
 	private static final Log log = LogFactory.getLog(MemberGradeTImpl.class);
 	
-
-	public void addMemberGradeT(MemberGradeT mgt) {
-		log.debug("save GradeT");
-		try {
-			this.getHibernateTemplate().save(mgt);
-			log.debug("save successful");
-		
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public int countfindAllMemberGradeT() {
 		log.debug("count all MemberGradeT");
 		try {

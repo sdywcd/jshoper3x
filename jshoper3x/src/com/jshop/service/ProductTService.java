@@ -5,14 +5,7 @@ import java.util.List;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.ProductT;
 
-public interface ProductTService {
-	/**
-	 * 增加产品
-	 * 
-	 * @param pt
-	 * @return
-	 */
-	public int saveProductT(ProductT pt);
+public interface ProductTService extends BaseTService<ProductT>{
 
 	/**
 	 * 查询所有产品

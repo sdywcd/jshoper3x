@@ -522,12 +522,9 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			vsa.setState("1");//有对应订单的虚拟发货地址
 			vsa.setIssend("0");//未发送过的地址
 			vsa.setOrderid(this.getSerialidorderid());//预先获取的订单号
-			if(this.getVirtualShippingAddressTService().addVirtualShippingAddressT(vsa)>0){
+			this.getVirtualShippingAddressTService().save(vsa);
 				this.setVsat(vsa);
 				this.setSvirtualshippingaddress(true);
-			}else{
-				this.setSvirtualshippingaddress(false);
-			}
 			
 		}
 		
@@ -545,12 +542,10 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			vsa.setState("1");//有对应订单的虚拟发货地址
 			vsa.setIssend("0");//未发送过的地址
 			vsa.setOrderid(this.getSerialidorderid());//预先获取的订单号
-			if(this.getVirtualShippingAddressTService().addVirtualShippingAddressT(vsa)>0){
+			this.getVirtualShippingAddressTService().save(vsa);
 				this.setVsat(vsa);
 				this.setSvirtualshippingaddress(true);
-			}else{
-				this.setSvirtualshippingaddress(false);
-			}
+			
 			
 		}
 		
@@ -602,11 +597,8 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		order.setShippingaddressid(this.getVsat().getVirtualshippingaddressid());//设置虚拟发货地址到订单中
 		order.setDeliveraddressid("");//设置收货地址到订单中,虚拟所以为空
 		order.setShippingusername("");//设置收货人虚拟所以为空
-		if(this.getOrderTService().addOrder(order)>0){
+		this.getOrderTService().save(order);
 			this.setSaddorder(true);
-		}else{
-			this.setSaddorder(false);
-		}
 		
 	}
 	/**
@@ -655,11 +647,9 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 		order.setShippingaddressid(this.getVsat().getVirtualshippingaddressid());//设置虚拟发货地址到订单中
 		order.setDeliveraddressid("");//设置收货地址到订单中,虚拟所以为空
 		order.setShippingusername("");//设置收货人虚拟所以为空
-		if(this.getOrderTService().addOrder(order)>0){
+		this.getOrderTService().save(order);
 			this.setSaddorder(true);
-		}else{
-			this.setSaddorder(false);
-		}
+		
 		
 	}
 	/**

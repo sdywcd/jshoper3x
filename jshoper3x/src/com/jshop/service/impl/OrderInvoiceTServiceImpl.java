@@ -14,7 +14,7 @@ import com.jshop.service.OrderInvoiceTService;
 
 @Service("orderInvoiceTService")
 @Scope("prototype")
-public class OrderInvoiceTServiceImpl implements OrderInvoiceTService {
+public class OrderInvoiceTServiceImpl extends BaseTServiceImpl<OrderInvoiceT>implements OrderInvoiceTService {
 	@Resource
 	private OrderInvoiceTDao orderInvoiceTDao;
 
@@ -34,9 +34,6 @@ public class OrderInvoiceTServiceImpl implements OrderInvoiceTService {
 		return this.getOrderInvoiceTDao().updateOrderInvoiceState(orderinvoiceid, state);
 	}
 
-	public int addOrderInvoice(OrderInvoiceT oi) {
-		return this.getOrderInvoiceTDao().addOrderInvoice(oi);
-	}
 
 	public int countfindAllOrderIvoice() {
 		return this.getOrderInvoiceTDao().countfindAllOrderIvoice();

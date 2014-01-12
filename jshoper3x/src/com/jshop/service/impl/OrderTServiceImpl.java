@@ -26,7 +26,7 @@ import com.jshop.service.OrderTService;
 
 @Service("orderTService")
 @Scope("prototype")
-public class OrderTServiceImpl implements OrderTService {
+public class OrderTServiceImpl extends BaseTServiceImpl<OrderT>implements OrderTService {
 	@Resource
 	private OrderTDao orderTDao;
 	private Serial serial;
@@ -65,9 +65,7 @@ public class OrderTServiceImpl implements OrderTService {
 	public void setSerial(Serial serial) {
 		this.serial = serial;
 	}
-	public int addOrder(OrderT o) {
-		return this.getOrderTDao().addOrder(o);
-	}
+
 
 	public int countfindAllOrderByorderstate(String userid, String orderstate, String paystate, String shippingstate) {
 		return this.getOrderTDao().countfindAllOrderByorderstate(userid, orderstate, paystate, shippingstate);
@@ -197,14 +195,14 @@ public class OrderTServiceImpl implements OrderTService {
 		}
 		//加入到发货地址表中
 		sAddressT.setOrderid(orderid);
-		this.getShippingAddressTDao().addShoppingAddress(sAddressT);
+		this.getShippingAddressTDao().save(sAddressT);
 		//加入订单表
 		ordert.setOrderid(orderid);
-		this.getOrderTDao().addOrder(ordert);
+		this.getOrderTDao().save(ordert);
 		//加入订单发票表
 		oit.setOrderInvoiceid(this.getSerial().Serialid(Serial.ORDERINVOICE));
 		oit.setOrderid(orderid);
-		this.getOrderInvoiceTDao().addOrderInvoice(oit);
+		this.getOrderInvoiceTDao().save(oit);
 	}
 
 

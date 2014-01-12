@@ -16,21 +16,10 @@ import com.jshop.dao.VirtualShippingAddressTDao;
 import com.jshop.entity.ShippingAddressT;
 import com.jshop.entity.VirtualShippingAddressT;
 @Repository("virtualShippingAddressTDao")
-public class VirtualShippingAddressTDaoImpl extends HibernateDaoSupport implements
+public class VirtualShippingAddressTDaoImpl extends BaseTDaoImpl<VirtualShippingAddressT> implements
 		VirtualShippingAddressTDao {
 	private static final Log log=LogFactory.getLog(VirtualShippingAddressTDaoImpl.class);
-	@Override
-	public int addVirtualShippingAddressT(VirtualShippingAddressT vsa) {
-		log.debug("save VirtualShippingAddressT");
-		try {
-			this.getHibernateTemplate().save(vsa);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
+
 
 	@SuppressWarnings("unchecked")
 	@Override

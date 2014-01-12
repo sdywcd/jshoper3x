@@ -4,14 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.UserRoleM;
 
-public interface UserRoleMDao {
+public interface UserRoleMDao extends BaseTDao<UserRoleM>{
 
-	/**
-	 * 增加用户和角色关系
-	 * 
-	 * @param urm
-	 */
-	public void addUserRoleM(UserRoleM urm);
 
 	/**
 	 * 根据用户id删除角色

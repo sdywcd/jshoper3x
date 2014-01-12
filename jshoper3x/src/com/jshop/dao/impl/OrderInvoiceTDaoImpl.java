@@ -27,24 +27,11 @@ import com.jshop.entity.OrderInvoiceT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("orderInvoiceTDao")
-public class OrderInvoiceTDaoImpl extends HibernateDaoSupport implements OrderInvoiceTDao {
+public class OrderInvoiceTDaoImpl extends BaseTDaoImpl<OrderInvoiceT> implements OrderInvoiceTDao {
 	
 
 	private static final Log log = LogFactory.getLog(OrderInvoiceTDaoImpl.class);
 	
-
-	public int addOrderInvoice(OrderInvoiceT oi) {
-		log.debug("save OrderInvoiceT");
-		try {
-			this.getHibernateTemplate().save(oi);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public int countfindAllOrderIvoice() {
 		log.debug("count all countfindAllOrderIvoice");
 		try {

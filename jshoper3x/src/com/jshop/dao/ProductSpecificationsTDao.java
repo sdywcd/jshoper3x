@@ -4,14 +4,9 @@ import java.util.List;
 
 import com.jshop.entity.ProductSpecificationsT;
 
-public interface ProductSpecificationsTDao {
+public interface ProductSpecificationsTDao extends BaseTDao<ProductSpecificationsT>{
 
-	/**
-	 * 增加商品规格
-	 * 
-	 * @param pst
-	 */
-	public void addProductSpecification(ProductSpecificationsT pst);
+
 
 	/**
 	 * 更新商品规格

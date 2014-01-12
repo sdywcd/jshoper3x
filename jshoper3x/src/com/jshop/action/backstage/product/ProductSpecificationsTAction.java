@@ -315,7 +315,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		pst.setState(StaticString.ONE);
 		pst.setGoodsTypeId(this.getGoodsTypeId());
 		pst.setGoodsTypeName(this.getGoodsTypeName());
-		this.getProductSpecificationsTService().addProductSpecification(pst);
+		this.getProductSpecificationsTService().save(pst);
 		this.setSucflag(true);
 		return "json";
 

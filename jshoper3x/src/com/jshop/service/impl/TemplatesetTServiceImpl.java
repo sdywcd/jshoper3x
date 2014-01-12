@@ -13,7 +13,7 @@ import com.jshop.entity.TemplatesetT;
 import com.jshop.service.TemplatesetTService;
 @Service("templatesetTService")
 @Scope("prototype")
-public class TemplatesetTServiceImpl implements TemplatesetTService {
+public class TemplatesetTServiceImpl extends BaseTServiceImpl<TemplatesetT>implements TemplatesetTService {
 	@Resource
 	private TemplatesetTDao templatesetTDao;
 
@@ -25,9 +25,7 @@ public class TemplatesetTServiceImpl implements TemplatesetTService {
 		this.templatesetTDao = templatesetTDao;
 	}
 
-	public int addTemplatesetT(TemplatesetT tst) {
-		return this.getTemplatesetTDao().addTemplatesetT(tst);
-	}
+
 
 	public int countfindAllTemplatesetT(String creatorid) {
 		return this.getTemplatesetTDao().countfindAllTemplatesetT(creatorid);

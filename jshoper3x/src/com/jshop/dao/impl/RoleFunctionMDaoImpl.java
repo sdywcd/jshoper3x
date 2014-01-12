@@ -27,19 +27,8 @@ import com.jshop.entity.RoleFunctionM;
  * @author MyEclipse Persistence Tools
  */
 @Repository("roleFunctionMDao")
-public class RoleFunctionMDaoImpl extends HibernateDaoSupport implements RoleFunctionMDao {
+public class RoleFunctionMDaoImpl extends BaseTDaoImpl<RoleFunctionM> implements RoleFunctionMDao {
 	private static final Logger log = LoggerFactory.getLogger(RoleFunctionMDaoImpl.class);
-
-	public void addRoleFunctionM(RoleFunctionM rfm) {
-		log.debug("save RoleFunctionM");
-		try {
-			this.getHibernateTemplate().save(rfm);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public List<RoleFunctionM> findAllRoleFunctionMByroleid(String roleid) {
 		log.debug("findAllRoleFunctionMByroleid");

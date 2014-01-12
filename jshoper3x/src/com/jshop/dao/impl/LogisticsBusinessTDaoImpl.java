@@ -28,24 +28,11 @@ import com.jshop.entity.LogisticsBusinessT;
  */
 
 @Repository("logisticsBusinessTDao")
-public class LogisticsBusinessTDaoImpl extends HibernateDaoSupport implements LogisticsBusinessTDao {
+public class LogisticsBusinessTDaoImpl extends BaseTDaoImpl<LogisticsBusinessT> implements LogisticsBusinessTDao {
 	
 
 	private static final Log log = LogFactory.getLog(LogisticsBusinessTDaoImpl.class);
 	
-
-	public int addLogisticsBusiness(LogisticsBusinessT lb) {
-		log.debug("save LogisticsBusinessT");
-		try {
-			this.getHibernateTemplate().save(lb);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public int countfindAllLogisticsBusiness() {
 		log.debug("count all LogisticsBusinessT");
 		try {

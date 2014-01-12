@@ -30,23 +30,11 @@ import com.jshop.entity.SiteNavigationT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("siteNavigationTDao")
-public class SiteNavigationTDaoImpl extends HibernateDaoSupport implements SiteNavigationTDao {
+public class SiteNavigationTDaoImpl extends BaseTDaoImpl<SiteNavigationT> implements SiteNavigationTDao {
 	
 
 	private static final Logger log = LoggerFactory.getLogger(SiteNavigationTDaoImpl.class);
 	
-
-	public int addSiteNavigationT(SiteNavigationT sn) {
-		log.debug("save SiteNavigationT");
-		try {
-			this.getHibernateTemplate().save(sn);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllSiteNavigationT(String creatorid) {
 		log.debug("countfindAllSiteNavigationT");

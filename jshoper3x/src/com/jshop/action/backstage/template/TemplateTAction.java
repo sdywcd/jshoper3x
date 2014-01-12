@@ -403,14 +403,11 @@ public class TemplateTAction extends ActionSupport {
 		tt.setSign(this.getSign());
 		tt.setType(this.getType());
 		tt.setStatus("1");//默认开启
-		if (this.getTemplateTService().addTemplate(tt) > 0) {
-			createFTLFile(tt);
-			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+		this.getTemplateTService().save(tt);
+		createFTLFile(tt);
+		this.setSucflag(true);
+		return "json";
+	
 	}
 
 	/**

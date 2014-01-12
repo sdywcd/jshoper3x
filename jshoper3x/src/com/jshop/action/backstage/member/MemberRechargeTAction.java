@@ -197,7 +197,7 @@ public class MemberRechargeTAction extends ActionSupport {
 			mrtt.setCreatetime(BaseTools.systemtime());
 			mrtt.setUpdatetime(mrtt.getCreatetime());
 			mrtt.setVersiont(0);
-			this.getMemberRechargeTService().saveMemberRechargeT(mrtt);
+			this.getMemberRechargeTService().save(mrtt);
 			this.setSucflag(true);
 			return "json";
 		}

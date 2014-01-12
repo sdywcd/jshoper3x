@@ -559,7 +559,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 			s.setDeliveraddressid(list.getAddressid());
 			s.setIssend("0");//未发送到这个地址过
 			s.setOrderid(oldorder.getOrderid());
-			if (this.getShippingAddressTService().addShoppingAddress(s) > 0) {
+			this.getShippingAddressTService().save(s);
 				this.setSshoppingaddress(false);
 				order.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
 				order.setDeliveraddressid(list.getAddressid());//设置收货地址到订单中
@@ -570,9 +570,9 @@ public class UserCenterMyorderAction extends ActionSupport {
 				AlipayConfig.reveive_zip = list.getPostcode();
 				AlipayConfig.reveive_phone = list.getTelno();
 				AlipayConfig.reveive_mobile = list.getMobile();
-			} else {
-				this.setSshoppingaddress(true);
-			}
+//			} else {
+//				this.setSshoppingaddress(true);
+//			}
 		}
 	}
 

@@ -12,7 +12,7 @@ import com.jshop.entity.UserRoleM;
 import com.jshop.service.UserRoleMService;
 @Service("userRoleMService")
 @Scope("prototype")
-public class UserRoleMServiceImpl implements UserRoleMService {
+public class UserRoleMServiceImpl extends BaseTServiceImpl<UserRoleM> implements UserRoleMService {
 	@Resource
 	private UserRoleMDao userRoleMDao;
 	
@@ -24,10 +24,6 @@ public class UserRoleMServiceImpl implements UserRoleMService {
 		this.userRoleMDao = userRoleMDao;
 	}
 
-	public void addUserRoleM(UserRoleM urm) {
-		this.getUserRoleMDao().addUserRoleM(urm);
-
-	}
 
 	public int delUserRoleM(String userid) {
 		return this.getUserRoleMDao().delUserRoleM(userid);

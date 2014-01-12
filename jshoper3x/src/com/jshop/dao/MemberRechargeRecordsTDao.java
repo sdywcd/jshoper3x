@@ -4,14 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.MemberRechargeRecordsT;
 
-public interface MemberRechargeRecordsTDao {
-	/**
-	 * 增加充值记录
-	 * 
-	 * @param mrrt
-	 */
-	public void saveMemberRechargeRecordsT(MemberRechargeRecordsT mrrt);
-
+public interface MemberRechargeRecordsTDao extends BaseTDao<MemberRechargeRecordsT>{
 	/**
 	 * 查询所有充值记录
 	 * 

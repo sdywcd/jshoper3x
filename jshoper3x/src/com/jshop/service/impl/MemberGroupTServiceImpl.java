@@ -13,7 +13,7 @@ import com.jshop.service.MemberGroupTService;
 
 @Service("memberGroupTService")
 @Scope("prototype")
-public class MemberGroupTServiceImpl implements MemberGroupTService{
+public class MemberGroupTServiceImpl extends BaseTServiceImpl<MemberGroupT>implements MemberGroupTService{
 	@Resource
 	private MemberGroupTDao memberGroupTDao;
 	
@@ -25,10 +25,7 @@ public class MemberGroupTServiceImpl implements MemberGroupTService{
 		this.memberGroupTDao = memberGroupTDao;
 	}
 
-	@Override
-	public void saveMemberGroupT(MemberGroupT mgt) {
-		this.getMemberGroupTDao().saveMemberGroupT(mgt);
-	}
+
 
 	@Override
 	public List<MemberGroupT> findAllMemberGroupT(int currentPage, int lineSize) {

@@ -252,11 +252,8 @@ public class VouchersTAction extends ActionSupport {
 			vt.setState("0");
 			vt.setCreatetime(BaseTools.systemtime());
 			vt.setCreatorid(adminid);
-			if (this.getVouchersTService().addVoucherst(vt) > 0) {
-				this.addvoucherflag = true;
-				return "json";
-			}
-			return "json";
+			this.getVouchersTService().save(vt);
+			this.addvoucherflag = true;
 		}
 		return "json";
 	}

@@ -17,7 +17,7 @@ import com.jshop.service.ProductTService;
 
 @Service("productTService")
 @Scope("prototype")
-public class ProductTServiceImpl implements ProductTService {
+public class ProductTServiceImpl extends BaseTServiceImpl<ProductT>implements ProductTService {
 	@Resource
 	private ProductTDao productTDao;
 	@Resource
@@ -40,9 +40,6 @@ public class ProductTServiceImpl implements ProductTService {
 		this.productTDao = productTDao;
 	}
 
-	public int saveProductT(ProductT pt) {
-		return this.getProductTDao().saveProductT(pt);
-	}
 
 	public int countfindAllProductT(String creatorid) {
 		return this.getProductTDao().countfindAllProductT(creatorid);
@@ -107,7 +104,7 @@ public class ProductTServiceImpl implements ProductTService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void saveProductProcess(ProductT pt,
 			GoodsSpecificationsProductRpT gsrt) {
-		this.getProductTDao().saveProductT(pt);
+		this.getProductTDao().save(pt);
 		this.getGoodsSpecificationsProductRpTService().save(gsrt);
 	}
 

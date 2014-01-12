@@ -4,15 +4,9 @@ import java.util.List;
 
 import com.jshop.entity.PaymentM;
 
-public interface PaymentMService {
+public interface PaymentMService extends BaseTService<PaymentM>{
 
-	/**
-	 * 增加支付方式
-	 * 
-	 * @param pm
-	 * @return
-	 */
-	public int addPayment(PaymentM pm);
+	
 
 	/**
 	 * 开启支付方式使用

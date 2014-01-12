@@ -12,7 +12,7 @@ import com.jshop.entity.VirtualShippingAddressT;
 import com.jshop.service.VirtualShippingAddressTService;
 @Service("virtualShippingAddressTService")
 @Scope("prototype")
-public class VirtualShippingAddressTServiceImpl implements
+public class VirtualShippingAddressTServiceImpl extends BaseTServiceImpl<VirtualShippingAddressT>implements
 		VirtualShippingAddressTService {
 	@Resource
 	private VirtualShippingAddressTDao virtualShippingAddressTDao;
@@ -26,10 +26,7 @@ public class VirtualShippingAddressTServiceImpl implements
 		this.virtualShippingAddressTDao = virtualShippingAddressTDao;
 	}
 
-	@Override
-	public int addVirtualShippingAddressT(VirtualShippingAddressT vsa) {
-		return this.getVirtualShippingAddressTDao().addVirtualShippingAddressT(vsa);
-	}
+
 
 	@Override
 	public List<VirtualShippingAddressT> findVirtualShippingAddressTByIdAndState(

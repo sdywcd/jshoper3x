@@ -294,10 +294,8 @@ public class SystemMailTAction extends ActionSupport {
 		sm.setCreatorname(BaseTools.adminCreateName());
 		sm.setCreatetime(BaseTools.systemtime());
 		sm.setUpdatetime(BaseTools.systemtime());
-		if (this.getSystemMailTService().addSystemMail(sm) > 0) {
-			this.setSucflag(true);
-			return "json";
-		}
+		this.getSystemMailTService().save(sm);
+		this.setSucflag(true);		
 		return "json";
 	}
 

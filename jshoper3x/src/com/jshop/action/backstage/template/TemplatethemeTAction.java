@@ -346,13 +346,10 @@ public class TemplatethemeTAction extends ActionSupport {
 		tt.setCreatetime(BaseTools.systemtime());
 		tt.setCreatorid(BaseTools.adminCreateId());
 		tt.setStatus(this.getStatus());
-		if (this.getTemplatethemeTService().addTemplatetheme(tt) > 0) {
-			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+		this.getTemplatethemeTService().save(tt);
+		this.setSucflag(true);
+		return "json";
+		
 	}
 
 	/**

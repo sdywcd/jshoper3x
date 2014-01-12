@@ -4,12 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.MemberRechargeT;
 
-public interface MemberRechargeTDao {
-	/**
-	 * 增加充值账户余额
-	 * @param mrt
-	 */
-	public void saveMemberRechargeT(MemberRechargeT mrt);
+public interface MemberRechargeTDao extends BaseTDao<MemberRechargeT>{
 	/**
 	 * 查询所有充值账户余额
 	 * @param currentPage

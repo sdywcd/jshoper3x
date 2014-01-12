@@ -122,7 +122,7 @@ public class UserRoleMAction extends ActionSupport {
 			urm.setId(this.getUserid());
 			urm.setRoleid(this.getRoleid());
 			urm.setUserid(this.getUserid());
-			this.getUserRoleMService().addUserRoleM(urm);
+			this.getUserRoleMService().save(urm);
 			this.setSucflag(true);
 			return "json";
 		}

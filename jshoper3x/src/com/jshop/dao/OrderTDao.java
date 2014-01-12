@@ -7,13 +7,6 @@ import com.jshop.entity.OrderT;
 
 public interface OrderTDao extends BaseTDao<OrderT> {
 
-	/**
-	 * 增加订单
-	 * 
-	 * @param o
-	 * @return
-	 */
-	public int addOrder(OrderT o);
 
 	/**
 	 * 根据订单状态获取订单信息

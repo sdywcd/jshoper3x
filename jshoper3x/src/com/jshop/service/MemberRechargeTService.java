@@ -5,12 +5,7 @@ import java.util.List;
 
 import com.jshop.entity.MemberRechargeT;
 
-public interface MemberRechargeTService {
-	/**
-	 * 增加充值账户余额
-	 * @param mrt
-	 */
-	public void saveMemberRechargeT(MemberRechargeT mrt);
+public interface MemberRechargeTService extends BaseTService<MemberRechargeT>{
 	/**
 	 * 查询所有充值账户余额
 	 * @param currentPage

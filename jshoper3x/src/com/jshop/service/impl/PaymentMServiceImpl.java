@@ -13,7 +13,7 @@ import com.jshop.service.PaymentMService;
 
 @Service("paymentMService")
 @Scope("prototype")
-public class PaymentMServiceImpl implements PaymentMService {
+public class PaymentMServiceImpl extends BaseTServiceImpl<PaymentM> implements PaymentMService {
 	@Resource
 	private PaymentMDao paymentMDao;
 
@@ -33,10 +33,7 @@ public class PaymentMServiceImpl implements PaymentMService {
 		return this.getPaymentMDao().updatePayment(pm);
 	}
 
-	public int addPayment(PaymentM pm) {
-		return this.getPaymentMDao().addPayment(pm);
-	}
-
+	
 	public int countfindAllPayment() {
 		return this.getPaymentMDao().countfindAllPayment();
 	}

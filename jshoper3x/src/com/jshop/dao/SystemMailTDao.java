@@ -4,15 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.SystemMailT;
 
-public interface SystemMailTDao {
+public interface SystemMailTDao extends BaseTDao<SystemMailT>{
 
-	/**
-	 * 增加系统邮件
-	 * 
-	 * @param sm
-	 * @return
-	 */
-	public int addSystemMail(SystemMailT sm);
 
 	/**
 	 * 删除邮箱

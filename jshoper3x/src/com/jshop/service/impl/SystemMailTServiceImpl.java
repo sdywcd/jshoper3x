@@ -13,7 +13,7 @@ import com.jshop.service.SystemMailTService;
 
 @Service("systemMailTService")
 @Scope("prototype")
-public class SystemMailTServiceImpl implements SystemMailTService {
+public class SystemMailTServiceImpl extends BaseTServiceImpl<SystemMailT>implements SystemMailTService {
 	@Resource
 	private SystemMailTDao systemMailTDao;
 
@@ -23,11 +23,6 @@ public class SystemMailTServiceImpl implements SystemMailTService {
 
 	public void setSystemMailTDao(SystemMailTDao systemMailTDao) {
 		this.systemMailTDao = systemMailTDao;
-	}
-
-	@Override
-	public int addSystemMail(SystemMailT sm) {
-		return this.getSystemMailTDao().addSystemMail(sm);
 	}
 
 	@Override

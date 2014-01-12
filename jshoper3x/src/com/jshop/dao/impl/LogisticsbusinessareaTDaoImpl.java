@@ -27,23 +27,10 @@ import com.jshop.entity.LogisticsbusinessareaT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("logisticsbusinessareaTDao")
-public class LogisticsbusinessareaTDaoImpl extends HibernateDaoSupport implements LogisticsbusinessareaTDao {
+public class LogisticsbusinessareaTDaoImpl extends BaseTDaoImpl<LogisticsbusinessareaT> implements LogisticsbusinessareaTDao {
 	
 
 	private static final Log log = LogFactory.getLog(LogisticsbusinessareaTDaoImpl.class);
-
-	public int addLogisticsbusinessarea(LogisticsbusinessareaT lba) {
-		log.debug("save LogisticsbusinessareaT");
-		try {
-			this.getHibernateTemplate().save(lba);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
 	public int countfindAllLogisticsbusinessareaT() {
 		log.debug("count all LogisticsbusinessareaT");
 		try {

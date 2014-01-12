@@ -27,20 +27,8 @@ import com.jshop.entity.ModuleM;
  * @author MyEclipse Persistence Tools
  */
 @Repository("moduleMDao")
-public class ModuleMDaoImpl extends HibernateDaoSupport implements ModuleMDao {
+public class ModuleMDaoImpl extends BaseTDaoImpl<ModuleM> implements ModuleMDao {
 	private static final Logger log = LoggerFactory.getLogger(ModuleMDaoImpl.class);
-
-	public void addModuleM(ModuleM mm) {
-		log.debug("save ModuleM");
-		try {
-			this.getHibernateTemplate().save(mm);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-
-	}
 
 	public int delModuleM(final String[] strs) {
 		log.debug("delModuleM");

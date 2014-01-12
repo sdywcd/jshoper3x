@@ -27,22 +27,10 @@ import com.jshop.entity.ProductSpecificationsT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("productSpecificationsTDao")
-public class ProductSpecificationsTDaoImpl extends HibernateDaoSupport implements ProductSpecificationsTDao{
+public class ProductSpecificationsTDaoImpl extends BaseTDaoImpl<ProductSpecificationsT> implements ProductSpecificationsTDao{
 	
 	private static final Logger log = LoggerFactory.getLogger(ProductSpecificationsTDaoImpl.class);
 	
-
-	public void addProductSpecification(ProductSpecificationsT pst) {
-		log.debug("save ProductSpecificationsT");
-		try {
-			this.getHibernateTemplate().save(pst);
-			log.debug("save successful");
-
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllProductSpecificationsT() {
 		log.debug("count all ProductSpecificationsT");

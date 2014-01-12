@@ -198,7 +198,7 @@ public class RoleMAction extends ActionSupport {
 		rm.setRolename(this.getRolename());
 		rm.setNote(this.getNote());
 		rm.setCreatetime(BaseTools.systemtime());
-		this.getRoleMService().addRoleM(rm);
+		this.getRoleMService().save(rm);
 		this.getRoleFunctionMService().addRoleFunctionM(rm,this.getFunctionid().trim());
 		this.setSucflag(true);
 		return "json";

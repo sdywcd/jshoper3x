@@ -373,10 +373,9 @@ public class LogisticsBusinessTAction extends ActionSupport {
 		lb.setWebsite(this.getWebsite().trim());
 		lb.setSendrange(this.getSendrange().trim());
 		lb.setMobile(this.getMobile().trim());
-		if (this.getLogisticsBusinessTService().addLogisticsBusiness(lb) > 0) {
-			this.setSucflag(true);
-			return "json";
-		}
+		this.getLogisticsBusinessTService().save(lb);
+		this.setSucflag(true);
+		
 		return "json";
 
 	}

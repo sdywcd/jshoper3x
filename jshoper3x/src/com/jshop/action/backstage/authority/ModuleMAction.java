@@ -152,7 +152,7 @@ public class ModuleMAction extends ActionSupport {
 		mm.setId(this.getSerial().Serialid(Serial.MODULE));
 		mm.setModulename(this.getModulename());
 		mm.setCreatetime(BaseTools.systemtime());
-		this.getModuleMService().addModuleM(mm);
+		this.getModuleMService().save(mm);
 		this.setSucflag(true);
 		return "json";
 	}

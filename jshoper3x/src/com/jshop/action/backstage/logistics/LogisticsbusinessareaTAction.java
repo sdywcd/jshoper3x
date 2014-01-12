@@ -250,10 +250,9 @@ public class LogisticsbusinessareaTAction extends ActionSupport {
 		lba.setOvercost(Double.parseDouble(this.getOvercost()));
 		lba.setSendarea(this.getSendarea().trim());
 		lba.setState(this.getState());
-		if (this.getLogisticsbusinessareaTService().addLogisticsbusinessarea(lba) > 0) {
-			this.setSucflag(true);
-			return "json";
-		}
+		this.getLogisticsbusinessareaTService().save(lba);
+		this.setSucflag(true);
+		
 		return "json";
 
 	}

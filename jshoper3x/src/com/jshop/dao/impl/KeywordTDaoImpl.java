@@ -27,22 +27,10 @@ import com.jshop.entity.KeywordT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("keywordTDao")
-public class KeywordTDaoImpl extends HibernateDaoSupport implements KeywordTDao {
+public class KeywordTDaoImpl extends BaseTDaoImpl<KeywordT> implements KeywordTDao {
 	
 	private static final Log log = LogFactory.getLog(KeywordTDaoImpl.class);
 	
-
-	public int addKeywordT(KeywordT transientInstance) {
-		log.debug("saving KeywordT instance");
-		try {
-			this.getHibernateTemplate().save(transientInstance);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countAllKeywordT() {
 		log.debug("count all KeywordT");

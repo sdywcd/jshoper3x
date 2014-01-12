@@ -14,7 +14,7 @@ import com.jshop.service.RoleMService;
 
 @Service("roleMService")
 @Scope("prototype")
-public class RoleMServiceImpl implements RoleMService {
+public class RoleMServiceImpl extends BaseTServiceImpl<RoleM>implements RoleMService {
 	@Resource
 	private RoleMDao roleMDao;
 
@@ -24,11 +24,6 @@ public class RoleMServiceImpl implements RoleMService {
 
 	public void setRoleMDao(RoleMDao roleMDao) {
 		this.roleMDao = roleMDao;
-	}
-
-	public void addRoleM(RoleM rm) {
-		this.getRoleMDao().addRoleM(rm);
-
 	}
 
 	public int delRoleM(String[] strs) {

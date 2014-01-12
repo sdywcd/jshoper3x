@@ -27,22 +27,10 @@ import com.jshop.entity.MsgtextT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("msgtextTDao")
-public class MsgtextTDaoImpl extends HibernateDaoSupport implements MsgtextTDao {
+public class MsgtextTDaoImpl extends BaseTDaoImpl<MsgtextT> implements MsgtextTDao {
 
 	private static final Log log = LogFactory.getLog(MsgtextTDaoImpl.class);
 
-
-	public int addMsgtext(MsgtextT mt) {
-		log.debug("save MsgtextT");
-		try {
-			this.getHibernateTemplate().save(mt);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllMsgtext() {
 		log.debug("count all countfindAllMsgtext");

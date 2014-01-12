@@ -232,7 +232,7 @@ public class RegisterAction extends ActionSupport {
 				m.setCreatetime(BaseTools.systemtime());
 				m.setVersiont(1);
 				m.setUpdatetime(m.getCreatetime());
-				this.getMemberTService().saveMemberT(m);
+				this.getMemberTService().save(m);
 				return "register_success";
 			}
 		}else{

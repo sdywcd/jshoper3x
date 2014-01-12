@@ -4,12 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.MemberGroupT;
 
-public interface MemberGroupTDao {
-	/**
-	 * 增加用户分组
-	 * @param mgt
-	 */
-	public void saveMemberGroupT(MemberGroupT mgt);
+public interface MemberGroupTDao extends BaseTDao<MemberGroupT>{
+	
 	/**
 	 * 查询所有用户分组
 	 * @param currentPage

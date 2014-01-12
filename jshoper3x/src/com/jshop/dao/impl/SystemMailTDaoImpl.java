@@ -27,22 +27,11 @@ import com.jshop.entity.SystemMailT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("systemMailTDao")
-public class SystemMailTDaoImpl extends HibernateDaoSupport implements SystemMailTDao {
+public class SystemMailTDaoImpl extends BaseTDaoImpl<SystemMailT> implements SystemMailTDao {
 	
 	private static final Logger log = LoggerFactory.getLogger(SystemMailTDaoImpl.class);
 	
 
-	public int addSystemMail(SystemMailT sm) {
-		log.debug("save SystemMailM");
-		try {
-			this.getHibernateTemplate().save(sm);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public void updateSystemMail(SystemMailT sm) {
 		log.debug("update SystemMailM");

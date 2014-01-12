@@ -4,15 +4,9 @@ import java.util.List;
 
 import com.jshop.entity.ProductT;
 
-public interface ProductTDao {
+public interface ProductTDao extends BaseTDao<ProductT>{
 
-	/**
-	 * 增加产品
-	 * 
-	 * @param pt
-	 * @return
-	 */
-	public int saveProductT(ProductT pt);
+	
 
 	/**
 	 * 查询所有产品

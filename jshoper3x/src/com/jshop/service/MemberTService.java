@@ -5,12 +5,8 @@ import java.util.List;
 import com.jshop.entity.MemberGroupT;
 import com.jshop.entity.MemberT;
 
-public interface MemberTService {
-	/**
-	 * 增加用户
-	 * @param mt
-	 */
-	public void saveMemberT(MemberT mt);
+public interface MemberTService extends BaseTService<MemberT>{
+
 	/**
 	 * 查询所有用户
 	 * @param currentPage

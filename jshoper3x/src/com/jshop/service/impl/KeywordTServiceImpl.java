@@ -14,7 +14,7 @@ import com.jshop.service.KeywordTService;
 
 @Service("keywordTService")
 @Scope("prototype")
-public class KeywordTServiceImpl implements KeywordTService {
+public class KeywordTServiceImpl extends BaseTServiceImpl<KeywordT> implements KeywordTService {
 	@Resource
 	private KeywordTDao keywordTDao;
 
@@ -38,10 +38,7 @@ public class KeywordTServiceImpl implements KeywordTService {
 		return this.getKeywordTDao().updatekeywordsearchcount(keywordname);
 	}
 
-	public int addKeywordT(KeywordT kt) {
-		return this.getKeywordTDao().addKeywordT(kt);
-	}
-
+	
 	public int countAllKeywordT() {
 		return this.getKeywordTDao().countAllKeywordT();
 	}

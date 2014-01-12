@@ -13,7 +13,7 @@ import com.jshop.entity.WebsiteMsgT;
 import com.jshop.service.WebsiteMsgTService;
 @Service("websiteMsgTService")
 @Scope("prototype")
-public class WebsiteMsgTServiceImpl implements WebsiteMsgTService {
+public class WebsiteMsgTServiceImpl extends BaseTServiceImpl<WebsiteMsgT>implements WebsiteMsgTService {
 	@Resource
 	private WebsiteMsgTDao websiteMsgTDao;
 
@@ -29,9 +29,7 @@ public class WebsiteMsgTServiceImpl implements WebsiteMsgTService {
 		return this.getWebsiteMsgTDao().delWebsiteMsgT(list);
 	}
 
-	public int addWebsiteMsgT(WebsiteMsgT wm) {
-		return this.getWebsiteMsgTDao().addWebsiteMsgT(wm);
-	}
+	
 
 	public int countfindAllWebsiteMsgByFromUserid(String userid) {
 		return this.getWebsiteMsgTDao().countfindAllWebsiteMsgByFromUserid(userid);

@@ -4,14 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.SystemMailT;
 
-public interface SystemMailTService {
-	/**
-	 * 增加系统邮件
-	 * 
-	 * @param sm
-	 * @return
-	 */
-	public int addSystemMail(SystemMailT sm);
+public interface SystemMailTService extends BaseTService<SystemMailT>{
 	/**
 	 * 删除邮箱
 	 * @param id

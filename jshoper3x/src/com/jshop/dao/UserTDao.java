@@ -4,14 +4,9 @@ import java.util.List;
 
 import com.jshop.entity.UserT;
 
-public interface UserTDao {
+public interface UserTDao extends BaseTDao<UserT>{
 
-	/**
-	 * 用户注册
-	 * 
-	 * @param transientInstance
-	 */
-	public int save(UserT transientInstance);
+	
 
 	/**
 	 * 用户登录

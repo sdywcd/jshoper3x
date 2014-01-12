@@ -171,13 +171,11 @@ public class OrderInvoiceAction extends ActionSupport {
 			oi.setState("0");
 			oi.setInvContent(this.getInvContent());
 			oi.setCreatetime(BaseTools.systemtime());
-			if(this.getOrderInvoiceTService().addOrderInvoice(oi)>0){
+			this.getOrderInvoiceTService().save(oi);
 				UpdateInvoiceByOrderId(this.getOrderid().trim(),"1");
 				this.setSaddflag(true);
 				return "json";
-			}else{
-				this.setSaddflag(false);
-			}
+			
 		}
 		return "json";
 	}

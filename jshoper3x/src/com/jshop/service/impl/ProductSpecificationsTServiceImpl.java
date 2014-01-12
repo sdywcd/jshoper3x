@@ -13,7 +13,7 @@ import com.jshop.service.ProductSpecificationsTService;
 
 @Service("productSpecificationsTService")
 @Scope("prototype")
-public class ProductSpecificationsTServiceImpl implements ProductSpecificationsTService {
+public class ProductSpecificationsTServiceImpl extends BaseTServiceImpl<ProductSpecificationsT>implements ProductSpecificationsTService {
 	@Resource
 	private ProductSpecificationsTDao productSpecificationsTDao;
 
@@ -52,10 +52,6 @@ public class ProductSpecificationsTServiceImpl implements ProductSpecificationsT
 	public List<ProductSpecificationsT> sortAllProductSpecificationsT(int currentPage, int lineSize, String queryString) {
 
 		return this.getProductSpecificationsTDao().sortAllProductSpecificationsT(currentPage, lineSize, queryString);
-	}
-
-	public void addProductSpecification(ProductSpecificationsT pst) {
-		this.getProductSpecificationsTDao().addProductSpecification(pst);
 	}
 
 	public int countfindAllProductSpecificationsT() {

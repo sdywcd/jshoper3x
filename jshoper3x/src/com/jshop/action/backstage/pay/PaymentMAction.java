@@ -263,10 +263,8 @@ public class PaymentMAction extends ActionSupport {
 		pm.setDes(this.getDes().trim());
 		pm.setIsFast(this.getIsFast().trim());
 		pm.setState(this.getState().trim());
-		if (this.getPaymentMService().addPayment(pm) > 0) {
-			this.setSucflag(true);
-			return "json";
-		}
+		this.getPaymentMService().save(pm);
+		this.setSucflag(true);
 		return "json";
 	}
 	/**

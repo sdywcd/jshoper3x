@@ -4,12 +4,7 @@ import java.util.List;
 
 import com.jshop.entity.MemberT;
 
-public interface MemberTDao {
-	/**
-	 * 增加用户
-	 * @param mt
-	 */
-	public void saveMemberT(MemberT mt);
+public interface MemberTDao extends BaseTDao<MemberT>{
 	/**
 	 * 查询所有用户
 	 * @param currentPage

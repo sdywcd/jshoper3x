@@ -14,7 +14,7 @@ import com.jshop.service.ShippingAddressTService;
 
 @Service("shippingAddressTService")
 @Scope("prototype")
-public class ShippingAddressTServiceImpl implements ShippingAddressTService {
+public class ShippingAddressTServiceImpl extends BaseTServiceImpl<ShippingAddressT>implements ShippingAddressTService {
 	@Resource
 	private ShippingAddressTDao shippingAddressTDao;
 
@@ -26,9 +26,7 @@ public class ShippingAddressTServiceImpl implements ShippingAddressTService {
 		this.shippingAddressTDao = shippingAddressTDao;
 	}
 
-	public int addShoppingAddress(ShippingAddressT s) {
-		return this.getShippingAddressTDao().addShoppingAddress(s);
-	}
+
 
 	public List<ShippingAddressT> findShippingAddressByDeliveraddressidAndstate(String deliveraddressid, String state, String orderid) {
 		return this.getShippingAddressTDao().findShippingAddressByDeliveraddressidAndstate(deliveraddressid, state, orderid);

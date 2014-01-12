@@ -283,7 +283,7 @@ public class MemberGradeTAction extends ActionSupport {
 		mgt.setCreatorid(BaseTools.adminCreateId());
 		mgt.setUpdatetime(mgt.getCreatetime());
 		mgt.setVersiont(0);
-		this.getMemberGradeTService().addMemberGradeT(mgt);
+		this.getMemberGradeTService().save(mgt);
 		this.setSucflag(true);
 		return "json";
 	}

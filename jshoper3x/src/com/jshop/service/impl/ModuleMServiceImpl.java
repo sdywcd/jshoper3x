@@ -14,7 +14,7 @@ import com.jshop.service.ModuleMService;
 
 @Service("moduleMService")
 @Scope("prototype")
-public class ModuleMServiceImpl implements ModuleMService {
+public class ModuleMServiceImpl extends BaseTServiceImpl<ModuleM> implements ModuleMService {
 	@Resource
 	private ModuleMDao moduleMDao;
 
@@ -24,11 +24,6 @@ public class ModuleMServiceImpl implements ModuleMService {
 
 	public void setModuleMDao(ModuleMDao moduleMDao) {
 		this.moduleMDao = moduleMDao;
-	}
-
-	public void addModuleM(ModuleM mm) {
-		this.getModuleMDao().addModuleM(mm);
-
 	}
 
 	public int delModuleM(String[] strs) {

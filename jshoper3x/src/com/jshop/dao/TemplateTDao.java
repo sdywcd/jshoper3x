@@ -4,16 +4,9 @@ import java.util.List;
 
 import com.jshop.entity.TemplateT;
 
-public interface TemplateTDao{
+public interface TemplateTDao extends BaseTDao<TemplateT>{
 
-	/**
-	 * 增加模板
-	 * 
-	 * @param tt
-	 * @return
-	 */
-	public int addTemplate(TemplateT tt);
-
+	
 	/**
 	 * 查询所有模板
 	 * 

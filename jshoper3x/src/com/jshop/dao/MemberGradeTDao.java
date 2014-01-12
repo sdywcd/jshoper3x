@@ -4,15 +4,8 @@ import java.util.List;
 
 import com.jshop.entity.MemberGradeT;
 
-public interface MemberGradeTDao {
+public interface MemberGradeTDao extends BaseTDao<MemberGradeT>{
 
-	/**
-	 * 增加会员等级
-	 * 
-	 * @param gt
-	 * @return
-	 */
-	public void addMemberGradeT(MemberGradeT mgt);
 
 	/**
 	 * 删除会员等级

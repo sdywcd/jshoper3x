@@ -403,7 +403,7 @@ public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsT
 			GoodsDetailRpT gdpt,ProductT pt,GoodsSpecificationsProductRpT gspt) {
 			this.getGoodsTDao().save(gt);
 			this.getGoodsDetailRpTDao().save(gdpt);
-			this.getProductTDao().saveProductT(pt);
+			this.getProductTDao().save(pt);
 			//增加规格商品和货物关系表
 			this.getGoodsSpecificationsProductRpTService().save(gspt);
 			

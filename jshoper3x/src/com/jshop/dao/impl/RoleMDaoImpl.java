@@ -28,20 +28,10 @@ import com.jshop.entity.RoleM;
  * @author MyEclipse Persistence Tools
  */
 @Repository("roleMDao")
-public class RoleMDaoImpl extends HibernateDaoSupport implements RoleMDao {
+public class RoleMDaoImpl extends BaseTDaoImpl<RoleM> implements RoleMDao {
 	private static final Logger log = LoggerFactory.getLogger(RoleMDaoImpl.class);
 
-	public void addRoleM(RoleM rm) {
-		log.debug("save RoleM");
-		try {
-			this.getHibernateTemplate().save(rm);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
-
+	
 	public int delRoleM(final String[] strs) {
 		log.debug("delRoleM");
 		try {

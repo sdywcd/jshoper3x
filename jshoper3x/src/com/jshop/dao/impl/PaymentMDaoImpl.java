@@ -28,22 +28,12 @@ import com.jshop.entity.PaymentM;
  */
 
 @Repository("paymentMDao")
-public class PaymentMDaoImpl extends HibernateDaoSupport implements PaymentMDao {
+public class PaymentMDaoImpl extends BaseTDaoImpl<PaymentM> implements PaymentMDao {
 	
 
 	private static final Log log = LogFactory.getLog(PaymentMDaoImpl.class);
 	
-	public int addPayment(PaymentM pm) {
-		log.debug("save PaymentM");
-		try {
-			this.getHibernateTemplate().save(pm);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
+	
 
 	public int countfindAllPayment() {
 		log.debug("count all PaymentM");

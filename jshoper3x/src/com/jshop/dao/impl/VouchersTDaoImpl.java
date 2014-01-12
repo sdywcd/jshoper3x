@@ -30,22 +30,10 @@ import com.jshop.entity.VouchersT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("vouchersTDao")
-public class VouchersTDaoImpl extends HibernateDaoSupport implements VouchersTDao {
+public class VouchersTDaoImpl extends BaseTDaoImpl<VouchersT> implements VouchersTDao {
 	
 	private static final Log log = LogFactory.getLog(VouchersTDaoImpl.class);
 	
-
-	public int addVoucherst(VouchersT vt) {
-		log.debug("save VouchersT");
-		try {
-			this.getHibernateTemplate().save(vt);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("save failed", re);
-			throw re;
-		}
-	}
 
 	public int countfindAllVoucherst() {
 		log.debug("count all VouchersT");

@@ -13,7 +13,7 @@ import com.jshop.entity.VouchersT;
 import com.jshop.service.VouchersTService;
 @Service("vouchersTService")
 @Scope("prototype")
-public class VouchersTServiceImpl implements VouchersTService {
+public class VouchersTServiceImpl  extends BaseTServiceImpl<VouchersT>implements VouchersTService {
 	@Resource
 	private VouchersTDao vouchersTDao;
 
@@ -33,9 +33,6 @@ public class VouchersTServiceImpl implements VouchersTService {
 		return this.getVouchersTDao().updateVoucherst(vt);
 	}
 
-	public int addVoucherst(VouchersT vt) {
-		return this.getVouchersTDao().addVoucherst(vt);
-	}
 
 	public int countfindAllVoucherst() {
 		return this.getVouchersTDao().countfindAllVoucherst();

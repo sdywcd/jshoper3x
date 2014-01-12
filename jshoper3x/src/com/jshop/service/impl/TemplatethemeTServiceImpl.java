@@ -13,7 +13,7 @@ import com.jshop.entity.TemplatethemeT;
 import com.jshop.service.TemplatethemeTService;
 @Service("templatethemeTService")
 @Scope("prototype")
-public class TemplatethemeTServiceImpl implements TemplatethemeTService {
+public class TemplatethemeTServiceImpl extends BaseTServiceImpl<TemplatethemeT> implements TemplatethemeTService {
 	@Resource
 	private TemplatethemeTDao templatethemeTDao;
 
@@ -23,10 +23,6 @@ public class TemplatethemeTServiceImpl implements TemplatethemeTService {
 
 	public void setTemplatethemeTDao(TemplatethemeTDao templatethemeTDao) {
 		this.templatethemeTDao = templatethemeTDao;
-	}
-
-	public int addTemplatetheme(TemplatethemeT tt) {
-		return this.getTemplatethemeTDao().addTemplatetheme(tt);
 	}
 
 	public int checkTemplatethemeBythemenameandsign(String themename,String sign) {

@@ -210,7 +210,7 @@ public class MyWebsiteMsgAction extends ActionSupport {
 			mt.setMsgtextid(this.getSerial().Serialid(Serial.MSGTEXT));
 			mt.setText(this.getText());
 			mt.setSendtime(BaseTools.systemtime());
-			if(this.getMsgtextTService().addMsgtext(mt)>0){
+			this.getMsgtextTService().save(mt);
 				WebsiteMsgT wm=new WebsiteMsgT();
 				wm.setMsgid(this.getSerial().Serialid(Serial.WEBSITEMSG));
 				wm.setMsgtousername(this.getMsgToUsername().trim());
@@ -221,17 +221,11 @@ public class MyWebsiteMsgAction extends ActionSupport {
 				wm.setState("0");
 				wm.setTitle(this.getTitle().trim());
 				wm.setCreatetime(createtime1);
-				if(this.getWebsiteMsgTService().addWebsiteMsgT(wm)>0){
+				this.getWebsiteMsgTService().save(wm);
 					this.setSflag(true);
 					return "json";
-				}else{
-					this.setSflag(false);
-					return "json";
-				}
-			}else{
-				this.setSflag(false);
-				return "json";
-			}
+				
+			
 		}else{
 			this.setSlogin(false);
 			return "json";

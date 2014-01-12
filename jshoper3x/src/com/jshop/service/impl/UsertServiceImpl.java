@@ -14,7 +14,7 @@ import com.jshop.service.UsertService;
 
 @Service("usertService")
 @Scope("prototype")
-public class UsertServiceImpl implements UsertService {
+public class UsertServiceImpl extends BaseTServiceImpl<UserT>implements UsertService {
 	@Resource
 	private UserTDao userTDao;
 
@@ -36,10 +36,6 @@ public class UsertServiceImpl implements UsertService {
 
 	public UserT login(UserT transientInstance) {
 		return this.getUserTDao().login(transientInstance);
-	}
-
-	public int save(UserT transientInstance) {
-		return this.getUserTDao().save(transientInstance);
 	}
 
 	public List<UserT> findAllUsert(int currentPage, int lineSize) {

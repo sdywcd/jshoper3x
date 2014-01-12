@@ -14,7 +14,7 @@ import com.jshop.service.SiteNavigationTService;
 
 @Service("siteNavigationTService")
 @Scope("prototype")
-public class SiteNavigationTServiceImpl implements SiteNavigationTService {
+public class SiteNavigationTServiceImpl extends BaseTServiceImpl<SiteNavigationT> implements SiteNavigationTService {
 	@Resource
 	private SiteNavigationTDao siteNavigationTDao;
 
@@ -26,9 +26,6 @@ public class SiteNavigationTServiceImpl implements SiteNavigationTService {
 		this.siteNavigationTDao = siteNavigationTDao;
 	}
 
-	public int addSiteNavigationT(SiteNavigationT sn) {
-		return this.getSiteNavigationTDao().addSiteNavigationT(sn);
-	}
 
 	public int countfindAllSiteNavigationT(String creatorid) {
 		return this.getSiteNavigationTDao().countfindAllSiteNavigationT(creatorid);

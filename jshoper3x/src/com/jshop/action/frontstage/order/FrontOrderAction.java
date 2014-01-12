@@ -824,11 +824,9 @@ public class FrontOrderAction extends ActionSupport {
 		order.setExpressnumber(null);//快递单号
 		order.setPaymentid(this.getPm().getPaymentid());
 		order.setPaymentname(this.getPm().getPaymentname());
-		if (this.getOrderTService().addOrder(order) > 0) {
-			this.setSaddorder(true);
-		} else {
-			this.setSaddorder(false);
-		}
+		this.getOrderTService().save(order);
+		this.setSaddorder(true);
+		
 	}
 	
 	/**
@@ -930,15 +928,15 @@ public class FrontOrderAction extends ActionSupport {
 			s.setDeliveraddressid(list.getAddressid());
 			s.setIssend("0");//未发送到这个地址过
 			s.setOrderid(this.getSerialidorderid());//设置订单号
-			if (this.getShippingAddressTService().addShoppingAddress(s) > 0) {
+			this.getShippingAddressTService().save(s);
 				this.setDt(list);//将收获地址信息存入dt
 				this.setSshoppingaddress(false);//这里应该改成true比较好
 				order.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
 				order.setDeliveraddressid(list.getAddressid());//设置收货地址到订单中
 				order.setShippingusername(list.getShippingusername());//设置收货人
-			} else {
-				this.setSshoppingaddress(true);
-			}
+//			} else {
+//				this.setSshoppingaddress(true);
+//			}
 		}
 	}
 	

@@ -11,7 +11,7 @@ import com.jshop.entity.MemberRechargeT;
 import com.jshop.service.MemberRechargeTService;
 @Service("memberRechargeTService")
 @Scope("prototype")
-public class MemberRechargeTServiceImpl implements MemberRechargeTService {
+public class MemberRechargeTServiceImpl extends BaseTServiceImpl<MemberRechargeT> implements MemberRechargeTService {
 
 	private MemberRechargeTDao memberRechargeTDao;
 	
@@ -22,12 +22,6 @@ public class MemberRechargeTServiceImpl implements MemberRechargeTService {
 
 	public void setMemberRechargeTDao(MemberRechargeTDao memberRechargeTDao) {
 		this.memberRechargeTDao = memberRechargeTDao;
-	}
-
-	@Override
-	public void saveMemberRechargeT(MemberRechargeT mrt) {
-		this.getMemberRechargeTDao().saveMemberRechargeT(mrt);
-
 	}
 
 	@Override

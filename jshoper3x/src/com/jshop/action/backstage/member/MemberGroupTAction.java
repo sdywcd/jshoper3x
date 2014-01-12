@@ -176,7 +176,7 @@ public class MemberGroupTAction extends ActionSupport{
 			mgt.setCreatorid(BaseTools.adminCreateId());
 			mgt.setUpdatetime(mgt.getCreatetime());
 			mgt.setVersiont(0);
-			this.getMemberGroupTService().saveMemberGroupT(mgt);
+			this.getMemberGroupTService().save(mgt);
 			this.setSucflag(true);
 			return "json";
 		}

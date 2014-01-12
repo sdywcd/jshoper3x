@@ -859,7 +859,7 @@ public class GroupOrderAction extends ActionSupport {
 			s.setDeliveraddressid(list.getAddressid());
 			s.setIssend("0");//未发送到这个地址过
 			s.setOrderid(this.getSerialidorderid());//设置订单号
-			if (this.getShippingAddressTService().addShoppingAddress(s) > 0) {
+			this.getShippingAddressTService().save(s);
 				this.setSshoppingaddress(false);
 				got.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
 				got.setDeliveraddressid(list.getAddressid());//设置收货地址到订单中
@@ -870,9 +870,9 @@ public class GroupOrderAction extends ActionSupport {
 				AlipayConfig.reveive_zip = list.getPostcode();
 				AlipayConfig.reveive_phone = list.getTelno();
 				AlipayConfig.reveive_mobile = list.getMobile();
-			} else {
-				this.setSshoppingaddress(true);
-			}
+//			else {
+//				this.setSshoppingaddress(true);
+//			}
 		}
 	}
 
