@@ -45,13 +45,6 @@ public class TemplatethemeTServiceImpl extends BaseTServiceImpl<TemplatethemeT> 
 		return this.getTemplatethemeTDao().sortAllTemplatetheme(currentPage, lineSize, creatorid, queryString);
 	}
 
-	public TemplatethemeT findTemplatethemeByttid(String ttid) {
-		return this.getTemplatethemeTDao().findTemplatethemeByttid(ttid);
-	}
-
-	public void updateTemplatetheme(TemplatethemeT tt) {
-		this.getTemplatethemeTDao().updateTemplatetheme(tt);
-	}
 
 	public List<TemplatethemeT> findAllTemplatethemeWithNoParam(String creatorid) {
 		return this.getTemplatethemeTDao().findAllTemplatethemeWithNoParam(creatorid);

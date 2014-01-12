@@ -1,5 +1,6 @@
 package com.jshop.action.backstage.template;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -397,7 +398,7 @@ public class TemplatethemeTAction extends ActionSupport {
 	public String findTemplatethemeByttid() {
 
 		if (Validate.StrNotNull(this.getTtid())) {
-			bean = this.getTemplatethemeTService().findTemplatethemeByttid(this.getTtid());
+			bean = this.getTemplatethemeTService().findByPK(TemplatethemeT.class,this.getTtid());
 			if (bean != null) {
 				return "json";
 			}
@@ -426,7 +427,7 @@ public class TemplatethemeTAction extends ActionSupport {
 		tt.setCreatetime(BaseTools.systemtime());
 		tt.setCreatorid(BaseTools.adminCreateId());
 		tt.setStatus(this.getStatus());
-		this.getTemplatethemeTService().updateTemplatetheme(tt);
+		this.getTemplatethemeTService().update(tt);
 		int k = this.getTemplateTService().updateTemplatetBystatus(this.getTtid(), this.getStatus());
 		int j = this.getTemplatesetTService().updateTemplatesetBystatus(this.getTtid(), this.getStatus());
 		this.setSucflag(true);

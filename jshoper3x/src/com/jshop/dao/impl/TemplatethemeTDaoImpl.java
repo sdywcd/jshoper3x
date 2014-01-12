@@ -140,32 +140,7 @@ public class TemplatethemeTDaoImpl extends BaseTDaoImpl<TemplatethemeT> implemen
 		}
 	}
 
-	public TemplatethemeT findTemplatethemeByttid(String ttid) {
-		log.debug("findTemplatethemeByttid");
-		try {
-			String queryString = "from TemplatethemeT as tt where tt.ttid=:ttid";
-			List<TemplatethemeT> list = this.getHibernateTemplate().findByNamedParam(queryString, "ttid", ttid);
-			if (list != null && list.size() > 0) {
-				return list.get(0);
-			}
-			return null;
-		} catch (RuntimeException re) {
-			log.error("findTemplatethemeByttid error", re);
-			throw re;
-		}
-	}
 
-	public void updateTemplatetheme(TemplatethemeT tt) {
-		log.debug("update TemplateT");
-		try {
-			this.getHibernateTemplate().update(tt);
-			log.debug("save successful");
-		} catch (RuntimeException re) {
-			log.error("update failed", re);
-			throw re;
-		}
-		
-	}
 
 	public List<TemplatethemeT> findAllTemplatethemeWithNoParam(String creatorid) {
 		log.debug("findAllTemplatethemeWithNoParam");

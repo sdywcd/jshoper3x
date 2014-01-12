@@ -1,5 +1,6 @@
 package com.jshop.dao.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -22,7 +23,7 @@ import com.jshop.entity.SerialT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("serialTDao")
-public class SerialTDaoImpl extends HibernateDaoSupport implements SerialTDao {
+public class SerialTDaoImpl extends BaseTDaoImpl<SerialT> implements SerialTDao {
 	
 	private static final Log log = LogFactory.getLog(SerialTDaoImpl.class);
 	
@@ -64,4 +65,6 @@ public class SerialTDaoImpl extends HibernateDaoSupport implements SerialTDao {
 			throw re;
 		}
 	}
+
+
 }

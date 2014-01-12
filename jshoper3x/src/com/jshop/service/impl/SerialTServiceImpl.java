@@ -11,7 +11,7 @@ import com.jshop.service.SerialTService;
 
 @Service("serialTService")
 @Scope("prototype")
-public class SerialTServiceImpl implements SerialTService {
+public class SerialTServiceImpl extends BaseTServiceImpl<SerialT>implements SerialTService {
 	@Resource
 	private SerialTDao serialTDao;
 
