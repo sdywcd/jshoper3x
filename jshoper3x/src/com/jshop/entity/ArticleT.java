@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-14 18:15:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-12 21:51:24 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -47,6 +47,8 @@ public class ArticleT implements java.io.Serializable {
 	private String stypeid;
 	private Integer sort;
 	private String mainpicture;
+	private String isoutsite;
+	private String outsitelink;
 
 	public ArticleT() {
 	}
@@ -77,7 +79,8 @@ public class ArticleT implements java.io.Serializable {
 			String position, String isnotice, Date updatetime, int versiont,
 			String mobilesync, String tipcontent, String nname, String lname,
 			String sname, String fname, String navid, String ltypeid,
-			String stypeid, Integer sort, String mainpicture) {
+			String stypeid, Integer sort, String mainpicture, String isoutsite,
+			String outsitelink) {
 		this.articleid = articleid;
 		this.title = title;
 		this.metaKeywords = metaKeywords;
@@ -108,6 +111,8 @@ public class ArticleT implements java.io.Serializable {
 		this.stypeid = stypeid;
 		this.sort = sort;
 		this.mainpicture = mainpicture;
+		this.isoutsite = isoutsite;
+		this.outsitelink = outsitelink;
 	}
 
 	@Id
@@ -381,6 +386,24 @@ public class ArticleT implements java.io.Serializable {
 
 	public void setMainpicture(String mainpicture) {
 		this.mainpicture = mainpicture;
+	}
+
+	@Column(name = "ISOUTSITE", length = 1)
+	public String getIsoutsite() {
+		return this.isoutsite;
+	}
+
+	public void setIsoutsite(String isoutsite) {
+		this.isoutsite = isoutsite;
+	}
+
+	@Column(name = "OUTSITELINK")
+	public String getOutsitelink() {
+		return this.outsitelink;
+	}
+
+	public void setOutsitelink(String outsitelink) {
+		this.outsitelink = outsitelink;
 	}
 
 }

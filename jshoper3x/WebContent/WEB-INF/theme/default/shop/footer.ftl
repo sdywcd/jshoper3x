@@ -1,54 +1,87 @@
+<!DOCTYPE html>
 <html>
- <body>
- <div id="foot">
-   <div class="servicepro1 mt7">
-     <div class="servicepro1_t">
-       <p> <img src="${basepath}/ui/default/images/servicepro_t_l.gif"> </p>
-       <cite><img src="${basepath}/ui/default/images/servicepro_t_r.gif"> </cite> </div>
-     <div class="servicepro1_c">
-       <div class="servicepro1_l">
- 	  <#if (footcategory??)&&(footcategory?size>0) >
- 	    <#list footcategory as f> 
-         <div class="service_z1">
-           <h1>${f_index+1} . ${f.name}</h1>
-           <#if (footerarticle??)&&(footerarticle?size>0) >
- 		  <ul>
- 		  <#list footerarticle as fa>
- 			<#if f.articleCategoryTid==fa.articleCategoryTid>
- 			
- 			<li> <a href="${basepath}/${fa.htmlPath}" target="_blank">${fa.title}</a> </li>
- 			<#if fa_index+1==5>
- 			<#break/>
- 			</#if>
- 			</#if>
- 		  </#list>
-           </ul>
- 		  </#if>
-         </div>
- 		</#list>
-       </#if>
-    
-       </div>
-       <div class="servicepro1_r"> <img src="${basepath}/ui/default/images/servicerightpic.gif"> </div>
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+ </head> 
+ <body> 
+  <footer> 
+   <div class="f_navigation"> 
+    <div class="container_12"> 
+     <div class="grid_3"> 
+      <h3>Contact Us</h3> 
+      <ul class="f_contact"> 
+       <li>49 Archdale, 2B Charlestone</li> 
+       <li>+777 (100) 1234</li> 
+       <li>mail@example.com</li> 
+      </ul>
+      <!-- .f_contact --> 
      </div>
-     <div class="servicepro1_b">
-       <p> <img src="${basepath}/ui/default/images/servicepro_b_l.gif"> </p>
-       <cite><img src="${basepath}/ui/default/images/servicepro_b_r.gif"> </cite> </div>
+     <!-- .grid_3 --> 
+     <div class="grid_3"> 
+      <h3>Information</h3> 
+      <nav class="f_menu"> 
+       <ul> 
+        <li><a href="#">About As</a></li> 
+        <li><a href="#">Privacy Policy</a></li> 
+        <li><a href="#">Terms &amp; Conditions</a></li> 
+        <li><a href="#">Secure payment</a></li> 
+       </ul> 
+      </nav>
+      <!-- .private --> 
+     </div>
+     <!-- .grid_3 --> 
+     <div class="grid_3"> 
+      <h3>Costumer Servise</h3> 
+      <nav class="f_menu"> 
+       <ul> 
+        <li><a href="contact_us.html">Contact As</a></li> 
+        <li><a href="#">Return</a></li> 
+        <li><a href="#">FAQ</a></li> 
+        <li><a href="#">Site Map</a></li> 
+       </ul> 
+      </nav>
+      <!-- .private --> 
+     </div>
+     <!-- .grid_3 --> 
+     <div class="grid_3"> 
+      <h3>My Account</h3> 
+      <nav class="f_menu"> 
+       <ul> 
+        <li><a href="#">My Account</a></li> 
+        <li><a href="#">Order History</a></li> 
+        <li><a href="#">Wish List</a></li> 
+        <li><a href="#">Newsletter</a></li> 
+       </ul> 
+      </nav>
+      <!-- .private --> 
+     </div>
+     <!-- .grid_3 --> 
+     <div class="clear"></div> 
+    </div>
+    <!-- .container_12 --> 
    </div>
-   <div class="servicepro2" style="background: none repeat scroll 0% 0% rgb(248, 248, 248);">
-     <div class="servicepro2_l" style="background: none repeat scroll 0% 0% rgb(248, 248, 248);"></div>
-     <div class="servicepro2_1" style="background: none repeat scroll 0% 0% rgb(248, 248, 248);"> <img src="${basepath}/ui/default/images/servicepro_11.gif"> </div>
-     <div class="servicepro2_2" style="background: none repeat scroll 0% 0% rgb(248, 248, 248);"> <img src="${basepath}/ui/default/images/servicepro_21.gif"> </div>
-     <div class="servicepro2_4" style="background: none repeat scroll 0% 0% rgb(248, 248, 248);"> <img src="${basepath}/ui/default/images/servicepro_41.gif"> </div>
-     <div class="servicepro2_3" style="background: none repeat scroll 0% 0% rgb(248, 248, 248);"> <img src="${basepath}/ui/default/images/servicepro_31.gif"> </div>
-     <div class="servicepro2_r" style="background: none repeat scroll 0% 0% rgb(248, 248, 248);"></div>
+   <!-- .f_navigation --> 
+   <div class="f_info"> 
+    <div class="container_12"> 
+     <div class="grid_6"> 
+      <p class="copyright">&copy; Breeze Store Theme, 2012</p> 
+     </div>
+     <!-- .grid_6 --> 
+     <div class="grid_6"> 
+      <div class="soc"> 
+       <a class="google" href="#"></a> 
+       <a class="twitter" href="#"></a> 
+       <a class="facebook" href="#"></a> 
+      </div>
+      <!-- .soc --> 
+     </div>
+     <!-- .grid_6 --> 
+     <div class="clear"></div> 
+    </div>
+    <!-- .container_12 --> 
    </div>
-   <!-- 底部文字菜单 -->
-   <div class="copyright">
-     <p> <a href="http://www.ostocy.com" target="_blank">关于我们</a> | <a href="#" target="_blank">帮助中心</a> | <a href="#" target="_blank">联系我们</a> | <a href="#" target="_blank">合作伙伴</a> | <a href="#" target="_blank">友情链接</a> | <a href="#" target="_blank">人才招聘</a> </p>
-     <span>沪ICP备09069935号<br>
-     Copyright&#169;2000-2012 All Rights Reserved 欧斯塔克(上海) 版权所有</span> </div>
-   <div class="link"> </div>
- </div>
+   <!-- .f_info --> 
+  </footer> 
+
  </body>
- </html>
+</html>

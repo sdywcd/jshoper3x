@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-14 18:15:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-12 21:51:24 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +19,7 @@ public class ActRuIdentitylink implements java.io.Serializable {
 
 	private String id;
 	private ActReProcdef actReProcdef;
+	private ActRuExecution actRuExecution;
 	private ActRuTask actRuTask;
 	private Integer rev;
 	private String groupId;
@@ -33,10 +34,11 @@ public class ActRuIdentitylink implements java.io.Serializable {
 	}
 
 	public ActRuIdentitylink(String id, ActReProcdef actReProcdef,
-			ActRuTask actRuTask, Integer rev, String groupId, String type,
-			String userId) {
+			ActRuExecution actRuExecution, ActRuTask actRuTask, Integer rev,
+			String groupId, String type, String userId) {
 		this.id = id;
 		this.actReProcdef = actReProcdef;
+		this.actRuExecution = actRuExecution;
 		this.actRuTask = actRuTask;
 		this.rev = rev;
 		this.groupId = groupId;
@@ -62,6 +64,16 @@ public class ActRuIdentitylink implements java.io.Serializable {
 
 	public void setActReProcdef(ActReProcdef actReProcdef) {
 		this.actReProcdef = actReProcdef;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PROC_INST_ID_")
+	public ActRuExecution getActRuExecution() {
+		return this.actRuExecution;
+	}
+
+	public void setActRuExecution(ActRuExecution actRuExecution) {
+		this.actRuExecution = actRuExecution;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
