@@ -55,22 +55,7 @@ public interface TemplatethemeTDao extends BaseTDao<TemplatethemeT>{
 	 */
 	public List<TemplatethemeT> sortAllTemplatetheme(final int currentPage,
 			final int lineSize, final String creatorid, final String queryString);
-
-	/**
-	 * 根据主键获取模板主题
-	 * 
-	 * @param ttid
-	 * @return
-	 */
-	public TemplatethemeT findTemplatethemeByttid(String ttid);
-
-	/**
-	 * 更新模板主题
-	 * 
-	 * @param tt
-	 */
-	public void updateTemplatetheme(TemplatethemeT tt);
-
+	
 	/**
 	 * 获取所有模板主题
 	 * 

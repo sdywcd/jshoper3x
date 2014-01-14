@@ -26,9 +26,7 @@ public class UsertServiceImpl extends BaseTServiceImpl<UserT>implements UsertSer
 		this.userTDao = userTDao;
 	}
 
-	public int delete(UserT transientInstance) {
-		return this.getUserTDao().delete(transientInstance);
-	}
+	
 
 	public UserT findById(String id) {
 		return this.getUserTDao().findById(id);

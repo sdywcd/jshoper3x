@@ -15,13 +15,7 @@ public interface UsertService extends BaseTService<UserT>{
 	 */
 	public UserT login(UserT transientInstance);
 
-	/**
-	 * 删除用户
-	 * 
-	 * @param transientInstance
-	 * @return
-	 */
-	public int delete(UserT transientInstance);
+
 
 	/**
 	 * 根据用户ID获取用户信息

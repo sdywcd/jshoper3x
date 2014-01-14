@@ -17,14 +17,6 @@ public interface UserTDao extends BaseTDao<UserT>{
 	public UserT login(UserT transientInstance);
 
 	/**
-	 * 删除用户
-	 * 
-	 * @param transientInstance
-	 * @return
-	 */
-	public int delete(UserT transientInstance);
-
-	/**
 	 * 根据用户名称获取用户信息
 	 */
 	public UserT findByUserName(String name);

@@ -32,17 +32,6 @@ public class UserTDaoImpl extends BaseTDaoImpl<UserT> implements UserTDao {
 
 	private static final Log log = LogFactory.getLog(UserTDaoImpl.class);
 
-	public int delete(UserT persistentInstance) {
-		log.debug("deleting UserT instance");
-		try {
-			this.getHibernateTemplate().delete(persistentInstance);
-			log.debug("delete successful");
-		} catch (RuntimeException re) {
-			log.error("delete failed", re);
-			throw re;
-		}
-		return 0;
-	}
 
 	public UserT findById(java.lang.String id) {
 		log.debug("getting UserT instance with id: " + id);
