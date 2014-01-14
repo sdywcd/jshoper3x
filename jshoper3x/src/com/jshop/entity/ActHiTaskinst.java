@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-14 18:15:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-12 21:51:24 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,11 +28,13 @@ public class ActHiTaskinst implements java.io.Serializable {
 	private String owner;
 	private String assignee;
 	private Date startTime;
+	private Date claimTime;
 	private Date endTime;
 	private Long duration;
 	private String deleteReason;
 	private Integer priority;
 	private Date dueDate;
+	private String formKey;
 
 	public ActHiTaskinst() {
 	}
@@ -45,8 +47,9 @@ public class ActHiTaskinst implements java.io.Serializable {
 	public ActHiTaskinst(String id, String procDefId, String taskDefKey,
 			String procInstId, String executionId, String name,
 			String parentTaskId, String description, String owner,
-			String assignee, Date startTime, Date endTime, Long duration,
-			String deleteReason, Integer priority, Date dueDate) {
+			String assignee, Date startTime, Date claimTime, Date endTime,
+			Long duration, String deleteReason, Integer priority, Date dueDate,
+			String formKey) {
 		this.id = id;
 		this.procDefId = procDefId;
 		this.taskDefKey = taskDefKey;
@@ -58,11 +61,13 @@ public class ActHiTaskinst implements java.io.Serializable {
 		this.owner = owner;
 		this.assignee = assignee;
 		this.startTime = startTime;
+		this.claimTime = claimTime;
 		this.endTime = endTime;
 		this.duration = duration;
 		this.deleteReason = deleteReason;
 		this.priority = priority;
 		this.dueDate = dueDate;
+		this.formKey = formKey;
 	}
 
 	@Id
@@ -167,6 +172,16 @@ public class ActHiTaskinst implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CLAIM_TIME_", length = 0)
+	public Date getClaimTime() {
+		return this.claimTime;
+	}
+
+	public void setClaimTime(Date claimTime) {
+		this.claimTime = claimTime;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "END_TIME_", length = 0)
 	public Date getEndTime() {
 		return this.endTime;
@@ -211,6 +226,15 @@ public class ActHiTaskinst implements java.io.Serializable {
 
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
+	}
+
+	@Column(name = "FORM_KEY_")
+	public String getFormKey() {
+		return this.formKey;
+	}
+
+	public void setFormKey(String formKey) {
+		this.formKey = formKey;
 	}
 
 }

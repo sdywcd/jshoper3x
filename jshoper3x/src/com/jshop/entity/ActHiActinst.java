@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-14 18:15:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-12 21:51:24 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -146,7 +146,7 @@ public class ActHiActinst implements java.io.Serializable {
 		this.actType = actType;
 	}
 
-	@Column(name = "ASSIGNEE_", length = 64)
+	@Column(name = "ASSIGNEE_")
 	public String getAssignee() {
 		return this.assignee;
 	}

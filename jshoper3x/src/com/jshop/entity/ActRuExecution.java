@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-14 18:15:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-12 21:51:24 by Hibernate Tools 3.4.0.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -38,6 +38,8 @@ public class ActRuExecution implements java.io.Serializable {
 	private Integer cachedEntState;
 	private Set<ActRuVariable> actRuVariablesForProcInstId = new HashSet<ActRuVariable>(
 			0);
+	private Set<ActRuIdentitylink> actRuIdentitylinks = new HashSet<ActRuIdentitylink>(
+			0);
 	private Set<ActRuVariable> actRuVariablesForExecutionId = new HashSet<ActRuVariable>(
 			0);
 	private Set<ActRuEventSubscr> actRuEventSubscrs = new HashSet<ActRuEventSubscr>(
@@ -66,6 +68,7 @@ public class ActRuExecution implements java.io.Serializable {
 			Byte isScope, Byte isEventScope, Integer suspensionState,
 			Integer cachedEntState,
 			Set<ActRuVariable> actRuVariablesForProcInstId,
+			Set<ActRuIdentitylink> actRuIdentitylinks,
 			Set<ActRuVariable> actRuVariablesForExecutionId,
 			Set<ActRuEventSubscr> actRuEventSubscrs,
 			Set<ActRuExecution> actRuExecutionsForProcInstId,
@@ -88,6 +91,7 @@ public class ActRuExecution implements java.io.Serializable {
 		this.suspensionState = suspensionState;
 		this.cachedEntState = cachedEntState;
 		this.actRuVariablesForProcInstId = actRuVariablesForProcInstId;
+		this.actRuIdentitylinks = actRuIdentitylinks;
 		this.actRuVariablesForExecutionId = actRuVariablesForExecutionId;
 		this.actRuEventSubscrs = actRuEventSubscrs;
 		this.actRuExecutionsForProcInstId = actRuExecutionsForProcInstId;
@@ -239,6 +243,15 @@ public class ActRuExecution implements java.io.Serializable {
 	public void setActRuVariablesForProcInstId(
 			Set<ActRuVariable> actRuVariablesForProcInstId) {
 		this.actRuVariablesForProcInstId = actRuVariablesForProcInstId;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "actRuExecution")
+	public Set<ActRuIdentitylink> getActRuIdentitylinks() {
+		return this.actRuIdentitylinks;
+	}
+
+	public void setActRuIdentitylinks(Set<ActRuIdentitylink> actRuIdentitylinks) {
+		this.actRuIdentitylinks = actRuIdentitylinks;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "actRuExecutionByExecutionId")

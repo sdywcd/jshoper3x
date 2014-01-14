@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2013-12-14 18:15:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-12 21:51:24 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,10 +36,8 @@ public class ActReModel implements java.io.Serializable {
 	public ActReModel() {
 	}
 
-	public ActReModel(String id, Date createTime, Date lastUpdateTime) {
+	public ActReModel(String id) {
 		this.id = id;
-		this.createTime = createTime;
-		this.lastUpdateTime = lastUpdateTime;
 	}
 
 	public ActReModel(String id,
@@ -141,7 +139,7 @@ public class ActReModel implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME_", nullable = false, length = 0)
+	@Column(name = "CREATE_TIME_", length = 0)
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -151,7 +149,7 @@ public class ActReModel implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LAST_UPDATE_TIME_", nullable = false, length = 0)
+	@Column(name = "LAST_UPDATE_TIME_", length = 0)
 	public Date getLastUpdateTime() {
 		return this.lastUpdateTime;
 	}
