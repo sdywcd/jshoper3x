@@ -23,21 +23,7 @@ public interface TemplateTService extends BaseTService<TemplateT> {
 	 */
 	public int countfindAllTemplate(String creatorid);
 
-	/**
-	 * 更新模板
-	 * 
-	 * @param tt
-	 * @return
-	 */
-	public int updateTemplate(TemplateT tt);
-
-	/**
-	 * 根据id查找模板
-	 * 
-	 * @param tid
-	 * @return
-	 */
-	public TemplateT findTemplateByTid(String tid);
+	
 
 	/**
 	 * 删除模板

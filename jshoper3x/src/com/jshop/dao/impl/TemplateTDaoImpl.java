@@ -103,33 +103,6 @@ public class TemplateTDaoImpl extends BaseTDaoImpl<TemplateT> implements Templat
 		return 0;
 	}
 
-	public TemplateT findTemplateByTid(String tid) {
-		log.debug("find by id TemplateT");
-		try {
-			String queryString = "from TemplateT as tt where tt.tid=:tid";
-			List<TemplateT> list = this.getHibernateTemplate().findByNamedParam(queryString, "tid", tid);
-			if (list != null && list.size() > 0) {
-				return list.get(0);
-			}
-			return null;
-		} catch (RuntimeException re) {
-			log.error("find by id TemplateT error", re);
-			throw re;
-		}
-	}
-
-	public int updateTemplate(TemplateT tt) {
-		log.debug("update TemplateT");
-		try {
-			this.getHibernateTemplate().update(tt);
-			log.debug("save successful");
-			return 1;
-		} catch (RuntimeException re) {
-			log.error("update failed", re);
-			throw re;
-		}
-	}
-
 	public List<TemplateT> findAllTemplateWithNoParam(String creatorid,String status) {
 		log.debug("findAllTemplateWithNoParam");
 		try {

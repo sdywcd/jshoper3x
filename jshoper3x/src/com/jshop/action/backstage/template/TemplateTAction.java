@@ -420,7 +420,7 @@ public class TemplateTAction extends ActionSupport {
 	})
 	public String findTemplateByTid() {
 		if (Validate.StrNotNull(this.getTid())) {
-			bean = this.getTemplateTService().findTemplateByTid(this.getTid());
+			bean = this.getTemplateTService().findByPK(TemplateT.class, this.getTid());
 			if (bean != null) {
 				return "json";
 			}
@@ -453,14 +453,10 @@ public class TemplateTAction extends ActionSupport {
 		tt.setCreatetime(BaseTools.systemtime());
 		tt.setCreatorid(BaseTools.adminCreateId());
 		tt.setStatus(this.getStatus());
-		if (this.getTemplateTService().updateTemplate(tt) > 0) {
-			updateFTLFile(tt);
-			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+		this.getTemplateTService().update(tt);
+		updateFTLFile(tt);
+		this.setSucflag(true);
+		return "json";
 	}
 
 	/**

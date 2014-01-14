@@ -38,14 +38,7 @@ public class TemplateTServiceImpl extends BaseTServiceImpl<TemplateT> implements
 		return this.getTemplateTDao().delTemplate(list);
 	}
 
-	public TemplateT findTemplateByTid(String tid) {
-		return this.getTemplateTDao().findTemplateByTid(tid);
-	}
-
-	public int updateTemplate(TemplateT tt) {
-		return this.getTemplateTDao().updateTemplate(tt);
-	}
-
+	
 	public List<TemplateT> findAllTemplateWithNoParam(String creatorid,String status) {
 		return this.getTemplateTDao().findAllTemplateWithNoParam(creatorid,status);
 	}
