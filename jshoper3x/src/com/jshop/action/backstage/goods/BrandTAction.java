@@ -317,7 +317,7 @@ public class BrandTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findAllBrandt", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/web/findAllBrandt", results = { @Result(name = "json", type = "json") })
 	public String findAllBrandt() {
 		int currentPage = page;
 		int lineSize = rp;

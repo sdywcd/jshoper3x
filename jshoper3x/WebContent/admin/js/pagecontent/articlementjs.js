@@ -1,14 +1,7 @@
 
 $(function(){
 	
-	/**
-	 * ui
-	 */
-	  $('input').iCheck({
-		    checkboxClass: 'icheckbox_square-blue',
-		    radioClass: 'iradio_square-blue',
-		    increaseArea: '20%' // optional
-		  });
+	
 	  /*
 		 * 删除图片按钮
 		 */
@@ -124,6 +117,8 @@ $(function(){
 	 * 增加文章
 	 */
 	saveArticle=function(){
+		var isoutsite=$("input[name='isoutsite']:checked").val();
+		var outsitelink=$('#outsitelink').val();
 		var title=$('#title').val();
 		if(title==""){
 			formwarning("#alerterror", "文章标题必须填写");
@@ -172,6 +167,8 @@ $(function(){
 		this.value="提交中";
 		this.disabled=true;
 		$.post("addArticleT.action",{
+			"isoutsite":isoutsite,
+			"outsitelink":outsitelink,
 			"navid":navid,
 			"nname":nname,
 			"ltypeid":ltypeid,
@@ -234,23 +231,29 @@ $(function(){
 				if("1"==data.bean.isrecommend){
 					$("input[name='isrecommend']").get(0).checked=true;
 				}else{
-					$("input[name='isrecommend']").get(1).checked=false;
+					$("input[name='isrecommend']").get(1).checked=true;
 				}
 				if("1"==data.bean.istop){
 					$("input[name='istop']").get(0).checked=true;
 				}else{
-					$("input[name='istop']").get(1).checked=false;
+					$("input[name='istop']").get(1).checked=true;
 				}
 				if("1"==data.bean.isnotice){
 					$("input[name='isnotice']").get(0).checked=true;
 				}else{
-					$("input[name='isnotice']").get(1).checked=false;
+					$("input[name='isnotice']").get(1).checked=true;
 				}
 				if("1"==data.bean.mobilesync){
 					$("input[name='mobilesync']").get(0).checked=true;
 				}else{
-					$("input[name='mobilesync']").get(1).checked=false;
+					$("input[name='mobilesync']").get(1).checked=true;
 				}
+				if("1"==data.bean.isoutsite){
+					$("input[name='isoutsite']").get(0).checked=true;
+				}else{
+					$("input[name='isoutsite']").get(1).checked=true;
+				}
+				$("#outsitelink").attr("value",data.bean.outsitelink);
 				$('#tipcontent').attr("value",data.bean.tipcontent);
 				$('#sort').attr("value",data.bean.sort);
 				if(data.bean.mainpicture!=""){
@@ -277,6 +280,8 @@ $(function(){
 	 * @returns
 	 */
 	updateArticleT=function(){
+		var isoutsite=$("input[name='isoutsite']:checked").val();
+		var outsitelink=$('#outsitelink').val();
 		var articleid=$("#hidarticleid").val();
 		var title=$('#title').val();
 		if(title==""){
@@ -339,6 +344,8 @@ $(function(){
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateArticleT.action",{
+			"isoutsite":isoutsite,
+			"outsitelink":outsitelink,
 			"articleid":articleid,
 			"navid":navid,
 			"nname":nname,

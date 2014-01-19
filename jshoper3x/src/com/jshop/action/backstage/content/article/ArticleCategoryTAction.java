@@ -532,7 +532,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setVersiont(act.getVersiont()+1);
 				act.setMobilesync(this.getMobilesync());
 				act.setLogo(this.getLogo().trim());
-				this.getArticleCategoryTService().updateArticleCategoryT(act);
+				this.getArticleCategoryTService().update(act);
 				this.setSucflag(true);
 				return "json";
 			}
@@ -615,7 +615,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setVersiont(act.getVersiont()+1);
 				act.setMobilesync(this.getMobilesync());
 				act.setLogo(this.getLogo().trim());
-				this.getArticleCategoryTService().updateArticleCategoryT(act);
+				this.getArticleCategoryTService().update(act);
 				this.setSucflag(true);
 				return "json";
 			}
@@ -695,7 +695,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 				act.setVersiont(act.getVersiont()+1);
 				act.setMobilesync(this.getMobilesync());
 				act.setLogo(this.getLogo().trim());
-				this.getArticleCategoryTService().updateArticleCategoryT(act);
+				this.getArticleCategoryTService().update(act);
 				this.setSucflag(true);
 				return "json";
 			}

@@ -84,7 +84,7 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 			
 			String actionname = invocation.getInvocationContext().getName();
 			String referer = request.getHeader("Referer");
-			String ref=referer.substring(referer.lastIndexOf("/")+1);
+			String ref=referer.substring(referer.lastIndexOf("/"));
 			String spref[]=StringUtils.split(ref, "?");
 			
 			//去读取内存中的权限信息和上下文在url和action上做判断
@@ -93,14 +93,16 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 				for (Iterator it = userfunctionlist.iterator(); it.hasNext();) {
 					
 					FunctionM fm = (FunctionM) it.next();
-					if(StringUtils.isNotBlank(fm.getVisiturl())){
-						if(spref[0].toString().equals(fm.getVisiturl())){
-							return invocation.invoke();
-						}
-					}else{
-						if(StringUtils.isNotBlank(fm.getVisitmethodname())){
-							if(fm.getVisitmethodname().equals(actionname)){
+					if(fm!=null){
+						if(StringUtils.isNotBlank(fm.getVisiturl())){
+							if(spref[0].toString().equals(fm.getVisiturl())){
 								return invocation.invoke();
+							}
+						}else{
+							if(StringUtils.isNotBlank(fm.getVisitmethodname())){
+								if(fm.getVisitmethodname().equals(actionname)){
+									return invocation.invoke();
+								}
 							}
 						}
 					}

@@ -52,8 +52,20 @@
 				<div class="btn-group">
 					<button id="btnback" type="button" class="btn btn-success">返回</button>
 				</div>
+				
 				<!-- 开始显示商品类型form表单 -->
 				<div class="form-actions">
+					<div class="form-inline">
+						<span class="label label-required">外链:</span> <input
+							type="radio" id="isoutsite" name="isoutsite" value="1"
+							checked="checked" /> <label for="radio-1">是 </label> <input
+							type="radio" id="isoutsite" name="isoutsite" value="0" /> <label
+							for="radio-2">否 </label>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">外链地址:</span> <input type="text"
+							id="outsitelink" name="outsitelink" class="medium"  value="" />
+					</div>
 					<div id="articlecategory" style="display: none;" class="form-inline">
 						<span class="label label-required">文章所在分类: </span> <span
 							id="shownname"></span>
@@ -153,6 +165,7 @@
 							type="radio" id="isnotice" name="isnotice" value="0" /> <label
 							for="radio-2">否 </label>
 					</div>
+					
 					<div class="form-inline">
 						<span class="label label-required">同步移动平台:</span> <input
 							type="radio" id="mobilesync" name="mobilesync" value="1"

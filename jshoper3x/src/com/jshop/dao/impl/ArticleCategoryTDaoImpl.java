@@ -268,16 +268,6 @@ public class ArticleCategoryTDaoImpl extends BaseTDaoImpl<ArticleCategoryT> impl
 		}
 	}
 
-	public void updateArticleCategoryT(final ArticleCategoryT act) {
-		log.debug(" updateArticleCategoryT");
-		try {
-			this.getHibernateTemplate().update(act);
-
-		} catch (RuntimeException re) {
-			log.error("updateArticleCategoryT error", re);
-			throw re;
-		}
-	}
 
 	public List<ArticleCategoryT> findAllArticleCategoryBycreatorid(String creatorid) {
 		log.debug("findAllArticleCategoryBycreatorid");

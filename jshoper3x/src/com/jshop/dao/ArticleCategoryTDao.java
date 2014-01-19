@@ -82,14 +82,6 @@ public interface ArticleCategoryTDao extends BaseTDao<ArticleCategoryT> {
 	public void delArticleCategoryT(String strs[]);
 	
 	/**
-	 * 更新文章分类
-	 * 
-	 * @param act
-	 * @return
-	 */
-	public void updateArticleCategoryT(ArticleCategoryT act);
-
-	/**
 	 * 获取所有激活的文章分类status=1
 	 * 
 	 * @param currentPage

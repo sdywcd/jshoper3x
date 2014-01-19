@@ -75,6 +75,8 @@ public class ArticleTAction extends ActionSupport {
 	private Date createtime;
 	private Date updatetime;
 	private Integer version;
+	private String isoutsite;
+	private String outsitelink;
 	private String sort;
 	private String mainpicture;
 	private ArticleT bean = new ArticleT();
@@ -455,6 +457,22 @@ public class ArticleTAction extends ActionSupport {
 		this.basepath = basepath;
 	}
 
+	public String getIsoutsite() {
+		return isoutsite;
+	}
+
+	public void setIsoutsite(String isoutsite) {
+		this.isoutsite = isoutsite;
+	}
+
+	public String getOutsitelink() {
+		return outsitelink;
+	}
+
+	public void setOutsitelink(String outsitelink) {
+		this.outsitelink = outsitelink;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -504,6 +522,8 @@ public class ArticleTAction extends ActionSupport {
 		at.setHtmlPath("#");
 		at.setSort(Integer.parseInt(this.getSort()));
 		at.setMainpicture(this.getMainpicture().trim());
+		at.setIsoutsite(this.getIsoutsite());
+		at.setOutsitelink(this.getOutsitelink());
 		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
 		if(!list.isEmpty()){
 			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {
@@ -585,6 +605,8 @@ public class ArticleTAction extends ActionSupport {
 		at.setTipcontent(this.getTipcontent());
 		at.setSort(Integer.parseInt(this.getSort()));
 		at.setMainpicture(this.getMainpicture().trim());
+		at.setIsoutsite(this.getIsoutsite());
+		at.setOutsitelink(this.getOutsitelink());
 		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
 		if(!list.isEmpty()){
 			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {

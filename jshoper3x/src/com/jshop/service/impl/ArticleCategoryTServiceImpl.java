@@ -82,9 +82,6 @@ public class ArticleCategoryTServiceImpl extends BaseTServiceImpl<ArticleCategor
 		return getArticleCategoryTDao().findPathParentIdByParentId(parentId, creatorid);
 	}
 
-	public void updateArticleCategoryT(ArticleCategoryT act) {
-		this.getArticleCategoryTDao().updateArticleCategoryT(act);
-	}
 
 	public List<ArticleCategoryT> findAllArticleCategoryBycreatorid(String creatorid) {
 		return this.getArticleCategoryTDao().findAllArticleCategoryBycreatorid(creatorid);

@@ -10,6 +10,7 @@ public interface ArticleCategoryTService extends BaseTService<ArticleCategoryT>{
 	/**
 	 * 获取父路径数据
 	 * 
+	 * 
 	 * @param parentId
 	 * @return
 	 */
@@ -70,14 +71,6 @@ public interface ArticleCategoryTService extends BaseTService<ArticleCategoryT>{
 	 * @return
 	 */
 	public void delArticleCategoryT(String strs[]);
-	/**
-	 * 更新文章分类
-	 * 
-	 * @param act
-	 * @return
-	 */
-	public void updateArticleCategoryT(ArticleCategoryT act);
-
 	/**
 	 * 获取所有激活的文章分类status=1
 	 * 
