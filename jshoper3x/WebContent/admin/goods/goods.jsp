@@ -59,6 +59,17 @@
 				<!-- 开始显示商品类型form表单 -->
 				<div class="form-actions">
 					<div class="form-inline">
+						<span class="label label-required">外链:</span> <input
+							type="radio" id="isoutsite" name="isoutsite" value="1"
+							checked="checked" /> <label for="radio-1">是 </label> <input
+							type="radio" id="isoutsite" name="isoutsite" value="0" /> <label
+							for="radio-2">否 </label>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">外链地址:</span> <input type="text"
+							id="outsitelink" name="outsitelink" class="medium"  value="" />
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">选择商品类型: </span> <select
 							id="goodsTypeId" name="goodsTypeId"  >
 

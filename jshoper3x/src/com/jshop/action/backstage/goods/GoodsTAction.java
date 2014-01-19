@@ -145,6 +145,8 @@ public class GoodsTAction extends ActionSupport {
 	private String isvirtual;//是否虚拟商品标记
 	private String virtualresults;//虚拟商品返回结果
 	private String productid;
+	private String isoutsite;
+	private String outsitelink;
 	private String rejson;
 	private String query;//text
 	private String qtype;//select
@@ -1068,6 +1070,22 @@ public class GoodsTAction extends ActionSupport {
 		this.productid = productid;
 	}
 
+	public String getIsoutsite() {
+		return isoutsite;
+	}
+
+	public void setIsoutsite(String isoutsite) {
+		this.isoutsite = isoutsite;
+	}
+
+	public String getOutsitelink() {
+		return outsitelink;
+	}
+
+	public void setOutsitelink(String outsitelink) {
+		this.outsitelink = outsitelink;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -1123,6 +1141,8 @@ public class GoodsTAction extends ActionSupport {
 		gt.setCreatetime(BaseTools.systemtime());
 		gt.setCreatorid(BaseTools.adminCreateId());
 		gt.setUpdatetime(BaseTools.systemtime());
+		gt.setIsoutsite(this.getIsoutsite());
+		gt.setOutsitelink(this.getOutsitelink());
 		//构造goodsdetail和goods关系
 		GoodsDetailRpT gdpt=new GoodsDetailRpT();
 		gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
@@ -1371,6 +1391,8 @@ public class GoodsTAction extends ActionSupport {
 				bean.setMetaDescription(this.getMetaDescription());
 				bean.setCreatorid(BaseTools.adminCreateId());
 				bean.setUpdatetime(BaseTools.systemtime());
+				bean.setIsoutsite(this.getIsoutsite());
+				bean.setOutsitelink(this.getOutsitelink());
 				//构造product
 				ProductT pt=new ProductT();
 				//根据商品和规格货物关系，通过spid0和goodsid来取出addgoods时唯一对照的默认规格值的productdid进行级联更新

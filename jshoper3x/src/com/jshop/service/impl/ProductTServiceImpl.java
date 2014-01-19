@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jshop.dao.GoodsTDao;
 import com.jshop.dao.ProductTDao;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.ProductT;
@@ -22,7 +23,17 @@ public class ProductTServiceImpl extends BaseTServiceImpl<ProductT>implements Pr
 	private ProductTDao productTDao;
 	@Resource
 	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
+	@Resource
+	private GoodsTDao goodsTDao;
 	
+	public GoodsTDao getGoodsTDao() {
+		return goodsTDao;
+	}
+
+	public void setGoodsTDao(GoodsTDao goodsTDao) {
+		this.goodsTDao = goodsTDao;
+	}
+
 	public GoodsSpecificationsProductRpTService getGoodsSpecificationsProductRpTService() {
 		return goodsSpecificationsProductRpTService;
 	}
@@ -106,6 +117,8 @@ public class ProductTServiceImpl extends BaseTServiceImpl<ProductT>implements Pr
 			GoodsSpecificationsProductRpT gsrt) {
 		this.getProductTDao().save(pt);
 		this.getGoodsSpecificationsProductRpTService().save(gsrt);
+		//this.getGoodsTDao().updateGoodsQuantityByGoodsId(pt.getStore(), pt.getGoodsid());
+		
 	}
 
 	@Override

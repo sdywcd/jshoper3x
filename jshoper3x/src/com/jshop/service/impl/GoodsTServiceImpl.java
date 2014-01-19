@@ -459,6 +459,11 @@ public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsT
 		return this.getGoodsTDao().countfindAllGoodsByattribute(queryString);
 	}
 
+	@Override
+	public int updateGoodsQuantityByGoodsId(int quantity, String goodsid) {
+		return this.getGoodsTDao().updateGoodsQuantityByGoodsId(quantity, goodsid);
+	}
+
 
 
 

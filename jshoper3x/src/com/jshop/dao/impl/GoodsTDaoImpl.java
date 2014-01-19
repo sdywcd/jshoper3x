@@ -1913,4 +1913,26 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 		}
 	}
 
+	@Override
+	public int updateGoodsQuantityByGoodsId(final int quantity, final String goodsid) {
+		log.debug("updateGoodsQuantityByGoodsId");
+		try {
+			final String queryString = "update GoodsT as gt set gt.quantity=gt.quantity+:quantity where gt.goodsid=:goodsid";
+			int i=this.getHibernateTemplate().execute(new HibernateCallback() {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setParameter("goodsid", goodsid);
+					query.setParameter("quantity", quantity);
+					return query.executeUpdate();
+				}
+			});
+			return i;
+		} catch (RuntimeException re) {
+			log.error("updateGoodsQuantityByGoodsId failed", re);
+			throw re;
+		}
+	
+	}
+
 }

@@ -753,6 +753,12 @@ public interface GoodsTService extends BaseTService<GoodsT>{
 	 * @return
 	 */
 	public int countfindAllGoodsByattribute(String queryString);
-	
+	/**
+	 * 更新商品库存 库存由货物相加
+	 * @param quantity
+	 * @param goodsid
+	 * @return
+	 */
+	public int updateGoodsQuantityByGoodsId(int quantity,String goodsid);
 	
 }

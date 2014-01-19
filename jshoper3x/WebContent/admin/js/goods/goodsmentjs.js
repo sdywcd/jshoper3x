@@ -1,13 +1,4 @@
 $(function() {
-//	/**
-//	 * ui
-//	 */
-//	  $('input').iCheck({
-//		    checkboxClass: 'icheckbox_square-blue',
-//		    radioClass: 'iradio_square-blue',
-//		    increaseArea: '20%' // optional
-//		  });
-//	
 	  $("#delpc").click(function() {
 			var str = "";
 			var sum = 0;
@@ -235,6 +226,8 @@ $(function() {
 	 * 增加商品
 	 */
 	saveGoods=function(){
+		var isoutsite=$("input[name='isoutsite']:checked").val();
+		var outsitelink=$('#outsitelink').val();
 		var goodsTypeId=$("#goodsTypeId").val();//商品类型id
 		var goodsTypeName=$("#goodsTypeId").find("option:selected").text();//所选商品类型名称
 		//这里需要调用获取商品类型属性和参数填写的值方法
@@ -296,6 +289,8 @@ $(function() {
 		this.value="提交中";
 		this.disabled=true;
 		$.post("saveGoods.action",{
+			"isoutsite":isoutsite,
+			"outsitelink":outsitelink,
 			"goodsTypeId":goodsTypeId,
 			"goodsTypeName":goodsTypeName,
 			"goodsParameterValue":goodsParameterValue,
@@ -341,6 +336,8 @@ $(function() {
 	 * 更新商品
 	 */
 	updateGoods=function(){
+		var isoutsite=$("input[name='isoutsite']:checked").val();
+		var outsitelink=$('#outsitelink').val();
 		var goodsid=$("#hidgoodsid").val();
 		var goodsTypeId=$("#goodsTypeId").val();//商品类型id
 		var goodsTypeName=$("#goodsTypeId").find("option:selected").text();//所选商品类型名称
@@ -417,6 +414,8 @@ $(function() {
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateGoods.action",{
+			"isoutsite":isoutsite,
+			"outsitelink":outsitelink,
 			"goodsid":goodsid,
 			"goodsTypeId":goodsTypeId,
 			"goodsTypeName":goodsTypeName,
@@ -629,7 +628,12 @@ $(function() {
 						$('#triggers').append(allpcpath);
 					});
 					findGoodsDetialRpTBygoodsid(data.bean.goodsid);
-					
+					if("1"==data.bean.isoutsite){
+						$("input[name='isoutsite']").get(0).checked=true;
+					}else{
+						$("input[name='isoutsite']").get(1).checked=true;
+					}
+					$("#outsitelink").attr("value",data.bean.outsitelink);
 					KE.html("commoditylist",data.bean.commoditylist);
 					$('#metaKeywords').val(data.bean.metaKeywords);
 					$('#metaDes').val(data.bean.metaDescription);
