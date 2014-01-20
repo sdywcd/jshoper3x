@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-1-12 21:51:24 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-20 20:32:27 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -20,9 +20,7 @@ public class AdvertiseT implements java.io.Serializable {
 	private String id;
 	private String type;
 	private String advPath;
-	private String showPosition;
-	private int showAmount;
-	private double showCount;
+	private String showTag;
 	private String showWhere;
 	private String alt;
 	private Date begintime;
@@ -30,26 +28,23 @@ public class AdvertiseT implements java.io.Serializable {
 	private Date createtime;
 	private String creatorid;
 	private String state;
-	private String templateName;
 	private int sort;
 	private int height;
 	private int width;
 	private int versiont;
+	private String code;
 
 	public AdvertiseT() {
 	}
 
-	public AdvertiseT(String id, String type, String advPath,
-			String showPosition, int showAmount, double showCount,
+	public AdvertiseT(String id, String type, String advPath, String showTag,
 			String showWhere, String alt, Date begintime, Date endtime,
 			Date createtime, String state, int sort, int height, int width,
 			int versiont) {
 		this.id = id;
 		this.type = type;
 		this.advPath = advPath;
-		this.showPosition = showPosition;
-		this.showAmount = showAmount;
-		this.showCount = showCount;
+		this.showTag = showTag;
 		this.showWhere = showWhere;
 		this.alt = alt;
 		this.begintime = begintime;
@@ -62,17 +57,14 @@ public class AdvertiseT implements java.io.Serializable {
 		this.versiont = versiont;
 	}
 
-	public AdvertiseT(String id, String type, String advPath,
-			String showPosition, int showAmount, double showCount,
+	public AdvertiseT(String id, String type, String advPath, String showTag,
 			String showWhere, String alt, Date begintime, Date endtime,
-			Date createtime, String creatorid, String state,
-			String templateName, int sort, int height, int width, int versiont) {
+			Date createtime, String creatorid, String state, int sort,
+			int height, int width, int versiont, String code) {
 		this.id = id;
 		this.type = type;
 		this.advPath = advPath;
-		this.showPosition = showPosition;
-		this.showAmount = showAmount;
-		this.showCount = showCount;
+		this.showTag = showTag;
 		this.showWhere = showWhere;
 		this.alt = alt;
 		this.begintime = begintime;
@@ -80,11 +72,11 @@ public class AdvertiseT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.creatorid = creatorid;
 		this.state = state;
-		this.templateName = templateName;
 		this.sort = sort;
 		this.height = height;
 		this.width = width;
 		this.versiont = versiont;
+		this.code = code;
 	}
 
 	@Id
@@ -115,31 +107,13 @@ public class AdvertiseT implements java.io.Serializable {
 		this.advPath = advPath;
 	}
 
-	@Column(name = "SHOW_POSITION", nullable = false, length = 1)
-	public String getShowPosition() {
-		return this.showPosition;
+	@Column(name = "SHOW_TAG", nullable = false, length = 20)
+	public String getShowTag() {
+		return this.showTag;
 	}
 
-	public void setShowPosition(String showPosition) {
-		this.showPosition = showPosition;
-	}
-
-	@Column(name = "SHOW_AMOUNT", nullable = false)
-	public int getShowAmount() {
-		return this.showAmount;
-	}
-
-	public void setShowAmount(int showAmount) {
-		this.showAmount = showAmount;
-	}
-
-	@Column(name = "SHOW_COUNT", nullable = false, precision = 10)
-	public double getShowCount() {
-		return this.showCount;
-	}
-
-	public void setShowCount(double showCount) {
-		this.showCount = showCount;
+	public void setShowTag(String showTag) {
+		this.showTag = showTag;
 	}
 
 	@Column(name = "SHOW_WHERE", nullable = false, length = 1)
@@ -208,15 +182,6 @@ public class AdvertiseT implements java.io.Serializable {
 		this.state = state;
 	}
 
-	@Column(name = "TEMPLATE_NAME", length = 45)
-	public String getTemplateName() {
-		return this.templateName;
-	}
-
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
-	}
-
 	@Column(name = "SORT", nullable = false)
 	public int getSort() {
 		return this.sort;
@@ -251,6 +216,15 @@ public class AdvertiseT implements java.io.Serializable {
 
 	public void setVersiont(int versiont) {
 		this.versiont = versiont;
+	}
+
+	@Column(name = "CODE", length = 10)
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

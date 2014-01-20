@@ -806,9 +806,7 @@ CREATE TABLE `advertise_t` (
   `ID` varchar(20) NOT NULL,
   `TYPE` varchar(1) NOT NULL,
   `ADV_PATH` varchar(255) NOT NULL,
-  `SHOW_POSITION` varchar(1) NOT NULL,
-  `SHOW_AMOUNT` int(10) unsigned NOT NULL,
-  `SHOW_COUNT` double(10,2) NOT NULL,
+  `SHOW_TAG` varchar(20) NOT NULL,
   `SHOW_WHERE` varchar(1) NOT NULL,
   `ALT` varchar(100) NOT NULL,
   `BEGINTIME` datetime NOT NULL,
@@ -816,11 +814,11 @@ CREATE TABLE `advertise_t` (
   `CREATETIME` datetime NOT NULL,
   `CREATORID` varchar(20) DEFAULT NULL,
   `STATE` varchar(1) NOT NULL,
-  `TEMPLATE_NAME` varchar(45) DEFAULT NULL,
   `SORT` int(11) NOT NULL,
   `HEIGHT` int(11) NOT NULL,
   `WIDTH` int(11) NOT NULL,
   `VERSIONT` int(11) NOT NULL,
+  `CODE` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3023,4 +3021,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-01-14 22:13:41
+-- Dump completed on 2014-01-20 21:20:02
