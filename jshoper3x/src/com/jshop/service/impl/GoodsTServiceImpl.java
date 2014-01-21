@@ -460,8 +460,8 @@ public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsT
 	}
 
 	@Override
-	public int updateGoodsQuantityByGoodsId(int quantity, String goodsid) {
-		return this.getGoodsTDao().updateGoodsQuantityByGoodsId(quantity, goodsid);
+	public int updateGoodsQuantityByGoodsId(int oldQuantity,int newQuantity, String goodsid) {
+		return this.getGoodsTDao().updateGoodsQuantityByGoodsId(oldQuantity,newQuantity, goodsid);
 	}
 
 

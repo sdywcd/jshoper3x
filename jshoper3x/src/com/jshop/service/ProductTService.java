@@ -123,8 +123,9 @@ public interface ProductTService extends BaseTService<ProductT>{
 	 * 货物信息更新过程
 	 * @param pt
 	 * @param gsrt
+	 * @param oldQuantity 当前货物的原始库存
 	 */
-	public void updateProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt);
+	public void updateProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt,int oldQuantity);
 	/**
 	 * 根据货物名称获取货物信息
 	 * @param productName

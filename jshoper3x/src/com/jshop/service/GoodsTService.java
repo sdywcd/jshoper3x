@@ -759,6 +759,6 @@ public interface GoodsTService extends BaseTService<GoodsT>{
 	 * @param goodsid
 	 * @return
 	 */
-	public int updateGoodsQuantityByGoodsId(int quantity,String goodsid);
+	public int updateGoodsQuantityByGoodsId(int oldQuantity,int newQuantity,String goodsid);
 	
 }

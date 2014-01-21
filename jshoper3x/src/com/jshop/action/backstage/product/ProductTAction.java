@@ -533,6 +533,8 @@ public class ProductTAction extends ActionSupport {
 		}
 		ProductT pt=new ProductT();
 		pt=this.getProductTService().findProductByProductid(this.getProductid());
+		//当前货物的旧库存
+		int oldQuantity=pt.getStore();
 		pt.setPrice(this.getPrice());
 		pt.setMemberprice(this.getMemberprice());
 		pt.setCost(this.getCost());
@@ -557,7 +559,7 @@ public class ProductTAction extends ActionSupport {
 		gsrt.setGoodsid(pt.getGoodsid());
 		gsrt.setProductid(pt.getProductid());
 		gsrt.setSpecidicationsid(pt.getSpecificationsid());
-		this.getProductTService().updateProductProcess(pt, gsrt);
+		this.getProductTService().updateProductProcess(pt, gsrt,oldQuantity);
 		this.setSucflag(true);
 		return "json";
 	}

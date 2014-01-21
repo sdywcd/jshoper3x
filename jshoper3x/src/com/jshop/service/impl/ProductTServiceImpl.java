@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jshop.dao.GoodsTDao;
 import com.jshop.dao.ProductTDao;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
+import com.jshop.entity.GoodsT;
 import com.jshop.entity.ProductT;
 import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.ProductTService;
@@ -117,16 +118,17 @@ public class ProductTServiceImpl extends BaseTServiceImpl<ProductT>implements Pr
 			GoodsSpecificationsProductRpT gsrt) {
 		this.getProductTDao().save(pt);
 		this.getGoodsSpecificationsProductRpTService().save(gsrt);
-		//this.getGoodsTDao().updateGoodsQuantityByGoodsId(pt.getStore(), pt.getGoodsid());
-		
+		this.getGoodsTDao().updateGoodsQuantityByGoodsId(0, pt.getStore(), pt.getGoodsid());
 	}
 
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void updateProductProcess(ProductT pt,
-			GoodsSpecificationsProductRpT gsrt) {
+			GoodsSpecificationsProductRpT gsrt,int oldQuantity) {
 		this.getProductTDao().updateProductT(pt);
 		this.getGoodsSpecificationsProductRpTService().updateGoodsAssociatedProductById(gsrt);
+		//得到商品的库存 得到货物的原始库存，得到货物的新库存 更新商品的库存=商品库存-原始库存+新库存
+		this.getGoodsTDao().updateGoodsQuantityByGoodsId(oldQuantity,pt.getStore(),pt.getGoodsid());
 		
 	}
 
