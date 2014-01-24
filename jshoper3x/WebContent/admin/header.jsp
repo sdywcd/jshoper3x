@@ -183,6 +183,10 @@
 									href="<%=basePath%>admin/pagecontent/article.jsp?operate=add">添加文章</a></li>
 								<li><a
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
+									<li><a
+									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">添加广告</a></li>
+									<li><a
+									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有广告列表</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#"> 素材管理 <b class="caret"></b>
