@@ -184,7 +184,7 @@
 								<li><a
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
 									<li><a
-									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">添加广告</a></li>
+									href="<%=basePath%>admin/pagecontent/advertise.jsp?operate=add">添加广告</a></li>
 									<li><a
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有广告列表</a></li>
 							</ul></li>

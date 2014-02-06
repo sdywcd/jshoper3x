@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>文章管理 &middot; jshoper</title>
+<title>广告管理 &middot; jshoper</title>
 
 </head>
 
@@ -19,8 +19,8 @@
 		<div class="navbar-innert">
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
-				height="30" alt=""></a> <a class="brand" href="#">文章管理</a> <a
-				class="brand2">所有文章列表</a>
+				height="30" alt=""></a> <a class="brand" href="#">广告管理</a> <a
+				class="brand2">所有广告列表</a>
 		</div>
 	</div>
 	<div class="container-fluid containerb">
@@ -35,7 +35,7 @@
 			<div class="span10">
 				<div class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">×</button>
-					<strong>说明</strong> 请根据需要定义文章 
+					<strong>说明</strong> 请根据需要定义广告 
 				</div>
 				<div id="alertinfo" style="display: none;" class="alert alert-info">
 					<a class="close" data-dismiss="alert" href="#">&times;</a> <strong></strong>
@@ -46,8 +46,8 @@
 				</div>
 				<div class="line-dotted"></div>
 				<!-- flexigrid -->
-				<div id="flexarticlemanagement">
-					<table id="articlemanagement" style="display: none;"></table>
+				<div id="flexadvertisemanagement">
+					<table id="advertisemanagement" style="display: none;"></table>
 				</div>
 			
 				<div class="line-dotted"></div>

@@ -427,6 +427,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 		this.setSucflag(true);
 		return "json";
 	}
+	
 
 	/**
 	 * 获取二级分类
