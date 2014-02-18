@@ -731,7 +731,8 @@ public class ArticleCategoryTAction extends ActionSupport {
 	@Action(value = "findArticleCategoryByarticleCategoryTid", results = { @Result(name = "json", type = "json") })
 	public String findArticleCategoryByarticleCategoryTid() {
 		if (Validate.StrNotNull(this.getArticleCategoryTid())) {
-			bean = this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(this.getArticleCategoryTid());
+			//bean = this.getArticleCategoryTService().findArticleCategoryByarticleCategoryTid(this.getArticleCategoryTid());
+			bean=this.getArticleCategoryTService().findByPK(ArticleCategoryT.class, this.getArticleCategoryTid());
 			if (bean != null) {
 				this.setBasepath(BaseTools.getBasePath());
 				return "json";

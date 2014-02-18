@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -60,6 +62,7 @@ import com.swetake.util.Qrcode;
 import freemarker.template.TemplateException;
 @Namespace("")
 @ParentPackage("jshop")
+
 public class GoodsTAction extends ActionSupport {
 	private GoodsTService goodsTService;
 	private Serial serial;
@@ -1317,7 +1320,7 @@ public class GoodsTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findGoodsById", results = { @Result(name = "json", type = "json",params = { "excludeNullProperties", "true" }) })
+	@Action(value = "findGoodsById", results = { @Result(name = "json", type = "json",params = { "excludeNullProperties", "true","goods","bean"}) })
 	public String findGoodsById() {
 
 		if (StringUtils.isNotBlank(this.getGoodsid())) {

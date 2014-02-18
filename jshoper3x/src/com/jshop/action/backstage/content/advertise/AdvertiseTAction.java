@@ -1,9 +1,10 @@
-package com.jshop.action.backstage.content.article;
+package com.jshop.action.backstage.content.advertise;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -16,6 +17,7 @@ import com.jshop.entity.AdvertiseT;
 import com.jshop.entity.SerialT;
 import com.jshop.service.AdvertiseTService;
 import com.opensymphony.xwork2.ActionSupport;
+
 /**
  * 广告管理action
  * @author chenda
@@ -383,8 +385,42 @@ public class AdvertiseTAction extends ActionSupport {
 		return "json";
 	}
 	
+	/**
+	 * 更新广告信息
+	 * @return
+	 */
+	@Action(value = "updateAdvertiseT", results = { @Result(name = "json", type = "json") })
 	public String updateAdvertiseT(){
 		bean=this.getAdvertiseTService().findByPK(AdvertiseT.class, this.getId());
+		bean.setType(this.getType());
+		bean.setAdvPath(this.getAdvPath());
+		bean.setShowTag(this.getShowTag());
+		bean.setShowWhere(this.getShowWhere());
+		bean.setAlt(this.getAlt());
+		bean.setBegintime(this.getBegintime());
+		bean.setEndtime(this.getEndtime());
+		bean.setState(this.getState());
+		bean.setSort(this.getSort());
+		bean.setHeight(this.getHeight());
+		bean.setWidth(this.getWidth());
+		bean.setVersiont(bean.getVersiont()+1);
+		bean.setCode(this.getCode());
+		this.getAdvertiseTService().update(bean);
+		this.setSucflag(true);
+		return "json";
+	}
+	
+	/**
+	 * 批量删除广告信息
+	 * @return
+	 */
+	public String delAdvertiseT(){
+		String[]ids=StringUtils.split(this.getId(),",");
+		for(String id:ids){
+			bean=this.getAdvertiseTService().findByPK(AdvertiseT.class, id);
+			this.getAdvertiseTService().delete(bean);
+		}
+		this.setSucflag(true);
 		return "json";
 	}
 	
