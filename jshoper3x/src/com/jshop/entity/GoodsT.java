@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-1-20 20:32:27 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-1-25 22:43:14 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -74,6 +74,7 @@ public class GoodsT implements java.io.Serializable {
 	private String commoditylist;
 	private String isoutsite;
 	private String outsitelink;
+	private String subgoodsname;
 
 	public GoodsT() {
 	}
@@ -118,7 +119,7 @@ public class GoodsT implements java.io.Serializable {
 			Integer totalstaruser, Integer totalcomment, String isvirtualsale,
 			String ismobileplatformgoods, Integer sales, Integer realsales,
 			Date updatetime, int versiont, String commoditylist,
-			String isoutsite, String outsitelink) {
+			String isoutsite, String outsitelink, String subgoodsname) {
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
 		this.brandname = brandname;
@@ -176,6 +177,7 @@ public class GoodsT implements java.io.Serializable {
 		this.commoditylist = commoditylist;
 		this.isoutsite = isoutsite;
 		this.outsitelink = outsitelink;
+		this.subgoodsname = subgoodsname;
 	}
 
 	@Id
@@ -692,6 +694,15 @@ public class GoodsT implements java.io.Serializable {
 
 	public void setOutsitelink(String outsitelink) {
 		this.outsitelink = outsitelink;
+	}
+
+	@Column(name = "SUBGOODSNAME", length = 45)
+	public String getSubgoodsname() {
+		return this.subgoodsname;
+	}
+
+	public void setSubgoodsname(String subgoodsname) {
+		this.subgoodsname = subgoodsname;
 	}
 
 }
