@@ -98,7 +98,7 @@
 									href="<%=basePath%>admin/goods/goodstypetnbrandsment.jsp?operate=find">品牌类型设置
 								</a></li>
 								<li><a
-									href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">规格设置
+									href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find">商品规格设置
 								</a></li>
 								<li><a
 									href="<%=basePath%>admin/goods/goodscategoryment.jsp?operate=find">商品分类设置
@@ -200,7 +200,7 @@
 						</a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find">基本设置</a></li>
+									href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find">商城信息设置</a></li>
 								<li><a
 									href="<%=basePath%>admin/setting/emailment.jsp?operate=find">邮箱设置</a></li>
 								<li><a
