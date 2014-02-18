@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.androidclient;
+package com.jshop.action.app;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,7 +30,7 @@ import com.jshop.service.GoodsTService;
 import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.utility.StringUtil;
-@Namespace("")
+@Namespace("/app")
 @ParentPackage("jshop")
 @InterceptorRefs({  
     @InterceptorRef("defaultStack")  

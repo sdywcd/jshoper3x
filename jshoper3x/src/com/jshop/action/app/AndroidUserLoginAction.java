@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.androidclient;
+package com.jshop.action.app;
 
 import java.io.IOException;
 import java.io.PrintWriter;
