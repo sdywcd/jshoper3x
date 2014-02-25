@@ -1936,4 +1936,29 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 	
 	}
 
+	@Override
+	public List<GoodsT> findrecommendedGoodsT(final String salestate,
+			final String recommended, final int lineSize) {
+		log.debug("findrecommendedGoodsT");
+		try {
+			final String queryString = "from GoodsT as gt where gt.salestate=:salestate and gt.recommended=:recommended order by gt.createtime desc";
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setParameter("salestate", salestate);
+							query.setParameter("recommended", recommended);
+							query.setMaxResults(lineSize);
+							List list = query.list();
+							return list;
+						}
+					});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findrecommendedGoodsT error", re);
+			throw re;
+		}
+	}
+
 }

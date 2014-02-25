@@ -769,5 +769,13 @@ public interface GoodsTDao extends BaseTDao<GoodsT>{
 	 * @return
 	 */
 	public int updateGoodsQuantityByGoodsId(int oldQuantity,int newQuantity,String goodsid);
+	/**
+	 * 获取推荐商品
+	 * @param salestate
+	 * @param recommended
+	 * @param lineSize
+	 * @return
+	 */
+	public List<GoodsT>findrecommendedGoodsT(String salestate,String recommended,int lineSize);
 	
 }

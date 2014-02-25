@@ -464,6 +464,12 @@ public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsT
 		return this.getGoodsTDao().updateGoodsQuantityByGoodsId(oldQuantity,newQuantity, goodsid);
 	}
 
+	@Override
+	public List<GoodsT> findrecommendedGoodsT(String salestate,
+			String recommended, int lineSize) {
+		return this.getGoodsTDao().findrecommendedGoodsT(salestate, recommended, lineSize);
+	}
+
 
 
 
