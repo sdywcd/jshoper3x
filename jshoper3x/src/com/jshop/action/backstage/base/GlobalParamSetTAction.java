@@ -1014,8 +1014,8 @@ public class GlobalParamSetTAction extends ActionSupport {
 		p.load(inputStream);
 		OutputStream outputStream = new FileOutputStream(filePath);
 		List<GlobalParamM>list=this.getGlobalParamService().findAllGlobalParam();
-		for (Iterator<GlobalParamM> it = list.iterator(); it.hasNext();) {
-			GlobalParamM gm = (GlobalParamM) it.next();
+ 		for (Iterator<GlobalParamM> it = list.iterator(); it.hasNext();) {
+                             			GlobalParamM gm = (GlobalParamM) it.next();
 			p.setProperty(gm.getGkey(), gm.getGvalue());
 		}
 		p.store(outputStream, "update_config");

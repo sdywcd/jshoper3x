@@ -7,240 +7,315 @@ $(function(){
 			if(data.beanlist!=null){
 				$.each(data.beanlist,function(k,v){ 
 					if(v.gkey=="language"){
-						if(v.gvalue=="1"){
-							$("input[name='language']").get(0).checked=true;
-						}else{
-							$("input[name='language']").get(1).checked=true;
+						if($("input[name='language']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='language']").get(0).checked=true;
+							}else{
+								$("input[name='language']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isstockment"){
-						if(v.gvalue=="1"){
-							$("input[name='isstockment']").get(0).checked=true;
-						}else{
-							$("input[name='isstockment']").get(1).checked=true;
+						if($("input[name='isstockment']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isstockment']").get(0).checked=true;
+							}else{
+								$("input[name='isstockment']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="ispurchaseplan"){
-						if(v.gvalue=="1"){
-							$("input[name='ispurchaseplan']").get(0).checked=true;
-						}else{
-							$("input[name='ispurchaseplan']").get(1).checked=true;
+						if($("input[name='ispurchaseplan']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='ispurchaseplan']").get(0).checked=true;
+							}else{
+								$("input[name='ispurchaseplan']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isfinancement"){
-						if(v.gvalue=="1"){
-							$("input[name='isfinancement']").get(0).checked=true;
-						}else{
-							$("input[name='isfinancement']").get(1).checked=true;
+						if($("input[name='isfinancement']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isfinancement']").get(0).checked=true;
+							}else{
+								$("input[name='isfinancement']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isworkflowengine"){
-						if(v.gvalue=="1"){
-							$("input[name='isworkflowengine']").get(0).checked=true;
-						}else{
-							$("input[name='isworkflowengine']").get(1).checked=true;
+						if($("input[name='isworkflowengine']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isworkflowengine']").get(0).checked=true;
+							}else{
+								$("input[name='isworkflowengine']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="istaskschedule"){
-						if(v.gvalue=="1"){
-							$("input[name='istaskschedule']").get(0).checked=true;
-						}else{
-							$("input[name='istaskschedule']").get(1).checked=true;
+						if($("input[name='istaskschedule']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='istaskschedule']").get(0).checked=true;
+							}else{
+								$("input[name='istaskschedule']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isvisitcount"){
-						if(v.gvalue=="1"){
-							$("input[name='isvisitcount']").get(0).checked=true;
-						}else{
-							$("input[name='isvisitcount']").get(1).checked=true;
+						if($("input[name='isvisitcount']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isvisitcount']").get(0).checked=true;
+							}else{
+								$("input[name='isvisitcount']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isusercanregister"){
-						if(v.gvalue=="1"){
-							$("input[name='isusercanregister']").get(0).checked=true;
-						}else{
-							$("input[name='isusercanregister']").get(1).checked=true;
+						if($("input[name='isusercanregister']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isusercanregister']").get(0).checked=true;
+							}else{
+								$("input[name='isusercanregister']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="issendactivatemail"){
-						if(v.gvalue=="1"){
-							$("input[name='issendactivatemail']").get(0).checked=true;
-						}else{
-							$("input[name='issendactivatemail']").get(1).checked=true;
+						if($("input[name='issendactivatemail']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issendactivatemail']").get(0).checked=true;
+							}else{
+								$("input[name='issendactivatemail']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isqueuemail"){
-						if(v.gvalue=="1"){
-							$("input[name='isqueuemail']").get(0).checked=true;
-						}else{
-							$("input[name='isqueuemail']").get(1).checked=true;
+						if($("input[name='isqueuemail']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isqueuemail']").get(0).checked=true;
+							}else{
+								$("input[name='isqueuemail']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isshoppinghelp"){
-						if(v.gvalue=="1"){
-							$("input[name='isshoppinghelp']").get(0).checked=true;
-						}else{
-							$("input[name='isshoppinghelp']").get(1).checked=true;
+						if($("input[name='isshoppinghelp']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isshoppinghelp']").get(0).checked=true;
+							}else{
+								$("input[name='isshoppinghelp']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="iswebsitehelp"){
-						if(v.gvalue=="1"){
-							$("input[name='iswebsitehelp']").get(0).checked=true;
-						}else{
-							$("input[name='iswebsitehelp']").get(1).checked=true;
+						if($("input[name='iswebsitehelp']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='iswebsitehelp']").get(0).checked=true;
+							}else{
+								$("input[name='iswebsitehelp']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="islog"){
-						if(v.gvalue=="1"){
-							$("input[name='islog']").get(0).checked=true;
-						}else{
-							$("input[name='islog']").get(1).checked=true;
+						if($("input[name='islog']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='islog']").get(0).checked=true;
+							}else{
+								$("input[name='islog']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isauthoritycontrol"){
-						if(v.gvalue=="1"){
-							$("input[name='isauthoritycontrol']").get(0).checked=true;
-						}else{
-							$("input[name='isauthoritycontrol']").get(1).checked=true;
+						if($("input[name='isauthoritycontrol']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isauthoritycontrol']").get(0).checked=true;
+							}else{
+								$("input[name='isauthoritycontrol']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="iscommentmoderation"){
-						if(v.gvalue=="1"){
-							$("input[name='iscommentmoderation']").get(0).checked=true;
-						}else{
-							$("input[name='iscommentmoderation']").get(1).checked=true;
+						if($("input[name='iscommentmoderation']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='iscommentmoderation']").get(0).checked=true;
+							}else{
+								$("input[name='iscommentmoderation']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="commenttarget"){
-						if(v.gvalue=="1"){
-							$("input[name='commenttarget']").get(0).checked=true;
-						}else if(v.gvalue=="2"){
-							$("input[name='commenttarget']").get(1).checked=true;
-						}else if(v.gvalue=="3"){
-							$("input[name='commenttarget']").get(2).checked=true;
-						}else if(v.gvalue=="4"){
-							$("input[name='commenttarget']").get(3).checked=true;
-						}else{
-							$("input[name='commenttarget']").get(4).checked=true;
+						if($("input[name='commenttarget']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='commenttarget']").get(0).checked=true;
+							}else if(v.gvalue=="2"){
+								$("input[name='commenttarget']").get(1).checked=true;
+							}else if(v.gvalue=="3"){
+								$("input[name='commenttarget']").get(2).checked=true;
+							}else if(v.gvalue=="4"){
+								$("input[name='commenttarget']").get(3).checked=true;
+							}else{
+								$("input[name='commenttarget']").get(4).checked=true;
+							}
 						}
+						
 					}else if(v.gkey=="isautosharecomment"){
-						if(v.gvalue=="1"){
-							$("input[name='isautosharecomment']").get(0).checked=true;
-						}else{
-							$("input[name='isautosharecomment']").get(1).checked=true;
+						if($("input[name='isautosharecomment']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isautosharecomment']").get(0).checked=true;
+							}else{
+								$("input[name='isautosharecomment']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isinvoice"){
-						if(v.gvalue=="1"){
-							$("input[name='isinvoice']").get(0).checked=true;
-						}else{
-							$("input[name='isinvoice']").get(1).checked=true;
+						if($("input[name='isinvoice']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isinvoice']").get(0).checked=true;
+							}else{
+								$("input[name='isinvoice']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isusepoint"){
-						if(v.gvalue=="1"){
-							$("input[name='isusepoint']").get(0).checked=true;
-						}else{
-							$("input[name='isusepoint']").get(1).checked=true;
+						if($("input[name='isusepoint']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isusepoint']").get(0).checked=true;
+							}else{
+								$("input[name='isusepoint']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isdiscountcoupon"){
-						if(v.gvalue=="1"){
-							$("input[name='isdiscountcoupon']").get(0).checked=true;
-						}else{
-							$("input[name='isdiscountcoupon']").get(1).checked=true;
+						if($("input[name='isdiscountcoupon']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isdiscountcoupon']").get(0).checked=true;
+							}else{
+								$("input[name='isdiscountcoupon']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isstockoutprocess"){
-						if(v.gvalue=="1"){
-							$("input[name='isstockoutprocess']").get(0).checked=true;
-						}else{
-							$("input[name='isstockoutprocess']").get(1).checked=true;
+						if($("input[name='isstockoutprocess']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isstockoutprocess']").get(0).checked=true;
+							}else{
+								$("input[name='isstockoutprocess']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isconfirmtomail"){
-						if(v.gvalue=="1"){
-							$("input[name='isconfirmtomail']").get(0).checked=true;
-						}else{
-							$("input[name='isconfirmtomail']").get(1).checked=true;
+						if($("input[name='isconfirmtomail']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isconfirmtomail']").get(0).checked=true;
+							}else{
+								$("input[name='isconfirmtomail']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="ispaymail"){
-						if(v.gvalue=="1"){
-							$("input[name='ispaymail']").get(0).checked=true;
-						}else{
-							$("input[name='ispaymail']").get(1).checked=true;
+						if($("input[name='ispaymail']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='ispaymail']").get(0).checked=true;
+							}else{
+								$("input[name='ispaymail']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isdelivergoodsmail"){
-						if(v.gvalue=="1"){
-							$("input[name='isdelivergoodsmail']").get(0).checked=true;
-						}else{
-							$("input[name='isdelivergoodsmail']").get(1).checked=true;
+						if($("input[name='isdelivergoodsmail']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isdelivergoodsmail']").get(0).checked=true;
+							}else{
+								$("input[name='isdelivergoodsmail']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="iscancelordermail"){
-						if(v.gvalue=="1"){
-							$("input[name='iscancelordermail']").get(0).checked=true;
-						}else{
-							$("input[name='iscancelordermail']").get(1).checked=true;
+						if($("input[name='iscancelordermail']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='iscancelordermail']").get(0).checked=true;
+							}else{
+								$("input[name='iscancelordermail']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isnoticeservice"){
-						if(v.gvalue=="1"){
-							$("input[name='isnoticeservice']").get(0).checked=true;
-						}else{
-							$("input[name='isnoticeservice']").get(1).checked=true;
+						if($("input[name='isnoticeservice']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isnoticeservice']").get(0).checked=true;
+							}else{
+								$("input[name='isnoticeservice']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isnoticeneworder"){
-						if(v.gvalue=="1"){
-							$("input[name='isnoticeneworder']").get(0).checked=true;
-						}else{
-							$("input[name='isnoticeneworder']").get(1).checked=true;
+						if($("input[name='isnoticeneworder']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isnoticeneworder']").get(0).checked=true;
+							}else{
+								$("input[name='isnoticeneworder']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="iscashondelivery"){
-						if(v.gvalue=="1"){
-							$("input[name='iscashondelivery']").get(0).checked=true;
-						}else{
-							$("input[name='iscashondelivery']").get(1).checked=true;
+						if($("input[name='iscashondelivery']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='iscashondelivery']").get(0).checked=true;
+							}else{
+								$("input[name='iscashondelivery']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="freeshoppinglines"){
 						$("#freeshoppinglines").attr("value",v.gvalue);
 					}else if(v.gkey=="salemobile"){
 						$("#salemobile").attr("value",v.gvalue);
 					}else if(v.gkey=="isordermsg"){
-						if(v.gvalue=="1"){
-							$("input[name='isordermsg']").get(0).checked=true;
-						}else{
-							$("input[name='isordermsg']").get(1).checked=true;
+						if($("input[name='isordermsg']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isordermsg']").get(0).checked=true;
+							}else{
+								$("input[name='isordermsg']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="ispaymsg"){
-						if(v.gvalue=="1"){
-							$("input[name='ispaymsg']").get(0).checked=true;
-						}else{
-							$("input[name='ispaymsg']").get(1).checked=true;
+						if($("input[name='ispaymsg']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='ispaymsg']").get(0).checked=true;
+							}else{
+								$("input[name='ispaymsg']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isdelivermsg"){
-						if(v.gvalue=="1"){
-							$("input[name='isdelivermsg']").get(0).checked=true;
-						}else{
-							$("input[name='isdelivermsg']").get(1).checked=true;
+						if($("input[name='isdelivermsg']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isdelivermsg']").get(0).checked=true;
+							}else{
+								$("input[name='isdelivermsg']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="issyncmobileplatform"){
-						if(v.gvalue=="1"){
-							$("input[name='issyncmobileplatform']").get(0).checked=true;
-						}else{
-							$("input[name='issyncmobileplatform']").get(1).checked=true;
+						if($("input[name='issyncmobileplatform']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issyncmobileplatform']").get(0).checked=true;
+							}else{
+								$("input[name='issyncmobileplatform']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="issyncgoodsdata"){
-						if(v.gvalue=="1"){
-							$("input[name='issyncgoodsdata']").get(0).checked=true;
-						}else{
-							$("input[name='issyncgoodsdata']").get(1).checked=true;
+						if($("input[name='issyncgoodsdata']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issyncgoodsdata']").get(0).checked=true;
+							}else{
+								$("input[name='issyncgoodsdata']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="issynccontentdata"){
-						if(v.gvalue=="1"){
-							$("input[name='issynccontentdata']").get(0).checked=true;
-						}else{
-							$("input[name='issynccontentdata']").get(1).checked=true;
+						if($("input[name='issynccontentdata']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issynccontentdata']").get(0).checked=true;
+							}else{
+								$("input[name='issynccontentdata']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="issynccartdata"){
-						if(v.gvalue=="1"){
-							$("input[name='issynccartdata']").get(0).checked=true;
-						}else{
-							$("input[name='issynccartdata']").get(1).checked=true;
+						if($("input[name='issynccartdata']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issynccartdata']").get(0).checked=true;
+							}else{
+								$("input[name='issynccartdata']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="issyncorderdata"){
-						if(v.gvalue=="1"){
-							$("input[name='issyncorderdata']").get(0).checked=true;
-						}else{
-							$("input[name='issyncorderdata']").get(1).checked=true;
+						if($("input[name='issyncorderdata']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issyncorderdata']").get(0).checked=true;
+							}else{
+								$("input[name='issyncorderdata']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="freepoint"){
 						$("#freepoint").attr("value",v.gvalue);
 					}else if(v.gkey=="stockreduce"){
-						if(v.gvalue=="1"){
-							$("input[name='stockreduce']").get(0).checked=true;
-						}else if(v.gkey=="2"){
-							$("input[name='stockreduce']").get(1).checked=true;
-						}else{
-							$("input[name='stockreduce']").get(2).checked=true;
+						if($("input[name='stockreduce']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='stockreduce']").get(0).checked=true;
+							}else if(v.gkey=="2"){
+								$("input[name='stockreduce']").get(1).checked=true;
+							}else{
+								$("input[name='stockreduce']").get(2).checked=true;
+							}
 						}
 					}else if(v.gkey=="defaultstock"){
 						$("#defaultstock").attr("value",v.gvalue);
@@ -251,10 +326,12 @@ $(function(){
 					}else if(v.gkey=="watermarkclarity"){
 						$("#watermarkclarity").attr("value",v.gvalue);
 					}else if(v.gkey=="issaveoriginalbitmap"){
-						if(v.gvalue=="1"){
-							$("input[name='issaveoriginalbitmap']").get(0).checked=true;
-						}else{
-							$("input[name='issaveoriginalbitmap']").get(1).checked=true;
+						if($("input[name='issaveoriginalbitmap']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issaveoriginalbitmap']").get(0).checked=true;
+							}else{
+								$("input[name='issaveoriginalbitmap']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="thumbnailwidth"){
 						$("#thumbnailwidth").attr("value",v.gvalue);
@@ -265,10 +342,12 @@ $(function(){
 					}else if(v.gkey=="defaultheight"){
 						$("#defaultheight").attr("value",v.gvalue);
 					}else if(v.gkey=="isimagecompression"){
-						if(v.gvalue=="1"){
-							$("input[name='isimagecompression']").get(0).checked=true;
-						}else{
-							$("input[name='isimagecompression']").get(1).checked=true;
+						if($("input[name='isimagecompression']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isimagecompression']").get(0).checked=true;
+							}else{
+								$("input[name='isimagecompression']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="pointrename"){
 						$("#pointrename").attr("value",v.gvalue);
@@ -277,30 +356,38 @@ $(function(){
 					}else if(v.gkey=="proportionintegralpayment"){
 						$("#proportionintegralpayment").attr("value",v.gvalue);
 					}else if(v.gkey=="isvirtualitemsupport"){
-						if(v.gvalue=="1"){
-							$("input[name='isvirtualitemsupport']").get(0).checked=true;
-						}else{
-							$("input[name='isvirtualitemsupport']").get(1).checked=true;
+						if($("input[name='isvirtualitemsupport']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isvirtualitemsupport']").get(0).checked=true;
+							}else{
+								$("input[name='isvirtualitemsupport']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="isspecificationsupport"){
-						if(v.gvalue=="1"){
-							$("input[name='isspecificationsupport']").get(0).checked=true;
-						}else{
-							$("input[name='isspecificationsupport']").get(1).checked=true;
+						if($("input[name='isspecificationsupport']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isspecificationsupport']").get(0).checked=true;
+							}else{
+								$("input[name='isspecificationsupport']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="goodscommentcondition"){
-						if(v.gvalue=="1"){
-							$("input[name='goodscommentcondition']").get(0).checked=true;
-						}else if(v.gvalue=="2"){
-							$("input[name='goodscommentcondition']").get(1).checked=true;
-						}else{
-							$("input[name='goodscommentcondition']").get(2).checked=true;
+						if($("input[name='goodscommentcondition']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='goodscommentcondition']").get(0).checked=true;
+							}else if(v.gvalue=="2"){
+								$("input[name='goodscommentcondition']").get(1).checked=true;
+							}else{
+								$("input[name='goodscommentcondition']").get(2).checked=true;
+							}
 						}
 					}else if(v.gkey=="isintelligentproductnamed"){
-						if(v.gvalue=="1"){
-							$("input[name='isintelligentproductnamed']").get(0).checked=true;
-						}else{
-							$("input[name='isintelligentproductnamed']").get(1).checked=true;
+						if($("input[name='isintelligentproductnamed']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='isintelligentproductnamed']").get(0).checked=true;
+							}else{
+								$("input[name='isintelligentproductnamed']").get(1).checked=true;
+							}
 						}
 					}else if(v.gkey=="associateattributecount"){
 						$("#associateattributecount").attr("value",v.gvalue);

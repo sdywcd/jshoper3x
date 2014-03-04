@@ -51,7 +51,7 @@
 					<div class="well">
 						<h4>基础相关</h4>
 					</div>
-					<div class="form-inline">
+					<!--  <div class="form-inline">
 						<span class="label label-required">系统语言:</span> <input
 							type="radio" id="language" name="language" value="1" /> <label
 							for="radio-1">中文 </label> <input type="radio" id="language"
@@ -98,7 +98,7 @@
 						<label for="radio-1">开启 </label> <input type="radio"
 							id="isvisitcount" name="isvisitcount" value="0" /> <label
 							for="radio-2">关闭 </label>
-					</div>
+					</div>-->
 					<div class="form-inline">
 						<span class="label label-required">会员注册:</span> <input
 							type="radio" id="isusercanregister" name="isusercanregister"
@@ -113,6 +113,7 @@
 							type="radio" id="issendactivatemail" name="issendactivatemail"
 							value="0" /> <label for="radio-2">关闭 </label>
 					</div>
+					<!--  
 					<div class="form-inline">
 						<span class="label label-required">发送队列中邮件:</span> <input
 							type="radio" id="isqueuemail" name="isqueuemail" value="1" /> <label
@@ -146,7 +147,7 @@
 							value="1" /> <label for="radio-1">开启 </label> <input
 							type="radio" id="isauthoritycontrol" name="isauthoritycontrol"
 							value="0" /> <label for="radio-2">关闭 </label>
-					</div>
+					</div>-->
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input
 							class="btn btn-success" type="button" id="basicupdate"
@@ -156,11 +157,12 @@
 					<div class="well">
 						<h4>内容相关</h4>
 					</div>
+					<!-- 
 					<div class="form-inline">
 						<span class="label label-required">文章分页字符数: </span> <input
 							id="articlesplitsize" name="articlesplitsize" type="text" value="" /> <span
 							class="label label-info">文章每多少个字符进行分页</span>
-					</div>
+					</div> -->
 					<div class="form-inline">
 						<span class="label label-required">评论审核:</span> <input
 							type="radio" id="iscommentmoderation" name="iscommentmoderation"
@@ -168,6 +170,7 @@
 							type="radio" id="iscommentmoderation" name="iscommentmoderation"
 							value="0" /> <label for="radio-2">关闭 </label>
 					</div>
+					<!-- 
 					<div class="form-inline">
 						<span class="label label-required">可评论对象:</span> <input
 							type="radio" id="commenttarget" name="commenttarget" value="1" />
@@ -186,7 +189,7 @@
 							value="1" /> <label for="radio-1">开启 </label> <input
 							type="radio" id="isautosharecomment" name="isautosharecomment"
 							value="0" /> <label for="radio-2">关闭 </label>
-					</div>
+					</div> -->
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input
 							class="btn btn-success" type="button" id="contentupdate"
@@ -195,12 +198,14 @@
 					<div class="well">
 						<h4>订单相关</h4>
 					</div>
+					
 					<div class="form-inline">
 						<span class="label label-required">订单开票:</span> <input
 							type="radio" id="isinvoice" name="isinvoice" value="1" /> <label
 							for="radio-1">开启 </label> <input type="radio" id="isinvoice"
 							name="isinvoice" value="0" /> <label for="radio-2">关闭 </label>
 					</div>
+					<!-- 
 					<div class="form-inline">
 						<span class="label label-required">使用积分:</span> <input
 							type="radio" id="isusepoint" name="isusepoint" value="1" /> <label
@@ -273,13 +278,13 @@
 						<span class="label label-required">免运费额度:</span> <input
 							id="freeshoppinglines" name="freeshoppinglines" type="text"
 							value="" />
-					</div>
+					</div> -->
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input
 							class="btn btn-success" type="button" id="orderupdate"
 							name="orderupdate" value="更新" />
 					</div>
-
+<!--  
 					<div class="well">
 						<h4>短信相关</h4>
 					</div>
@@ -312,6 +317,8 @@
 							class="btn btn-success" type="button" id="msgupdate"
 							name="msgupdate" value="更新" />
 					</div>
+					-->
+					<!-- 
 					<div class="well">
 						<h4>移动平台相关</h4>
 					</div>
@@ -357,7 +364,7 @@
 							class="btn btn-success" type="button" id="mobileupdate"
 							name="mobileupdate" value="更新" />
 					</div>
-
+ -->
 					<div class="well">
 						<h4>会员相关</h4>
 					</div>
@@ -400,6 +407,7 @@
 					<div class="well">
 						<h4>图片相关</h4>
 					</div>
+					<!--  
 					<div class="form-inline">
 						<span class="label label-required">水印文件:</span> <input type="file"
 							id="watermarkfile" name="watermarkfile" /> <input type="hidden"
@@ -415,6 +423,7 @@
 							id="watermarkclarity" name="watermarkclarity" type="text"
 							value="20" />
 					</div>
+					-->
 					<div class="form-inline">
 						<span class="label label-required">保留原图:</span> <input
 							type="radio" id="issaveoriginalbitmap"
@@ -456,6 +465,7 @@
 					<div class="well">
 						<h4>商品相关</h4>
 					</div>
+					<!-- 
 					<div class="form-inline">
 						<span class="label label-required">积分重命名:</span> <input
 							id="pointrename" name="pointrename" type="text" value="" />
@@ -486,6 +496,7 @@
 							name="outlinkgoodssupport" value="0" /> <label for="radio-2">
 							关闭 </label>
 					</div>
+					 -->
 					<div class="form-inline">
 						<span class="label label-required">规格商品支持:</span> <input
 							type="radio" id="isspecificationsupport"
@@ -494,6 +505,7 @@
 							name="isspecificationsupport" value="0" /> <label for="radio-2">
 							关闭 </label>
 					</div>
+					<!--  
 					<div class="form-inline">
 						<span class="label label-required">商品评论条件:</span> <input
 							type="radio" id="goodscommentcondition"
@@ -517,7 +529,7 @@
 						<span class="label label-required">关联属性商品数:</span> <input
 							id="associateattributecount" name="associateattributecount"
 							type="text" value="5" />
-					</div>
+					</div>-->
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input
 							class="btn btn-success" type="button" id="goodsupdate"
