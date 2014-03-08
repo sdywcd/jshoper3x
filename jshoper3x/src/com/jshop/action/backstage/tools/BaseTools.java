@@ -1,5 +1,6 @@
 package com.jshop.action.backstage.tools;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
@@ -104,6 +105,16 @@ public class BaseTools {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA);
 		String dateString = formatter.format(object);
 		return dateString;
+	}
+	
+	public static Date string2Time(String dateString) throws java.text.ParseException {
+
+		DateFormat dateFormat;
+		dateFormat = new SimpleDateFormat("yy-MM-dd", Locale.CHINA);
+		dateFormat.setLenient(false);
+		Date timeDate = dateFormat.parse(dateString);
+		Date dateTime = new Date(timeDate.getTime());
+		return dateTime;
 	}
 
 	/**

@@ -1,35 +1,29 @@
 package com.jshop.action.backstage.activity;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.VouchersT;
 import com.jshop.service.VouchersTService;
-import com.jshop.service.impl.VouchersTServiceImpl;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+@Namespace("")
 @ParentPackage("jshop")
 public class VouchersTAction extends ActionSupport {
-	@Resource
+	private static final long serialVersionUID = 1L;
 	private VouchersTService vouchersTService;
-	@Resource
 	private Serial serial;
 	private String vouchersid;
 	private String vouchersname;
@@ -43,11 +37,11 @@ public class VouchersTAction extends ActionSupport {
 	private String state;
 	private Date createtime;
 	private String creatorid;
-	private List rows = new ArrayList();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean addvoucherflag = false;
+	private boolean sucflag;
 	@JSON(serialize = false)
 	public VouchersTService getVouchersTService() {
 		return vouchersTService;
@@ -163,11 +157,11 @@ public class VouchersTAction extends ActionSupport {
 	}
 
 	@JSON(name = "rows")
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -195,15 +189,15 @@ public class VouchersTAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public boolean isAddvoucherflag() {
-		return addvoucherflag;
+
+	public boolean isSucflag() {
+		return sucflag;
 	}
 
-	public void setAddvoucherflag(boolean addvoucherflag) {
-		this.addvoucherflag = addvoucherflag;
+	public void setSucflag(boolean sucflag) {
+		this.sucflag = sucflag;
 	}
 
-	
 	/**
 	 * 清理错误
 	 */
@@ -213,15 +207,7 @@ public class VouchersTAction extends ActionSupport {
 
 	}
 
-	public final static Date string2Time(String dateString) throws java.text.ParseException {
 
-		DateFormat dateFormat;
-		dateFormat = new SimpleDateFormat("yy-MM-dd", Locale.CHINESE);
-		dateFormat.setLenient(false);
-		Date timeDate = dateFormat.parse(dateString);
-		Date dateTime = new Date(timeDate.getTime());
-		return dateTime;
-	}
 
 	/**
 	 * 增加抵用券
@@ -233,28 +219,26 @@ public class VouchersTAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addVoucherst() throws ParseException {
-		String adminid = (String) ActionContext.getContext().getSession().get("adminid");
-		if (adminid != null) {
-			List<VouchersT> vlist = this.getVouchersTService().findVoucherstByName(this.getVouchersname().trim());
-			if (vlist.size() > 0) {
-				return "json";
-			}
-			VouchersT vt = new VouchersT();
-			vt.setVouchersid(this.getSerial().Serialid(Serial.VOUCHERS));
-			vt.setVouchersname(this.getVouchersname().trim());
-			vt.setBegintime(this.getBegintime());
-			vt.setEndtime(this.getEndtime());
-			vt.setVoucherscontent(this.getVoucherscontent());
-			vt.setLimitprice(Double.parseDouble(this.getLimitprice()));
-			vt.setGivenmemberid("");
-			vt.setVoucherstate(this.getVoucherstate());
-			vt.setVoucheruseway(this.getVoucheruseway());
-			vt.setState("0");
-			vt.setCreatetime(BaseTools.systemtime());
-			vt.setCreatorid(adminid);
-			this.getVouchersTService().save(vt);
-			this.addvoucherflag = true;
+	
+		List<VouchersT> vlist = this.getVouchersTService().findVoucherstByName(this.getVouchersname().trim());
+		if (vlist.size() > 0) {
+			return "json";
 		}
+		VouchersT vt = new VouchersT();
+		vt.setVouchersid(this.getSerial().Serialid(Serial.VOUCHERS));
+		vt.setVouchersname(this.getVouchersname().trim());
+		vt.setBegintime(this.getBegintime());
+		vt.setEndtime(this.getEndtime());
+		vt.setVoucherscontent(this.getVoucherscontent());
+		vt.setLimitprice(Double.parseDouble(this.getLimitprice()));
+		vt.setGivenmemberid(StaticString.EMPTY);
+		vt.setVoucherstate(this.getVoucherstate());
+		vt.setVoucheruseway(this.getVoucheruseway());
+		vt.setState(StaticString.ZERO);
+		vt.setCreatetime(BaseTools.systemtime());
+		vt.setCreatorid(BaseTools.adminCreateId());
+		this.getVouchersTService().save(vt);
+		this.setSucflag(true);
 		return "json";
 	}
 

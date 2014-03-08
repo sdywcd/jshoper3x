@@ -64,7 +64,7 @@ public class CreateStaticHtmlAspect {
 			//获取商品详细
 			map.put(FreeMarkervariable.GOODSDETAIL, gtn.getBean());
 			//这里获取商品参数和商品类型表中的对比并显示
-			map.put(FreeMarkervariable.GOODSPARAMETERS,gtn.processGoodsparameters(gtn.getBean()));;//这是处理过后的商品参数,用在freemarker模板
+			map.put(FreeMarkervariable.GOODSPARAMETERS,gtn.processGoodsparameters(gtn.getBean()));//这是处理过后的商品参数,用在freemarker模板
 			//获取商品评论
 			map.put(FreeMarkervariable.GOODSCOMMENTS, gtn.getDataCollectionTAction().findGoodsCommentBygoodsid(gtn.getBean()));
 			//获取规格值
