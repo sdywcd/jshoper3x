@@ -10,8 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -19,13 +17,13 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
@@ -36,18 +34,16 @@ import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.TemplateException;
 @Namespace("")
 @ParentPackage("jshop")
-public class ArticleTAction extends ActionSupport {
+public class ArticleTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ArticleTService articleTService;
 	private ArticleCategoryTService articleCategoryTService;
 	private DataCollectionTAction dataCollectionTAction;
 	private CreateHtml createHtml;
-	private Serial serial;
 	private String articleid;
 	private String tipcontent;
 	private String nname;
@@ -82,12 +78,10 @@ public class ArticleTAction extends ActionSupport {
 	private ArticleT bean = new ArticleT();
 	private ArticleCategoryT actbean = new ArticleCategoryT();
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
 	private boolean sucflag;
 	private String basepath;
 	@JSON(serialize = false)
@@ -126,16 +120,6 @@ public class ArticleTAction extends ActionSupport {
 	public void setCreateHtml(CreateHtml createHtml) {
 		this.createHtml = createHtml;
 	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getArticleid() {
 		return articleid;
 	}
@@ -256,11 +240,11 @@ public class ArticleTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -293,22 +277,6 @@ public class ArticleTAction extends ActionSupport {
 
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 
 	public Map<String, Object> getMap() {
@@ -670,7 +638,7 @@ public class ArticleTAction extends ActionSupport {
 	}
 
 	public void ProcessArticleTList(List<ArticleT> list) {
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<ArticleT> it = list.iterator(); it.hasNext();) {
 			ArticleT at = (ArticleT) it.next();
 			if (at.getIspublication().equals("1")) {
 				at.setIspublication("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");

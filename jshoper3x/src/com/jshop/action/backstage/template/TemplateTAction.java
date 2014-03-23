@@ -18,20 +18,17 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
-
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.TemplateT;
 import com.jshop.service.TemplateTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class TemplateTAction extends ActionSupport {
-
+public class TemplateTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private TemplateTService templateTService;
-	private Serial serial;
 	private String tid;
 	private String url;
 	private String note;
@@ -44,10 +41,8 @@ public class TemplateTAction extends ActionSupport {
 	private String sign;
 	private String type;
 	private String status;
-	private String query;//text
-	private String qtype;//select
 	private TemplateT bean=new TemplateT();
-	private List rows=new ArrayList<Map<String,Object>>();
+	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -60,16 +55,6 @@ public class TemplateTAction extends ActionSupport {
 	public void setTemplateTService(TemplateTService templateTService) {
 		this.templateTService = templateTService;
 	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getTid() {
 		return tid;
 	}
@@ -119,11 +104,11 @@ public class TemplateTAction extends ActionSupport {
 		this.creatorid = creatorid;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -149,23 +134,6 @@ public class TemplateTAction extends ActionSupport {
 
 	public void setTotal(int total) {
 		this.total = total;
-	}
-
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 
 	public TemplateT getBean() {
@@ -274,7 +242,7 @@ public class TemplateTAction extends ActionSupport {
 	}
 
 	public void ProcessTemplateList(List<TemplateT> list) {
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
 			TemplateT t = (TemplateT) it.next();
 			if (t.getType().equals("1")) {
 				t.setType("页面模板");
@@ -493,7 +461,7 @@ public class TemplateTAction extends ActionSupport {
 	})
 	public String recreateTemplate() throws UnsupportedEncodingException, IllegalAccessException, IOException {
 			List<TemplateT> list = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.adminCreateId(),"1");
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
 				TemplateT tt = (TemplateT) it.next();
 				this.updateFTLFile(tt);
 			}

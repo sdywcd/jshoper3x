@@ -9,30 +9,27 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.service.ArticleCategoryTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 //@InterceptorRefs({  
 //    @InterceptorRef("articlemoduleArticleInterecptor"),  
 //    @InterceptorRef("defaultStack")
 //})
-public class ArticleCategoryTAction extends ActionSupport {
+public class ArticleCategoryTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ArticleCategoryTService articleCategoryTService;
-	private Serial serial;
 	private String articleCategoryTid;
 	private String grade;
 	private String metaKeywords;
@@ -54,22 +51,18 @@ public class ArticleCategoryTAction extends ActionSupport {
 	private String articlecategoryzero;
 	private String articlecategorythree;
 	private String articlecategorytwo;
-	private String query;
-	private String qtype;
 	private List<ArticleCategoryT> secondcategory = new ArrayList<ArticleCategoryT>();
 	private List<ArticleCategoryT> thiredscategory = new ArrayList<ArticleCategoryT>();
 	private String navidlist;
 	private String ltypeidlist;
 	private String stypeidlist;
 	private ArticleCategoryT bean = new ArticleCategoryT();
-	private List rows=new ArrayList<Map<String,Object>>();
+	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean slogin;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
 	private String basepath;
 
 	@JSON(serialize = false)
@@ -80,18 +73,6 @@ public class ArticleCategoryTAction extends ActionSupport {
 	public void setArticleCategoryTService(ArticleCategoryTService articleCategoryTService) {
 		this.articleCategoryTService = articleCategoryTService;
 	}
-
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getArticleCategoryTid() {
 		return articleCategoryTid;
 	}
@@ -220,22 +201,6 @@ public class ArticleCategoryTAction extends ActionSupport {
 		this.articlecategorytwo = articlecategorytwo;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
 	public List<ArticleCategoryT> getSecondcategory() {
 		return secondcategory;
 	}
@@ -284,11 +249,11 @@ public class ArticleCategoryTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -356,23 +321,6 @@ public class ArticleCategoryTAction extends ActionSupport {
 		this.position = position;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
-
 	public String getMobilesync() {
 		return mobilesync;
 	}
@@ -417,7 +365,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 		this.setArticlecategoryzero("");
 		List<ArticleCategoryT> list = this.getArticleCategoryTService().findArticleCategoryByGrade("0", "1");
 		if (!list.isEmpty()) {
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<ArticleCategoryT> it = list.iterator(); it.hasNext();) {
 				ArticleCategoryT act = (ArticleCategoryT) it.next();
 				this.articlecategoryzero += "<option value='" + act.getArticleCategoryTid() + "'>" + act.getName() + "</option>";
 			}
@@ -445,7 +393,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 		List<ArticleCategoryT> list = this.getArticleCategoryTService().findArticleCategoryByparentId(status, parentId);
 		if (!list.isEmpty()) {
 			this.setArticlecategorytwo("<option value='-1'>---请选择---</option>");
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<ArticleCategoryT> it = list.iterator(); it.hasNext();) {
 				ArticleCategoryT act = (ArticleCategoryT) it.next();
 				this.articlecategorytwo += "<option value='" + act.getArticleCategoryTid() + "'>" + act.getName() + "</option>";
 			}
@@ -746,8 +694,8 @@ public class ArticleCategoryTAction extends ActionSupport {
 		int lineSize = rp;
 		this.setStatus("1");
 		total = this.getArticleCategoryTService().countfindAllArticleCategoryT(this.getStatus(), BaseTools.adminCreateId());
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from ArticleCategoryT as act where act.status=:status and act.creatorid=:creatorid  order by " + sortname + " " + sortorder + "";
+		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
+			String queryString = "from ArticleCategoryT as act where act.status=:status and act.creatorid=:creatorid  order by " + this.getSortname() + " " + this.getSortorder() + "";
 			List<ArticleCategoryT> list = this.getArticleCategoryTService().sortAllArticleCategoryT(currentPage, lineSize, this.getStatus(), BaseTools.adminCreateId(), queryString);
 			if (!list.isEmpty()) {
 				this.ProcessArticleCategoryTList(list);
@@ -756,7 +704,7 @@ public class ArticleCategoryTAction extends ActionSupport {
 	}
 
 	public void ProcessArticleCategoryTList(List<ArticleCategoryT> list) {
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<ArticleCategoryT> it = list.iterator(); it.hasNext();) {
 			ArticleCategoryT act = (ArticleCategoryT) it.next();
 			if (act.getGrade().equals(StaticString.ZERO)) {
 				act.setGrade(StaticString.TOPCA);

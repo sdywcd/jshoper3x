@@ -14,6 +14,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.core.task.TaskExecutor;
+
 import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
@@ -22,17 +23,15 @@ import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.SystemMailT;
 import com.jshop.service.SystemMailTService;
 import com.jshop.service.UsertService;
-import com.opensymphony.xwork2.ActionSupport;
 
 @Namespace("")
 @ParentPackage("jshop")
-public class SystemMailTAction extends ActionSupport {
+public class SystemMailTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private UsertService usertService;
 	private TaskExecutor taskExecutor;
 	private SystemMailTService SystemMailTService;
 	private CreateHtml createHtml;
-	private Serial serial;
-
 	private String id;
 	private String email;
 	private String smtp;
@@ -47,12 +46,10 @@ public class SystemMailTAction extends ActionSupport {
 	private Date updatetime;
 	private String creatorname;
 	private SystemMailT bean = new SystemMailT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
 	private boolean sucflag;
 
 	@JSON(serialize = false)
@@ -91,15 +88,6 @@ public class SystemMailTAction extends ActionSupport {
 		this.createHtml = createHtml;
 	}
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getSmtpusername() {
 		return smtpusername;
 	}
@@ -124,11 +112,11 @@ public class SystemMailTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -252,22 +240,6 @@ public class SystemMailTAction extends ActionSupport {
 		this.creatorname = creatorname;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();
@@ -367,7 +339,7 @@ public class SystemMailTAction extends ActionSupport {
 
 	public void ProcessSystemMailTlist(List<SystemMailT> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<SystemMailT> it = list.iterator(); it.hasNext();) {
 			SystemMailT sm = (SystemMailT) it.next();
 			if(StaticString.ONE.equals(sm.getIsssl())){
 				sm.setIsssl(StaticString.SUPPORT);
@@ -384,7 +356,7 @@ public class SystemMailTAction extends ActionSupport {
 			}else{
 				sm.setState(StaticString.UNUSING);
 			}
-			Map cellMap = new HashMap();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sm.getId());
 			cellMap.put("cell", new Object[] { sm.getEmail(), sm.getSmtp(), sm.getPort(), sm.getIsssl(), sm.getIsdefault(), sm.getState(), sm.getCreatorid(), BaseTools.formateDbDate(sm.getCreatetime()), "<a id='editemail' name='editemail' href='email.jsp?operate=edit&folder=setting&id=" + sm.getId() + "'>[编辑]</a>" });
 			rows.add(cellMap);

@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.GlobalParam;
 import com.jshop.entity.GlobalParamM;
@@ -28,7 +27,7 @@ public class AuthorityInterceptor {
 	public boolean IsusercanregisterIntercept(){
 		List<GlobalParamM>list=this.getGlobalParamService().findAllGlobalParam();
 		if(list!=null){
-			for(Iterator it=list.iterator();it.hasNext();){
+			for(Iterator<GlobalParamM> it=list.iterator();it.hasNext();){
 				GlobalParamM gm=(GlobalParamM)it.next();
 				if(gm.getGkey().equals(GlobalParam.ISUSERCANREGISTER)){
 					if(gm.getGvalue().equals("1")){
@@ -49,7 +48,7 @@ public class AuthorityInterceptor {
 	public boolean canuserregistermoreshopinfoIntercept(){
 		List<GlobalParamM>list=this.getGlobalParamService().findAllGlobalParam();
 		if(list!=null){
-			for(Iterator it=list.iterator();it.hasNext();){
+			for(Iterator<GlobalParamM> it=list.iterator();it.hasNext();){
 				GlobalParamM gm=(GlobalParamM)it.next();
 //				if(gm.getGkey().equals(GlobalParam.CANUSERREGISTERMORESHOPINFO)){
 //					if(gm.getGvalue().equals("1")){
@@ -70,7 +69,7 @@ public class AuthorityInterceptor {
 	public boolean issendactivatemail(){
 		List<GlobalParamM>list=this.getGlobalParamService().findAllGlobalParam();
 		if(list!=null){
-			for(Iterator it=list.iterator();it.hasNext();){
+			for(Iterator<GlobalParamM> it=list.iterator();it.hasNext();){
 				GlobalParamM gm=(GlobalParamM)it.next();
 				if(gm.getGkey().equals(GlobalParam.ISSENDACTIVATEMAIL)){
 					if(gm.getGvalue().equals("1")){

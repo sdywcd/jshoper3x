@@ -20,7 +20,6 @@ import org.apache.struts2.json.annotations.JSON;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.tools.Validate;
@@ -29,12 +28,12 @@ import com.jshop.entity.GoodsT;
 import com.jshop.entity.UserT;
 import com.jshop.service.CartTService;
 import com.jshop.service.GoodsTService;
-import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.TemplateException;
 @Namespace("")
 @ParentPackage("jshop")
-public class SendSystemEmail extends ActionSupport {
+public class SendSystemEmail extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private TaskExecutor taskExecutor;
 	private CreateHtml createHtml;
 	private CartTService cartTService;
@@ -239,7 +238,6 @@ public class SendSystemEmail extends ActionSupport {
 	 * 根据orderid查询到商品数据并发送邮件
 	 * @param orderid
 	 */
-	@SuppressWarnings("unchecked")
 	@Action(value="sendEmailVirtualMovieGoodsinfo")
 	public void sendEmailVirtualMovieGoodsinfo(){
 		String orderid="";
@@ -249,9 +247,9 @@ public class SendSystemEmail extends ActionSupport {
 		}
 	
 		List<CartT>list=this.getCartTService().findCartGoodsByOrderid(orderid);
-		List glist=new ArrayList();
+		List<String> glist=new ArrayList<String>();
 		if(!list.isEmpty()){
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<CartT> it = list.iterator(); it.hasNext();) {
 				CartT cart=(CartT)it.next();
 				if(!list.contains(cart.getGoodsid())){
 					glist.add(cart.getGoodsid());

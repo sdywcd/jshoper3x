@@ -7,13 +7,14 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.service.GoodsDetailRpTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsDetailRpTAction extends ActionSupport {
+public class GoodsDetailRpTAction extends BaseTAction {
 
+	private static final long serialVersionUID = 1L;
 	private GoodsDetailRpTService goodsDetailRpTService;
 	private String goodsid;
 	private GoodsDetailRpT bean=new GoodsDetailRpT();

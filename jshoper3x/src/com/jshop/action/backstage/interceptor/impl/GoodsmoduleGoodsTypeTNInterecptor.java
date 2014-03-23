@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.goods.GoodsTypeTNAction;
 import com.jshop.action.backstage.interceptor.GoodsmoduleInterecptor;
@@ -14,6 +13,8 @@ import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 @ParentPackage("jshop")
 public class GoodsmoduleGoodsTypeTNInterecptor extends MethodFilterInterceptor {
+	
+	private static final long serialVersionUID = 1L;
 	private GoodsTypeTNAction goodsTypeTNAction;
 	private GoodsmoduleInterecptor goodsmoduleInterecptor;
 	

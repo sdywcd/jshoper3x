@@ -61,7 +61,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 @Namespace("")
 @Controller("dataCollectionTAction")
 public class DataCollectionTAction extends ActionSupport {
-
+	private static final long serialVersionUID = 1L;
 	private JshopbasicInfoTService jshopbasicInfoTService;
 	private SiteNavigationTService siteNavigationTService;
 	
@@ -328,7 +328,6 @@ public class DataCollectionTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public List<GoodsCategoryT> findGoodsCategoryT() {
 		try {
 			String state = "1";// 标示激活的商品分类
@@ -336,7 +335,7 @@ public class DataCollectionTAction extends ActionSupport {
 			List<GoodsCategoryT> list = this.getGoodsCategoryTService()
 					.findAllGoodsCategoryT(state);
 			if (!list.isEmpty()) {
-				for (Iterator it = list.iterator(); it.hasNext();) {
+				for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 					GoodsCategoryT gt = (GoodsCategoryT) it.next();
 					if (gt.getGrade().equals("0")&&gt.getHtmlpath().length()>0) {
 						gradecount++;

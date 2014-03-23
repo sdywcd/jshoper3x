@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
@@ -30,8 +31,8 @@ import com.opensymphony.xwork2.ActionSupport;
     @InterceptorRef("goodsmoduleGoodsTypeTNInterecptor"),  
     @InterceptorRef("defaultStack")
 })
-public class GoodsTypeTNAction extends ActionSupport {
-	private Serial serial;
+public class GoodsTypeTNAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsTypeTNService goodsTypeTNService;
 	private String goodsTypeId;
 	private String name;
@@ -41,17 +42,11 @@ public class GoodsTypeTNAction extends ActionSupport {
 	private GoodsTypeTN bean;
 	private List<GoodsTypeTN> beanlist=new ArrayList<GoodsTypeTN>();;
 	private String goodstypetnlist;
-	private String query;
-	private String qtype;
-	private List rows=new ArrayList();
+	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
-
 
 	@JSON(serialize = false)
 	public GoodsTypeTNService getGoodsTypeTNService() {
@@ -61,16 +56,6 @@ public class GoodsTypeTNAction extends ActionSupport {
 	public void setGoodsTypeTNService(GoodsTypeTNService goodsTypeTNService) {
 		this.goodsTypeTNService = goodsTypeTNService;
 	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	
 	public String getGoodsTypeId() {
 		return goodsTypeId;
@@ -120,11 +105,11 @@ public class GoodsTypeTNAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -152,13 +137,6 @@ public class GoodsTypeTNAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
 
 	public boolean isSucflag() {
 		return sucflag;
@@ -166,22 +144,6 @@ public class GoodsTypeTNAction extends ActionSupport {
 
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 
 	public String getGoodstypetnlist() {
@@ -198,22 +160,6 @@ public class GoodsTypeTNAction extends ActionSupport {
 
 	public void setBeanlist(List<GoodsTypeTN> beanlist) {
 		this.beanlist = beanlist;
-	}
-
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
 	}
 
 
@@ -301,7 +247,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 	
 
 	public void ProcessGoodsTypeTNList(List<GoodsTypeTN> list) {
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<GoodsTypeTN> it = list.iterator(); it.hasNext();) {
 			GoodsTypeTN gtn = (GoodsTypeTN) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gtn.getGoodsTypeId());
@@ -315,8 +261,8 @@ public class GoodsTypeTNAction extends ActionSupport {
 		int lineSize = rp;
 		String qs= "select count(*) from GoodsTypeTN  where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
 		total = this.getGoodsTypeTNService().countsortAllGoodsTypeTN(qs);
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from GoodsTypeTN as gtn where gtn."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + sortname + " " + sortorder + "";
+		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
+			String queryString = "from GoodsTypeTN as gtn where gtn."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + getSortname() + " " + getSortorder() + "";
 			List<GoodsTypeTN> list = this.getGoodsTypeTNService().sortAllGoodsTypeTN(currentPage, lineSize, queryString);
 			this.ProcessGoodsTypeTNList(list);
 		}
@@ -325,8 +271,8 @@ public class GoodsTypeTNAction extends ActionSupport {
 		int currentPage = page;
 		int lineSize = rp;
 		total = this.getGoodsTypeTNService().countfindAllGoodsTypeTN();
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from GoodsTypeTN  order by " + sortname + " " + sortorder + "";
+		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
+			String queryString = "from GoodsTypeTN  order by " + getSortname() + " " + getSortorder() + "";
 			List<GoodsTypeTN> list = this.getGoodsTypeTNService().sortAllGoodsTypeTN(currentPage, lineSize, queryString);
 			this.ProcessGoodsTypeTNList(list);
 		}
@@ -389,7 +335,7 @@ public class GoodsTypeTNAction extends ActionSupport {
 		List<GoodsTypeTN> list = this.getGoodsTypeTNService().findAllGoodsTypeTNNopage();
 		if (list != null) {
 			this.setGoodstypetnlist("<option value='0'>---请选择---</option>");
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<GoodsTypeTN> it = list.iterator(); it.hasNext();) {
 				GoodsTypeTN gtn = (GoodsTypeTN) it.next();
 				this.goodstypetnlist += "<option value='" + gtn.getGoodsTypeId() + "'>" + gtn.getName() + "</option>";
 			}

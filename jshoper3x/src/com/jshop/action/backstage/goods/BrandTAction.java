@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
@@ -20,13 +21,12 @@ import com.jshop.entity.BrandT;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.service.BrandTService;
 import com.jshop.service.GoodsTypeBrandTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class BrandTAction extends ActionSupport {
+public class BrandTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private BrandTService brandTService;
 	private GoodsTypeBrandTService goodsTypeBrandTService;
-	private Serial serial;
 	private String brandid;
 	private String brandname;
 	private String creatorid;
@@ -41,16 +41,11 @@ public class BrandTAction extends ActionSupport {
 	private BrandT bean=new BrandT();
 	private String brandjson;
 	private List<BrandT> brand = new ArrayList<BrandT>();
-	private String query;
-	private String qtype;
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
 	@JSON(serialize = false)
 	public GoodsTypeBrandTService getGoodsTypeBrandTService() {
 		return goodsTypeBrandTService;
@@ -70,15 +65,6 @@ public class BrandTAction extends ActionSupport {
 		this.brandTService = brandTService;
 	}
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getBrandid() {
 		return brandid;
 	}
@@ -95,12 +81,11 @@ public class BrandTAction extends ActionSupport {
 		this.brandname = brandname;
 	}
 
-	@JSON(name = "rows")
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -208,29 +193,7 @@ public class BrandTAction extends ActionSupport {
 		this.brand = brand;
 	}
 
-	public String getQuery() {
-		return query;
-	}
 
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
 
 	public boolean isSucflag() {
 		return sucflag;
@@ -238,22 +201,6 @@ public class BrandTAction extends ActionSupport {
 
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
-	}
-
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
 	}
 
 
@@ -322,13 +269,13 @@ public class BrandTAction extends ActionSupport {
 		int currentPage = page;
 		int lineSize = rp;
 		total = this.getBrandTService().countfindAllBrandt(BaseTools.adminCreateId());
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = " from BrandT as bt where bt.creatorid=:creatorid order by " + sortname + " " + sortorder + "";
+		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
+			String queryString = " from BrandT as bt where bt.creatorid=:creatorid order by " + getSortname() + " " + getSortorder() + "";
 			List<BrandT> bt = this.getBrandTService().sortAllBrandt(currentPage, lineSize, BaseTools.adminCreateId(), queryString);
 			if (bt != null) {
-				for (Iterator it = bt.iterator(); it.hasNext();) {
+				for (Iterator<BrandT> it = bt.iterator(); it.hasNext();) {
 					BrandT b = (BrandT) it.next();
-					Map cellMap = new HashMap();
+					Map<String, Object> cellMap = new HashMap<String, Object>();
 					cellMap.put("id", b.getBrandid());
 					cellMap.put("cell", new Object[] {b.getBrandname(), b.getSort(), BaseTools.formateDbDate(b.getCreatetime()), b.getCreatorid(),"<a id='editbrands' name='editbrands' href='brands.jsp?operate=edit&folder=goods&brandid=" + b.getBrandid()+ "'>[编辑]</a>" });
 					rows.add(cellMap);
@@ -428,7 +375,7 @@ public class BrandTAction extends ActionSupport {
 		this.setBrandjson("");
 		this.brand = this.getBrandTService().findAllBrandt();
 		if (this.brand != null) {
-			for (Iterator it = this.brand.iterator(); it.hasNext();) {
+			for (Iterator<BrandT> it = this.brand.iterator(); it.hasNext();) {
 				BrandT b = (BrandT) it.next();
 				this.brandjson += "<option value='" + b.getBrandid() + "'>" + b.getBrandname() + "</option>";
 			}

@@ -14,19 +14,17 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.MemberGroupT;
 import com.jshop.service.MemberGroupTService;
-import com.opensymphony.xwork2.ActionSupport;
-import com.sun.xml.internal.bind.v2.TODO;
 
 @Namespace("")
 @ParentPackage("jshop")
-public class MemberGroupTAction extends ActionSupport{
-
-	private Serial serial;
+public class MemberGroupTAction extends BaseTAction{
+	private static final long serialVersionUID = 1L;
 	private MemberGroupTService memberGroupTService;
 	private String id;
 	private String name;
@@ -36,21 +34,13 @@ public class MemberGroupTAction extends ActionSupport{
 	private Date updatetime;
 	private Integer versiont;
 	private String attrs;
-	private String query;//text
-	private String qtype;//select
 	private MemberGroupT bean=new MemberGroupT();
 	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
+	
 	@JSON(serialize = false)
 	public MemberGroupTService getMemberGroupTService() {
 		return memberGroupTService;
@@ -106,18 +96,7 @@ public class MemberGroupTAction extends ActionSupport{
 	public void setAttrs(String attrs) {
 		this.attrs = attrs;
 	}
-	public String getQuery() {
-		return query;
-	}
-	public void setQuery(String query) {
-		this.query = query;
-	}
-	public String getQtype() {
-		return qtype;
-	}
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
+
 	public MemberGroupT getBean() {
 		return bean;
 	}
@@ -212,7 +191,7 @@ public class MemberGroupTAction extends ActionSupport{
 		
 	}
 	private void ProcessMemberGroupList(List<MemberGroupT> list) {
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<MemberGroupT> it=list.iterator();it.hasNext();){
 			MemberGroupT mgt=(MemberGroupT)it.next();
 			if(mgt.getStatus().equals(StaticString.ONE)){
 				mgt.setStatus(StaticString.USEING);

@@ -12,19 +12,18 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
-
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.service.GoodsGroupTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsGroupTAction extends ActionSupport {
+public class GoodsGroupTAction extends BaseTAction {
+
+	private static final long serialVersionUID = 1L;
 	public GoodsGroupTService goodsGroupTService;
-	public Serial serial;
 	private String pictureurl;
 	private String groupid;
 	private String goodsid;
@@ -49,26 +48,15 @@ public class GoodsGroupTAction extends ActionSupport {
 	private int total=0;
 	private int page=1;
 	private int rp;
-	private String sortname;//排序字段
-	private String sortorder;//排序方式
-	private String qtype;
 	private boolean goodsgroup =false;
 	private GoodsGroupT groupList= new GoodsGroupT();
-	
-	private List rows= new ArrayList();
+	private List<Map<String,Object>> rows= new ArrayList<Map<String,Object>>();
 	@JSON(serialize=false)
 	public GoodsGroupTService getGoodsGroupTService() {
 		return goodsGroupTService;
 	}
 	public void setGoodsGroupTService(GoodsGroupTService goodsGroupTService) {
 		this.goodsGroupTService = goodsGroupTService;
-	}
-	@JSON(serialize=false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 	public String getGroupid() {
 		return groupid;
@@ -178,10 +166,10 @@ public class GoodsGroupTAction extends ActionSupport {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}		
 	public int getPage() {
@@ -196,24 +184,7 @@ public class GoodsGroupTAction extends ActionSupport {
 	public void setRp(int rp) {
 		this.rp = rp;
 	}
-	public String getSortname() {
-		return sortname;
-	}
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-	public String getSortorder() {
-		return sortorder;
-	}
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-	public String getQtype() {
-		return qtype;
-	}
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
+
 	public boolean isGoodsgroup() {
 		return goodsgroup;
 	}
@@ -293,11 +264,10 @@ public class GoodsGroupTAction extends ActionSupport {
 	 * 处理迭代商品信息
 	 * @param ggtList
 	 */
-	@SuppressWarnings("unchecked")
 	public void ProcessGoodsGroupTList(List<GoodsGroupT> ggtList){
 		total = this.getGoodsGroupTService().countAllGoodsGroupT();
 		rows.clear();
-		for(Iterator it = ggtList.iterator();it.hasNext();){
+		for(Iterator<GoodsGroupT> it = ggtList.iterator();it.hasNext();){
 			GoodsGroupT ggt =(GoodsGroupT) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", ggt.getGroupid());
@@ -327,8 +297,8 @@ public class GoodsGroupTAction extends ActionSupport {
 	public  void defaultfindAllGoodsGroupT(){
 		int currentPage= page;
 		int lineSize = rp;
-		if(Validate.StrNotNull(sortname)&&Validate.StrNotNull(sortorder)){
-			String queryString = "from GoodsGroupT  order by "+sortname+" "+ sortorder +"";
+		if(Validate.StrNotNull(getSortname())&&Validate.StrNotNull(getSortorder())){
+			String queryString = "from GoodsGroupT  order by "+getSortname()+" "+ getSortorder() +"";
 			List<GoodsGroupT> list = this.getGoodsGroupTService().sortAllGoodsGroup(currentPage, lineSize, queryString);
 			if(!list.isEmpty()){
 				ProcessGoodsGroupTList(list);

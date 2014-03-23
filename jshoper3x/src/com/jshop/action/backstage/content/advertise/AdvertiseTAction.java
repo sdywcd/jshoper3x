@@ -3,6 +3,7 @@ package com.jshop.action.backstage.content.advertise;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -11,12 +12,10 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
 import com.jshop.entity.AdvertiseT;
-import com.jshop.entity.SerialT;
 import com.jshop.service.AdvertiseTService;
-import com.opensymphony.xwork2.ActionSupport;
 
 /**
  * 广告管理action
@@ -25,9 +24,9 @@ import com.opensymphony.xwork2.ActionSupport;
  */
 @Namespace("")
 @ParentPackage("jshop")
-public class AdvertiseTAction extends ActionSupport {
+public class AdvertiseTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private AdvertiseTService advertiseTService;
-	private Serial serial;
 	private String id;
 	private String type;
 	private String advPath;
@@ -45,15 +44,11 @@ public class AdvertiseTAction extends ActionSupport {
 	private int versiont;
 	private String code;
 	private AdvertiseT bean=new AdvertiseT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
 	
 	@JSON(serialize = false)
 	public AdvertiseTService getAdvertiseTService() {
@@ -63,16 +58,6 @@ public class AdvertiseTAction extends ActionSupport {
 
 	public void setAdvertiseTService(AdvertiseTService advertiseTService) {
 		this.advertiseTService = advertiseTService;
-	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 
 
@@ -246,12 +231,12 @@ public class AdvertiseTAction extends ActionSupport {
 	}
 
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -285,27 +270,6 @@ public class AdvertiseTAction extends ActionSupport {
 		this.total = total;
 	}
 
-
-	public String getQuery() {
-		return query;
-	}
-
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-
-	public String getQtype() {
-		return qtype;
-	}
-
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -314,28 +278,6 @@ public class AdvertiseTAction extends ActionSupport {
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
 	}
-
-
-	public String getSortname() {
-		return sortname;
-	}
-
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
-
 	/**
 	 * 清理错误
 	 */

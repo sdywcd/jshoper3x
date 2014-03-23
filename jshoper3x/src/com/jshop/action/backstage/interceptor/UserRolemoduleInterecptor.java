@@ -1,7 +1,6 @@
 package com.jshop.action.backstage.interceptor;
 
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.service.FunctionMService;
 import com.jshop.service.RoleFunctionMService;

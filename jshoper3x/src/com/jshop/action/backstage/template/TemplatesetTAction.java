@@ -12,8 +12,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
@@ -26,16 +26,14 @@ import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.TemplateTService;
 import com.jshop.service.TemplatesetTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class TemplatesetTAction extends ActionSupport {
-	
+public class TemplatesetTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private TemplatesetTService templatesetTService;
 	private TemplateTService templateTService;
 	private GoodsCategoryTService goodsCategoryTService;
 	private ArticleCategoryTService articleCategoryTService;
-	private Serial serial;
 	private String tsid;
 	private String templateurl;
 	private String systemcontent;
@@ -44,16 +42,13 @@ public class TemplatesetTAction extends ActionSupport {
 	private String creatorid;
 	private String sign;
 	private TemplatesetT bean = new TemplatesetT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
 	private String syscontentstrs;
 	private String templatestrs;
 	private String templatesetstrs;
-	private boolean slogin;
 	private boolean sucflag;
 	
 	@JSON(serialize = false)
@@ -90,14 +85,6 @@ public class TemplatesetTAction extends ActionSupport {
 		this.articleCategoryTService = articleCategoryTService;
 	}
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 
 	public String getTsid() {
 		return tsid;
@@ -155,11 +142,11 @@ public class TemplatesetTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -185,30 +172,6 @@ public class TemplatesetTAction extends ActionSupport {
 
 	public void setTotal(int total) {
 		this.total = total;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public boolean isSucflag() {
@@ -291,7 +254,7 @@ public class TemplatesetTAction extends ActionSupport {
 
 	public void ProcessTemplatesetTlist(List<TemplatesetT> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<TemplatesetT> it = list.iterator(); it.hasNext();) {
 			TemplatesetT tst = (TemplatesetT) it.next();
 			if("1".equals(tst.getStatus())){
 				tst.setStatus(StaticString.USEING);
@@ -318,7 +281,7 @@ public class TemplatesetTAction extends ActionSupport {
 		this.setSyscontentstrs("");
 		this.setSyscontentstrs("<option value='-1'>---请选择---</option><option value='0'>--自定义系统内容--</option><option value='1'>--以下是所创建的商品分类--</option>");
 		if(!gclist.isEmpty()){
-			for (Iterator it = gclist.iterator(); it.hasNext();) {
+			for (Iterator<GoodsCategoryT> it = gclist.iterator(); it.hasNext();) {
 				GoodsCategoryT gct = (GoodsCategoryT) it.next();
 				if (gct.getGrade().equals("0")) {
 					this.syscontentstrs += "<option value='" + gct.getGoodsCategoryTid() + "," + gct.getSign() + "'>" + gct.getName() + "</option>";
@@ -331,7 +294,7 @@ public class TemplatesetTAction extends ActionSupport {
 		}
 		if (!aclist.isEmpty()) {
 			this.syscontentstrs += "<option value='2'>--以下是所创建的文章分类--</option>";
-			for (Iterator it = aclist.iterator(); it.hasNext();) {
+			for (Iterator<ArticleCategoryT> it = aclist.iterator(); it.hasNext();) {
 				ArticleCategoryT act = (ArticleCategoryT) it.next();
 				if (act.getGrade().equals("0")) {
 					this.syscontentstrs += "<option value='" + act.getArticleCategoryTid() + "," + act.getSign() + "'>" + act.getName() + "</option>";
@@ -356,7 +319,7 @@ public class TemplatesetTAction extends ActionSupport {
 		if (list != null) {
 			this.setTemplatestrs("");
 			this.setTemplatestrs("<option value='-1'>---请选择---</option>");
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
 				TemplateT tt = (TemplateT) it.next();
 				this.templatestrs += "<option value='" + tt.getUrl() + "," + tt.getSign() + "'>" + tt.getUrl() + "</option>";
 			}
@@ -378,7 +341,7 @@ public class TemplatesetTAction extends ActionSupport {
 		List<TemplatesetT> list = this.getTemplatesetTService().findAllTemplatesetWithNoParam(BaseTools.adminCreateId());
 		if (list != null) {
 			this.setTemplatesetstrs("<option value='-1'>---请选择---</option>");
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<TemplatesetT> it = list.iterator(); it.hasNext();) {
 				TemplatesetT tst = (TemplatesetT) it.next();
 				this.templatesetstrs += "<option value='" + tst.getBuildhtmlpath() + "'>" + tst.getSystemcontent() + "</option>";
 			}

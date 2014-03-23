@@ -6,16 +6,17 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.thirdpartyplatform.alifh.AlipayConfig;
 import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class AlipayFhTAction extends ActionSupport {
+public class AlipayFhTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private PaymentMService paymentMService;
 	private OrderTService orderTService;
 	private String paymentid;
@@ -24,8 +25,6 @@ public class AlipayFhTAction extends ActionSupport {
 	private String paystate;
 	private String shippingstate;
 	private boolean spaymentflag;
-
-	
 
 	@JSON(serialize = false)
 	public PaymentMService getPaymentMService() {

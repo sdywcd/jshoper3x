@@ -11,17 +11,15 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
-
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.InvoicetempleteT;
 import com.jshop.service.InvoicetempleteTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class InvoicetempleteTAction extends ActionSupport {
-	private Serial serial;
+public class InvoicetempleteTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private InvoicetempleteTService invoicetempleteTService;
 	private String invoicetempleteid;
 	private String logisticsid;
@@ -29,20 +27,10 @@ public class InvoicetempleteTAction extends ActionSupport {
 	private String kindeditorCode;
 	private String invoiceCode;
 	private InvoicetempleteT beanlist = new InvoicetempleteT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
-	private String usession;
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public InvoicetempleteTService getInvoicetempleteTService() {
 		return invoicetempleteTService;
@@ -92,11 +80,11 @@ public class InvoicetempleteTAction extends ActionSupport {
 		this.beanlist = beanlist;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -124,14 +112,6 @@ public class InvoicetempleteTAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public String getInvoiceCode() {
 		return invoiceCode;
 	}
@@ -139,15 +119,6 @@ public class InvoicetempleteTAction extends ActionSupport {
 	public void setInvoiceCode(String invoiceCode) {
 		this.invoiceCode = invoiceCode;
 	}
-
-	public String getUsession() {
-		return usession;
-	}
-
-	public void setUsession(String usession) {
-		this.usession = usession;
-	}
-
 	/**
 	 *清理错误
 	 */
@@ -195,7 +166,7 @@ public class InvoicetempleteTAction extends ActionSupport {
 		if (list != null) {
 			total = this.getInvoicetempleteTService().countfindAllInvoicetempleteT();
 			rows.clear();
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<InvoicetempleteT> it = list.iterator(); it.hasNext();) {
 				InvoicetempleteT itt = (InvoicetempleteT) it.next();
 				if (itt.getState().equals("1")) {
 					itt.setState("使用");

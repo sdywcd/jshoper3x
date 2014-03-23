@@ -5,28 +5,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
-
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.SiteNavigationT;
 import com.jshop.service.SiteNavigationTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class SiteNavigationTAction extends ActionSupport {
-	private Serial serial;
+public class SiteNavigationTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private SiteNavigationTService siteNavigationTService;
-
 	private String snid;
 	private String isTargetBlank;
 	private String isVisible;
@@ -38,25 +34,11 @@ public class SiteNavigationTAction extends ActionSupport {
 	private String sort;
 	private String sign;
 	private SiteNavigationT bean = new SiteNavigationT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
-	private boolean slogin;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 
 	@JSON(serialize = false)
 	public SiteNavigationTService getSiteNavigationTService() {
@@ -147,11 +129,11 @@ public class SiteNavigationTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -179,30 +161,6 @@ public class SiteNavigationTAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -219,21 +177,6 @@ public class SiteNavigationTAction extends ActionSupport {
 		this.sign = sign;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
 
 	/**
 	 * 清理错误
@@ -268,8 +211,8 @@ public class SiteNavigationTAction extends ActionSupport {
 		int currentPage = page;
 		int lineSize = rp;
 		total = this.getSiteNavigationTService().countfindAllSiteNavigationT(BaseTools.adminCreateId());
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from SiteNavigationT as st where st.creatorid=:creatorid order by " + sortname + " " + sortorder + "";
+		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
+			String queryString = "from SiteNavigationT as st where st.creatorid=:creatorid order by " + getSortname() + " " + getSortorder() + "";
 			List<SiteNavigationT> list = this.getSiteNavigationTService().sortAllSiteNavigationT(currentPage, lineSize, BaseTools.adminCreateId(), queryString);
 			if (list != null) {
 				this.ProcessSiteNavigationList(list);
@@ -279,7 +222,7 @@ public class SiteNavigationTAction extends ActionSupport {
 
 	public void ProcessSiteNavigationList(List<SiteNavigationT> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<SiteNavigationT> it = list.iterator(); it.hasNext();) {
 			SiteNavigationT sn = (SiteNavigationT) it.next();
 			if (sn.getIsTargetBlank().equals("1")) {
 				sn.setIsTargetBlank("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");

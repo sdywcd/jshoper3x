@@ -4,17 +4,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.interceptor.UserRolemoduleInterecptor;
-import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.user.UserTAction;
 import com.jshop.entity.FunctionM;
@@ -26,7 +23,7 @@ import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 
 @ParentPackage("jshop")
 public class AuthorityLogininterceptor extends MethodFilterInterceptor {
-
+	private static final long serialVersionUID = 1L;
 	public static final String COOKIE_REMEMBER_KEY = "cookieadminid";
 	public static final String GOING_TO_URL_KEY = "going_to";
 	public boolean authority;

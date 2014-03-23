@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.OrderInvoiceT;
@@ -20,7 +21,8 @@ import com.jshop.service.OrderInvoiceTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class OrderInvoiceTAction extends ActionSupport {
+public class OrderInvoiceTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private OrderInvoiceTService orderInvoiceTService;
 	private String orderInvoiceid;
 	private String orderid;
@@ -34,11 +36,10 @@ public class OrderInvoiceTAction extends ActionSupport {
 	private String query;
 	private String qtype;
 	private List<OrderInvoiceT> orderinvoice = new ArrayList<OrderInvoiceT>();
-	private List rows = new ArrayList();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin = false;	
 	@JSON(serialize = false)
 	public OrderInvoiceTService getOrderInvoiceTService() {
 		return orderInvoiceTService;
@@ -128,11 +129,11 @@ public class OrderInvoiceTAction extends ActionSupport {
 		this.orderinvoice = orderinvoice;
 	}
 
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -158,14 +159,6 @@ public class OrderInvoiceTAction extends ActionSupport {
 
 	public void setTotal(int total) {
 		this.total = total;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public String getQuery() {
@@ -226,10 +219,9 @@ public class OrderInvoiceTAction extends ActionSupport {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public void ProcessOrderInvoice(List<OrderInvoiceT> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<OrderInvoiceT> it = list.iterator(); it.hasNext();) {
 			OrderInvoiceT oi = (OrderInvoiceT) it.next();
 			if (oi.getInvType().equals("1")) {
 				oi.setInvType("个人");
@@ -244,7 +236,7 @@ public class OrderInvoiceTAction extends ActionSupport {
 				oi.setState("未开");
 			}
 
-			Map cellMap = new HashMap();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", oi.getOrderInvoiceid());
 			cellMap.put("cell", new Object[] {
 					oi.getOrderid(), 

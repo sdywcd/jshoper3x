@@ -14,18 +14,18 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
-import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.MemberGradeT;
 import com.jshop.service.MemberGradeTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class MemberGradeTAction extends ActionSupport {
+public class MemberGradeTAction extends BaseTAction {
+
+	private static final long serialVersionUID = 1L;
 	private MemberGradeTService memberGradeTService;
-	private Serial serial;
 	private String id;
 	private String type;
 	private String name;
@@ -40,24 +40,12 @@ public class MemberGradeTAction extends ActionSupport {
 	private Double discount;
 	private MemberGradeT bean = new MemberGradeT();
 	private List<MemberGradeT>beanlist=new ArrayList<MemberGradeT>();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
-	private String sortname;
-	private String sortorder;
 	private boolean sucflag;
 	
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public MemberGradeTService getMemberGradeTService() {
 		return memberGradeTService;
@@ -180,11 +168,11 @@ public class MemberGradeTAction extends ActionSupport {
 		this.beanlist = beanlist;
 	}
 
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -220,37 +208,6 @@ public class MemberGradeTAction extends ActionSupport {
 		this.sucflag = sucflag;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
 
 	/**
 	 * 清理错误
@@ -293,7 +250,6 @@ public class MemberGradeTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Action(value = "findAllMemberGradeT", results = { @Result(name = "json", type = "json") })
 	public String findAllMemberGradeT() {
 		if(StaticString.SC.equals(this.getQtype())){
@@ -319,7 +275,7 @@ public class MemberGradeTAction extends ActionSupport {
 	}
 
 	private void ProcessMemberGradeTList(List<MemberGradeT> list) {
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<MemberGradeT> it=list.iterator();it.hasNext();){
 			MemberGradeT mgt=(MemberGradeT) it.next();
 			if(StaticString.ONE.equals(mgt.getType())){
 				mgt.setType(StaticString.CREDITVALUE);

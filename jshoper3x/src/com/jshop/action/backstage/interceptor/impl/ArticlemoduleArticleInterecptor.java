@@ -3,7 +3,6 @@ package com.jshop.action.backstage.interceptor.impl;
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.interceptor.ArticlemoduleInterecptor;
 import com.opensymphony.xwork2.ActionContext;
@@ -12,7 +11,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 @ParentPackage("jshop")
 
 public class ArticlemoduleArticleInterecptor  extends AbstractInterceptor {
-	
+	private static final long serialVersionUID = 1L;
 	private ArticlemoduleInterecptor articlemoduleInterecptor;
 	
 	public ArticlemoduleInterecptor getArticlemoduleInterecptor() {

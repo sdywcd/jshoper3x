@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
@@ -20,11 +21,10 @@ import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.MemberRechargeT;
 import com.jshop.service.MemberRechargeRecordsTService;
 import com.jshop.service.MemberRechargeTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class MemberRechargeTAction extends ActionSupport {
-	private Serial serial;
+public class MemberRechargeTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private MemberRechargeRecordsTService memberRechargeRecordsTService;
 	private MemberRechargeTService memberRechargeTService;
 	private String id;
@@ -34,20 +34,12 @@ public class MemberRechargeTAction extends ActionSupport {
 	private double money;
 	private String type;
 	private String operatetype;//操作类型加法还是减法
-	private String query;//text
-	private String qtype;//select
 	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
+
 	@JSON(serialize = false)
 	public MemberRechargeRecordsTService getMemberRechargeRecordsTService() {
 		return memberRechargeRecordsTService;
@@ -99,18 +91,6 @@ public class MemberRechargeTAction extends ActionSupport {
 	}
 	public void setType(String type) {
 		this.type = type;
-	}
-	public String getQuery() {
-		return query;
-	}
-	public void setQuery(String query) {
-		this.query = query;
-	}
-	public String getQtype() {
-		return qtype;
-	}
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 	public int getRp() {
 		return rp;
@@ -232,7 +212,7 @@ public class MemberRechargeTAction extends ActionSupport {
 	}
 	
 	private void processMemberRechargeTList(List<MemberRechargeT> list) {
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<MemberRechargeT> it=list.iterator();it.hasNext();){
 			MemberRechargeT mrt=(MemberRechargeT) it.next();
 			Map<String,Object>cellMap=new HashMap<String,Object>();
 			cellMap.put("id", mrt.getMemberid());

@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
@@ -21,11 +22,10 @@ import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.ProductT;
 import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.ProductTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class ProductTAction extends ActionSupport {
-	private Serial serial;
+public class ProductTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ProductTService productTService;
 	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
 	private String productid;
@@ -48,11 +48,7 @@ public class ProductTAction extends ActionSupport {
 	private String specificationsid;
 	private String specificationsName;
 	private String unit;
-	private String query;
-	private String qtype;
-	private String sortname;
-	private String sortorder;
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -78,15 +74,6 @@ public class ProductTAction extends ActionSupport {
 	public void setGoodsSpecificationsProductRpTService(
 			GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService) {
 		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
-	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 
 	public String getUnit() {
@@ -266,22 +253,6 @@ public class ProductTAction extends ActionSupport {
 		this.beanlist = beanlist;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
 	public ProductT getBean() {
 		return bean;
 	}
@@ -290,28 +261,11 @@ public class ProductTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -454,7 +408,7 @@ public class ProductTAction extends ActionSupport {
 		int currentPage=page;
 		int lineSize=rp;
 		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
-			String queryString = "from ProductT as pt where pt.goodsid="+goodsid+" order by " + sortname + " " + sortorder + "";
+			String queryString = "from ProductT as pt where pt.goodsid="+goodsid+" order by " + this.getSortname() + " " + this.getSortorder() + "";
 			List<ProductT>list=this.getProductTService().sortAllProductT(currentPage, lineSize,queryString);
 			if(!list.isEmpty()){
 				ProcessProductsList(list);
@@ -475,7 +429,7 @@ public class ProductTAction extends ActionSupport {
 	private void ProcessProductsList(List<ProductT> list) {
 		total=this.getProductTService().countfineAllProductT();
 		rows.clear();
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<ProductT> it=list.iterator();it.hasNext();){
 			ProductT pt=(ProductT) it.next();
 			if(pt.getIsDefault().equals(StaticString.ZERO)){
 				pt.setIsDefault(StaticString.NO);

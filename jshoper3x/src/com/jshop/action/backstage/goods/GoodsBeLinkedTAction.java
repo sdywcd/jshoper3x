@@ -17,6 +17,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.modelbean.GoodsBelinkedModel;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
@@ -27,11 +28,10 @@ import com.jshop.entity.ProductT;
 import com.jshop.service.GoodsBelinkedTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.ProductTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsBeLinkedTAction extends ActionSupport {
-	private Serial serial;
+public class GoodsBeLinkedTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsBelinkedTService goodsBelinkedTService;
 	private ProductTService productTService;
 	private GoodsTService goodsTService;
@@ -47,23 +47,11 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 	private String sxlinkedgoodsid;
 	private String mainproductid;
 	private GoodsBelinkedT bean=new GoodsBelinkedT();
-	private String query;
-	private String qtype;
-	private String sortname;
-	private String sortorder;
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-	
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public ProductTService getProductTService() {
 		return productTService;
@@ -167,34 +155,11 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 		this.bean = bean;
 	}
 	
-	public String getQuery() {
-		return query;
-	}
-	public void setQuery(String query) {
-		this.query = query;
-	}
-	public String getQtype() {
-		return qtype;
-	}
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-	public String getSortname() {
-		return sortname;
-	}
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-	public String getSortorder() {
-		return sortorder;
-	}
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-	public List getRows() {
+	
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 	public int getRp() {
@@ -339,7 +304,7 @@ public class GoodsBeLinkedTAction extends ActionSupport {
 		processGoodsBelinkedList(list);
 	}
 	private void processGoodsBelinkedList(List<GoodsBelinkedT> list) {
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<GoodsBelinkedT> it=list.iterator();it.hasNext();){
 			GoodsBelinkedT gbt=(GoodsBelinkedT) it.next();
 			GoodsBelinkedModel gbm=new GoodsBelinkedModel();
 			gbm.setId(gbt.getId());

@@ -13,19 +13,18 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.FunctionM;
 import com.jshop.service.FunctionMService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class FunctionMAction extends ActionSupport {
+public class FunctionMAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private FunctionMService functionMService;
-	private Serial serial;
 	private String id;
     private String visiturl;
     private String visitmethodname;
@@ -35,12 +34,10 @@ public class FunctionMAction extends ActionSupport {
     private FunctionM bean=new FunctionM();
     private List<FunctionM> beanlist=new ArrayList<FunctionM>();
 	private Map<String,Object>map=new HashMap<String,Object>();
-	private List rows=new ArrayList();
+	private List<Map<String, Object>> rows=new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
 	private boolean sucflag;
 	@JSON(serialize = false)
 	public FunctionMService getFunctionMService() {
@@ -48,13 +45,6 @@ public class FunctionMAction extends ActionSupport {
 	}
 	public void setFunctionMService(FunctionMService functionMService) {
 		this.functionMService = functionMService;
-	}
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 	public String getId() {
 		return id;
@@ -104,10 +94,10 @@ public class FunctionMAction extends ActionSupport {
 	public void setMap(Map<String, Object> map) {
 		this.map = map;
 	}
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 	public int getRp() {
@@ -127,18 +117,6 @@ public class FunctionMAction extends ActionSupport {
 	}
 	public void setTotal(int total) {
 		this.total = total;
-	}
-	public String getQuery() {
-		return query;
-	}
-	public void setQuery(String query) {
-		this.query = query;
-	}
-	public String getQtype() {
-		return qtype;
-	}
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 	public boolean isSucflag() {
 		return sucflag;
@@ -249,7 +227,7 @@ public class FunctionMAction extends ActionSupport {
 	}
 	
 	public void ProcessFunctionMList(List<FunctionM>list){
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<FunctionM> it=list.iterator();it.hasNext();){
 			FunctionM fm=(FunctionM)it.next();
 			Map<String,Object>cellMap=new HashMap<String,Object>();
 			cellMap.put("id", fm.getId());

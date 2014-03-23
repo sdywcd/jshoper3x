@@ -6,27 +6,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.PaymentMService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class PaymentMAction extends ActionSupport {
+public class PaymentMAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private PaymentMService paymentMService;
-	private Serial serial;
 	private String paymentid;
 	private String paymentname;
 	private String paymentCode;
@@ -40,13 +37,10 @@ public class PaymentMAction extends ActionSupport {
 	private String state;
 	private PaymentM bean = new PaymentM();
 	private List<PaymentM>beanlist=new ArrayList<PaymentM>();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
-	private boolean slogin;
 	private boolean sucflag;
 
 	@JSON(serialize = false)
@@ -56,15 +50,6 @@ public class PaymentMAction extends ActionSupport {
 
 	public void setPaymentMService(PaymentMService paymentMService) {
 		this.paymentMService = paymentMService;
-	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 
 	public String getPaymentid() {
@@ -147,11 +132,11 @@ public class PaymentMAction extends ActionSupport {
 		this.state = state;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -185,30 +170,6 @@ public class PaymentMAction extends ActionSupport {
 
 	public void setBean(PaymentM bean) {
 		this.bean = bean;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 
 	public String getIsFast() {
@@ -298,7 +259,6 @@ public class PaymentMAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Action(value = "findAllPayment", results = { @Result(name = "json", type = "json") })
 	public String findAllPayment() {
 		if(StaticString.SC.equals(this.getQtype())){
@@ -323,7 +283,7 @@ public class PaymentMAction extends ActionSupport {
 	
 	public void ProcessPayment(List<PaymentM>list){
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<PaymentM> it = list.iterator(); it.hasNext();) {
 			PaymentM pm = (PaymentM) it.next();
 			if (StaticString.ONE.equals(pm.getPaymentInterface())) {
 				pm.setPaymentInterface(StaticString.INSTANTINTERFACE);
@@ -342,7 +302,7 @@ public class PaymentMAction extends ActionSupport {
 			} else {
 				pm.setState(StaticString.UNUSING);
 			}
-			Map cellMap = new HashMap();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", pm.getPaymentid());
 			cellMap.put("cell", new Object[] { pm.getPaymentname(), pm.getPaymentCode(), pm.getPaymentFree(), pm.getPaymentInterface(), pm.getDes(),pm.getIsFast(), pm.getState() });
 			rows.add(cellMap);

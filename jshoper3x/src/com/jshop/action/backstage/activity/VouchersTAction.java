@@ -13,18 +13,17 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.VouchersT;
 import com.jshop.service.VouchersTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class VouchersTAction extends ActionSupport {
+public class VouchersTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	private VouchersTService vouchersTService;
-	private Serial serial;
 	private String vouchersid;
 	private String vouchersname;
 	private String begintime;
@@ -50,16 +49,6 @@ public class VouchersTAction extends ActionSupport {
 	public void setVouchersTService(VouchersTService vouchersTService) {
 		this.vouchersTService = vouchersTService;
 	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getVouchersid() {
 		return vouchersid;
 	}
@@ -218,27 +207,26 @@ public class VouchersTAction extends ActionSupport {
 	@Action(value = "addVoucherst", results = { 
 			@Result(name = "json",type="json")
 	})
-	public String addVoucherst() throws ParseException {
-	
-		List<VouchersT> vlist = this.getVouchersTService().findVoucherstByName(this.getVouchersname().trim());
-		if (vlist.size() > 0) {
+	public String addVoucherst(){
+		List<VouchersT> list = this.getVouchersTService().findVoucherstByName(this.getVouchersname().trim());
+		if (!list.isEmpty()) {
+			VouchersT vt = new VouchersT();
+			vt.setVouchersid(this.getSerial().Serialid(Serial.VOUCHERS));
+			vt.setVouchersname(this.getVouchersname().trim());
+			vt.setBegintime(this.getBegintime());
+			vt.setEndtime(this.getEndtime());
+			vt.setVoucherscontent(this.getVoucherscontent());
+			vt.setLimitprice(Double.parseDouble(this.getLimitprice()));
+			vt.setGivenmemberid(StaticString.EMPTY);
+			vt.setVoucherstate(this.getVoucherstate());
+			vt.setVoucheruseway(this.getVoucheruseway());
+			vt.setState(StaticString.ZERO);
+			vt.setCreatetime(BaseTools.systemtime());
+			vt.setCreatorid(BaseTools.adminCreateId());
+			this.getVouchersTService().save(vt);
+			this.setSucflag(true);
 			return "json";
 		}
-		VouchersT vt = new VouchersT();
-		vt.setVouchersid(this.getSerial().Serialid(Serial.VOUCHERS));
-		vt.setVouchersname(this.getVouchersname().trim());
-		vt.setBegintime(this.getBegintime());
-		vt.setEndtime(this.getEndtime());
-		vt.setVoucherscontent(this.getVoucherscontent());
-		vt.setLimitprice(Double.parseDouble(this.getLimitprice()));
-		vt.setGivenmemberid(StaticString.EMPTY);
-		vt.setVoucherstate(this.getVoucherstate());
-		vt.setVoucheruseway(this.getVoucheruseway());
-		vt.setState(StaticString.ZERO);
-		vt.setCreatetime(BaseTools.systemtime());
-		vt.setCreatorid(BaseTools.adminCreateId());
-		this.getVouchersTService().save(vt);
-		this.setSucflag(true);
 		return "json";
 	}
 
@@ -257,7 +245,7 @@ public class VouchersTAction extends ActionSupport {
 		if (list != null) {
 			total = this.getVouchersTService().countfindAllVoucherst();
 			rows.clear();
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<VouchersT> it = list.iterator(); it.hasNext();) {
 				VouchersT vt = (VouchersT) it.next();
 				if (vt.getState().equals("1")) {
 					vt.setState("已使用");
@@ -277,7 +265,7 @@ public class VouchersTAction extends ActionSupport {
 				if (vt.getGivenmemberid().equals("")) {
 					vt.setGivenmemberid("未分配");
 				}
-				Map cellMap = new HashMap();
+				Map<String, Object> cellMap = new HashMap<String, Object>();
 				cellMap.put("id", vt.getVouchersid());
 				cellMap.put("cell", new Object[] { "<input id='id' name='firstcol' class='firstvouchersid' type='checkbox' value='" + vt.getVouchersid() + "'></input>", vt.getVouchersname(), vt.getBegintime(), vt.getEndtime(), vt.getVoucherscontent(), vt.getLimitprice(), vt.getVoucherstate(), vt.getVoucheruseway(), vt.getState(), vt.getGivenmemberid(), vt.getCreatetime(), vt.getCreatorid() });
 				rows.add(cellMap);

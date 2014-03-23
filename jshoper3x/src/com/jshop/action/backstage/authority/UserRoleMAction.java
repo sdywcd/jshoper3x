@@ -11,6 +11,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.RoleFunctionM;
@@ -20,11 +21,11 @@ import com.jshop.service.FunctionMService;
 import com.jshop.service.RoleFunctionMService;
 import com.jshop.service.RoleMService;
 import com.jshop.service.UserRoleMService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")  
 @Controller("userRoleMAction")
-public class UserRoleMAction extends ActionSupport {
+public class UserRoleMAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private UserRoleMService userRoleMService;
 	private FunctionMService functionMService;
 	private RoleFunctionMService roleFunctionMService;
@@ -33,7 +34,6 @@ public class UserRoleMAction extends ActionSupport {
 	private String roleid;
 	private UserRoleM urm=new UserRoleM();
 	private RoleM bean=new RoleM();
-	
 	private boolean sucflag;
 	
 	@JSON(serialize = false)
@@ -162,7 +162,7 @@ public class UserRoleMAction extends ActionSupport {
 		List<RoleFunctionM>list=this.getRoleFunctionMService().findAllRoleFunctionMByroleid(umlist.get(0).getRoleid());
 		FunctionM fm=new FunctionM();
 		List<FunctionM>userfunctionlist=new ArrayList<FunctionM>();
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<RoleFunctionM> it=list.iterator();it.hasNext();){
 			RoleFunctionM rfm=(RoleFunctionM)it.next();
 			fm=this.getFunctionMService().findFunctionMById(rfm.getFunctionid());
 			userfunctionlist.add(fm);

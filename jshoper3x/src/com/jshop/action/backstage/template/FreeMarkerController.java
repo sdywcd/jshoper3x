@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.ServletResponseAware;
-import org.apache.struts2.json.annotations.JSON;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -26,27 +24,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-public class FreeMarkerController extends ActionSupport implements ServletResponseAware{
-	
-	
-	private HttpServletResponse response;
-
+public class FreeMarkerController extends ActionSupport {
+	private static final long serialVersionUID = 1L;
 	private String logmsg;
-	public void setServletResponse(HttpServletResponse response) {
-		this.response = response;
-		
-	}
-
-      
-	public HttpServletResponse getResponse() {
-		return response;
-	}
-
-
-	public void setResponse(HttpServletResponse response) {
-		this.response = response;
-	}
-
+	
 
 	public String getLogmsg() {
 		return logmsg;

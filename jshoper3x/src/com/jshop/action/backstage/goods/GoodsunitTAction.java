@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
@@ -21,22 +22,19 @@ import com.jshop.service.GoodsunitTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsunitTAction extends ActionSupport {
+public class GoodsunitTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsunitTService goodsunitTService;
-	private Serial serial;
 	private String unitid;
 	private String unitname;
 	private String creatorid;
 	private String unitjson;
 	private List<GoodsunitT> unit = new ArrayList<GoodsunitT>();
 	private GoodsunitT beanlist = new GoodsunitT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String sortname;
-	private String sortorder;
-	private boolean slogin;
 	private String param;
 	private String usession;
 
@@ -48,15 +46,6 @@ public class GoodsunitTAction extends ActionSupport {
 
 	public void setGoodsunitTService(GoodsunitTService goodsunitTService) {
 		this.goodsunitTService = goodsunitTService;
-	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 
 	public String getUnitid() {
@@ -83,11 +72,11 @@ public class GoodsunitTAction extends ActionSupport {
 		this.beanlist = beanlist;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -131,21 +120,6 @@ public class GoodsunitTAction extends ActionSupport {
 		this.unit = unit;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
 
 	public String getUsession() {
 		return usession;
@@ -163,13 +137,7 @@ public class GoodsunitTAction extends ActionSupport {
 		this.creatorid = creatorid;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
 
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
 
 	public String getParam() {
 		return param;
@@ -210,20 +178,19 @@ public class GoodsunitTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Action(value = "findAllGoodsunit", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsunit() {
 		int currentPage = page;
 		int lineSize = rp;
-		String queryString = "from GoodsunitT order by " + sortname + " " + sortorder + "";
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
+		String queryString = "from GoodsunitT order by " + getSortname() + " " + getSortorder() + "";
+		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
 			List<GoodsunitT> gt = this.getGoodsunitTService().sortAllGoodsunit(currentPage, lineSize, queryString);
 			if (gt != null) {
 				total = this.getGoodsunitTService().countfindAllGoodsunit();
 				rows.clear();
-				for (Iterator it = gt.iterator(); it.hasNext();) {
+				for (Iterator<GoodsunitT> it = gt.iterator(); it.hasNext();) {
 					GoodsunitT u = (GoodsunitT) it.next();
-					Map cellMap = new HashMap();
+					Map<String, Object> cellMap = new HashMap<String, Object>();
 					cellMap.put("id", u.getUnitid());
 					cellMap.put("cell", new Object[] { u.getUnitname(), BaseTools.formateDbDate(u.getCreatetime()), u.getCreatorid() });
 					rows.add(cellMap);
@@ -298,7 +265,7 @@ public class GoodsunitTAction extends ActionSupport {
 		this.setUnitjson("");
 		this.unit = this.getGoodsunitTService().findAllGoodsunitjson();
 		if (unit != null) {
-			for (Iterator it = this.unit.iterator(); it.hasNext();) {
+			for (Iterator<GoodsunitT> it = this.unit.iterator(); it.hasNext();) {
 				GoodsunitT gt = (GoodsunitT) it.next();
 				this.unitjson += "<option value='" + gt.getUnitid() + "'>" + gt.getUnitname() + "</option>";
 			}

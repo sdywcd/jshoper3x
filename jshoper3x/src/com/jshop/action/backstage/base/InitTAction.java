@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.StaticString;
@@ -15,11 +14,11 @@ import com.jshop.entity.TemplatethemeT;
 import com.jshop.service.OrderTService;
 import com.jshop.service.TemplatethemeTService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-@Controller("initTAction")
-public class InitTAction extends ActionSupport {
+@Controller
+public class InitTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private TemplatethemeTService templatethemeTService;
 	private TemplatethemeT tt;
 	private OrderTService orderTService;

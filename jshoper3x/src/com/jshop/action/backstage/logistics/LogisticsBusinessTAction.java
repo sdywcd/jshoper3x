@@ -12,22 +12,20 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.service.LogisticsBusinessTService;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 @Namespace("")
 @ParentPackage("jshop")
-public class LogisticsBusinessTAction extends ActionSupport {
+public class LogisticsBusinessTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private LogisticsBusinessTService logisticsBusinessTService;
-	private Serial serial;
 	private String logisticsid;
 	private String logisticsname;
 	private String address;
@@ -52,13 +50,10 @@ public class LogisticsBusinessTAction extends ActionSupport {
 	private String logisticsjson = null;
 	private List<LogisticsBusinessT> logisticsbusiness = new ArrayList<LogisticsBusinessT>();
 	private LogisticsBusinessT beanlist = new LogisticsBusinessT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
-	private boolean slogin = false;
 	private boolean sucflag;
 
 	@JSON(serialize = false)
@@ -70,14 +65,6 @@ public class LogisticsBusinessTAction extends ActionSupport {
 		this.logisticsBusinessTService = logisticsBusinessTService;
 	}
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 
 	public List<LogisticsBusinessT> getLogisticsbusiness() {
 		return logisticsbusiness;
@@ -239,12 +226,11 @@ public class LogisticsBusinessTAction extends ActionSupport {
 		this.beanlist = beanlist;
 	}
 
-	@JSON(name = "rows")
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -280,14 +266,6 @@ public class LogisticsBusinessTAction extends ActionSupport {
 		this.website = website;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public String getLogisticsjson() {
 		return logisticsjson;
 	}
@@ -302,22 +280,6 @@ public class LogisticsBusinessTAction extends ActionSupport {
 
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 
 	public String getSendrange() {
@@ -409,7 +371,7 @@ public class LogisticsBusinessTAction extends ActionSupport {
 
 	public void ProcessTemplatesetTlist(List<LogisticsBusinessT> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<LogisticsBusinessT> it = list.iterator(); it.hasNext();) {
 			LogisticsBusinessT lb = (LogisticsBusinessT) it.next();
 			if (lb.getInsure().equals("1")) {
 				lb.setInsure(StaticString.SUPPORT);
@@ -438,7 +400,7 @@ public class LogisticsBusinessTAction extends ActionSupport {
 			}else{
 				lb.setSendrange(StaticString.INTERNAL);
 			}
-			Map cellMap = new HashMap();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", lb.getLogisticsid());
 			cellMap.put("cell", new Object[] { lb.getLogisticsname(), lb.getCity(), lb.getContractor(), lb.getTelno(), lb.getFaxno(), lb.getEmail(), lb.getAddress(), lb.getReceiver(), lb.getBankaccount(), lb.getBankaddress(), lb.getInsure(), lb.getIsCod(), lb.getVisible(), lb.getDes(), lb.getState(), BaseTools.formateDbDate(lb.getCreatetime()), lb.getCreatorid(), lb.getWebsite(),lb.getSendrange(),lb.getMobile(),
 					"<a id='editlogistics' name='editlogistics' href='logistics.jsp?operate=edit&folder=setting&logisticsid="+lb.getLogisticsid()+"'>[编辑]</a>"});
@@ -523,7 +485,7 @@ public class LogisticsBusinessTAction extends ActionSupport {
 		this.setLogisticsjson("");
 		this.logisticsbusiness = this.getLogisticsBusinessTService().findAllLogisticsBusinessTjson();
 		if (this.logisticsbusiness != null) {
-			for (Iterator it = this.logisticsbusiness.iterator(); it.hasNext();) {
+			for (Iterator<LogisticsBusinessT> it = this.logisticsbusiness.iterator(); it.hasNext();) {
 				LogisticsBusinessT l = (LogisticsBusinessT) it.next();
 				this.logisticsjson += "<option value='" + l.getLogisticsid() + "'>" + l.getLogisticsname() + "</option>";
 			}

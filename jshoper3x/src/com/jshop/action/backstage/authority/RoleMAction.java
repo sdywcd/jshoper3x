@@ -6,16 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
@@ -23,16 +21,12 @@ import com.jshop.entity.RoleFunctionM;
 import com.jshop.entity.RoleM;
 import com.jshop.service.RoleFunctionMService;
 import com.jshop.service.RoleMService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class RoleMAction extends ActionSupport {
-	@Resource
+public class RoleMAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private RoleMService roleMService;
-	@Resource
 	private RoleFunctionMService roleFunctionMService;
-	@Resource
-	private Serial serial;
 	private String id;
 	private String rolename;
 	private String note;
@@ -43,7 +37,7 @@ public class RoleMAction extends ActionSupport {
 	private RoleM bean=new RoleM();
 	private List<RoleFunctionM> rfmbean=new ArrayList<RoleFunctionM>();
 	private Map<String,Object>map=new HashMap<String,Object>();
-	private List rows=new ArrayList();
+	private List<Map<String, Object>> rows=new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page=1;
 	private int total=0;
@@ -64,13 +58,6 @@ public class RoleMAction extends ActionSupport {
 	}
 	public void setRoleMService(RoleMService roleMService) {
 		this.roleMService = roleMService;
-	}
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 	public String getId() {
 		return id;
@@ -108,10 +95,10 @@ public class RoleMAction extends ActionSupport {
 	public void setMap(Map<String, Object> map) {
 		this.map = map;
 	}
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 	public int getRp() {
@@ -228,7 +215,7 @@ public class RoleMAction extends ActionSupport {
 	}
 	
 	public void ProcessRoleMList(List<RoleM>list){
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<RoleM> it=list.iterator();it.hasNext();){
 			RoleM rm=(RoleM)it.next();
 			Map<String,Object>cellMap=new HashMap<String,Object>();
 			cellMap.put("id", rm.getId());
@@ -320,7 +307,7 @@ public class RoleMAction extends ActionSupport {
 		List<RoleM>list=this.getRoleMService().findAllRoleM();
 		if(!list.isEmpty()){
 			this.setRolestr("<option value='0'>---请选择---</option>");
-			for(Iterator it=list.iterator();it.hasNext();){
+			for(Iterator<RoleM> it=list.iterator();it.hasNext();){
 				RoleM rm=(RoleM)it.next();
 				this.rolestr+="<option value='"+rm.getId()+"'>"+rm.getRolename()+"</option>";
 			}

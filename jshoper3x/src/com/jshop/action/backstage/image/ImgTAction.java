@@ -30,14 +30,15 @@ import org.apache.struts2.json.annotations.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.ServerFileInfo;
 import com.jshop.action.backstage.tools.Validate;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class ImgTAction extends ActionSupport implements ServletResponseAware, ServletRequestAware {
+public class ImgTAction extends BaseTAction implements ServletResponseAware, ServletRequestAware {
 
+	private static final long serialVersionUID = 1L;
 	private static final Logger log = LoggerFactory.getLogger(ImgTAction.class);
 	private File fileupload;
 	private String fileuploadFileName;
@@ -50,13 +51,13 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 	/**
 	 * 保存服务器文件目录
 	 */
-	private List list = new ArrayList();
+	private List<ServerFileInfo> list = new ArrayList<ServerFileInfo>();
 	private String query;
 	private String qtype;
 	private int total = 0;
 	private int rp;
 	private int page = 1;
-	private List rows = new ArrayList();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private String creatorid;
 	private String imgdirpath;
 	/**
@@ -67,7 +68,6 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 	 * 图片文件保存的目录
 	 */
 	private String targetSavePath;
-	private boolean slogin;
 	private boolean sucflag;
 
 	public String getTargetSavePath() {
@@ -144,11 +144,11 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 		this.qqfile = qqfile;
 	}
 
-	public List getList() {
+	public List<ServerFileInfo> getList() {
 		return list;
 	}
 
-	public void setList(List list) {
+	public void setList(List<ServerFileInfo> list) {
 		this.list = list;
 	}
 
@@ -168,11 +168,11 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 		this.qtype = qtype;
 	}
 
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -184,13 +184,6 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 		this.creatorid = creatorid;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
 
 	public boolean isSucflag() {
 		return sucflag;
@@ -305,9 +298,9 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 		}
 	}
 
-	public void ProcessAllSeverDirectoryFile(List list) {
+	public void ProcessAllSeverDirectoryFile(List<ServerFileInfo> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<ServerFileInfo> it = list.iterator(); it.hasNext();) {
 			ServerFileInfo sfi = (ServerFileInfo) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sfi.getDirectoryname());
@@ -480,9 +473,9 @@ public class ImgTAction extends ActionSupport implements ServletResponseAware, S
 		}
 	}
 
-	public void ProcessAllSeverDirectory(List list) {
+	public void ProcessAllSeverDirectory(List<ServerFileInfo> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<ServerFileInfo> it = list.iterator(); it.hasNext();) {
 			ServerFileInfo sfi = (ServerFileInfo) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sfi.getDirectoryname());

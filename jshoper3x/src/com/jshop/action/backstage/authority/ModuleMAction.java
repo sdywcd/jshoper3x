@@ -13,39 +13,31 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ModuleM;
 import com.jshop.service.ModuleMService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class ModuleMAction extends ActionSupport {
+public class ModuleMAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ModuleMService moduleMService;
-	private Serial serial;
 	private String id;
 	private String modulename;
 	private Date createtime;
 	private String moduleselectstr;
 	private ModuleM bean=new ModuleM();
 	private Map<String,Object>map=new HashMap<String,Object>();
-	private List rows=new ArrayList();
+	private List<Map<String, Object>> rows=new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private String query;
 	private String qtype;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public ModuleMService getModuleMService() {
 		return moduleMService;
@@ -85,10 +77,10 @@ public class ModuleMAction extends ActionSupport {
 		this.map = map;
 	}
 	
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 	public int getRp() {
@@ -213,7 +205,7 @@ public class ModuleMAction extends ActionSupport {
 	}
 	
 	public void ProcessModuleMList(List<ModuleM>list){
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<ModuleM> it=list.iterator();it.hasNext();){
 			ModuleM mm=(ModuleM)it.next();
 			Map<String,Object>cellMap=new HashMap<String,Object>();
 			cellMap.put("id", mm.getId());
@@ -255,7 +247,7 @@ public class ModuleMAction extends ActionSupport {
 		List<ModuleM>list=this.getModuleMService().findAllModuleM();
 		if(!list.isEmpty()){
 			this.setModuleselectstr("<option value='0'>---请选择---</option>");
-			for(Iterator it=list.iterator();it.hasNext();){
+			for(Iterator<ModuleM> it=list.iterator();it.hasNext();){
 				ModuleM mm=(ModuleM)it.next();
 				this.moduleselectstr+="<option value='"+mm.getId()+"'>"+mm.getModulename()+"</option>";
 			}

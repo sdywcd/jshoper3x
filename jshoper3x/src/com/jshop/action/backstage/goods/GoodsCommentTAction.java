@@ -14,6 +14,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
@@ -22,14 +23,13 @@ import com.jshop.entity.GoodsCommentT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsCommentTService;
 import com.jshop.service.GoodsTService;
-import com.opensymphony.xwork2.ActionSupport;
 
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsCommentTAction extends ActionSupport {
+public class GoodsCommentTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsCommentTService goodsCommentTService;
 	private GoodsTService goodsTService;
-	private Serial serial;
 	private String commentid;
 	private String goodsid;
 	private String goodsname;
@@ -44,11 +44,9 @@ public class GoodsCommentTAction extends ActionSupport {
 	private String emailable;
 	private String userid;
 	private GoodsT g = new GoodsT();
-	private String query;// text
-	private String qtype;// select
 	private GoodsCommentT bean = new GoodsCommentT();
 	private List<GoodsCommentT> beanlist = new ArrayList<GoodsCommentT>();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -73,14 +71,7 @@ public class GoodsCommentTAction extends ActionSupport {
 		this.goodsTService = goodsTService;
 	}
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
 
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 
 	public String getCommentid() {
 		return commentid;
@@ -178,21 +169,6 @@ public class GoodsCommentTAction extends ActionSupport {
 		this.emailable = emailable;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
 
 	public GoodsCommentT getBean() {
 		return bean;
@@ -202,11 +178,11 @@ public class GoodsCommentTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -329,17 +305,16 @@ public class GoodsCommentTAction extends ActionSupport {
 	 * 
 	 * @param gct
 	 */
-	@SuppressWarnings("unchecked")
 	public void ProcessGoodsCommentList(List<GoodsCommentT> gct) {
 		total = this.getGoodsCommentTService().countfindAllGoodsComment();
-		for (Iterator it = gct.iterator(); it.hasNext();) {
+		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
 			if (gctt.getState().equals(StaticString.ONE)) {
 				gctt.setState(StaticString.SHOW);
 			} else {
 				gctt.setState(StaticString.HIDDEN);
 			}
-			Map cellMap = new HashMap();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gctt.getGoodsid());
 			cellMap.put("cell",
 					new Object[] {
@@ -438,10 +413,9 @@ public class GoodsCommentTAction extends ActionSupport {
 	 * 
 	 * @param gct
 	 */
-	@SuppressWarnings("unchecked")
 	public void ProcessGoodsCommentListByGoodsid(List<GoodsCommentT> gct) {
 		total = this.getGoodsCommentTService().countfindAllGoodsComment();
-		for (Iterator it = gct.iterator(); it.hasNext();) {
+		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
 			if (gctt.getState().equals(StaticString.ONE)) {
 				gctt.setState(StaticString.SHOW);
@@ -460,7 +434,7 @@ public class GoodsCommentTAction extends ActionSupport {
 			} else {
 				gctt.setReplyorcomment(StaticString.COMMENT_REPLY_TWO);
 			}
-			Map cellMap = new HashMap();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gctt.getCommentid());
 			cellMap.put(
 					"cell",

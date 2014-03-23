@@ -8,9 +8,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.PrintExpressParam;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ExpresstempleteT;
@@ -20,11 +19,10 @@ import com.jshop.service.ExpresstempleteTService;
 import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.ShippingAddressTService;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class PrintExpressSingleTAction extends ActionSupport {
+public class PrintExpressSingleTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ExpresstempleteTService expresstempleteTService;
 	private OrderTService orderTService;
 	private JshopbasicInfoTService jshopbasicInfoTService;
@@ -32,7 +30,6 @@ public class PrintExpressSingleTAction extends ActionSupport {
 	private String orderid;
 	private PrintExpressParam pe = new PrintExpressParam();
 	private String logisticsid;
-	private boolean slogin = false;
 	private boolean sprintexpressflag = false;
 
 	
@@ -91,14 +88,6 @@ public class PrintExpressSingleTAction extends ActionSupport {
 
 	public void setSprintexpressflag(boolean sprintexpressflag) {
 		this.sprintexpressflag = sprintexpressflag;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public String getLogisticsid() {

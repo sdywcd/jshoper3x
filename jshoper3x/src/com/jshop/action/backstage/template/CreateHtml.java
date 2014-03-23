@@ -40,6 +40,7 @@ import freemarker.template.TemplateException;
 @Namespace("")
 @Controller("createHtml")
 public class CreateHtml extends ActionSupport {
+	private static final long serialVersionUID = 1L;
 	private TemplateTAction templateTAction;
 	private TemplateTService templateTService;
 	private TemplatesetTService templatesetTService;
@@ -55,7 +56,7 @@ public class CreateHtml extends ActionSupport {
 	private TemplateT bean = new TemplateT();
 	private TemplatesetT setbean = new TemplatesetT();
 	private FreeMarkerController fc = new FreeMarkerController();
-	private PageModel pm = new PageModel();
+	private PageModel<Object> pm = new PageModel<Object>();
 	private String status;
 	private boolean slogin;
 	private StringBuilder logmsg=new StringBuilder();
@@ -192,11 +193,11 @@ public class CreateHtml extends ActionSupport {
 	}
 
 	@JSON(serialize = false)
-	public PageModel getPm() {
+	public PageModel<Object> getPm() {
 		return pm;
 	}
 
-	public void setPm(PageModel pm) {
+	public void setPm(PageModel<Object> pm) {
 		this.pm = pm;
 	}
 
@@ -242,7 +243,7 @@ public class CreateHtml extends ActionSupport {
 	 */
 	public void buildGoodsdetailsPage(Map<String, Object> map) throws IOException, TemplateException {
 		List<GoodsT> glist = this.getDataCollectionTAction().findAllGoodsT();
-		for (Iterator it = glist.iterator(); it.hasNext();) {
+		for (Iterator<GoodsT> it = glist.iterator(); it.hasNext();) {
 			GoodsT gt = (GoodsT) it.next();
 //			if(!gt.getCreatetime().equals(gt.getUpdatetime())){
 				map.put(FreeMarkervariable.GOODSDETAIL, gt);
@@ -269,7 +270,7 @@ public class CreateHtml extends ActionSupport {
 	public void buildArticlesPage(Map<String, Object> map) throws IOException, TemplateException {
 		List<ArticleT> alist = this.getDataCollectionTAction().findAllArticleT();
 		if (!alist.isEmpty()) {
-			for (Iterator it = alist.iterator(); it.hasNext();) {
+			for (Iterator<ArticleT> it = alist.iterator(); it.hasNext();) {
 				ArticleT at = (ArticleT) it.next();
 //				if(!at.getCreatetime().equals(at.getUpdatetime())){
 					if(!"1".equals(at.getIsnotice())){
@@ -291,7 +292,7 @@ public class CreateHtml extends ActionSupport {
 	public void buildNoticeArticlesPage(Map<String, Object> map) throws IOException, TemplateException {
 		List<ArticleT> alist = this.getDataCollectionTAction().findAllArticleT();
 		if (!alist.isEmpty()) {
-			for (Iterator it = alist.iterator(); it.hasNext();) {
+			for (Iterator<ArticleT> it = alist.iterator(); it.hasNext();) {
 				ArticleT at = (ArticleT) it.next();
 //				if(!at.getCreatetime().equals(at.getUpdatetime())){
 					if("1".equals(at.getIsnotice())){
@@ -318,7 +319,7 @@ public class CreateHtml extends ActionSupport {
 		List<GoodsCategoryT> gclist = this.getDataCollectionTAction().findAllGoodsCategoryTByState();//读取所有启用的商品分类
 		if (!gclist.isEmpty()) {
 			List<GoodsT> list = new ArrayList<GoodsT>();
-			for (Iterator it = gclist.iterator(); it.hasNext();) {
+			for (Iterator<GoodsCategoryT> it = gclist.iterator(); it.hasNext();) {
 				GoodsCategoryT gct = (GoodsCategoryT) it.next();
 				map.put(FreeMarkervariable.GOODSCATEGORY, gct);
 				if (gct.getGrade().equals("0")) {
@@ -796,7 +797,7 @@ public class CreateHtml extends ActionSupport {
 		try {
 			List<TemplateT> tlist = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.adminCreateId(), "1");
 			if (!tlist.isEmpty()) {
-				for (Iterator it = tlist.iterator(); it.hasNext();) {
+				for (Iterator<TemplateT> it = tlist.iterator(); it.hasNext();) {
 					TemplateT tt = (TemplateT) it.next();
 					this.getTemplateTAction().updateFTLFile(tt);
 				}
@@ -814,7 +815,7 @@ public class CreateHtml extends ActionSupport {
 	 */
 	public void buildGoodsGroupT(Map<String, Object> map) throws IOException, TemplateException{
 		List<GoodsGroupT> list = this.getGoodsGroupTService().findGoodsGroupByState("1");
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<GoodsGroupT> it=list.iterator();it.hasNext();){
 			GoodsGroupT ggt = (GoodsGroupT) it.next();
 			map.put(FreeMarkervariable.GOODSGROUPT, ggt);
 			String htmlpath = this.createGoodsGroup(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSGROUPT, ggt.getGroupid(), map);

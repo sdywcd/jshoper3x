@@ -10,26 +10,18 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.service.GoodsAttributeRpTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsAttributeRpTAction extends ActionSupport {
-	private Serial serial;
+public class GoodsAttributeRpTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsAttributeRpTService goodsAttributeRpTService;
 	private String goodsid;
 	private String goodsAttrsVals;
 	private List<GoodsAttributeRpT> beanlist=new ArrayList<GoodsAttributeRpT>();
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public GoodsAttributeRpTService getGoodsAttributeRpTService() {
 		return goodsAttributeRpTService;

@@ -11,17 +11,15 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
-
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.service.GoodsTypeBrandTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsTypeBrandTAction extends ActionSupport {
-	private Serial serial;
+public class GoodsTypeBrandTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsTypeBrandTService goodsTypeBrandTService;
 	private String goodsTypeBrandTid;
 	private String goodsTypeId;
@@ -30,18 +28,12 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 	private String brandid;
 	private String query;
 	private String qtype;
-	private List rows;
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
 
-	public GoodsTypeBrandTAction() {
-		rows = new ArrayList();
-	}
 	@JSON(serialize = false)
 	public GoodsTypeBrandTService getGoodsTypeBrandTService() {
 		return goodsTypeBrandTService;
@@ -51,14 +43,6 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 		this.goodsTypeBrandTService = goodsTypeBrandTService;
 	}
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 
 	public String getGoodsTypeId() {
 		return goodsTypeId;
@@ -108,11 +92,11 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 		this.qtype = qtype;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -140,14 +124,6 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -164,21 +140,6 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 		this.goodsTypeBrandTid = goodsTypeBrandTid;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
 
 	/**
 	 * 设置日期格式
@@ -240,8 +201,8 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 	public void findDefaultAllGoodsTypeBrand() {
 		int currentPage = page;
 		int lineSize = rp;
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from GoodsTypeBrandT  order by " + sortname + " " + sortorder + "";
+		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
+			String queryString = "from GoodsTypeBrandT  order by " + getSortname() + " " + getSortorder() + "";
 			List<GoodsTypeBrandT> list = this.getGoodsTypeBrandTService().sortAllGoodsTypeBrand(currentPage, lineSize, queryString);
 			if (list != null) {
 				this.ProcessGoodsTypeBrandTList(list);
@@ -251,7 +212,7 @@ public class GoodsTypeBrandTAction extends ActionSupport {
 
 	public void ProcessGoodsTypeBrandTList(List<GoodsTypeBrandT> list) {
 		total = this.getGoodsTypeBrandTService().countfindAllGoodsTypeBrand();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<GoodsTypeBrandT> it = list.iterator(); it.hasNext();) {
 			GoodsTypeBrandT gtbt = (GoodsTypeBrandT) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gtbt.getGoodsTypeBrandTid());

@@ -4,13 +4,12 @@ import java.util.Date;
 
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
-import com.opensymphony.xwork2.ActionSupport;
+import com.jshop.action.backstage.base.BaseTAction;
 @Namespace("")
 @ParentPackage("jshop")
-public class GroupCartTAction extends ActionSupport {
-	
+public class GroupCartTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String cartid;
 	private String orderid;

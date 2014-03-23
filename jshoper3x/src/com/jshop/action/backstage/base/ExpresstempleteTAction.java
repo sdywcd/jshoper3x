@@ -10,20 +10,17 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ExpresstempleteT;
 import com.jshop.service.ExpresstempleteTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 
-public class ExpresstempleteTAction extends ActionSupport {
+public class ExpresstempleteTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ExpresstempleteTService expresstempleteTService;
-	
-	private Serial serial;
 	public static final String SENDNAME = "sendname";
 	public static final String SENDCOUNTRY = "sendcountry";
 	public static final String SENDPROVINCE = "sendprovince";
@@ -83,17 +80,11 @@ public class ExpresstempleteTAction extends ActionSupport {
 	private String expressCss;
 	private String expressImg;
 	private String kindeditorCode;
-	private ExpresstempleteT beanlist;
-	private List rows;
+	private List<Map<String, Object>>rows =new ArrayList<Map<String, Object>>();
+	private ExpresstempleteT beanlist=new ExpresstempleteT();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
-
-	public ExpresstempleteTAction() {
-		beanlist = new ExpresstempleteT();
-		rows = new ArrayList();
-	}
 	@JSON(serialize = false)
 	public ExpresstempleteTService getExpresstempleteTService() {
 		return expresstempleteTService;
@@ -101,15 +92,6 @@ public class ExpresstempleteTAction extends ActionSupport {
 
 	public void setExpresstempleteTService(ExpresstempleteTService expresstempleteTService) {
 		this.expresstempleteTService = expresstempleteTService;
-	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 
 	public String getExpresstempleteid() {
@@ -352,11 +334,11 @@ public class ExpresstempleteTAction extends ActionSupport {
 		this.kindeditorCode = kindeditorCode;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -383,15 +365,6 @@ public class ExpresstempleteTAction extends ActionSupport {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public ExpresstempleteT getBeanlist() {
 		return beanlist;
 	}
@@ -430,7 +403,7 @@ public class ExpresstempleteTAction extends ActionSupport {
 			et.setSendStreet(ExpresstempleteTAction.SENDSTREET);
 			et.setSendTelno(ExpresstempleteTAction.SENDTELNO);
 			et.setSendMobile(ExpresstempleteTAction.SENDMOBILE);
-			et.setSendContactor(this.SENDCONTACTOR);
+			et.setSendContactor(ExpresstempleteTAction.SENDCONTACTOR);
 			et.setRecipientName(ExpresstempleteTAction.RECIPIENTNAME);
 			et.setRecipientCountry(ExpresstempleteTAction.RECIPIENTCOUNTRY);
 			et.setRecipientProvince(ExpresstempleteTAction.RECIPIENTPROVINCE);
@@ -440,18 +413,18 @@ public class ExpresstempleteTAction extends ActionSupport {
 			et.setRecipientTelno(ExpresstempleteTAction.RECIPIENTTELNO);
 			et.setRecipientMobile(ExpresstempleteTAction.RECIPIENTMOBILE);
 			et.setRecipientPostcode(ExpresstempleteTAction.RECIPIENTPOSTCODE);
-			et.setRecipientContactor(this.RECIPIENTCONTACTOR);
+			et.setRecipientContactor(ExpresstempleteTAction.RECIPIENTCONTACTOR);
 			et.setYear(ExpresstempleteTAction.YEAR);
 			et.setMonth(ExpresstempleteTAction.MONTH);
 			et.setDay(ExpresstempleteTAction.DAY);
-			et.setHour(this.HOUR);
-			et.setMinutes(this.MINUTES);
+			et.setHour(ExpresstempleteTAction.HOUR);
+			et.setMinutes(ExpresstempleteTAction.MINUTES);
 			et.setOrderid(ExpresstempleteTAction.ORDERID);
 			et.setNotes(ExpresstempleteTAction.NOTES);
 			et.setSendTime(ExpresstempleteTAction.SENDTIME);
 			et.setRightTag(ExpresstempleteTAction.RIGHTTAG);
 			et.setLogisticsid(this.getLogisticsid().trim());
-			et.setQuantity(this.QUANTITY);
+			et.setQuantity(ExpresstempleteTAction.QUANTITY);
 			et.setState("1");
 			et.setExpressCss(null);
 			et.setExpressImg(null);
@@ -476,7 +449,7 @@ public class ExpresstempleteTAction extends ActionSupport {
 		if (list != null) {
 			total = this.getExpresstempleteTService().countfindAllExpresstempleteT();
 			rows.clear();
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<ExpresstempleteT> it = list.iterator(); it.hasNext();) {
 				ExpresstempleteT et = (ExpresstempleteT) it.next();
 				if (et.getState().equals("1")) {
 					et.setState("启用");

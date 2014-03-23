@@ -12,18 +12,15 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.JshopbasicInfoT;
 import com.jshop.service.JshopbasicInfoTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-
-public class JshopbasicInfoTAction extends ActionSupport {
+public class JshopbasicInfoTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private Serial serial;
 	private JshopbasicInfoTService jshopbasicInfoTService;
 	private String basicinfoid;
@@ -51,11 +48,10 @@ public class JshopbasicInfoTAction extends ActionSupport {
 	private String metaKeywords;
 	private String metaDes;
 	private JshopbasicInfoT beanlist = new JshopbasicInfoT();
-	private List rows = new ArrayList();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
 	private boolean sucflag;
 	private String basepath;
 	@JSON(serialize = false)
@@ -221,11 +217,11 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		this.beanlist = beanlist;
 	}
 
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -275,14 +271,6 @@ public class JshopbasicInfoTAction extends ActionSupport {
 
 	public void setDistrict(String district) {
 		this.district = district;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public String getMetaKeywords() {
@@ -396,7 +384,7 @@ public class JshopbasicInfoTAction extends ActionSupport {
 		if (list != null) {
 			total = this.getJshopbasicInfoTService().countfindAllJshopbasicInfo(BaseTools.adminCreateId());
 			rows.clear();
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<JshopbasicInfoT> it = list.iterator(); it.hasNext();) {
 				JshopbasicInfoT jbi = (JshopbasicInfoT) it.next();
 				if (jbi.getOpenstate().equals("1")) {
 					jbi.setOpenstate("开启");
@@ -410,7 +398,7 @@ public class JshopbasicInfoTAction extends ActionSupport {
 				if (jbi.getState().equals("0")) {
 					jbi.setState("关闭");
 				}
-				Map cellMap = new HashMap();
+				Map<String, Object> cellMap = new HashMap<String, Object>();
 				cellMap.put("id", jbi.getBasicinfoid());
 				cellMap.put("cell", new Object[] { jbi.getJshopname(), jbi.getMetaKeywords(), jbi.getOpenstate(), jbi.getState() });
 				rows.add(cellMap);

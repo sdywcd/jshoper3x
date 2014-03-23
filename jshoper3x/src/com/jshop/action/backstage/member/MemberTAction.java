@@ -17,20 +17,19 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.MemberT;
-import com.jshop.redis.dao.RedisMemberDao;
 import com.jshop.redis.service.RedisMemberService;
 import com.jshop.service.MemberTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class MemberTAction extends ActionSupport {
-	
-	private Serial serial;
+public class MemberTAction extends BaseTAction {
+
+	private static final long serialVersionUID = 1L;
 	private MemberTService memberTService;
 	private RedisMemberService redisMemberService;
 	private String id;
@@ -63,8 +62,6 @@ public class MemberTAction extends ActionSupport {
 	private String headpath;
 	private Date createtime;
 	private String creatorid;
-	private String query;//text
-	private String qtype;//select
 	private String basepath;
 	private MemberT bean=new MemberT();
 	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
@@ -74,14 +71,7 @@ public class MemberTAction extends ActionSupport {
 	private String message;
 	private boolean sucflag;
 	private boolean doingTag;//用于aspect的标记
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
 
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public RedisMemberService getRedisMemberService() {
 		return redisMemberService;
@@ -332,22 +322,6 @@ public class MemberTAction extends ActionSupport {
 		this.creatorid = creatorid;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
 	public MemberT getBean() {
 		return bean;
 	}
@@ -526,7 +500,7 @@ public class MemberTAction extends ActionSupport {
 	}
 
 	private void ProcessMemberList(List<MemberT> list) {
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<MemberT> it=list.iterator();it.hasNext();){
 			MemberT mt=(MemberT) it.next();
 			if(mt.getSex().equals(StaticString.ONE)){
 				mt.setSex(StaticString.SEXMAN);

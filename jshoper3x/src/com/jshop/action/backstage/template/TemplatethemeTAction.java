@@ -1,6 +1,5 @@
 package com.jshop.action.backstage.template;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,8 +14,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
@@ -28,13 +27,12 @@ import com.jshop.service.TemplatethemeTService;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class TemplatethemeTAction extends ActionSupport {
+public class TemplatethemeTAction extends BaseTAction {
 
+	private static final long serialVersionUID = 1L;
 	private TemplatethemeTService templatethemeTService;
 	private TemplateTService templateTService;
 	private TemplatesetTService templatesetTService;
-	@Resource(name = "serial")
-	private Serial serial;
 	private String ttid;
 	private String note;
 	private String themename;
@@ -44,27 +42,13 @@ public class TemplatethemeTAction extends ActionSupport {
 	private String status;
 	private String templatethemestrs;
 	private TemplatethemeT bean = new TemplatethemeT();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String query;
-	private String qtype;
-	private String sortname;
-	private String sortorder;
-	private boolean slogin;
 	private boolean sucflag;
-	private String usession;
 	private String msg;
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public TemplatethemeTService getTemplatethemeTService() {
 		return templatethemeTService;
@@ -146,11 +130,11 @@ public class TemplatethemeTAction extends ActionSupport {
 		this.sign = sign;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -178,60 +162,12 @@ public class TemplatethemeTAction extends ActionSupport {
 		this.total = total;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
 
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
-	}
-
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
-	public String getUsession() {
-		return usession;
-	}
-
-	public void setUsession(String usession) {
-		this.usession = usession;
 	}
 
 	public String getTemplatethemestrs() {
@@ -295,8 +231,8 @@ public class TemplatethemeTAction extends ActionSupport {
 	public void finddefaultAllTemplatetheme() {
 		int currentPage = page;
 		int lineSize = rp;
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from TemplatethemeT as tt where tt.creatorid=:creatorid order by " + sortname + " " + sortorder + " ";
+		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
+			String queryString = "from TemplatethemeT as tt where tt.creatorid=:creatorid order by " + this.getSortname() + " " + this.getSortorder() + " ";
 			List<TemplatethemeT> list = this.getTemplatethemeTService().sortAllTemplatetheme(currentPage, lineSize, BaseTools.adminCreateId(), queryString);
 			if (list != null) {
 				ProcessTemplatethemeList(list);
@@ -312,7 +248,7 @@ public class TemplatethemeTAction extends ActionSupport {
 	public void ProcessTemplatethemeList(List<TemplatethemeT> list) {
 		total = this.getTemplatethemeTService().countfindAllTemplatetheme(BaseTools.adminCreateId());
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<TemplatethemeT> it = list.iterator(); it.hasNext();) {
 			TemplatethemeT tt = (TemplatethemeT) it.next();
 			if (tt.getStatus().equals("1")) {
 				tt.setStatus("启用");
@@ -447,7 +383,7 @@ public class TemplatethemeTAction extends ActionSupport {
 		if (list != null) {
 			this.setTemplatethemestrs("");
 			this.setTemplatethemestrs("<option value='-1'>---请选择---</option>");
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<TemplatethemeT> it = list.iterator(); it.hasNext();) {
 				TemplatethemeT tt = (TemplatethemeT) it.next();
 				this.templatethemestrs += "<option value='" + tt.getTtid() + "," + tt.getSign() + "'>" + tt.getThemename() + "</option>";
 			}

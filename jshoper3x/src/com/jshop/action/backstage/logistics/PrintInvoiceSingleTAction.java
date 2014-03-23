@@ -13,9 +13,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.PrintInvoiceParam;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.CartT;
@@ -26,12 +25,10 @@ import com.jshop.service.CartTService;
 import com.jshop.service.InvoicetempleteTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.ShippingAddressTService;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class PrintInvoiceSingleTAction extends ActionSupport {
-	
+public class PrintInvoiceSingleTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private OrderTService orderTService;
 	private CartTService cartTService;
 	private ShippingAddressTService shippingAddressTService;
@@ -39,8 +36,7 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 	private String orderid;
 	private PrintInvoiceParam pi = new PrintInvoiceParam();
 	private List<CartT> ct = new ArrayList<CartT>();
-	private List invoicerows = new ArrayList();
-	private boolean slogin = false;
+	private List<Map<String, Object>> invoicerows = new ArrayList<Map<String, Object>>();
 	private boolean sprintinvoiceflag = false;
 
 	@JSON(serialize = false)
@@ -100,14 +96,6 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 		this.pi = pi;
 	}
 
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public boolean isSprintinvoiceflag() {
 		return sprintinvoiceflag;
 	}
@@ -116,11 +104,11 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 		this.sprintinvoiceflag = sprintinvoiceflag;
 	}
 
-	public List getInvoicerows() {
+	public List<Map<String, Object>> getInvoicerows() {
 		return invoicerows;
 	}
 
-	public void setInvoicerows(List invoicerows) {
+	public void setInvoicerows(List<Map<String, Object>> invoicerows) {
 		this.invoicerows = invoicerows;
 	}
 
@@ -148,7 +136,6 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 		return temp;
 	}
 
-	@SuppressWarnings("deprecation")
 	private void GetChangeTime(Date t) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-yy-ss");
 		String time = formatter.format(t.getTime()).toString();
@@ -200,7 +187,7 @@ public class PrintInvoiceSingleTAction extends ActionSupport {
 		List<CartT> ct = this.getCartTService().findCartGoodsByOrderid(orderid);
 		if (ct != null) {
 			invoicerows.clear();
-			for (Iterator it = ct.iterator(); it.hasNext();) {
+			for (Iterator<CartT> it = ct.iterator(); it.hasNext();) {
 				CartT c = (CartT) it.next();
 				Map<String, Object> cellMap = new HashMap<String, Object>();
 				cellMap.put("goodsname", c.getGoodsname());

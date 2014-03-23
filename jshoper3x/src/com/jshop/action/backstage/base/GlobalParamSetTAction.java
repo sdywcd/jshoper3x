@@ -25,11 +25,11 @@ import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 @Namespace("")
 @ParentPackage("jshop")
-public class GlobalParamSetTAction extends ActionSupport {
+public class GlobalParamSetTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GlobalParamService globalParamService;
 	// 基础相关
 	private String language;
@@ -101,7 +101,6 @@ public class GlobalParamSetTAction extends ActionSupport {
 	private String associateattributecount;
 	// icp备案相关
 	private String icp;
-
 	private List<GlobalParamM> beanlist;
 	private Map<String, String> map = new HashMap<String, String>();
 	private boolean sucflag;

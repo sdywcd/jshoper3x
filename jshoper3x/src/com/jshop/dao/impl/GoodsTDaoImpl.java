@@ -57,7 +57,7 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 		try {
 
 			final String queryString = "delete from GoodsT as gt where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
+			this.getHibernateTemplate().execute(new HibernateCallback<Object>() {
 
 				public Object doInHibernate(Session session)
 						throws HibernateException, SQLException {

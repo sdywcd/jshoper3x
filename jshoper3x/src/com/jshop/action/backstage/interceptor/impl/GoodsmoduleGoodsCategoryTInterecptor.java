@@ -12,6 +12,8 @@ import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 @Namespace("")
 @ParentPackage("jshop")
 public class GoodsmoduleGoodsCategoryTInterecptor extends MethodFilterInterceptor {
+	
+	private static final long serialVersionUID = 1L;
 	private GoodsmoduleInterecptor goodsmoduleInterecptor;
 	
 	public GoodsmoduleInterecptor getGoodsmoduleInterecptor() {

@@ -12,8 +12,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Validate;
@@ -28,10 +28,10 @@ import com.jshop.service.LogisticsBusinessTService;
 import com.jshop.service.ShippingAddressTService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsGroupTOrderAction extends ActionSupport {
+public class GoodsGroupTOrderAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GroupOrderTService groupOrderTService;
 	private UsertService usertService;
 	private ShippingAddressTService shippingAddressTService;
@@ -74,18 +74,15 @@ public class GoodsGroupTOrderAction extends ActionSupport {
 	private String hasprintfpinvoice;
 	private String expressnumber;
 	private String tradeNo;
-	private List rows= new ArrayList();
+	private List<Map<String, Object>> rows= new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String sortname;
-	private String sortorder;
-	private String qtype;
 	private String Invoicenumber;
 	private String tradeno;
 	private String logisticsname;
 	private String formatedeliverytime;//格式化的发货时间
-	Map<String, Object> map = new HashMap<String, Object>();
+	private Map<String, Object> map = new HashMap<String, Object>();
 	@JSON(serialize=false)
 	public LogisticsBusinessTService getLogisticsBusinessTService() {
 		return logisticsBusinessTService;
@@ -134,12 +131,6 @@ public class GoodsGroupTOrderAction extends ActionSupport {
 	}
 	public void setMap(Map<String, Object> map) {
 		this.map = map;
-	}
-	public String getQtype() {
-		return qtype;
-	}
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
 	}
 	@JSON(serialize=false)
 	public GroupOrderTService getGroupOrderTService() {
@@ -371,10 +362,10 @@ public class GoodsGroupTOrderAction extends ActionSupport {
 		this.tradeNo = tradeNo;
 	}
 
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 	public int getRp() {
@@ -395,18 +386,6 @@ public class GoodsGroupTOrderAction extends ActionSupport {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	public String getSortname() {
-		return sortname;
-	}
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-	public String getSortorder() {
-		return sortorder;
-	}
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
 	
 	public String getInvoicenumber() {
 		return Invoicenumber;
@@ -424,10 +403,9 @@ public class GoodsGroupTOrderAction extends ActionSupport {
 	 * 迭代显示数据
 	 * @param list
 	 */
-	@SuppressWarnings("unchecked")
 	public void processGroupOrder(List<GroupOrderT> list){
 		rows.clear();
-		for(Iterator it = list.iterator();it.hasNext();){
+		for(Iterator<GroupOrderT> it = list.iterator();it.hasNext();){
 			GroupOrderT grouporder = (GroupOrderT) it.next();
 			if (grouporder.getOrderstate().equals("0")) {
 				grouporder.setOrderstate(AllOrderState.ORDERSTATE_ZERO);
@@ -489,7 +467,7 @@ public class GoodsGroupTOrderAction extends ActionSupport {
 			}else{
 				this.setFormatedeliverytime("");
 			}
-			Map cellmap=new HashMap();
+			Map<String,Object> cellmap=new HashMap<String,Object>();
 			cellmap.put("id", grouporder.getOrderid());
 			cellmap.put("cell",new Object[]{
 					grouporder.getOrderid(),
@@ -529,8 +507,8 @@ public class GoodsGroupTOrderAction extends ActionSupport {
 //		}
 
 		total = this.getGroupOrderTService().countfindAllGroupOrderT();
-		if(Validate.StrNotNull(sortname)&& Validate.StrNotNull(sortorder)){
-			String queryString ="from GroupOrderT order by "+ sortname +" "+ sortorder +"";
+		if(Validate.StrNotNull(getSortname())&& Validate.StrNotNull(getSortorder())){
+			String queryString ="from GroupOrderT order by "+ getSortname() +" "+ getSortorder() +"";
 			List<GroupOrderT> order = this.getGroupOrderTService().sortAllGroupOrderT(currentPage, lineSize, queryString);
 			if(order!=null){
 				this.processGroupOrder(order);

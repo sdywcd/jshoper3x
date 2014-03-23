@@ -16,15 +16,11 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.interceptor.CookiesAware;
-import org.apache.struts2.interceptor.ServletRequestAware;
-import org.apache.struts2.interceptor.ServletResponseAware;
-import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.authority.UserRoleMAction;
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.base.InitTAction;
-import com.jshop.action.backstage.base.SendSystemEmail;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
 import com.jshop.action.backstage.tools.Serial;
@@ -37,14 +33,13 @@ import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.TemplateException;
 @Namespace("")
 @ParentPackage("jshop")
-public class UserTAction extends ActionSupport {
+public class UserTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private UsertService usertService;
-	private Serial serial;
 	private InitTAction initTAction;
 	private UserRoleMService userRoleMService;
 	private UserRoleMAction userRoleMAction;
@@ -52,7 +47,7 @@ public class UserTAction extends ActionSupport {
 	private UserT bean = new UserT();
 	private String param;
 	private List<UserT> user = new ArrayList<UserT>();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -86,10 +81,6 @@ public class UserTAction extends ActionSupport {
 	private String weixin;
 	private String newpassword;
 	private String message;
-	private String query;//text
-	private String qtype;//select
-	private String sortname;//排序字段
-	private String sortorder;//排序方式
 	private String roleid;
 	private boolean slogin = false;
 	private boolean sucflag;
@@ -128,15 +119,6 @@ public class UserTAction extends ActionSupport {
 
 	public void setInitTAction(InitTAction initTAction) {
 		this.initTAction = initTAction;
-	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
 	}
 
 	@JSON(serialize = false)
@@ -336,12 +318,11 @@ public class UserTAction extends ActionSupport {
 		this.user = user;
 	}
 
-	@JSON(name = "rows")
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -392,21 +373,6 @@ public class UserTAction extends ActionSupport {
 		this.sucflag = sucflag;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
 
 	public String getRoleid() {
 		return roleid;
@@ -495,22 +461,6 @@ public class UserTAction extends ActionSupport {
 		this.weixin = weixin;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
 	public String getNewpassword() {
 		return newpassword;
 	}
@@ -577,7 +527,6 @@ public class UserTAction extends ActionSupport {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings("unchecked")
 	@Action(value = "adminlogin", results = { @Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
 	public String adminlogin() throws Exception {
 		if(StringUtils.isBlank(this.getUsername())){
@@ -619,7 +568,6 @@ public class UserTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Action(value = "findAllUsert", results = { @Result(name = "json", type = "json") })
 	public String findAllUsert() {
 		if(StaticString.SC.equals(this.getQtype())){
@@ -645,7 +593,7 @@ public class UserTAction extends ActionSupport {
 	}
 
 	private void processUserList(List<UserT> list) {
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<UserT> it = list.iterator(); it.hasNext();) {
 			UserT u = (UserT) it.next();
 			if (StaticString.ONE.equals(u.getState())) {
 				u.setState(StaticString.NORMALUSER);

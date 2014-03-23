@@ -13,18 +13,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.base.InitTAction;
-import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.StaticString;
-import com.jshop.action.backstage.tools.Validate;
-
-import com.jshop.dao.impl.GoodsAttributeTDaoImpl;
-import com.jshop.entity.CartT;
 import com.jshop.entity.TemplatesetT;
-import com.jshop.entity.UserT;
 import com.jshop.service.TemplatesetTService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -33,6 +25,7 @@ import freemarker.template.TemplateException;
 @Namespace("")
 @ParentPackage("jshop")
 public class InitAllHtml extends ActionSupport {
+	private static final long serialVersionUID = 1L;
 	private CreateHtml createHtml;
 	private DataCollectionTAction dataCollectionTAction;
 	private InitTAction initTAction;

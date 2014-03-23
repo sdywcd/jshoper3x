@@ -17,18 +17,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.GoodsAttributeT;
 import com.jshop.service.GoodsAttributeTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class GoodsAttributeTAction extends ActionSupport {
+public class GoodsAttributeTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsAttributeTService goodsAttributeTService;
-	private Serial serial;
 	private String goodsattributeid;
 	private String goodsattributename;
 	private String goodsTypeId;
@@ -45,15 +45,11 @@ public class GoodsAttributeTAction extends ActionSupport {
 	private String rjson;
 	private GoodsAttributeT bean = new GoodsAttributeT();
 	private List<GoodsAttributeT> gatbeanlist = new ArrayList<GoodsAttributeT>();
-	private List beanlist = new ArrayList();
-	private String query;
-	private String qtype;
-	private List rows = new ArrayList();
+	private List<GoodsAttributeT> beanlist = new ArrayList<GoodsAttributeT>();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String sortname;
-	private String sortorder;
 	private boolean sucflag;
 
 
@@ -66,17 +62,6 @@ public class GoodsAttributeTAction extends ActionSupport {
 	public void setGoodsAttributeTService(GoodsAttributeTService goodsAttributeTService) {
 		this.goodsAttributeTService = goodsAttributeTService;
 	}
-
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getGoodsattributeid() {
 		return goodsattributeid;
 	}
@@ -181,27 +166,11 @@ public class GoodsAttributeTAction extends ActionSupport {
 		this.sucflag = sucflag;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -237,11 +206,11 @@ public class GoodsAttributeTAction extends ActionSupport {
 		this.rjson = rjson;
 	}
 
-	public List getBeanlist() {
+	public List<GoodsAttributeT> getBeanlist() {
 		return beanlist;
 	}
 
-	public void setBeanlist(List beanlist) {
+	public void setBeanlist(List<GoodsAttributeT> beanlist) {
 		this.beanlist = beanlist;
 	}
 
@@ -270,26 +239,6 @@ public class GoodsAttributeTAction extends ActionSupport {
 
 	public void setIssametolink(String issametolink) {
 		this.issametolink = issametolink;
-	}
-
-
-	public String getSortname() {
-		return sortname;
-	}
-
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
 	}
 
 
@@ -368,8 +317,8 @@ public class GoodsAttributeTAction extends ActionSupport {
 		int lineSize=rp;
 		String qs="select count(*) from GoodsAttributeT where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
 		total=this.getGoodsAttributeTService().countsortAllGoodsAttributeT(qs);
-		if(StringUtils.isNotBlank(sortname) &&StringUtils.isNotBlank(sortorder)){
-			String queryString="from GoodsAttributeT as gat where gat."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + sortname + " " + sortorder + "";
+		if(StringUtils.isNotBlank(getSortname()) &&StringUtils.isNotBlank(getSortorder())){
+			String queryString="from GoodsAttributeT as gat where gat."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + getSortname() + " " + getSortorder() + "";
 			List<GoodsAttributeT>list=this.getGoodsAttributeTService().sortAllGoodsAttributeT(currentPage, lineSize, queryString);
 			this.ProcessGoodsAttributeTList(list);
 		}
@@ -389,7 +338,7 @@ public class GoodsAttributeTAction extends ActionSupport {
 
 	public void ProcessGoodsAttributeTList(List<GoodsAttributeT> list) {
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<GoodsAttributeT> it = list.iterator(); it.hasNext();) {
 			GoodsAttributeT gat = (GoodsAttributeT) it.next();
 			if(StaticString.ZERO.equals(gat.getAttributeType())){
 				gat.setAttributeType(StaticString.SELECTITEM);

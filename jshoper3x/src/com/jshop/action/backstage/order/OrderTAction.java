@@ -13,6 +13,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
@@ -44,8 +45,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class OrderTAction extends ActionSupport {
-	private Serial serial;
+public class OrderTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ProductTService productTService;
 	private OrderTService orderTService;
 	private UsertService usertService;
@@ -90,26 +91,14 @@ public class OrderTAction extends ActionSupport {
 	private String ordername;
 	private String memberdelivertime;//会员指定的送货日期
 	private String invPayee;//发票抬头
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private String sortname;
-	private String sortorder;
 	private String productName;
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private boolean slogin = false;
-	private String usession;
 	private String formatedeliverytime;//格式化的发货时间
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public DeliverAddressTService getDeliverAddressTService() {
 		return deliverAddressTService;
@@ -220,12 +209,11 @@ public class OrderTAction extends ActionSupport {
 		this.qtype = qtype;
 	}
 
-	@JSON(name = "rows")
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -251,14 +239,6 @@ public class OrderTAction extends ActionSupport {
 
 	public void setTotal(int total) {
 		this.total = total;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public String getPaystate() {
@@ -323,30 +303,6 @@ public class OrderTAction extends ActionSupport {
 
 	public void setInvoicenumber(String invoicenumber) {
 		this.invoicenumber = invoicenumber;
-	}
-
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
-	public String getUsession() {
-		return usession;
-	}
-
-	public void setUsession(String usession) {
-		this.usession = usession;
 	}
 
 	public String getFormatedeliverytime() {
@@ -577,10 +533,9 @@ public class OrderTAction extends ActionSupport {
 	 * 
 	 * @param order
 	 */
-	@SuppressWarnings("unchecked")
 	public void ProcessOrderList(List<OrderT> order) {
 		rows.clear();
-		for (Iterator it = order.iterator(); it.hasNext();) {
+		for (Iterator<OrderT> it = order.iterator(); it.hasNext();) {
 			OrderT o = (OrderT) it.next();
 			if (o.getOrderstate().equals("0")) {
 				o.setOrderstate(AllOrderState.ORDERSTATE_ZERO);
@@ -648,7 +603,7 @@ public class OrderTAction extends ActionSupport {
 			}else{
 				this.setFormatedeliverytime("");
 			}
-			Map cellMap = new HashMap();
+			Map<String,Object> cellMap = new HashMap<String,Object>();
 			cellMap.put("id", o.getOrderid());
 			cellMap.put("cell", new Object[] {
 					o.getOrderid(),
@@ -678,8 +633,8 @@ public class OrderTAction extends ActionSupport {
 		int currentPage = page;
 		int lineSize = rp;
 		total = this.getOrderTService().countfindAllOrderT();
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from OrderT order by " + sortname + " " + sortorder + "";
+		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
+			String queryString = "from OrderT order by " + this.getSortname() + " " + this.getSortorder() + "";
 			List<OrderT> order = this.getOrderTService().sortAllOrderT(currentPage, lineSize, queryString);
 			if (order != null) {
 				this.ProcessOrderList(order);
@@ -1386,7 +1341,7 @@ public class OrderTAction extends ActionSupport {
 	}
 
 	private void ProcessDeliverAddress(List<DeliverAddressT> list) {
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<DeliverAddressT> it=list.iterator();it.hasNext();){
 			DeliverAddressT dt=(DeliverAddressT) it.next();
 			if(dt.getState().equals(StaticString.DELIVERADDRESSSTATE_ZERO_NUM)){
 				dt.setState(StaticString.DELIVERADDRESSSTATE_ZERO);

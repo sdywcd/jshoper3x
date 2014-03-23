@@ -3,10 +3,8 @@ package com.jshop.action.backstage.androidclient;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,31 +18,22 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.json.annotations.JSON;
-import org.json.simple.JSONObject;
-import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Validate;
-import com.jshop.entity.GoodsCategoryT;
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.entity.GoodsT;
-import com.jshop.entity.ProductT;
 import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsTService;
-import com.opensymphony.xwork2.ActionSupport;
-
-import freemarker.template.utility.StringUtil;
 @Namespace("")
 @ParentPackage("jshop")
 @InterceptorRefs({  
     @InterceptorRef("defaultStack")  
 })
 
-public class AndroidGoodsTAction extends ActionSupport implements
+public class AndroidGoodsTAction extends BaseTAction implements
 ServletRequestAware, ServletResponseAware {
-	@Resource
+	private static final long serialVersionUID = 1L;
 	private GoodsTService goodsTService;
-	@Resource
 	private GoodsCategoryTService goodsCategoryTService;
 	private HttpServletRequest request;
     private HttpServletResponse response;

@@ -15,6 +15,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
@@ -28,7 +29,6 @@ import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.SiteNavigationTService;
-import com.opensymphony.xwork2.ActionSupport;
 
 import freemarker.template.TemplateException;
 @Namespace("")
@@ -37,7 +37,7 @@ import freemarker.template.TemplateException;
 //    @InterceptorRef("goodsmoduleGoodsCategoryTInterecptor"),  
 //    @InterceptorRef("defaultStack")
 //})
-public class GoodsCategoryTAction extends ActionSupport {
+public class GoodsCategoryTAction extends BaseTAction {
 	
 	private GoodsCategoryTService goodsCategoryTService;
 	private GoodsTService goodsTService;
@@ -46,7 +46,6 @@ public class GoodsCategoryTAction extends ActionSupport {
 	private ArticleCategoryTService articleCategoryTService;
 	private ArticleTService articleTService;
 	private CreateHtml createHtml;
-	private Serial serial;
 	private DataCollectionTAction dataCollectionTAction;
 	private String goodsCategoryTid;
 	private String grade;
@@ -69,8 +68,6 @@ public class GoodsCategoryTAction extends ActionSupport {
 	private String goodscategoryzero = null;
 	private String goodscategorythree = null;
 	private String goodscategorytwo = null;
-	private String query;
-	private String qtype;
 	private List<GoodsCategoryT> goodstypetnav = new ArrayList<GoodsCategoryT>();
 	private List<GoodsCategoryT> secondcategory = new ArrayList<GoodsCategoryT>();
 	private List<GoodsCategoryT> thiredscategory = new ArrayList<GoodsCategoryT>();
@@ -79,14 +76,11 @@ public class GoodsCategoryTAction extends ActionSupport {
 	private String stypeidlist = null;
 	private GoodsCategoryT bean = new GoodsCategoryT();
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private List rows = new ArrayList();
+	private List<Map<String,Object>>rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
-	private boolean slogin;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
 	private String basepath;
 	@JSON(serialize = false)
 	public DataCollectionTAction getDataCollectionTAction() {
@@ -154,16 +148,6 @@ public class GoodsCategoryTAction extends ActionSupport {
 	public void setCreateHtml(CreateHtml createHtml) {
 		this.createHtml = createHtml;
 	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getGoodsCategoryTid() {
 		return goodsCategoryTid;
 	}
@@ -267,15 +251,6 @@ public class GoodsCategoryTAction extends ActionSupport {
 	public void setCreatorid(String creatorid) {
 		this.creatorid = creatorid;
 	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
-	}
-
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -332,27 +307,12 @@ public class GoodsCategoryTAction extends ActionSupport {
 		this.parentName1 = parentName1;
 	}
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public List getRows() {
+	
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -444,22 +404,6 @@ public class GoodsCategoryTAction extends ActionSupport {
 		this.map = map;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
-
 	public String getLogo() {
 		return logo;
 	}
@@ -503,7 +447,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 		String state="1";//表示启用的分类
 		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade(grade, state);
 		this.goodscategoryzero = "";
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 			GoodsCategoryT gct = (GoodsCategoryT) it.next();
 			this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 		}
@@ -529,7 +473,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findGoodscategoryByparentId(state, parentId);
 		if(!list.isEmpty()){
 			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 				GoodsCategoryT gct = (GoodsCategoryT) it.next();
 				this.goodscategorytwo += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 			}
@@ -552,7 +496,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade("1", "1");
 		if (list != null) {
 			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
-			for (Iterator it = list.iterator(); it.hasNext();) {
+			for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 				GoodsCategoryT gct = (GoodsCategoryT) it.next();
 				this.goodscategorytwo += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 			}
@@ -845,8 +789,8 @@ public class GoodsCategoryTAction extends ActionSupport {
 		int lineSize = rp;
 		String state = StaticString.ONE;
 		total = this.getGoodsCategoryTService().countfindAllGoodsCategoryT(state);
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
-			String queryString = "from GoodsCategoryT as gt where state=:state order by " + sortname + " " + sortorder + " ";
+		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
+			String queryString = "from GoodsCategoryT as gt where state=:state order by " + getSortname() + " " + getSortorder() + " ";
 			List<GoodsCategoryT> list = this.getGoodsCategoryTService().sortAllGoodsCategoryT(currentPage, lineSize, state, queryString);
 			if(!list.isEmpty()){
 				this.ProcessGoodsCategoryTList(list);
@@ -855,7 +799,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 	}
 
 	public void ProcessGoodsCategoryTList(List<GoodsCategoryT> list) {
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 			GoodsCategoryT gct = (GoodsCategoryT) it.next();
 			if (gct.getGrade().equals(StaticString.ZERO)) {
 				gct.setGrade(StaticString.TOPCA);
@@ -978,7 +922,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 	 */
 	public void updateGoodsCategoryhtmlpath(){
 		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findGoodsCategoryByGrade("0","1");
-		for(Iterator it=list.iterator();it.hasNext();){
+		for(Iterator<GoodsCategoryT> it=list.iterator();it.hasNext();){
 			GoodsCategoryT gct=(GoodsCategoryT)it.next();
 			List<GoodsCategoryT>glist=this.getGoodsCategoryTService().findGoodscategoryByparentId("1",gct.getParentId());
 			if(glist.isEmpty()){
@@ -998,7 +942,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 		this.setNavidlist("");
 		this.goodstypetnav = this.getGoodsCategoryTService().findGoodscategoryByparentIdnull("1");
 		if (this.goodstypetnav != null) {
-			for (Iterator it = goodstypetnav.iterator(); it.hasNext();) {
+			for (Iterator<GoodsCategoryT> it = goodstypetnav.iterator(); it.hasNext();) {
 				GoodsCategoryT gct = (GoodsCategoryT) it.next();
 				navidlist += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 			}
@@ -1022,7 +966,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 			this.secondcategory = this.getGoodsCategoryTService().findGoodscategoryByparentId("1", this.getParentId().trim());
 			if (this.secondcategory != null) {
 				this.ltypeidlist = "<option value='0'>---请选择---</option>";
-				for (Iterator it = this.secondcategory.iterator(); it.hasNext();) {
+				for (Iterator<GoodsCategoryT> it = this.secondcategory.iterator(); it.hasNext();) {
 					GoodsCategoryT gct = (GoodsCategoryT) it.next();
 					ltypeidlist += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 				}
@@ -1051,7 +995,7 @@ public class GoodsCategoryTAction extends ActionSupport {
 			this.thiredscategory = this.getGoodsCategoryTService().findGoodscategoryByparentId("1", this.getParentId().trim());
 			if (this.thiredscategory != null) {
 				this.stypeidlist = "<option value='-1'>---请选择---</option>";
-				for (Iterator it = this.thiredscategory.iterator(); it.hasNext();) {
+				for (Iterator<GoodsCategoryT> it = this.thiredscategory.iterator(); it.hasNext();) {
 					GoodsCategoryT gct = (GoodsCategoryT) it.next();
 					stypeidlist += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 				}

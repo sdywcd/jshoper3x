@@ -11,21 +11,17 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
-
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.KeywordT;
 import com.jshop.service.KeywordTService;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
-@SuppressWarnings("serial")
 @ParentPackage("jshop")
-public class KeywordTAction extends ActionSupport {
+public class KeywordTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private KeywordTService keywordTService;
-	private Serial serial;
 	private String creatorid;
 	private String keywordid;
 	private String keywordname;
@@ -35,7 +31,7 @@ public class KeywordTAction extends ActionSupport {
 	private KeywordT beanlist = new KeywordT();
 	private String keywordjson = null;
 	private List<KeywordT> keyword = new ArrayList<KeywordT>();
-	private List rows = new ArrayList(0);
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -51,16 +47,6 @@ public class KeywordTAction extends ActionSupport {
 	public void setKeywordTService(KeywordTService keywordTService) {
 		this.keywordTService = keywordTService;
 	}
-
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
-
 	public String getKeywordid() {
 		return keywordid;
 	}
@@ -109,12 +95,11 @@ public class KeywordTAction extends ActionSupport {
 		this.beanlist = beanlist;
 	}
 
-	@JSON(name = "rows")
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -289,7 +274,6 @@ public class KeywordTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@Action(value = "findAllKeywordT", results = { @Result(name = "json", type = "json") })
 	public String findAllKeywordT() {
 		int currentPage = page;
@@ -298,7 +282,7 @@ public class KeywordTAction extends ActionSupport {
 		if (kt != null) {
 			total = this.getKeywordTService().countAllKeywordT();
 			rows.clear();
-			for (Iterator it = kt.iterator(); it.hasNext();) {
+			for (Iterator<KeywordT> it = kt.iterator(); it.hasNext();) {
 				KeywordT k = (KeywordT) it.next();
 				if (k.getType().equals("1")) {
 					k.setType("商品类型");
@@ -312,7 +296,7 @@ public class KeywordTAction extends ActionSupport {
 				if (k.getState().equals("2")) {
 					k.setState("隐藏");
 				}
-				Map cellMap = new HashMap();
+				Map<String, Object> cellMap = new HashMap<String, Object>();
 				cellMap.put("id", k.getKeywordid());
 				cellMap.put("cell", new Object[] {k.getKeywordname(), k.getType(), k.getState(), k.getSort(), BaseTools.formateDbDate(k.getCreatetime()), k.getCreatorid() });
 				rows.add(cellMap);
@@ -351,7 +335,7 @@ public class KeywordTAction extends ActionSupport {
 		this.setKeywordjson("");
 		this.keyword = this.getKeywordTService().findAllKeywordTjson();
 		if (this.keyword != null) {
-			for (Iterator it = this.keyword.iterator(); it.hasNext();) {
+			for (Iterator<KeywordT> it = this.keyword.iterator(); it.hasNext();) {
 				KeywordT k = (KeywordT) it.next();
 				this.keywordjson += "<option value='" + k.getKeywordid() + "'>" + k.getKeywordname() + "</option>";
 			}

@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -20,19 +18,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
 import com.jshop.entity.ProductSpecificationsT;
 import com.jshop.service.ProductSpecificationsTService;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-public class ProductSpecificationsTAction extends ActionSupport {
-	private Serial serial;
+public class ProductSpecificationsTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private ProductSpecificationsTService productSpecificationsTService;
-
 	private String specificationsid;
 	private String name;
 	private String note;
@@ -45,29 +42,16 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	private String goodsTypeId;
 	private String goodsTypeName;
 	private ProductSpecificationsT bean = new ProductSpecificationsT();
-	private List beanlist = new ArrayList();
+	private List<Map<String,Object>> beanlist = new ArrayList<Map<String,Object>>();
 	private List<ProductSpecificationsT> specificationList = new ArrayList<ProductSpecificationsT>();
-	private String query;
-	private String qtype;
-	private List rows = new ArrayList();
+	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private String specificationslist = null;
 	private String specificationsselect = null;
-	private boolean slogin;
 	private boolean sucflag;
-	private String sortname;
-	private String sortorder;
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 	@JSON(serialize = false)
 	public ProductSpecificationsTService getProductSpecificationsTService() {
 		return productSpecificationsTService;
@@ -149,35 +133,20 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getBeanlist() {
+	public List<Map<String,Object>> getBeanlist() {
 		return beanlist;
 	}
 
-	public void setBeanlist(List beanlist) {
+	public void setBeanlist(List<Map<String,Object>> beanlist) {
 		this.beanlist = beanlist;
 	}
 
-	public String getQuery() {
-		return query;
-	}
 
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
-
-	public List getRows() {
+	public List<Map<String,Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String,Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -203,14 +172,6 @@ public class ProductSpecificationsTAction extends ActionSupport {
 
 	public void setTotal(int total) {
 		this.total = total;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public boolean isSucflag() {
@@ -253,22 +214,6 @@ public class ProductSpecificationsTAction extends ActionSupport {
 
 	public void setSpecificationsselect(String specificationsselect) {
 		this.specificationsselect = specificationsselect;
-	}
-
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
 	}
 
 	public String getGoodsTypeId() {
@@ -344,8 +289,8 @@ public class ProductSpecificationsTAction extends ActionSupport {
 		int currentPage = page;
 		int lineSize = rp;
 		total = this.getProductSpecificationsTService().countfindAllProductSpecificationsT();
-		String queryString = "from ProductSpecificationsT order by " + sortname + " " + sortorder + " ";
-		if (Validate.StrNotNull(sortname) && Validate.StrNotNull(sortorder)) {
+		String queryString = "from ProductSpecificationsT order by " + this.getSortname() + " " + this.getSortorder() + " ";
+		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
 			List<ProductSpecificationsT> list = this.getProductSpecificationsTService().sortAllProductSpecificationsT(currentPage, lineSize, queryString);
 			if (list != null) {
 				this.ProcessProductSpecificationsTList(list);
@@ -356,7 +301,7 @@ public class ProductSpecificationsTAction extends ActionSupport {
 	public void ProcessProductSpecificationsTList(List<ProductSpecificationsT> list) {
 		rows.clear();
 		StringBuilder sbkey = new StringBuilder();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<ProductSpecificationsT> it = list.iterator(); it.hasNext();) {
 			ProductSpecificationsT gst = (ProductSpecificationsT) it.next();
 			if (gst.getSpecificationsType().equals(StaticString.ONE)) {
 				gst.setSpecificationsType(StaticString.WORTTYPE);

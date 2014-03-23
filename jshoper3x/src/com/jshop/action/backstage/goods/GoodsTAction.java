@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -28,6 +26,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.modelbean.GoodsparameterlistModel;
 import com.jshop.action.backstage.template.CreateHtml;
@@ -56,16 +55,14 @@ import com.jshop.service.GoodsTypeTNService;
 import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.ProductTService;
 import com.jshop.service.SiteNavigationTService;
-import com.opensymphony.xwork2.ActionSupport;
 import com.swetake.util.Qrcode;
 
 import freemarker.template.TemplateException;
 @Namespace("")
 @ParentPackage("jshop")
-
-public class GoodsTAction extends ActionSupport {
+public class GoodsTAction extends BaseTAction {
+	private static final long serialVersionUID = 1L;
 	private GoodsTService goodsTService;
-	private Serial serial;
 	private ImgTAction imgTAction;
 	private ProductTService productTService;
 	private ArticleTService articleTService;
@@ -84,7 +81,6 @@ public class GoodsTAction extends ActionSupport {
 	private String goodsid;
 	private String goodsname;
 	private String brandname;
-	private boolean flag;
 	private String nname;
 	private String lname;
 	private String sname;
@@ -151,14 +147,10 @@ public class GoodsTAction extends ActionSupport {
 	private String isoutsite;
 	private String outsitelink;
 	private String rejson;
-	private String query;//text
-	private String qtype;//select
-	private String sortname;//排序字段
-	private String sortorder;//排序方式
 	private GoodsT bean = new GoodsT();
 	private GoodsT gt = new GoodsT();
 	private List<GoodsT>beanlist=new ArrayList<GoodsT>();
-	private List rows = new ArrayList();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private List<GoodsTypeTN>gtnlist=new ArrayList<GoodsTypeTN>();
 	private GoodsTypeTN gtnbean=new GoodsTypeTN();
@@ -172,8 +164,6 @@ public class GoodsTAction extends ActionSupport {
 	private String pcpath;
 	private String twocodepath;
 	private String basepath;
-	private boolean delpcflag;
-	private boolean slogin;
 	private boolean sucflag;
 	@JSON(serialize = false)
 	public ProductTService getProductTService() {
@@ -304,14 +294,6 @@ public class GoodsTAction extends ActionSupport {
 		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
 	}
 
-	@JSON(serialize = false)
-	public Serial getSerial() {
-		return serial;
-	}
-
-	public void setSerial(Serial serial) {
-		this.serial = serial;
-	}
 
 	@JSON(serialize = false)
 	public ImgTAction getImgTAction() {
@@ -629,21 +611,7 @@ public class GoodsTAction extends ActionSupport {
 	}
 
 
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getQtype() {
-		return qtype;
-	}
-
-	public void setQtype(String qtype) {
-		this.qtype = qtype;
-	}
+	
 
 	public GoodsT getBean() {
 		return bean;
@@ -653,11 +621,11 @@ public class GoodsTAction extends ActionSupport {
 		this.bean = bean;
 	}
 
-	public List getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -716,22 +684,6 @@ public class GoodsTAction extends ActionSupport {
 
 	public void setPcpath(String pcpath) {
 		this.pcpath = pcpath;
-	}
-
-	public boolean isDelpcflag() {
-		return delpcflag;
-	}
-
-	public void setDelpcflag(boolean delpcflag) {
-		this.delpcflag = delpcflag;
-	}
-
-	public boolean isSlogin() {
-		return slogin;
-	}
-
-	public void setSlogin(boolean slogin) {
-		this.slogin = slogin;
 	}
 
 	public boolean isSucflag() {
@@ -886,21 +838,6 @@ public class GoodsTAction extends ActionSupport {
 		this.ismobileplatformgoods = ismobileplatformgoods;
 	}
 
-	public String getSortname() {
-		return sortname;
-	}
-
-	public void setSortname(String sortname) {
-		this.sortname = sortname;
-	}
-
-	public String getSortorder() {
-		return sortorder;
-	}
-
-	public void setSortorder(String sortorder) {
-		this.sortorder = sortorder;
-	}
 
 	public String getSpecificationsValue() {
 		return specificationsValue;
@@ -1041,13 +978,6 @@ public class GoodsTAction extends ActionSupport {
 		this.isSalestate = isSalestate;
 	}
 
-	public boolean isFlag() {
-		return flag;
-	}
-
-	public void setFlag(boolean flag) {
-		this.flag = flag;
-	}
 
 	public String getOtherPath() {
 		return otherPath;
@@ -1218,12 +1148,9 @@ public class GoodsTAction extends ActionSupport {
 	public String findAllGoods() {
 		if (StaticString.SC.equals(this.getQtype())) {
 			finddefaultAllGoods();
-
 		} else {
-			if (Validate.StrisNull(this.getQtype())) {
-				return "json";
-			} else {
-				if (this.getQtype().equals("goodsname")) {
+			if(StringUtils.isNotBlank(this.getQtype())){
+				if(this.getQtype().equals("goodsname")){
 					findGoodsByGoodsname();
 				}
 			}
@@ -1265,11 +1192,10 @@ public class GoodsTAction extends ActionSupport {
 	 * 
 	 * @param list
 	 */
-	@SuppressWarnings("unchecked")
 	public void ProcessGoodsList(List<GoodsT> list) {
 		total = this.getGoodsTService().countAllGoods();
 		rows.clear();
-		for (Iterator it = list.iterator(); it.hasNext();) {
+		for (Iterator<GoodsT> it = list.iterator(); it.hasNext();) {
 			GoodsT gt = (GoodsT) it.next();
 			if (gt.getRecommended().equals(StaticString.ONE)) {
 				gt.setRecommended("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
@@ -1297,7 +1223,7 @@ public class GoodsTAction extends ActionSupport {
 				gt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 
-			Map cellMap = new HashMap();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gt.getGoodsid());
 			cellMap.put("cell", new Object[] { 
 					gt.getGoodsname(), 
@@ -1794,7 +1720,7 @@ public class GoodsTAction extends ActionSupport {
 					//当数据里面存在此记录的时候，只修改二维码路径
 					if(list!=null){						
 						this.getGoodsTwocodeRelationshipTService().updateGoodsQRCode(goods.getGoodsid(), code);
-						this.setFlag(true);
+						this.setSucflag(true);
 						return "json";
 					}else{
 						//生成商品与二维码关系的记录
@@ -1805,7 +1731,7 @@ public class GoodsTAction extends ActionSupport {
 						goodscode.setState("1");
 						goodscode.setTwocodepath(code);
 						this.getGoodsTwocodeRelationshipTService().save(goodscode);
-						this.setFlag(true);
+						this.setSucflag(true);
 						return "json";
 					}
 				}
@@ -1832,7 +1758,7 @@ public class GoodsTAction extends ActionSupport {
 				// 生成二维码QRCode图片
 				ImageIO.write(bufImg, "png", imgFile);
 				
-				this.setFlag(true);
+				this.setSucflag(true);
 				return "json";
 			}
 			return "json";
