@@ -12,8 +12,8 @@ import org.apache.struts2.StrutsStatics;
 import org.apache.struts2.convention.annotation.ParentPackage;
 
 import com.jshop.action.backstage.interceptor.UserRolemoduleInterecptor;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.user.UserTAction;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.UserT;
 import com.jshop.service.UsertService;
@@ -71,10 +71,10 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 		HttpServletRequest request = (HttpServletRequest) actionContext.get(StrutsStatics.HTTP_REQUEST);
 		HttpServletResponse response=(HttpServletResponse) actionContext.get(StrutsStatics.HTTP_RESPONSE);
 		Map session = actionContext.getSession();
-		if ((session != null) && (session.get(StaticString.BACK_USER_SESSION_KEY) != null)) {
-			UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticString.BACK_USER_SESSION_KEY);
+		if ((session != null) && (session.get(StaticKey.BACK_USER_SESSION_KEY) != null)) {
+			UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticKey.BACK_USER_SESSION_KEY);
 			//如果是超级管理员就不验证权限state=3表示超级管理员
-			if(StaticString.THREE.equals(admin.getState())){
+			if(StaticKey.THREE.equals(admin.getState())){
 				return invocation.invoke();
 			}
 			//获取post过来的url和actionname
@@ -85,7 +85,7 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 			String spref[]=StringUtils.split(ref, "?");
 			
 			//去读取内存中的权限信息和上下文在url和action上做判断
-			List<FunctionM> userfunctionlist = (List<FunctionM>) ActionContext.getContext().getSession().get(StaticString.USERROLEFUNCTION);
+			List<FunctionM> userfunctionlist = (List<FunctionM>) ActionContext.getContext().getSession().get(StaticKey.USERROLEFUNCTION);
 			if(!userfunctionlist.isEmpty()){
 				for (Iterator it = userfunctionlist.iterator(); it.hasNext();) {
 					
@@ -106,7 +106,7 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 				}
 			}
 			//权限异常标记
-			ActionContext.getContext().getSession().put(StaticString.AUTHORITYEXCEPTION, StaticString.ONE);
+			ActionContext.getContext().getSession().put(StaticKey.AUTHORITYEXCEPTION, StaticKey.ONE);
 			return "authorityfalied";
 		} else {
 			return "adminloginfailed";

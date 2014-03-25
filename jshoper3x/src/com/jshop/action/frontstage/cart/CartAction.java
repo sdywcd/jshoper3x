@@ -20,8 +20,8 @@ import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.UserT;
@@ -346,7 +346,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "addCart", results = { @Result(name = "json", type = "json") })
 	public String addCart() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			List<GoodsT> gtlist1 = this.GetGoodsdetailByGoodsidForCart();
@@ -526,7 +526,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "findAllCartByUserId", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/mycart.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}") })
 	public String findAllCartByUserId() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String state="1";//表示新加入购物车商品的标记
 			String orderTag=null;
@@ -550,9 +550,9 @@ public class CartAction extends ActionSupport {
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据
@@ -569,7 +569,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "findAllCartByUserIdFortopCart", results = { @Result(name = "json", type = "json") })
 	public String findAllCartByUserIdFortopCart() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String state="1";//表示新加入购物车商品的标记
 			String orderTag=this.getOrderTag().trim();
@@ -598,7 +598,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "PlusCartNeedquantityByGoodsid", results = { @Result(name = "json", type = "json") })
 	public String PlusCartNeedquantityByGoodsid() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			//更新对应商品id的数量	//检测商品是否已经在购物车中，如果有责增加数量，没有责加入
 			int j = 0;
@@ -629,7 +629,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "DelCartByGoodsId", results = { @Result(name = "json", type = "json") })
 	public String DelCartByGoodsId() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			@SuppressWarnings("unused")
@@ -649,7 +649,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "delCartByid", results = { @Result(name = "json", type = "json") })
 	public String delCartByid() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 
@@ -674,7 +674,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "UpdateCartGoodsstate2", results = { @Result(name = "success", type = "chain", location = "findAllCartByUserId"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}") })
 	public String UpdateCartGoodsstate2() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			@SuppressWarnings("unused")
 			String[] goodslist = (this.getGoodsid() + ",").split(",");

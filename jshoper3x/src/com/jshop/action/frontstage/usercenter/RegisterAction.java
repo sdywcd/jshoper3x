@@ -20,8 +20,8 @@ import com.jshop.action.backstage.base.SendSystemEmail;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
 import com.jshop.service.MemberTService;
@@ -227,7 +227,7 @@ public class RegisterAction extends ActionSupport {
 				m.setLoginname(this.getLoginname().trim());
 				m.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
 				m.setNick(this.getNick().trim());
-				m.setMemberstate(StaticString.MEMBERSTATE_ZERO_NUM);
+				m.setMemberstate(StaticKey.MEMBERSTATE_ZERO_NUM);
 				m.setHeadpath("#");
 				m.setCreatetime(BaseTools.systemtime());
 				m.setVersiont(1);
@@ -254,7 +254,7 @@ public class RegisterAction extends ActionSupport {
 		}
 		List<MemberT>memberTs=this.getMemberTService().findMemberTymid(this.getMid());
 		if(!memberTs.isEmpty()){
-			memberTs.get(0).setMemberstate(StaticString.MEMBERSTATE_ONE_NUM);
+			memberTs.get(0).setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);
 			this.getMemberTService().updateMemberT(memberTs.get(0));
 			this.setSucflag(true);
 			return "json";

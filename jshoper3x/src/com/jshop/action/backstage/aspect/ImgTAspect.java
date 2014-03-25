@@ -13,9 +13,9 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 
 import com.jshop.action.backstage.image.ImgTAction;
-import com.jshop.action.backstage.tools.GlobalParam;
 import com.jshop.action.backstage.tools.ImgCutTools;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.GlobalParam;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.opensymphony.xwork2.ActionContext;
 /**
  * 图片上传切片
@@ -37,11 +37,11 @@ public class ImgTAspect {
 		Properties p=new Properties();
 		ActionContext ac=ActionContext.getContext();
 		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
-		filePath=sc.getRealPath("/")+StaticString.SYSTEM_CONFIG_FILE;
+		filePath=sc.getRealPath("/")+StaticKey.SYSTEM_CONFIG_FILE;
 		try {
 			p.load(new FileInputStream(filePath));
 			String isimagecompression=p.getProperty(GlobalParam.ISIMAGECOMPRESSION, "0");
-			if(isimagecompression.equals(StaticString.ONE)){
+			if(isimagecompression.equals(StaticKey.ONE)){
 				//只有当开启压缩时才执行压缩方法并保存缩略图
 				int width=Integer.parseInt(p.getProperty(GlobalParam.THUMBNAILWIDTH, "0"));
 				int height=Integer.parseInt(p.getProperty(GlobalParam.THUMBNAILHEIGHT,"0"));

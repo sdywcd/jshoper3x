@@ -21,7 +21,7 @@ import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.redis.service.RedisMemberService;
 import com.jshop.service.MemberTService;
@@ -449,7 +449,7 @@ public class MemberTAction extends BaseTAction {
 				mt.setPostingcount(0);//发布信息总数0
 				mt.setQuestion(this.getQuestion().trim());
 				mt.setAnswer(this.getAnswer().trim());
-				mt.setMemberstate(StaticString.MEMBERSTATE_ONE_NUM);//激活
+				mt.setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);//激活
 				mt.setHeadpath(this.getHeadpath().trim());
 				mt.setCreatetime(BaseTools.systemtime());
 				mt.setCreatorid(BaseTools.adminCreateId());
@@ -476,7 +476,7 @@ public class MemberTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllMemberT", results = {@Result(name = "json",type="json")})
 	public String findAllMemberT(){
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			this.findDefaultAllMemberT();
 			
 		}else{
@@ -502,15 +502,15 @@ public class MemberTAction extends BaseTAction {
 	private void ProcessMemberList(List<MemberT> list) {
 		for(Iterator<MemberT> it=list.iterator();it.hasNext();){
 			MemberT mt=(MemberT) it.next();
-			if(mt.getSex().equals(StaticString.ONE)){
-				mt.setSex(StaticString.SEXMAN);
+			if(mt.getSex().equals(StaticKey.ONE)){
+				mt.setSex(StaticKey.SEXMAN);
 			}else{
-				mt.setSex(StaticString.SEXFEMAL);
+				mt.setSex(StaticKey.SEXFEMAL);
 			}
-			if(mt.getMemberstate().equals(StaticString.MEMBERSTATE_ONE_NUM)){
-				mt.setMemberstate(StaticString.DOACTIVE);
+			if(mt.getMemberstate().equals(StaticKey.MEMBERSTATE_ONE_NUM)){
+				mt.setMemberstate(StaticKey.DOACTIVE);
 			}else{
-				mt.setMemberstate(StaticString.DONOTACTIVE);
+				mt.setMemberstate(StaticKey.DONOTACTIVE);
 			}
 			Map<String,Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", mt.getId());
@@ -547,7 +547,7 @@ public class MemberTAction extends BaseTAction {
 			int jsonsize=ja.size();
 			for(int i=0;i<jsonsize;i++){
 				JSONObject jo=(JSONObject) ja.get(i);
-				tagstr+=jo.get(StaticString.TAG).toString()+",";
+				tagstr+=jo.get(StaticKey.TAG).toString()+",";
 			}
 			tagstr="["+tagstr.substring(0,tagstr.length()-1)+"]";
 		}
@@ -585,7 +585,7 @@ public class MemberTAction extends BaseTAction {
 			bean.setTag(this.getTag().trim());
 			bean.setQuestion(this.getQuestion().trim());
 			bean.setAnswer(this.getAnswer().trim());
-			bean.setMemberstate(StaticString.ONE);//激活
+			bean.setMemberstate(StaticKey.ONE);//激活
 			bean.setHeadpath(this.getHeadpath().trim());
 			bean.setUpdatetime(BaseTools.systemtime());
 			bean.setCreatorid(BaseTools.adminCreateId());

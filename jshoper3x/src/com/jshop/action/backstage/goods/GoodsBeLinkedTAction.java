@@ -21,7 +21,7 @@ import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.modelbean.GoodsBelinkedModel;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsBelinkedT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.ProductT;
@@ -252,27 +252,27 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 				gbl.setId(list.get(0).getId());
 				gbl.setMaingoodsid(pt.getGoodsid());
 				gbl.setBelinkedproductinfo(belinkedstr.toString());
-				gbl.setMode(StaticString.ONE);//单向模式
-				gbl.setState(StaticString.ONE);//开启关联
+				gbl.setMode(StaticKey.ONE);//单向模式
+				gbl.setState(StaticKey.ONE);//开启关联
 				gbl.setMainproductid(pt.getProductid());
 				gbl.setCreatorid(BaseTools.adminCreateId());
 				gbl.setCreatetime(list.get(0).getCreatetime());
 				gbl.setUpdatetime(BaseTools.systemtime());
 				gbl.setVersiont(0);
-				gbl.setSxlinkedgoodsid(StaticString.ONE);//单向关联模式时设置成0
+				gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
 				this.getGoodsBelinkedTService().updateGoodsBelinked(gbl);
 			}else{
 				gbl.setId(this.getSerial().Serialid(Serial.GOODSBELINKED));
 				gbl.setMaingoodsid(pt.getGoodsid());
 				gbl.setBelinkedproductinfo(belinkedstr.toString());
-				gbl.setMode(StaticString.ONE);//单向模式
-				gbl.setState(StaticString.ONE);//开启关联
+				gbl.setMode(StaticKey.ONE);//单向模式
+				gbl.setState(StaticKey.ONE);//开启关联
 				gbl.setMainproductid(pt.getProductid());
 				gbl.setCreatorid(BaseTools.adminCreateId());
 				gbl.setCreatetime(BaseTools.systemtime());
 				gbl.setUpdatetime(BaseTools.systemtime());
 				gbl.setVersiont(0);
-				gbl.setSxlinkedgoodsid(StaticString.ONE);//单向关联模式时设置成0
+				gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
 				this.getGoodsBelinkedTService().save(gbl);
 			}
 			
@@ -287,7 +287,7 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoodsBelinked", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
 	public String findAllGoodsBelinked(){
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			finddefaultAllGoodsBelinked();
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){

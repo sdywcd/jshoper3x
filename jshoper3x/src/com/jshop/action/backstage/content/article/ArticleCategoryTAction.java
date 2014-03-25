@@ -17,8 +17,8 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.service.ArticleCategoryTService;
 @Namespace("")
@@ -422,7 +422,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaKeywords(this.getMetaKeywords().trim());
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
-				act.setStatus(StaticString.ONE);//启用
+				act.setStatus(StaticKey.ONE);//启用
 				act.setPath(act.getArticleCategoryTid());
 				act.setSort(Integer.parseInt(this.getSort().trim()));
 				act.setSign(this.getSign().trim());
@@ -430,7 +430,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setCreatorid(BaseTools.adminCreateId());
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(0);
-				act.setParentName(StaticString.EMPTY);
+				act.setParentName(StaticKey.EMPTY);
 				act.setPosition(this.getPosition());
 				act.setMobilesync(this.getMobilesync());
 				act.setLogo(this.getLogo().trim());
@@ -469,13 +469,13 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaKeywords(this.getMetaKeywords().trim());
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
-				act.setStatus(StaticString.ONE);
+				act.setStatus(StaticKey.ONE);
 				act.setCreatorid(BaseTools.adminCreateId());
-				act.setPath(StaticString.EMPTY);
+				act.setPath(StaticKey.EMPTY);
 				act.setSort(Integer.parseInt(this.getSort()));
-				act.setParentId(StaticString.EMPTY);
+				act.setParentId(StaticKey.EMPTY);
 				act.setSign(this.getSign().trim());
-				act.setParentName(StaticString.EMPTY);
+				act.setParentName(StaticKey.EMPTY);
 				act.setPosition(this.getPosition().trim());
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(act.getVersiont()+1);
@@ -510,7 +510,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaKeywords(this.getMetaKeywords().trim());
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
-				act.setStatus(StaticString.ONE);
+				act.setStatus(StaticKey.ONE);
 				act.setPath(this.getParentId() + "," + act.getArticleCategoryTid());
 				act.setSort(Integer.parseInt(this.getSort().trim()));
 				act.setSign(this.getSign().trim());
@@ -552,7 +552,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaKeywords(this.getMetaKeywords().trim());
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
-				act.setStatus(StaticString.ONE);
+				act.setStatus(StaticKey.ONE);
 				act.setCreatorid(BaseTools.adminCreateId());
 				act.setPath(this.getParentId()+","+act.getArticleCategoryTid());
 				act.setSort(Integer.parseInt(this.getSort()));
@@ -590,7 +590,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaKeywords(this.getMetaKeywords().trim());
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
-				act.setStatus(StaticString.ONE);
+				act.setStatus(StaticKey.ONE);
 				act.setPath(this.getParentId() + "," + this.getParentId1() + "," + act.getArticleCategoryTid());
 				act.setSort(Integer.parseInt(this.getSort().trim()));
 				act.setSign(this.getSign().trim());
@@ -632,7 +632,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaKeywords(this.getMetaKeywords().trim());
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
-				act.setStatus(StaticString.ONE);
+				act.setStatus(StaticKey.ONE);
 				act.setCreatorid(BaseTools.adminCreateId());
 				act.setPath(this.getParentId()+","+this.getParentId1()+","+act.getArticleCategoryTid());
 				act.setSort(Integer.parseInt(this.getSort()));
@@ -659,7 +659,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllArticleCategoryT", results = { @Result(name = "json", type = "json") })
 	public String findAllArticleCategoryT() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllArticleCategory();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -706,14 +706,14 @@ public class ArticleCategoryTAction extends BaseTAction {
 	public void ProcessArticleCategoryTList(List<ArticleCategoryT> list) {
 		for (Iterator<ArticleCategoryT> it = list.iterator(); it.hasNext();) {
 			ArticleCategoryT act = (ArticleCategoryT) it.next();
-			if (act.getGrade().equals(StaticString.ZERO)) {
-				act.setGrade(StaticString.TOPCA);
-			} else if (act.getGrade().equals(StaticString.ONE)) {
-				act.setGrade(StaticString.TWOCA);
+			if (act.getGrade().equals(StaticKey.ZERO)) {
+				act.setGrade(StaticKey.TOPCA);
+			} else if (act.getGrade().equals(StaticKey.ONE)) {
+				act.setGrade(StaticKey.TWOCA);
 			} else {
-				act.setGrade(StaticString.THREECA);
+				act.setGrade(StaticKey.THREECA);
 			}
-			if (act.getPosition().equals(StaticString.ONE)) {
+			if (act.getPosition().equals(StaticKey.ONE)) {
 				act.setPosition("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				act.setPosition("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");

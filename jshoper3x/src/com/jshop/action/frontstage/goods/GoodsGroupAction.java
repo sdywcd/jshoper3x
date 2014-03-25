@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.service.GoodsGroupTService;
 import com.opensymphony.xwork2.ActionContext;
@@ -326,9 +327,9 @@ public class GoodsGroupAction extends ActionSupport {
 		ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 		ActionContext.getContext().put("goodsgrouplist", list);
 		//获取导航数据
-		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 		//获取商城基本数据
-		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 		//获取页脚分类数据
 		ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 		//获取页脚文章数据

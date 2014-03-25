@@ -19,6 +19,7 @@ import com.jshop.action.backstage.template.ContentTag;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsT;
 
 import freemarker.template.TemplateException;
@@ -54,9 +55,9 @@ public class CreateStaticHtmlAspect {
 			//获取默认主题
 			map.put(FreeMarkervariable.DEFAULTTHEMESIGN, theme);
 			//获取商城基本信息
-			map.put(FreeMarkervariable.JSHOPBASICINFO, gtn.getDataCollectionTAction().findJshopbasicInfo());
+			map.put(FreeMarkervariable.JSHOPBASICINFO, gtn.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取导航
-			map.put(FreeMarkervariable.SITENAVIGATIONLIST, gtn.getDataCollectionTAction().findSiteNavigation());
+			map.put(FreeMarkervariable.SITENAVIGATIONLIST, gtn.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取页脚文章一级分类
 			map.put(FreeMarkervariable.FOOTCATEGORY, gtn.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章一级分类下得文章
@@ -86,7 +87,7 @@ public class CreateStaticHtmlAspect {
 	 * @throws TemplateException 
 	 * @throws IOException 
 	 */
-	@After("execution(String com.jshop.action.GoodsCategoryTAction.updateGoodscategoryT())")
+	@After("execution(String com.jshop.action.backstage.goods.GoodsCategoryTAction.updateGoodscategoryT())")
 	public void aftergoodscategoryIUCreatestatichtml(JoinPoint joinPoint) throws IOException, TemplateException{
 		GoodsCategoryTAction gcta=(GoodsCategoryTAction)joinPoint.getThis();
 		if(gcta.getBean()!=null){
@@ -95,9 +96,9 @@ public class CreateStaticHtmlAspect {
 			//获取默认主题
 			map.put(FreeMarkervariable.DEFAULTTHEMESIGN, gcta.getDataCollectionTAction().getDefaultTheme());
 			//获取商城基本信息
-			map.put(FreeMarkervariable.JSHOPBASICINFO, gcta.getDataCollectionTAction().findJshopbasicInfo());
+			map.put(FreeMarkervariable.JSHOPBASICINFO, gcta.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取导航
-			map.put(FreeMarkervariable.SITENAVIGATIONLIST, gcta.getDataCollectionTAction().findSiteNavigation());
+			map.put(FreeMarkervariable.SITENAVIGATIONLIST, gcta.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取页脚文章一级分类
 			map.put(FreeMarkervariable.FOOTCATEGORY, gcta.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章一级分类下得文章
@@ -141,9 +142,9 @@ public class CreateStaticHtmlAspect {
 			//获取默认主题
 			map.put(FreeMarkervariable.DEFAULTTHEMESIGN, ata.getDataCollectionTAction().getDefaultTheme());
 			//获取商城基本信息
-			map.put(FreeMarkervariable.JSHOPBASICINFO, ata.getDataCollectionTAction().findJshopbasicInfo());
+			map.put(FreeMarkervariable.JSHOPBASICINFO, ata.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取导航
-			map.put(FreeMarkervariable.SITENAVIGATIONLIST, ata.getDataCollectionTAction().findSiteNavigation());
+			map.put(FreeMarkervariable.SITENAVIGATIONLIST, ata.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取页脚文章一级分类
 			map.put(FreeMarkervariable.FOOTCATEGORY, ata.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章一级分类下得文章

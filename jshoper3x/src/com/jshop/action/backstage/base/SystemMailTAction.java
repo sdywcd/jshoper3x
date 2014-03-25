@@ -18,8 +18,8 @@ import org.springframework.core.task.TaskExecutor;
 import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.SystemMailT;
 import com.jshop.service.SystemMailTService;
 import com.jshop.service.UsertService;
@@ -316,7 +316,7 @@ public class SystemMailTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllSystemMail", results = { @Result(name = "json", type = "json") })
 	public String findAllSystemMail() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllSystemMail();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -341,20 +341,20 @@ public class SystemMailTAction extends BaseTAction {
 		rows.clear();
 		for (Iterator<SystemMailT> it = list.iterator(); it.hasNext();) {
 			SystemMailT sm = (SystemMailT) it.next();
-			if(StaticString.ONE.equals(sm.getIsssl())){
-				sm.setIsssl(StaticString.SUPPORT);
+			if(StaticKey.ONE.equals(sm.getIsssl())){
+				sm.setIsssl(StaticKey.SUPPORT);
 			}else{
-				sm.setIsssl(StaticString.UNSUPPORT);
+				sm.setIsssl(StaticKey.UNSUPPORT);
 			}
-			if(StaticString.ONE.equals(sm.getIsdefault())){
-				sm.setIsdefault(StaticString.YES);
+			if(StaticKey.ONE.equals(sm.getIsdefault())){
+				sm.setIsdefault(StaticKey.YES);
 			}else{
-				sm.setIsdefault(StaticString.NO);
+				sm.setIsdefault(StaticKey.NO);
 			}
-			if(StaticString.ONE.equals(sm.getState())){
-				sm.setState(StaticString.USEING);
+			if(StaticKey.ONE.equals(sm.getState())){
+				sm.setState(StaticKey.USEING);
 			}else{
-				sm.setState(StaticString.UNUSING);
+				sm.setState(StaticKey.UNUSING);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sm.getId());

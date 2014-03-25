@@ -17,7 +17,7 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberGradeT;
 import com.jshop.service.MemberGradeTService;
 @Namespace("")
@@ -252,7 +252,7 @@ public class MemberGradeTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllMemberGradeT", results = { @Result(name = "json", type = "json") })
 	public String findAllMemberGradeT() {
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			this.findDefaultAllMemberGradeT();
 		}else{
 			if(StringUtils.isBlank(this.getQuery())){
@@ -277,15 +277,15 @@ public class MemberGradeTAction extends BaseTAction {
 	private void ProcessMemberGradeTList(List<MemberGradeT> list) {
 		for(Iterator<MemberGradeT> it=list.iterator();it.hasNext();){
 			MemberGradeT mgt=(MemberGradeT) it.next();
-			if(StaticString.ONE.equals(mgt.getType())){
-				mgt.setType(StaticString.CREDITVALUE);
+			if(StaticKey.ONE.equals(mgt.getType())){
+				mgt.setType(StaticKey.CREDITVALUE);
 			}else{
-				mgt.setType(StaticString.EMPIRICALVALUE);
+				mgt.setType(StaticKey.EMPIRICALVALUE);
 			}
-			if(StaticString.ZERO.equals(mgt.getMpstate())){
-				mgt.setMpstate(StaticString.UNUSING);
+			if(StaticKey.ZERO.equals(mgt.getMpstate())){
+				mgt.setMpstate(StaticKey.UNUSING);
 			}else{
-				mgt.setMpstate(StaticString.USEING);
+				mgt.setMpstate(StaticKey.USEING);
 			}
 			Map<String,Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", mgt.getId());

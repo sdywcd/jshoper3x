@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.UserT;
@@ -158,7 +158,7 @@ public class OrderInvoiceAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addOrderInvoice(){
-		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			OrderInvoiceT oi=new OrderInvoiceT();
 			oi.setOrderInvoiceid(this.getSerial().Serialid(Serial.ORDERINVOICE));

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.entity.GroupCartT;
 import com.jshop.entity.UserT;
@@ -299,7 +299,7 @@ public class GroupCartAction extends ActionSupport {
 	@Action(value = "addGroupCart", results = { @Result(name = "json", type = "json") })
 	public String addGroupCart() {
 		UserT user = (UserT) ActionContext.getContext().getSession()
-				.get(StaticString.MEMBER_SESSION_KEY);
+				.get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 
 			GoodsGroupT ggt = this.GetGoodsGroupTForGroupCart();

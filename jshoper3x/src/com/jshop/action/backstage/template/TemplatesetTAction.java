@@ -16,8 +16,8 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.TemplateT;
@@ -257,9 +257,9 @@ public class TemplatesetTAction extends BaseTAction {
 		for (Iterator<TemplatesetT> it = list.iterator(); it.hasNext();) {
 			TemplatesetT tst = (TemplatesetT) it.next();
 			if("1".equals(tst.getStatus())){
-				tst.setStatus(StaticString.USEING);
+				tst.setStatus(StaticKey.USEING);
 			}else{
-				tst.setStatus(StaticString.UNUSING);
+				tst.setStatus(StaticKey.UNUSING);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", tst.getTsid());

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
 import com.jshop.service.MemberTService;
@@ -112,19 +112,19 @@ public class LoginAction extends ActionSupport {
 	public String login() {
 		this.setBasepath(BaseTools.getBasePath());
 		
-		MemberT m = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT m = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(m!=null){
-			ActionContext.getContext().getSession().remove(StaticString.MEMBER_SESSION_KEY);
+			ActionContext.getContext().getSession().remove(StaticKey.MEMBER_SESSION_KEY);
 		}
 		MD5Code md5 = new MD5Code();
 		MemberT memberT = new MemberT();
 		memberT.setLoginname(this.getLoginname().trim());
 		memberT.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
-		memberT.setMemberstate(StaticString.MEMBERSTATE_ONE_NUM);
+		memberT.setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);
 		List<MemberT>mlists=this.getMemberTService().login(memberT);
 		if (!mlists.isEmpty()) {
 			this.setLoginflag(true);
-			ActionContext.getContext().getSession().put(StaticString.MEMBER_SESSION_KEY, mlists.get(0));
+			ActionContext.getContext().getSession().put(StaticKey.MEMBER_SESSION_KEY, mlists.get(0));
 			return "json";
 		}
 		return "json";
@@ -136,13 +136,13 @@ public class LoginAction extends ActionSupport {
 			@Result(name = "success",type="freemarker",location = "/html/default/shop/user/login.html")
 	})
 	public String memberLogout() throws UnsupportedEncodingException {
-		ActionContext.getContext().getSession().remove(StaticString.MEMBER_SESSION_KEY);
+		ActionContext.getContext().getSession().remove(StaticKey.MEMBER_SESSION_KEY);
 		return "success";
 	}
 	
 	@Action(value="findUsernameFromSession", results={ @Result(name="json",type="json") })
 	public String findUsernameFromSession(){
-		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			this.setLoginname(memberT.getLoginname());
 		}else{

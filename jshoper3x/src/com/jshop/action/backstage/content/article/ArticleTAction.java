@@ -28,8 +28,8 @@ import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
 import com.jshop.service.ArticleCategoryTService;
@@ -474,7 +474,7 @@ public class ArticleTAction extends BaseTAction {
 		at.setMetaKeywords(this.getMetaKeywords());
 		at.setMetaDes(this.getMetaDes());
 		at.setContentvalue(this.getContentvalue());
-		at.setStatus(StaticString.ONE);//显示
+		at.setStatus(StaticKey.ONE);//显示
 		at.setAuthor(this.getAuthor());
 		at.setIspublication(this.getIspublication());
 		at.setIsrecommend(this.getIsrecommend());
@@ -492,12 +492,12 @@ public class ArticleTAction extends BaseTAction {
 		at.setMainpicture(this.getMainpicture().trim());
 		at.setIsoutsite(this.getIsoutsite());
 		at.setOutsitelink(this.getOutsitelink());
-		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
+		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticKey.ONE, this.getNavid());
 		if(!list.isEmpty()){
-			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {
-				at.setPosition(StaticString.ONE);
+			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticKey.ONE)) {
+				at.setPosition(StaticKey.ONE);
 			} else {
-				at.setPosition(StaticString.ZERO);
+				at.setPosition(StaticKey.ZERO);
 			}
 		}
 		at.setIsnotice(this.getIsnotice());
@@ -559,7 +559,7 @@ public class ArticleTAction extends BaseTAction {
 		at.setMetaKeywords(this.getMetaKeywords());
 		at.setMetaDes(this.getMetaDes());
 		at.setContentvalue(this.getContentvalue());
-		at.setStatus(StaticString.ONE);//显示
+		at.setStatus(StaticKey.ONE);//显示
 		at.setAuthor(this.getAuthor());
 		at.setIspublication(this.getIspublication());
 		at.setIsrecommend(this.getIsrecommend());
@@ -575,12 +575,12 @@ public class ArticleTAction extends BaseTAction {
 		at.setMainpicture(this.getMainpicture().trim());
 		at.setIsoutsite(this.getIsoutsite());
 		at.setOutsitelink(this.getOutsitelink());
-		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticString.ONE, this.getNavid());
+		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticKey.ONE, this.getNavid());
 		if(!list.isEmpty()){
-			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticString.ONE)) {
-				at.setPosition(StaticString.ONE);
+			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticKey.ONE)) {
+				at.setPosition(StaticKey.ONE);
 			} else {
-				at.setPosition(StaticString.ZERO);
+				at.setPosition(StaticKey.ZERO);
 			}
 		}
 		at.setIsnotice(this.getIsnotice());
@@ -615,7 +615,7 @@ public class ArticleTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllArticleT", results = { @Result(name = "json", type = "json") })
 	public String findAllArticleT() throws Exception {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllArticle();				
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {

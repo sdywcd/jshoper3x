@@ -17,8 +17,8 @@ import org.springframework.stereotype.Controller;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
@@ -228,7 +228,7 @@ public class DeliverAddressAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addDeliveraddress(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user=(UserT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(user!=null){
 			DeliverAddressT d=new DeliverAddressT();
 			d.setAddressid(this.getSerial().Serialid(Serial.DELIVERADDRESS));
@@ -262,7 +262,7 @@ public class DeliverAddressAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
 	public String GetUserDeliverAddress(){
-		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			List<DeliverAddressT> list=this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
 			ActionContext.getContext().put("deliveraddress", list);
@@ -283,7 +283,7 @@ public class DeliverAddressAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
 	public String memberDelDeliverAddress(){
-		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			if(StringUtils.isBlank(this.getAddressid())){
 				return INPUT;
@@ -303,7 +303,7 @@ public class DeliverAddressAction extends ActionSupport {
 	 */
 	@Action(value = "delDeliverAddressByaddressid", results = { @Result(name = "json", type = "json") })
 	public String delDeliverAddressByaddressid(){
-		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			if(StringUtils.isBlank(this.getAddressid())){
 				String strs[]=StringUtils.split(this.getAddressid(), ",");

@@ -20,6 +20,7 @@ import com.jshop.action.backstage.goods.GoodsGroupTAction;
 import com.jshop.action.backstage.goods.GoodsTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.PageModel;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleT;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsGroupT;
@@ -516,7 +517,7 @@ public class CreateHtml extends ActionSupport {
 	 */
 	public String buildEmail(String emailcontent) throws IOException, TemplateException {
 		map.put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 		map.put(FreeMarkervariable.USERACTIVATES, emailcontent);
 		return this.createEmail(ContentTag.TEMPLATENAMEFOREMAIL, BaseTools.adminCreateId(), map);
 
@@ -531,7 +532,7 @@ public class CreateHtml extends ActionSupport {
 	 */
 	public String buildactivityEmail(String emailcontent) throws IOException, TemplateException {
 		map.put(FreeMarkervariable.BASEPATH, this.getBasePath());
-		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 		map.put(FreeMarkervariable.EMAILCONTENT, emailcontent);
 		return this.createactivityEmail(ContentTag.TEMPLATENAMEFOREMAILTEMPLATE, ContentTag.CREATORID, map);
 	}
@@ -545,7 +546,7 @@ public class CreateHtml extends ActionSupport {
 	 */
 	public void buildUseractivatescallback(Map<String, Object> map) throws IOException, TemplateException {
 		map.put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 		this.createNormalhtml(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORUSERACTIVATESCALLBACK, null, map);
 	}
 

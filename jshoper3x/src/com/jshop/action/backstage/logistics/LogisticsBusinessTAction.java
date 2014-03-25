@@ -16,8 +16,8 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.service.LogisticsBusinessTService;
 
@@ -374,31 +374,31 @@ public class LogisticsBusinessTAction extends BaseTAction {
 		for (Iterator<LogisticsBusinessT> it = list.iterator(); it.hasNext();) {
 			LogisticsBusinessT lb = (LogisticsBusinessT) it.next();
 			if (lb.getInsure().equals("1")) {
-				lb.setInsure(StaticString.SUPPORT);
+				lb.setInsure(StaticKey.SUPPORT);
 			} else {
-				lb.setInsure(StaticString.UNSUPPORT);
+				lb.setInsure(StaticKey.UNSUPPORT);
 			}
 			if (lb.getIsCod().equals("1")) {
-				lb.setInsure(StaticString.SUPPORT);
+				lb.setInsure(StaticKey.SUPPORT);
 			} else {
-				lb.setIsCod(StaticString.UNSUPPORT);
+				lb.setIsCod(StaticKey.UNSUPPORT);
 			}
 			if (lb.getVisible().equals("1")) {
-				lb.setVisible(StaticString.SHOW);
+				lb.setVisible(StaticKey.SHOW);
 			} else {
-				lb.setVisible(StaticString.HIDDEN);
+				lb.setVisible(StaticKey.HIDDEN);
 			}
 			if (lb.getState().equals("1")) {
-				lb.setState(StaticString.FRONTUSE);
+				lb.setState(StaticKey.FRONTUSE);
 			} else if (lb.getState().equals("0")) {
-				lb.setState(StaticString.UNUSING);
+				lb.setState(StaticKey.UNUSING);
 			} else {
-				lb.setState(StaticString.BACKUSE);
+				lb.setState(StaticKey.BACKUSE);
 			}
 			if(lb.getSendrange().equals("1")){
-				lb.setSendrange(StaticString.INTERNATIONAL);
+				lb.setSendrange(StaticKey.INTERNATIONAL);
 			}else{
-				lb.setSendrange(StaticString.INTERNAL);
+				lb.setSendrange(StaticKey.INTERNAL);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", lb.getLogisticsid());

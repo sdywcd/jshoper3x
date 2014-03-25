@@ -20,8 +20,8 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
-import com.jshop.action.backstage.tools.GlobalParam;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.GlobalParam;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
 import com.opensymphony.xwork2.ActionContext;
@@ -1007,7 +1007,7 @@ public class GlobalParamSetTAction extends BaseTAction {
 		String filePath="";
 		ActionContext ac=ActionContext.getContext();
 		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
-		filePath=sc.getRealPath("/")+StaticString.SYSTEM_CONFIG_FILE;
+		filePath=sc.getRealPath("/")+StaticKey.SYSTEM_CONFIG_FILE;
 		InputStream inputStream = new FileInputStream(filePath);
 		Properties p = new Properties();
 		p.load(inputStream);

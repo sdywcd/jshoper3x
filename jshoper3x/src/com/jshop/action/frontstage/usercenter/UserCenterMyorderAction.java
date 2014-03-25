@@ -21,8 +21,8 @@ import com.jshop.action.backstage.thirdpartyplatform.alipay.AlipayConfig;
 import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.LogisticsBusinessT;
@@ -341,7 +341,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "findAllUserOrder", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/myorder.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${hidurl}") })
 	public String findAllUserOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			int lineSize = 50;
 			String orderstate = "8";//8表示用户自己删除的订单
@@ -360,9 +360,9 @@ public class UserCenterMyorderAction extends ActionSupport {
 			//获取我已买到的商品
 			ActionContext.getContext().put("userorder", list);
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据
@@ -380,7 +380,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "DelOrderByorderid", results = { @Result(name = "success", type = "chain", location = "findAllUserOrder"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String DelOrderByorderid() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String orderstate = "8";//9表示用户自己删除的订单
 			@SuppressWarnings("unused")
@@ -399,7 +399,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "ConfirmGoodsReceive", results = { @Result(name = "success", type = "chain", location = "findAllUserOrder"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String ConfirmGoodsReceive() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String orderstate = "6";//6表示用户已经确认收货
 			@SuppressWarnings("unused")
@@ -419,7 +419,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "findAllUserOrderOn", results = { @Result(name = "success", type = "freemarker", location = "WEB-INF/theme/default/shop/myorder.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String findAllUserOrderOn() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			currentPage = 1;
 			lineSize = 5;
@@ -439,9 +439,9 @@ public class UserCenterMyorderAction extends ActionSupport {
 			//获取我的订单
 			ActionContext.getContext().put("userorderon", list);
 			//获取导航数据
-			ActionContext.getContext().put("siteNavigationList", this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put("siteNavigationList", this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put("jshopbasicinfo", this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put("jshopbasicinfo", this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put("footcategory", this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据
@@ -508,7 +508,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "InitPayPage", results = { @Result(name = "success", type="freemarker", location = "/WEB-INF/theme/default/shop/confirmorderag.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String InitPayPage() {
-		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
 			//获取用户收获地址
 			GetUserDeliverAddress(memberT);
@@ -521,9 +521,9 @@ public class UserCenterMyorderAction extends ActionSupport {
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据
@@ -707,7 +707,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "InitAgAlipayandUpdateOrder", results = { @Result(name = "json", type = "json") })
 	public String InitAgAlipayandUpdateOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			//比较发货地址并更新
@@ -850,9 +850,9 @@ public class UserCenterMyorderAction extends ActionSupport {
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据

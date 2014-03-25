@@ -17,7 +17,7 @@ import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberRechargeT;
 import com.jshop.service.MemberRechargeRecordsTService;
 import com.jshop.service.MemberRechargeTService;
@@ -153,7 +153,7 @@ public class MemberRechargeTAction extends BaseTAction {
 		if(mrt!=null){
 			double mbalance=0.0;
 			//如果是增加余额
-			if(StaticString.ONE.equals(this.getOperatetype())){
+			if(StaticKey.ONE.equals(this.getOperatetype())){
 				//1加法
 				mbalance=Arith.add(mrt.getBalance(), this.getBalance());
 			}else{
@@ -190,7 +190,7 @@ public class MemberRechargeTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllMemberRechargeT", results = {@Result(name = "json",type="json")})
 	public String findAllMemberRechargeT(){
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			this.findDefaultAllMemberRechargeT();
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){

@@ -19,10 +19,10 @@ import com.jshop.action.backstage.thirdpartyplatform.alipay.AlipayConfig;
 import com.jshop.action.backstage.thirdpartyplatform.tenpay.TenPayConfig;
 import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.PaymentCode;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.PaymentCode;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
@@ -418,7 +418,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${hidurl}")
 	})
 	public String InitvirtualcardOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			//跟新下购物车的cartid（特殊）
 			updateCartidForVirtualGoodsCard();
@@ -438,9 +438,9 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据
@@ -463,7 +463,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${hidurl}")
 	})
 	public String InitvirtualmovieOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			//跟新下购物车的cartid（特殊）
 			updateCartidForVirtualGoodsCard();
@@ -483,9 +483,9 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据
@@ -737,7 +737,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitpayneedInfoVirtualGoodsCard() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			
@@ -781,7 +781,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitpayneedInfoVirtualGoodsmovie() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			
@@ -824,7 +824,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 	 * @return
 	 */
 	public void updateCartidForVirtualGoodsCard(){
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			String cartid=this.getSerial().Serialid(Serial.CART);//获取购物车信息id是可重复的。一次提交只有一个购物车信息id,标记这批商品被标记在同一个订单中
 			int i=this.getCartTService().updateCartIdBygoodsid(cartid, user.getUserid(), this.getGoodsid(), "1");

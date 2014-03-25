@@ -17,8 +17,8 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCommentT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsCommentTService;
@@ -270,11 +270,11 @@ public class GoodsCommentTAction extends BaseTAction {
 		gct.setPosttime(BaseTools.systemtime());
 		gct.setCommentcontent(this.getCommentcontent());
 		gct.setScore(this.getScore());
-		gct.setState(StaticString.COMMENT_STATE_ONE_NUM);
-		gct.setReplyorcomment(StaticString.COMMENT_REPLY_TWO_NUM);
-		gct.setReplyid(StaticString.COMMENT_DEFAULT_REPLYID);
-		gct.setEmailable(StaticString.COMMENT_EMAILABLE_ONE_NUM);
-		gct.setVirtualadd(StaticString.COMMENT_VIRTUALADD_ONE_NUM);
+		gct.setState(StaticKey.COMMENT_STATE_ONE_NUM);
+		gct.setReplyorcomment(StaticKey.COMMENT_REPLY_TWO_NUM);
+		gct.setReplyid(StaticKey.COMMENT_DEFAULT_REPLYID);
+		gct.setEmailable(StaticKey.COMMENT_EMAILABLE_ONE_NUM);
+		gct.setVirtualadd(StaticKey.COMMENT_VIRTUALADD_ONE_NUM);
 		this.getGoodsCommentTService().save(gct);
 		this.setSucflag(true);
 		return "json";
@@ -309,10 +309,10 @@ public class GoodsCommentTAction extends BaseTAction {
 		total = this.getGoodsCommentTService().countfindAllGoodsComment();
 		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
-			if (gctt.getState().equals(StaticString.ONE)) {
-				gctt.setState(StaticString.SHOW);
+			if (gctt.getState().equals(StaticKey.ONE)) {
+				gctt.setState(StaticKey.SHOW);
 			} else {
-				gctt.setState(StaticString.HIDDEN);
+				gctt.setState(StaticKey.HIDDEN);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gctt.getGoodsid());
@@ -383,7 +383,7 @@ public class GoodsCommentTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoodsCommentListByGoodsId", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsCommentListByGoodsId() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.finddefaultAllGoodsCommentByGoodsId();
 		} else {
 			if (StringUtils.isBlank(this.getQuery())) {
@@ -417,22 +417,22 @@ public class GoodsCommentTAction extends BaseTAction {
 		total = this.getGoodsCommentTService().countfindAllGoodsComment();
 		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
-			if (gctt.getState().equals(StaticString.ONE)) {
-				gctt.setState(StaticString.SHOW);
+			if (gctt.getState().equals(StaticKey.ONE)) {
+				gctt.setState(StaticKey.SHOW);
 			} else {
-				gctt.setState(StaticString.HIDDEN);
+				gctt.setState(StaticKey.HIDDEN);
 			}
 			if (gctt.getVirtualadd().equals(
-					StaticString.COMMENT_VIRTUALADD_ONE_NUM)) {
-				gctt.setVirtualadd(StaticString.COMMENT_VIRTULADD);
+					StaticKey.COMMENT_VIRTUALADD_ONE_NUM)) {
+				gctt.setVirtualadd(StaticKey.COMMENT_VIRTULADD);
 			} else {
-				gctt.setVirtualadd(StaticString.COMMENT_NOTVIRTULADD);
+				gctt.setVirtualadd(StaticKey.COMMENT_NOTVIRTULADD);
 			}
 			if (gctt.getReplyorcomment().equals(
-					StaticString.COMMENT_REPLY_ONE_NUM)) {
-				gctt.setReplyorcomment(StaticString.COMMENT_REPLY_ONE);
+					StaticKey.COMMENT_REPLY_ONE_NUM)) {
+				gctt.setReplyorcomment(StaticKey.COMMENT_REPLY_ONE);
 			} else {
-				gctt.setReplyorcomment(StaticString.COMMENT_REPLY_TWO);
+				gctt.setReplyorcomment(StaticKey.COMMENT_REPLY_TWO);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gctt.getCommentid());

@@ -13,8 +13,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 import com.jshop.action.backstage.member.MemberTAction;
-import com.jshop.action.backstage.tools.GlobalParam;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.GlobalParam;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.opensymphony.xwork2.ActionContext;
 /**
  * 会员相关的切片
@@ -37,11 +37,11 @@ public class MemberTAspect {
 		Properties p=new Properties();
 		ActionContext ac=ActionContext.getContext();
 		ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
-		filePath=sc.getRealPath("/")+StaticString.SYSTEM_CONFIG_FILE;
+		filePath=sc.getRealPath("/")+StaticKey.SYSTEM_CONFIG_FILE;
 		try {
 			p.load(new FileInputStream(filePath));
 			String isUsercanRegister=p.getProperty(GlobalParam.ISUSERCANREGISTER, "0");
-			if(isUsercanRegister.equals(StaticString.ONE)){
+			if(isUsercanRegister.equals(StaticKey.ONE)){
 				isCanRegister=true;
 			}
 			memberTAction.setDoingTag(isCanRegister);

@@ -21,8 +21,8 @@ import org.json.simple.JSONValue;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ProductSpecificationsT;
 import com.jshop.service.ProductSpecificationsTService;
 @Namespace("")
@@ -257,7 +257,7 @@ public class ProductSpecificationsTAction extends BaseTAction {
 		pst.setSpecificationsValue(this.getSpecificationsValue());
 		pst.setCreatetime(BaseTools.systemtime());
 		pst.setCreatorid(BaseTools.adminCreateId());
-		pst.setState(StaticString.ONE);
+		pst.setState(StaticKey.ONE);
 		pst.setGoodsTypeId(this.getGoodsTypeId());
 		pst.setGoodsTypeName(this.getGoodsTypeName());
 		this.getProductSpecificationsTService().save(pst);
@@ -273,7 +273,7 @@ public class ProductSpecificationsTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllProductSpecificationsT", results = { @Result(name = "json", type = "json") })
 	public String findAllProductSpecificationsT() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllProductSpecificationsT();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -303,12 +303,12 @@ public class ProductSpecificationsTAction extends BaseTAction {
 		StringBuilder sbkey = new StringBuilder();
 		for (Iterator<ProductSpecificationsT> it = list.iterator(); it.hasNext();) {
 			ProductSpecificationsT gst = (ProductSpecificationsT) it.next();
-			if (gst.getSpecificationsType().equals(StaticString.ONE)) {
-				gst.setSpecificationsType(StaticString.WORTTYPE);
-			} else if(gst.getSpecificationsType().equals(StaticString.TWO)) {
-				gst.setSpecificationsType(StaticString.IMGTYPE);
+			if (gst.getSpecificationsType().equals(StaticKey.ONE)) {
+				gst.setSpecificationsType(StaticKey.WORTTYPE);
+			} else if(gst.getSpecificationsType().equals(StaticKey.TWO)) {
+				gst.setSpecificationsType(StaticKey.IMGTYPE);
 			}else{
-				gst.setSpecificationsType(StaticString.COLORTYPE);
+				gst.setSpecificationsType(StaticKey.COLORTYPE);
 			}
 			JSONArray ja=(JSONArray)JSONValue.parse(gst.getSpecificationsValue());
 			int jsonsize=ja.size();
@@ -317,7 +317,7 @@ public class ProductSpecificationsTAction extends BaseTAction {
 				Iterator iter = jo.keySet().iterator();
 				while (iter.hasNext()) {
 					String key = iter.next().toString();
-					if (key.equals(StaticString.SPECIFIKEY)) {
+					if (key.equals(StaticKey.SPECIFIKEY)) {
 						sbkey.append(jo.get(key).toString()).append("");
 					}
 				}
@@ -406,7 +406,7 @@ public class ProductSpecificationsTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllSpecificationsforjson", results = { @Result(name = "json", type = "json") })
 	public String findAllSpecificationsforjson() {
-		String state=StaticString.ONE;//可用状态
+		String state=StaticKey.ONE;//可用状态
 		specificationList = this.getProductSpecificationsTService().findAllProductSpecificationsT(state);
 		if (!specificationList.isEmpty()) {
 			this.setSucflag(true);

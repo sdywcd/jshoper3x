@@ -24,8 +24,8 @@ import com.jshop.action.backstage.base.InitTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.MD5Code;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
@@ -492,7 +492,7 @@ public class UserTAction extends BaseTAction {
 	 */
 	@Action(value = "checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
 	public String checklogin() {
-		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticString.BACK_USER_SESSION_KEY);
+		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticKey.BACK_USER_SESSION_KEY);
 		if (admin!=null) {
 			this.setSlogin(false);
 			return "json";
@@ -506,11 +506,11 @@ public class UserTAction extends BaseTAction {
 	
 	@Action(value = "checkAuthorityException", results = { @Result(name = "json", type = "json", params = { "includeProperties", "sauthority" }) })
 	public String checkAuthorityException(){
-		String authorityE=(String) ActionContext.getContext().getSession().get(StaticString.AUTHORITYEXCEPTION);
+		String authorityE=(String) ActionContext.getContext().getSession().get(StaticKey.AUTHORITYEXCEPTION);
 		if(authorityE!=null){
-			if(StaticString.ONE.equals(authorityE)){
+			if(StaticKey.ONE.equals(authorityE)){
 				this.setSauthority(true);
-				ActionContext.getContext().getSession().remove(StaticString.AUTHORITYEXCEPTION);
+				ActionContext.getContext().getSession().remove(StaticKey.AUTHORITYEXCEPTION);
 				return "json";
 			}
 		}else{
@@ -530,11 +530,11 @@ public class UserTAction extends BaseTAction {
 	@Action(value = "adminlogin", results = { @Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
 	public String adminlogin() throws Exception {
 		if(StringUtils.isBlank(this.getUsername())){
-			this.setParam(StaticString.ONE);
+			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
 		if(StringUtils.isBlank(this.getPassword())){
-			this.setParam(StaticString.ONE);
+			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
 		MD5Code md5 = new MD5Code();
@@ -544,22 +544,22 @@ public class UserTAction extends BaseTAction {
 		//user.setState(StaticString.THREE);//超级管理员
 		user = this.getUsertService().login(user);
 		if (user != null) {
-			ActionContext.getContext().getSession().put(StaticString.BACK_USER_SESSION_KEY, user);
+			ActionContext.getContext().getSession().put(StaticKey.BACK_USER_SESSION_KEY, user);
 			this.setParam(md5.getMD5ofStr(user.getUserid()));
-			ActionContext.getContext().getSession().put(StaticString.BACK_SESSION_KEY, param);
+			ActionContext.getContext().getSession().put(StaticKey.BACK_SESSION_KEY, param);
 			//获取默认主题
 			this.getInitTAction().InitDefaultThemeT();
 			//收集权限信息并放入内存
 			List<FunctionM> userfunctionlist = this.getUserRoleMAction().findUserRoleFunctionList(user.getUserid());
 			//List<FunctionM>allfunctionlist=this.getUserRoleMAction().findAllFunctionM();
-			ActionContext.getContext().getSession().put(StaticString.USERROLEFUNCTION, userfunctionlist);
+			ActionContext.getContext().getSession().put(StaticKey.USERROLEFUNCTION, userfunctionlist);
 			//ActionContext.getContext().getSession().put(BaseTools.ALLROLEFUNCTION, allfunctionlist);
 			//获取前5条需要发货的订单信息
 			List<OrderT>listOrderTs=this.getInitTAction().findNewestOrders();
-			ActionContext.getContext().getSession().put(StaticString.NEWESTORDERS, listOrderTs);
+			ActionContext.getContext().getSession().put(StaticKey.NEWESTORDERS, listOrderTs);
 			return SUCCESS;
 		}
-		this.setParam(StaticString.ONE);
+		this.setParam(StaticKey.ONE);
 		return INPUT;
 	}
 
@@ -570,7 +570,7 @@ public class UserTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllUsert", results = { @Result(name = "json", type = "json") })
 	public String findAllUsert() {
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			finddefaultAllUserT();
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
@@ -595,20 +595,20 @@ public class UserTAction extends BaseTAction {
 	private void processUserList(List<UserT> list) {
 		for (Iterator<UserT> it = list.iterator(); it.hasNext();) {
 			UserT u = (UserT) it.next();
-			if (StaticString.ONE.equals(u.getState())) {
-				u.setState(StaticString.NORMALUSER);
+			if (StaticKey.ONE.equals(u.getState())) {
+				u.setState(StaticKey.NORMALUSER);
 			}
-			if (StaticString.TWO.equals(u.getState())) {
-				u.setState(StaticString.MANAGERUSER);
+			if (StaticKey.TWO.equals(u.getState())) {
+				u.setState(StaticKey.MANAGERUSER);
 			}
-			if (StaticString.THREE.equals(u.getState())) {
-				u.setState(StaticString.SUPERMANAGER);
+			if (StaticKey.THREE.equals(u.getState())) {
+				u.setState(StaticKey.SUPERMANAGER);
 			}
-			if (StaticString.ZERO.equals(u.getUserstate())) {
-				u.setUserstate(StaticString.USERSTATEUNACTIVE);
+			if (StaticKey.ZERO.equals(u.getUserstate())) {
+				u.setUserstate(StaticKey.USERSTATEUNACTIVE);
 			}
-			if (StaticString.ONE.equals(u.getUserstate())) {
-				u.setUserstate(StaticString.USERSTATEACTIVE);
+			if (StaticKey.ONE.equals(u.getUserstate())) {
+				u.setUserstate(StaticKey.USERSTATEACTIVE);
 			}
 			Map<String,Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", u.getUserid());
@@ -665,16 +665,16 @@ public class UserTAction extends BaseTAction {
 				user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));//默认密码6个1
 				user.setUserstate(this.getUserstate());
 				user.setPostingcount(0);
-				user.setSection(StaticString.EMPTY);
-				user.setPosition(StaticString.EMPTY);
-				user.setGroupid(StaticString.EMPTY);
-				user.setParttime1(StaticString.EMPTY);
-				user.setParttime2(StaticString.EMPTY);
-				user.setParttime3(StaticString.EMPTY);
+				user.setSection(StaticKey.EMPTY);
+				user.setPosition(StaticKey.EMPTY);
+				user.setGroupid(StaticKey.EMPTY);
+				user.setParttime1(StaticKey.EMPTY);
+				user.setParttime2(StaticKey.EMPTY);
+				user.setParttime3(StaticKey.EMPTY);
 				user.setQq(this.getQq().trim());
 				user.setState(this.getState());
-				user.setRolemid(StaticString.ZERO);
-				user.setRolemname(StaticString.EMPTY);
+				user.setRolemid(StaticKey.ZERO);
+				user.setRolemname(StaticKey.EMPTY);
 				user.setHeadpath(this.getHeadpath().trim());
 				user.setCreatorid(BaseTools.adminCreateId());
 				user.setCreatetime(BaseTools.systemtime());
@@ -885,9 +885,9 @@ public class UserTAction extends BaseTAction {
 	 */
 	@Action(value = "adminlogout", results = { @Result(name = "json", type = "json") })
 	public String adminlogout() {
-		ActionContext.getContext().getSession().remove(StaticString.BACK_USER_SESSION_KEY);
-		ActionContext.getContext().getSession().remove(StaticString.USERROLEFUNCTION);
-		ActionContext.getContext().getSession().remove(StaticString.BACK_SESSION_KEY);
+		ActionContext.getContext().getSession().remove(StaticKey.BACK_USER_SESSION_KEY);
+		ActionContext.getContext().getSession().remove(StaticKey.USERROLEFUNCTION);
+		ActionContext.getContext().getSession().remove(StaticKey.BACK_SESSION_KEY);
 		return "json";
 
 	}

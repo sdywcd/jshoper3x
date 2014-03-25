@@ -20,8 +20,8 @@ import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
@@ -527,7 +527,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
 				gct.setName(this.getName().trim());
-				gct.setState(StaticString.ONE);
+				gct.setState(StaticKey.ONE);
 				gct.setPath(gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
@@ -536,7 +536,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setCreatorid(BaseTools.adminCreateId());
 				gct.setUpdatetime(BaseTools.systemtime());
 				gct.setVersiont(0);
-				gct.setParentName(StaticString.EMPTY);
+				gct.setParentName(StaticKey.EMPTY);
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
 				this.getGoodsCategoryTService().save(gct);
@@ -570,14 +570,14 @@ public class GoodsCategoryTAction extends BaseTAction {
 		if (i == 0 && j == 0) {
 			if (Integer.parseInt(this.getGrade()) == 0) {
 				gct.setGoodsTypeId(this.getGoodsTypeId());//商品类型id
-				gct.setParentId(StaticString.EMPTY);//将父分类设置成空
-				gct.setParentName(StaticString.EMPTY);//父分类名称应为是顶级和一级分类所以名称空
+				gct.setParentId(StaticKey.EMPTY);//将父分类设置成空
+				gct.setParentName(StaticKey.EMPTY);//父分类名称应为是顶级和一级分类所以名称空
 				gct.setGrade(this.getGrade().trim());//顶级分类一级分类
 				gct.setName(this.getName().trim());
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
-				gct.setState(StaticString.ONE);
-				gct.setPath(StaticString.EMPTY);//将原有分类递归路径设置成空
+				gct.setState(StaticKey.ONE);
+				gct.setPath(StaticKey.EMPTY);//将原有分类递归路径设置成空
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
 				gct.setCreatorid(BaseTools.adminCreateId());
@@ -610,7 +610,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
 				gct.setName(this.getName().trim());
-				gct.setState(StaticString.ONE);
+				gct.setState(StaticKey.ONE);
 				gct.setPath(this.getParentId() + "," + gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
@@ -659,7 +659,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setName(this.getName().trim());
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
-				gct.setState(StaticString.ONE);
+				gct.setState(StaticKey.ONE);
 			    gct.setPath(this.getParentId() + "," + gct.getGoodsCategoryTid());//path代表了递归路径，要更新
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
@@ -696,7 +696,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
 				gct.setName(this.getName().trim());
-				gct.setState(StaticString.ONE);
+				gct.setState(StaticKey.ONE);
 				gct.setPath(this.getParentId() + "," + this.getParentId1() + "," + gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
@@ -745,7 +745,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setName(this.getName().trim());
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
-				gct.setState(StaticString.ONE);
+				gct.setState(StaticKey.ONE);
 				gct.setPath(this.getParentId()+","+this.getParentId1()+","+gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
@@ -772,7 +772,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoodsCategoryT", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsCategoryT() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllGoodsCategoryT();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -787,7 +787,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 	public void findDefaultAllGoodsCategoryT() {
 		int currentPage = page;
 		int lineSize = rp;
-		String state = StaticString.ONE;
+		String state = StaticKey.ONE;
 		total = this.getGoodsCategoryTService().countfindAllGoodsCategoryT(state);
 		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
 			String queryString = "from GoodsCategoryT as gt where state=:state order by " + getSortname() + " " + getSortorder() + " ";
@@ -801,12 +801,12 @@ public class GoodsCategoryTAction extends BaseTAction {
 	public void ProcessGoodsCategoryTList(List<GoodsCategoryT> list) {
 		for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 			GoodsCategoryT gct = (GoodsCategoryT) it.next();
-			if (gct.getGrade().equals(StaticString.ZERO)) {
-				gct.setGrade(StaticString.TOPCA);
-			} else if (gct.getGrade().equals(StaticString.ONE)) {
-				gct.setGrade(StaticString.TWOCA);
+			if (gct.getGrade().equals(StaticKey.ZERO)) {
+				gct.setGrade(StaticKey.TOPCA);
+			} else if (gct.getGrade().equals(StaticKey.ONE)) {
+				gct.setGrade(StaticKey.TWOCA);
 			} else {
-				gct.setGrade(StaticString.THREECA);
+				gct.setGrade(StaticKey.THREECA);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gct.getGoodsCategoryTid());

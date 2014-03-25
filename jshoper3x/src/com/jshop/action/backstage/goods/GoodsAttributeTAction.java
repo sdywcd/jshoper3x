@@ -20,8 +20,8 @@ import org.json.simple.JSONValue;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsAttributeT;
 import com.jshop.service.GoodsAttributeTService;
 @Namespace("")
@@ -263,22 +263,22 @@ public class GoodsAttributeTAction extends BaseTAction {
 		GoodsAttributeT gat = new GoodsAttributeT();
 		for (int i = 0; i <jsonsize; i++) {
 			gat.setCreatetime(BaseTools.systemtime());
-			gat.setState(StaticString.ONE);
+			gat.setState(StaticKey.ONE);
 			gat.setCreatorid(BaseTools.adminCreateId());
 			gat.setGoodsTypeId(this.getGoodsTypeId());
 			gat.setGoodsTypeName(this.getGoodsTypeName());
 			gat.setAttributeIndex(this.getAttributeIndex());
 			JSONObject jo=(JSONObject)ja.get(i);
 
-			gat.setGoodsattributename(jo.get(StaticString.GOODSATTRIBUTENAME).toString());
+			gat.setGoodsattributename(jo.get(StaticKey.GOODSATTRIBUTENAME).toString());
 		
-			gat.setAttributeType(jo.get(StaticString.ATTRIBUTETYPE).toString());
+			gat.setAttributeType(jo.get(StaticKey.ATTRIBUTETYPE).toString());
 
-			gat.setAttributelist(jo.get(StaticString.ATTRIBUTELIST).toString());
+			gat.setAttributelist(jo.get(StaticKey.ATTRIBUTELIST).toString());
 		
-			gat.setSort(jo.get(StaticString.SORT).toString());
+			gat.setSort(jo.get(StaticKey.SORT).toString());
 
-			gat.setGoodsattributeid(jo.get(StaticString.GOODSATTRIBUTEID).toString());
+			gat.setGoodsattributeid(jo.get(StaticKey.GOODSATTRIBUTEID).toString());
 				
 			if(gat.getGoodsattributeid().length()==0){
 				gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
@@ -296,7 +296,7 @@ public class GoodsAttributeTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoodsAttributeT", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsAttributeT() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllGoodsAttributeT();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -340,20 +340,20 @@ public class GoodsAttributeTAction extends BaseTAction {
 		rows.clear();
 		for (Iterator<GoodsAttributeT> it = list.iterator(); it.hasNext();) {
 			GoodsAttributeT gat = (GoodsAttributeT) it.next();
-			if(StaticString.ZERO.equals(gat.getAttributeType())){
-				gat.setAttributeType(StaticString.SELECTITEM);
+			if(StaticKey.ZERO.equals(gat.getAttributeType())){
+				gat.setAttributeType(StaticKey.SELECTITEM);
 			}else{
-				gat.setAttributeType(StaticString.INPUTITEM);
+				gat.setAttributeType(StaticKey.INPUTITEM);
 			}
-			if(StaticString.ONE.equals(gat.getIssearch())){
-				gat.setIssearch(StaticString.SUPPORT);
+			if(StaticKey.ONE.equals(gat.getIssearch())){
+				gat.setIssearch(StaticKey.SUPPORT);
 			}else{
-				gat.setIssearch(StaticString.UNSUPPORT);
+				gat.setIssearch(StaticKey.UNSUPPORT);
 			}
-			if(StaticString.ONE.equals(gat.getIssametolink())){
-				gat.setIssametolink(StaticString.SUPPORT);
+			if(StaticKey.ONE.equals(gat.getIssametolink())){
+				gat.setIssametolink(StaticKey.SUPPORT);
 			}else{
-				gat.setIssametolink(StaticString.UNSUPPORT);
+				gat.setIssametolink(StaticKey.UNSUPPORT);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gat.getGoodsattributeid());

@@ -17,6 +17,7 @@ import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.modelbean.GoodsBelinkedModel;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
 import com.jshop.entity.BrandT;
@@ -64,7 +65,6 @@ public class DataCollectionTAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private JshopbasicInfoTService jshopbasicInfoTService;
 	private SiteNavigationTService siteNavigationTService;
-	
 	private GoodsCategoryTService goodsCategoryTService;
 	private BrandTService brandTService;
 	private GoodsTypeBrandTService goodsTypeBrandTService;
@@ -284,11 +284,12 @@ public class DataCollectionTAction extends ActionSupport {
 
 	/**
 	 * 获取商城基本信息
+	 * @param state 1 可用 商城状态标记
+	 * @param openstate 1  开启 商城开启运作标记
+	 * @return
 	 */
-	public JshopbasicInfoT findJshopbasicInfo() {
+	public JshopbasicInfoT findJshopbasicInfo(String state,String openstate) {
 		try {
-			String state = "1";// 商城状态标记
-			String openstate = "1";// 商城开启运作标记
 			JshopbasicInfoT bean = this.getJshopbasicInfoTService()
 					.findJshopbasicInfoBystateandopstate(state, openstate);
 			if (bean != null) {
@@ -305,10 +306,10 @@ public class DataCollectionTAction extends ActionSupport {
 	/**
 	 * 获取导航
 	 */
+	//TODO
 	@SuppressWarnings({ "unchecked" })
-	public List<SiteNavigationT> findSiteNavigation() {
+	public List<SiteNavigationT> findSiteNavigation(String isVisible) {
 		try {
-			String isVisible = "1";// 显示标记
 			List<SiteNavigationT> list = this.getSiteNavigationTService()
 					.findSiteNavigationByisVisible(isVisible);
 			if (!list.isEmpty()) {
@@ -328,16 +329,18 @@ public class DataCollectionTAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<GoodsCategoryT> findGoodsCategoryT() {
 		try {
-			String state = "1";// 标示激活的商品分类
+			String state = StaticKey.ONE;// 1 标示激活可用的商品分类
 			gradecount=0;
 			List<GoodsCategoryT> list = this.getGoodsCategoryTService()
 					.findAllGoodsCategoryT(state);
 			if (!list.isEmpty()) {
 				for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 					GoodsCategoryT gt = (GoodsCategoryT) it.next();
-					if (gt.getGrade().equals("0")&&gt.getHtmlpath().length()>0) {
+					//grade=0 表示顶级分类
+					if (gt.getGrade().equals(StaticKey.ZERO)&&gt.getHtmlpath().length()>0) {
 						gradecount++;
 					}
 				}

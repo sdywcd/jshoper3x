@@ -17,8 +17,8 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.user.UserTAction;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GlobalParamM;
 import com.opensymphony.xwork2.ActionContext;
 /**
@@ -49,8 +49,8 @@ public class GlobalParamSetTAspect {
             String value = p.getProperty (key);
             config.put(key, value);
         }
-		ActionContext.getContext().getSession().remove(StaticString.GLOBALPARAMS);
-		ActionContext.getContext().getSession().put(StaticString.GLOBALPARAMS, config);
+		ActionContext.getContext().getSession().remove(StaticKey.GLOBALPARAMS);
+		ActionContext.getContext().getSession().put(StaticKey.GLOBALPARAMS, config);
 	}
 	
 }

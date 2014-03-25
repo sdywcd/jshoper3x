@@ -19,8 +19,8 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsTypeTN;
 import com.jshop.service.GoodsTypeTNService;
 import com.opensymphony.xwork2.ActionContext;
@@ -229,7 +229,7 @@ public class GoodsTypeTNAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoodsTypeTN", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsTypeTN() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			findDefaultAllGoodsTypeTN();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.PageModel;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsT;
@@ -290,9 +291,9 @@ public class GoodsCategoryAction extends ActionSupport{
 		//路径获取
 		ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 		//获取导航数据
-		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 		//获取商城基本数据
-		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 		//获取页脚分类数据
 		ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 		//获取页脚文章数据

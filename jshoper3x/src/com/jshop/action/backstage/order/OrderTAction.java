@@ -18,8 +18,8 @@ import com.jshop.action.backstage.tools.AllOrderState;
 import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.GoodsT;
@@ -712,7 +712,7 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String findAllTobeShippedOrdersUnpay() {
-		if (this.getQtype().equals(StaticString.SC)) {
+		if (this.getQtype().equals(StaticKey.SC)) {
 			this.finddefaultAllUnpayTobeShippedOrder();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -731,7 +731,7 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String findAllTobeShippedOrdersHavepay(){
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			this.finddefaultAllHavepayTobeShippedOrder();
 		}else{
 			if(StringUtils.isBlank(this.getQuery())){
@@ -749,9 +749,9 @@ public class OrderTAction extends BaseTAction {
 	private void finddefaultAllHavepayTobeShippedOrder() {
 		int currentPage=page;
 		int lineSize=rp;
-		String shippingstate=StaticString.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
-		String orderstate=StaticString.ORDERSTATE_ONE_NUM;//订单状态已确认
-		String paystate=StaticString.PAYSTATE_ONE_NUM;//付款状态已支付
+		String shippingstate=StaticKey.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String orderstate=StaticKey.ORDERSTATE_ONE_NUM;//订单状态已确认
+		String paystate=StaticKey.PAYSTATE_ONE_NUM;//付款状态已支付
 		total=this.getOrderTService().countfindAllTobeShippedOrders(orderstate, paystate, shippingstate);
 		List<OrderT>orderTs=this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, orderstate, paystate, shippingstate);
 		if(orderTs!=null){
@@ -765,9 +765,9 @@ public class OrderTAction extends BaseTAction {
 	public void finddefaultAllUnpayTobeShippedOrder() {
 		int currentPage = page;
 		int lineSize = rp;
-		String shippingstate = StaticString.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
-		String orderstate=StaticString.ORDERSTATE_TWO_NUM;//订单状态货到付款
-		String paystate=StaticString.PAYSTATE_ZERO_NUM;//付款状态未付款
+		String shippingstate = StaticKey.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String orderstate=StaticKey.ORDERSTATE_TWO_NUM;//订单状态货到付款
+		String paystate=StaticKey.PAYSTATE_ZERO_NUM;//付款状态未付款
 		total = this.getOrderTService().countfindAllTobeShippedOrders(orderstate,paystate,shippingstate);
 		List<OrderT> order = this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize,orderstate,paystate, shippingstate);
 		if (order != null) {
@@ -1114,7 +1114,7 @@ public class OrderTAction extends BaseTAction {
 			return "json";
 		}
 		//获取管理员id和名称
-		UserT usert=(UserT) ActionContext.getContext().getSession().get(StaticString.BACK_USER_SESSION_KEY);
+		UserT usert=(UserT) ActionContext.getContext().getSession().get(StaticKey.BACK_USER_SESSION_KEY);
 		String userid=usert.getUserid();
 		String username=usert.getUsername();
 		
@@ -1156,12 +1156,12 @@ public class OrderTAction extends BaseTAction {
 				t.setPicture("");
 				t.setUsersetnum(g.getUsersetnum());
 				t.setWeight(p.getWeight());
-				t.setState(StaticString.CARTSTATE_NEWADDTOCART_NUM);//新加入购物车的状态
+				t.setState(StaticKey.CARTSTATE_NEWADDTOCART_NUM);//新加入购物车的状态
 				t.setHtmlpath(g.getHtmlPath());//货物的静态页沿用商品的静态页
 				t.setProductid(p.getProductid());
-				t.setOrderTag(StaticString.CART_ORDER_TAG_NORMALPRODUCT);
+				t.setOrderTag(StaticKey.CART_ORDER_TAG_NORMALPRODUCT);
 				t.setProductName(p.getProductName());
-				t.setCartTag(StaticString.CARTTAG_PRODUCTFROM);
+				t.setCartTag(StaticKey.CARTTAG_PRODUCTFROM);
 				t.setMemberid(memberid);
 				t.setMembername(membername);
 				cartlists.add(t);//将购物车信息加入购物车集合
@@ -1186,9 +1186,9 @@ public class OrderTAction extends BaseTAction {
 			sAddressT.setMobile(deliverAddressTs.getMobile());
 			sAddressT.setEmail(deliverAddressTs.getEmail());
 			sAddressT.setCreatetime(BaseTools.systemtime());
-			sAddressT.setState(StaticString.SHIPPINGSTATE_HAVEORDER);//有对应订单的发货地址
-			sAddressT.setDeliveraddressid(StaticString.SHIPPINGADDRESS_DELIVERADDRESSID);
-			sAddressT.setIssend(StaticString.SHIPPINGISSEND_NOSEND);
+			sAddressT.setState(StaticKey.SHIPPINGSTATE_HAVEORDER);//有对应订单的发货地址
+			sAddressT.setDeliveraddressid(StaticKey.SHIPPINGADDRESS_DELIVERADDRESSID);
+			sAddressT.setIssend(StaticKey.SHIPPINGISSEND_NOSEND);
 			sAddressT.setOrderid(null);
 			sAddressT.setCountry(deliverAddressTs.getCountry());
 			sAddressT.setShopid(null);//店铺id 未来支持入住模式时启用
@@ -1217,9 +1217,9 @@ public class OrderTAction extends BaseTAction {
 		orderT.setMembername(membername);
 		orderT.setPaymentid(paymentM.getPaymentid());
 		orderT.setPaymentname(paymentM.getPaymentname());
-		orderT.setDelivermode(StaticString.DELIVERMODE_EXPRESS);//快递
-		orderT.setDeliverynumber(StaticString.ZERO);//默认发货单号是0，在发货单填写过程中输入真正的发货单号
-		orderT.setOrderstate(StaticString.ORDERSTATE_ZERO_NUM);//未确认
+		orderT.setDelivermode(StaticKey.DELIVERMODE_EXPRESS);//快递
+		orderT.setDeliverynumber(StaticKey.ZERO);//默认发货单号是0，在发货单填写过程中输入真正的发货单号
+		orderT.setOrderstate(StaticKey.ORDERSTATE_ZERO_NUM);//未确认
 		orderT.setLogisticsid(lBusinessT.getLogisticsid());
 		orderT.setLogisticsname(lBusinessT.getLogisticsname());
 		orderT.setLogisticswebaddress(lBusinessT.getWebsite());//查询快递点信息地址
@@ -1239,19 +1239,19 @@ public class OrderTAction extends BaseTAction {
 		orderT.setVouchersid(null);//后台不需要使用优惠券所以设置成null
 		orderT.setProductinfo("["+psbBuffer+"]");//订单中货物信息
 		orderT.setNeedquantity(needquantity);//购物车中的货物数量总和
-		orderT.setPaystate(StaticString.PAYSTATE_ZERO_NUM);//未付款
-		orderT.setShippingstate(StaticString.SHIPPINGSTATE_ZERO_NUM);//未发货
+		orderT.setPaystate(StaticKey.PAYSTATE_ZERO_NUM);//未付款
+		orderT.setShippingstate(StaticKey.SHIPPINGSTATE_ZERO_NUM);//未发货
 		orderT.setDeliveraddressid(sAddressT.getDeliveraddressid());//获取收货地址id 此处0表示改订单的收货地址不在会员的收货地址管理中
 		orderT.setShippingusername(sAddressT.getShippingusername());//商户角度来看的收货人，来自于会员的deliveraddress表中或者直接从页面上获取
 		orderT.setCreatetime(BaseTools.systemtime());
-		orderT.setIsprintexpress(StaticString.ISPRINTEXPRESS_ZERO_NUM);
-		orderT.setIsprintinvoice(StaticString.ISPRINTINVOICE_ZERO_NUM);
-		orderT.setIsprintfpinvoice(StaticString.ISPRINTFPINVOICE_ZERO_NUM);
+		orderT.setIsprintexpress(StaticKey.ISPRINTEXPRESS_ZERO_NUM);
+		orderT.setIsprintinvoice(StaticKey.ISPRINTINVOICE_ZERO_NUM);
+		orderT.setIsprintfpinvoice(StaticKey.ISPRINTFPINVOICE_ZERO_NUM);
 		orderT.setExpressnumber(null);//快递单号
 		orderT.setTradeNo(null);//支付交易号由第三方提供
 		orderT.setUserid(userid);
 		orderT.setUsername(username);
-		orderT.setErrorOrderTag(StaticString.ERRORORDERTAG_ZERO_NUM);//订单目前没有错误
+		orderT.setErrorOrderTag(StaticKey.ERRORORDERTAG_ZERO_NUM);//订单目前没有错误
 		orderT.setVersiont(1);
 		orderT.setOrdername(this.getOrdername());
 		orderT.setShopid(null);//店铺id 未来支持入住模式时启用
@@ -1269,7 +1269,7 @@ public class OrderTAction extends BaseTAction {
 		oit.setInvPayee(this.getInvPayee());
 		oit.setAmount(this.getAmount()+"");
 		oit.setMemberid(memberid);
-		oit.setState(StaticString.ZERO);
+		oit.setState(StaticKey.ZERO);
 		oit.setMembername(membername);
 		oit.setInvContent("");
 		oit.setCreatetime(BaseTools.systemtime());
@@ -1343,10 +1343,10 @@ public class OrderTAction extends BaseTAction {
 	private void ProcessDeliverAddress(List<DeliverAddressT> list) {
 		for(Iterator<DeliverAddressT> it=list.iterator();it.hasNext();){
 			DeliverAddressT dt=(DeliverAddressT) it.next();
-			if(dt.getState().equals(StaticString.DELIVERADDRESSSTATE_ZERO_NUM)){
-				dt.setState(StaticString.DELIVERADDRESSSTATE_ZERO);
+			if(dt.getState().equals(StaticKey.DELIVERADDRESSSTATE_ZERO_NUM)){
+				dt.setState(StaticKey.DELIVERADDRESSSTATE_ZERO);
 			}else{
-				dt.setState(StaticString.DELIVERADDRESSSTATE_ONE);
+				dt.setState(StaticKey.DELIVERADDRESSSTATE_ONE);
 			}
 			Map<String,Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", dt.getAddressid());
@@ -1391,7 +1391,7 @@ public class OrderTAction extends BaseTAction {
 			dt.setMobile(this.getMobile().trim());
 			dt.setEmail(this.getEmail().trim());
 			dt.setCreatetime(BaseTools.systemtime());
-			dt.setState(StaticString.DELIVERADDRESSSTATE_ZERO_NUM);
+			dt.setState(StaticKey.DELIVERADDRESSSTATE_ZERO_NUM);
 			dt.setCountry(this.getCountry().trim());
 			this.getDeliverAddressTService().save(dt);
 			this.setSucflag(true);

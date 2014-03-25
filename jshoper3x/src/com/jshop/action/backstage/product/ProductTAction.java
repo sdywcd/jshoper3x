@@ -16,8 +16,8 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.ProductT;
 import com.jshop.service.GoodsSpecificationsProductRpTService;
@@ -392,7 +392,7 @@ public class ProductTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllProducts", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
 	public String findAllProducts(){
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			finddefaultAllProducts();
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
@@ -431,15 +431,15 @@ public class ProductTAction extends BaseTAction {
 		rows.clear();
 		for(Iterator<ProductT> it=list.iterator();it.hasNext();){
 			ProductT pt=(ProductT) it.next();
-			if(pt.getIsDefault().equals(StaticString.ZERO)){
-				pt.setIsDefault(StaticString.NO);
+			if(pt.getIsDefault().equals(StaticKey.ZERO)){
+				pt.setIsDefault(StaticKey.NO);
 			}else{
-				pt.setIsDefault(StaticString.YES);
+				pt.setIsDefault(StaticKey.YES);
 			}
-			if(pt.getIsSalestate().equals(StaticString.ZERO)){
-				pt.setIsSalestate(StaticString.OFFSALE);
+			if(pt.getIsSalestate().equals(StaticKey.ZERO)){
+				pt.setIsSalestate(StaticKey.OFFSALE);
 			}else{
-				pt.setIsSalestate(StaticString.ONSALE);
+				pt.setIsSalestate(StaticKey.ONSALE);
 			}
 			Map<String,Object> cellMap=new HashMap<String,Object>();
 			cellMap.put("id", pt.getProductid());

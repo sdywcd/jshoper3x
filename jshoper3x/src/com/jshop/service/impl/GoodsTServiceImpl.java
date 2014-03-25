@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.dao.GoodsAttributeRpTDao;
 import com.jshop.dao.GoodsDetailRpTDao;
 import com.jshop.dao.GoodsTDao;

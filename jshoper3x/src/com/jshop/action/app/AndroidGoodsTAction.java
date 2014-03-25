@@ -23,8 +23,8 @@ import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsCategoryTService;
@@ -180,7 +180,7 @@ ServletRequestAware, ServletResponseAware {
 	@Action(value="findrecommendedGoods")
 	public void findrecommendedGoods() throws IOException{
 		int lineSize=10;;
-		List<GoodsT>list=this.getGoodsTService().findrecommendedGoodsT(StaticString.ONE, StaticString.ONE, lineSize);
+		List<GoodsT>list=this.getGoodsTService().findrecommendedGoodsT(StaticKey.ONE, StaticKey.ONE, lineSize);
 		Gson gson=new Gson();
 		String jsonstr=gson.toJson(list);
 		response.setContentType("text/html");

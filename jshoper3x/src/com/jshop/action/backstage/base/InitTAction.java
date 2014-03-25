@@ -8,7 +8,7 @@ import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.template.FreeMarkervariable;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.TemplatethemeT;
 import com.jshop.service.OrderTService;
@@ -104,9 +104,9 @@ public class InitTAction extends BaseTAction {
 	public List<OrderT>findNewestOrders(){
 		int currentPage=1;
 		int lineSize=5;
-		String shippingstate=StaticString.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
-		String orderstate=StaticString.ORDERSTATE_ONE_NUM;//订单状态已确认
-		String paystate=StaticString.PAYSTATE_ONE_NUM;//付款状态已支付
+		String shippingstate=StaticKey.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String orderstate=StaticKey.ORDERSTATE_ONE_NUM;//订单状态已确认
+		String paystate=StaticKey.PAYSTATE_ONE_NUM;//付款状态已支付
 		List<OrderT>list=this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, orderstate, paystate, shippingstate);
 		return list;
 	}

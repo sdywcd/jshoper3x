@@ -33,8 +33,8 @@ import com.jshop.action.backstage.template.CreateHtml;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
@@ -1066,7 +1066,7 @@ public class GoodsTAction extends BaseTAction {
 		gt.setBargainprice(this.getBargainprice());
 		gt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
 		gt.setSalestate(this.getSalestate());
-		gt.setIsSpecificationsOpen(StaticString.ONE);//默认开启规格值
+		gt.setIsSpecificationsOpen(StaticKey.ONE);//默认开启规格值
 		gt.setPictureurl(this.getPictureurl());
 		gt.setCommoditylist(this.getCommoditylist());
 		gt.setMetaDescription(this.getMetaDescription());
@@ -1090,21 +1090,21 @@ public class GoodsTAction extends BaseTAction {
 		pt.setSaleprice(gt.getSaleprice());
 		pt.setFreezeStore(0);
 		pt.setStore(0);
-		pt.setIsDefault(StaticString.ONE);//表示默认
-		pt.setIsSalestate(StaticString.ONE);//表示对外销售状态
+		pt.setIsDefault(StaticKey.ONE);//表示默认
+		pt.setIsSalestate(StaticKey.ONE);//表示对外销售状态
 		pt.setProductName(gt.getGoodsname());
 		pt.setProductSn(gt.getUsersetnum());
-		pt.setSpecificationsValue(StaticString.EMPTY);
-		pt.setWarehouseLocation(StaticString.EMPTY);
-		pt.setPlaceStore(StaticString.EMPTY);
-		pt.setWeight(StaticString.EMPTY);
+		pt.setSpecificationsValue(StaticKey.EMPTY);
+		pt.setWarehouseLocation(StaticKey.EMPTY);
+		pt.setPlaceStore(StaticKey.EMPTY);
+		pt.setWeight(StaticKey.EMPTY);
 		pt.setGoodsid(gt.getGoodsid());
 		pt.setCreatorid(gt.getCreatorid());
 		pt.setCreatetime(gt.getCreatetime());
-		pt.setSpecificationsid(StaticString.ZERO);//表示默认规格的值
-		pt.setSpecificationsName(StaticString.DEFAULTSPECIFNAME);//默认规格值名称
+		pt.setSpecificationsid(StaticKey.ZERO);//表示默认规格的值
+		pt.setSpecificationsName(StaticKey.DEFAULTSPECIFNAME);//默认规格值名称
 		pt.setUpdatetime(gt.getCreatetime());
-		pt.setUnit(StaticString.EMPTY);
+		pt.setUnit(StaticKey.EMPTY);
 		//构造goodsspecificationproductrp
 		GoodsSpecificationsProductRpT gspt=new GoodsSpecificationsProductRpT();
 		gspt.setGoodsSpecificationsProductRpTid(this.getSerial().Serialid(Serial.GOODSSPECIFICATIONSPRODUCTRPT));
@@ -1133,7 +1133,7 @@ public class GoodsTAction extends BaseTAction {
 			gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
 			gart.setGoodsid(gt.getGoodsid());
 			JSONObject jo=(JSONObject) ja.get(i);
-			gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
+			gart.setAttrval(jo.get(StaticKey.ATTRVAL).toString());
 			this.getGoodsAttributeRpTService().save(gart);
 		}
 	}
@@ -1146,7 +1146,7 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoods", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
 	public String findAllGoods() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			finddefaultAllGoods();
 		} else {
 			if(StringUtils.isNotBlank(this.getQtype())){
@@ -1197,27 +1197,27 @@ public class GoodsTAction extends BaseTAction {
 		rows.clear();
 		for (Iterator<GoodsT> it = list.iterator(); it.hasNext();) {
 			GoodsT gt = (GoodsT) it.next();
-			if (gt.getRecommended().equals(StaticString.ONE)) {
+			if (gt.getRecommended().equals(StaticKey.ONE)) {
 				gt.setRecommended("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setRecommended("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getHotsale().equals(StaticString.ONE)) {
+			if (gt.getHotsale().equals(StaticKey.ONE)) {
 				gt.setHotsale("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setHotsale("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getBargainprice().equals(StaticString.ONE)) {
+			if (gt.getBargainprice().equals(StaticKey.ONE)) {
 				gt.setBargainprice("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setBargainprice("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getIsNew().equals(StaticString.ONE)) {
+			if (gt.getIsNew().equals(StaticKey.ONE)) {
 				gt.setIsNew("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setIsNew("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getSalestate().equals(StaticString.ONE)) {
+			if (gt.getSalestate().equals(StaticKey.ONE)) {
 				gt.setSalestate("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
@@ -1333,21 +1333,21 @@ public class GoodsTAction extends BaseTAction {
 				pt.setSaleprice(bean.getSaleprice());
 				pt.setFreezeStore(0);
 				pt.setStore(0);
-				pt.setIsDefault(StaticString.ONE);//表示默认
-				pt.setIsSalestate(StaticString.ONE);//表示对外销售状态
+				pt.setIsDefault(StaticKey.ONE);//表示默认
+				pt.setIsSalestate(StaticKey.ONE);//表示对外销售状态
 				pt.setProductName(bean.getGoodsname());
 				pt.setProductSn(bean.getUsersetnum());
-				pt.setSpecificationsValue(StaticString.EMPTY);
-				pt.setWarehouseLocation(StaticString.EMPTY);
-				pt.setPlaceStore(StaticString.EMPTY);
-				pt.setWeight(StaticString.EMPTY);
+				pt.setSpecificationsValue(StaticKey.EMPTY);
+				pt.setWarehouseLocation(StaticKey.EMPTY);
+				pt.setPlaceStore(StaticKey.EMPTY);
+				pt.setWeight(StaticKey.EMPTY);
 				pt.setGoodsid(bean.getGoodsid());
 				pt.setCreatorid(bean.getCreatorid());
 				pt.setCreatetime(bean.getCreatetime());
-				pt.setSpecificationsid(StaticString.ZERO);//表示默认规格的值
-				pt.setSpecificationsName(StaticString.DEFAULTSPECIFNAME);//默认规格值名称
+				pt.setSpecificationsid(StaticKey.ZERO);//表示默认规格的值
+				pt.setSpecificationsName(StaticKey.DEFAULTSPECIFNAME);//默认规格值名称
 				pt.setUpdatetime(bean.getCreatetime());
-				pt.setUnit(StaticString.EMPTY);
+				pt.setUnit(StaticKey.EMPTY);
 				this.getGoodsTService().updateGoodsProcess(bean, this.getDetail(),pt);
 				this.updateGoodsAttributeRp(bean, this.getGoodsAttrsVals());
 				this.setSucflag(true);
@@ -1373,7 +1373,7 @@ public class GoodsTAction extends BaseTAction {
 				gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
 				gart.setGoodsid(gt.getGoodsid());
 				JSONObject jo=(JSONObject) ja.get(i);
-				gart.setAttrval(jo.get(StaticString.ATTRVAL).toString());
+				gart.setAttrval(jo.get(StaticKey.ATTRVAL).toString());
 				this.getGoodsAttributeRpTService().save(gart);
 			}
 		}
@@ -1626,8 +1626,8 @@ public class GoodsTAction extends BaseTAction {
 	public String findAllGoodsByCategory(){
 		if(!"-1".equals(this.getNavid())&&"-1".equals(this.getLtypeid())&&"-1".equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
-			String salestate=StaticString.ONE;//上架
-			String isSpecificationsOpen=StaticString.ONE;//默认都开启规格
+			String salestate=StaticKey.ONE;//上架
+			String isSpecificationsOpen=StaticKey.ONE;//默认都开启规格
 			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavid(navid, salestate,isSpecificationsOpen);
 			if(!list.isEmpty()){
 				this.ProcessGoodsList(list);
@@ -1638,8 +1638,8 @@ public class GoodsTAction extends BaseTAction {
 		if(!"-1".equals(this.getNavid())&&!"-1".equals(this.getLtypeid())&&"-1".equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
 			String ltypeid=this.getLtypeid().trim();
-			String salestate=StaticString.ONE;//上架
-			String isSpecificationsOpen=StaticString.ONE;//开启规格
+			String salestate=StaticKey.ONE;//上架
+			String isSpecificationsOpen=StaticKey.ONE;//开启规格
 			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavidandltypeid(navid, ltypeid, salestate, isSpecificationsOpen);
 			if(!list.isEmpty()){
 				this.ProcessGoodsList(list);
@@ -1651,8 +1651,8 @@ public class GoodsTAction extends BaseTAction {
 			String navid=this.getNavid().trim();
 			String ltypeid=this.getLtypeid().trim();
 			String stypeid=this.getStypeid().trim();
-			String salestate=StaticString.ONE;//上架
-			String isSpecificationsOpen=StaticString.ONE;//开启规格
+			String salestate=StaticKey.ONE;//上架
+			String isSpecificationsOpen=StaticKey.ONE;//开启规格
 			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavidandltypeidandstypeid(navid, ltypeid, stypeid, salestate, isSpecificationsOpen);
 			if(!list.isEmpty()){
 				this.ProcessGoodsList(list);

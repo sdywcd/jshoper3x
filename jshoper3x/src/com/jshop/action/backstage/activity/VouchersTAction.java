@@ -16,7 +16,7 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.VouchersT;
 import com.jshop.service.VouchersTService;
 @Namespace("")
@@ -217,10 +217,10 @@ public class VouchersTAction extends BaseTAction {
 			vt.setEndtime(this.getEndtime());
 			vt.setVoucherscontent(this.getVoucherscontent());
 			vt.setLimitprice(Double.parseDouble(this.getLimitprice()));
-			vt.setGivenmemberid(StaticString.EMPTY);
+			vt.setGivenmemberid(StaticKey.EMPTY);
 			vt.setVoucherstate(this.getVoucherstate());
 			vt.setVoucheruseway(this.getVoucheruseway());
-			vt.setState(StaticString.ZERO);
+			vt.setState(StaticKey.ZERO);
 			vt.setCreatetime(BaseTools.systemtime());
 			vt.setCreatorid(BaseTools.adminCreateId());
 			this.getVouchersTService().save(vt);

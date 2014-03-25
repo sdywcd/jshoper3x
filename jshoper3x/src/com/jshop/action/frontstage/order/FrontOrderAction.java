@@ -19,10 +19,10 @@ import com.jshop.action.backstage.thirdpartyplatform.alipay.AlipayConfig;
 import com.jshop.action.backstage.thirdpartyplatform.tenpay.TenPayConfig;
 import com.jshop.action.backstage.tools.Arith;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.PaymentCode;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.PaymentCode;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.LogisticsBusinessT;
@@ -683,7 +683,7 @@ public class FrontOrderAction extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}")
 	})
 	public String InitOrder() {
-		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
 			//获取用户收获地址
 			GetUserDeliverAddress(memberT);
@@ -701,9 +701,9 @@ public class FrontOrderAction extends ActionSupport {
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据
@@ -725,7 +725,7 @@ public class FrontOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String GetVouchersByname() throws ParseException {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			if (Validate.StrNotNull(this.getVouchername())) {
 				VouchersT v = this.getVouchersTService().findVouchersForHonor(this.getVouchername());
@@ -958,7 +958,7 @@ public class FrontOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitAlipayneedInfo() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 			//预先生成订单编号

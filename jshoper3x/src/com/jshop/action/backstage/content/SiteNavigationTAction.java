@@ -14,8 +14,8 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.BaseTools;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.SiteNavigationT;
 import com.jshop.service.SiteNavigationTService;
 @Namespace("")
@@ -195,7 +195,7 @@ public class SiteNavigationTAction extends BaseTAction {
 
 	@Action(value = "findAllSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String findAllSiteNavigationT() {
-		if (StaticString.SC.equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllSiteNavigation();
 		} else {
 			if (Validate.StrisNull(this.getQuery())) {
@@ -229,14 +229,14 @@ public class SiteNavigationTAction extends BaseTAction {
 			} else {
 				sn.setIsTargetBlank("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (sn.getIsVisible().equals(StaticString.ONE)) {
+			if (sn.getIsVisible().equals(StaticKey.ONE)) {
 				sn.setIsVisible("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				sn.setIsVisible("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (sn.getPosition().equals(StaticString.ONE)) {
+			if (sn.getPosition().equals(StaticKey.ONE)) {
 				sn.setPosition("页面上部");
-			} else if (sn.getPosition().equals(StaticString.TWO)) {
+			} else if (sn.getPosition().equals(StaticKey.TWO)) {
 				sn.setPosition("页面中部");
 			} else {
 				sn.setPosition("页面下部");

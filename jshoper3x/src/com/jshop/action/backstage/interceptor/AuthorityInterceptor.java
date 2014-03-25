@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.struts2.convention.annotation.ParentPackage;
 
-import com.jshop.action.backstage.tools.GlobalParam;
+import com.jshop.action.backstage.utils.statickey.GlobalParam;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
 @ParentPackage("jshop")

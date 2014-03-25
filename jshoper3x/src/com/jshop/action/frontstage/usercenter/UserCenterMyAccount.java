@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 import com.jshop.action.backstage.template.DataCollectionTAction;
 import com.jshop.action.backstage.template.FreeMarkervariable;
 import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;
 import com.jshop.service.MemberTService;
@@ -126,7 +126,7 @@ public class UserCenterMyAccount extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String updateUserPasswordProtection() {
-		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			//先验证原始的密码保护问题是否正确
 			if(StringUtils.isNotBlank(memberT.getQuestion())){
@@ -163,14 +163,14 @@ public class UserCenterMyAccount extends ActionSupport {
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
 	public String InitMyAccountProtection(){
-		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticString.MEMBER_SESSION_KEY);
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
 			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
 			//获取页脚文章数据

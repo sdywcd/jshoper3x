@@ -15,8 +15,8 @@ import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.PaymentMService;
 @Namespace("")
@@ -261,7 +261,7 @@ public class PaymentMAction extends BaseTAction {
 	 */
 	@Action(value = "findAllPayment", results = { @Result(name = "json", type = "json") })
 	public String findAllPayment() {
-		if(StaticString.SC.equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			this.findDefaultAllPayment();
 		}else{
 			if(Validate.StrisNull(this.getQuery())){
@@ -285,22 +285,22 @@ public class PaymentMAction extends BaseTAction {
 		rows.clear();
 		for (Iterator<PaymentM> it = list.iterator(); it.hasNext();) {
 			PaymentM pm = (PaymentM) it.next();
-			if (StaticString.ONE.equals(pm.getPaymentInterface())) {
-				pm.setPaymentInterface(StaticString.INSTANTINTERFACE);
-			} else if (StaticString.TWO.equals(pm.getPaymentInterface())) {
-				pm.setPaymentInterface(StaticString.SECUREDINTERFACE);
+			if (StaticKey.ONE.equals(pm.getPaymentInterface())) {
+				pm.setPaymentInterface(StaticKey.INSTANTINTERFACE);
+			} else if (StaticKey.TWO.equals(pm.getPaymentInterface())) {
+				pm.setPaymentInterface(StaticKey.SECUREDINTERFACE);
 			} else {
-				pm.setPaymentInterface(StaticString.STANDARD);
+				pm.setPaymentInterface(StaticKey.STANDARD);
 			}
-			if(StaticString.ONE.equals(pm.getIsFast())){
-				pm.setIsFast(StaticString.SUPPORT);
+			if(StaticKey.ONE.equals(pm.getIsFast())){
+				pm.setIsFast(StaticKey.SUPPORT);
 			}else{
-				pm.setIsFast(StaticString.UNSUPPORT);
+				pm.setIsFast(StaticKey.UNSUPPORT);
 			}
-			if (StaticString.ONE.equals(pm.getState())) {
-				pm.setState(StaticString.USEING);
+			if (StaticKey.ONE.equals(pm.getState())) {
+				pm.setState(StaticKey.USEING);
 			} else {
-				pm.setState(StaticString.UNUSING);
+				pm.setState(StaticKey.UNUSING);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", pm.getPaymentid());

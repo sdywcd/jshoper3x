@@ -13,8 +13,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.StaticString;
 import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.LogisticsbusinessareaT;
 import com.jshop.service.LogisticsbusinessareaTService;
 @Namespace("")
@@ -251,11 +251,11 @@ public class LogisticsbusinessareaTAction extends BaseTAction {
 		rows.clear();
 		for (Iterator<LogisticsbusinessareaT> it = list.iterator(); it.hasNext();) {
 			LogisticsbusinessareaT lba = (LogisticsbusinessareaT) it.next();
-			lba.setCostway(StaticString.WEIGHTMODEL);
-			if (lba.getState().equals(StaticString.ONE)) {
-				lba.setState(StaticString.USEING);
+			lba.setCostway(StaticKey.WEIGHTMODEL);
+			if (lba.getState().equals(StaticKey.ONE)) {
+				lba.setState(StaticKey.USEING);
 			} else {
-				lba.setState(StaticString.UNUSING);
+				lba.setState(StaticKey.UNUSING);
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", lba.getLogbusareaid());

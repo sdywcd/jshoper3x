@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 
 import com.jshop.action.backstage.template.FreeMarkervariable;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.UserT;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -124,7 +125,7 @@ public class BaseTools {
 	 */
 	public static String adminCreateId() {
 		UserT userT = (UserT) ActionContext.getContext().getSession()
-				.get(StaticString.BACK_USER_SESSION_KEY);
+				.get(StaticKey.BACK_USER_SESSION_KEY);
 		if (userT!=null) {
 			return userT.getUserid();
 		}
@@ -137,7 +138,7 @@ public class BaseTools {
 	 */
 	public static String adminCreateName() {
 		UserT userT = (UserT) ActionContext.getContext().getSession()
-				.get(StaticString.BACK_USER_SESSION_KEY);
+				.get(StaticKey.BACK_USER_SESSION_KEY);
 		if (userT!=null) {
 			return userT.getUsername();
 		}

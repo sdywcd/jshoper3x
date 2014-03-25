@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.jshop.action.backstage.base.InitTAction;
 import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.TemplatesetT;
 import com.jshop.service.TemplatesetTService;
 import com.opensymphony.xwork2.ActionContext;
@@ -166,12 +167,12 @@ public class InitAllHtml extends ActionSupport {
 			//获取导航数据
 			buildhtmllog.append("<p>5,获取导航数据<p>");
 			log.info("<p>5,获取导航数据<p>");
-			map.put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation());
+			map.put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			buildhtmllog.append(this.getDataCollectionTAction().getLogmsg());
 			//获取商城基本数据
 			buildhtmllog.append("<p>6,获取商城基础数据</p>");
 			log.info("<p>6,获取商城基础数据</p>");
-			map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo());
+			map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			buildhtmllog.append(this.getDataCollectionTAction().getLogmsg());
 			
 			
