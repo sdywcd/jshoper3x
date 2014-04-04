@@ -27,7 +27,7 @@ import com.jshop.entity.BrandT;
  * @author MyEclipse Persistence Tools
  */
 @Repository("brandTDao")
-public class BrandTDaoImpl extends BaseTDaoImpl<BrandT> implements BrandTDao {
+public class BrandTDaoImpl<T> extends BaseTDaoImpl<BrandT> implements BrandTDao {
 	
 	private static final Log log = LogFactory.getLog(BrandTDaoImpl.class);
 	

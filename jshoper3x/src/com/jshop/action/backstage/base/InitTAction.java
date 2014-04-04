@@ -7,7 +7,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.template.FreeMarkervariable;
+import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.TemplatethemeT;

@@ -24,16 +24,16 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.template.CreateHtml;
-import com.jshop.action.backstage.template.DataCollectionTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.staticspage.CreateHtml;
+import com.jshop.action.backstage.staticspage.DataCollectionTAction;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
+import com.jshop.service.impl.Serial;
 
 import freemarker.template.TemplateException;
 @Namespace("")

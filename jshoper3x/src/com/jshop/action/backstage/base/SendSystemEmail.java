@@ -21,8 +21,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.task.TaskExecutor;
 
-import com.jshop.action.backstage.template.CreateHtml;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.staticspage.CreateHtml;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.CartT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.UserT;

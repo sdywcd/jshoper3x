@@ -12,4 +12,24 @@
 	<cache name="com.jshop.entity.UserT" maxElementsInMemory="100"
 		eternal="false" overflowToDisk="true" timeToIdleSeconds="50"
 		timeToLiveSeconds="60" diskPersistent="false" />
+	<!-- µÇÂ¼¼ÇÂ¼»º´æ Ëø¶¨10·ÖÖÓ -->
+	<cache name="passwordRetryCache" maxElementsInMemory="2000"
+		eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0"
+		overflowToDisk="false" >
+	</cache>
+
+	<cache name="authorizationCache" maxElementsInMemory="2000"
+		eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0"
+		overflowToDisk="false">
+	</cache>
+
+	<cache name="authenticationCache" maxElementsInMemory="2000"
+		eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0"
+		overflowToDisk="false">
+	</cache>
+
+	<cache name="shiro-activeSessionCache" maxElementsInMemory="2000"
+		eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0"
+		overflowToDisk="false" >
+	</cache>
 </ehcache>

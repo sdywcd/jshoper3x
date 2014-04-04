@@ -15,11 +15,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberGradeT;
 import com.jshop.service.MemberGradeTService;
+import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class MemberGradeTAction extends BaseTAction {
@@ -282,11 +282,7 @@ public class MemberGradeTAction extends BaseTAction {
 			}else{
 				mgt.setType(StaticKey.EMPIRICALVALUE);
 			}
-			if(StaticKey.ZERO.equals(mgt.getMpstate())){
-				mgt.setMpstate(StaticKey.UNUSING);
-			}else{
-				mgt.setMpstate(StaticKey.USEING);
-			}
+			mgt.setMpstate(StaticKey.DataUsingState.getName(mgt.getMpstate()));
 			Map<String,Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", mgt.getId());
 			cellMap.put("cell", new Object[]{

@@ -13,11 +13,11 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.service.GoodsGroupTService;
+import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class GoodsGroupTAction extends BaseTAction {

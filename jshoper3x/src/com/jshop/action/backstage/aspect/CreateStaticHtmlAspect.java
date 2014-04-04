@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 import com.jshop.action.backstage.content.article.ArticleTAction;
 import com.jshop.action.backstage.goods.GoodsCategoryTAction;
 import com.jshop.action.backstage.goods.GoodsTAction;
-import com.jshop.action.backstage.template.ContentTag;
-import com.jshop.action.backstage.template.FreeMarkervariable;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.staticspage.ContentTag;
+import com.jshop.action.backstage.staticspage.FreeMarkervariable;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsT;
 
@@ -55,13 +55,13 @@ public class CreateStaticHtmlAspect {
 			//获取默认主题
 			map.put(FreeMarkervariable.DEFAULTTHEMESIGN, theme);
 			//获取商城基本信息
-			map.put(FreeMarkervariable.JSHOPBASICINFO, gtn.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+			map.put(FreeMarkervariable.JSHOPBASICINFO, gtn.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取导航
 			map.put(FreeMarkervariable.SITENAVIGATIONLIST, gtn.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取页脚文章一级分类
-			map.put(FreeMarkervariable.FOOTCATEGORY, gtn.getDataCollectionTAction().findFooterCateogyrT());
+			map.put(FreeMarkervariable.FOOTCATEGORY, gtn.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 			//获取页脚文章一级分类下得文章
-			map.put(FreeMarkervariable.FOOTERATRICLE, gtn.getDataCollectionTAction().findFooterArticle());
+			map.put(FreeMarkervariable.FOOTERATRICLE, gtn.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 			//获取商品详细
 			map.put(FreeMarkervariable.GOODSDETAIL, gtn.getBean());
 			//这里获取商品参数和商品类型表中的对比并显示
@@ -96,23 +96,23 @@ public class CreateStaticHtmlAspect {
 			//获取默认主题
 			map.put(FreeMarkervariable.DEFAULTTHEMESIGN, gcta.getDataCollectionTAction().getDefaultTheme());
 			//获取商城基本信息
-			map.put(FreeMarkervariable.JSHOPBASICINFO, gcta.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+			map.put(FreeMarkervariable.JSHOPBASICINFO, gcta.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取导航
 			map.put(FreeMarkervariable.SITENAVIGATIONLIST, gcta.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取页脚文章一级分类
-			map.put(FreeMarkervariable.FOOTCATEGORY, gcta.getDataCollectionTAction().findFooterCateogyrT());
+			map.put(FreeMarkervariable.FOOTCATEGORY, gcta.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 			//获取页脚文章一级分类下得文章
-			map.put(FreeMarkervariable.FOOTERATRICLE, gcta.getDataCollectionTAction().findFooterArticle());
+			map.put(FreeMarkervariable.FOOTERATRICLE, gcta.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 			String salestate = "1";
 			if (gcta.getBean().getGrade().equals("0")) {
 				String navid = gcta.getGoodsCategoryTid();
 				List<GoodsT> list = gcta.getGoodsTService().findAllGoodsBynavid(navid, salestate);
-				map.put(FreeMarkervariable.SECONDGOODSCATEGORY, gcta.getDataCollectionTAction().findSecondGoodsCategoryT(navid));//获取此分类下的二级分类
+				map.put(FreeMarkervariable.SECONDGOODSCATEGORY, gcta.getDataCollectionTAction().findSecondGoodsCategoryT(navid,StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
 				map.put(FreeMarkervariable.ALLGOODS, list);
 			} else if (gcta.getBean().getGrade().equals("1")) {
 				String ltypeid = gcta.getGoodsCategoryTid();
 				List<GoodsT> list = gcta.getGoodsTService().findGoodsByLtypeid(ltypeid, salestate);
-				map.put(FreeMarkervariable.SECONDGOODSCATEGORY, gcta.getDataCollectionTAction().findSecondGoodsCategoryT(ltypeid));//获取此分类下的二级分类
+				map.put(FreeMarkervariable.SECONDGOODSCATEGORY, gcta.getDataCollectionTAction().findSecondGoodsCategoryT(ltypeid,StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
 				map.put(FreeMarkervariable.ALLGOODS, list);
 			} else {
 				String stypeid = gcta.getGoodsCategoryTid();
@@ -142,13 +142,13 @@ public class CreateStaticHtmlAspect {
 			//获取默认主题
 			map.put(FreeMarkervariable.DEFAULTTHEMESIGN, ata.getDataCollectionTAction().getDefaultTheme());
 			//获取商城基本信息
-			map.put(FreeMarkervariable.JSHOPBASICINFO, ata.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+			map.put(FreeMarkervariable.JSHOPBASICINFO, ata.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取导航
 			map.put(FreeMarkervariable.SITENAVIGATIONLIST, ata.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取页脚文章一级分类
-			map.put(FreeMarkervariable.FOOTCATEGORY, ata.getDataCollectionTAction().findFooterCateogyrT());
+			map.put(FreeMarkervariable.FOOTCATEGORY, ata.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 			//获取页脚文章一级分类下得文章
-			map.put(FreeMarkervariable.FOOTERATRICLE, ata.getDataCollectionTAction().findFooterArticle());
+			map.put(FreeMarkervariable.FOOTERATRICLE, ata.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 			//获取文章详细
 			map.put(FreeMarkervariable.ARTICLE, ata.getBean());
 			if("1".equals(ata.getBean().getIsnotice())){

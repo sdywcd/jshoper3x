@@ -14,8 +14,8 @@ import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.OrderInvoiceT;
 import com.jshop.service.OrderInvoiceTService;
 import com.opensymphony.xwork2.ActionSupport;

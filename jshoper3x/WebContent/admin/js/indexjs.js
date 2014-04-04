@@ -46,7 +46,7 @@ $(function(){
 		});
 	},
 	logout=function(){
-		$.post("adminlogout.action",function(data){
+		$.post("bk/user/adminlogout.action",function(data){
 			var pathnamearray = window.location.pathname.split("/");
 			var pathname = pathnamearray[1] + "/";
 			top.location.href = "http://" + window.location.host + "/" + pathname + "admin/jump.jsp";
@@ -88,7 +88,7 @@ $(function() {
 
 	});
 	
-	$.post("checkAuthorityException.action",function(data){
+	$.post("bk/user/checkAuthorityException.action",function(data){
 		if (data.sauthority) {
 			
 			var pathnamearray = window.location.pathname.split("/");

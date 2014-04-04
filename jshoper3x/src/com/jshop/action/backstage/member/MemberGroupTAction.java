@@ -15,11 +15,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberGroupT;
 import com.jshop.service.MemberGroupTService;
+import com.jshop.service.impl.Serial;
 
 @Namespace("")
 @ParentPackage("jshop")
@@ -193,11 +193,7 @@ public class MemberGroupTAction extends BaseTAction{
 	private void ProcessMemberGroupList(List<MemberGroupT> list) {
 		for(Iterator<MemberGroupT> it=list.iterator();it.hasNext();){
 			MemberGroupT mgt=(MemberGroupT)it.next();
-			if(mgt.getStatus().equals(StaticKey.ONE)){
-				mgt.setStatus(StaticKey.USEING);
-			}else{
-				mgt.setStatus(StaticKey.UNUSING);
-			}
+			mgt.setStatus(StaticKey.DataUsingState.getName(mgt.getStatus()));
 			Map<String, Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", mgt.getId());
 			cellMap.put("cell", new Object[]{

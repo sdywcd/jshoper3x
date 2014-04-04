@@ -176,4 +176,5 @@ public interface UserTDao extends BaseTDao<UserT>{
 	 * @param usert
 	 */
 	public void updateUserT(UserT usert);
+	
 }

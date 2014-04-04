@@ -12,11 +12,11 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.LogisticsbusinessareaT;
 import com.jshop.service.LogisticsbusinessareaTService;
+import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class LogisticsbusinessareaTAction extends BaseTAction {
@@ -252,11 +252,7 @@ public class LogisticsbusinessareaTAction extends BaseTAction {
 		for (Iterator<LogisticsbusinessareaT> it = list.iterator(); it.hasNext();) {
 			LogisticsbusinessareaT lba = (LogisticsbusinessareaT) it.next();
 			lba.setCostway(StaticKey.WEIGHTMODEL);
-			if (lba.getState().equals(StaticKey.ONE)) {
-				lba.setState(StaticKey.USEING);
-			} else {
-				lba.setState(StaticKey.UNUSING);
-			}
+			lba.setState(StaticKey.DataUsingState.getName(lba.getState()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", lba.getLogbusareaid());
 			cellMap.put("cell", new Object[] {lba.getSendarea(), lba.getCostway(), lba.getNormalcost(),lba.getNormalvalue(), lba.getOvercost(),lba.getOvervalue(),lba.getState(),

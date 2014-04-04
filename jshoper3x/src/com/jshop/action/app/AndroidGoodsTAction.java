@@ -22,8 +22,8 @@ import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsT;

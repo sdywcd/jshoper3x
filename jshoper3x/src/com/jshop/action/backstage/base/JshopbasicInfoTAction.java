@@ -13,10 +13,10 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.entity.JshopbasicInfoT;
 import com.jshop.service.JshopbasicInfoTService;
+import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class JshopbasicInfoTAction extends BaseTAction {

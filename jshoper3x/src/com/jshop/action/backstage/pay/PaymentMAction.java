@@ -14,11 +14,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.PaymentMService;
+import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class PaymentMAction extends BaseTAction {
@@ -297,11 +297,7 @@ public class PaymentMAction extends BaseTAction {
 			}else{
 				pm.setIsFast(StaticKey.UNSUPPORT);
 			}
-			if (StaticKey.ONE.equals(pm.getState())) {
-				pm.setState(StaticKey.USEING);
-			} else {
-				pm.setState(StaticKey.UNUSING);
-			}
+			pm.setState(StaticKey.DataUsingState.getName(pm.getState()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", pm.getPaymentid());
 			cellMap.put("cell", new Object[] { pm.getPaymentname(), pm.getPaymentCode(), pm.getPaymentFree(), pm.getPaymentInterface(), pm.getDes(),pm.getIsFast(), pm.getState() });

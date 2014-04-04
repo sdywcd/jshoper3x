@@ -13,7 +13,7 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
+import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.entity.AdvertiseT;
 import com.jshop.service.AdvertiseTService;
 

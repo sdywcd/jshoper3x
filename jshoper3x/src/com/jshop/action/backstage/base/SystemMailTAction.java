@@ -15,14 +15,14 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.core.task.TaskExecutor;
 
-import com.jshop.action.backstage.template.CreateHtml;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.staticspage.CreateHtml;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.SystemMailT;
 import com.jshop.service.SystemMailTService;
 import com.jshop.service.UsertService;
+import com.jshop.service.impl.Serial;
 
 @Namespace("")
 @ParentPackage("jshop")
@@ -351,11 +351,7 @@ public class SystemMailTAction extends BaseTAction {
 			}else{
 				sm.setIsdefault(StaticKey.NO);
 			}
-			if(StaticKey.ONE.equals(sm.getState())){
-				sm.setState(StaticKey.USEING);
-			}else{
-				sm.setState(StaticKey.UNUSING);
-			}
+			sm.setState(StaticKey.DataUsingState.getName(sm.getState()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sm.getId());
 			cellMap.put("cell", new Object[] { sm.getEmail(), sm.getSmtp(), sm.getPort(), sm.getIsssl(), sm.getIsdefault(), sm.getState(), sm.getCreatorid(), BaseTools.formateDbDate(sm.getCreatetime()), "<a id='editemail' name='editemail' href='email.jsp?operate=edit&folder=setting&id=" + sm.getId() + "'>[编辑]</a>" });

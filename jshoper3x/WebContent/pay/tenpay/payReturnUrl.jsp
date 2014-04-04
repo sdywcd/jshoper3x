@@ -2,7 +2,7 @@
 	pageEncoding="GBK"%>
 <%@ page
 	import="com.jshop.action.backstage.thirdpartyplatform.tenpay.*"%>
-<%@ page import="com.jshop.action.backstage.tools.Md5Util"%>
+<%@ page import="com.jshop.action.backstage.utils.Md5Util"%>
 <%@ include file="config.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 

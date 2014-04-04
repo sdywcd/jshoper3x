@@ -18,13 +18,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.MD5Code;
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.MD5Code;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.redis.service.RedisMemberService;
 import com.jshop.service.MemberTService;
+import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class MemberTAction extends BaseTAction {

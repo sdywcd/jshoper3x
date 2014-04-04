@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jshop.action.backstage.tools.Serial;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.dao.GoodsAttributeRpTDao;
 import com.jshop.dao.GoodsDetailRpTDao;

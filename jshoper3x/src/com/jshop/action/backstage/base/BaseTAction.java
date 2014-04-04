@@ -2,7 +2,7 @@ package com.jshop.action.backstage.base;
 
 import org.apache.struts2.json.annotations.JSON;
 
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class BaseTAction extends ActionSupport {

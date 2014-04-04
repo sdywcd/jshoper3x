@@ -2,7 +2,7 @@ package com.jshop.dao.impl;
 
 import java.sql.SQLException;
 
-import com.jshop.action.backstage.tools.DBConnection;
+import com.jshop.action.backstage.utils.DBConnection;
 import com.jshop.dao.OrderForAlipayDao;
 
 public class OrderForAlipayDaoImpl extends DBConnection implements OrderForAlipayDao {

@@ -193,7 +193,7 @@ $(function(){
  */
 $(function() {
 	$("#brandsmanagement").flexigrid({
-		url : '/web/findAllBrandt.action',
+		url : 'findAllBrandt.action',
 		dataType : 'json',
 		cache : false,
 		colModel : [ {

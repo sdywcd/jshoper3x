@@ -9,6 +9,11 @@ import sun.invoke.empty.Empty;
  */
 public class  StaticKey {
 	/**
+	 * 加密方式
+	 */
+	public static String ALGORITHMNAME="MD5";
+	
+	/**
 	 * 前台用户登录创建的session名称
 	 */
 	public static String MEMBER_SESSION_KEY = "member";
@@ -65,21 +70,21 @@ public class  StaticKey {
 	
 	public static final String THREE="3";
 	
-	public static final String USEING="启用";
+//	public static final String USEING="启用";
+//	
+//	public static final String UNUSING="禁用";
 	
-	public static final String UNUSING="禁用";
-	
-	public static final String SHOW="显示";
-	
-	public static final String HIDDEN="隐藏";
+//	public static final String SHOW="显示";
+//	
+//	public static final String HIDDEN="隐藏";
 	
 	public static final String SUPPORT="支持";
 	
 	public static final String UNSUPPORT="不支持";
 	
-	public static final String FRONTUSE="前端可用";
-	
-	public static final String BACKUSE="后端可用";
+//	public static final String FRONTUSE="前端可用";
+//	
+//	public static final String BACKUSE="后端可用";
 	
 	public static final String INTERNATIONAL="国际";
 	
@@ -457,13 +462,193 @@ public class  StaticKey {
 	
 	public static final String USERSTATEUNACTIVE="未激活";
 	
-	
 	/**
-	 * jshoper商城信息记录状态
+	 * 数据分类等级 一级 二级 三级
 	 * @author sdywcd
 	 *
 	 */
-	public enum JshopState{
+	public enum DataGrade{
+		FIRST("一级","0"),SECOND("二级","1"),THIRD("三级","2");
+		private String name;
+		private String state;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+		private DataGrade(String name,String state){
+			this.name=name;
+			this.state=state;
+		}
+		public static String getName(String tag){
+			for(DataGrade d:DataGrade.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	/**
+	 * 商品上下架状态
+	 * @author sdywcd
+	 *
+	 */
+	public enum GoodsState{
+		SALE("上架","1"),UNSALE("下架","0");
+		private String name;
+		private String state;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+		private GoodsState(String name,String state){
+			this.name=name;
+			this.state=state;
+		}
+		public static String getName(String tag){
+			for(GoodsState d:GoodsState.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	/**
+	 * 用户数据状态
+	 * @author sdywcd
+	 *
+	 */
+	public enum UserState{
+		DONOTACTIVE("未激活","0"),DOACTIVE("激活","1"),LOCKED("锁定","2");
+		private String name;
+		private String state;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+		private UserState(String name,String state){
+			this.name=name;
+			this.state=state;
+		}
+		public static String getName(String tag){
+			for(UserState d:UserState.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	/**
+	 * 物流商数据状态
+	 * @author sdywcd
+	 *
+	 */
+	public enum LogisticsUsingState{
+		FRONTUSE("前端可用","1"),UNUSING("禁用","0"),BACKUSE("后端可用","2");
+		private String name;
+		private String state;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+		private LogisticsUsingState(String name,String state){
+			this.name=name;
+			this.state=state;
+		}
+		public static String getName(String tag){
+			for(LogisticsUsingState d:LogisticsUsingState.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	
+	/**
+	 * 数据使用状态
+	 * @author sdywcd
+	 *
+	 */
+	public enum DataUsingState{
+		USING("启用","1"),UNUSING("禁用","0");
+		private String name;
+		private String state;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+		private DataUsingState(String name,String state){
+			this.name=name;
+			this.state=state;
+		}
+		public static String getName(String tag){
+			for(DataUsingState d:DataUsingState.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	/**
+	 * 数据记录状态
+	 * @author sdywcd
+	 *
+	 */
+	public enum DataShowState{
 		SHOW("显示","1"),HIDDEN("隐藏","0");
 		private String name;
 		private String state;
@@ -480,14 +665,14 @@ public class  StaticKey {
 		public void setState(String state) {
 			this.state = state;
 		}
-		private JshopState(String name,String state){
+		private DataShowState(String name,String state){
 			this.name=name;
 			this.state=state;
 		}
 		public static String getName(String tag){
-			for(JshopState jshopState:JshopState.values()){
-				if(jshopState.getState().equals(tag)){
-					return jshopState.getName();
+			for(DataShowState d:DataShowState.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
 				}
 			}
 			return "";
@@ -564,6 +749,9 @@ public class  StaticKey {
 			return "";
 		}
 	}
+	
+	
+	
 	
 	
 	

@@ -87,7 +87,7 @@ public class AuthorityLogininterceptor extends MethodFilterInterceptor {
 			//去读取内存中的权限信息和上下文在url和action上做判断
 			List<FunctionM> userfunctionlist = (List<FunctionM>) ActionContext.getContext().getSession().get(StaticKey.USERROLEFUNCTION);
 			if(!userfunctionlist.isEmpty()){
-				for (Iterator it = userfunctionlist.iterator(); it.hasNext();) {
+				for (Iterator<FunctionM> it = userfunctionlist.iterator(); it.hasNext();) {
 					
 					FunctionM fm = (FunctionM) it.next();
 					if(fm!=null){

@@ -12,7 +12,7 @@ import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.RoleFunctionM;
 import com.jshop.entity.RoleM;

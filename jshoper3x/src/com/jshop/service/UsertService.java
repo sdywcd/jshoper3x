@@ -1,6 +1,7 @@
 package com.jshop.service;
 
 import java.util.List;
+import java.util.Set;
 
 import com.jshop.entity.UserT;
 
@@ -177,4 +178,16 @@ public interface UsertService extends BaseTService<UserT>{
 	 * @param usert
 	 */
 	public void updateUserT(UserT usert);
+	/**
+	 * 获取用户角色权限列表
+	 * @param userid
+	 * @return
+	 */
+	public Set<String>findUserRoleFunctions(String userid);
+	/**
+	 * 获取用户角色
+	 * @param userid
+	 * @return
+	 */
+	public Set<String>findUserRole(String userid);
 }

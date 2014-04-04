@@ -14,12 +14,12 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.service.LogisticsBusinessTService;
+import com.jshop.service.impl.Serial;
 
 @Namespace("")
 @ParentPackage("jshop")
@@ -383,18 +383,8 @@ public class LogisticsBusinessTAction extends BaseTAction {
 			} else {
 				lb.setIsCod(StaticKey.UNSUPPORT);
 			}
-			if (lb.getVisible().equals("1")) {
-				lb.setVisible(StaticKey.SHOW);
-			} else {
-				lb.setVisible(StaticKey.HIDDEN);
-			}
-			if (lb.getState().equals("1")) {
-				lb.setState(StaticKey.FRONTUSE);
-			} else if (lb.getState().equals("0")) {
-				lb.setState(StaticKey.UNUSING);
-			} else {
-				lb.setState(StaticKey.BACKUSE);
-			}
+			lb.setVisible(StaticKey.DataShowState.getName(lb.getVisible()));
+			lb.setState(StaticKey.LogisticsUsingState.getName(lb.getState()));
 			if(lb.getSendrange().equals("1")){
 				lb.setSendrange(StaticKey.INTERNATIONAL);
 			}else{

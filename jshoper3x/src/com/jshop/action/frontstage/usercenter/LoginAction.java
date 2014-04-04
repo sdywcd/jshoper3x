@@ -12,8 +12,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.MD5Code;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.MD5Code;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.UserT;

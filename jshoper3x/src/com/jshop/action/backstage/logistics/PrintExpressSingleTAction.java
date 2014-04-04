@@ -10,8 +10,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.PrintExpressParam;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.PrintExpressParam;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.ExpresstempleteT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.ShippingAddressT;

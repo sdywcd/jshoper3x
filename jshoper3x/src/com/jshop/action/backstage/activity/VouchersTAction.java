@@ -14,11 +14,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.VouchersT;
 import com.jshop.service.VouchersTService;
+import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class VouchersTAction extends BaseTAction {

@@ -13,7 +13,7 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 
 import com.jshop.action.backstage.image.ImgTAction;
-import com.jshop.action.backstage.tools.ImgCutTools;
+import com.jshop.action.backstage.utils.ImgCutTools;
 import com.jshop.action.backstage.utils.statickey.GlobalParam;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.opensymphony.xwork2.ActionContext;

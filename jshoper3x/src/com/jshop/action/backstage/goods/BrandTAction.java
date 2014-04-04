@@ -14,14 +14,14 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.BrandT;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.service.BrandTService;
 import com.jshop.service.GoodsTypeBrandTService;
-@Namespace("")
+import com.jshop.service.impl.Serial;
+@Namespace("/bk/goods")
 @ParentPackage("jshop")
 public class BrandTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
@@ -235,7 +235,7 @@ public class BrandTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "addBrandt", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/addBrandt", results = { @Result(name = "json", type = "json") })
 	public String addBrandt() {
 		BrandT bt = new BrandT();
 		bt.setBrandid(this.getSerial().Serialid(Serial.BRAND));
@@ -264,7 +264,7 @@ public class BrandTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "/web/findAllBrandt", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/findAllBrandt", results = { @Result(name = "json", type = "json") })
 	public String findAllBrandt() {
 		int currentPage = page;
 		int lineSize = rp;
@@ -293,7 +293,7 @@ public class BrandTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "updateBrandt", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/updateBrandt", results = { @Result(name = "json", type = "json") })
 	public String updateBrandt() {
 		BrandT bt = new BrandT();
 		bt.setBrandid(this.getBrandid());
@@ -328,7 +328,7 @@ public class BrandTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findBrandById", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/findBrandById", results = { @Result(name = "json", type = "json") })
 	public String findBrandById() {
 		if (Validate.StrNotNull(this.getBrandid())) {
 			bean = this.getBrandTService().findBrandById(this.getBrandid().trim());
@@ -353,7 +353,7 @@ public class BrandTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "delBrandt", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/delBrandt", results = { @Result(name = "json", type = "json") })
 	public String delBrandt() {
 		if (StringUtils.isNotBlank(this.getBrandid())) {
 			String[] strs = StringUtils.split(this.getBrandid(), ",");
@@ -370,7 +370,7 @@ public class BrandTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findAllBrandtjson", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/findAllBrandtjson", results = { @Result(name = "json", type = "json") })
 	public String findAllBrandtjson() {
 		this.setBrandjson("");
 		this.brand = this.getBrandTService().findAllBrandt();

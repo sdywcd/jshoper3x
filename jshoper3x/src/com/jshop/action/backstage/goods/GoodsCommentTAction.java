@@ -15,14 +15,14 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCommentT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsCommentTService;
 import com.jshop.service.GoodsTService;
+import com.jshop.service.impl.Serial;
 
 @Namespace("")
 @ParentPackage("jshop")
@@ -46,7 +46,7 @@ public class GoodsCommentTAction extends BaseTAction {
 	private GoodsT g = new GoodsT();
 	private GoodsCommentT bean = new GoodsCommentT();
 	private List<GoodsCommentT> beanlist = new ArrayList<GoodsCommentT>();
-	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -70,8 +70,6 @@ public class GoodsCommentTAction extends BaseTAction {
 	public void setGoodsTService(GoodsTService goodsTService) {
 		this.goodsTService = goodsTService;
 	}
-
-
 
 	public String getCommentid() {
 		return commentid;
@@ -168,7 +166,6 @@ public class GoodsCommentTAction extends BaseTAction {
 	public void setEmailable(String emailable) {
 		this.emailable = emailable;
 	}
-
 
 	public GoodsCommentT getBean() {
 		return bean;
@@ -279,27 +276,29 @@ public class GoodsCommentTAction extends BaseTAction {
 		this.setSucflag(true);
 		return "json";
 	}
+
 	/**
 	 * 更新商品评论
+	 * 
 	 * @return
 	 */
 	@Action(value = "updateGoodsComment", results = { @Result(name = "json", type = "json") })
-	public String updateGoodsComment(){
-		if(StringUtils.isBlank(this.getCommentid())){
+	public String updateGoodsComment() {
+		if (StringUtils.isBlank(this.getCommentid())) {
 			return "json";
 		}
-		bean=this.getGoodsCommentTService().findGoodsCommentById(this.getCommentid());
+		bean = this.getGoodsCommentTService().findGoodsCommentById(
+				this.getCommentid());
 		bean.setReplyorcommentusername(this.getReplyorcommentusername());
 		bean.setReplyorcommentuserid(BaseTools.adminCreateId());
 		bean.setCommentcontent(this.getCommentcontent());
 		bean.setScore(this.getScore());
 		this.getGoodsCommentTService().updateGoodsComment(bean);
-		//this.setSucflag(true);
+		// this.setSucflag(true);
 		return "json";
-		
+
 	}
-	
-	
+
 	/**
 	 * 处理商品评论迭代
 	 * 
@@ -309,18 +308,17 @@ public class GoodsCommentTAction extends BaseTAction {
 		total = this.getGoodsCommentTService().countfindAllGoodsComment();
 		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
-			if (gctt.getState().equals(StaticKey.ONE)) {
-				gctt.setState(StaticKey.SHOW);
-			} else {
-				gctt.setState(StaticKey.HIDDEN);
-			}
+			gctt.setState(StaticKey.DataShowState.getName(gctt.getState()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gctt.getGoodsid());
-			cellMap.put("cell",
+			cellMap.put(
+					"cell",
 					new Object[] {
 							gctt.getGoodsname(),
 							gctt.getState(),
-							"<a id='showgoodscomment' href='goodscommentlistment.jsp?operate=edit&goodsname="+gctt.getGoodsname()+"&goodsid="
+							"<a id='showgoodscomment' href='goodscommentlistment.jsp?operate=edit&goodsname="
+									+ gctt.getGoodsname()
+									+ "&goodsid="
 									+ gctt.getGoodsid()
 									+ "' name='showgoodscomment'>[查看详细]</a>" });
 			rows.add(cellMap);
@@ -417,19 +415,15 @@ public class GoodsCommentTAction extends BaseTAction {
 		total = this.getGoodsCommentTService().countfindAllGoodsComment();
 		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
-			if (gctt.getState().equals(StaticKey.ONE)) {
-				gctt.setState(StaticKey.SHOW);
-			} else {
-				gctt.setState(StaticKey.HIDDEN);
-			}
+			gctt.setState(StaticKey.DataShowState.getName(gctt.getState()));
 			if (gctt.getVirtualadd().equals(
 					StaticKey.COMMENT_VIRTUALADD_ONE_NUM)) {
 				gctt.setVirtualadd(StaticKey.COMMENT_VIRTULADD);
 			} else {
 				gctt.setVirtualadd(StaticKey.COMMENT_NOTVIRTULADD);
 			}
-			if (gctt.getReplyorcomment().equals(
-					StaticKey.COMMENT_REPLY_ONE_NUM)) {
+			if (gctt.getReplyorcomment()
+					.equals(StaticKey.COMMENT_REPLY_ONE_NUM)) {
 				gctt.setReplyorcomment(StaticKey.COMMENT_REPLY_ONE);
 			} else {
 				gctt.setReplyorcomment(StaticKey.COMMENT_REPLY_TWO);
@@ -508,7 +502,7 @@ public class GoodsCommentTAction extends BaseTAction {
 		}
 		bean = this.getGoodsCommentTService().findGoodsCommentById(
 				this.getCommentid());
-		if(bean!=null){
+		if (bean != null) {
 			this.setSucflag(true);
 			return "json";
 		}

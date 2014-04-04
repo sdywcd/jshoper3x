@@ -14,11 +14,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.AllOrderState;
-import com.jshop.action.backstage.tools.Arith;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.AllOrderState;
+import com.jshop.action.backstage.utils.Arith;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
@@ -41,6 +40,7 @@ import com.jshop.service.PaymentMService;
 import com.jshop.service.ProductTService;
 import com.jshop.service.ShippingAddressTService;
 import com.jshop.service.UsertService;
+import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")

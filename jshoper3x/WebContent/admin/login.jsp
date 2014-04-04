@@ -90,7 +90,7 @@ html {
 	<div class="container">
 
 
-		<form class="form-signin" action="user/adminlogin.action"
+		<form class="form-signin" action="bk/user/adminlogin.action"
 			method="post">
 			<h2 class="form-signin-heading">
 				<img src="<%=basePath%>admin/ui/assets/img/logo.png" width="280"

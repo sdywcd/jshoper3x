@@ -7,8 +7,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.thirdpartyplatform.alifh.AlipayConfig;
-import com.jshop.action.backstage.tools.AllOrderState;
+import com.jshop.action.backstage.pay.thirdpartyplatform.alipay.AlipayConfig;
+import com.jshop.action.backstage.utils.AllOrderState;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.OrderTService;
@@ -108,7 +108,7 @@ public class AlipayFhTAction extends BaseTAction {
 	public void GetPaymentinfo() {
 		PaymentM list = this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
 		if (list != null) {
-			AlipayConfig.partnerID = list.getPartnerid();
+			AlipayConfig.partner = list.getPartnerid();
 			AlipayConfig.key = list.getSafecode();
 			this.setSpaymentflag(true);
 		} else {

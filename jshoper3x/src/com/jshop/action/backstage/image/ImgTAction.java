@@ -31,9 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.ServerFileInfo;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.ServerFileInfo;
+import com.jshop.action.backstage.utils.Validate;
 @Namespace("")
 @ParentPackage("jshop")
 public class ImgTAction extends BaseTAction implements ServletResponseAware, ServletRequestAware {

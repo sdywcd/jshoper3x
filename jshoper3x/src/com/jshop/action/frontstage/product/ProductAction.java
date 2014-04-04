@@ -16,10 +16,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.ProductT;
 import com.jshop.service.ProductTService;
+import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionSupport;
 
 @ParentPackage("jshop")

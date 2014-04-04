@@ -13,14 +13,12 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.template.DataCollectionTAction;
-import com.jshop.action.backstage.template.FreeMarkervariable;
-import com.jshop.action.backstage.thirdpartyplatform.alipay.AlipayConfig;
-import com.jshop.action.backstage.thirdpartyplatform.tenpay.TenPayConfig;
-import com.jshop.action.backstage.tools.Arith;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.pay.thirdpartyplatform.alipay.AlipayConfig;
+import com.jshop.action.backstage.staticspage.DataCollectionTAction;
+import com.jshop.action.backstage.staticspage.FreeMarkervariable;
+import com.jshop.action.backstage.utils.Arith;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.PaymentCode;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
@@ -32,6 +30,7 @@ import com.jshop.service.CartTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
 import com.jshop.service.VirtualShippingAddressTService;
+import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("jshop")
@@ -440,11 +439,11 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			//获取导航数据
 			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
+			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 			//获取页脚文章数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle());
+			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 			
 			return SUCCESS;
 		}
@@ -485,11 +484,11 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 			//获取导航数据
 			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 			//获取页脚分类数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
+			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 			//获取页脚文章数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle());
+			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 			
 			return SUCCESS;
 		}
@@ -686,27 +685,27 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 	/**
 	 * 开始对TenPay所需数据进行采集
 	 */
-	public void BuildTenPayConfig(){
-		TenPayConfig.partner=this.getPm().getPartnerid();//商户号
-		TenPayConfig.key=this.getPm().getSafecode();//密钥
-		TenPayConfig.out_trade_no=order.getOrderid();//订单号
-		int totalfee=(int)(order.getShouldpay()*100);
-		TenPayConfig.total_fee=String.valueOf(totalfee);
-		TenPayConfig.body=order.getOrdername();
-		TenPayConfig.bank_type="DEFAULT";
-		TenPayConfig.subject=order.getOrdername();
-		TenPayConfig.goods_tag=order.getOrderTag();//手机充值虚拟卡
-		TenPayConfig.trade_mode="1";//即时到帐
-		TenPayConfig.trans_type="2";//虚拟交易
-		if(Validate.StrNotNull(this.getMobile())){
-			TenPayConfig.mobile=this.getMobile();
-		}
-		if(Validate.StrNotNull(this.getEmail())){
-			TenPayConfig.email=this.getEmail();
-		}
-		//TenPayConfig.return_url="http://"+this.getDataCollectionTAction().getBasePath()+"pay/tenpay_api_b2c/payReturnUrl.jsp";
-		//TenPayConfig.notify_url="http://"+this.getDataCollectionTAction().getBasePath()+"pay/tenpay_api_b2c/payNotifyUrl.jsp";
-	}
+//	public void BuildTenPayConfig(){
+//		TenPayConfig.partner=this.getPm().getPartnerid();//商户号
+//		TenPayConfig.key=this.getPm().getSafecode();//密钥
+//		TenPayConfig.out_trade_no=order.getOrderid();//订单号
+//		int totalfee=(int)(order.getShouldpay()*100);
+//		TenPayConfig.total_fee=String.valueOf(totalfee);
+//		TenPayConfig.body=order.getOrdername();
+//		TenPayConfig.bank_type="DEFAULT";
+//		TenPayConfig.subject=order.getOrdername();
+//		TenPayConfig.goods_tag=order.getOrderTag();//手机充值虚拟卡
+//		TenPayConfig.trade_mode="1";//即时到帐
+//		TenPayConfig.trans_type="2";//虚拟交易
+//		if(Validate.StrNotNull(this.getMobile())){
+//			TenPayConfig.mobile=this.getMobile();
+//		}
+//		if(Validate.StrNotNull(this.getEmail())){
+//			TenPayConfig.email=this.getEmail();
+//		}
+//		//TenPayConfig.return_url="http://"+this.getDataCollectionTAction().getBasePath()+"pay/tenpay_api_b2c/payReturnUrl.jsp";
+//		//TenPayConfig.notify_url="http://"+this.getDataCollectionTAction().getBasePath()+"pay/tenpay_api_b2c/payNotifyUrl.jsp";
+//	}
 	
 	
 	/**
@@ -753,7 +752,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 				if(PaymentCode.PAYMENT_CODE_ALIPAY.equals(this.getPm().getPaymentCode())){
 					BuildAlipayConfig();
 				}else if(PaymentCode.PAYMENT_CODE_TENPAY.equals(this.getPm().getPaymentCode())){
-					BuildTenPayConfig();
+					//BuildTenPayConfig();
 				}
 				
 				//更新购物车商品到3，表示已经在订单中。并把对应订单号更新
@@ -797,7 +796,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 				if(PaymentCode.PAYMENT_CODE_ALIPAY.equals(this.getPm().getPaymentCode())){
 					BuildAlipayConfig();
 				}else if(PaymentCode.PAYMENT_CODE_TENPAY.equals(this.getPm().getPaymentCode())){
-					BuildTenPayConfig();
+					//BuildTenPayConfig();
 				}
 				
 				//更新购物车商品到3，表示已经在订单中。并把对应订单号更新

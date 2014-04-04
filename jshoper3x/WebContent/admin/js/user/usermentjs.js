@@ -182,7 +182,7 @@ $(function(){
 	
 	findAllUser=function(){
 		$("#usermanagement").flexigrid( {
-			url : 'findAllUsert.action',
+			url : 'bk/user/findAllUsert.action',
 			dataType : 'json',
 			cache : false,
 			colModel : [ { 

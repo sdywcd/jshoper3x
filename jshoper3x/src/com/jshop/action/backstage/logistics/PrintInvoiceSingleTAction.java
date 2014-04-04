@@ -15,8 +15,8 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.tools.PrintInvoiceParam;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.PrintInvoiceParam;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.entity.CartT;
 import com.jshop.entity.InvoicetempleteT;
 import com.jshop.entity.OrderT;

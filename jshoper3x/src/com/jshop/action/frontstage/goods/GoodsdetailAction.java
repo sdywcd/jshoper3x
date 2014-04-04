@@ -21,11 +21,11 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.tools.Serial;
 import com.jshop.entity.GoodsCommentT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsCommentTService;
 import com.jshop.service.GoodsTService;
+import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("jshop")

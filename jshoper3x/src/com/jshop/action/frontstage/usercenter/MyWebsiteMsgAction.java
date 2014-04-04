@@ -12,10 +12,9 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.template.DataCollectionTAction;
-import com.jshop.action.backstage.template.FreeMarkervariable;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
+import com.jshop.action.backstage.staticspage.DataCollectionTAction;
+import com.jshop.action.backstage.staticspage.FreeMarkervariable;
+import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.MsgtextT;
@@ -23,6 +22,7 @@ import com.jshop.entity.UserT;
 import com.jshop.entity.WebsiteMsgT;
 import com.jshop.service.MsgtextTService;
 import com.jshop.service.WebsiteMsgTService;
+import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("jshop")
@@ -255,11 +255,11 @@ public class MyWebsiteMsgAction extends ActionSupport {
 				//获取导航数据
 				ActionContext.getContext().put("siteNavigationList", this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 				//获取商城基本数据
-				ActionContext.getContext().put("jshopbasicinfo", this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+				ActionContext.getContext().put("jshopbasicinfo", this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 				//获取页脚分类数据
-				ActionContext.getContext().put("footcategory", this.getDataCollectionTAction().findFooterCateogyrT());
+				ActionContext.getContext().put("footcategory", this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 				//获取页脚文章数据
-				ActionContext.getContext().put("footerarticle", this.getDataCollectionTAction().findFooterArticle());
+				ActionContext.getContext().put("footerarticle", this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 				return SUCCESS;
 			}else{
 				//路径获取
@@ -269,11 +269,11 @@ public class MyWebsiteMsgAction extends ActionSupport {
 				//获取导航数据
 				ActionContext.getContext().put("siteNavigationList", this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 				//获取商城基本数据
-				ActionContext.getContext().put("jshopbasicinfo", this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+				ActionContext.getContext().put("jshopbasicinfo", this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 				//获取页脚分类数据
-				ActionContext.getContext().put("footcategory", this.getDataCollectionTAction().findFooterCateogyrT());
+				ActionContext.getContext().put("footcategory", this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 				//获取页脚文章数据
-				ActionContext.getContext().put("footerarticle", this.getDataCollectionTAction().findFooterArticle());
+				ActionContext.getContext().put("footerarticle", this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 				return SUCCESS;
 			}
 		}else{
@@ -326,11 +326,11 @@ public class MyWebsiteMsgAction extends ActionSupport {
 				//获取导航数据				
 				ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 				//获取商城基本数据
-				ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+				ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 				//获取页脚分类数据
-				ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
+				ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 				//获取页脚文章数据
-				ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle());
+				ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 				return "json";
 			}else{
 				String temp=this.getMsgtextid().trim()+",";
@@ -345,11 +345,11 @@ public class MyWebsiteMsgAction extends ActionSupport {
 				//获取导航数据				
 				ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 				//获取商城基本数据
-				ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.JshopState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+				ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 				//获取页脚分类数据
-				ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT());
+				ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
 				//获取页脚文章数据
-				ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle());
+				ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 				this.setSflag(true);
 				return "json";
 			}

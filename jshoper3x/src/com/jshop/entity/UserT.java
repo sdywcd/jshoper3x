@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-1-25 22:43:14 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -45,6 +45,8 @@ public class UserT implements java.io.Serializable {
 	private Date updatetime;
 	private String creatorid;
 	private Integer postingcount;
+	private String salt;
+	private String credentialsalt;
 
 	public UserT() {
 	}
@@ -71,7 +73,7 @@ public class UserT implements java.io.Serializable {
 			String parttime3, String qq, String sinaweibo, String state,
 			String uid, String rolemname, String rolemid, String headpath,
 			String weixin, Date createtime, Date updatetime, String creatorid,
-			Integer postingcount) {
+			Integer postingcount, String salt, String credentialsalt) {
 		this.userid = userid;
 		this.username = username;
 		this.realname = realname;
@@ -100,6 +102,8 @@ public class UserT implements java.io.Serializable {
 		this.updatetime = updatetime;
 		this.creatorid = creatorid;
 		this.postingcount = postingcount;
+		this.salt = salt;
+		this.credentialsalt = credentialsalt;
 	}
 
 	@Id
@@ -355,6 +359,24 @@ public class UserT implements java.io.Serializable {
 
 	public void setPostingcount(Integer postingcount) {
 		this.postingcount = postingcount;
+	}
+
+	@Column(name = "SALT", length = 45)
+	public String getSalt() {
+		return this.salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	@Column(name = "CREDENTIALSALT", length = 45)
+	public String getCredentialsalt() {
+		return this.credentialsalt;
+	}
+
+	public void setCredentialsalt(String credentialsalt) {
+		this.credentialsalt = credentialsalt;
 	}
 
 }

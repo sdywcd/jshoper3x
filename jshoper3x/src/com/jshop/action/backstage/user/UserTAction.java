@@ -21,10 +21,9 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.authority.UserRoleMAction;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.base.InitTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.MD5Code;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.MD5Code;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
@@ -32,10 +31,11 @@ import com.jshop.entity.UserT;
 import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
+import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 
 import freemarker.template.TemplateException;
-@Namespace("")
+@Namespace("/bk/user")
 @ParentPackage("jshop")
 public class UserTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
@@ -490,7 +490,7 @@ public class UserTAction extends BaseTAction {
 	/**
 	 * 验证登陆
 	 */
-	@Action(value = "checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
+	@Action(value = "/checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
 	public String checklogin() {
 		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticKey.BACK_USER_SESSION_KEY);
 		if (admin!=null) {
@@ -504,7 +504,7 @@ public class UserTAction extends BaseTAction {
 	}
 	
 	
-	@Action(value = "checkAuthorityException", results = { @Result(name = "json", type = "json", params = { "includeProperties", "sauthority" }) })
+	@Action(value = "/checkAuthorityException", results = { @Result(name = "json", type = "json", params = { "includeProperties", "sauthority" }) })
 	public String checkAuthorityException(){
 		String authorityE=(String) ActionContext.getContext().getSession().get(StaticKey.AUTHORITYEXCEPTION);
 		if(authorityE!=null){
@@ -527,7 +527,7 @@ public class UserTAction extends BaseTAction {
 	 * @return
 	 * @throws Exception
 	 */
-	@Action(value = "adminlogin", results = { @Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
+	@Action(value = "/adminlogin", results = { @Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
 	public String adminlogin() throws Exception {
 		if(StringUtils.isBlank(this.getUsername())){
 			this.setParam(StaticKey.ONE);
@@ -568,7 +568,7 @@ public class UserTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findAllUsert", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/findAllUsert", results = { @Result(name = "json", type = "json") })
 	public String findAllUsert() {
 		if(StaticKey.SC.equals(this.getQtype())){
 			finddefaultAllUserT();
@@ -632,7 +632,7 @@ public class UserTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "saveUserT", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/saveUserT", results = { @Result(name = "json", type = "json") })
 	public String saveUserT() {
 		if(StringUtils.isNotBlank(this.getUsername())&&StringUtils.isNotBlank(this.getPassword())&&StringUtils.isNotBlank(this.getEmail())){
 			MD5Code md5 = new MD5Code();
@@ -693,7 +693,7 @@ public class UserTAction extends BaseTAction {
 	 * 更新系统用户
 	 * @return
 	 */
-	@Action(value = "updateUserT", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/updateUserT", results = { @Result(name = "json", type = "json") })
 	public String updateUserT(){
 		if(StringUtils.isBlank(this.getUserid())){
 			return "json";
@@ -721,7 +721,7 @@ public class UserTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findUserById", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/findUserById", results = { @Result(name = "json", type = "json") })
 	public String findUserById() {
 		if (StringUtils.isNotBlank(this.getUserid())) {
 			bean = this.getUsertService().findById(this.getUserid());
@@ -739,7 +739,7 @@ public class UserTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "UpdateUserTunpwd", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/UpdateUserTunpwd", results = { @Result(name = "json", type = "json") })
 	public String UpdateUserTunpwd() {
 		this.checklogin();
 		if (!this.isSlogin()) {
@@ -763,7 +763,7 @@ public class UserTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "DelUsert", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/DelUsert", results = { @Result(name = "json", type = "json") })
 	public String DelUsert() {
 		if (Validate.StrNotNull(this.getUserid())) {
 			String[] list = this.getUserid().trim().split(",");
@@ -780,7 +780,7 @@ public class UserTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "UpdateUserMember", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/UpdateUserMember", results = { @Result(name = "json", type = "json") })
 	public String UpdateUserMember() {
 		this.checklogin();
 		if (!this.isSlogin()) {
@@ -841,7 +841,7 @@ public class UserTAction extends BaseTAction {
 //		}
 //	}
 
-	@Action(value = "updateUserbyuserstate", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/updateUserbyuserstate", results = { @Result(name = "json", type = "json") })
 	public String updateUserbyuserstate() {
 		if (StringUtils.isNotBlank(this.getUserid())) {
 			UserT user = new UserT();
@@ -869,7 +869,7 @@ public class UserTAction extends BaseTAction {
 	 * 更新用户表中后台管理者的权限标记，后期可能全面启用写死的userstate模式改成此模式
 	 * @return
 	 */
-	@Action(value = "updateUserRoleMByuserid", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/updateUserRoleMByuserid", results = { @Result(name = "json", type = "json") })
 	public String updateUserRoleMByuserid(){
 		if(Validate.StrNotNull(this.getUserid())&&Validate.StrNotNull(this.getRoleid())&&Validate.StrNotNull(this.getRolemname())){
 			if(this.getUsertService().updateUserRoleMByuserid(this.getUserid(),this.getRoleid(), this.getRolemname())>0){
@@ -883,7 +883,7 @@ public class UserTAction extends BaseTAction {
 	/**
 	 * 后台登出
 	 */
-	@Action(value = "adminlogout", results = { @Result(name = "json", type = "json") })
+	@Action(value = "/adminlogout", results = { @Result(name = "json", type = "json") })
 	public String adminlogout() {
 		ActionContext.getContext().getSession().remove(StaticKey.BACK_USER_SESSION_KEY);
 		ActionContext.getContext().getSession().remove(StaticKey.USERROLEFUNCTION);

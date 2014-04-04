@@ -16,11 +16,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.template.CreateHtml;
-import com.jshop.action.backstage.template.DataCollectionTAction;
-import com.jshop.action.backstage.tools.BaseTools;
-import com.jshop.action.backstage.tools.Serial;
-import com.jshop.action.backstage.tools.Validate;
+import com.jshop.action.backstage.staticspage.CreateHtml;
+import com.jshop.action.backstage.staticspage.DataCollectionTAction;
+import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.service.ArticleCategoryTService;
@@ -29,6 +28,7 @@ import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.SiteNavigationTService;
+import com.jshop.service.impl.Serial;
 
 import freemarker.template.TemplateException;
 @Namespace("")
