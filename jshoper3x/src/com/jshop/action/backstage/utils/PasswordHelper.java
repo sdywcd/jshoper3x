@@ -20,6 +20,8 @@ public class PasswordHelper {
 	public void encrypPassword(UserT user){
 		user.setSalt(rNumberGenerator.nextBytes().toHex());//随机加密盐
 		user.setCredentialsalt(user.getUsername()+rNumberGenerator.nextBytes().toHex());//用户名+随机hash
+		//uid 
+		user.setUid(rNumberGenerator.nextBytes().toHex());
 		String npwd=new SimpleHash(StaticKey.ALGORITHMNAME,user.getPassword(),ByteSource.Util.bytes(user.getCredentialsalt()),hashIterations).toHex();
 		user.setPassword(npwd);
 	}

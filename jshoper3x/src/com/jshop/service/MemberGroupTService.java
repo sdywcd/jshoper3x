@@ -57,6 +57,13 @@ public interface MemberGroupTService extends BaseTService<MemberGroupT>{
 	 */
 	public List<MemberGroupT>findMemberGroupTByname(String name);
 	
+	/**
+	 * 根据状态查询会员分组
+	 * @param status
+	 * @return
+	 */
+	public List<MemberGroupT>findAllMemberGroup(String status);
+	
 	
 	
 }

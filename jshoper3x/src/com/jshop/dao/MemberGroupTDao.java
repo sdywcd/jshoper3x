@@ -56,8 +56,12 @@ public interface MemberGroupTDao extends BaseTDao<MemberGroupT>{
 	 * @return
 	 */
 	public List<MemberGroupT>findMemberGroupTByname(String name);
-	
-	
+	/**
+	 * 根据状态查询会员分组
+	 * @param status
+	 * @return
+	 */
+	public List<MemberGroupT>findAllMemberGroup(String status);
 	
 	
 }

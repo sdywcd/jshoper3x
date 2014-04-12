@@ -68,4 +68,9 @@ public class MemberGroupTServiceImpl extends BaseTServiceImpl<MemberGroupT>imple
 		return this.getMemberGroupTDao().findMemberGroupTByname(name);
 	}
 
+	@Override
+	public List<MemberGroupT> findAllMemberGroup(String status) {
+		return this.getMemberGroupTDao().findAllMemberGroup(status);
+	}
+
 }

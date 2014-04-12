@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -29,6 +29,7 @@ public class OrderInvoiceT implements java.io.Serializable {
 	private Date createtime;
 	private Date updatetime;
 	private int versiont;
+	private String shopid;
 
 	public OrderInvoiceT() {
 	}
@@ -52,7 +53,7 @@ public class OrderInvoiceT implements java.io.Serializable {
 	public OrderInvoiceT(String orderInvoiceid, String orderid, String invType,
 			String invPayee, String amount, String memberid, String state,
 			String membername, String invContent, Date createtime,
-			Date updatetime, int versiont) {
+			Date updatetime, int versiont, String shopid) {
 		this.orderInvoiceid = orderInvoiceid;
 		this.orderid = orderid;
 		this.invType = invType;
@@ -65,6 +66,7 @@ public class OrderInvoiceT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.updatetime = updatetime;
 		this.versiont = versiont;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -176,6 +178,15 @@ public class OrderInvoiceT implements java.io.Serializable {
 
 	public void setVersiont(int versiont) {
 		this.versiont = versiont;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

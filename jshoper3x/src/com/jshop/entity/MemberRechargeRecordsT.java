@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,6 +23,7 @@ public class MemberRechargeRecordsT implements java.io.Serializable {
 	private double money;
 	private Date createtime;
 	private String type;
+	private String shopid;
 
 	public MemberRechargeRecordsT() {
 	}
@@ -35,6 +36,18 @@ public class MemberRechargeRecordsT implements java.io.Serializable {
 		this.money = money;
 		this.createtime = createtime;
 		this.type = type;
+	}
+
+	public MemberRechargeRecordsT(String id, String memberid,
+			String membername, double money, Date createtime, String type,
+			String shopid) {
+		this.id = id;
+		this.memberid = memberid;
+		this.membername = membername;
+		this.money = money;
+		this.createtime = createtime;
+		this.type = type;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -91,6 +104,15 @@ public class MemberRechargeRecordsT implements java.io.Serializable {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.ws.soap.MTOM;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -22,9 +24,11 @@ import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.MD5Code;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
+import com.jshop.redis.dao.RedisBaseTDao;
 import com.jshop.redis.service.RedisMemberService;
 import com.jshop.service.MemberTService;
 import com.jshop.service.impl.Serial;
+import com.taobao.api.domain.Member;
 @Namespace("")
 @ParentPackage("jshop")
 public class MemberTAction extends BaseTAction {
@@ -32,6 +36,7 @@ public class MemberTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	private MemberTService memberTService;
 	private RedisMemberService redisMemberService;
+	private RedisBaseTDao redisBaseTDao;
 	private String id;
 	private String loginname;
 	private String loginpwd;
@@ -71,6 +76,14 @@ public class MemberTAction extends BaseTAction {
 	private String message;
 	private boolean sucflag;
 	private boolean doingTag;//用于aspect的标记
+
+	public RedisBaseTDao<MemberT> getRedisBaseTDao() {
+		return redisBaseTDao;
+	}
+
+	public void setRedisBaseTDao(RedisBaseTDao redisBaseTDao) {
+		this.redisBaseTDao = redisBaseTDao;
+	}
 
 	@JSON(serialize = false)
 	public RedisMemberService getRedisMemberService() {
@@ -458,6 +471,7 @@ public class MemberTAction extends BaseTAction {
 				this.getMemberTService().save(mt);
 //				//放置到redis中去
 //				this.getRedisMemberService().save(mt);
+				//this.getRedisBaseTDao().put(mt.getId(), mt, MemberT.class);
 				this.setSucflag(true);
 				return "json";
 			}else{
@@ -493,8 +507,18 @@ public class MemberTAction extends BaseTAction {
 		int currentPage=page;
 		int lineSize=rp;
 		total=this.getMemberTService().countfindAllMemberT();
+		
 		List<MemberT>list=this.getMemberTService().findAllMemberT(currentPage, lineSize);
+		
+		
+		
+		
 		if(!list.isEmpty()){
+//			//put to redis
+//			for(Iterator<MemberT> it=list.iterator();it.hasNext();){
+//				MemberT mt=it.next();
+//				this.getRedisBaseTDao().put(mt.getId(), mt, MemberT.class);
+//			}
 			this.ProcessMemberList(list);
 		}
 	}
@@ -606,7 +630,7 @@ public class MemberTAction extends BaseTAction {
 		if(StringUtils.isBlank(this.getId())){
 			return "json";
 		}
-//		MemberT mt=this.getRedisMemberService().read(this.getId());
+//		MemberT mt=this.getRedisBaseTDao().get(this.getId(), MemberT.class);
 //		if(mt!=null){
 //			System.out.println(mt.getNick());
 //		}
@@ -672,5 +696,8 @@ public class MemberTAction extends BaseTAction {
 		this.setSucflag(true);
 		return "json";
 	}
+	
+	
+	
 	
 }

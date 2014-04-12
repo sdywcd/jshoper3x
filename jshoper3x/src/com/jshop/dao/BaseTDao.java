@@ -48,8 +48,6 @@ public interface BaseTDao<T> {
 	 * @return
 	 */
 	public T findByPK(Class<T> t,Serializable id);
-	
-	
-	
+
 	
 }

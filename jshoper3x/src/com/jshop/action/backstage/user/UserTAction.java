@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.util.ByteSource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -23,6 +25,7 @@ import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.base.InitTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.MD5Code;
+import com.jshop.action.backstage.utils.PasswordHelper;
 import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
@@ -541,6 +544,8 @@ public class UserTAction extends BaseTAction {
 		UserT user = new UserT();
 		user.setUsername(username);
 		user.setPassword(md5.getMD5ofStr(password));
+
+		
 		//user.setState(StaticString.THREE);//超级管理员
 		user = this.getUsertService().login(user);
 		if (user != null) {
@@ -636,6 +641,7 @@ public class UserTAction extends BaseTAction {
 	public String saveUserT() {
 		if(StringUtils.isNotBlank(this.getUsername())&&StringUtils.isNotBlank(this.getPassword())&&StringUtils.isNotBlank(this.getEmail())){
 			MD5Code md5 = new MD5Code();
+			PasswordHelper ph=new PasswordHelper();
 			UserT u = new UserT();
 			u.setUsername(this.getUsername().trim());
 			u.setEmail(this.getEmail().trim());
@@ -653,6 +659,7 @@ public class UserTAction extends BaseTAction {
 					return "json";
 				}
 				UserT user = new UserT();
+				
 				user.setUserid(this.getSerial().Serialid(Serial.USER));
 				user.setUid(md5.getMD5ofStr(user.getUserid()));
 				user.setUsername(this.getUsername().trim());
@@ -662,7 +669,7 @@ public class UserTAction extends BaseTAction {
 				user.setMobile(this.getMobile().trim());
 				user.setQuestion(this.getQuestion().trim());
 				user.setAnswer(this.getAnswer().trim());
-				user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));//默认密码6个1
+				user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));//默认密码7个1
 				user.setUserstate(this.getUserstate());
 				user.setPostingcount(0);
 				user.setSection(StaticKey.EMPTY);
@@ -679,6 +686,7 @@ public class UserTAction extends BaseTAction {
 				user.setCreatorid(BaseTools.adminCreateId());
 				user.setCreatetime(BaseTools.systemtime());
 				user.setUpdatetime(user.getCreatetime());
+				//ph.encrypPassword(user);
 				this.getUsertService().save(user);
 				this.setSucflag(true);
 				return "json";

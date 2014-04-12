@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,6 +28,7 @@ public class GoodsBelinkedT implements java.io.Serializable {
 	private int versiont;
 	private String sxlinkedgoodsid;
 	private String mainproductid;
+	private String shopid;
 
 	public GoodsBelinkedT() {
 	}
@@ -51,7 +52,7 @@ public class GoodsBelinkedT implements java.io.Serializable {
 	public GoodsBelinkedT(String id, String maingoodsid,
 			String belinkedproductinfo, String mode, String state,
 			String creatorid, Date createtime, Date updatetime, int versiont,
-			String sxlinkedgoodsid, String mainproductid) {
+			String sxlinkedgoodsid, String mainproductid, String shopid) {
 		this.id = id;
 		this.maingoodsid = maingoodsid;
 		this.belinkedproductinfo = belinkedproductinfo;
@@ -63,6 +64,7 @@ public class GoodsBelinkedT implements java.io.Serializable {
 		this.versiont = versiont;
 		this.sxlinkedgoodsid = sxlinkedgoodsid;
 		this.mainproductid = mainproductid;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -165,6 +167,15 @@ public class GoodsBelinkedT implements java.io.Serializable {
 
 	public void setMainproductid(String mainproductid) {
 		this.mainproductid = mainproductid;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

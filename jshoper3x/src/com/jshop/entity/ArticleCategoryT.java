@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,6 +36,7 @@ public class ArticleCategoryT implements java.io.Serializable {
 	private String mobilesync;
 	private String htmlpath;
 	private String logo;
+	private String shopid;
 
 	public ArticleCategoryT() {
 	}
@@ -63,7 +64,7 @@ public class ArticleCategoryT implements java.io.Serializable {
 			Date createtime, String creatorid, String path, int sort,
 			String parentId, String sign, String parentName, String position,
 			Date updatetime, int versiont, String mobilesync, String htmlpath,
-			String logo) {
+			String logo, String shopid) {
 		this.articleCategoryTid = articleCategoryTid;
 		this.grade = grade;
 		this.metaKeywords = metaKeywords;
@@ -83,6 +84,7 @@ public class ArticleCategoryT implements java.io.Serializable {
 		this.mobilesync = mobilesync;
 		this.htmlpath = htmlpath;
 		this.logo = logo;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -257,6 +259,15 @@ public class ArticleCategoryT implements java.io.Serializable {
 
 	public void setLogo(String logo) {
 		this.logo = logo;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

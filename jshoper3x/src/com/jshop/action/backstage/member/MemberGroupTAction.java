@@ -264,8 +264,15 @@ public class MemberGroupTAction extends BaseTAction{
 		return "json";
 		
 	}
-	
-	
+//	/**
+//	 * 获取所有可用会员分组
+//	 * @return
+//	 */
+//	@Action(value = "delMemberGroupT", results = {@Result(name = "json",type="json")})
+//	public String findAllMemberGroupT4Select(){
+//		
+//	}
+//	
 	
 	
 	

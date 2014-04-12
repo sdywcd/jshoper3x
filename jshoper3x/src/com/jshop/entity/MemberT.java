@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -50,6 +50,8 @@ public class MemberT implements java.io.Serializable {
 	private int versiont;
 	private String mid;
 	private String paypassword;
+	private String memberGroupId;
+	private String memberGroupName;
 
 	public MemberT() {
 	}
@@ -72,7 +74,8 @@ public class MemberT implements java.io.Serializable {
 			Integer loveother, Integer postingcount, String question,
 			String answer, String memberstate, String headpath,
 			Date createtime, String creatorid, Date updatetime, String mobile,
-			int versiont, String mid, String paypassword) {
+			int versiont, String mid, String paypassword, String memberGroupId,
+			String memberGroupName) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
@@ -106,6 +109,8 @@ public class MemberT implements java.io.Serializable {
 		this.versiont = versiont;
 		this.mid = mid;
 		this.paypassword = paypassword;
+		this.memberGroupId = memberGroupId;
+		this.memberGroupName = memberGroupName;
 	}
 
 	@Id
@@ -406,6 +411,24 @@ public class MemberT implements java.io.Serializable {
 
 	public void setPaypassword(String paypassword) {
 		this.paypassword = paypassword;
+	}
+
+	@Column(name = "MEMBER_GROUP_ID", length = 20)
+	public String getMemberGroupId() {
+		return this.memberGroupId;
+	}
+
+	public void setMemberGroupId(String memberGroupId) {
+		this.memberGroupId = memberGroupId;
+	}
+
+	@Column(name = "MEMBER_GROUP_NAME", length = 45)
+	public String getMemberGroupName() {
+		return this.memberGroupName;
+	}
+
+	public void setMemberGroupName(String memberGroupName) {
+		this.memberGroupName = memberGroupName;
 	}
 
 }

@@ -93,7 +93,7 @@ public class MemberGroupTDaoImpl extends BaseTDaoImpl<MemberGroupT> implements M
 		log.debug("countfindAllMemberGroupT");
 		try {
 			String queryString = "select count(*) from MemberGroupT as mgt where mgt.creatorid=:creatorid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "creatorid", creatorid);
+			List<MemberGroupT> list = this.getHibernateTemplate().findByNamedParam(queryString, "creatorid", creatorid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -173,6 +173,19 @@ public class MemberGroupTDaoImpl extends BaseTDaoImpl<MemberGroupT> implements M
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findMemberGroupTByname error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<MemberGroupT> findAllMemberGroup(String status) {
+		log.debug("findAllMemberGroup");
+		try {
+			String queryString = "from MemberGroupT as mgt where mgt.status=:status";
+			List<MemberGroupT> list = this.getHibernateTemplate().findByNamedParam(queryString, "status", status);
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findAllMemberGroup error", re);
 			throw re;
 		}
 	}

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,6 +28,7 @@ public class ProductSpecificationsT implements java.io.Serializable {
 	private String state;
 	private String goodsTypeId;
 	private String goodsTypeName;
+	private String shopid;
 
 	public ProductSpecificationsT() {
 	}
@@ -50,7 +51,8 @@ public class ProductSpecificationsT implements java.io.Serializable {
 	public ProductSpecificationsT(String specificationsid, String name,
 			String note, String sort, String specificationsType,
 			String specificationsValue, Date createtime, String creatorid,
-			String state, String goodsTypeId, String goodsTypeName) {
+			String state, String goodsTypeId, String goodsTypeName,
+			String shopid) {
 		this.specificationsid = specificationsid;
 		this.name = name;
 		this.note = note;
@@ -62,6 +64,7 @@ public class ProductSpecificationsT implements java.io.Serializable {
 		this.state = state;
 		this.goodsTypeId = goodsTypeId;
 		this.goodsTypeName = goodsTypeName;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -163,6 +166,15 @@ public class ProductSpecificationsT implements java.io.Serializable {
 
 	public void setGoodsTypeName(String goodsTypeName) {
 		this.goodsTypeName = goodsTypeName;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

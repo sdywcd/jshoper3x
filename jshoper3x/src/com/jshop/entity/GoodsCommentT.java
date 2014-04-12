@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,6 +31,7 @@ public class GoodsCommentT implements java.io.Serializable {
 	private String emailable;
 	private String title;
 	private String virtualadd;
+	private String shopid;
 
 	public GoodsCommentT() {
 	}
@@ -54,7 +55,7 @@ public class GoodsCommentT implements java.io.Serializable {
 			String replyorcommentusername, Date posttime,
 			String commentcontent, Integer score, String state,
 			String replyorcomment, String replyid, String replyorcommentuserid,
-			String emailable, String title, String virtualadd) {
+			String emailable, String title, String virtualadd, String shopid) {
 		this.commentid = commentid;
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
@@ -69,6 +70,7 @@ public class GoodsCommentT implements java.io.Serializable {
 		this.emailable = emailable;
 		this.title = title;
 		this.virtualadd = virtualadd;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -197,6 +199,15 @@ public class GoodsCommentT implements java.io.Serializable {
 
 	public void setVirtualadd(String virtualadd) {
 		this.virtualadd = virtualadd;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

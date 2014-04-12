@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -49,6 +49,7 @@ public class ArticleT implements java.io.Serializable {
 	private String mainpicture;
 	private String isoutsite;
 	private String outsitelink;
+	private String shopid;
 
 	public ArticleT() {
 	}
@@ -80,7 +81,7 @@ public class ArticleT implements java.io.Serializable {
 			String mobilesync, String tipcontent, String nname, String lname,
 			String sname, String fname, String navid, String ltypeid,
 			String stypeid, Integer sort, String mainpicture, String isoutsite,
-			String outsitelink) {
+			String outsitelink, String shopid) {
 		this.articleid = articleid;
 		this.title = title;
 		this.metaKeywords = metaKeywords;
@@ -113,6 +114,7 @@ public class ArticleT implements java.io.Serializable {
 		this.mainpicture = mainpicture;
 		this.isoutsite = isoutsite;
 		this.outsitelink = outsitelink;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -404,6 +406,15 @@ public class ArticleT implements java.io.Serializable {
 
 	public void setOutsitelink(String outsitelink) {
 		this.outsitelink = outsitelink;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -24,6 +24,7 @@ public class MemberRechargeT implements java.io.Serializable {
 	private Date createtime;
 	private Date updatetime;
 	private int versiont;
+	private String shopid;
 
 	public MemberRechargeT() {
 	}
@@ -37,6 +38,19 @@ public class MemberRechargeT implements java.io.Serializable {
 		this.createtime = createtime;
 		this.updatetime = updatetime;
 		this.versiont = versiont;
+	}
+
+	public MemberRechargeT(String id, String memberid, String membername,
+			double balance, Date createtime, Date updatetime, int versiont,
+			String shopid) {
+		this.id = id;
+		this.memberid = memberid;
+		this.membername = membername;
+		this.balance = balance;
+		this.createtime = createtime;
+		this.updatetime = updatetime;
+		this.versiont = versiont;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -103,6 +117,15 @@ public class MemberRechargeT implements java.io.Serializable {
 
 	public void setVersiont(int versiont) {
 		this.versiont = versiont;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }

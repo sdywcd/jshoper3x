@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-3-29 21:46:52 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-4-8 22:52:16 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -47,6 +47,7 @@ public class UserT implements java.io.Serializable {
 	private Integer postingcount;
 	private String salt;
 	private String credentialsalt;
+	private String shopid;
 
 	public UserT() {
 	}
@@ -73,7 +74,8 @@ public class UserT implements java.io.Serializable {
 			String parttime3, String qq, String sinaweibo, String state,
 			String uid, String rolemname, String rolemid, String headpath,
 			String weixin, Date createtime, Date updatetime, String creatorid,
-			Integer postingcount, String salt, String credentialsalt) {
+			Integer postingcount, String salt, String credentialsalt,
+			String shopid) {
 		this.userid = userid;
 		this.username = username;
 		this.realname = realname;
@@ -104,6 +106,7 @@ public class UserT implements java.io.Serializable {
 		this.postingcount = postingcount;
 		this.salt = salt;
 		this.credentialsalt = credentialsalt;
+		this.shopid = shopid;
 	}
 
 	@Id
@@ -377,6 +380,15 @@ public class UserT implements java.io.Serializable {
 
 	public void setCredentialsalt(String credentialsalt) {
 		this.credentialsalt = credentialsalt;
+	}
+
+	@Column(name = "SHOPID", length = 20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
 	}
 
 }
