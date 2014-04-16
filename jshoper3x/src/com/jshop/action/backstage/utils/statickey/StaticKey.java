@@ -1,6 +1,5 @@
 package com.jshop.action.backstage.utils.statickey;
 
-import sun.invoke.empty.Empty;
 
 /**
  * 这个类是用来定义一些系统使用的字符串

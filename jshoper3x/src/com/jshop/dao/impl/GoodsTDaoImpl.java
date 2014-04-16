@@ -407,13 +407,14 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	public int updateGoodshotsale(final String[] goodsid, final String hotsale,
 			final String creatorid) {
 		log.debug("updateGoodshotsale");
 		try {
 
-			final String queryString = "update GoodsT as gt set gt.hotsale=:hotsale where gt.goodsid=:goodsid where gt.creatorid=:creatorid";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
+			final String queryString = "update GoodsT as gt set gt.hotsale=:hotsale where gt.goodsid=:goodsid and gt.creatorid=:creatorid";
+			Integer integer=(Integer)this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session)
 						throws HibernateException, SQLException {
