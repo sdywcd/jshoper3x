@@ -1,5 +1,5 @@
 .zoomPad{
-	height: 294px;
+	height: 354px;
 	position:relative;
 	float:left;
 	z-index:99;
@@ -56,7 +56,7 @@
 
 .zoomWindow{
 	position:absolute;
-	left:360px!important;
+	left:375px!important;
 	top:40px;
 	background:#FFF;
 	z-index:6000;
