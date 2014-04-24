@@ -190,6 +190,10 @@ $(function() {
 			bclass : 'edit',
 			onpress : action
 		},{
+			name:'测试静态化',
+			bclass:'edit',
+			onpress:action
+		},{
 			separator : true
 		}],
 		searchitems : [{
@@ -249,6 +253,10 @@ $(function() {
 				forminfo("#alerterror","请选择要删除的信息");
 				return false;
 			}
+		}else if(com=="测试静态化"){
+			$.post("buildAllHtml.action", function(data) {
+				$('#templatemanagement').flexReload();
+			});
 		}
 	}
 });
