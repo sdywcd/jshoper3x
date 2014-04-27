@@ -186,6 +186,10 @@ $(function() {
 			bclass:'del',
 			onpress:action
 		},{
+			name:'预览模板',
+			bclass:'add',
+			onpress:action
+		},{
 			name : '更新模板文件',
 			bclass : 'edit',
 			onpress : action
@@ -257,6 +261,23 @@ $(function() {
 			$.post("buildAllHtml.action", function(data) {
 				$('#templatemanagement').flexReload();
 			});
+		}else if(com=="预览模板"){
+			if ($('.trSelected', grid).length == 1) {
+				var str = $('.trSelected', grid)[0].id.substr(3);
+				$.post("previewTemplate.action",
+				{
+					"tid":str
+				}, function(data) {
+					if(data.templatehtml!=null&&data.templatehtml!=""){
+						window.open(data.templatehtml,'');
+						return;
+					}
+				});
+				return;
+		} else {
+			formwarning("#alerterror","请选择一条信息");
+			return false;
+		}
 		}
 	}
 });

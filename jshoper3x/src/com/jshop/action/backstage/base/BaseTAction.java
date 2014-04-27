@@ -13,6 +13,10 @@ public class BaseTAction extends ActionSupport {
 	private String qtype;//select
 	private String sortname;//排序字段
 	private String sortorder;//排序方式
+	/**
+	 * action 返回类型
+	 */
+	public final static String JSON="json";
 
 	
 	@JSON(serialize = false)

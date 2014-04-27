@@ -21,14 +21,18 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.TemplateT;
+import com.jshop.entity.TemplatesetT;
 import com.jshop.service.TemplateTService;
+import com.jshop.service.TemplatesetTService;
 import com.jshop.service.impl.Serial;
 @Namespace("")
 @ParentPackage("jshop")
 public class TemplateTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	private TemplateTService templateTService;
+	private TemplatesetTService templatesetTService;
 	private String tid;
 	private String url;
 	private String note;
@@ -41,12 +45,23 @@ public class TemplateTAction extends BaseTAction {
 	private String sign;
 	private String type;
 	private String status;
+	private String templatehtml;
 	private TemplateT bean=new TemplateT();
 	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
+	
+	@JSON(serialize = false)
+	public TemplatesetTService getTemplatesetTService() {
+		return templatesetTService;
+	}
+
+	public void setTemplatesetTService(TemplatesetTService templatesetTService) {
+		this.templatesetTService = templatesetTService;
+	}
+
 	@JSON(serialize = false)
 	public TemplateTService getTemplateTService() {
 		return templateTService;
@@ -200,6 +215,14 @@ public class TemplateTAction extends BaseTAction {
 		this.status = status;
 	}
 
+	public String getTemplatehtml() {
+		return templatehtml;
+	}
+
+	public void setTemplatehtml(String templatehtml) {
+		this.templatehtml = templatehtml;
+	}
+
 	/**
 	 * 去除查询所有商品类别的错误
 	 */
@@ -218,7 +241,7 @@ public class TemplateTAction extends BaseTAction {
 			@Result(name = "json",type="json")
 	})
 	public String findAllTemplate() {
-			if ("sc".equals(this.getQtype())) {
+			if (StaticKey.SC.equals(this.getQtype())) {
 				this.findDefaultAllTemplate();
 			} else {
 				if (Validate.StrisNull(this.getQuery())) {
@@ -483,4 +506,16 @@ public class TemplateTAction extends BaseTAction {
 		}
 		//return "json";
 	}
+	@Action(value="previewTemplate",results={@Result(name="json",type="json")})
+	public String previewTemplate(){
+		TemplateT tt=this.getTemplateTService().findByPK(TemplateT.class, tid);
+		if(tt!=null){
+			TemplatesetT tst=this.getTemplatesetTService().findTemplatesetTBysign(tt.getSign());
+			if(tst!=null){
+				this.setTemplatehtml(BaseTools.getBasePath()+"/"+tst.getBuildhtmlpath());
+			}
+		}
+		return JSON;
+	}
+	
 }
