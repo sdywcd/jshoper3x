@@ -195,71 +195,7 @@ public class GoodsCategoryAction extends ActionSupport{
 	
 	}
 
-	/**
-	 * 收集生成静态页所需数据
-	 */
-	public void createGoodsCategory(){
-		this.findIndexSiteNavigation();
-		this.findGoodsCategoryT();
-		this.findJshopbasicInfo();
-		findFooterCateogyrT();
 
-		
-		
-	}
-	/**
-	 * 获取商城基本信息
-	 */
-	public void findJshopbasicInfo(){
-		String state="1";
-		String openstate="1";
-		JshopbasicInfoT bean=this.getJshopbasicInfoTService().findJshopbasicInfoBystateandopstate(state, openstate);
-		if(bean!=null){
-			map.put("jshopbasicinfo", bean);
-		}
-		
-	}
-	/**
-	 * 获取导航
-	 */
-	public void findIndexSiteNavigation(){
-		String isVisible="1";
-		List<SiteNavigationT>list=this.getSiteNavigationTService().findSiteNavigationByisVisible(isVisible);
-		if(list!=null){
-			map.put("siteNavigationList", list);
-		}
-	}
-	/**
-	 * 读取左侧主导航
-	 * @return
-	 */
-	public void findGoodsCategoryT(){
-		String state="1";
-		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findAllGoodsCategoryBycreatorid(state);
-		if(list!=null){
-			int gradecount=0;
-			for(Iterator it=list.iterator();it.hasNext();){
-				GoodsCategoryT gt=(GoodsCategoryT)it.next();
-				if(gt.getGrade().equals("0")){
-					gradecount++;
-				}
-			}
-			map.put("goodsCategoryTree", list);
-			map.put("goodsCategoryTreeFirstCount", gradecount);
-		}
-	}
-	/**
-	 * 获取页脚分类
-	 */
-	public void findFooterCateogyrT(){
-		String position="1";
-		String status="1";
-		int lineSize=5;
-		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByposition(lineSize, status, position);
-		if(list!=null){
-			map.put("footcategory", list);
-		}
-	}
 	/**
 	 * 根据商品名称搜索商品
 	 * @return

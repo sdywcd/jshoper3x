@@ -254,6 +254,7 @@ $(function() {
 	            }else{
 	            	$("input[name='mobilesync']").get(1).checked=true;
 	            }
+	        
 	            $('#submit').hide();
 				$('#addfl').hide();
 				$('#modfl').show();//上级分类显示区域
@@ -295,19 +296,80 @@ $(function() {
 		var parentId1 = $('#parentId1').val();
 		var parentName1 = $('#parentId1').find("option:selected").text();
 		var grade=$("#hidgrade").val();
-		if (parentId == "0") {
-			grade = "0";
-		} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
-			grade = "1";
-
-		} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
-			grade = "2";
-		} else if (parentId == "-1") {
-			if(grade==""){
-				formwarning("#alerterror","请选择分类");
-				return false;
+		switch(grade){
+		case "0":
+			if (parentId == "0") {
+				grade = "0";
+				
+			} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+				grade = "1";
+				
+				if(parentId===""||parentId==="-1"){
+					parentName=$("#parentName").val();
+				}
+				
+			} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+				grade = "2";
+				if(parentId===""||parentId==="-1"){
+					parentName1=$("#parentName").val();
+				}
+			} else if (parentId == "-1") {
+				if(grade==""){
+					formwarning("#alerterror","请选择分类");
+					return false;
+				}
 			}
+			break;
+		case "1":
+			if (parentId == "0") {
+				grade = "0";
+				
+			} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+				grade = "1";
+				
+				if(parentId===""||parentId==="-1"){
+					parentName=$("#parentName").val();
+				}
+				
+			} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+				grade = "2";
+				if(parentId===""||parentId==="-1"){
+					parentName1=$("#parentName").val();
+				}
+			} else if (parentId == "-1") {
+				if(grade==""){
+					formwarning("#alerterror","请选择分类");
+					return false;
+				}
+				parentName=$("#parentName").val();
+			}
+			break;
+		case "2":
+			if (parentId == "0") {
+				grade = "0";
+				
+			} else if (parentId != "0" && parentId != "-1" && parentId1 == "-1") {
+				grade = "1";
+				
+				if(parentId===""||parentId==="-1"){
+					parentName=$("#parentName").val();
+				}
+				
+			} else if (parentId != "0" && parentId != "-1" && parentId1 != "-1") {
+				grade = "2";
+				if(parentId===""||parentId==="-1"){
+					parentName1=$("#parentName").val();
+				}
+			} else if (parentId == "-1") {
+				if(grade==""){
+					formwarning("#alerterror","请选择分类");
+					return false;
+				}
+				parentName1=$("#parentName").val();
+			}
+			break;
 		}
+		
 		var mobilesync=$("input[name='mobilesync']:checked").val();
 		if (grade == "0") {
 			$.post("updateGoodsCategory.action", {

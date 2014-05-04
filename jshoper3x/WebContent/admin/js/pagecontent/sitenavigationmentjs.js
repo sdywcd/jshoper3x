@@ -3,16 +3,7 @@
  * flexigrid list
  */
 $(function() {
-	/**
-	 * ui
-	 */
-	  $('input').iCheck({
-		    checkboxClass: 'icheckbox_square-blue',
-		    radioClass: 'iradio_square-blue',
-		    increaseArea: '20%' // optional
-		  });
-	
-	
+
 	$("#sitenavigationmanagement").flexigrid( {
 		url : 'findAllSiteNavigationT.action',
 		dataType : 'json',
@@ -243,10 +234,10 @@ $(function(){
 			return false;
 		}
 		var syscontent = $('#syscontent').val();
-		if (syscontent == "-1") {
-			formwarning("#alerterror","系统内容必须选择");
-			return false;
-		}
+//		if (syscontent == "-1") {
+//			formwarning("#alerterror","系统内容必须选择");
+//			return false;
+//		}
 		var sign = $('#sign').val();
 		if (sign == "") {
 			formwarning("#alerterror","标示必须填写");

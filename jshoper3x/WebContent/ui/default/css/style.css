@@ -2035,7 +2035,7 @@ a.more:hover{text-decoration: underline!important;}
 /**************
  * Login page *
  **************/
-.new_customers{margin-top: 65px; padding-bottom: 120px; background:url(../images/logincar.gif) right bottom no-repeat; }
+.new_customers{margin-top: 65px; padding-bottom: 120px; }
 .new_customers p{margin-bottom: 30px!important;}
 .new_customers button.account{
 	width: 192px;

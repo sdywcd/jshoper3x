@@ -120,6 +120,10 @@
 						<label class="label label-submit"></label> <input type="hidden"
 							id="hidgoodsCategoryTid" name="hidgoodsCategoryTid" value="" />
 						<input type="hidden" id="hidgrade" name="hidgrade" value="" />
+						<!-- 隐藏二级分类id -->
+						<input type="hidden" id="hidparentId" name="hidparentId" value=""/>
+						<!-- 隐藏三级分类id -->
+						<input type="hidden" id="hidparentId1" name="hidparentId1" value=""/>
 						<input class="btn btn-success" type="button" id="submit"
 							name="submit" value="提交" /> <input class="btn btn-success"
 							type="button" id="update" name="update" value="更新"

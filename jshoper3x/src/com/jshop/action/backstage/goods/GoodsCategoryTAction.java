@@ -775,7 +775,10 @@ public class GoodsCategoryTAction extends BaseTAction {
 		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllGoodsCategoryT();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
+			if (StringUtils.isNotBlank(this.getQuery())) {
+//				if("name".equals(this.getQtype())){
+//					this.findGoodsCategoryByName();
+//				}
 				return "json";
 			} else {
 				return "json";
@@ -784,7 +787,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 		return "json";
 	}
 
-	public void findDefaultAllGoodsCategoryT() {
+	private void findDefaultAllGoodsCategoryT() {
 		int currentPage = page;
 		int lineSize = rp;
 		String state = StaticKey.ONE;

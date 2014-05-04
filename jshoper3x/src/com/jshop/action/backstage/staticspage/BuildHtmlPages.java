@@ -184,7 +184,7 @@ public class BuildHtmlPages extends ActionSupport {
 			//获取商品分类左侧主导航
 			buildhtmllog.append("<p>7,获取商品分类导航数据</p>");
 			log.info("<p>7,获取商品分类导航数据</p>");
-			map.put(FreeMarkervariable.GOODSCATEGORYTREE, this.getDataCollectionTAction().findGoodsCategoryT(StaticKey.DataShowState.SHOW.getState()));
+			map.put(FreeMarkervariable.GOODSCATEGORYTREE, this.getDataCollectionTAction().findGoodsCategoryT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataShowState.SHOW.getState()));
 			map.put(FreeMarkervariable.GOODSCATEGORYTREEFIRSTCOUNT, this.getDataCollectionTAction().getGoodsCategoryTreeFirstCount());
 			buildhtmllog.append(this.getDataCollectionTAction().getLogmsg());
 			//获取页脚分类数据
@@ -215,7 +215,7 @@ public class BuildHtmlPages extends ActionSupport {
 					}
 					TemplatesetT tt=(TemplatesetT)it.next();
 					if(tt.getSign().equals(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORGOODSDETAIL)){
-						//this.getCreateHtml().buildGoodsdetailsPage(map);
+						this.getCreateHtml().buildGoodsdetailsPage(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
 					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORARTICLE)){
 						this.getCreateHtml().buildArticlesPage(map);
@@ -260,10 +260,13 @@ public class BuildHtmlPages extends ActionSupport {
 	 * @return
 	 */
 	@Action(value = "showindex", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/login.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}") })
-	public String findAllCartByUserId() {
+	public String showindex() {
 		//路径获取
 		ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
+		//获取商城基本数据
 		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+		//获取导航数据
+		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
 		return SUCCESS;
 		
 	}

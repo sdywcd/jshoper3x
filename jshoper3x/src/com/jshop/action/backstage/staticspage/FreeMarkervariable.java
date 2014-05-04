@@ -36,6 +36,10 @@ public class FreeMarkervariable {
 	 */
 	public static final String GOODSCATEGORYTREEFIRSTCOUNT="goodscategorytreefirstcount";
 	/**
+	 * 商品分类递归路径
+	 */
+	public static final String GOODSCATEGORYPATH="goodscategorypath";
+	/**
 	 * 页脚分类
 	 */
 	public static final String FOOTCATEGORY="footcategory";
@@ -61,9 +65,13 @@ public class FreeMarkervariable {
 	 */
 	public static final String GOODSCATEGORY="goodscategory";
 	/**
-	 * 所有商品信息
+	 * 所有商品信息，某个分类下商品
 	 */
 	public static final String ALLGOODS="allgoods";
+	/**
+	 * 商品对象集合
+	 */
+	public static final String GOODS="goods";
 	/**
 	 * 标识
 	 */

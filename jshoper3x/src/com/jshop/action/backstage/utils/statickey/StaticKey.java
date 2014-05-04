@@ -8,6 +8,11 @@ package com.jshop.action.backstage.utils.statickey;
  */
 public class  StaticKey {
 	/**
+	 * 逗号分隔符
+	 */
+	public static final String SPLITDOT=",";
+	
+	/**
 	 * 加密方式
 	 */
 	public static String ALGORITHMNAME="MD5";

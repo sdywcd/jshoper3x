@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -46,10 +47,12 @@ import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.ProductSpecificationsTService;
 import com.jshop.service.SiteNavigationTService;
 import com.jshop.service.TemplatethemeTService;
+import com.jshop.vo.GoodsCategoryPathVo;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.emory.mathcs.backport.java.util.Collections;
+import freemarker.template.utility.StringUtil;
 
 /**
  * 数据收集 收集所有模板页面需要的数据
@@ -325,11 +328,12 @@ public class DataCollectionTAction extends ActionSupport {
 	
 	/**
 	 * 读取左侧主导航(商品分类)
-	 * 
+	 * @param state 分类状态1显示 0隐藏
+	 * @param grade 分类等级
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<GoodsCategoryT> findGoodsCategoryT(String state) {
+	public List<GoodsCategoryT> findGoodsCategoryT(String grade,String state) {
 		try {
 			gradecount=0;
 			List<GoodsCategoryT> list = this.getGoodsCategoryTService()
@@ -338,7 +342,7 @@ public class DataCollectionTAction extends ActionSupport {
 				for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 					GoodsCategoryT gt = (GoodsCategoryT) it.next();
 					//grade=0 表示顶级分类
-					if (gt.getGrade().equals(StaticKey.ZERO)&&gt.getHtmlpath().length()>0) {
+					if (gt.getGrade().equals(grade)&&gt.getHtmlpath().length()>0) {
 						gradecount++;
 					}
 				}
@@ -585,5 +589,28 @@ public class DataCollectionTAction extends ActionSupport {
 		return Collections.emptyList();
 	}
 	
-
+	/**
+	 * 获取商品分类的递归路径，表示当前浏览的位置
+	 * @param path
+	 * @return
+	 */
+	public List<GoodsCategoryPathVo> getGoodsCategoryPath(String path){
+		List<GoodsCategoryPathVo>list=new ArrayList<GoodsCategoryPathVo>();
+		if(StringUtils.isNotBlank(path)){
+			String paths[]=StringUtils.split(StaticKey.SPLITDOT);
+			for(String s:paths){
+				GoodsCategoryT gct=this.getGoodsCategoryTService().findByPK(GoodsCategoryT.class, s);
+				if(gct!=null){
+					GoodsCategoryPathVo gcpv=new GoodsCategoryPathVo();
+					if(StringUtils.isNotBlank(gct.getName())&&StringUtils.isNotBlank(gct.getHtmlpath())){
+						gcpv.setName(gct.getName());
+						gcpv.setUrl(gct.getHtmlpath());
+					}
+					list.add(gcpv);
+				}
+			}
+		}
+		return list;
+	}
+	
 }
