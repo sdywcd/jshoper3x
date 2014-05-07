@@ -48,9 +48,13 @@ public class FreeMarkervariable {
 	 */
 	public static final String FOOTERATRICLE="footerarticle";
 	/**
-	 * 商品详细
+	 * 商品基本详细（包含价格信息）
 	 */
 	public static final String GOODSDETAIL="goodsdetail";
+	/**
+	 * 商品描述详细
+	 */
+	public static final String GOODSDES="goodsdes";
 	/**
 	 * 产品详细
 	 */
@@ -118,4 +122,8 @@ public class FreeMarkervariable {
 	 * 关联商品
 	 */
 	public static final String GOODSBELINKED="goodsbelinked";
+	/**
+	 * 热销商品标记
+	 */
+	public static final String HOTSALEGOODSLIST="hotsalegoodslist";
 }

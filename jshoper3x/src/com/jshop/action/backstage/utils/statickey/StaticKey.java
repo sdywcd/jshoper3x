@@ -155,6 +155,7 @@ public class  StaticKey {
 	public static final String ONSALE="上架";
 	
 	public static final String OFFSALE="下架";
+
 	
 	//会员静态字段
 	public static final String SEXMAN="男";
@@ -503,12 +504,12 @@ public class  StaticKey {
 	}
 	
 	/**
-	 * 商品上下架状态
+	 * 商品记录相关状态
 	 * @author sdywcd
 	 *
 	 */
 	public enum GoodsState{
-		SALE("上架","1"),UNSALE("下架","0");
+		SALE("上架","1"),UNSALE("下架","0"),HOTSALE("hotsale","1");
 		private String name;
 		private String state;
 		public String getName() {

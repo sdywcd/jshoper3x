@@ -1,6 +1,7 @@
 package com.jshop.action.backstage.staticspage;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.jshop.entity.GoodsAttributeT;
 import com.jshop.entity.GoodsBelinkedT;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsCommentT;
+import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.GoodsTypeBrandT;
@@ -40,6 +42,7 @@ import com.jshop.service.GoodsAttributeTService;
 import com.jshop.service.GoodsBelinkedTService;
 import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsCommentTService;
+import com.jshop.service.GoodsDetailRpTService;
 import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.GoodsTypeBrandTService;
@@ -75,6 +78,7 @@ public class DataCollectionTAction extends ActionSupport {
 	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
 	private int gradecount;
 	private GoodsTService goodsTService;
+	private GoodsDetailRpTService goodsDetailRpTService;
 	private ArticleTService articleTService;
 	private ArticleCategoryTService articleCategoryTService;
 	private GoodsAttributeTService goodsAttributeTService;
@@ -83,6 +87,15 @@ public class DataCollectionTAction extends ActionSupport {
 	private GoodsBelinkedTService goodsBelinkedTService;
 	private TemplatethemeT tt;
 	private String logmsg;
+	@JSON(serialize = false)
+	public GoodsDetailRpTService getGoodsDetailRpTService() {
+		return goodsDetailRpTService;
+	}
+
+	public void setGoodsDetailRpTService(GoodsDetailRpTService goodsDetailRpTService) {
+		this.goodsDetailRpTService = goodsDetailRpTService;
+	}
+
 	@JSON(serialize = false)
 	public GoodsBelinkedTService getGoodsBelinkedTService() {
 		return goodsBelinkedTService;
@@ -611,6 +624,42 @@ public class DataCollectionTAction extends ActionSupport {
 			}
 		}
 		return list;
+	}
+	/**
+	 * 根据navid和ltypeid获取热销商品集合
+	 * @param navid
+	 * @param ltypeid
+	 * @param stypeid
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<GoodsT>findHostsaleGoodsByCategoryId(String navid,String ltypeid){
+		List<GoodsT>list=null;
+		if(navid!=null){
+			list = this.getGoodsTService().findAllGoodsBynavidorderbyParams(navid, StaticKey.GoodsState.SALE.getState(), null, null, null, null, StaticKey.GoodsState.HOTSALE.getName(), null, null, StaticKey.GoodsState.HOTSALE.getState());
+		}
+		if(ltypeid!=null){
+			list = this.getGoodsTService().findAllGoodsBynavidorderbyParams(ltypeid, StaticKey.GoodsState.SALE.getState(), null, null, null, null, StaticKey.GoodsState.HOTSALE.getName(), null, null, StaticKey.GoodsState.HOTSALE.getState());
+		}
+		if(list!=null&&list.size()>0){
+			return list;
+		}
+		return Collections.emptyList();
+	}
+	
+	/**
+	 * 根据商品id获取商品详细描述信息
+	 * @param goodsid
+	 * @return
+	 */
+	public GoodsDetailRpT findGoodsDetailRpByGoodsId(String goodsid){
+		if(StringUtils.isNotBlank(goodsid)){
+			GoodsDetailRpT gdrt=this.getGoodsDetailRpTService().findGoodsDetailRpBygoodsid(goodsid);
+			if(gdrt!=null){
+				return gdrt;
+			}
+		}
+		return null;
 	}
 	
 }

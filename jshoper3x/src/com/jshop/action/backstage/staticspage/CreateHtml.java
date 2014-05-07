@@ -30,6 +30,7 @@ import com.jshop.entity.TemplateT;
 import com.jshop.entity.TemplatesetT;
 import com.jshop.service.ArticleTService;
 import com.jshop.service.GoodsCategoryTService;
+import com.jshop.service.GoodsDetailRpTService;
 import com.jshop.service.GoodsGroupTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.TemplateTService;
@@ -47,6 +48,7 @@ public class CreateHtml extends ActionSupport {
 	private TemplateTService templateTService;
 	private TemplatesetTService templatesetTService;
 	private GoodsTService goodsTService;
+
 	private ArticleTService articleTService;
 	private GoodsCategoryTService goodsCategoryTService;	
 	private DataCollectionTAction dataCollectionTAction;
@@ -254,7 +256,11 @@ public class CreateHtml extends ActionSupport {
 				map.put(FreeMarkervariable.GOODSCATEGORYPATH, this.getDataCollectionTAction().getGoodsCategoryPath(gt.getNavid()+","+gt.getLtypeid()+","+gt.getStypeid()));
 				//获取此该商品的同级分类
 				map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gt.getNavid(),StaticKey.DataUsingState.USING.getState()));
-				//获取商品描述
+				//获取此商品顶级分类的热销商品集合
+				map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gt.getNavid(), null));
+				//获取商品描述信息
+				map.put(FreeMarkervariable.GOODSDES, this.getDataCollectionTAction().findGoodsDetailRpByGoodsId(gt.getGoodsid()));
+				
 				
 				//获取商品参数
 				//map.put(FreeMarkervariable.GOODSPARAMETERS,this.getGoodsTAction().processGoodsparameters(gt));
@@ -329,7 +335,8 @@ public class CreateHtml extends ActionSupport {
 			for (Iterator<GoodsCategoryT> it = gclist.iterator(); it.hasNext();) {
 				GoodsCategoryT gct = (GoodsCategoryT) it.next();
 				map.put(FreeMarkervariable.GOODSCATEGORY, gct);
-				if (gct.getGrade().equals("0")) {
+				//顶级分类
+				if (gct.getGrade().equals(StaticKey.ZERO)) {
 					String navid = gct.getGoodsCategoryTid();
 					//生成上架状态的商品分类静态页
 					list = this.getGoodsTService().findAllGoodsBynavid(navid, salestate);
@@ -340,6 +347,9 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));//收集商品类型下的品牌
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+						
 						String htmlPath = this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign(), map);
 						this.getGoodsCategoryTService().updateHtmlPath(gct.getGoodsCategoryTid(), htmlPath);
 						
@@ -353,6 +363,9 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+						
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "sales", map);
 
 					}
@@ -365,6 +378,9 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+						
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "memberprice", map);
 
 					}
@@ -377,6 +393,9 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+						
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "totalcomment", map);
 
 					}
@@ -391,6 +410,9 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+						
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "bargainprice", map);
 					}
 					//生成按照热销筛选
@@ -402,6 +424,9 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+						
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "hotsale", map);
 					}
 
@@ -413,6 +438,9 @@ public class CreateHtml extends ActionSupport {
 					map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 					map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 					map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+					//获取此商品顶级分类的热销商品集合
+					map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+					
 					this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "recommended", map);
 					//生成按照新品排序
 					list = this.getGoodsTService().findAllGoodsBynavidorderbyParams(navid, salestate, null, null, null, null, null, null, "isNew", "1");
@@ -422,6 +450,9 @@ public class CreateHtml extends ActionSupport {
 					map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 					map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 					map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+					//获取此商品顶级分类的热销商品集合
+					map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+					
 					this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "isNew", map);
 				} else if (gct.getGrade().equals("1")) {
 					String ltypeid = gct.getGoodsCategoryTid();
@@ -434,6 +465,9 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
+						
 						String htmlPath = this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign(), map);
 						this.getGoodsCategoryTService().updateHtmlPath(gct.getGoodsCategoryTid(), htmlPath);
 					}
@@ -446,6 +480,8 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "sales", map);
 
 					}
@@ -458,6 +494,8 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "memberprice", map);
 
 					}
@@ -470,6 +508,8 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "totalcomment", map);
 
 					}
@@ -484,6 +524,8 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "bargainprice", map);
 					}
 					//生成按照热销筛选
@@ -495,6 +537,8 @@ public class CreateHtml extends ActionSupport {
 						map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 						map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 						map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+						//获取此商品顶级分类的热销商品集合
+						map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
 						this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "hotsale", map);
 					}
 
@@ -506,6 +550,8 @@ public class CreateHtml extends ActionSupport {
 					map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 					map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 					map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+					//获取此商品顶级分类的热销商品集合
+					map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
 					this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "recommended", map);
 					//生成按照新品排序
 					list = this.getGoodsTService().findAllGoodsByLtypeidorderbyParams(ltypeid, salestate, null, null, null, null, null, null, "isNew", "1");
@@ -515,6 +561,8 @@ public class CreateHtml extends ActionSupport {
 					map.put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
 					map.put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
 					map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+					//获取此商品顶级分类的热销商品集合
+					map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().findHostsaleGoodsByCategoryId(null,gct.getGoodsCategoryTid()));
 					this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign() + "isNew", map);
 				} else {
 					String stypeid = gct.getGoodsCategoryTid();
@@ -690,7 +738,7 @@ public class CreateHtml extends ActionSupport {
 	@SuppressWarnings("unchecked")
 	public String createGoodsCategoryT(String sign, String filename, Map<String, Object> data) throws IOException, TemplateException {
 		String realhtmlpath = "";
-		int pageSize = 12;
+		int pageSize = 1;
 		try{
 			setbean = this.getTemplatesetTService().findTemplatesetTBysign(sign);
 			if (setbean != null) {
