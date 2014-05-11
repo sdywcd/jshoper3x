@@ -63,8 +63,8 @@ public class CartAction extends ActionSupport {
 	private String sendstring;
 	private Double totalweight = 0.0;
 	private Double totalmemberprice = 0.0;
-	private boolean sucflag = false;
-	private boolean slogin = false;
+	private boolean sucflag;
+	private boolean slogin;
 	
 	@JSON(serialize = false)
 	public ProductTService getProductTService() {

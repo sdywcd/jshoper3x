@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.modelbean;
+package com.jshop.vo;
 
 public class GoodsBelinkedModel {
 	

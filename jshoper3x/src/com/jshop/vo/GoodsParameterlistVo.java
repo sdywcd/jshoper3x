@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.modelbean;
+package com.jshop.vo;
 /**
  * 商品参数模型
  * @Description TODO
@@ -13,7 +13,7 @@ package com.jshop.action.backstage.modelbean;
  * 
  * @Data 2012-5-11 上午11:51:15
  */
-public class GoodsparameterlistModel {
+public class GoodsParameterlistVo {
 	private String goodsTypeParamid;
 
 	private String goodsParamid;
@@ -62,7 +62,7 @@ public class GoodsparameterlistModel {
 	public void setSortList(String sortList) {
 		this.sortList = sortList;
 	}
-	public GoodsparameterlistModel(String goodsTypeParamid, String goodsParamid, String paramName, String paramValue, String sortList) {
+	public GoodsParameterlistVo(String goodsTypeParamid, String goodsParamid, String paramName, String paramValue, String sortList) {
 		super();
 		this.goodsTypeParamid = goodsTypeParamid;
 		this.goodsParamid = goodsParamid;
@@ -70,7 +70,7 @@ public class GoodsparameterlistModel {
 		this.paramValue = paramValue;
 		this.sortList = sortList;
 	}
-	public GoodsparameterlistModel() {
+	public GoodsParameterlistVo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

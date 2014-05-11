@@ -28,7 +28,6 @@ import org.json.simple.JSONValue;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.image.ImgTAction;
-import com.jshop.action.backstage.modelbean.GoodsparameterlistModel;
 import com.jshop.action.backstage.staticspage.CreateHtml;
 import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.utils.BaseTools;
@@ -55,6 +54,7 @@ import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.ProductTService;
 import com.jshop.service.SiteNavigationTService;
 import com.jshop.service.impl.Serial;
+import com.jshop.vo.GoodsParameterlistVo;
 import com.swetake.util.Qrcode;
 
 import freemarker.template.TemplateException;
@@ -154,7 +154,7 @@ public class GoodsTAction extends BaseTAction {
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private List<GoodsTypeTN>gtnlist=new ArrayList<GoodsTypeTN>();
 	private GoodsTypeTN gtnbean=new GoodsTypeTN();
-	private List<GoodsparameterlistModel>gmllist=new ArrayList<GoodsparameterlistModel>();
+	private List<GoodsParameterlistVo>gmllist=new ArrayList<GoodsParameterlistVo>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -889,11 +889,11 @@ public class GoodsTAction extends BaseTAction {
 		this.gtnbean = gtnbean;
 	}
 
-	public List<GoodsparameterlistModel> getGmllist() {
+	public List<GoodsParameterlistVo> getGmllist() {
 		return gmllist;
 	}
 
-	public void setGmllist(List<GoodsparameterlistModel> gmllist) {
+	public void setGmllist(List<GoodsParameterlistVo> gmllist) {
 		this.gmllist = gmllist;
 	}
 	
@@ -1567,56 +1567,7 @@ public class GoodsTAction extends BaseTAction {
 		return "json";
 	}
 	
-	/**
-	 * 在这里增加商品参数的处理逻辑
-	 * 1,根据goodstypeid获取goodstypen中的参数列表json格式
-	 * 2,迭代此json和goods中的goodsparmeters对比
-	 * 3,放入一个工具bean中
-	 *
-	 */
-	public List<GoodsparameterlistModel> processGoodsparameters(GoodsT goodst){
-		List<GoodsparameterlistModel>gmllist=new ArrayList<GoodsparameterlistModel>();
-		gtnlist=this.getGoodsTypeTNService().findGoodsTypeTNById(goodst.getGoodsTypeId());
-		if(!gtnlist.isEmpty()){
-			gtnbean=gtnlist.get(0);
-			gmllist.clear();
-			if(Validate.StrNotNull(gtnbean.getGoodsParameter())){
-				
-				JSONArray ja=(JSONArray) JSONValue.parse(gtnbean.getGoodsParameter());
-				for (int i = 0; i < ja.size(); i++) {
-					GoodsparameterlistModel gml=new GoodsparameterlistModel();
-					JSONObject jo = (JSONObject) ja.get(i);
-					gml.setGoodsTypeParamid(jo.get("id").toString());
-					gml.setParamName(jo.get("name").toString());
-					gml.setSortList(jo.get("sortList").toString());
-					compareGoodsparameters(gmllist,gml,goodst.getGoodsParameterValue(),gml.getGoodsTypeParamid());
-				}
-				
-			}
-		}
-		return gmllist;
-		
-		
-	}
-	/**
-	 * 处理商品表中的商品参数
-	 * @param id
-	 * @param goodst
-	 */
-	private void compareGoodsparameters(List<GoodsparameterlistModel>gmllist,GoodsparameterlistModel gml,String goodsParameterValue,String GoodsTypeParamid){
-		if(Validate.StrNotNull(goodsParameterValue)){
-			JSONArray ja=(JSONArray) JSONValue.parse(goodsParameterValue);
-			for (int i = 0; i < ja.size(); i++) {
-				JSONObject jo = (JSONObject) ja.get(i);
-				if(jo.get("id").toString().equals(GoodsTypeParamid)){
-					gml.setGoodsParamid(jo.get("id").toString());
-					gml.setParamValue(jo.get("value").toString());
-				}
-			}
-			gmllist.add(gml);
-		}
-	
-	}
+
 	
 	/**
 	 * 根据顶级分类获取商品列表传送到前台给关联商品部分

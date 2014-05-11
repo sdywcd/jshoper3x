@@ -509,7 +509,7 @@ public class  StaticKey {
 	 *
 	 */
 	public enum GoodsState{
-		SALE("上架","1"),UNSALE("下架","0"),HOTSALE("hotsale","1");
+		SALE("上架","1"),UNSALE("下架","0"),HOTSALE("hotsale","1"),RECOMMENDED("recommended","1");
 		private String name;
 		private String state;
 		public String getName() {

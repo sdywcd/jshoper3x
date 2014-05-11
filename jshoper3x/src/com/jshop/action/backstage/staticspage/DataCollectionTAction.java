@@ -18,7 +18,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
 
-import com.jshop.action.backstage.modelbean.GoodsBelinkedModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
@@ -31,6 +33,7 @@ import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.GoodsTypeBrandT;
+import com.jshop.entity.GoodsTypeTN;
 import com.jshop.entity.JshopbasicInfoT;
 import com.jshop.entity.ProductSpecificationsT;
 import com.jshop.entity.SiteNavigationT;
@@ -46,11 +49,16 @@ import com.jshop.service.GoodsDetailRpTService;
 import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.GoodsTypeBrandTService;
+import com.jshop.service.GoodsTypeTNService;
 import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.ProductSpecificationsTService;
 import com.jshop.service.SiteNavigationTService;
 import com.jshop.service.TemplatethemeTService;
+import com.jshop.vo.GoodsBelinkedModel;
 import com.jshop.vo.GoodsCategoryPathVo;
+import com.jshop.vo.GoodsParameterInGoodsTVo;
+import com.jshop.vo.GoodsParameterInGoodsTypeTnVo;
+import com.jshop.vo.GoodsParameterlistVo;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -76,6 +84,7 @@ public class DataCollectionTAction extends ActionSupport {
 	private GoodsTypeBrandTService goodsTypeBrandTService;
 	private ProductSpecificationsTService productSpecificationsTService;
 	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
+	private GoodsTypeTNService goodsTypeTNService;
 	private int gradecount;
 	private GoodsTService goodsTService;
 	private GoodsDetailRpTService goodsDetailRpTService;
@@ -85,8 +94,18 @@ public class DataCollectionTAction extends ActionSupport {
 	private GoodsCommentTService goodsCommentTService;
 	private TemplatethemeTService templatethemeTService;
 	private GoodsBelinkedTService goodsBelinkedTService;
+	private Gson gson=new Gson();
 	private TemplatethemeT tt;
 	private String logmsg;
+	@JSON(serialize = false)
+	public GoodsTypeTNService getGoodsTypeTNService() {
+		return goodsTypeTNService;
+	}
+
+	public void setGoodsTypeTNService(GoodsTypeTNService goodsTypeTNService) {
+		this.goodsTypeTNService = goodsTypeTNService;
+	}
+
 	@JSON(serialize = false)
 	public GoodsDetailRpTService getGoodsDetailRpTService() {
 		return goodsDetailRpTService;
@@ -633,7 +652,7 @@ public class DataCollectionTAction extends ActionSupport {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<GoodsT>findHostsaleGoodsByCategoryId(String navid,String ltypeid){
+	public List<GoodsT>getHostsaleGoodsByCategoryId(String navid,String ltypeid){
 		List<GoodsT>list=null;
 		if(navid!=null){
 			list = this.getGoodsTService().findAllGoodsBynavidorderbyParams(navid, StaticKey.GoodsState.SALE.getState(), null, null, null, null, StaticKey.GoodsState.HOTSALE.getName(), null, null, StaticKey.GoodsState.HOTSALE.getState());
@@ -652,7 +671,7 @@ public class DataCollectionTAction extends ActionSupport {
 	 * @param goodsid
 	 * @return
 	 */
-	public GoodsDetailRpT findGoodsDetailRpByGoodsId(String goodsid){
+	public GoodsDetailRpT getGoodsDetailRpByGoodsId(String goodsid){
 		if(StringUtils.isNotBlank(goodsid)){
 			GoodsDetailRpT gdrt=this.getGoodsDetailRpTService().findGoodsDetailRpBygoodsid(goodsid);
 			if(gdrt!=null){
@@ -660,6 +679,66 @@ public class DataCollectionTAction extends ActionSupport {
 			}
 		}
 		return null;
+	}
+	/**
+	 * 在这里增加商品参数的处理逻辑
+	 * 1,根据goodstypeid获取goodstypen中的参数列表json格式
+	 * 2,迭代此json和goods中的goodsparmeters对比
+	 * 3,放入一个工具bean中
+	 *
+	 */
+	public List<GoodsParameterlistVo> getGoodsparameters(GoodsT goodst){
+		List<GoodsParameterlistVo> gmllist=new ArrayList<GoodsParameterlistVo>();
+		List<GoodsTypeTN>gtnlist=this.getGoodsTypeTNService().findGoodsTypeTNById(goodst.getGoodsTypeId());
+		if(!gtnlist.isEmpty()){
+			String goodsparameteringoodstyetn=gtnlist.get(0).getGoodsParameter();
+			String goodsparameteringoods=goodst.getGoodsParameterValue();
+			if(StringUtils.isNotBlank(goodsparameteringoods)){
+				List<GoodsParameterInGoodsTVo>gpigs=gson.fromJson(goodsparameteringoods, new TypeToken<List<GoodsParameterInGoodsTVo>>(){}.getType());
+				if(StringUtils.isNotBlank(goodsparameteringoodstyetn)){
+					//[{"name":"型号","id":"paramlistname34571","sortList":""}]
+					List<GoodsParameterInGoodsTypeTnVo>gpigtvs=gson.fromJson(goodsparameteringoodstyetn, new TypeToken<List<GoodsParameterInGoodsTypeTnVo>>(){}.getType());
+					for(GoodsParameterInGoodsTypeTnVo gpigtv:gpigtvs){
+						gmllist.add(compareGoodsparameters(gpigtv,gpigs));
+					}
+					
+				}
+			}
+		}
+		return gmllist;
+	}
+	/**
+	 * 处理商品表中的商品参数
+	 * @param id
+	 * @param goodst
+	 */
+	private GoodsParameterlistVo compareGoodsparameters(GoodsParameterInGoodsTypeTnVo gpigtv,List<GoodsParameterInGoodsTVo>gpigs){
+		GoodsParameterlistVo gslm=new GoodsParameterlistVo();
+		for(GoodsParameterInGoodsTVo gpig:gpigs){
+			if(gpig.getId().equals(gpigtv.getId())){
+				gslm.setGoodsTypeParamid(gpigtv.getId());
+				gslm.setGoodsParamid(gpig.getId());
+				gslm.setParamName(gpigtv.getName());
+				gslm.setParamValue(gpig.getValue());
+				gslm.setSortList(gpigtv.getSortList());
+				break;
+			}
+		}
+		return gslm;
+	}
+	
+	/**
+	 * 获取分类下的推荐商品列表
+	 * @param categoryId
+	 * @param status
+	 * @return
+	 */
+	public List<GoodsT>getRecommedGoodsListByCategoryId(String categoryId){
+		List<GoodsT>list=null;
+		if(categoryId!=null){
+			list = this.getGoodsTService().findAllGoodsBynavidorderbyParams(categoryId, StaticKey.GoodsState.SALE.getState(), null, null, null, null, null, StaticKey.GoodsState.RECOMMENDED.getName(), null, StaticKey.GoodsState.RECOMMENDED.getState());
+		}
+		return Collections.emptyList();
 	}
 	
 }

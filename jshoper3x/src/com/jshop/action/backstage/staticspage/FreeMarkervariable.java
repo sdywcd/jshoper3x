@@ -126,4 +126,9 @@ public class FreeMarkervariable {
 	 * 热销商品标记
 	 */
 	public static final String HOTSALEGOODSLIST="hotsalegoodslist";
+	/**
+	 * 推荐商品标记
+	 */
+	public static final String RECOMMENDGOODSLIST="recommendgoodslist";
+	
 }
