@@ -58,7 +58,7 @@ public class FrontOrderAction extends ActionSupport {
 	private ShippingAddressTService shippingAddressTService;
 	private OrderTService orderTService;
 	private DataCollectionTAction dataCollectionTAction;
-
+	
 	/**
 	 * 收获地址区域变量
 	 */
@@ -108,6 +108,8 @@ public class FrontOrderAction extends ActionSupport {
 	private boolean slogin;
 	private String paymentcode;//返回给前台的支付方式
 	private String paymentinterface;//反馈给前台的支付接口类型
+	private String basePath;
+	
 	@JSON(serialize = false)
 	public DataCollectionTAction getDataCollectionTAction() {
 		return dataCollectionTAction;
@@ -560,6 +562,14 @@ public class FrontOrderAction extends ActionSupport {
 		this.paymentinterface = paymentinterface;
 	}
 
+	public String getBasePath() {
+		return basePath;
+	}
+
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -625,20 +635,22 @@ public class FrontOrderAction extends ActionSupport {
 			for (Iterator<CartT> it = list.iterator(); it.hasNext();) {
 				CartT ct = (CartT) it.next();
 				total = Arith.add(total, Arith.mul(ct.getFavorable(), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
-				totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(ct.getWeight()), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
+				if(ct.getWeight()!=null){
+					totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(ct.getWeight()), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
+				}
 				totalpoints = Arith.add(totalpoints, Arith.mul(ct.getPoints(), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
 				cartgoodsname += ct.getGoodsname();
 				cartgoodsid += ct.getGoodsid() + ",";
 				cartneedquantity += ct.getNeedquantity();
 				cartid = ct.getCartid();//获取购物车中的cartid表示同一个cartid即在同一个订单中
 			}
-			ActionContext.getContext().put("cart", list);
-			ActionContext.getContext().put("totalprice", total);
-			ActionContext.getContext().put("totalpoints", totalpoints);
-			ActionContext.getContext().put("cartid", cartid);
-			ActionContext.getContext().put("cartgoodsid", cartgoodsid);
-			ActionContext.getContext().put("cartgoodsname", cartgoodsname);
-			ActionContext.getContext().put("cartneedquantity", cartneedquantity);
+			ActionContext.getContext().put(FreeMarkervariable.MEMBERCART, list);
+			ActionContext.getContext().put(FreeMarkervariable.TOTALPRICE, total);
+			ActionContext.getContext().put(FreeMarkervariable.TOTALPOINTS, totalpoints);
+			ActionContext.getContext().put(FreeMarkervariable.CARTID, cartid);
+			ActionContext.getContext().put(FreeMarkervariable.CARTGOODSID, cartgoodsid);
+			ActionContext.getContext().put(FreeMarkervariable.CARTGOODSNAME, cartgoodsname);
+			ActionContext.getContext().put(FreeMarkervariable.CARTNEEDQUANTITY, cartneedquantity);
 		}
 	}
 
@@ -666,7 +678,7 @@ public class FrontOrderAction extends ActionSupport {
 			}
 			Double freight = tempfreight + tempy;
 			this.setFreight(freight);
-			ActionContext.getContext().put("freight", freight);
+			ActionContext.getContext().put(FreeMarkervariable.FREIGHT, freight);
 
 		}
 
@@ -677,11 +689,11 @@ public class FrontOrderAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "InitOrder", results = { 
+	@Action(value = "initOrder", results = { 
 			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/confirmorder.ftl"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}")
 	})
-	public String InitOrder() {
+	public String initOrder() {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
 			//获取用户收获地址
@@ -696,7 +708,7 @@ public class FrontOrderAction extends ActionSupport {
 			GetLogisticsPrice();
 			//获取总金额+运费
 			Double totalfreight = this.getTotal() + this.getFreight();
-			ActionContext.getContext().put("totalfreight", totalfreight);
+			ActionContext.getContext().put(FreeMarkervariable.TOTALFREIGHT, totalfreight);
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
@@ -771,10 +783,12 @@ public class FrontOrderAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	public void initOrderInfo(UserT user) {
+	public void initOrderInfo(MemberT member) {
 		order.setOrderid(this.getSerialidorderid());
-		order.setUserid(user.getUserid());
-		order.setUsername(user.getUsername());
+		order.setUserid(member.getId());
+		order.setUsername(member.getLoginname());
+		order.setMemberid(member.getId());
+		order.setMembername(member.getLoginname());
 		//未来需要在这里处理是平邮还是快递或者是ems，这样物流商需要选择是平邮还是快递还是ems
 		if (this.getPaymentid().trim().equals("-1")) {
 			order.setDelivermode("货到付款");
@@ -789,8 +803,9 @@ public class FrontOrderAction extends ActionSupport {
 		order.setLogisticswebaddress(this.getLogisticswebaddress());
 		//这部分的逻辑需要修改，需要组织json来填写productinfo
 		//order.setGoodid(this.getCartgoodsid());
-		//order.setProductinfo(this.getCartgoodsid());
+		order.setProductinfo(this.getCartgoodsid());
 		//order.setGoodsname(this.getCartgoodsname());
+		order.setOrdername(this.getCartgoodsname());
 		order.setNeedquantity(this.getCartneedquantity());
 		order.setFreight(this.getFreight());//运费，在request中也有
 		//		if(!this.isSvoucher()){
@@ -957,8 +972,9 @@ public class FrontOrderAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String InitAlipayneedInfo() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		this.setBasePath(this.getDataCollectionTAction().getBasePath());
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
 			this.setSlogin(true);
 			//预先生成订单编号
 			GetSerialidorder();
@@ -967,7 +983,7 @@ public class FrontOrderAction extends ActionSupport {
 			//获取支付信息
 			InitPayway();
 			//增加订单到数据库
-			initOrderInfo(user);
+			initOrderInfo(member);
 			if (this.isSaddorder()) {
 				if(PaymentCode.PAYMENT_CODE_ALIPAY.equals(this.getPm().getPaymentCode())){
 					BuildAlipayConfig();
@@ -982,7 +998,7 @@ public class FrontOrderAction extends ActionSupport {
 				if(!list.isEmpty()){
 					return "json";
 				}
-				this.getCartTService().updateCartStateandOrderidByGoodsidList(this.getCartid().trim(), this.getSerialidorderid(), user.getUserid(), "3");
+				this.getCartTService().updateCartStateandOrderidByGoodsidList(this.getCartid().trim(), this.getSerialidorderid(), member.getId(), "3");
 			}
 			return "json";
 

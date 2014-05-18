@@ -23,7 +23,8 @@ import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.GoodsT;
-import com.jshop.entity.UserT;
+import com.jshop.entity.MemberT;
+import com.jshop.entity.MemberT;
 import com.jshop.service.CartTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.ProductTService;
@@ -63,6 +64,7 @@ public class CartAction extends ActionSupport {
 	private String sendstring;
 	private Double totalweight = 0.0;
 	private Double totalmemberprice = 0.0;
+	private String basePath;
 	private boolean sucflag;
 	private boolean slogin;
 	
@@ -311,6 +313,14 @@ public class CartAction extends ActionSupport {
 		this.orderTag = orderTag;
 	}
 
+	public String getBasePath() {
+		return basePath;
+	}
+
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -346,8 +356,9 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "addCart", results = { @Result(name = "json", type = "json") })
 	public String addCart() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		this.setBasePath(this.getDataCollectionTAction().getBasePath());
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
 			this.setSlogin(true);
 			List<GoodsT> gtlist1 = this.GetGoodsdetailByGoodsidForCart();
 			for (int i = 0; i < gtlist1.size(); i++) {
@@ -355,9 +366,9 @@ public class CartAction extends ActionSupport {
 				//如果是货品当且仅当只有一个goodsid时正确
 				if("1".equals(this.getGuigeflag())){
 					//进行根据goodsid，userid，productid的在购物车中的商品查询
-					CartT cart=this.getCartTService().findGoodsInCartOrNot(user.getUserid(), gtlist.getGoodsid(), this.getProductid().trim(), "1");
+					CartT cart=this.getCartTService().findGoodsInCartOrNot(member.getId(), gtlist.getGoodsid(), this.getProductid().trim(), "1");
 					if(cart!=null){
-						if(this.getCartTService().updateCartNeedquantityByGoodsid(user.getUserid(), gtlist.getGoodsid(), this.getProductid(), Integer.parseInt(this.getNeedquantity()), "1")>0){
+						if(this.getCartTService().updateCartNeedquantityByGoodsid(member.getId(), gtlist.getGoodsid(), this.getProductid(), Integer.parseInt(this.getNeedquantity()), "1")>0){
 							this.setSucflag(true);
 						}else{
 							this.setSucflag(false);
@@ -371,8 +382,10 @@ public class CartAction extends ActionSupport {
 						t.setOrderid(null);
 						t.setGoodsid(gtlist.getGoodsid());
 						t.setGoodsname(gtlist.getGoodsname());
-						t.setUserid(user.getUserid());
-						t.setUsername(user.getUsername());
+						t.setUserid(member.getId());
+						t.setUsername(member.getLoginname());
+						t.setMemberid(member.getId());
+						t.setMembername(member.getLoginname());
 						t.setNeedquantity(Integer.parseInt(this.getNeedquantity()));
 						t.setPrice(gtlist.getPrice());
 						t.setFavorable(gtlist.getMemberprice());
@@ -396,12 +409,12 @@ public class CartAction extends ActionSupport {
 						
 					}
 				}else{
-					CartT cart = this.getCartTService().findGoodsInCartOrNot(user.getUserid(), gtlist.getGoodsid(), "1");
+					CartT cart = this.getCartTService().findGoodsInCartOrNot(member.getId(), gtlist.getGoodsid(), "1");
 					if (cart != null) {
 						
 						//同状态的商品只能在购物车出现一次
 						//更新对应商品id的数量	//检测商品是否已经在购物车中，如果有责增加数量，没有责加入
-						if(this.getCartTService().updateCartNeedquantityByGoodsid(user.getUserid(), this.getGoodsid().trim(), Integer.parseInt(this.getNeedquantity()), "1")>0){
+						if(this.getCartTService().updateCartNeedquantityByGoodsid(member.getId(), this.getGoodsid().trim(), Integer.parseInt(this.getNeedquantity()), "1")>0){
 							this.setSucflag(true);
 						}else{
 							this.setSucflag(false);
@@ -424,8 +437,10 @@ public class CartAction extends ActionSupport {
 						t.setOrderid(null);
 						t.setGoodsid(gtlist.getGoodsid());
 						t.setGoodsname(gtlist.getGoodsname());
-						t.setUserid(user.getUserid());
-						t.setUsername(user.getUsername());
+						t.setUserid(member.getId());
+						t.setUsername(member.getLoginname());
+						t.setMemberid(member.getId());
+						t.setMembername(member.getLoginname());
 						t.setNeedquantity(Integer.parseInt(this.getNeedquantity()));
 						t.setPrice(gtlist.getPrice());
 						t.setFavorable(gtlist.getMemberprice());
@@ -442,7 +457,7 @@ public class CartAction extends ActionSupport {
 						t.setHtmlpath(gtlist.getHtmlPath());//
 						t.setOrderTag(this.getOrderTag());
 						this.getCartTService().save(t);
-						
+						this.setSucflag(true);
 					}
 				}
 				
@@ -524,10 +539,11 @@ public class CartAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findAllCartByUserId", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/mycart.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}") })
-	public String findAllCartByUserId() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+	@Action(value = "findAllCartByMemberId", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/mycart.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}") })
+	public String findAllCartByMemberId() {
+		this.setBasePath(this.getDataCollectionTAction().getBasePath());
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
 			String state="1";//表示新加入购物车商品的标记
 			String orderTag=null;
 			if(Validate.StrisNull(this.getOrderTag())){
@@ -536,17 +552,19 @@ public class CartAction extends ActionSupport {
 				orderTag=this.getOrderTag().trim();
 			}
 		
-			List<CartT> list = this.getCartTService().findAllCartByUserId(user.getUserid(),state,orderTag);
+			List<CartT> list = this.getCartTService().findAllCartByUserId(member.getId(),state,orderTag);
 			this.setTotalmemberprice(0.0);
 			this.setTotalweight(0.0);
 			for (Iterator it = list.iterator(); it.hasNext();) {
 				CartT ct = (CartT) it.next();
-				totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(ct.getWeight()), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
+				if(ct.getWeight()!=null){
+					totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(ct.getWeight()), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
+				}
 				totalmemberprice = Arith.add(totalmemberprice, Arith.mul(ct.getFavorable(), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
 			}
-			ActionContext.getContext().put("usercart", list);
-			ActionContext.getContext().put("totalmemberprice", totalmemberprice);
-			ActionContext.getContext().put("totalweight", totalweight);
+			ActionContext.getContext().put(FreeMarkervariable.MEMBERCART, list);
+			ActionContext.getContext().put(FreeMarkervariable.TOTALMEMBERPRICE, totalmemberprice);
+			ActionContext.getContext().put(FreeMarkervariable.TOTALWEIGHT, totalweight);
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
@@ -569,11 +587,11 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "findAllCartByUserIdFortopCart", results = { @Result(name = "json", type = "json") })
 	public String findAllCartByUserIdFortopCart() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
 			String state="1";//表示新加入购物车商品的标记
 			String orderTag=this.getOrderTag().trim();
-			List<CartT> list = this.getCartTService().findAllCartByUserId(user.getUserid(),state,orderTag);
+			List<CartT> list = this.getCartTService().findAllCartByUserId(member.getId(),state,orderTag);
 			if (list != null && list.size() > 0) {
 				//删除购物车session
 				ActionContext.getContext().getSession().remove("usercart");
@@ -598,8 +616,8 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "PlusCartNeedquantityByGoodsid", results = { @Result(name = "json", type = "json") })
 	public String PlusCartNeedquantityByGoodsid() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
 			//更新对应商品id的数量	//检测商品是否已经在购物车中，如果有责增加数量，没有责加入
 			int j = 0;
 			String[] tempstring = this.getSendstring().split(":");
@@ -609,9 +627,9 @@ public class CartAction extends ActionSupport {
 			for (int k = 0; k < tempstring.length; k++) {
 				temp = tempstring[k];
 				ttemp = temp.split(",");
-				j = this.getCartTService().updateCartNeedquantity(user.getUserid(), ttemp[0], Integer.parseInt(ttemp[1]));
-				if(this.getCartTService().updateCartIdBygoodsid(cartid, user.getUserid(), ttemp[0], "1")==0){
-					this.getCartTService().updateCartIdByproductid(cartid, user.getUserid(), ttemp[0], "1");
+				j = this.getCartTService().updateCartNeedquantity(member.getId(), ttemp[0], Integer.parseInt(ttemp[1]));
+				if(this.getCartTService().updateCartIdBygoodsid(cartid, member.getId(), ttemp[0], "1")==0){
+					this.getCartTService().updateCartIdByproductid(cartid, member.getId(), ttemp[0], "1");
 				}
 			}
 			this.setSucflag(true);
@@ -625,16 +643,17 @@ public class CartAction extends ActionSupport {
 	/**
 	 * 删除购物车中的商品
 	 * 
+	 * 
 	 * @return
 	 */
 	@Action(value = "DelCartByGoodsId", results = { @Result(name = "json", type = "json") })
 	public String DelCartByGoodsId() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
 			this.setSlogin(true);
 			@SuppressWarnings("unused")
 			String state="1";
-			int i = this.getCartTService().delCartByGoodsId(user.getUserid(), this.getGoodsid(),state);
+			int i = this.getCartTService().delCartByGoodsId(member.getId(), this.getGoodsid(),state);
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -649,7 +668,7 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "delCartByid", results = { @Result(name = "json", type = "json") })
 	public String delCartByid() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		MemberT user = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (user != null) {
 			this.setSlogin(true);
 
@@ -674,11 +693,11 @@ public class CartAction extends ActionSupport {
 	 */
 	@Action(value = "UpdateCartGoodsstate2", results = { @Result(name = "success", type = "chain", location = "findAllCartByUserId"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}") })
 	public String UpdateCartGoodsstate2() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
 			@SuppressWarnings("unused")
 			String[] goodslist = (this.getGoodsid() + ",").split(",");
-			int i = this.getCartTService().updateCartStateByGoodsidList(user.getUserid(), goodslist, "2");
+			int i = this.getCartTService().updateCartStateByGoodsidList(member.getId(), goodslist, "2");
 			return SUCCESS;
 		} else {
 			return INPUT;

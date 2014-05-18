@@ -172,12 +172,12 @@ public interface CartTDao extends BaseTDao<CartT> {
 	/**
 	 * 根据goodsid更新购物车id，表示次购物车下的商品同属一个购物车
 	 * 
-	 * @param userid
+	 * @param memberid
 	 * @param goodsid
 	 * @param state
 	 * @return
 	 */
-	public int updateCartIdBygoodsid(String cartid, String userid,
+	public int updateCartIdBygoodsid(String cartid, String memberid,
 			String goodsid, String state);
 
 	/**

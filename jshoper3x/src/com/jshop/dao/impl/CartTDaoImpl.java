@@ -88,11 +88,11 @@ public class CartTDaoImpl extends BaseTDaoImpl<CartT> implements CartTDao {
 		}
 	}
 
-	public CartT findGoodsInCartOrNot(String userid, String goodsid, String state) {
+	public CartT findGoodsInCartOrNot(String memberid, String goodsid, String state) {
 		log.debug("find good or in CartT ");
 		try {
-			String queryString = "from CartT as c where c.userid=:userid and c.goodsid=:goodsid and c.state=:state order by addtime desc";
-			List<CartT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "userid", "goodsid", "state" }, new Object[] { userid, goodsid, state });
+			String queryString = "from CartT as c where c.memberid=:memberid and c.goodsid=:goodsid and c.state=:state order by addtime desc";
+			List<CartT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "memberid", "goodsid", "state" }, new Object[] { memberid, goodsid, state });
 			if (list != null && list.size() > 0) {
 				return list.get(0);
 			}
@@ -103,16 +103,16 @@ public class CartTDaoImpl extends BaseTDaoImpl<CartT> implements CartTDao {
 		}
 	}
 
-	public int updateCartNeedquantityByGoodsid(final String userid, final String goodsid, final int needquantity, final String state) {
+	public int updateCartNeedquantityByGoodsid(final String memberid, final String goodsid, final int needquantity, final String state) {
 		log.debug("update cart needquantity");
 		try {
-			final String queryString = "update CartT as c set c.needquantity=:needquantity+c.needquantity where c.userid=:userid and c.goodsid=:goodsid and c.state=:state";
+			final String queryString = "update CartT as c set c.needquantity=:needquantity+c.needquantity where c.memberid=:memberid and c.goodsid=:goodsid and c.state=:state";
 			Integer integer=(Integer)this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
-					query.setParameter("userid", userid);
+					query.setParameter("memberid", memberid);
 					query.setParameter("goodsid", goodsid);
 					query.setParameter("needquantity", needquantity);
 					query.setParameter("state", state);
@@ -253,18 +253,18 @@ public class CartTDaoImpl extends BaseTDaoImpl<CartT> implements CartTDao {
 		return 0;
 	}
 
-	public int updateCartStateandOrderidByGoodsidList(final String cartid, final String orderid, final String userid, final String state) {
+	public int updateCartStateandOrderidByGoodsidList(final String cartid, final String orderid, final String memberid, final String state) {
 		log.debug("UpdateCartStateandOrderidByGoodsidList cart");
 		try {
 
-			final String queryString = "update CartT as c set c.state=:state,c.orderid=:orderid where c.userid=:userid  and c.cartid=:cartid";
+			final String queryString = "update CartT as c set c.state=:state,c.orderid=:orderid where c.memberid=:memberid  and c.cartid=:cartid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					int i = 0;
 					query.setParameter("orderid", orderid);
-					query.setParameter("userid", userid);
+					query.setParameter("memberid", memberid);
 					query.setParameter("cartid", cartid);
 					query.setParameter("state", state);
 					i = query.executeUpdate();
@@ -324,16 +324,16 @@ public class CartTDaoImpl extends BaseTDaoImpl<CartT> implements CartTDao {
 		}
 	}
 
-	public int updateCartIdBygoodsid(final String cartid, final String userid, final String goodsid, final String state) {
+	public int updateCartIdBygoodsid(final String cartid, final String memberid, final String goodsid, final String state) {
 		log.debug("update cart UpdateCartId");
 		try {
-			final String queryString = "update CartT as c set c.cartid=:cartid where c.userid=:userid and  c.state=:state and c.goodsid=:goodsid";
+			final String queryString = "update CartT as c set c.cartid=:cartid where c.memberid=:memberid and  c.state=:state and c.goodsid=:goodsid";
 			Integer integer=(Integer) this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
-					query.setParameter("userid", userid);
+					query.setParameter("memberid", memberid);
 					query.setParameter("goodsid", goodsid);
 					query.setParameter("cartid", cartid);
 					query.setParameter("state", state);

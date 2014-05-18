@@ -77,8 +77,8 @@ public class CartTServiceImpl extends BaseTServiceImpl<CartT> implements CartTSe
 		return this.getCartTDao().updateCartStateByGoodsidList(userid, goodsid, state);
 	}
 
-	public int updateCartIdBygoodsid(String cartid, String userid, String goodsid, String state) {
-		return this.getCartTDao().updateCartIdBygoodsid(cartid, userid, goodsid, state);
+	public int updateCartIdBygoodsid(String cartid, String memberid, String goodsid, String state) {
+		return this.getCartTDao().updateCartIdBygoodsid(cartid, memberid, goodsid, state);
 	}
 
 	@Override

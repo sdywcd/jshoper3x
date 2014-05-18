@@ -131,4 +131,52 @@ public class FreeMarkervariable {
 	 */
 	public static final String RECOMMENDGOODSLIST="recommendgoodslist";
 	
+	/**
+	 * 会员购物车
+	 */
+	public static final String MEMBERCART="membercart";
+	/**
+	 * 会员购物车中多个商品的总价
+	 */
+	public static final String TOTALMEMBERPRICE="totalmemberprice";
+	/**
+	 * 会员购物车中商品总重量
+	 */
+	public static final String TOTALWEIGHT="totalweight";
+	/**
+	 * 订单确认显示的总价格
+	 */
+	public static final String TOTALPRICE="totalprice";
+	/**
+	 * 订单确认页显示的总积分
+	 */
+	public static final String TOTALPOINTS="totalpoints";
+	/**
+	 * 订单确认页中的购车id获取购物车中的cartid表示同一个cartid即在同一个订单中
+	 */
+	public static final String CARTID="cartid";
+	/**
+	 * 订单确认页中的购物车中的商品id串
+	 */
+	public static final String CARTGOODSID="cartgoodsid";
+	/**
+	 * 订单确认页中的购物车中的商品名称串
+	 */
+	public static final String CARTGOODSNAME="cartgoodsname";
+	/**
+	 * 订单确认页中的购物车中的商品数量
+	 */
+	public static final String CARTNEEDQUANTITY="cartneedquantity";
+	/**
+	 * 运费
+	 */
+	public static final String FREIGHT="freight";
+	/**
+	 * 总金额+运费
+	 */
+	public static final String TOTALFREIGHT="totalfreight";
+	/**
+	 * 会员收货地址
+	 */
+	public static final String DELIVERADDRESS="deliveraddress";
 }

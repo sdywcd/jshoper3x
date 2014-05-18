@@ -12,15 +12,13 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.staticspage.DataCollectionTAction;
+import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.MemberT;
-import com.jshop.entity.UserT;
 import com.jshop.service.DeliverAddressTService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
@@ -37,7 +35,7 @@ public class DeliverAddressAction extends ActionSupport {
 	
 	private String addressid;
 	private String userid;
-	private String username;
+	private String membername;
 	private String province;
 	private String city;
 	private String district;
@@ -96,12 +94,13 @@ public class DeliverAddressAction extends ActionSupport {
 		this.userid = userid;
 	}
 
-	public String getUsername() {
-		return username;
+
+	public String getMembername() {
+		return membername;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setMembername(String membername) {
+		this.membername = membername;
 	}
 
 	public String getProvince() {
@@ -228,12 +227,12 @@ public class DeliverAddressAction extends ActionSupport {
 			@Result(name = "json",type="json")
 	})
 	public String addDeliveraddress(){
-		UserT user=(UserT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if(user!=null){
+		MemberT member=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if(member!=null){
 			DeliverAddressT d=new DeliverAddressT();
 			d.setAddressid(this.getSerial().Serialid(Serial.DELIVERADDRESS));
-			d.setMemberid(user.getUserid());
-			d.setShippingusername(this.getUsername().trim());
+			d.setMemberid(member.getId());
+			d.setShippingusername(this.getMembername().trim());
 			d.setCountry(this.getCountry().trim());
 			d.setProvince(this.getProvince().trim());
 			d.setCity(this.getCity().trim());
@@ -244,7 +243,7 @@ public class DeliverAddressAction extends ActionSupport {
 			d.setMobile(this.getMobile());
 			d.setEmail(this.getEmail().trim());
 			d.setCreatetime(BaseTools.systemtime());
-			d.setState("0");
+			d.setState(StaticKey.ZERO);//0非默认，1默认
 			this.getDeliverAddressTService().save(d);
 			this.setSucflag(true);
 			return "json";
@@ -257,15 +256,15 @@ public class DeliverAddressAction extends ActionSupport {
 	 * 获取用户收获地址
 	 * @return
 	 */
-	@Action(value = "GetUserDeliverAddress", results = { 
+	@Action(value = "getUserDeliverAddress", results = { 
 			@Result(name = "success",type="chain",location = "initOrder"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
-	public String GetUserDeliverAddress(){
+	public String getUserDeliverAddress(){
 		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			List<DeliverAddressT> list=this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
-			ActionContext.getContext().put("deliveraddress", list);
+			ActionContext.getContext().put(FreeMarkervariable.DELIVERADDRESS, list);
 			return SUCCESS;
 		}else{
 			return INPUT;

@@ -27,7 +27,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class LoginAction extends ActionSupport {
 	private MemberTService memberTService;
 	private MemberT memberT;
-	private String basepath;
+	private String basePath;
 	private String loginname;
 	private String loginpwd;
 	private String hidurl;
@@ -83,12 +83,14 @@ public class LoginAction extends ActionSupport {
 		this.hidurl = hidurl;
 	}
 
-	public String getBasepath() {
-		return basepath;
+
+
+	public String getBasePath() {
+		return basePath;
 	}
 
-	public void setBasepath(String basepath) {
-		this.basepath = basepath;
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
 	}
 
 	/**
@@ -107,8 +109,7 @@ public class LoginAction extends ActionSupport {
 	 */
 	@Action(value="login", results={ @Result(name="json",type="json") })
 	public String login() {
-		this.setBasepath(BaseTools.getBasePath());
-		
+		this.setBasePath(BaseTools.getBasePath());
 		MemberT m = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(m!=null){
 			ActionContext.getContext().getSession().remove(StaticKey.MEMBER_SESSION_KEY);

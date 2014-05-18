@@ -34,7 +34,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.Map"%>
-<%@ page import="com.jshop.action.backstage.thirdpartyplatform.alipay.*"%>
+<%@ page import="com.jshop.action.backstage.pay.thirdpartyplatform.alipay.*"%>
 <%@ page import="com.jshop.action.frontstage.pay.*"%>
 <%
 String path = request.getContextPath();
