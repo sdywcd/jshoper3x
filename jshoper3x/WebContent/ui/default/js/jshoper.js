@@ -36,6 +36,8 @@ $(function() {
     });
 });
 //========================================jshoper js beigin ==========================================
+//========================================jshoper index goodssearch ==========================================
+$(function() {});
 //========================================jshoper goodscategorylist js ==========================================
 $(function() {
     // 获取url地址用来让用户登录时跳转
@@ -64,11 +66,39 @@ $(function() {
      */
     addgoodstocart = function() {
         var needquantity = $("#needquantity").val();
-        if (needquantity <= 0) {
+        if (needquantity == undefined || needquantity <= 0) {
             return false;
         }
         var goodsid = $("#hidgoodsid").val();
         var hidurl = $('#hidhtmlpath').val();
+        var orderTag = "1"; //普通商品
+        $.post("addCart.action", {
+            "goodsid": goodsid,
+            "needquantity": needquantity,
+            "hidurl": hidurl,
+            "orderTag": orderTag
+        }, function(data) {
+            if (!data.slogin) {
+                // 跳转到登录页面
+                window.location.href = data.basePath + "/html/default/shop/user/login.html?redirecturl=" + hidurl;
+            } else {
+                if (data.sucflag) {
+                    // 跳转到购物车页面
+                    window.location.href = "findAllCartByMemberId.action?orderTag=" + orderTag;
+                } else {
+                    // 跳转到登录页面
+                    window.location.href = data.basePath + "/html/default/shop/user/login.html?redirecturl=" + hidurl;
+                }
+            }
+        });
+    },
+    /*
+     *将商品加入购物车(分类页面)
+     */
+    addgoodstocart = function(id) {
+        var needquantity = 1; //分类页默认加入一个到购物车
+        var goodsid = id;
+        var hidurl = $('#hidurl').val();
         var orderTag = "1"; //普通商品
         $.post("addCart.action", {
             "goodsid": goodsid,
@@ -117,11 +147,11 @@ $(function() {
      *绑定click事件到购物车刷新列表按钮
      */
     $("#mycartlink").bind("click", function() {
-        var basepath = $("#hidbasepath").val();
-        if (basepath !== "") {
-            // 跳转到购物车页面
-            window.location.href = "findAllCartByMemberId.action?orderTag=1";
-        }
+        // var basepath = $("#hidbasepath").val();
+        // if (basepath !== "") {
+        // 跳转到购物车页面
+        window.location.href = "findAllCartByMemberId.action?orderTag=1";
+        // }
     });
     /*
      * 删除购物车商品根据购物车唯一id
@@ -205,7 +235,7 @@ $(function() {
         var customernotes = $('#customernotes').val();
         var logisticswebaddress = $('#hd' + logisticsid).val();
         var cartid = $('#cartid').val(); //购物车id
-        if(cartid===""){
+        if (cartid === "") {
             alert("参数错误");
             return false;
         }
@@ -259,11 +289,11 @@ $(function() {
                     if (inv_Payee == "" || inv_Payee == undefined) {
                         if (data.paymentcode == "cft" && data.paymentinterface == "3") {
                             //此情况表示财付通
-                            window.location.href = data.basePath +"/pay/tenpay/payRequest.jsp";
+                            window.location.href = data.basePath + "/pay/tenpay/payRequest.jsp";
                         }
                         if (data.paymentcode == "zfb" && data.paymentinterface == "3") {
                             //此情况表示支付宝
-                            window.location.href =data.basePath + "/pay/alipay/alipayto.jsp";
+                            window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
                         }
                     } else {
                         $.post("addOrderInvoice.action", {
@@ -276,21 +306,21 @@ $(function() {
                             if (data.saddflag) {
                                 if (data.paymentcode == "cft" && data.paymentinterface == "3") {
                                     //此情况表示财付通
-                                    window.location.href = data.basePath +"/pay/tenpay/payRequest.jsp";
+                                    window.location.href = data.basePath + "/pay/tenpay/payRequest.jsp";
                                 }
                                 if (data.paymentcode == "zfb" && data.paymentinterface == "3") {
                                     //此情况表示支付宝
-                                    window.location.href = data.basePath +"/pay/alipay/alipayto.jsp";
+                                    window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
                                 }
                             } else {
                                 alert("发票提交有误请联系客服处理开发票事宜");
                                 if (data.paymentcode == "cft" && data.paymentinterface == "3") {
                                     //此情况表示财付通
-                                    window.location.href = data.basePath +"/pay/tenpay/payRequest.jsp";
+                                    window.location.href = data.basePath + "/pay/tenpay/payRequest.jsp";
                                 }
                                 if (data.paymentcode == "zfb" && data.paymentinterface == "3") {
                                     //此情况表示支付宝
-                                    window.location.href = data.basePath +"/pay/alipay/alipayto.jsp";
+                                    window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
                                 }
                             }
                         });

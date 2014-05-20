@@ -1,12 +1,8 @@
 package com.jshop.action.frontstage.usercenter;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.mail.MessagingException;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.mail.EmailException;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -14,22 +10,16 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.base.SendSystemEmail;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.MD5Code;
-import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
-import com.jshop.entity.UserT;
 import com.jshop.service.MemberTService;
-import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
-import freemarker.template.TemplateException;
 
 @ParentPackage("jshop")
 @Namespace("")

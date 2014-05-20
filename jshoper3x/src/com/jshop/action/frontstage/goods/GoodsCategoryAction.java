@@ -1,7 +1,6 @@
 package com.jshop.action.frontstage.goods;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,17 +11,12 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.PageModel;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
-import com.jshop.entity.ArticleCategoryT;
-import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsT;
-import com.jshop.entity.JshopbasicInfoT;
-import com.jshop.entity.SiteNavigationT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
 import com.jshop.service.GoodsCategoryTService;
@@ -53,7 +47,7 @@ public class GoodsCategoryAction extends ActionSupport{
     private String ls;
     private String goodsname;
     private String topKeywords;
-    private int rp=4;//每页显示数量
+    private int rp=2;//每页显示数量
 	private int page = 1;
 	private int total = 0;
 	private int totalpage=1;
@@ -202,7 +196,8 @@ public class GoodsCategoryAction extends ActionSupport{
 	 */
 	@Action(value = "searchGoodsByGoodsName", results = { 
 			@Result(name = "success",type="freemarker" ,location = "/WEB-INF/theme/default/shop/searchgoods.ftl"),
-			@Result(name = "input",type="freemarker" ,location = "/WEB-INF/theme/default/shop/searchgoods.ftl")})
+			@Result(name = "input" ,type="redirect",location = "/index.html")
+			})
 	public String searchGoodsByGoodsName(){
 		int currentPage = page;
 		int lineSize = rp;
@@ -217,6 +212,9 @@ public class GoodsCategoryAction extends ActionSupport{
 			}else{
 				totalpage=total/lineSize;//没有余数 页码数等于当前值
 			}			
+			String action=this.getDataCollectionTAction().getBasePath()+"/searchGoodsByGoodsName.action?topKeywords="+this.getTopKeywords();
+			ActionContext.getContext().put("actionlink", action);
+			ActionContext.getContext().put("sign", "disstatic");
 			ActionContext.getContext().put("goods", pm);
 			ActionContext.getContext().put("goodsList", list);
 			ActionContext.getContext().put("totalgoods",total);
