@@ -544,10 +544,10 @@ public class CartAction extends ActionSupport {
 		this.setBasePath(this.getDataCollectionTAction().getBasePath());
 		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (member != null) {
-			String state="1";//表示新加入购物车商品的标记
+			String state=StaticKey.CARTGOODSSTATE.NEWADDTOCART_NUM.getState();//表示新加入购物车商品的标记
 			String orderTag=null;
 			if(Validate.StrisNull(this.getOrderTag())){
-				orderTag="1";
+				orderTag=StaticKey.ORDERCREATETAG.NORMAL.getState();
 			}else{
 				orderTag=this.getOrderTag().trim();
 			}
@@ -589,7 +589,7 @@ public class CartAction extends ActionSupport {
 	public String findAllCartByUserIdFortopCart() {
 		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (member != null) {
-			String state="1";//表示新加入购物车商品的标记
+			String state=StaticKey.CARTGOODSSTATE.NEWADDTOCART_NUM.getState();//表示新加入购物车商品的标记
 			String orderTag=this.getOrderTag().trim();
 			List<CartT> list = this.getCartTService().findAllCartByUserId(member.getId(),state,orderTag);
 			if (list != null && list.size() > 0) {
@@ -626,7 +626,7 @@ public class CartAction extends ActionSupport {
 			String cartid = this.getSerial().Serialid(Serial.CART);//获取购物车信息id是可重复的。一次提交只有一个购物车信息id,标记这批商品被标记在同一个订单中
 			for (int k = 0; k < tempstring.length; k++) {
 				temp = tempstring[k];
-				ttemp = temp.split(",");
+				ttemp = temp.split(StaticKey.SPLITDOT);
 				j = this.getCartTService().updateCartNeedquantity(member.getId(), ttemp[0], Integer.parseInt(ttemp[1]));
 				if(this.getCartTService().updateCartIdBygoodsid(cartid, member.getId(), ttemp[0], "1")==0){
 					this.getCartTService().updateCartIdByproductid(cartid, member.getId(), ttemp[0], "1");

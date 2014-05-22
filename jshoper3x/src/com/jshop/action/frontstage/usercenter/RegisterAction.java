@@ -152,7 +152,7 @@ public class RegisterAction extends ActionSupport {
 		boolean register=false;
 		this.setMsg("");
 		if(StringUtils.isNotBlank(this.getLoginname())){
-			if(this.getLoginname().length()<6){
+			if(this.getLoginname().length()<4){
 				this.setMsg("1");
 				return register;
 			}else if(this.getLoginname().length()>20){
@@ -164,7 +164,7 @@ public class RegisterAction extends ActionSupport {
 			return register;
 		}
 		if(StringUtils.isNotBlank(this.getLoginpwd())){
-			if(this.getLoginpwd().length()<6){
+			if(this.getLoginpwd().length()<7){
 				this.setMsg("2");
 				return register;
 			}else if(this.getLoginpwd().length()>20){
@@ -176,10 +176,10 @@ public class RegisterAction extends ActionSupport {
 			return register;
 		}
 		
-		if(!StringUtils.isNotBlank(this.getEmail())){
-			this.setMsg("3");
-			return register;
-		}
+//		if(!StringUtils.isNotBlank(this.getEmail())){
+//			this.setMsg("3");
+//			return register;
+//		}
 		register=true;
 		return register;
 		
@@ -197,38 +197,38 @@ public class RegisterAction extends ActionSupport {
 	})
 	public String register() {
 		if(registervalidation()){
-			String rand=(String) ActionContext.getContext().getSession().get("rand");
-			String userstate=(String) ActionContext.getContext().getSession().get("userstate");
-			if(rand.equals(this.getRand())){
+			//String rand=(String) ActionContext.getContext().getSession().get("rand");
+			//String userstate=(String) ActionContext.getContext().getSession().get("userstate");
+//			if(rand.equals(this.getRand())){
 				List<MemberT>m1=this.getMemberTService().findMemberTByloginname(this.getLoginname());
-				if(m1!=null&&m1.size()==0){
+				if(m1!=null&&m1.size()>0){
 					this.setMsg("4");
 					return "register_error";
 				}
-				List<MemberT>m2=this.getMemberTService().findMemberTByemail(this.getEmail().trim());//新增根据邮箱差信息
-				if(m2!=null&&m2.size()==0){
-					this.setMsg("7");
-					return "register_error";
-				}
+//				List<MemberT>m2=this.getMemberTService().findMemberTByemail(this.getEmail().trim());//新增根据邮箱差信息
+//				if(m2!=null&&m2.size()==0){
+//					this.setMsg("7");
+//					return "register_error";
+//				}
 				MD5Code md5 = new MD5Code();
 				MemberT m=new MemberT();
 				m.setId(this.getSerial().Serialid(Serial.MEMBER));
 				m.setMid(md5.getMD5ofStr(m.getId()));
 				m.setLoginname(this.getLoginname().trim());
 				m.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
-				m.setNick(this.getNick().trim());
-				m.setMemberstate(StaticKey.MEMBERSTATE_ZERO_NUM);
+				m.setNick("");
+				m.setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);
 				m.setHeadpath("#");
 				m.setCreatetime(BaseTools.systemtime());
 				m.setVersiont(1);
 				m.setUpdatetime(m.getCreatetime());
 				this.getMemberTService().save(m);
 				return "register_success";
-			}
+//			}
 		}else{
 			return "register_error";
 		}
-		return "register_error";
+//		return "register_error";
 	}
 
 	

@@ -1,7 +1,6 @@
 package com.jshop.action.backstage.interceptor.impl;
 
 import org.apache.struts2.convention.annotation.ParentPackage;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.interceptor.AuthorityInterceptor;
 import com.opensymphony.xwork2.ActionContext;

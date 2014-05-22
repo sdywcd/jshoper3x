@@ -4,11 +4,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.ParentPackage;
+import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.utils.statickey.GlobalParam;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
 @ParentPackage("jshop")
+@Controller
 public class AuthorityInterceptor {
 	private GlobalParamService globalParamService;
 

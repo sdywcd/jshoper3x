@@ -6,7 +6,7 @@
 </head>
 <div class="navbar navbar-fixed-bottom">
 	<div class="navbar-inner navbar-innerb">
-		<div class="pull-right fixed-bottom-cp">&copy; jshoper 2012</div>
+		<div class="pull-right fixed-bottom-cp">&copy; jshoper 2014</div>
 		<div class="viewsite fixed-bottom-div">
 			<a href="http://www.localjoomla3.com/" target="_blank"><i
 				class="icon-share-alt"></i> 浏览网站</a>

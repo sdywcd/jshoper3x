@@ -130,16 +130,16 @@ public class LoginAction extends ActionSupport {
 	/**
 	 * 前台登出 
 	 */
-	@Action(value = "memberLogout", results = { 
+	@Action(value = "memberlogout", results = { 
 			@Result(name = "success",type="freemarker",location = "/html/default/shop/user/login.html")
 	})
-	public String memberLogout() throws UnsupportedEncodingException {
+	public String memberlogout() throws UnsupportedEncodingException {
 		ActionContext.getContext().getSession().remove(StaticKey.MEMBER_SESSION_KEY);
 		return "success";
 	}
 	
-	@Action(value="findUsernameFromSession", results={ @Result(name="json",type="json") })
-	public String findUsernameFromSession(){
+	@Action(value="islogin", results={ @Result(name="json",type="json") })
+	public String islogin(){
 		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			this.setLoginname(memberT.getLoginname());

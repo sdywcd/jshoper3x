@@ -36,13 +36,38 @@ $(function() {
     });
 });
 //========================================jshoper js beigin ==========================================
+$(function() {
+    /*
+     *将商品加入购物车
+     */
+    $.ajax({
+        url: "islogin.action",
+        type: "post",
+        dataType: "json",
+        async: false,
+        success: function(data) {
+            if ($("#islogin").length > 0) {
+                var hidbasepath = $("#hidbasepath").val();
+                if (hidbasepath !== "") {
+                    if (data.loginname !== "") {
+                        $("#islogin").text("我的优系");
+                        $("#islogin").attr("href", "")
+                    } else {
+                        $("#islogin").text("登陆");
+                        $("#islogin").attr("href", hidbasepath + "/html/default/shop/user/login.html");
+                    }
+                }
+            }
+        }
+    })
+});
 //========================================jshoper index goodssearch ==========================================
 $(function() {});
 //========================================jshoper goodscategorylist js ==========================================
 $(function() {
     // 获取url地址用来让用户登录时跳转
     var windowsurl = window.location;
-    $('#hidurl').attr("value", windowsurl);
+    $('#hidurl').attr("value", windowsurl.pathname);
 });
 $(function() {
     // 获取url地址用来让用户登录时跳转
@@ -56,7 +81,7 @@ $(function() {
             if (redirecturl === "") {
                 self.location = basepath + "/index.html";
             } else {
-                self.location = basepath + "/" + redirecturl;
+                self.location = redirecturl;
             }
         }
     },
@@ -95,7 +120,7 @@ $(function() {
     /*
      *将商品加入购物车(分类页面)
      */
-    addgoodstocart = function(id) {
+    addgoodstocartwithid = function(id) {
         var needquantity = 1; //分类页默认加入一个到购物车
         var goodsid = id;
         var hidurl = $('#hidurl').val();
@@ -378,12 +403,12 @@ $(function() {
         });
     },
     /*
-     * 保定增加收货地址
+     * 绑定增加收货地址
      * */
     $("#savemyaddress").bind("click", function() {
         addnewaddress();
     });
-    //========================================jshoper login js ==========================================
+    //========================================jshoper login and register js ==========================================
     login = function() {
         var username = $('#username').val();
         if (username === "") {
@@ -406,7 +431,69 @@ $(function() {
             }
         });
     },
+    /*
+     * 绑定登陆操作
+     * */
     $("#tologin").bind("click", function() {
         login();
     });
+    /*
+     * 绑定注册跳转链接
+     * */
+    var createmyaccount = $("#createmyaccount").length;
+    if (createmyaccount > 0) {
+        $("#createmyaccount").bind("click", function() {
+            var hidbasepath = $("#hidbasepath").val();
+            window.location.href = hidbasepath + "/html/default/shop/user/register.html";
+            return;
+        });
+    }
+    register = function() {
+        var loginname = $("#loginname").val();
+        if (loginname === "") {
+            $("#registererrormsg").text("请填写用户名");
+            return false;
+        }
+        if (loginname.length < 4 || loginname.length > 20) {
+            $("#registererrormsg").text("用户名需大于4个字符小于20个字符");
+            return false;
+        }
+        var loginpwd = $("#loginpwd").val();
+        if (loginpwd === "") {
+            $("#registererrormsg").text("请填写密码");
+            return false;
+        }
+        if (loginpwd.length < 7 || loginpwd.length > 20) {
+            $("#registererrormsg").text("密码需大于等于7个字符小于20个字符");
+            return false;
+        }
+        var conpwd = $("#confirmpassword").val();
+        if (conpwd === "") {
+            $("#registererrormsg").text("请填写确认密码");
+            return false;
+        }
+        if (conpwd !== loginpwd) {
+            $("#registererrormsg").text("2次输入密码不一致");
+            return false;
+        }
+        return true;
+    },
+    $("#submitmyaccount").bind("click", function() {
+        if (register()) {
+            $("#register").submit();
+        }
+    });
+    //注册错误信息处理
+    var rerrormsg = $.query.get("msg");
+    switch (rerrormsg) {
+        case 1:
+            $("#registererrormsg").text("用户名需大于4个字符小于20个字符");
+            return false;
+        case 2:
+            $("#registererrormsg").text("密码需大于等于7个字符小于20个字符");
+            return false;
+        case 4:
+            $("#registererrormsg").text("该用户已经被注册");
+            return false;
+    }
 });

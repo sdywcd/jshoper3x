@@ -468,6 +468,77 @@ public class  StaticKey {
 	public static final String USERSTATEUNACTIVE="未激活";
 	
 	/**
+	 * 订单创建类型标记
+	 * @author sdywcd
+	 *
+	 */
+	public enum ORDERCREATETAG{
+		NORMAL("普通订单","1");
+		private String name;
+		private String state;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+		private ORDERCREATETAG(String name,String state){
+			this.name=name;
+			this.state=state;
+		}
+		public static String getName(String tag){
+			for(DataGrade d:DataGrade.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	/**
+	 * 商品在购物车中的状态
+	 * @author sdywcd
+	 *
+	 */
+	public enum CARTGOODSSTATE{
+		NEWADDTOCART_NUM("新加入购物车的商品","1");
+		private String name;
+		private String state;
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+		private CARTGOODSSTATE(String name,String state){
+			this.name=name;
+			this.state=state;
+		}
+		public static String getName(String tag){
+			for(DataGrade d:DataGrade.values()){
+				if(d.getState().equals(tag)){
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	/**
 	 * 数据分类等级 一级 二级 三级
 	 * @author sdywcd
 	 *
