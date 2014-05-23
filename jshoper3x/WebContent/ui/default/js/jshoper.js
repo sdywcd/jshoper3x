@@ -159,6 +159,8 @@ $(function() {
         if (basepath !== "") {
             // 跳转到商品页面
             window.location.href = basepath + "/index.html";
+        }else{
+            window.history.go(-1);
         }
     });
     /*

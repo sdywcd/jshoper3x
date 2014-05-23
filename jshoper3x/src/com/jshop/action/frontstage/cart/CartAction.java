@@ -378,7 +378,7 @@ public class CartAction extends ActionSupport {
 						String[] picturelist = gtlist.getPictureurl().split(",");
 						CartT t = new CartT();
 						t.setId(this.getSerial().Serialid(Serial.CARTINFO));
-						t.setCartid(null);
+						t.setCartid("");//标记是否在同一个购物车中的id这里需要重新处理
 						t.setOrderid(null);
 						t.setGoodsid(gtlist.getGoodsid());
 						t.setGoodsname(gtlist.getGoodsname());
@@ -397,7 +397,7 @@ public class CartAction extends ActionSupport {
 						t.setPicture(picturelist[0]);
 						t.setUsersetnum(gtlist.getUsersetnum());
 						t.setWeight(gtlist.getWeight());
-						t.setState("1");//新加入购物车的商品
+						t.setState(StaticKey.CARTGOODSSTATE.NEWADDTOCART_NUM.getState());//新加入购物车的商品
 						if("1".equals(this.getGuigeflag())){
 							t.setProductid(this.getProductid());
 						}
@@ -433,7 +433,7 @@ public class CartAction extends ActionSupport {
 						String[] picturelist = gtlist.getPictureurl().split(",");
 						CartT t = new CartT();
 						t.setId(this.getSerial().Serialid(Serial.CARTINFO));
-						t.setCartid(null);
+						t.setCartid("");
 						t.setOrderid(null);
 						t.setGoodsid(gtlist.getGoodsid());
 						t.setGoodsname(gtlist.getGoodsname());
