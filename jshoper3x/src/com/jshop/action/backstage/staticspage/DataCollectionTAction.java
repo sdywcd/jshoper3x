@@ -309,6 +309,22 @@ public class DataCollectionTAction extends ActionSupport {
 	}
 
 	/**
+	 * 将路径，导航，商城基本信息，页脚分类，页脚文章put到上下文中
+	 */
+	public void putBaseInfoToContext(){
+		//路径获取
+		ActionContext.getContext().put(FreeMarkervariable.BASEPATH, getBasePath());
+		//获取导航数据
+		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
+		//获取商城基本数据
+		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO,findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+		//获取页脚分类数据
+		ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
+		//获取页脚文章数据
+		ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+	}
+	
+	/**
 	 * 获取session数据
 	 * 
 	 * @return

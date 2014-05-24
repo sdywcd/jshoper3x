@@ -18,48 +18,48 @@ public interface OrderTService extends BaseTService<OrderT>{
 	 * 根据订单状态获取订单信息
 	 * @param currentPage
 	 * @param lineSize
-	 * @param userid
+	 * @param memberid
 	 * @param orderstate
 	 * @return
 	 */
-	public  List<OrderT>findAllOrderByorderstate(final int currentPage,final int lineSize,final String userid,final String orderstate,String paystate,String shippingstate);
+	public  List<OrderT>findAllOrderByorderstate(final int currentPage,final int lineSize,final String memberid,final String orderstate,String paystate,String shippingstate);
 	/**
 	 * 统计根据订单状态获取订单信息
-	 * @param userid
+	 * @param memberid
 	 * @param orderstate
 	 * @return
 	 */
-	public  int countfindAllOrderByorderstate(String userid,String orderstate,String paystate,String shippingstate);
+	public  int countfindAllOrderByorderstate(String memberid,String orderstate,String paystate,String shippingstate);
 	
 	/**
 	 * 用户删除自己订单
-	 * @param userid
+	 * @param memberid
 	 * @param orderid
 	 * @param orderstate
 	 * @return
 	 */
-	public  int delOrderByorderid(String userid,String orderid,String orderstate);
+	public  int delOrderByorderid(String memberid,String orderid,String orderstate);
 
 	/**
 	 * 获取用户需要处理的订单，及包含paystate是1and0，shippingstate是1and0，orderstate不是8
 	 * @param currentPage
 	 * @param lineSize
-	 * @param userid
+	 * @param memberid
 	 * @param orderstate
 	 * @param paystate
 	 * @param shippingstate
 	 * @return
 	 */
-	public  List<OrderT>findAllOrderByorderstateForOn(final int currentPage,final int lineSize,final String userid,final String orderstate,final String paystate,final String shippingstate);	
+	public  List<OrderT>findAllOrderByorderstateForOn(final int currentPage,final int lineSize,final String memberid,final String orderstate,final String paystate,final String shippingstate);	
 	/**
 	 * 统计获取用户需要处理的订单，及包含paystate是1and0，shippingstate是1and0，orderstate不是8
-	 * @param userid
+	 * @param memberid
 	 * @param orderstate
 	 * @param paystate
 	 * @param shippingstate
 	 * @return
 	 */
-	public  int countfindAllOrderByorderstateForOn(String userid,String orderstate,String paystate,String shippingstate);
+	public  int countfindAllOrderByorderstateForOn(String memberid,String orderstate,String paystate,String shippingstate);
 	/**
 	 * 根据订单号获取订单详细信息
 	 * @param orderid

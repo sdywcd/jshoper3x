@@ -1,5 +1,6 @@
 package com.jshop.action.frontstage.usercenter;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ import com.jshop.service.DeliverAddressTService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
+import freemarker.template.TemplateException;
 @ParentPackage("jshop")
 @Namespace("")
 @InterceptorRefs({  
@@ -32,7 +35,7 @@ public class DeliverAddressAction extends ActionSupport {
 	private Serial serial;
 	private DeliverAddressTService deliverAddressTService;
 	private DataCollectionTAction dataCollectionTAction;
-	
+	private DeliverAddressT bean = new DeliverAddressT();
 	private String addressid;
 	private String userid;
 	private String membername;
@@ -49,8 +52,9 @@ public class DeliverAddressAction extends ActionSupport {
 
 	private boolean sucflag;
 	private boolean slogin;
+	private String basePath;
 	
-	private Map<String,Object>amap=new HashMap<String,Object>();
+	private Map<String,Object>map=new HashMap<String,Object>();
 	
 	@JSON(serialize=false) 
 	public DataCollectionTAction getDataCollectionTAction() {
@@ -200,12 +204,30 @@ public class DeliverAddressAction extends ActionSupport {
 		this.country = country;
 	}
 
-	public Map<String, Object> getAmap() {
-		return amap;
+
+
+	public Map<String, Object> getMap() {
+		return map;
 	}
 
-	public void setAmap(Map<String, Object> amap) {
-		this.amap = amap;
+	public void setMap(Map<String, Object> map) {
+		this.map = map;
+	}
+
+	public DeliverAddressT getBean() {
+		return bean;
+	}
+
+	public void setBean(DeliverAddressT bean) {
+		this.bean = bean;
+	}
+
+	public String getBasePath() {
+		return basePath;
+	}
+
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
 	}
 
 	/**
@@ -256,7 +278,7 @@ public class DeliverAddressAction extends ActionSupport {
 	 * 获取用户收获地址
 	 * @return
 	 */
-	@Action(value = "getUserDeliverAddress", results = { 
+	@Action(value = "getMemberDeliverAddress", results = { 
 			@Result(name = "success",type="chain",location = "initOrder"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
@@ -271,30 +293,7 @@ public class DeliverAddressAction extends ActionSupport {
 		}
 		
 	}
-	
 
-	/**
-	 *用户在用户中心删除收获地址
-	 * @return
-	 */
-	@Action(value = "memberDelDeliverAddress", results = { 
-			@Result(name = "success",type="chain",location = "getmemberDeliverAddressForUserCenter"),
-			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
-	})
-	public String memberDelDeliverAddress(){
-		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if(memberT!=null){
-			if(StringUtils.isBlank(this.getAddressid())){
-				return INPUT;
-			}
-
-			return SUCCESS;
-			
-		}else{
-			return INPUT;
-		}
-	
-	}
 	
 	/**
 	 * 根据收获地址id删除收获地址
@@ -302,9 +301,10 @@ public class DeliverAddressAction extends ActionSupport {
 	 */
 	@Action(value = "delDeliverAddressByaddressid", results = { @Result(name = "json", type = "json") })
 	public String delDeliverAddressByaddressid(){
+		this.setBasePath(this.getDataCollectionTAction().getBasePath());
 		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
-			if(StringUtils.isBlank(this.getAddressid())){
+			if(StringUtils.isNotBlank(this.getAddressid())){
 				String strs[]=StringUtils.split(this.getAddressid(), ",");
 				this.getDeliverAddressTService().delDeliverAddress(strs);
 				this.setSucflag(true);
@@ -313,5 +313,83 @@ public class DeliverAddressAction extends ActionSupport {
 		}
 		return "json";
 	}
+	/**
+	 *用户中心获取用户收货地址
+	 * @return
+	 * @throws IOException 
+	 * @throws TemplateException 
+	 */
+	@Action(value = "getMemberDeliverAddress4Mc", results = { 
+			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/mydeliveraddress.ftl"),
+			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
+	})
+	public String getMemberDeliverAddressForUserCenter() throws TemplateException, IOException{
+		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			List<DeliverAddressT> list=this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
+			//获取收货地址
+			ActionContext.getContext().put(FreeMarkervariable.DELIVERADDRESS, list);
+			this.getDataCollectionTAction().putBaseInfoToContext();
+			return SUCCESS;
+		}else{
+			return INPUT;
+		}
+	}
 	
+	/**
+	 * 根据地址ID获取用户地址
+	 * return 
+	 */
+	@Action(value = "findDeliverAddressByaddresid", results = { @Result(name = "json", type = "json") })
+	public String findDeliverAddressByaddresid(){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			this.setSlogin(true);
+			if(StringUtils.isNotBlank(this.getAddressid())){
+				bean = this.getDeliverAddressTService().findDeliverAddressById(this.getAddressid());
+				this.setSucflag(true);
+				return "json";
+			}else{
+				this.setSucflag(false);
+				return "json";
+			}
+	
+		}
+		this.setSucflag(false);
+		return "json";
+		
+	}
+	
+	/**
+	 * 根据地址ID更新用户地址
+	 * 
+	 */
+	@Action(value = "updateDeliverAddress", results = { @Result(name = "json", type = "json") })
+	public String updateDeliverAddress(){
+		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if(memberT!=null){
+			this.setSlogin(true);
+			if(StringUtils.isNotBlank(this.getAddressid())){
+				bean = this.getDeliverAddressTService().findDeliverAddressById(this.getAddressid());
+				bean.setShippingusername(this.getMembername().trim());
+				bean.setCountry(this.getCountry());
+				bean.setProvince(this.getProvince());
+				bean.setCity(this.getCity());
+				bean.setDistrict(this.getDistrict());
+				bean.setStreet(this.getStreet());
+				bean.setTelno(this.getTelno());
+				bean.setMobile(this.getMobile());
+				bean.setPostcode(this.getPostcode());
+				bean.setEmail(this.getEmail());
+				this.getDeliverAddressTService().updateDeliverAddress(bean);
+				this.setSucflag(true);
+				return "json";
+			}else{
+				this.setSucflag(false);
+				return "json";
+			}
+		}
+		this.setSucflag(false);
+		return "json";
+	}
 }

@@ -179,4 +179,8 @@ public class FreeMarkervariable {
 	 * 会员收货地址
 	 */
 	public static final String DELIVERADDRESS="deliveraddress";
+	/**
+	 * 会员的未处理的订单
+	 */
+	public static final String MEMBERORDERON="userorderon";
 }

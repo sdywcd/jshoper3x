@@ -103,27 +103,19 @@ public class MemberCenterIndexAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "initUserCenterIndex", results = { 
+	@Action(value = "initMcIndex", results = { 
 			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/memberindex.ftl"),
 			@Result(name = "input",location = "/html/default/shop/user/login.html")
 	})
-	public String InitUserCenterIndex() {
+	public String InitMemberCenterIndex() {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
 			//获取最近的订单信息
-			this.findAllUserOrderOn(memberT.getId());
+			List<OrderT>list=this.findAllUserOrderOn(memberT.getId());
+			ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
 			//乱序获取推荐商品
-			this.shuffleGoods();
-			//路径获取
-			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
-			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
-			//获取页脚分类数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
-			//获取页脚文章数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+			//this.shuffleGoods();
+			this.getDataCollectionTAction().putBaseInfoToContext();
 			return SUCCESS;
 		}
 		return INPUT;
@@ -132,12 +124,12 @@ public class MemberCenterIndexAction extends ActionSupport {
 	/**
 	 * 获取用户未处理的订单只获取前30条
 	 */
-	public void findAllUserOrderOn(String userid){
+	public List<OrderT> findAllUserOrderOn(String memberid){
 		int currentPage=1;
 		int lineSize=30;
-		List<OrderT>list=this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, userid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO, AllOrderState.SHIPPINGSTATE_TWO);
-		//获取我的订单
-		ActionContext.getContext().put("userorderon", list);
+		List<OrderT>list=this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO, AllOrderState.SHIPPINGSTATE_TWO);
+		return list;
+		
 	}
 	
 	/**

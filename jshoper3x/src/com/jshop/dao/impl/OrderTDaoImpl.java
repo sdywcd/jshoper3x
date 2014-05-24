@@ -49,16 +49,16 @@ public class OrderTDaoImpl extends BaseTDaoImpl<OrderT> implements OrderTDao {
 		}
 	}
 
-	public int delOrderByorderid(final String userid, final String orderid, final String orderstate) {
+	public int delOrderByorderid(final String memberid, final String orderid, final String orderstate) {
 		log.debug("update OrderT");
 		try {
-			final String queryString = "update OrderT as o set o.orderstate=:orderstate where o.userid=:userid and o.orderid=:orderid";
+			final String queryString = "update OrderT as o set o.orderstate=:orderstate where o.memberid=:memberid and o.orderid=:orderid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					int i = 0;
 					Query query = session.createQuery(queryString);
-					query.setParameter("userid", userid);
+					query.setParameter("memberid", memberid);
 					query.setParameter("orderid", orderid);
 					query.setParameter("orderstate", orderstate);
 					i = query.executeUpdate();
@@ -73,11 +73,11 @@ public class OrderTDaoImpl extends BaseTDaoImpl<OrderT> implements OrderTDao {
 		return 0;
 	}
 
-	public int countfindAllOrderByorderstate(String userid, String orderstate, String paystate, String shippingstate) {
+	public int countfindAllOrderByorderstate(String memberid, String orderstate, String paystate, String shippingstate) {
 		log.debug("count all OrderT  by OrderTstate");
 		try {
-			String queryString = "select count(*) from OrderT as o where o.userid=:userid and o.orderstate!=:orderstate and o.paystate=:paystate and o.shippingstate=:shippingstate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "userid", "orderstate", "paystate", "shippingstate" }, new Object[] { userid, orderstate, paystate, shippingstate });
+			String queryString = "select count(*) from OrderT as o where o.memberid=:memberid and o.orderstate!=:orderstate and o.paystate=:paystate and o.shippingstate=:shippingstate";
+			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "memberid", "orderstate", "paystate", "shippingstate" }, new Object[] { memberid, orderstate, paystate, shippingstate });
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -91,18 +91,18 @@ public class OrderTDaoImpl extends BaseTDaoImpl<OrderT> implements OrderTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<OrderT> findAllOrderByorderstate(final int currentPage, final int lineSize, final String userid, final String orderstate, final String paystate, final String shippingstate) {
+	public List<OrderT> findAllOrderByorderstate(final int currentPage, final int lineSize, final String memberid, final String orderstate, final String paystate, final String shippingstate) {
 		log.debug("find all OrderT by OrderTstate");
 		try {
 			List<OrderT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
 
-				String queryString = "from OrderT as o where o.orderstate!=:orderstate and o.userid=:userid and o.paystate=:paystate and o.shippingstate=:shippingstate order by purchasetime desc";
+				String queryString = "from OrderT as o where o.orderstate!=:orderstate and o.memberid=:memberid and o.paystate=:paystate and o.shippingstate=:shippingstate order by purchasetime desc";
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					query.setFirstResult((currentPage - 1) * lineSize);
 					query.setMaxResults(lineSize);
-					query.setParameter("userid", userid);
+					query.setParameter("memberid", memberid);
 					query.setParameter("orderstate", orderstate);
 					query.setParameter("shippingstate", shippingstate);
 					query.setParameter("paystate", paystate);
@@ -118,18 +118,18 @@ public class OrderTDaoImpl extends BaseTDaoImpl<OrderT> implements OrderTDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<OrderT> findAllOrderByorderstateForOn(final int currentPage, final int lineSize, final String userid, final String orderstate, final String paystate, final String shippingstate) {
+	public List<OrderT> findAllOrderByorderstateForOn(final int currentPage, final int lineSize, final String memberid, final String orderstate, final String paystate, final String shippingstate) {
 		log.debug("find all OrderT by OrderTstate");
 		try {
 			List<OrderT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
 
-				String queryString = "from OrderT as o where o.orderstate!=:orderstate and o.userid=:userid and o.paystate!=:paystate and o.shippingstate!=:shippingstate order by purchasetime desc";
+				String queryString = "from OrderT as o where o.orderstate!=:orderstate and o.memberid=:memberid and o.paystate!=:paystate and o.shippingstate!=:shippingstate order by purchasetime desc";
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					query.setFirstResult((currentPage - 1) * lineSize);
 					query.setMaxResults(lineSize);
-					query.setParameter("userid", userid);
+					query.setParameter("memberid", memberid);
 					query.setParameter("orderstate", orderstate);
 					query.setParameter("shippingstate", shippingstate);
 					query.setParameter("paystate", paystate);
@@ -144,11 +144,11 @@ public class OrderTDaoImpl extends BaseTDaoImpl<OrderT> implements OrderTDao {
 		}
 	}
 
-	public int countfindAllOrderByorderstateForOn(String userid, String orderstate, String paystate, String shippingstate) {
+	public int countfindAllOrderByorderstateForOn(String memberid, String orderstate, String paystate, String shippingstate) {
 		log.debug("count all OrderT  by OrderTstate");
 		try {
-			String queryString = "select count(*) from OrderT as o where o.userid=:userid and o.orderstate!=:orderstate and o.paystate!=:paystate and o.shippingstate!=:shippingstate";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "userid", "orderstate", "paystate", "shippingstate" }, new Object[] { userid, orderstate, paystate, shippingstate });
+			String queryString = "select count(*) from OrderT as o where o.memberid=:memberid and o.orderstate!=:orderstate and o.paystate!=:paystate and o.shippingstate!=:shippingstate";
+			List list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "memberid", "orderstate", "paystate", "shippingstate" }, new Object[] { memberid, orderstate, paystate, shippingstate });
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;

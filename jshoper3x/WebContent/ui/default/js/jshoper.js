@@ -51,7 +51,7 @@ $(function() {
                 if (hidbasepath !== "") {
                     if (data.loginname !== "") {
                         $("#islogin").text("我的优系");
-                        $("#islogin").attr("href", hidbasepath+"/initUserCenterIndex.action");
+                        $("#islogin").attr("href", hidbasepath + "/initMcIndex.action");
                     } else {
                         $("#islogin").text("登陆");
                         $("#islogin").attr("href", hidbasepath + "/html/default/shop/user/login.html");
@@ -59,7 +59,10 @@ $(function() {
                 }
             }
         }
-    })
+    });
+    gotolink = function() {
+        window.location.reload();
+    }
 });
 //========================================jshoper index goodssearch ==========================================
 $(function() {});
@@ -159,7 +162,7 @@ $(function() {
         if (basepath !== "") {
             // 跳转到商品页面
             window.location.href = basepath + "/index.html";
-        }else{
+        } else {
             window.history.go(-1);
         }
     });
@@ -400,7 +403,7 @@ $(function() {
                 return false;
             }
             if (data.sucflag) {
-                window.location.href = "getUserDeliverAddress.action";
+                window.location.href = "getMemberDeliverAddress.action";
             }
         });
     },
@@ -497,5 +500,20 @@ $(function() {
         case 4:
             $("#registererrormsg").text("该用户已经被注册");
             return false;
+    }
+    //========================================jshoper member center js ==========================================
+    /*
+     * 删除我的收货地址
+     * */
+    delmyaddress = function(id) {
+        $.post("delDeliverAddressByaddressid.action", {
+            "addressid": id
+        }, function(data) {
+            if(data.sucflag){
+                window.location.reload();
+            }else{
+                window.location.href=data.basePath+"/html/default/shop/user/login.html?redirecturl="+window.location.pathname;
+            }
+        });
     }
 });

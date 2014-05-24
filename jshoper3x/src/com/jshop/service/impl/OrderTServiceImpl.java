@@ -66,24 +66,24 @@ public class OrderTServiceImpl extends BaseTServiceImpl<OrderT>implements OrderT
 	}
 
 
-	public int countfindAllOrderByorderstate(String userid, String orderstate, String paystate, String shippingstate) {
-		return this.getOrderTDao().countfindAllOrderByorderstate(userid, orderstate, paystate, shippingstate);
+	public int countfindAllOrderByorderstate(String memberid, String orderstate, String paystate, String shippingstate) {
+		return this.getOrderTDao().countfindAllOrderByorderstate(memberid, orderstate, paystate, shippingstate);
 	}
 
-	public List<OrderT> findAllOrderByorderstate(int currentPage, int lineSize, String userid, String orderstate, String paystate, String shippingstate) {
-		return this.getOrderTDao().findAllOrderByorderstate(currentPage, lineSize, userid, orderstate, paystate, shippingstate);
+	public List<OrderT> findAllOrderByorderstate(int currentPage, int lineSize, String memberid, String orderstate, String paystate, String shippingstate) {
+		return this.getOrderTDao().findAllOrderByorderstate(currentPage, lineSize, memberid, orderstate, paystate, shippingstate);
 	}
 
-	public int delOrderByorderid(String userid, String orderid, String orderstate) {
-		return this.getOrderTDao().delOrderByorderid(userid, orderid, orderstate);
+	public int delOrderByorderid(String memberid, String orderid, String orderstate) {
+		return this.getOrderTDao().delOrderByorderid(memberid, orderid, orderstate);
 	}
 
-	public List<OrderT> findAllOrderByorderstateForOn(int currentPage, int lineSize, String userid, String orderstate, String paystate, String shippingstate) {
-		return this.getOrderTDao().findAllOrderByorderstateForOn(currentPage, lineSize, userid, orderstate, paystate, shippingstate);
+	public List<OrderT> findAllOrderByorderstateForOn(int currentPage, int lineSize, String memberid, String orderstate, String paystate, String shippingstate) {
+		return this.getOrderTDao().findAllOrderByorderstateForOn(currentPage, lineSize, memberid, orderstate, paystate, shippingstate);
 	}
 
-	public int countfindAllOrderByorderstateForOn(String userid, String orderstate, String paystate, String shippingstate) {
-		return this.getOrderTDao().countfindAllOrderByorderstateForOn(userid, orderstate, paystate, shippingstate);
+	public int countfindAllOrderByorderstateForOn(String memberid, String orderstate, String paystate, String shippingstate) {
+		return this.getOrderTDao().countfindAllOrderByorderstateForOn(memberid, orderstate, paystate, shippingstate);
 	}
 
 	public OrderT findOrderDetailByorderid(String orderid) {
