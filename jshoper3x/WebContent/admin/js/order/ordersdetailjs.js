@@ -213,18 +213,18 @@ $(function() {
 	 */
 	
 	$('#alipaysendgoods').click(function(){
-		CheckForm();
-		var paymentid=$('#hidpaymentid').val();
-		var trade_no=$('#trade_no').val();
-		var transport_type=$('#transport_type').val();
-		alert(transport_type);
-		var logistics_name=$('#logistics_name').val();
-		var invoice_no=$('#invoice_no').val();
-		$.post("GetFhPaymentinfo.action",{"paymentid":paymentid},function(data){
-			if(data.spaymentflag){
-				window.location.href="jshop/admin/alipay/fh/sendgoods.jsp?trade_no="+trade_no+"&transport_type="+transport_type+"&logistics_name="+logistics_name+"&invoice_no="+invoice_no+"";
-			}
-		});
+//		CheckForm();
+//		var paymentid=$('#hidpaymentid').val();
+//		var trade_no=$('#trade_no').val();
+//		var transport_type=$('#transport_type').val();
+//		alert(transport_type);
+//		var logistics_name=$('#logistics_name').val();
+//		var invoice_no=$('#invoice_no').val();
+//		$.post("GetFhPaymentinfo.action",{"paymentid":paymentid},function(data){
+//			if(data.spaymentflag){
+//				window.location.href="jshop/admin/alipay/fh/sendgoods.jsp?trade_no="+trade_no+"&transport_type="+transport_type+"&logistics_name="+logistics_name+"&invoice_no="+invoice_no+"";
+//			}
+//		});
 		
 	});
 	

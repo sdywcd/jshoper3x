@@ -94,6 +94,7 @@ public class FrontOrderAction extends ActionSupport {
 	private String cartgoodsname;
 	private String cartgoodsid;
 	private int cartneedquantity;
+	private static String mainpicture;//订单中显示的主图片
 	private String cartid;
 	private String hidurl;
 	private String redirecturl;
@@ -570,6 +571,14 @@ public class FrontOrderAction extends ActionSupport {
 		this.basePath = basePath;
 	}
 
+	public String getMainpicture() {
+		return mainpicture;
+	}
+
+	public void setMainpicture(String mainpicture) {
+		this.mainpicture = mainpicture;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -623,7 +632,7 @@ public class FrontOrderAction extends ActionSupport {
 	 */
 	public void GetMyCart(MemberT memberT) {
 		String state="1";
-		String orderTag=this.getOrderTag();
+		String orderTag="1";
 		List<CartT> list = this.getCartTService().findAllCartByMemberId(memberT.getId(),state,orderTag);
 		if (list != null) {
 			this.setTotal(0.0);
@@ -639,10 +648,12 @@ public class FrontOrderAction extends ActionSupport {
 					totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(ct.getWeight()), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
 				}
 				totalpoints = Arith.add(totalpoints, Arith.mul(ct.getPoints(), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
-				cartgoodsname += ct.getGoodsname();
+				
+				cartgoodsname=ct.getGoodsname();
 				cartgoodsid += ct.getGoodsid() + ",";
 				cartneedquantity += ct.getNeedquantity();
 				cartid = ct.getCartid();//获取购物车中的cartid表示同一个cartid即在同一个订单中
+				mainpicture=ct.getPicture();
 			}
 			ActionContext.getContext().put(FreeMarkervariable.MEMBERCART, list);
 			ActionContext.getContext().put(FreeMarkervariable.TOTALPRICE, total);
@@ -806,6 +817,7 @@ public class FrontOrderAction extends ActionSupport {
 		order.setProductinfo(this.getCartgoodsid());
 		//order.setGoodsname(this.getCartgoodsname());
 		order.setOrdername(this.getCartgoodsname());
+		order.setMainpicture(this.getMainpicture());
 		order.setNeedquantity(this.getCartneedquantity());
 		order.setFreight(this.getFreight());//运费，在request中也有
 		//		if(!this.isSvoucher()){

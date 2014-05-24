@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-5-22 20:36:00 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-24 9:01:28 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -61,6 +61,7 @@ public class OrderT implements java.io.Serializable {
 	private String ordername;
 	private String shopid;
 	private Date memberdelivertime;
+	private String mainpicture;
 
 	public OrderT() {
 	}
@@ -108,7 +109,8 @@ public class OrderT implements java.io.Serializable {
 			String isprintfpinvoice, String expressnumber, String tradeNo,
 			String userid, String username, String logisticsname,
 			String errorOrderTag, String productinfo, Integer versiont,
-			String ordername, String shopid, Date memberdelivertime) {
+			String ordername, String shopid, Date memberdelivertime,
+			String mainpicture) {
 		this.orderid = orderid;
 		this.memberid = memberid;
 		this.membername = membername;
@@ -153,6 +155,7 @@ public class OrderT implements java.io.Serializable {
 		this.ordername = ordername;
 		this.shopid = shopid;
 		this.memberdelivertime = memberdelivertime;
+		this.mainpicture = mainpicture;
 	}
 
 	@Id
@@ -555,6 +558,15 @@ public class OrderT implements java.io.Serializable {
 
 	public void setMemberdelivertime(Date memberdelivertime) {
 		this.memberdelivertime = memberdelivertime;
+	}
+
+	@Column(name = "MAINPICTURE")
+	public String getMainpicture() {
+		return this.mainpicture;
+	}
+
+	public void setMainpicture(String mainpicture) {
+		this.mainpicture = mainpicture;
 	}
 
 }

@@ -51,7 +51,7 @@ $(function() {
                 if (hidbasepath !== "") {
                     if (data.loginname !== "") {
                         $("#islogin").text("我的优系");
-                        $("#islogin").attr("href", "")
+                        $("#islogin").attr("href", hidbasepath+"/initUserCenterIndex.action");
                     } else {
                         $("#islogin").text("登陆");
                         $("#islogin").attr("href", hidbasepath + "/html/default/shop/user/login.html");

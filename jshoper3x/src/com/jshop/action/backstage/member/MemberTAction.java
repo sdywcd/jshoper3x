@@ -526,11 +526,14 @@ public class MemberTAction extends BaseTAction {
 	private void ProcessMemberList(List<MemberT> list) {
 		for(Iterator<MemberT> it=list.iterator();it.hasNext();){
 			MemberT mt=(MemberT) it.next();
-			if(mt.getSex().equals(StaticKey.ONE)){
-				mt.setSex(StaticKey.SEXMAN);
-			}else{
-				mt.setSex(StaticKey.SEXFEMAL);
+			if(mt.getSex()!=null){
+				if(mt.getSex().equals(StaticKey.ONE)){
+					mt.setSex(StaticKey.SEXMAN);
+				}else{
+					mt.setSex(StaticKey.SEXFEMAL);
+				}
 			}
+			
 			if(mt.getMemberstate().equals(StaticKey.MEMBERSTATE_ONE_NUM)){
 				mt.setMemberstate(StaticKey.DOACTIVE);
 			}else{

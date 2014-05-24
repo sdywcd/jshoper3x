@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-5-22 20:36:00 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-5-24 9:01:28 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -52,6 +52,7 @@ public class MemberT implements java.io.Serializable {
 	private String paypassword;
 	private String memberGroupId;
 	private String memberGroupName;
+	private Integer integration;
 
 	public MemberT() {
 	}
@@ -75,7 +76,7 @@ public class MemberT implements java.io.Serializable {
 			String answer, String memberstate, String headpath,
 			Date createtime, String creatorid, Date updatetime, String mobile,
 			int versiont, String mid, String paypassword, String memberGroupId,
-			String memberGroupName) {
+			String memberGroupName, Integer integration) {
 		this.id = id;
 		this.loginname = loginname;
 		this.loginpwd = loginpwd;
@@ -111,6 +112,7 @@ public class MemberT implements java.io.Serializable {
 		this.paypassword = paypassword;
 		this.memberGroupId = memberGroupId;
 		this.memberGroupName = memberGroupName;
+		this.integration = integration;
 	}
 
 	@Id
@@ -429,6 +431,15 @@ public class MemberT implements java.io.Serializable {
 
 	public void setMemberGroupName(String memberGroupName) {
 		this.memberGroupName = memberGroupName;
+	}
+
+	@Column(name = "INTEGRATION")
+	public Integer getIntegration() {
+		return this.integration;
+	}
+
+	public void setIntegration(Integer integration) {
+		this.integration = integration;
 	}
 
 }
