@@ -32,6 +32,7 @@ import com.jshop.entity.UserT;
 import com.jshop.service.CartTService;
 import com.jshop.service.DeliverAddressTService;
 import com.jshop.service.LogisticsBusinessTService;
+import com.jshop.service.MemberTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
 import com.jshop.service.ShippingAddressTService;
@@ -53,6 +54,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	private OrderTService orderTService;
 	private UsertService usertService;
 	private DataCollectionTAction dataCollectionTAction;
+	private MemberTService memberTService;
 	//获取隐藏的url
 	private String hidurl;
 	private OrderT order = new OrderT();
@@ -82,6 +84,15 @@ public class UserCenterMyorderAction extends ActionSupport {
 	int lineSize = 5;
 	int allRecorders;
 	private boolean slogin;
+	
+	public MemberTService getMemberTService() {
+		return memberTService;
+	}
+
+	public void setMemberTService(MemberTService memberTService) {
+		this.memberTService = memberTService;
+	}
+
 	@JSON(serialize = false)
 	public DataCollectionTAction getDataCollectionTAction() {
 		return dataCollectionTAction;
@@ -505,7 +516,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "InitPayPage", results = { @Result(name = "success", type="freemarker", location = "/WEB-INF/theme/default/shop/confirmorderag.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
+	@Action(value = "InitPayPage", results = { @Result(name = "success", type="freemarker", location = "/WEB-INF/theme/default/shop/confirmorderag.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${hidurl}") })
 	public String InitPayPage() {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
@@ -799,10 +810,10 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 * 
 	 * @param userid
 	 */
-	public void GetUserBuyerInfo(String userid) {
-		UserT user = this.getUsertService().findById(userid);
-		if (user != null) {
-			map.put("myorderbuyerinfo", user);
+	public void GetUserBuyerInfo(String memberid) {
+		MemberT member = this.getMemberTService().findMemberTById(memberid);
+		if (member != null) {
+			map.put("myorderbuyerinfo", member);
 		}
 	}
 
@@ -835,29 +846,35 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value = "InitMyOrdersDetail", results = { @Result(name = "success", type="freemarker",location = "/WEB-INF/theme/default/shop/myordersdetail.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html") })
+	@Action(value = "InitMyOrdersDetail", results = { 
+			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/myordersdetail.ftl"),
+			@Result(name = "input",location = "/html/default/shop/user/login.html")
+	})
 	public String InitMyOrdersDetail() {
-		if(Validate.StrNotNull(this.getOrderid())){
-			String orderid = this.getOrderid().trim();
-			//获取订单详细
-			GetOrderDetail(orderid);
-			//获取订单中的商品列表
-			GetOrderGoodsList(orderid);
-			//获取发货地址信息
-			GetOrderShippingAddress(orderid);
-			ActionContext.getContext().put("myorder", map);
-			//路径获取
-			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
-			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
-			//获取页脚分类数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
-			//获取页脚文章数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
-			
-			return SUCCESS;
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (memberT != null) {
+			if(Validate.StrNotNull(this.getOrderid())){
+				String orderid = this.getOrderid().trim();
+				//获取订单详细
+				GetOrderDetail(orderid);
+				//获取订单中的商品列表
+				GetOrderGoodsList(orderid);
+				//获取发货地址信息
+				GetOrderShippingAddress(orderid);
+				ActionContext.getContext().put("myorder", map);
+				//路径获取
+				ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
+				//获取导航数据
+				ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
+				//获取商城基本数据
+				ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+				//获取页脚分类数据
+				ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
+				//获取页脚文章数据
+				ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+				
+				return SUCCESS;
+			}
 		}
 		return INPUT;
 		

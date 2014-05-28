@@ -49,7 +49,7 @@ public class OrderTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	private ProductTService productTService;
 	private OrderTService orderTService;
-	private UsertService usertService;
+	//private UsertService usertService;
 	private CartTService cartTService;
 	private ShippingAddressTService shippingAddressTService;
 	private LogisticsBusinessTService logisticsBusinessTService;
@@ -152,14 +152,14 @@ public class OrderTAction extends BaseTAction {
 	public void setOrderTService(OrderTService orderTService) {
 		this.orderTService = orderTService;
 	}
-	@JSON(serialize = false)
-	public UsertService getUsertService() {
-		return usertService;
-	}
-
-	public void setUsertService(UsertService usertService) {
-		this.usertService = usertService;
-	}
+	//@JSON(serialize = false)
+//	public UsertService getUsertService() {
+//		return usertService;
+//	}
+//
+//	public void setUsertService(UsertService usertService) {
+//		this.usertService = usertService;
+//	}
 	@JSON(serialize = false)
 	public CartTService getCartTService() {
 		return cartTService;

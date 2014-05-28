@@ -40,29 +40,29 @@ $(function() {
     /*
      *将商品加入购物车
      */
-    $.ajax({
-        url: "islogin.action",
-        type: "post",
-        dataType: "json",
-        async: false,
-        success: function(data) {
-            if ($("#islogin").length > 0) {
-                var hidbasepath = $("#hidbasepath").val();
-                if (hidbasepath !== "") {
-                    if (data.loginname !== "") {
-                        $("#islogin").text("我的优系");
-                        $("#islogin").attr("href", hidbasepath + "/initMcIndex.action");
-                    } else {
-                        $("#islogin").text("登陆");
-                        $("#islogin").attr("href", hidbasepath + "/html/default/shop/user/login.html");
-                    }
-                }
-            }
-        }
-    });
-    gotolink = function() {
-        window.location.reload();
-    }
+    // $.ajax({
+    //     url: "islogin.action",
+    //     type: "post",
+    //     dataType: "json",
+    //     async: false,
+    //     success: function(data) {
+    //         if ($("#islogin").length > 0) {
+    //             var hidbasepath = $("#hidbasepath").val();
+    //             if (hidbasepath !== "") {
+    //                 if (data.loginname !== "") {
+    //                     $("#islogin").text("我的优系");
+    //                     $("#islogin").attr("href", hidbasepath + "/initMcIndex.action");
+    //                 } else {
+    //                     $("#islogin").text("登陆");
+    //                     $("#islogin").attr("href", hidbasepath + "/html/default/shop/user/login.html");
+    //                 }
+    //             }
+    //         }
+    //     }
+    // });
+    // gotolink = function() {
+    //     window.location.reload();
+    // }
 });
 //========================================jshoper index goodssearch ==========================================
 $(function() {});

@@ -438,7 +438,7 @@ body {
 									</tr>
 									<tr>
 										<td colspan="7">买家留言：<span><s:property
-													value="#request.order.orderdetail.customernotes" /></span></td>
+													value="#request.order.orderdetail.toBuyerNotes" /></span></td>
 									</tr>
 									<tr>
 										<td colspan="7"><a href="#">查看详细</a></td>
