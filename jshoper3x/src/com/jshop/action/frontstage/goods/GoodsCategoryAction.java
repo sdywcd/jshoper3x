@@ -1,9 +1,11 @@
 package com.jshop.action.frontstage.goods;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -16,9 +18,12 @@ import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.PageModel;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.entity.GoodsAttributeRpT;
+import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsT;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
+import com.jshop.service.GoodsAttributeRpTService;
 import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.JshopbasicInfoTService;
@@ -36,8 +41,8 @@ public class GoodsCategoryAction extends ActionSupport{
 	private GoodsCategoryTService goodsCategoryTService;
 	private ArticleCategoryTService articleCategoryTService;
 	private ArticleTService articleTService;
-	private JshopbasicInfoTService jshopbasicInfoTService;
 	private DataCollectionTAction dataCollectionTAction;
+	private GoodsAttributeRpTService goodsAttributeRpTService;
 	private Map<String,Object>map=new HashMap<String,Object>();
 	private List<GoodsT>goodsList;
 	private String navid;
@@ -47,11 +52,22 @@ public class GoodsCategoryAction extends ActionSupport{
     private String ls;
     private String goodsname;
     private String topKeywords;
-    private int rp=2;//每页显示数量
+    private int rp=8;//每页显示数量
 	private int page = 1;
 	private int total = 0;
 	private int totalpage=1;
-   
+	private String attrs;//用于查询的属性串
+	private String grade;//当前分类等级
+	
+	@JSON(serialize = false)
+	public GoodsAttributeRpTService getGoodsAttributeRpTService() {
+		return goodsAttributeRpTService;
+	}
+	public void setGoodsAttributeRpTService(
+			GoodsAttributeRpTService goodsAttributeRpTService) {
+		this.goodsAttributeRpTService = goodsAttributeRpTService;
+	}
+	@JSON(serialize = false)
     public DataCollectionTAction getDataCollectionTAction() {
 		return dataCollectionTAction;
 	}
@@ -92,13 +108,6 @@ public class GoodsCategoryAction extends ActionSupport{
 	}
 	public void setArticleTService(ArticleTService articleTService) {
 		this.articleTService = articleTService;
-	}
-	@JSON(serialize = false)
-	public JshopbasicInfoTService getJshopbasicInfoTService() {
-		return jshopbasicInfoTService;
-	}
-	public void setJshopbasicInfoTService(JshopbasicInfoTService jshopbasicInfoTService) {
-		this.jshopbasicInfoTService = jshopbasicInfoTService;
 	}
 	public Map<String, Object> getMap() {
 		return map;
@@ -180,6 +189,20 @@ public class GoodsCategoryAction extends ActionSupport{
 	public void setTotalpage(int totalpage) {
 		this.totalpage = totalpage;
 	}
+	
+	public String getAttrs() {
+		return attrs;
+	}
+	public void setAttrs(String attrs) {
+		this.attrs = attrs;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
 	/**
 	 * 清理错误
 	 */
@@ -201,37 +224,27 @@ public class GoodsCategoryAction extends ActionSupport{
 	public String searchGoodsByGoodsName(){
 		int currentPage = page;
 		int lineSize = rp;
-		List<GoodsT> list = this.getGoodsTService().findGoodsByGoodsname(currentPage, lineSize, this.getTopKeywords().trim());
-		if(!list.isEmpty()&&list!=null){
+		List<GoodsT> list = this.getGoodsTService().findGoodsByGoodsname(currentPage, lineSize, StaticKey.GoodsState.SALE.getState(),this.getTopKeywords().trim());
+		if(!list.isEmpty()){
 			total=this.getGoodsTService().countfindSearchGoods(this.getTopKeywords().trim());
 			PageModel<GoodsT> pm = new PageModel<GoodsT>(currentPage, lineSize, list,total);			
 			//判断是否有余数
-			float i= total%lineSize;
-			if(i>0){
-				totalpage=total/lineSize+1;//有余数，页码数+1
-			}else{
-				totalpage=total/lineSize;//没有余数 页码数等于当前值
-			}			
+//			float i= total%lineSize;
+//			if(i>0){
+//				totalpage=total/lineSize+1;//有余数，页码数+1
+//			}else{
+//				totalpage=total/lineSize;//没有余数 页码数等于当前值
+//			}
 			String action=this.getDataCollectionTAction().getBasePath()+"/searchGoodsByGoodsName.action?topKeywords="+this.getTopKeywords();
 			ActionContext.getContext().put("actionlink", action);
 			ActionContext.getContext().put("sign", "disstatic");
 			ActionContext.getContext().put("goods", pm);
 			ActionContext.getContext().put("goodsList", list);
-			ActionContext.getContext().put("totalgoods",total);
-			ActionContext.getContext().put("totalpage",totalpage);
+			ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
+			ActionContext.getContext().put("totalpage",pm.getTotalpage());
 			ActionContext.getContext().put("topKeywords",topKeywords);
-			
 		}
-		//路径获取
-		ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-		//获取导航数据
-		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
-		//获取商城基本数据
-		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
-		//获取页脚分类数据
-		ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
-		//获取页脚文章数据
-		ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+		this.getDataCollectionTAction().putBaseInfoToContext();
 		return SUCCESS;
 		
 	}
@@ -240,10 +253,69 @@ public class GoodsCategoryAction extends ActionSupport{
 	 * 根据属性获取商品列表用于属性搜索
 	 * @return
 	 */
-//	public String findGoodsByAttrs(){
-//		
-//	}
-//	
+	@Action(value = "searchGoodsByAttrs", results = { 
+			@Result(name = "success",type="freemarker" ,location = "/WEB-INF/theme/default/shop/goodscategorylist.ftl"),
+			@Result(name = "input" ,type="redirect",location = "/index.html")
+			})
+	public String findGoodsByAttrs(){
+		
+		if(StringUtils.isNotBlank(this.getAttrs())){
+			int currentPage = page;
+			int lineSize = rp;
+			List<GoodsT>goodslist=new ArrayList<GoodsT>();
+			String strs[]=StringUtils.split(this.getAttrs(), StaticKey.SPLITDOT);
+			if(strs[0].equals(StaticKey.ALLATTRS)){
+				if(this.getGrade().equals(StaticKey.ZERO)){
+					total=this.getGoodsTService().countfindGoodsByNavid(this.getNavid(), StaticKey.GoodsState.SALE.getState());
+					goodslist=this.getGoodsTService().findGoodsByNavid(this.getNavid(), StaticKey.GoodsState.SALE.getState(), currentPage, lineSize);
+					
+				}
+			}else{
+				for(String s:strs){
+					List<GoodsAttributeRpT>garptlist=this.getGoodsAttributeRpTService().findGoodsIdsByAttr(s);
+					goodslist.addAll(findAttrGoodsInfo(garptlist));
+				}
+				total=goodslist.size();
+			}
+			
+			PageModel<GoodsT> pm = new PageModel<GoodsT>(currentPage, lineSize, goodslist,total);
+			String action="";
+			ActionContext.getContext().put("actionlink", action);
+			ActionContext.getContext().put("sign", "disstatic");
+			ActionContext.getContext().put("goods", pm);
+			ActionContext.getContext().put("goodsList", goodslist);
+			ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
+			ActionContext.getContext().put("totalpage",pm.getTotalpage());
+			ActionContext.getContext().put("topKeywords",topKeywords);
+			//将商品分类put到上下文
+			
+			GoodsCategoryT gct=this.getDataCollectionTAction().getGoodsCategoryTByNavid(this.getNavid());
+			ActionContext.getContext().put(FreeMarkervariable.GOODSCATEGORY, gct);
+			ActionContext.getContext().put(FreeMarkervariable.GOODSCATEGORYPATH, this.getDataCollectionTAction().getGoodsCategoryPath(gct.getPath()));
+			ActionContext.getContext().put(FreeMarkervariable.GOODSTYPEBRAND, this.getDataCollectionTAction().findGoodsTypeBrandBygoodsType(gct.getGoodsTypeId()));
+			ActionContext.getContext().put(FreeMarkervariable.GOODSATTRS, this.getDataCollectionTAction().findGoodsAttributeTBygoodsTypeId(gct.getGoodsTypeId()));//收集商品类型下的商品属性
+			ActionContext.getContext().put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
+			//获取此商品顶级分类的热销商品集合
+			ActionContext.getContext().put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().getHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
+			
+			this.getDataCollectionTAction().putBaseInfoToContext();
+			
+		}
+		return SUCCESS;
+	}
+	
+	private List<GoodsT>findAttrGoodsInfo(List<GoodsAttributeRpT>list){
+		List<GoodsT>lists=new ArrayList<GoodsT>();
+		for(GoodsAttributeRpT ga:list){
+			GoodsT g=this.getGoodsTService().findGoodsById(ga.getGoodsid());
+			if(g!=null){
+				lists.add(g);
+			}
+		}
+		return lists;
+	}
+	
+	
 	
 	
 

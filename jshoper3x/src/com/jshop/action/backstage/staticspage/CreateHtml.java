@@ -329,7 +329,7 @@ public class CreateHtml extends ActionSupport {
 	 * @throws TemplateException
 	 */
 	public void buildGoodsCategoryPage(Map<String, Object> map) throws IOException, TemplateException {
-		String salestate = "1";//salestate=1表示上架商品
+		String salestate =StaticKey.GoodsState.SALE.getState();//上架商品
 		List<GoodsCategoryT> gclist = this.getDataCollectionTAction().findAllGoodsCategoryTByState(StaticKey.DataShowState.SHOW.getState());//读取所有启用的商品分类
 		if (!gclist.isEmpty()) {
 			List<GoodsT> list = new ArrayList<GoodsT>();
@@ -353,7 +353,6 @@ public class CreateHtml extends ActionSupport {
 						
 						String htmlPath = this.createGoodsCategoryT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST, gct.getSign(), map);
 						this.getGoodsCategoryTService().updateHtmlPath(gct.getGoodsCategoryTid(), htmlPath);
-						
 					}
 					//生成按照销量排序
 					list = this.getGoodsTService().findAllGoodsBynavidorderbyParams(navid, salestate, "sales", null, null, null, null, null, null, null);

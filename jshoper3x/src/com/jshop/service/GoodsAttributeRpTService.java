@@ -28,4 +28,10 @@ public interface GoodsAttributeRpTService extends
 	 * @param goodsid
 	 */
 	public int delBygoodsid(String goodsid);
+	/**
+	 * 根据属性值获取商品id集合
+	 * @param attrval
+	 * @return
+	 */
+	public List<GoodsAttributeRpT>findGoodsIdsByAttr(String attrval);
 }

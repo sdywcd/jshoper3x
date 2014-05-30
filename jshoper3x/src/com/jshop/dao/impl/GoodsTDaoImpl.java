@@ -159,19 +159,20 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 
 	@SuppressWarnings("unchecked")
 	public List<GoodsT> findGoodsByGoodsname(final int currentPage,
-			final int lineSize, final String goodsname) {
+			final int lineSize, final String salestate,final String goodsname) {
 		log.debug("find all GoodsT by goodsname");
 		try {
 			List<GoodsT> list = this.getHibernateTemplate().executeFind(
 					new HibernateCallback() {
 
-						String queryString = "from GoodsT as g where g.goodsname like ? order by createtime desc";
+						String queryString = "from GoodsT as g where g.salestate=:salestate and g.goodsname like ? order by createtime desc";
 
 						public Object doInHibernate(Session session)
 								throws HibernateException, SQLException {
 							Query query = session.createQuery(queryString);
 							query.setFirstResult((currentPage - 1) * lineSize);
 							query.setMaxResults(lineSize);
+							query.setParameter("salestate", salestate);
 							query.setParameter(0, "%" + goodsname + "%");
 							List list = query.list();
 							return list;

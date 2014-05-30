@@ -757,4 +757,17 @@ public class DataCollectionTAction extends ActionSupport {
 		return Collections.emptyList();
 	}
 	
+	/**
+	 * 根据一级分类id获取其信息
+	 * @param navid
+	 * @return
+	 */
+	public GoodsCategoryT getGoodsCategoryTByNavid(String navid){
+		GoodsCategoryT gct=this.getGoodsCategoryTService().findByPK(GoodsCategoryT.class, navid);
+		if(gct!=null){
+			return gct;
+		}
+		return null;
+	}
+	
 }

@@ -9,15 +9,13 @@ import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.GoodsAttributeRpTDao;
-import com.jshop.entity.FunctionM;
 import com.jshop.entity.GoodsAttributeRpT;
 @Repository("goodsAttributeRpTDao")
 public class GoodsAttributeRpTDaoImpl extends BaseTDaoImpl<GoodsAttributeRpT>  implements GoodsAttributeRpTDao {
-	private static final Logger log = LoggerFactory.getLogger(TemplatesetTDaoImpl.class);
+	private static final Logger log = LoggerFactory.getLogger(GoodsAttributeRpTDaoImpl.class);
 
 
 	@Override
@@ -66,6 +64,19 @@ public class GoodsAttributeRpTDaoImpl extends BaseTDaoImpl<GoodsAttributeRpT>  i
 		}
 	
 		
+	}
+
+	@Override
+	public List<GoodsAttributeRpT> findGoodsIdsByAttr(String attrval) {
+		log.debug("findGoodsIdsByAttr");
+		try {
+			String queryString = "from GoodsAttributeRpT as garpt where garpt.attrval=:attrval";
+			List<GoodsAttributeRpT> list = this.getHibernateTemplate().findByNamedParam(queryString, "attrval", attrval);
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findGoodsIdsByAttr error", re);
+			throw re;
+		}
 	}
 
 	

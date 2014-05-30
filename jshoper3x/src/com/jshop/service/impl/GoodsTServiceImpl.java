@@ -234,8 +234,8 @@ public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsT
 		return getGoodsTDao().findSamepriceGoods(limit, minprice, maxprice, goodsid);
 	}
 
-	public List<GoodsT> findGoodsByGoodsname(int currentPage, int lineSize, String goodsname) {
-		return getGoodsTDao().findGoodsByGoodsname(currentPage, lineSize, goodsname);
+	public List<GoodsT> findGoodsByGoodsname(int currentPage, int lineSize, String salestate,String goodsname) {
+		return getGoodsTDao().findGoodsByGoodsname(currentPage, lineSize,salestate,goodsname);
 	}
 
 	public List<GoodsT> findMoreGoodsByGoodsType(String nlstypeid, int currentPage, int lineSize) {

@@ -11,7 +11,10 @@ public class  StaticKey {
 	 * 逗号分隔符
 	 */
 	public static final String SPLITDOT=",";
-	
+	/**
+	 * 所有商品属性
+	 */
+	public static final String ALLATTRS="all";
 	/**
 	 * 加密方式
 	 */

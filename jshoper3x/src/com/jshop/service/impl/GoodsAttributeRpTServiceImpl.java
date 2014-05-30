@@ -40,4 +40,9 @@ public class GoodsAttributeRpTServiceImpl extends BaseTServiceImpl<GoodsAttribut
 		return this.getGoodsAttributeRpTDao().delBygoodsid(goodsid);
 	}
 
+	@Override
+	public List<GoodsAttributeRpT> findGoodsIdsByAttr(String attrval) {
+		return this.getGoodsAttributeRpTDao().findGoodsIdsByAttr(attrval);
+	}
+
 }

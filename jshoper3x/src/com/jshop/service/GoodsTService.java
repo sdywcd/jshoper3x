@@ -160,7 +160,7 @@ public interface GoodsTService extends BaseTService<GoodsT>{
 	 * @return
 	 */
 	public List<GoodsT> findGoodsByGoodsname(final int currentPage,
-			final int lineSize, final String goodsname);
+			final int lineSize, String salestate,final String goodsname);
 
 	/**
 	 * 根据商品型号获取商品信息

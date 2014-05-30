@@ -71,6 +71,29 @@ $(function() {
     // 获取url地址用来让用户登录时跳转
     var windowsurl = window.location;
     $('#hidurl').attr("value", windowsurl.pathname);
+
+    /**
+     * 根据属性搜素商品
+     * @param  {[type]} action      [description]
+     * @param  {[type]} goodstypeid [description]
+     * @param  {[type]} navid       [description]
+     * @param  {[type]} attrs       [description]
+     * @return {[type]}             [description]
+     */
+    var attrsarray = new Array(); //商品属性集合
+    searchgoodsbyattrs = function(action, goodstypeid, navid, attrs, grade) {
+        if (action !== "" && goodstypeid !== "" && navid !== "" && attrs !== "") {
+
+
+            attrsarray.push(attrs);
+            var strattrs = attrsarray.join(",").toString();
+            window.location.href = action + "?goodsTypeId=" + goodstypeid + "&navid=" + navid + "&grade=" + grade + "&attrs=" + strattrs;
+
+        }
+    }
+
+
+
 });
 $(function() {
     // 获取url地址用来让用户登录时跳转
@@ -509,10 +532,10 @@ $(function() {
         $.post("delDeliverAddressByaddressid.action", {
             "addressid": id
         }, function(data) {
-            if(data.sucflag){
+            if (data.sucflag) {
                 window.location.reload();
-            }else{
-                window.location.href=data.basePath+"/html/default/shop/user/login.html?redirecturl="+window.location.pathname;
+            } else {
+                window.location.href = data.basePath + "/html/default/shop/user/login.html?redirecturl=" + window.location.pathname;
             }
         });
     }
