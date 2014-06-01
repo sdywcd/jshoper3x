@@ -22,12 +22,14 @@ import com.jshop.action.backstage.staticspage.template.TemplateTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.PageModel;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.TemplateT;
 import com.jshop.entity.TemplatesetT;
+import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
 import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsDetailRpTService;
@@ -48,7 +50,7 @@ public class CreateHtml extends ActionSupport {
 	private TemplateTService templateTService;
 	private TemplatesetTService templatesetTService;
 	private GoodsTService goodsTService;
-
+	private ArticleCategoryTService articleCategoryTService;
 	private ArticleTService articleTService;
 	private GoodsCategoryTService goodsCategoryTService;	
 	private DataCollectionTAction dataCollectionTAction;
@@ -65,7 +67,16 @@ public class CreateHtml extends ActionSupport {
 	private boolean slogin;
 	private StringBuilder logmsg=new StringBuilder();
 	
-	
+	 
+	public ArticleCategoryTService getArticleCategoryTService() {
+		return articleCategoryTService;
+	}
+
+	public void setArticleCategoryTService(
+			ArticleCategoryTService articleCategoryTService) {
+		this.articleCategoryTService = articleCategoryTService;
+	}
+
 	@JSON(serialize = false)
 	public GoodsTAction getGoodsTAction() {
 		return goodsTAction;
@@ -578,6 +589,33 @@ public class CreateHtml extends ActionSupport {
 
 		}
 	}
+	
+	/**
+	 * 创建帮助中心列表
+	 * @param map
+	 * @throws TemplateException 
+	 * @throws IOException 
+	 */
+	public void buildHelpCenterArticlelist(Map<String, Object> map) throws IOException, TemplateException{
+		List<ArticleCategoryT>list= this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataShowState.SHOW.getState());
+		List<ArticleT> allArticleTs = (List<ArticleT>) map.get(FreeMarkervariable.ALLARTICLE);
+		List<ArticleT>articles=new ArrayList();
+		for(ArticleCategoryT act:list){
+			for(ArticleT at:allArticleTs){
+				if(at.getNavid().equals(act.getArticleCategoryTid())){
+					articles.add(at);
+				}
+			}
+			map.put(FreeMarkervariable.ARTICLESINCATEGORY,articles);
+			
+			map.put(FreeMarkervariable.HELPARTICLECATEGORY,list);
+			String htmlpath=this.createHelpCenterArticleCategoryT(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAME4NOTICELIST, act.getSign(), map);
+			articles.clear();
+			act.setHtmlpath(htmlpath);
+			this.getArticleCategoryTService().update(act);
+		}
+		
+	}
 
 	/**
 	 * 生成激活邮件模板数据
@@ -602,7 +640,7 @@ public class CreateHtml extends ActionSupport {
 	 * @throws TemplateException
 	 */
 	public String buildactivityEmail(String emailcontent) throws IOException, TemplateException {
-		map.put(FreeMarkervariable.BASEPATH, this.getBasePath());
+		map.put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 		map.put(FreeMarkervariable.EMAILCONTENT, emailcontent);
 		return this.createactivityEmail(ContentTag.TEMPLATENAMEFOREMAILTEMPLATE, ContentTag.CREATORID, map);
@@ -632,26 +670,26 @@ public class CreateHtml extends ActionSupport {
 	 *            数据
 	 * @return List<Article>
 	 */
-	public static List<GoodsT> getDataByPageNo(int pageNo, int pageSize, List<GoodsT> lstGoods) {
+	public static List<?> getDataByPageNo(int pageNo, int pageSize, List<?> lstGoods) {
 		int totalpage = pageNo * pageSize > lstGoods.size() ? lstGoods.size() : pageNo * pageSize;
 		return lstGoods.subList((pageNo - 1) * pageSize, totalpage);
 	}
 
-	/**
-	 * 获取网站根目录
-	 * 
-	 * @param map
-	 * @throws UnknownHostException
-	 *             InetAddress inet = InetAddress.getLocalHost();
-	 *             request.getScheme() + "://" + inet.getHostAddress() + ":" +
-	 *             request.getServerPort() +
-	 */
-	public String getBasePath() throws UnknownHostException {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		String path = request.getContextPath();
-		String basePath = path + "/";
-		return basePath;
-	}
+//	/**
+//	 * 获取网站根目录
+//	 * 
+//	 * @param map
+//	 * @throws UnknownHostException
+//	 *             InetAddress inet = InetAddress.getLocalHost();
+//	 *             request.getScheme() + "://" + inet.getHostAddress() + ":" +
+//	 *             request.getServerPort() +
+//	 */
+//	public String getBasePath() throws UnknownHostException {
+//		HttpServletRequest request = ServletActionContext.getRequest();
+//		String path = request.getContextPath();
+//		String basePath = path + "/";
+//		return basePath;
+//	}
 
 	/**
 	 * 根据传入参数创建文章详细的静态页
@@ -742,7 +780,7 @@ public class CreateHtml extends ActionSupport {
 		try{
 			setbean = this.getTemplatesetTService().findTemplatesetTBysign(sign);
 			if (setbean != null) {
-				map.put("basePath", this.getBasePath());
+				map.put("basePath", this.getDataCollectionTAction().getBasePath());
 				String ftl = setbean.getTemplateurl();
 				String folder = setbean.getBuildhtmlpath();
 				String fileName;
@@ -752,7 +790,7 @@ public class CreateHtml extends ActionSupport {
 					PageModel<GoodsT> pms = new PageModel<GoodsT>(1, pageSize, null, allGoods.size());
 					long totalPage = pms.getTotalpage();
 					for (int i = 1; i <= totalPage; i++) {
-						PageModel<GoodsT> pm = new PageModel<GoodsT>(i, pageSize, CreateHtml.getDataByPageNo(i, pageSize, allGoods), allGoods.size());
+						PageModel<GoodsT> pm = new PageModel<GoodsT>(i, pageSize, (List<GoodsT>) CreateHtml.getDataByPageNo(i, pageSize, allGoods), allGoods.size());
 						data.put(FreeMarkervariable.GOODS, pm);
 						if (i == 1) {
 							fileName = filename + "_" + i + ".html";
@@ -773,6 +811,55 @@ public class CreateHtml extends ActionSupport {
 		
 	}
 
+	/**
+	 * 生成帮助中心列表静态页
+	 * 
+	 * @param ftlname
+	 * @param note
+	 * @param filename
+	 * @param creatorid
+	 * @param data
+	 * @return
+	 * @throws TemplateException
+	 * @throws IOException
+	 */
+	@SuppressWarnings("unchecked")
+	public String createHelpCenterArticleCategoryT(String sign, String filename, Map<String, Object> data) throws IOException, TemplateException {
+		String realhtmlpath = "";
+		int pageSize =20;
+		try{
+			setbean = this.getTemplatesetTService().findTemplatesetTBysign(sign);
+			if (setbean != null) {
+				map.put("basePath", this.getDataCollectionTAction().getBasePath());
+				String ftl = setbean.getTemplateurl();
+				String folder = setbean.getBuildhtmlpath();
+				String fileName;
+				String relativePath = "";
+				List<ArticleT> allArticleTs = (List<ArticleT>) data.get(FreeMarkervariable.ARTICLESINCATEGORY);
+				if (allArticleTs != null && allArticleTs.size() > 0) {
+					PageModel<ArticleT> pms = new PageModel<ArticleT>(1, pageSize, null, allArticleTs.size());
+					long totalPage = pms.getTotalpage();
+					for (int i = 1; i <= totalPage; i++) {
+						PageModel<ArticleT> pm = new PageModel<ArticleT>(i, pageSize, (List<ArticleT>) CreateHtml.getDataByPageNo(i, pageSize, allArticleTs), allArticleTs.size());
+						data.put(FreeMarkervariable.ARTICLE, pm);
+						if (i == 1) {
+							fileName = filename + "_" + i + ".html";
+							fc.init(ftl, folder, fileName, data, relativePath);
+							realhtmlpath = folder + fileName;
+						} else {
+							fileName = filename + "_" + i + ".html";
+							fc.init(ftl, folder, fileName, data, relativePath);
+						}
+					}
+				}
+			}
+			return realhtmlpath;
+		}catch(Exception e){
+			this.getLogmsg().append("<p style='color:red;'>" + fc.getLogmsg() + "</p>");
+		}
+		return realhtmlpath;
+		
+	}
 
 
 	
@@ -825,7 +912,7 @@ public class CreateHtml extends ActionSupport {
 		String htmlText = "";
 		bean = this.getTemplateTService().findTemplateByname(creatorid, ftlname);
 		if (bean != null) {
-			map.put("basePath", this.getBasePath());
+			map.put("basePath", this.getDataCollectionTAction().getBasePath());
 			String ftl = bean.getUrl();
 			String relativePath = "";
 			htmlText = fc.init(ftl, data, relativePath);
@@ -847,7 +934,7 @@ public class CreateHtml extends ActionSupport {
 		String htmlText = "";
 		bean = this.getTemplateTService().findTemplateByname(creatorid, ftlname);
 		if (bean != null) {
-			map.put("basePath", this.getBasePath());
+			map.put("basePath", this.getDataCollectionTAction().getBasePath());
 			String ftl = bean.getUrl();
 			String relativePath = "";
 			htmlText = fc.init(ftl, data, relativePath);
@@ -920,5 +1007,7 @@ public class CreateHtml extends ActionSupport {
 		} 
 		return realhtmlpath;
 	}
+	
+	
 
 }

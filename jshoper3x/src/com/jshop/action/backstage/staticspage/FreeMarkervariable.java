@@ -40,11 +40,16 @@ public class FreeMarkervariable {
 	 */
 	public static final String GOODSCATEGORYPATH="goodscategorypath";
 	/**
-	 * 页脚分类
+	 * 帮助中心页脚分类
 	 */
 	public static final String FOOTCATEGORY="footcategory";
 	/**
-	 * 获取页脚文章数据
+	 * 帮助中心列表页
+	 */
+	public static final String HELPARTICLECATEGORY="helparticlecategory";
+	
+	/**
+	 * 获取帮助中心页脚文章数据
 	 */
 	public static final String FOOTERATRICLE="footerarticle";
 	/**
@@ -61,9 +66,18 @@ public class FreeMarkervariable {
 	public static final String PRODUCTDETAIL="productdetail";
 	
 	/**
+	 * 所有文章详细
+	 */
+	public static final String ALLARTICLE="allarticle";
+	/**
 	 * 文章详细
 	 */
 	public static final String ARTICLE="article";
+	/**
+	 * 某个分类下的所有文章
+	 */
+	public static final String ARTICLESINCATEGORY="articleincategory";
+	
 	/**
 	 * 商品分类
 	 */

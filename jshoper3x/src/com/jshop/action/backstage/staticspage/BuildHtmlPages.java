@@ -190,6 +190,7 @@ public class BuildHtmlPages extends ActionSupport {
 			//获取页脚分类数据
 			buildhtmllog.append("<p>8,获取商城页脚分类数据</p>");
 			log.info("<p>8,获取商城页脚分类数据</p>");
+			//这里获取页脚帮助中心的分类，取值放在freemarker文件中
 			map.put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataShowState.SHOW.getState()));
 			buildhtmllog.append(this.getDataCollectionTAction().getLogmsg());
 			//获取页脚文章数据
@@ -201,7 +202,7 @@ public class BuildHtmlPages extends ActionSupport {
 			buildhtmllog.append("<p>10,获取首页自定义区域数据</p>");
 			
 			//获取系统所有文章数据
-			map.put(FreeMarkervariable.ARTICLE, this.getDataCollectionTAction().findAllArticleT(StaticKey.DataShowState.SHOW.getState()));
+			map.put(FreeMarkervariable.ALLARTICLE, this.getDataCollectionTAction().findAllArticleT(StaticKey.DataShowState.SHOW.getState()));
 			
 			this.setProcessbar(20);//进度20%
 			
@@ -223,12 +224,12 @@ public class BuildHtmlPages extends ActionSupport {
 					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORGOODSCATEGORYLIST)){
 						this.getCreateHtml().buildGoodsCategoryPage(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
-					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSGROUPT)){
-						this.getCreateHtml().buildGoodsGroupT(map);
-						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
 					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORNOTICE)){
 						this.getCreateHtml().buildNoticeArticlesPage(map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
+					}else if(tt.getSign().equals(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAME4NOTICELIST)){
+						//创建帮助中心（页脚分类）的列表页
+						this.getCreateHtml().buildHelpCenterArticlelist(map);
 					}else{
 						this.getCreateHtml().createNormalhtml(tt.getSign(), "", map);
 						buildhtmllog.append(this.getCreateHtml().getLogmsg().toString());
