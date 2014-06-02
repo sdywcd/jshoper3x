@@ -429,8 +429,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "findAllUserOrderOn", results = { @Result(name = "success", type = "freemarker", location = "WEB-INF/theme/default/shop/myorder.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
 	public String findAllUserOrderOn() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (memberT != null) {
 			currentPage = 1;
 			lineSize = 5;
 			String orderstate = "8";//9表示用户自己删除的订单
@@ -441,21 +441,11 @@ public class UserCenterMyorderAction extends ActionSupport {
 			} catch (Exception e) {
 
 			}
-			allRecorders = this.getOrderTService().countfindAllOrderByorderstateForOn(user.getUserid(), orderstate, paystate, shippingstate);
-			List<OrderT> list = this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, user.getUserid(), orderstate, paystate, shippingstate);
-			
-			//路径获取
-			ActionContext.getContext().put("basePath", this.getDataCollectionTAction().getBasePath());
+			allRecorders = this.getOrderTService().countfindAllOrderByorderstateForOn(memberT.getId(), orderstate, paystate, shippingstate);
+			List<OrderT> list = this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberT.getId(), orderstate, paystate, shippingstate);
 			//获取我的订单
 			ActionContext.getContext().put("userorderon", list);
-			//获取导航数据
-			ActionContext.getContext().put("siteNavigationList", this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
-			//获取商城基本数据
-			ActionContext.getContext().put("jshopbasicinfo", this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
-			//获取页脚分类数据
-			ActionContext.getContext().put("footcategory", this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
-			//获取页脚文章数据
-			ActionContext.getContext().put("footerarticle", this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+			this.getDataCollectionTAction().putBaseInfoToContext();
 			return SUCCESS;
 	
 

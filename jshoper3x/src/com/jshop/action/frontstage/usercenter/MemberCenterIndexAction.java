@@ -15,6 +15,7 @@ import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.AllOrderState;
 import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.PageModel;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 
 import com.jshop.entity.GoodsT;
@@ -39,6 +40,12 @@ public class MemberCenterIndexAction extends ActionSupport {
 	private UserCenterMyorderAction userCenterMyorderAction;
 	private OrderTService orderTService;
 	private GoodsTService goodsTService;
+	private int rp=8;//每页显示数量
+	private int page=1;
+	private int total=0;
+	private int totalpage=1;
+	
+	
 	private boolean slogin;
 	@JSON(serialize=false) 
 	public GoodsTService getGoodsTService() {
@@ -89,6 +96,38 @@ public class MemberCenterIndexAction extends ActionSupport {
 		this.hidurl = hidurl;
 	}
 
+	public int getRp() {
+		return rp;
+	}
+
+	public void setRp(int rp) {
+		this.rp = rp;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getTotalpage() {
+		return totalpage;
+	}
+
+	public void setTotalpage(int totalpage) {
+		this.totalpage = totalpage;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -111,8 +150,8 @@ public class MemberCenterIndexAction extends ActionSupport {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
 			//获取最近的订单信息
-			List<OrderT>list=this.findAllUserOrderOn(memberT.getId());
-			ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
+			this.findAllUserOrderOn(memberT.getId());
+			
 			//乱序获取推荐商品
 			//this.shuffleGoods();
 			this.getDataCollectionTAction().putBaseInfoToContext();
@@ -124,11 +163,22 @@ public class MemberCenterIndexAction extends ActionSupport {
 	/**
 	 * 获取用户未处理的订单只获取前30条
 	 */
-	public List<OrderT> findAllUserOrderOn(String memberid){
-		int currentPage=1;
-		int lineSize=30;
-		List<OrderT>list=this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO, AllOrderState.SHIPPINGSTATE_TWO);
-		return list;
+	public void findAllUserOrderOn(String memberid){
+		int currentPage=page;
+		int lineSize=rp;
+		List<OrderT>list=this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberid, AllOrderState.ORDERSTATE_EIGHT_NUM, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
+		if(!list.isEmpty()){
+			total=this.getOrderTService().countfindAllOrderByorderstateForOn(memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
+			PageModel<OrderT>pm=new PageModel<>(currentPage, lineSize, list, total);
+			String action=this.getDataCollectionTAction().getBasePath()+"/initMcIndex.action?";
+			ActionContext.getContext().put("actionlink", action);
+			ActionContext.getContext().put("sign", "disstatic");
+			ActionContext.getContext().put("goods", pm);
+			ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
+			ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
+			ActionContext.getContext().put("totalpage",pm.getTotalpage());
+		}
+
 		
 	}
 	
