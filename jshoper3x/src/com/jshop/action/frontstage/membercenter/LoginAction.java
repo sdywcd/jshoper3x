@@ -107,7 +107,10 @@ public class LoginAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	@Action(value="login", results={ @Result(name="json",type="json") })
+	@Action(value = "login", results = { 
+			@Result(name = "success",type="chain",location = "initMcIndex"),
+			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
+	})
 	public String login() {
 		this.setBasePath(BaseTools.getBasePath());
 		MemberT m = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
@@ -123,9 +126,9 @@ public class LoginAction extends ActionSupport {
 		if (!mlists.isEmpty()) {
 			this.setLoginflag(true);
 			ActionContext.getContext().getSession().put(StaticKey.MEMBER_SESSION_KEY, mlists.get(0));
-			return "json";
+			return SUCCESS;
 		}
-		return "json";
+		return INPUT;
 	}
 	/**
 	 * 前台登出 

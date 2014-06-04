@@ -436,26 +436,27 @@ $(function() {
     });
     //========================================jshoper login and register js ==========================================
     login = function() {
-        var username = $('#username').val();
-        if (username === "") {
+        var loginname = $('#loginname').val();
+        if (loginname === "") {
             $("#errormsg").text("请输入用户名");
             return false;
         }
-        var password = $('#password').val();
-        if (password === "") {
+        var loginpwd = $('#loginpwd').val();
+        if (loginpwd === "") {
             $("#errormsg").text("请输入密码");
             return false;
         }
-        $.post("login.action", {
-            "loginname": username,
-            "loginpwd": password
-        }, function(data) {
-            if (data.loginflag) {
-                redirect(data.basePath);
-            } else {
-                $("#errormsg").text("用户名或密码不正确");
-            }
-        });
+        $("#loginform").submit();
+        // $.post("login.action", {
+        //     "loginname": username,
+        //     "loginpwd": password
+        // }, function(data) {
+        //     if (data.loginflag) {
+        //         redirect(data.basePath);
+        //     } else {
+        //         $("#errormsg").text("用户名或密码不正确");
+        //     }
+        // });
     },
     /*
      * 绑定登陆操作
