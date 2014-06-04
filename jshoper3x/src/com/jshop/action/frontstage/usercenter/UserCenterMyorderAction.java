@@ -19,6 +19,7 @@ import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.AllOrderState;
 import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.PageModel;
 import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
@@ -79,10 +80,10 @@ public class UserCenterMyorderAction extends ActionSupport {
 
 	private boolean sshoppingaddress = false;//发货地址标记
 	private boolean supdateorder = false;//订单更新标记
-	int page;
-	int currentPage = 1;
-	int lineSize = 5;
-	int allRecorders;
+	private int rp=8;//每页显示数量
+	private int page=1;
+	private int total=0;
+	private int totalpage=1;
 	private boolean slogin;
 	
 	public MemberTService getMemberTService() {
@@ -293,31 +294,6 @@ public class UserCenterMyorderAction extends ActionSupport {
 	public void setLogisticswebaddress(String logisticswebaddress) {
 		this.logisticswebaddress = logisticswebaddress;
 	}
-
-	public int getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public int getLineSize() {
-		return lineSize;
-	}
-
-	public void setLineSize(int lineSize) {
-		this.lineSize = lineSize;
-	}
-
-	public int getAllRecorders() {
-		return allRecorders;
-	}
-
-	public void setAllRecorders(int allRecorders) {
-		this.allRecorders = allRecorders;
-	}
-
 	public int getPage() {
 		return page;
 	}
@@ -349,39 +325,46 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 * @return
 	 * @throws UnknownHostException
 	 */
-	@Action(value = "findAllUserOrder", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/myorder.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${hidurl}") })
-	public String findAllUserOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
-			int lineSize = 50;
-			String orderstate = "8";//8表示用户自己删除的订单
-			String paystate = "1";//已付款
-			String shippingstate = "1";//已发货
-			try {
-				currentPage = Integer.parseInt(this.getCp());
-			} catch (Exception e) {
-
-			}
-			//int allRecorders=this.getOrderTService().countfindAllOrderByorderstate(user.getUserid(), orderstate, paystate, shippingstate);
-			List<OrderT> list = this.getOrderTService().findAllOrderByorderstate(currentPage, lineSize, user.getUserid(), orderstate, paystate, shippingstate);
-
-			//路径获取
-			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-			//获取我已买到的商品
-			ActionContext.getContext().put("userorder", list);
-			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
-			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
-			//获取页脚分类数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
-			//获取页脚文章数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+	@Action(value = "findAllMemberOrder", results = { @Result(name = "success", type = "freemarker", location = "/WEB-INF/theme/default/shop/myorder.ftl"), @Result(name = "input", type = "redirect", location = "/html/default/shop/user/login.html?redirecturl=${hidurl}") })
+	public String findAllMemberOrder() {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (memberT != null) {
+			//获取最近的订单信息
+			this.findAllUserOrderOn(memberT.getId());
+			this.getDataCollectionTAction().putBaseInfoToContext();
 			return SUCCESS;
-		} else {
-			return INPUT;
 		}
+		return INPUT;
 	}
+	
+	
+	/**
+	 * 获取用户未处理的订单只获取前30条
+	 */
+	public void findAllUserOrderOn(String memberid){
+		int currentPage=page;
+		int lineSize=rp;
+		List<OrderT>list=this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberid, AllOrderState.ORDERSTATE_EIGHT_NUM, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
+		if(!list.isEmpty()){
+			total=this.getOrderTService().countfindAllOrderByorderstateForOn(memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
+			PageModel<OrderT>pm=new PageModel<>(currentPage, lineSize, list, total);
+			String action=this.getDataCollectionTAction().getBasePath()+"/findAllMemberOrder.action?";
+			ActionContext.getContext().put("actionlink", action);
+			ActionContext.getContext().put("sign", "disstatic");
+			ActionContext.getContext().put("goods", pm);
+			ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
+			ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
+			ActionContext.getContext().put("totalpage",pm.getTotalpage());
+		}
+
+		
+	}
+	
+	
+	
+	
+	
+	
 
 	/**
 	 * 删除订单（更新订单到8状态）
@@ -431,21 +414,21 @@ public class UserCenterMyorderAction extends ActionSupport {
 	public String findAllUserOrderOn() {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
-			currentPage = 1;
-			lineSize = 5;
-			String orderstate = "8";//9表示用户自己删除的订单
-			String paystate = "2";//未付款,已付款
-			String shippingstate = "2";//已发货，未发货
-			try {
-				currentPage = Integer.parseInt(this.getCp());
-			} catch (Exception e) {
-
-			}
-			allRecorders = this.getOrderTService().countfindAllOrderByorderstateForOn(memberT.getId(), orderstate, paystate, shippingstate);
-			List<OrderT> list = this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberT.getId(), orderstate, paystate, shippingstate);
-			//获取我的订单
-			ActionContext.getContext().put("userorderon", list);
-			this.getDataCollectionTAction().putBaseInfoToContext();
+//			currentPage = 1;
+//			lineSize = 5;
+//			String orderstate = "8";//9表示用户自己删除的订单
+//			String paystate = "2";//未付款,已付款
+//			String shippingstate = "2";//已发货，未发货
+//			try {
+//				currentPage = Integer.parseInt(this.getCp());
+//			} catch (Exception e) {
+//
+//			}
+//			allRecorders = this.getOrderTService().countfindAllOrderByorderstateForOn(memberT.getId(), orderstate, paystate, shippingstate);
+//			List<OrderT> list = this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberT.getId(), orderstate, paystate, shippingstate);
+//			//获取我的订单
+//			ActionContext.getContext().put("userorderon", list);
+//			this.getDataCollectionTAction().putBaseInfoToContext();
 			return SUCCESS;
 	
 

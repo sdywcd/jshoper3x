@@ -23,6 +23,7 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.authority.UserRoleMAction;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.base.InitTAction;
+import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.MD5Code;
 import com.jshop.action.backstage.utils.PasswordHelper;
@@ -47,6 +48,7 @@ public class UserTAction extends BaseTAction {
 	private UserRoleMService userRoleMService;
 	private UserRoleMAction userRoleMAction;
 	private GlobalParamService globalParamService;
+	private DataCollectionTAction dataCollectionTAction;
 	private UserT bean = new UserT();
 	private String param;
 	private List<UserT> user = new ArrayList<UserT>();
@@ -89,6 +91,17 @@ public class UserTAction extends BaseTAction {
 	private boolean sucflag;
 	private boolean sauthority;
 	private String baseurl;
+	private String basepath;
+	
+	@JSON(serialize = false)
+	public DataCollectionTAction getDataCollectionTAction() {
+		return dataCollectionTAction;
+	}
+
+	public void setDataCollectionTAction(DataCollectionTAction dataCollectionTAction) {
+		this.dataCollectionTAction = dataCollectionTAction;
+	}
+
 	@JSON(serialize = false)
 	public GlobalParamService getGlobalParamService() {
 		return globalParamService;
@@ -480,6 +493,14 @@ public class UserTAction extends BaseTAction {
 		this.sauthority = sauthority;
 	}
 
+	public String getBasepath() {
+		return basepath;
+	}
+
+	public void setBasepath(String basepath) {
+		this.basepath = basepath;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -495,12 +516,12 @@ public class UserTAction extends BaseTAction {
 	 */
 	@Action(value = "/checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
 	public String checklogin() {
+		this.setBasepath(this.getDataCollectionTAction().getBasePath());
 		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticKey.BACK_USER_SESSION_KEY);
 		if (admin!=null) {
 			this.setSlogin(false);
 			return "json";
 		} else {
-
 			this.setSlogin(true);
 			return "json";
 		}

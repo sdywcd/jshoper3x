@@ -136,6 +136,7 @@ $(function() {
 				procmsg : '正在获取数据，请稍候...',
 				checkbox:true
 			});
+	
 			function action(com,grid){
 				if(com=='添加普通订单'){
 					window.location.href = "normalorder.jsp?operate=add&folder=orders";

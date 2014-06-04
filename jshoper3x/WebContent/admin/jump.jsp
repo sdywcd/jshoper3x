@@ -19,10 +19,11 @@
 		if(pathname=="jshop/"){
 			pathname="";
 		}
-		top.location.href="http://"+window.location.host+"/"+pathname+"admin/login.jsp";
+		window.location.href="http://"+window.location.host+"/"+pathname+"admin/login.jsp";
 	});
 </script>
 <body>
 	<div id="hidjumptologin">正在跳转请稍后...</div>
+	
 </body>
 </html>

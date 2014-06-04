@@ -83,11 +83,9 @@ $(function() {
     var attrsarray = new Array(); //商品属性集合
     searchgoodsbyattrs = function(action, goodstypeid, navid, attrs, grade) {
         if (action !== "" && goodstypeid !== "" && navid !== "" && attrs !== "") {
-
-
             attrsarray.push(attrs);
             var strattrs = attrsarray.join(",").toString();
-            window.location.href = action + "?goodsTypeId=" + goodstypeid + "&navid=" + navid + "&grade=" + grade + "&attrs=" + strattrs;
+            window.location.href = action + "?navid=" + navid + "&grade=" + grade + "&attrs=" + strattrs;
 
         }
     }

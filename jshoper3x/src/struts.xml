@@ -72,7 +72,7 @@
 
 
 		<global-results>
-			<result name="adminloginfailed">/admin/login.jsp</result>
+			<result name="adminloginfailed" type="redirect">/admin/jump.jsp</result>
 			<result name="success">/jshop/admin/authorfailed.jsp</result>
 			<result name="login" type="redirect">/html/default/shop/login.html
 			</result>

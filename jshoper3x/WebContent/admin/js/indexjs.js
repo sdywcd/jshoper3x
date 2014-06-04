@@ -66,21 +66,21 @@ $(function(){
 $(function() {
 	$.post("checklogin.action", function(data) {
 		if (data.slogin) {
-			
 			var pathnamearray = window.location.pathname.split("/");
 			var pathname = pathnamearray[1] + "/";
-			if (pathname == "jshop/") {
+			if (pathname == "admin/") {
 				pathname = "";
 			}
-			top.location.href = "http://" + window.location.host + "/" + pathname + "admin/jump.jsp";
+			alert(pathnamearray);
+			top.location.href ="http://" + window.location.host +"/"+pathname+"admin/login.jsp";
 		} else {
 			if (data.length > 0) {
 				var pathnamearray = window.location.pathname.split("/");
 				var pathname = pathnamearray[1] + "/";
-				if (pathname == "jshop/") {
+				if (pathname == "admin/") {
 					pathname = "";
 				}
-				top.location.href = "http://" + window.location.host + "/" + pathname + "admin/jump.jsp";
+				top.location.href = "http://" + window.location.host + "/" + pathname + "admin/login.jsp";
 			} else {
 				return;
 			}
