@@ -250,7 +250,7 @@ $(function() {
         $.post("PlusCartNeedquantityByGoodsid.action", {
             "sendstring": sendstring
         }, function(data) {
-            if (data.slogin) {
+            if (!data.slogin) {
                 //跳转到登录页面
                 window.location.href = "user/login.html?redirecturl=" + hidurl;
             }
@@ -418,7 +418,7 @@ $(function() {
             "email": email,
             "postcode": postcode
         }, function(data) {
-            if (data.slogin) {
+            if (!data.slogin) {
                 //跳转到登录页面
                 window.location.href = "user/login.html?redirecturl=" + hidurl;
                 return false;
@@ -536,5 +536,124 @@ $(function() {
                 window.location.href = data.basePath + "/html/default/shop/user/login.html?redirecturl=" + window.location.pathname;
             }
         });
+    },
+    /*
+     * 会员中心增加收货地址
+     * */
+    addnewaddressinmc = function() {
+        var hidurl = $('#hidurl').val();
+        var membername = $('#membername').val();
+        //此处添加收货人信息
+        var country = $("#country").find("option:selected").text();
+        var province = $('#province').find("option:selected").text();
+        var city = $('#city').find("option:selected").text();
+        var district = $('#district').find("option:selected").text();
+        var street = $('#street').val();
+        var mobile = $('#mobile').val();
+        var telno = $('#telno').val();
+        var email = $('#email').val();
+        var postcode = $('#postcode').val();
+        if (membername === "" && street === "" && mobile === "") {
+            $("#addressmsg").text("请填写收货信息");
+            return false;
+        }
+        $.post("addDeliveraddress.action", {
+            "membername": membername,
+            "country": country,
+            "province": province,
+            "city": city,
+            "district": district,
+            "street": street,
+            "mobile": mobile,
+            "telno": telno,
+            "email": email,
+            "postcode": postcode
+        }, function(data) {
+            if (!data.slogin) {
+                //跳转到登录页面
+                window.location.href = "user/login.html?redirecturl=" + hidurl;
+                return false;
+            }
+            if (data.sucflag) {
+                window.location.reload();
+            }
+        });
+    },
+    $("#savemyaddressinmc").bind("click", function() {
+        addnewaddressinmc();
+    });
+
+    /*
+     * 会员中心更新收货地址
+     * */
+    updateaddressinmc = function() {
+        var hidurl = $('#hidurl').val();
+        var membername = $('#membername').val();
+        //此处添加收货人信息
+        var country = $("#country").find("option:selected").text();
+        var province = $('#province').find("option:selected").text();
+        var city = $('#city').find("option:selected").text();
+        var district = $('#district').find("option:selected").text();
+        var street = $('#street').val();
+        var mobile = $('#mobile').val();
+        var telno = $('#telno').val();
+        var email = $('#email').val();
+        var postcode = $('#postcode').val();
+        var addressid = $("#hidaddressid").val();
+        if (membername === "" && street === "" && mobile === "") {
+            $("#addressmsg").text("请填写收货信息");
+            return false;
+        }
+        $.post("updateDeliverAddress.action", {
+            "addressid": addressid,
+            "membername": membername,
+            "country": country,
+            "province": province,
+            "city": city,
+            "district": district,
+            "street": street,
+            "mobile": mobile,
+            "telno": telno,
+            "email": email,
+            "postcode": postcode
+        }, function(data) {
+            if (!data.slogin) {
+                //跳转到登录页面
+                window.location.href = "user/login.html?redirecturl=" + hidurl;
+                return false;
+            }
+            if (data.sucflag) {
+                window.location.reload();
+            }
+        });
+    },
+    $("#updatemyaddressinmc").bind("click", function() {
+        updateaddressinmc();
+    });
+    /**
+     * 根据id获取收货地址信息
+     * @return {[type]} [description]
+     */
+    finddeliveraddressbyid = function(id) {
+        $.post("findDeliverAddressByaddresid.action", {
+            "addressid": id
+        }, function(data) {
+            if (data.sucflag) {
+                $("#hidaddressid").val(data.bean.addressid);
+                $("#membername").val(data.bean.shippingusername);
+                $("#country").val(data.bean.country);
+                $("#province").val(data.bean.province);
+                $("#city").val(data.bean.city);
+                $("#district").val(data.bean.district);
+                $("#street").val(data.bean.street);
+                $("#postcode").val(data.bean.postcode);
+                $("#mobile").val(data.bean.mobile);
+                $("#telno").val(data.bean.telno);
+                $("#email").val(data.bean.email);
+                $("#updatemyaddressinmc").show();
+                $("#savemyaddressinmc").hide();
+            }
+        });
     }
+
 });

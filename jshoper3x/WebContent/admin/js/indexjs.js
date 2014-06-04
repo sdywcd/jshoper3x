@@ -71,7 +71,7 @@ $(function() {
 			if (pathname == "admin/") {
 				pathname = "";
 			}
-			alert(pathnamearray);
+			
 			top.location.href ="http://" + window.location.host +"/"+pathname+"admin/login.jsp";
 		} else {
 			if (data.length > 0) {

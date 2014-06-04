@@ -1,4 +1,4 @@
-package com.jshop.action.frontstage.usercenter;
+package com.jshop.action.frontstage.membercenter;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
