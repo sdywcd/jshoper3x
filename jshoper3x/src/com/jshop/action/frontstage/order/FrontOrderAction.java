@@ -970,26 +970,30 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 事先获取订单编号
 	 */
-	public void GetSerialidorder() {
-		
+	public void getSerialidorder() {
 		this.setSerialidorderid(this.getSerial().Serialid(Serial.ORDER));
 	}
 
 	/**
 	 * 获取支付宝需要的订单信息
-	 * 
+	 * 1,预先生成一个订单id
+	 * 2,增加收货地址信息到发货地址表中
+	 * 3,获取支付通道信息
+	 * 4,增加订单到数据表中
+	 * 5,将支付信息绑定到支付宝接口中
+	 * 6,更新购物车中的商品到已加入订单状态并将订单id和购物车记录绑定
 	 * @return
 	 */
 	@Action(value = "InitAlipayneedInfo", results = { 
 			@Result(name = "json",type="json")
 	})
-	public String InitAlipayneedInfo() {
+	public String initAlipayneedInfo() {
 		this.setBasePath(this.getDataCollectionTAction().getBasePath());
 		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (member != null) {
 			this.setSlogin(true);
 			//预先生成订单编号
-			GetSerialidorder();
+			getSerialidorder();
 			//增加收获信息到发货地址表中
 			AddShippingAddress();
 			//获取支付信息

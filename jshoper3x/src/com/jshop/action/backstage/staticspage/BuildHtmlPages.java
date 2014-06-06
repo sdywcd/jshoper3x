@@ -272,6 +272,19 @@ public class BuildHtmlPages extends ActionSupport {
 		
 	}
 	
+	/**
+	 * 生成首页静态页
+	 * @return
+	 */
+	public String buildIndexHtml(){
+		Map<String,Object>map=new HashMap<String,Object>();
+		map=this.getDataCollectionTAction().getBaseInfoContext(map);
+		this.getCreateHtml().createNormalhtml(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORINDEX, "", map);
+		
+		this.getDataCollectionTAction().putBaseInfoToContext();
+		return "json";
+	}
+	
 	
 	
 	

@@ -325,6 +325,20 @@ public class DataCollectionTAction extends ActionSupport {
 	}
 	
 	/**
+	 * 将路径，导航，商城基本信息，页脚分类，页脚文章放入map中用于静态化
+	 * @param map
+	 * @return
+	 */
+	public Map<String,Object> getBaseInfoContext(Map<String,Object> map){
+		map.put(FreeMarkervariable.BASEPATH, getBasePath());
+		map.put(FreeMarkervariable.SITENAVIGATIONLIST, findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
+		map.put(FreeMarkervariable.JSHOPBASICINFO,findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+		map.put(FreeMarkervariable.FOOTCATEGORY, findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
+		map.put(FreeMarkervariable.FOOTERATRICLE, findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+		return map;
+	}
+	
+	/**
 	 * 获取session数据
 	 * 
 	 * @return

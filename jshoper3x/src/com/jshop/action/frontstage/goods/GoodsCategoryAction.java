@@ -258,7 +258,6 @@ public class GoodsCategoryAction extends ActionSupport{
 			@Result(name = "input" ,type="redirect",location = "/index.html")
 			})
 	public String findGoodsByAttrs(){
-		
 		if(StringUtils.isNotBlank(this.getAttrs())){
 			int currentPage = page;
 			int lineSize = rp;
@@ -297,10 +296,8 @@ public class GoodsCategoryAction extends ActionSupport{
 			ActionContext.getContext().put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gct.getGoodsCategoryTid(),StaticKey.DataUsingState.USING.getState()));//获取此分类下的二级分类
 			//获取此商品顶级分类的热销商品集合
 			ActionContext.getContext().put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().getHostsaleGoodsByCategoryId(gct.getGoodsCategoryTid(), null));
-			
-			this.getDataCollectionTAction().putBaseInfoToContext();
-			
 		}
+		this.getDataCollectionTAction().putBaseInfoToContext();
 		return SUCCESS;
 	}
 	
