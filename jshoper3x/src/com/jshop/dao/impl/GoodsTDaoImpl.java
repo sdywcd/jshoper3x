@@ -165,7 +165,7 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 			List<GoodsT> list = this.getHibernateTemplate().executeFind(
 					new HibernateCallback() {
 
-						String queryString = "from GoodsT as g where g.salestate=:salestate and g.goodsname like ? order by createtime desc";
+						String queryString = "from GoodsT as g where g.goodsname like ? and g.salestate=:salestate order by createtime desc";
 
 						public Object doInHibernate(Session session)
 								throws HibernateException, SQLException {

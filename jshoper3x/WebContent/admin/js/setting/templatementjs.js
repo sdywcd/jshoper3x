@@ -194,6 +194,10 @@ $(function() {
 			bclass : 'edit',
 			onpress : action
 		},{
+			name:'首页静态化',
+			bclass:'edit',
+			onpress:action
+		},{
 			name:'测试静态化',
 			bclass:'edit',
 			onpress:action
@@ -274,10 +278,14 @@ $(function() {
 					}
 				});
 				return;
-		} else {
-			formwarning("#alerterror","请选择一条信息");
-			return false;
-		}
+			} else {
+				formwarning("#alerterror","请选择一条信息");
+				return false;
+			}
+		}else if(com=="首页静态化"){
+			$.post("buildIndexHtml.action", function(data) {
+				forminfo("#alertinfo","首页静态化成功");
+			});
 		}
 	}
 });

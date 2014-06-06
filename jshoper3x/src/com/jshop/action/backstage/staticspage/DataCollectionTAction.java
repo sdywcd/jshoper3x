@@ -784,4 +784,17 @@ public class DataCollectionTAction extends ActionSupport {
 		return null;
 	}
 	
+	/**
+	 * 获取推荐商品
+	 * @param state
+	 * @return
+	 */
+	public List<GoodsT>getrecommendGoods(String state,int lineSize){
+		List<GoodsT>list=this.getGoodsTService().findrecommendedGoodsT(state, StaticKey.GoodsState.RECOMMENDED.getState(), lineSize);
+		if(!list.isEmpty()){
+			return list;
+		}
+		return Collections.emptyList();
+	}
+	
 }

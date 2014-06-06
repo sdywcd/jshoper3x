@@ -40,6 +40,7 @@ public class BuildHtmlPages extends ActionSupport {
 	private String status;
 	private String buildlog;
 	private int processbar;
+	private boolean sucflag;
 	public BuildHtmlPages() {
 		map = new HashMap<String, Object>();
 	}
@@ -108,6 +109,13 @@ public class BuildHtmlPages extends ActionSupport {
 	}
 	public void setProcessbar(int processbar) {
 		this.processbar = processbar;
+	}
+	
+	public boolean isSucflag() {
+		return sucflag;
+	}
+	public void setSucflag(boolean sucflag) {
+		this.sucflag = sucflag;
 	}
 	/**
 	 * 清理错误
@@ -276,12 +284,18 @@ public class BuildHtmlPages extends ActionSupport {
 	 * 生成首页静态页
 	 * @return
 	 */
+	@Action(value = "buildIndexHtml", results = { 
+			@Result(name = "json",type="json")
+	})
 	public String buildIndexHtml(){
 		Map<String,Object>map=new HashMap<String,Object>();
 		map=this.getDataCollectionTAction().getBaseInfoContext(map);
+		map.put(FreeMarkervariable.GOODSCATEGORYTREE, this.getDataCollectionTAction().findGoodsCategoryT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataShowState.SHOW.getState()));
+		map.put(FreeMarkervariable.GOODSCATEGORYTREEFIRSTCOUNT, this.getDataCollectionTAction().getGoodsCategoryTreeFirstCount());
+		//获取此商品顶级分类的热销商品集合
+		map.put(FreeMarkervariable.RECOMMENDGOODSLIST, this.getDataCollectionTAction().getrecommendGoods(StaticKey.GoodsState.SALE.getState(), 4));
 		this.getCreateHtml().createNormalhtml(BaseTools.getApplicationthemesign()+"_"+ContentTag.TEMPLATENAMEFORINDEX, "", map);
-		
-		this.getDataCollectionTAction().putBaseInfoToContext();
+		this.setSucflag(true);
 		return "json";
 	}
 	
