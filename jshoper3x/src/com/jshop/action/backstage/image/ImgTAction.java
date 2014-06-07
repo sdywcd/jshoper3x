@@ -68,7 +68,17 @@ public class ImgTAction extends BaseTAction implements ServletResponseAware, Ser
 	 * 图片文件保存的目录
 	 */
 	private String targetSavePath;
+	private String extName;//文件后缀
+	
 	private boolean sucflag;
+
+	public String getExtName() {
+		return extName;
+	}
+
+	public void setExtName(String extName) {
+		this.extName = extName;
+	}
 
 	public String getTargetSavePath() {
 		return targetSavePath;
@@ -363,7 +373,7 @@ public class ImgTAction extends BaseTAction implements ServletResponseAware, Ser
 	 */
 	@Action(value ="ajaxFileUploads",results = { @Result(name = "json", type = "json") })
 	public String ajaxFileUploads() {
-		String extName = "";
+//		String extName = "";
 		String newFilename = "";
 		String nowTimeStr = "";
 		String realpath = "";

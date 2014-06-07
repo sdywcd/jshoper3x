@@ -78,6 +78,7 @@
 							value="提交" /> <input class="btn btn-success" type="button"
 							id="update" name="update" value="更新" style="display: none;" />
 					</div>
+					<div id="process">1212</div>
 				</div>
 
 			</div>
@@ -105,13 +106,36 @@
                  debug: true,
                  minSizeLimit:1024,
                  sizeLimit: 1073741824,
-                 allowedExtensions: ['jpeg','jpg','gif','png'],
+                 allowedExtensions: [],
                  onComplete: function(id, fileName, responseJSON){
-                	var pcpath1="<%=basePath%>"+responseJSON.success;
-                	var pcpath=responseJSON.success;
-  					var htm="<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
-  					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
-  					$("#triggers").append(htm).append(checkpc);
+                	 var filetype=["jpeg","jpg","gif","png"];
+                	 var dotag=false;
+                	 if(fileName.indexOf(".")>=0){
+                		 var extname=fileName.substring(fileName.indexOf(".")+1,fileName.length);
+                		 for(var i=0;i<filetype.length;i++){
+                			 if(extname===filetype[i]){
+                				 dotag=true;
+                    			 break;
+                			 }
+                		 }
+                		 if(dotag){
+                			var pcpath1="<%=basePath%>"+responseJSON.success;
+                         	var pcpath=responseJSON.success;
+           					var htm="<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
+           					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
+           					$("#triggers").append(htm).append(checkpc);
+                		 }else{
+                			var pcpath1="<%=basePath%>"+responseJSON.success;
+                          	var pcpath=responseJSON.success;
+                			var checkpc="<br><p id='"+id+"' name='pcpath'>"+fileName+"</p><br>";
+                			$("#triggers").append(htm).append(checkpc);
+                		 }
+                	 }
+                	 
+                	
+                 },
+                 onProgress:function(id,fileName,loaded,total){
+                	$("#process").text(loaded+"/"+total);
                  },
              });           
          }
