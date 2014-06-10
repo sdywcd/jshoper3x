@@ -1,6 +1,7 @@
 package com.jshop.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 public interface BaseTService<T> {
@@ -32,6 +33,28 @@ public interface BaseTService<T> {
 //	 */
 //	public void updateByHql(String hql);
 //	
+	/**
+	 * 根据状态查询所有数据
+	 * @param t
+	 * @param status
+	 * @return
+	 */
+	public List<T>findAll(Class<T> t,String status);
+	
+	/**
+	 * 分页查询所有记录
+	 * @param t
+	 * @param currentPage
+	 * @param lineSize
+	 * @return
+	 */
+	public List<T>findAll(Class<T> t,int currentPage,int lineSize);
+	/**
+	 * 查询记录总数
+	 * @param t
+	 * @return
+	 */
+	public int countfindAll(Class<T>t);
 	/**
 	 * 删除持久化对象
 	 * @param t

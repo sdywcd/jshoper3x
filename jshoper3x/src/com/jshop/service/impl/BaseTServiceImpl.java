@@ -1,6 +1,7 @@
 package com.jshop.service.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -43,6 +44,21 @@ public class BaseTServiceImpl<T> implements BaseTService<T>{
 	@Override
 	public T findByPK(Class<T> t, Serializable id) {
 		return this.getBaseTDao().findByPK(t, id);
+	}
+
+	@Override
+	public List<T> findAll(Class<T> t, String status) {
+		return this.getBaseTDao().findAll(t, status);
+	}
+
+	@Override
+	public List<T> findAll(Class<T> t, int currentPage, int lineSize) {
+		return this.getBaseTDao().findAll(t, currentPage, lineSize);
+	}
+
+	@Override
+	public int countfindAll(Class<T> t) {
+		return this.getBaseTDao().countfindAll(t);
 	}
 
 	
