@@ -14,7 +14,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.BaseTDao;
-import com.jshop.entity.BrandT;
 @Repository("baseTDao")
 public class BaseTDaoImpl<T> extends HibernateDaoSupport implements BaseTDao<T> {
 	private static final Logger log = LoggerFactory.getLogger(BaseTDaoImpl.class);

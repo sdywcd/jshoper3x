@@ -94,10 +94,4 @@ public class ArticleTServiceImpl extends BaseTServiceImpl<ArticleT> implements A
 				
 	}
 
-	@Override
-	public void save(ArticleT t) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
