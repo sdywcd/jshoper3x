@@ -221,6 +221,7 @@ public class RegisterAction extends ActionSupport {
 				m.setHeadpath("#");
 				m.setCreatetime(BaseTools.systemtime());
 				m.setVersiont(1);
+				m.setIntegration(0);
 				m.setUpdatetime(m.getCreatetime());
 				this.getMemberTService().save(m);
 				return "register_success";

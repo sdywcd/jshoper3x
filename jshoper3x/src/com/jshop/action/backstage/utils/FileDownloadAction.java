@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.ServletActionContext;
@@ -19,6 +20,7 @@ import com.jshop.entity.ArticleT;
 import com.jshop.service.ArticleTService;
 import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("jshop")
+@Namespace("")
 @Action(value="download",results={@Result(name = "success", type = "stream", params = { "contentType",  
         "application/pdf", "inputName",  
         "inputStream", "contentDisposition",  
@@ -65,10 +67,11 @@ public class FileDownloadAction extends ActionSupport  {
 	        this.fileName = fileName;   
 	  
 	}   
-    public InputStream getInputStream() throws Exception {     
+    public InputStream getInputStream() throws Exception { 
+    	this.setArticleid("201205060069");
     	if(Validate.StrNotNull(this.getArticleid())){
     		bean=this.getArticleTService().findArticleByarticleid(this.getArticleid().trim());
-        	fileName=bean.getTitle()+".PDF";//文件名
+        	fileName="201205060069.pdf";//文件名
             return new FileInputStream(ServletActionContext.getServletContext().getRealPath("")+"/PDF/"+fileName);
     	}
     	return null;
