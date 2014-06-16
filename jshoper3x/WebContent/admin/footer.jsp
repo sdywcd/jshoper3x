@@ -8,8 +8,8 @@
 	<div class="navbar-inner navbar-innerb">
 		<div class="pull-right fixed-bottom-cp">&copy; jshoper 2014</div>
 		<div class="viewsite fixed-bottom-div">
-			<a href="http://www.localjoomla3.com/" target="_blank"><i
-				class="icon-share-alt"></i> 浏览网站</a>
+			<a href="https://github.com/sdywcd/jshoper3x" target="_blank"><i
+				class="icon-share-alt"></i> 浏览源码网站</a>
 		</div>
 		<div class="loggedin-users fixed-bottom-div">
 			<span class="badge">0</span> 访客在线

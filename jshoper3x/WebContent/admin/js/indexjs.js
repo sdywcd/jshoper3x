@@ -49,7 +49,7 @@ $(function(){
 		$.post("bk/user/adminlogout.action",function(data){
 			var pathnamearray = window.location.pathname.split("/");
 			var pathname = pathnamearray[1] + "/";
-			top.location.href = "http://" + window.location.host + "/" + pathname + "admin/jump.jsp";
+			top.location.href = "http://" + window.location.host + "/" + pathname + "/login.jsp";
 		});
 	}
 	
