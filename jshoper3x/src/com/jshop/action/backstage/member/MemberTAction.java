@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.xml.ws.soap.MTOM;
@@ -432,12 +433,12 @@ public class MemberTAction extends BaseTAction {
 			return "json";
 		}
 		if(StringUtils.isNotBlank(this.getLoginname())&&StringUtils.isNotBlank(this.getLoginpwd())){
-			List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getLoginname().trim());
+			List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getLoginname().toLowerCase(Locale.CHINA).trim());
 			if(list.isEmpty()){
 				MD5Code md5=new MD5Code();
 				MemberT mt=new MemberT();
 				mt.setId(this.getSerial().Serialid(Serial.MEMBER));
-				mt.setLoginname(this.getLoginname().trim());
+				mt.setLoginname(this.getLoginname().toLowerCase(Locale.CHINA).trim());
 				mt.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
 				mt.setPaypassword(md5.getMD5ofStr(this.getPaypassword().trim()));
 				mt.setNick(this.getNick().trim());

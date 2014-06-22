@@ -7,7 +7,7 @@
 
 
 
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 	<!-- 配置文件重新加载 -->
 	<constant name="struts.configuration.xml.reload" value="true" />
 	<!-- convention类从新加载 -->

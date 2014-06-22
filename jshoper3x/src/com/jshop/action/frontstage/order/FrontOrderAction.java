@@ -588,13 +588,118 @@ public class FrontOrderAction extends ActionSupport {
 
 	}
 
+	/**
+	 * 事先获取订单编号
+	 */
+	public void getSerialidorder() {
+		this.setSerialidorderid(this.getSerial().Serialid(Serial.ORDER));
+	}
+
+	/**
+	 * 初始化订单所需信息
+	 * 1,获取用户收获地址列表
+	 * 2，获取物流商信息
+	 * 3，获取支付方式
+	 * 4，获取购物车中的商品数据并进行重量信息计算
+	 * 5，计算运费
+	 * 6，计算总金额包含运费
+	 * 
+	 * @return
+	 */
+	@Action(value = "initOrder", results = { 
+			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/confirmorder.ftl"),
+			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}")
+	})
+	public String initOrder() {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (memberT != null) {
+			//获取用户收获地址
+			getUserDeliverAddress(memberT);
+			//获取物流商
+			getDefaultLogistictsBusiness();
+			//获取支付方式
+			getDefaultPayment();
+			//获取购物车中的商品作为订单商品处理
+			getMyCart(memberT);
+			//计算运费
+			getLogisticsPrice();
+			//获取总金额+运费
+			Double totalfreight = this.getTotal() + this.getFreight();
+			ActionContext.getContext().put(FreeMarkervariable.TOTALFREIGHT, totalfreight);
+			//路径获取
+			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
+			//获取导航数据
+			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
+			//获取商城基本数据
+			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+			//获取页脚分类数据
+			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
+			//获取页脚文章数据
+			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+			
+			return SUCCESS;
+		}
+		return INPUT;
+
+	}
+
+	
+	/**
+	 * 获取支付宝需要的订单信息
+	 * 1,预先生成一个订单id
+	 * 2,增加收货地址信息到发货地址表中
+	 * 3,获取支付通道信息
+	 * 4,增加订单到数据表中
+	 * 5,将支付信息绑定到支付宝接口中
+	 * 6,更新购物车中的商品到已加入订单状态并将订单id和购物车记录绑定
+	 * @return
+	 */
+	@Action(value = "InitAlipayneedInfo", results = { 
+			@Result(name = "json",type="json")
+	})
+	public String initAlipayneedInfo() {
+		this.setBasePath(this.getDataCollectionTAction().getBasePath());
+		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (member != null) {
+			this.setSlogin(true);
+			//预先生成订单编号
+			getSerialidorder();
+			//增加收获信息到发货地址表中
+			addShippingAddress();
+			//获取支付信息
+			InitPayway();
+			//增加订单到数据库
+			initOrderInfo(member);
+			if (this.isSaddorder()) {
+				if(PaymentCode.PAYMENT_CODE_ALIPAY.equals(this.getPm().getPaymentCode())){
+					BuildAlipayConfig();
+				}else if(PaymentCode.PAYMENT_CODE_TENPAY.equals(this.getPm().getPaymentCode())){
+					//BuildTenPayConfig();
+				}
+				//更新购物车商品到3，表示已经在订单中。并把对应订单号更新
+				//String []tempgoodsid=order.getGoodid().split(",");
+				//检查如果购物已经有对应的订单号则不更新
+				//3表示加入订单的购物车
+				List<CartT>list=this.getCartTService().findCartByCartid(this.getCartid(), "3");
+				if(!list.isEmpty()){
+					return "json";
+				}
+				this.getCartTService().updateCartStateandOrderidByGoodsidList(this.getCartid().trim(), this.getSerialidorderid(), member.getId(), "3");
+			}
+			return "json";
+
+		}
+		this.setSlogin(false);
+		return "json";
+	}
+	
 	//初始化订单操作，包括收货地址是否已经有了。有就读取出来没有就增加新的，涉及保存新收获地址，
 	//读取出新购物车内容，读取出默认的物流商，读取出默认的支付方式，保存订单需要同时保存发货地址
 	//发票初始化，支付宝对接
 	/**
 	 * 获取用户收获地址
 	 */
-	public void GetUserDeliverAddress(MemberT memberT) {
+	public void getUserDeliverAddress(MemberT memberT) {
 		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
 		ActionContext.getContext().put("deliveraddress", list);
 	
@@ -603,7 +708,7 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 获取物流商配送方式
 	 */
-	public void GetDefaultLogistictsBusiness() {
+	public void getDefaultLogistictsBusiness() {
 		List<LogisticsBusinessT> list = this.getLogisticsBusinessTService().findAllLogisticsBusinessWithoutPage();
 		if (!list.isEmpty()) {
 			for (Iterator it = list.iterator(); it.hasNext();) {
@@ -620,7 +725,7 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 获取支付方式
 	 */
-	public void GetDefaultPayment() {
+	public void getDefaultPayment() {
 		List<PaymentM> list = this.getPaymentMService().findAllPaymentWithoutPage();
 		ActionContext.getContext().put("payments", list);
 	}
@@ -630,7 +735,7 @@ public class FrontOrderAction extends ActionSupport {
 	 * 
 	 * @param user
 	 */
-	public void GetMyCart(MemberT memberT) {
+	public void getMyCart(MemberT memberT) {
 		String state="1";
 		String orderTag="1";
 		List<CartT> list = this.getCartTService().findAllCartByMemberId(memberT.getId(),state,orderTag);
@@ -668,7 +773,7 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 计算运费
 	 */
-	private void GetLogisticsPrice() {
+	private void getLogisticsPrice() {
 		Double temptotal = this.getTotal();
 		List<LogisticsbusinessareaT> list = this.getLogisticsbusinessareaTService().findAllLogisticsbusinessareaTBylogisticsid(this.getDefaultlogisticsid());
 		if (list != null) {
@@ -695,48 +800,7 @@ public class FrontOrderAction extends ActionSupport {
 
 	}
 
-	/**
-	 * 初始化订单所需信息
-	 * 
-	 * @return
-	 */
-	@Action(value = "initOrder", results = { 
-			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/confirmorder.ftl"),
-			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html?redirecturl=${redirecturl}")
-	})
-	public String initOrder() {
-		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (memberT != null) {
-			//获取用户收获地址
-			GetUserDeliverAddress(memberT);
-			//获取物流商
-			GetDefaultLogistictsBusiness();
-			//获取支付方式
-			GetDefaultPayment();
-			//获取购物车中的商品作为订单商品处理
-			GetMyCart(memberT);
-			//计算运费
-			GetLogisticsPrice();
-			//获取总金额+运费
-			Double totalfreight = this.getTotal() + this.getFreight();
-			ActionContext.getContext().put(FreeMarkervariable.TOTALFREIGHT, totalfreight);
-			//路径获取
-			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
-			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
-			//获取页脚分类数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
-			//获取页脚文章数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
-			
-			return SUCCESS;
-		}
-		return INPUT;
-
-	}
-
+	
 	/**
 	 * 根据编码兑现抵用券
 	 * 
@@ -933,7 +997,7 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 增加发货地址
 	 */
-	public void AddShippingAddress() {
+	public void addShippingAddress() {
 		DeliverAddressT list = this.getDeliverAddressTService().findDeliverAddressById(this.getAddressid());
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
@@ -967,59 +1031,5 @@ public class FrontOrderAction extends ActionSupport {
 	}
 	
 
-	/**
-	 * 事先获取订单编号
-	 */
-	public void getSerialidorder() {
-		this.setSerialidorderid(this.getSerial().Serialid(Serial.ORDER));
-	}
-
-	/**
-	 * 获取支付宝需要的订单信息
-	 * 1,预先生成一个订单id
-	 * 2,增加收货地址信息到发货地址表中
-	 * 3,获取支付通道信息
-	 * 4,增加订单到数据表中
-	 * 5,将支付信息绑定到支付宝接口中
-	 * 6,更新购物车中的商品到已加入订单状态并将订单id和购物车记录绑定
-	 * @return
-	 */
-	@Action(value = "InitAlipayneedInfo", results = { 
-			@Result(name = "json",type="json")
-	})
-	public String initAlipayneedInfo() {
-		this.setBasePath(this.getDataCollectionTAction().getBasePath());
-		MemberT member = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (member != null) {
-			this.setSlogin(true);
-			//预先生成订单编号
-			getSerialidorder();
-			//增加收获信息到发货地址表中
-			AddShippingAddress();
-			//获取支付信息
-			InitPayway();
-			//增加订单到数据库
-			initOrderInfo(member);
-			if (this.isSaddorder()) {
-				if(PaymentCode.PAYMENT_CODE_ALIPAY.equals(this.getPm().getPaymentCode())){
-					BuildAlipayConfig();
-				}else if(PaymentCode.PAYMENT_CODE_TENPAY.equals(this.getPm().getPaymentCode())){
-					//BuildTenPayConfig();
-				}
-				//更新购物车商品到3，表示已经在订单中。并把对应订单号更新
-				//String []tempgoodsid=order.getGoodid().split(",");
-				//检查如果购物已经有对应的订单号则不更新
-				//3表示加入订单的购物车
-				List<CartT>list=this.getCartTService().findCartByCartid(this.getCartid(), "3");
-				if(!list.isEmpty()){
-					return "json";
-				}
-				this.getCartTService().updateCartStateandOrderidByGoodsidList(this.getCartid().trim(), this.getSerialidorderid(), member.getId(), "3");
-			}
-			return "json";
-
-		}
-		this.setSlogin(false);
-		return "json";
-	}
+	
 }

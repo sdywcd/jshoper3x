@@ -1,6 +1,7 @@
 package com.jshop.action.frontstage.membercenter;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
@@ -200,7 +201,7 @@ public class RegisterAction extends ActionSupport {
 			//String rand=(String) ActionContext.getContext().getSession().get("rand");
 			//String userstate=(String) ActionContext.getContext().getSession().get("userstate");
 //			if(rand.equals(this.getRand())){
-				List<MemberT>m1=this.getMemberTService().findMemberTByloginname(this.getLoginname());
+				List<MemberT>m1=this.getMemberTService().findMemberTByloginname(this.getLoginname().toLowerCase(Locale.CHINA));
 				if(m1!=null&&m1.size()>0){
 					this.setMsg("4");
 					return "register_error";
@@ -214,7 +215,7 @@ public class RegisterAction extends ActionSupport {
 				MemberT m=new MemberT();
 				m.setId(this.getSerial().Serialid(Serial.MEMBER));
 				m.setMid(md5.getMD5ofStr(m.getId()));
-				m.setLoginname(this.getLoginname().trim());
+				m.setLoginname(this.getLoginname().toLowerCase(Locale.CHINA).trim());
 				m.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
 				m.setNick("");
 				m.setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);

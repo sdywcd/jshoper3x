@@ -163,6 +163,8 @@ public class Serial {
 	public static String MEMBERRECHARGET="memberrecharget";
 	//账户充值记录表
 	public static String MEMBERRECHARGETRECORDS="memberrechargetrecords";
+	//订单快照
+	public static String ORDERSNAPSHOTT="ordersnapshot";
 	@Resource
 	private SerialTService serialTService;
 	

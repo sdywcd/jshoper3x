@@ -39,7 +39,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @InterceptorRefs({  
     @InterceptorRef("defaultStack")  
 })
-public class UserCenterMyInfoAction extends ActionSupport implements  
+public class MemberCenterMemberInfoAction extends ActionSupport implements  
 ServletResponseAware {
 	private MemberTService memberTService;
 	private DataCollectionTAction dataCollectionTAction;
@@ -425,26 +425,20 @@ ServletResponseAware {
 	 * @return
 	 */
 	@Action(value = "findMemberInfo", results = { 
-			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/memberbasicinfo.ftl"),
+			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/memberinfo.ftl"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
 	public String findMemberInfo(){
 		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
-			//路径获取
-			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
-			//获取导航数据
-			ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
-			//获取商城基本数据
-			ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
-			//获取页脚分类数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
-			//获取页脚文章数据
-			ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
+			this.getDataCollectionTAction().putBaseInfoToContext();
+			MemberT m=this.getMemberTService().findByPK(MemberT.class, memberT.getId());
+			ActionContext.getContext().put(FreeMarkervariable.MEMBERINFO, m);
 			return SUCCESS;
 		}
 		return INPUT;
 	}
+	
 	
 	
 	/**

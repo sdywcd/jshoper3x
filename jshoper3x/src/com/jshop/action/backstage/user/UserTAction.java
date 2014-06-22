@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -563,7 +564,7 @@ public class UserTAction extends BaseTAction {
 		}
 		MD5Code md5 = new MD5Code();
 		UserT user = new UserT();
-		user.setUsername(username);
+		user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
 		user.setPassword(md5.getMD5ofStr(password));
 
 		
@@ -664,7 +665,7 @@ public class UserTAction extends BaseTAction {
 			MD5Code md5 = new MD5Code();
 			PasswordHelper ph=new PasswordHelper();
 			UserT u = new UserT();
-			u.setUsername(this.getUsername().trim());
+			u.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
 			u.setEmail(this.getEmail().trim());
 			u = this.getUsertService().checkUserByUsername(u);
 			if (u != null) {
@@ -683,7 +684,7 @@ public class UserTAction extends BaseTAction {
 				
 				user.setUserid(this.getSerial().Serialid(Serial.USER));
 				user.setUid(md5.getMD5ofStr(user.getUserid()));
-				user.setUsername(this.getUsername().trim());
+				user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
 				user.setRealname(this.getRealname().trim());
 				user.setEmail(this.getEmail().trim());
 				user.setTelno(null);

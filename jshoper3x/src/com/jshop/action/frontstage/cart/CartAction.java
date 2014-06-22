@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -25,8 +27,10 @@ import com.jshop.entity.CartT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.MemberT;
+import com.jshop.entity.OrderSnapshotT;
 import com.jshop.service.CartTService;
 import com.jshop.service.GoodsTService;
+import com.jshop.service.OrderSnapshotTService;
 import com.jshop.service.ProductTService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
@@ -39,6 +43,8 @@ public class CartAction extends ActionSupport {
 	private GoodsTService goodsTService;
 	private CartTService cartTService;
 	private ProductTService productTService;
+	@Resource
+	private OrderSnapshotTService orderSnapshotTService;
 	private DataCollectionTAction dataCollectionTAction;
 	private Serial serial;
 	private String hidurl;
@@ -404,6 +410,7 @@ public class CartAction extends ActionSupport {
 						t.setOrderTag(this.getOrderTag());
 						t.setHtmlpath(gtlist.getHtmlPath());
 						this.getCartTService().save(t);
+						saveOrderSnapShot(t);
 						//要通过事务处理
 						this.setSucflag(true);
 						
@@ -411,7 +418,6 @@ public class CartAction extends ActionSupport {
 				}else{
 					CartT cart = this.getCartTService().findGoodsInCartOrNot(member.getId(), gtlist.getGoodsid(), "1");
 					if (cart != null) {
-						
 						//同状态的商品只能在购物车出现一次
 						//更新对应商品id的数量	//检测商品是否已经在购物车中，如果有责增加数量，没有责加入
 						if(this.getCartTService().updateCartNeedquantityByGoodsid(member.getId(), this.getGoodsid().trim(), Integer.parseInt(this.getNeedquantity()), "1")>0){
@@ -457,6 +463,7 @@ public class CartAction extends ActionSupport {
 						t.setHtmlpath(gtlist.getHtmlPath());//
 						t.setOrderTag(this.getOrderTag());
 						this.getCartTService().save(t);
+						saveOrderSnapShot(t);
 						this.setSucflag(true);
 					}
 				}
@@ -470,6 +477,42 @@ public class CartAction extends ActionSupport {
 
 	}
 
+	/**
+	 * 订单的快照
+	 * @param t
+	 */
+	private void saveOrderSnapShot(CartT t){
+		OrderSnapshotT os=new OrderSnapshotT();
+		os.setId(this.getSerial().Serialid(Serial.ORDERSNAPSHOTT));
+		os.setCartinfoid(t.getId());
+		os.setCartid(StaticKey.EMPTY);
+		os.setOrderid(StaticKey.EMPTY);
+		os.setGoodsid(t.getGoodsid());
+		os.setGoodsname(t.getGoodsname());
+		os.setUserid(t.getUserid());
+		os.setUsername(t.getUsername());
+		os.setNeedquantity(t.getNeedquantity());
+		os.setPrice(t.getPrice());
+		os.setFavorable(t.getFavorable());
+		os.setChangeprice(t.getChangeprice());
+		os.setPoints(t.getPoints());
+		os.setSubtotal(t.getSubtotal());
+		os.setAddtime(t.getAddtime());
+		os.setQuantity(t.getQuantity());
+		os.setPicture(t.getPicture());
+		os.setUsersetnum(t.getUsersetnum());
+		os.setWeight(t.getWeight());
+		os.setState(StaticKey.ONE);//订单快照状态 1可用
+		os.setHtmlpath("");
+		os.setProductid(t.getProductid());
+		os.setOrderTag(t.getOrderTag());
+		os.setMemberid(t.getMemberid());
+		os.setMembername(t.getMembername());
+		os.setStoreTag(1);//当前库存状态1有库存
+		os.setShopid(StaticKey.EMPTY);//店铺id
+		os.setShippingaddressid(StaticKey.EMPTY);
+		orderSnapshotTService.save(os);
+	}
 	/**
 	 * 获取推荐商品
 	 * 

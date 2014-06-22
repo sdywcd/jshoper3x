@@ -94,7 +94,7 @@
 				</style>
 				<!-- tag -->
 				 <ul id="mytab" class="nav nav-tabs">
-				 	<li class="active"><a href="#Home" data-toggle="tab">Home</a></li>
+				 	<li class="active"><a href="#Home" data-toggle="tab">商品管理指引</a></li>
 				 </ul>
 				<!-- /tag -->
 				<div  class="tab-content">
@@ -102,7 +102,7 @@
 			        	<li class="span2">
 							<a href="" class="thumbnail">
 								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+								<h4>商品类型参数</h4>
 							</a>
 						</li>
 						<li class="span2">

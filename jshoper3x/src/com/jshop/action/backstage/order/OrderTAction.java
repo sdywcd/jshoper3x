@@ -524,7 +524,7 @@ public class OrderTAction extends BaseTAction {
 	 * 
 	 * @param order
 	 */
-	public void ProcessOrderList(List<OrderT> order) {
+	public void processOrderList(List<OrderT> order) {
 		rows.clear();
 		for (Iterator<OrderT> it = order.iterator(); it.hasNext();) {
 			OrderT o = (OrderT) it.next();
@@ -628,7 +628,7 @@ public class OrderTAction extends BaseTAction {
 			String queryString = "from OrderT order by " + this.getSortname() + " " + this.getSortorder() + "";
 			List<OrderT> order = this.getOrderTService().sortAllOrderT(currentPage, lineSize, queryString);
 			if (order != null) {
-				this.ProcessOrderList(order);
+				this.processOrderList(order);
 			}
 		}
 	}
@@ -644,7 +644,7 @@ public class OrderTAction extends BaseTAction {
 		total = this.getOrderTService().countfindOrderbyOrderid(orderid);
 		List<OrderT> order = this.getOrderTService().findOrderByOrderid(currentPage, lineSize, orderid);
 		if (order != null) {
-			this.ProcessOrderList(order);
+			this.processOrderList(order);
 		}
 	}
 
@@ -659,7 +659,7 @@ public class OrderTAction extends BaseTAction {
 		total = this.getOrderTService().countfindOrderByShippingUsername(shippingusername);
 		List<OrderT> order = this.getOrderTService().findOrderByOrderid(currentPage, lineSize, orderid);
 		if (order != null) {
-			this.ProcessOrderList(order);
+			this.processOrderList(order);
 		}
 	}
 
@@ -746,7 +746,7 @@ public class OrderTAction extends BaseTAction {
 		total=this.getOrderTService().countfindAllTobeShippedOrders(orderstate, paystate, shippingstate);
 		List<OrderT>orderTs=this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, orderstate, paystate, shippingstate);
 		if(orderTs!=null){
-			this.ProcessOrderList(orderTs);
+			this.processOrderList(orderTs);
 		}
 	}
 
@@ -762,7 +762,7 @@ public class OrderTAction extends BaseTAction {
 		total = this.getOrderTService().countfindAllTobeShippedOrders(orderstate,paystate,shippingstate);
 		List<OrderT> order = this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize,orderstate,paystate, shippingstate);
 		if (order != null) {
-			this.ProcessOrderList(order);
+			this.processOrderList(order);
 		}
 	}
 
@@ -831,7 +831,7 @@ public class OrderTAction extends BaseTAction {
 			map.put("orderdetail", o);
 
 			//获取买家信息
-			GetMemberBuyerInfo(o.getMemberid());
+			getMemberBuyerInfo(o.getMemberid());
 		}
 	}
 
@@ -840,7 +840,7 @@ public class OrderTAction extends BaseTAction {
 	 * 
 	 * @param userid
 	 */
-	public void GetMemberBuyerInfo(String memberid) {
+	public void getMemberBuyerInfo(String memberid) {
 		MemberT memberT = this.getMemberTService().findMemberTById(memberid);
 		if (memberT != null) {
 			map.put("orderbuyerinfo", memberT);
@@ -852,7 +852,7 @@ public class OrderTAction extends BaseTAction {
 	 * 
 	 * @param orderid
 	 */
-	public void GetOrderGoodsList(String orderid) {
+	public void getOrderGoodsList(String orderid) {
 		List<CartT> list = this.getCartTService().findCartGoodsByOrderid(orderid);
 		if (list != null) {
 			map.put("ordergoods", list);
@@ -864,7 +864,7 @@ public class OrderTAction extends BaseTAction {
 	 * 
 	 * @param orderid
 	 */
-	public void GetOrderShippingAddress(String orderid) {
+	public void getOrderShippingAddress(String orderid) {
 		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
 		if (st != null) {
 			map.put("shipping", st);
@@ -886,9 +886,9 @@ public class OrderTAction extends BaseTAction {
 		//获取订单详细
 		GetOrderDetail(orderid);
 		//获取订单中的商品列表
-		GetOrderGoodsList(orderid);
+		getOrderGoodsList(orderid);
 		//获取发货地址信息
-		GetOrderShippingAddress(orderid);
+		getOrderShippingAddress(orderid);
 		ActionContext.getContext().put("order", map);
 		return SUCCESS;
 	}
@@ -901,7 +901,7 @@ public class OrderTAction extends BaseTAction {
 	@Action(value="UpdateOrderToClose",results={
 			@Result(name="json",type="json")
 	})
-	public String UpdateOrderToClose() {
+	public String updateOrderToClose() {
 		String orderid = this.getOrderid().trim();
 		String orderstate = AllOrderState.ORDERSTATE_FIVE_NUM;//关闭
 		String paystate = AllOrderState.PAYSTATE_TWO_NUM;//表示关闭订单后的付款状态制空
@@ -919,7 +919,7 @@ public class OrderTAction extends BaseTAction {
 	@Action(value="UpdateOrderToConfirm",results={
 			@Result(name="json",type="json")
 	})
-	public String UpdateOrderToConfirm() {
+	public String updateOrderToConfirm() {
 		String orderid = this.getOrderid().trim();
 		String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
 		String paystate = AllOrderState.PAYSTATE_ZERO_NUM;//未付款
@@ -937,7 +937,7 @@ public class OrderTAction extends BaseTAction {
 	@Action(value="UpdateOrderToDelivery",results={
 			@Result(name="json",type="json")
 	})
-	public String UpdateOrderToDelivery() {
+	public String updateOrderToDelivery() {
 		String orderid = this.getOrderid().trim();
 		String orderstate = AllOrderState.ORDERSTATE_THREE_NUM;//等待确认收获
 		String paystate = this.getPaystate().trim();//付款状态
@@ -955,7 +955,7 @@ public class OrderTAction extends BaseTAction {
 	@Action(value="UpdateOrderToPay",results={
 			@Result(name="json",type="json")
 	})
-	public String UpdateOrderToPay() {
+	public String updateOrderToPay() {
 		String orderid = this.getOrderid().trim();
 		String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
 		String paystate = AllOrderState.PAYSTATE_ONE_NUM;//付款
@@ -973,7 +973,7 @@ public class OrderTAction extends BaseTAction {
 	@Action(value="UpdateExpressnumberByOrderId",results={
 			@Result(name="json",type="json")
 	})
-	public String UpdateExpressnumberByOrderId() {
+	public String updateExpressnumberByOrderId() {
 		if (Validate.StrNotNull(this.getExpressnumber())&&Validate.StrNotNull(this.getOrderid())) {
 			int i = this.getOrderTService().updateExpressnumberByOrderId(this.getOrderid().trim(), this.getExpressnumber().trim());
 			//更新发货状态到已发货
@@ -994,7 +994,7 @@ public class OrderTAction extends BaseTAction {
 	@Action(value="UpdateInvoicenumberByOrderId",results={
 			@Result(name="json",type="json")
 	})
-	public String UpdateInvoicenumberByOrderId() {
+	public String updateInvoicenumberByOrderId() {
 		if (Validate.StrNotNull(this.getInvoicenumber())&&Validate.StrNotNull(this.getOrderid())) {
 			int i = this.getOrderTService().updateInvoicenumberByOrderId(this.getOrderid().trim(), this.getInvoicenumber().trim(), BaseTools.systemtime());
 			return "json";
@@ -1011,7 +1011,7 @@ public class OrderTAction extends BaseTAction {
 	@Action(value="GetAlipayFhNeedParams",results={
 			@Result(name="json",type="json")
 	})
-	public String GetAlipayFhNeedParams() {
+	public String getAlipayFhNeedParams() {
 		OrderT o = this.getOrderTService().findOrderDetailByorderid(this.getOrderid().trim());
 		this.setTradeno(o.getTradeNo());//支付宝交易号
 		this.setExpressnumber(o.getExpressnumber());//快递单号，发货单号
@@ -1029,7 +1029,7 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String findAllhaveshippedOrder(){
-		if ("sc".equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.setTotal(0);
 			rows.clear();
 			this.defaultfindAllhaveshippedOrder();
@@ -1052,7 +1052,7 @@ public class OrderTAction extends BaseTAction {
 		total = this.getOrderTService().countAllhaveshippedOrder(shippingstate);
 		List<OrderT> order =this.getOrderTService().findAllhaveshippedOrder(currentPage, lineSize, shippingstate);
 		if(order!=null){
-			this.ProcessOrderList(order);
+			this.processOrderList(order);
 		}
 	}
 	/**
@@ -1085,7 +1085,7 @@ public class OrderTAction extends BaseTAction {
 		total = this.getOrderTService().countAllreturnOrder(orderstate);
 		List<OrderT> order =this.getOrderTService().findAllreturnOrder(currentPage, lineSize, orderstate);
 		if(order!=null){
-			this.ProcessOrderList(order);
+			this.processOrderList(order);
 		}
 	}
 	
