@@ -101,7 +101,7 @@
 			</div>
 		
 	<div id="tbfh" class="row-fluid">
-		<div class="span12">
+		<div class="span4">
 			 <legend>支付宝发货通道</legend> 
 			<form class="form-inline">
 				<div class="form-inline">
@@ -135,10 +135,7 @@
 				value="" />
 			</form>
 		</div>
-	</div>
-	
-	<div id="setinvoicenumberarea"  class="row-fluid">
-		<div class="span12">
+		<div id="setinvoicenumberarea" class="span4">
 			 <legend>发货单号生成通道</legend> 
 			<form class="form-inline">
 				<div class="form-inline">
@@ -156,9 +153,7 @@
 				</div>
 			</form>
 		</div>
-	</div>
-	<div id="setinvoicenumberarea"  class="row-fluid">
-		<div class="span12">
+		<div id="setexpressnumberarea" class="span4">
 			 <legend>快递单号生成通道</legend> 
 			<form class="form-inline">
 				<div class="form-inline">
@@ -172,6 +167,8 @@
 			</form>
 		</div>
 	</div>
+	
+	
 	<!-- 订单买家信息 -->
 	<div id="order_info" class="row-fluid">
 		<div class="span12">
@@ -261,7 +258,7 @@
 							<s:property value="#request.order.orderdetail.orderTag" />
 						</td>
 						<td>
-							<s:property value="#request.order.orderdetail.purchasetime" />
+							<s:date name="#request.order.orderdetail.purchasetime" format="yyyy-MM-dd hh:mm:ss"/>
 						</td>
 						<td>
 							<s:property value="#request.order.orderdetail.orderstate" />
@@ -270,7 +267,7 @@
 							<s:property value="#request.order.orderdetail.deliverynumber" />
 						</td>
 						<td>
-							<s:property value="#request.order.orderdetail.deliverytime" />
+							<s:date name="#request.order.orderdetail.deliverytime" format="yyyy-MM-dd hh:mm:ss"/>
 						</td>
 						<td>
 							<s:property value="#request.order.orderdetail.shippingstate" />

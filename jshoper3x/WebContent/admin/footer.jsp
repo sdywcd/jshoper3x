@@ -18,7 +18,7 @@
 			<span class="badge">1</span> 管理在线
 		</div>
 		<div class="no-unread-messages fixed-bottom-div">
-			<a href="/administrator/index.php?option=com_messages"><i
+			<a href="#"><i
 				class="icon-envelope"></i> 0</a>
 		</div>
 		<div class="logout fixed-bottom-div">

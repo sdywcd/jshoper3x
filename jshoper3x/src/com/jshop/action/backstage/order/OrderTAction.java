@@ -1012,14 +1012,18 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String getAlipayFhNeedParams() {
-		OrderT o = this.getOrderTService().findOrderDetailByorderid(this.getOrderid().trim());
-		this.setTradeno(o.getTradeNo());//支付宝交易号
-		this.setExpressnumber(o.getExpressnumber());//快递单号，发货单号
-		this.setDelivermode(o.getDelivermode());
-		this.setPaymentid(o.getPaymentid());
-		LogisticsBusinessT lt = this.getLogisticsBusinessTService().findLogisticsBusinessById(o.getLogisticsid());
-		this.setLogisticsname(lt.getLogisticsname());
+		if(StringUtils.isNotBlank(this.getOrderid())){
+			OrderT o = this.getOrderTService().findOrderDetailByorderid(this.getOrderid().trim());
+			this.setTradeno(o.getTradeNo());//支付宝交易号
+			this.setExpressnumber(o.getExpressnumber());//快递单号，发货单号
+			this.setDelivermode(o.getDelivermode());
+			this.setPaymentid(o.getPaymentid());
+			LogisticsBusinessT lt = this.getLogisticsBusinessTService().findLogisticsBusinessById(o.getLogisticsid());
+			this.setLogisticsname(lt.getLogisticsname());
+			return "json";
+		}
 		return "json";
+	
 	}
 	/**
 	 * 查询所有已发货的订单

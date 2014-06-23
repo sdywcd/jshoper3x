@@ -94,127 +94,114 @@
 				</style>
 				<!-- tag -->
 				 <ul id="mytab" class="nav nav-tabs">
-				 	<li class="active"><a href="#Home" data-toggle="tab">商品管理指引</a></li>
+				 	<li class="active"><a href="#Home" data-toggle="tab">商品管理</a></li>
 				 </ul>
 				<!-- /tag -->
 				<div  class="tab-content">
 			        <div class="tab-pane fade in active home">
 			        	<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>商品类型参数</h4>
+							<a href="<%=basePath%>admin/goods/goodstypetnment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-banner.png"	alt="" class="caption">
+								<h4>商品类型</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/goods/goodsattributement.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-banner-categories.png"	alt="" class="caption">
+								<h4>商品属性</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/brands/brandsment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-banner-client.png"	alt="" class="caption">
+								<h4>品牌设置</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/goods/goodstypetnbrandsment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-banner-tracks.png"	alt="" class="caption">
+								<h4>品牌类型</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/products/productspecificationment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-media.png"	alt="" class="caption">
+								<h4>商品规格</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
-							</a>
-						</li>
-						
-			        </div>
-				</div>
-				<!-- tag -->
-				 <ul id="mytab" class="nav nav-tabs">
-				 	<li class="active"><a href="#Home" data-toggle="tab">Home</a></li>
-				 </ul>
-				<!-- /tag -->
-				<div  class="tab-content">
-			        <div class="tab-pane fade in active home">
-			        	<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
-							</a>
-						</li>
-						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
-							</a>
-						</li>
-						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/goods/goodscommentment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-levels.png"	alt="" class="caption">
+								<h4>商品评论</h4>
 							</a>
 						</li>
 			        </div>
 				</div>
 				<!-- tag -->
 				 <ul id="mytab" class="nav nav-tabs">
-				 	<li class="active"><a href="#Home" data-toggle="tab">Home</a></li>
+				 	<li class="active"><a href="#Home" data-toggle="tab">订单管理</a></li>
 				 </ul>
 				<!-- /tag -->
 				<div  class="tab-content">
 			        <div class="tab-pane fade in active home">
 			        	<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/order/normalorderstobeshippedunpayment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-stats.png"	alt="" class="caption">
+								<h4>货到付款</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
-							</a>
-						</li>
-						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/order/normalorderstobeshippedhavepayment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-stats.png"	alt="" class="caption">
+								<h4>需发货</h4>
 							</a>
 						</li>
 			        </div>
 				</div>
 				<!-- tag -->
 				 <ul id="mytab" class="nav nav-tabs">
-				 	<li class="active"><a href="#Home" data-toggle="tab">Home</a></li>
+				 	<li class="active"><a href="#Home" data-toggle="tab">会员管理</a></li>
 				 </ul>
 				<!-- /tag -->
 				<div  class="tab-content">
 			        <div class="tab-pane fade in active home">
 			        	<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/member/member.jsp?operate=add" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-user-add.png"	alt="" class="caption">
+								<h4>添加会员</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/member/membergroup.jsp?operate=add" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-groups-add.png"	alt="" class="caption">
+								<h4>添加会员分组</h4>
+							</a>
+						</li>
+			        </div>
+				</div>
+				<!-- tag -->
+				 <ul id="mytab" class="nav nav-tabs">
+				 	<li class="active"><a href="#Home" data-toggle="tab">内容管理</a></li>
+				 </ul>
+				<!-- /tag -->
+				<div  class="tab-content">
+			        <div class="tab-pane fade in active home">
+			        	<li class="span2">
+							<a href="<%=basePath%>admin/pagecontent/sitenavigationment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-links-cat.png"	alt="" class="caption">
+								<h4>导航设置</h4>
 							</a>
 						</li>
 						<li class="span2">
-							<a href="" class="thumbnail">
-								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-category.png"	alt="" class="caption">
-								<h4>分类管理</h4>
+							<a href="<%=basePath%>admin/pagecontent/article.jsp?operate=add" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article-add.png"	alt="" class="caption">
+								<h4>添加文章</h4>
+							</a>
+						</li>
+						<li class="span2">
+							<a href="<%=basePath%>admin/pagecontent/articlecategoryment.jsp?operate=find" class="thumbnail">
+								<img src="<%=basePath%>admin/ui/assets/img/header/icon-48-article-edit.png"	alt="" class="caption">
+								<h4>文章分类</h4>
 							</a>
 						</li>
 			        </div>
@@ -226,7 +213,7 @@
 				<h4>最新需发货订单</h4>
 				<ul class="nav nav-list bs-docs-sidenavh">
 					<s:iterator id="bean" value="#session.newestorders" status="newestorders">
-						<li><a href="InitOrdersDetail.action?orderid=<s:property value="orderid"/>"><s:property value="ordername"/></a></li>
+						<li><a href="InitOrdersDetail.action?orderid=<s:property value="orderid"/>"><s:date name="createtime" format="yyyy-MM-dd hh:mm:ss"/>  <s:property value="ordername"/></a></li>
 					</s:iterator>
 					
 				
