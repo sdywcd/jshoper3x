@@ -60,11 +60,11 @@ public interface BaseTService<T> {
 	 * @param t
 	 */
 	public void delete(T t);
-//	/**
-//	 * 批量删除持久化对象
-//	 * @param ids
-//	 */
-//	public void deleteAll(String []ids);
+	/**
+	 * 批量删除持久化对象
+	 * @param ids
+	 */
+	public int deleteAll(Class<T> t,String []ids);
 	/**
 	 * 根据持久化对象的主键获取对象
 	 * @param id

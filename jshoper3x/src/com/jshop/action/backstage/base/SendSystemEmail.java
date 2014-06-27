@@ -190,7 +190,6 @@ public class SendSystemEmail extends BaseTAction {
 		String emailcontent = "<a href='" + getBasePath() + "html/default/shop/useractivatescallback.html?uid=" + user.getUid() + "'>点击激活</a>";
 		final String htmlText = this.getCreateHtml().buildEmail(emailcontent);
 		this.getTaskExecutor().execute(new Runnable() {
-
 			public void run() {
 				InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("email.properties");
 				Properties p = new Properties();

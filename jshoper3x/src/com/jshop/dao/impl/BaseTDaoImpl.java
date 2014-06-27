@@ -108,4 +108,27 @@ public class BaseTDaoImpl<T> extends HibernateDaoSupport implements BaseTDao<T> 
 		}
 	}
 
+	@Override
+	public int deleteAll(Class<T> t, final String[] ids) {
+		log.debug("deleteAll"+t.getName());
+		try {
+			final String queryString = "delete from "+t.getName()+" as d where d.id=:id";
+			Integer integer=(Integer) this.getHibernateTemplate().execute(new HibernateCallback() {
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					int i=0;
+					for (String s : ids) {
+						query.setParameter("id", s);
+						i=query.executeUpdate();
+					}
+					return i;
+				}
+			});
+			return integer;
+		} catch (RuntimeException re) {
+			log.error("deleteAll"+t.getName()+"error", re);
+			throw re;
+		}
+	}
+
 }

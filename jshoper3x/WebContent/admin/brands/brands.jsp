@@ -16,7 +16,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>品牌设置 &middot; jshoper</title>
+<title>品牌设置 &middot; jshoperx</title>
 </head>
 
 <body data-spy="scroll" data-target=".subnav" data-offset-top="40">
@@ -58,9 +58,10 @@
 					<button id="btnback" type="button" class="btn btn-success">返回</button>
 				</div>
 				<!-- 开始显示商品类型form表单 -->
-				<div class="form-actions">
+				<form id="brandsform">
+				<div  class="form-actions">
 					<div class="form-inline">
-						<span class="label label-required">选择商品类型: </span> <select
+						<span class="label label-required">选择商品类型: </span> <select required
 							id="goodstypetn" name="goodstypetn">
 
 						</select> <span class="label label-info">请选择一个商品类型</span>
@@ -68,7 +69,7 @@
 					<div class="form-inline">
 						<span class="label label-required">品牌名称: </span> <input
 							id="brandname" name="brandname" type="text" value=""
-							class="small" />
+							class="small" required />
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">品牌官方网址: </span> <input id="url"
@@ -100,7 +101,7 @@
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">排序: </span> <input id="sort"
-							name="sort" type="text" value="" class="small" />
+							name="sort" type="text" value="" class="small" required/>
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">介绍: </span>
@@ -115,7 +116,7 @@
 							id="update" name="update" value="更新" style="display: none;" />
 					</div>
 				</div>
-
+			</form>
 			</div>
 
 		</div>

@@ -18,47 +18,44 @@ public class BaseTServiceImpl<T> implements BaseTService<T>{
 	@Resource
 	private BaseTDao<T> baseTDao;
 	
-	public BaseTDao<T> getBaseTDao() {
-		return baseTDao;
-	}
-
-	public void setBaseTDao(BaseTDao<T> baseTDao) {
-		this.baseTDao = baseTDao;
-	}
-
 	@Override
 	public void save(T t) {
-		this.getBaseTDao().save(t);
+		baseTDao.save(t);
 	}
 
 	@Override
 	public void update(T t) {
-		this.getBaseTDao().update(t);
+		baseTDao.update(t);
 	}
 
 	@Override
 	public void delete(T t) {
-		this.getBaseTDao().delete(t);
+		baseTDao.delete(t);
 	}
 
 	@Override
 	public T findByPK(Class<T> t, Serializable id) {
-		return this.getBaseTDao().findByPK(t, id);
+		return baseTDao.findByPK(t, id);
 	}
 
 	@Override
 	public List<T> findAll(Class<T> t, String status) {
-		return this.getBaseTDao().findAll(t, status);
+		return baseTDao.findAll(t, status);
 	}
 
 	@Override
 	public List<T> findAll(Class<T> t, int currentPage, int lineSize) {
-		return this.getBaseTDao().findAll(t, currentPage, lineSize);
+		return baseTDao.findAll(t, currentPage, lineSize);
 	}
 
 	@Override
 	public int countfindAll(Class<T> t) {
-		return this.getBaseTDao().countfindAll(t);
+		return baseTDao.countfindAll(t);
+	}
+
+	@Override
+	public int deleteAll(Class<T> t, String[] ids) {
+		return baseTDao.deleteAll(t, ids);
 	}
 
 	

@@ -39,19 +39,11 @@ public class DeliverAddressTDaoImpl extends BaseTDaoImpl<DeliverAddressT> implem
 			final String queryString = "delete from DeliverAddressT as d where d.addressid=:addressid";
 			this.getHibernateTemplate().execute(new HibernateCallback() {
 
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					int i = 0;
-					for (String s : list) {
-						query.setParameter("addressid", s);
-						i = query.executeUpdate();
-						i++;
-					}
-					if (list.length == i) {
-						return i;
-					} else {
-						return 0;
-					}
+				@Override
+				public Object doInHibernate(Session arg0)
+						throws HibernateException, SQLException {
+					// TODO Auto-generated method stub
+					return null;
 				}
 			});
 		} catch (RuntimeException re) {

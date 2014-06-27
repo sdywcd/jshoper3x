@@ -2,7 +2,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String pathb = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + pathb + "/";
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ pathb + "/";
 %>
 <!DOCTYPE HTML>
 <html>
@@ -62,7 +64,8 @@
 							data-toggle="dropdown">实验室 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a href="http://www.ostocy.com" target="_blank"><i class="icon-tags"></i> 电子点餐系统</a></li>
+								<li><a href="http://www.ostocy.com" target="_blank"><i
+										class="icon-tags"></i> 电子点餐系统</a></li>
 								<li><a href="#"><i class="icon-shopping-cart"></i>
 										B2O线下电商</a></li>
 								<li class="divider"></li>
@@ -76,8 +79,12 @@
 								<li><a href="#"><i class="icon-star"></i> 授权</a></li>
 								<li><a href="#"><i class="icon-wrench"></i> 技术支持</a></li>
 								<li class="divider"></li>
-								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i> 账号（管理员）</a></li>
-								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>系统用户列表</i></a></li>
+								<li><a
+									href="<%=basePath%>admin/user/userment.jsp?operate=find"><i
+										class="icon-user"></i> 账号（管理员）</a></li>
+								<li><a
+									href="<%=basePath%>admin/user/userment.jsp?operate=find"><i
+										class="icon-user"></i>系统用户列表</i></a></li>
 								<li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li>
 							</ul></li>
 
@@ -126,50 +133,64 @@
 									</ul>
 								</li>-->
 								<li class="divider"></li>
-								<li><a href="<%=basePath%>admin/goods/goodscomment.jsp?operate=add">添加商品评论</a></li>
-								<li><a href="<%=basePath%>admin/goods/goodscommentment.jsp?operate=find">商品评论</a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodscomment.jsp?operate=add">添加商品评论</a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodscommentment.jsp?operate=find">商品评论</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#"> 订单管理 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
-								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/normalordersment.jsp?operate=find">普通订单</a>
+								<li class="dropdown-submenu"><a tabindex="-1"
+									href="<%=basePath%>admin/order/normalordersment.jsp?operate=find">普通订单</a>
 									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="<%=basePath%>admin/order/normalorderstobeshippedunpayment.jsp?operate=find">未付款——货到付款订单</a></li> 
-										<li><a tabindex="-1" href="<%=basePath%>admin/order/normalorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货订单</a></li> 
-									</ul>
-								</li>
-								
-								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/grouponordersment.jsp?operate=find">团购订单</a>
+										<li><a tabindex="-1"
+											href="<%=basePath%>admin/order/normalorderstobeshippedunpayment.jsp?operate=find">未付款——货到付款订单</a></li>
+										<li><a tabindex="-1"
+											href="<%=basePath%>admin/order/normalorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货订单</a></li>
+									</ul></li>
+
+								<li class="dropdown-submenu"><a tabindex="-1"
+									href="<%=basePath%>admin/order/grouponordersment.jsp?operate=find">团购订单</a>
 									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="<%=basePath%>admin/order/grouponorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货团购订单</a></li> 
-							
-									</ul>
-								</li>
-								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/auctionordersment.jsp?operate=find">拍卖订单</a>
+										<li><a tabindex="-1"
+											href="<%=basePath%>admin/order/grouponorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货团购订单</a></li>
+
+									</ul></li>
+								<li class="dropdown-submenu"><a tabindex="-1"
+									href="<%=basePath%>admin/order/auctionordersment.jsp?operate=find">拍卖订单</a>
 									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="<%=basePath%>admin/order/auctionorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货拍卖订单</a></li> 	
-										
-									</ul>
-								</li>
-								<li class="dropdown-submenu"><a tabindex="-1" href="<%=basePath%>admin/order/mobileordersment.jsp?operate=find">手机订单</a>
+										<li><a tabindex="-1"
+											href="<%=basePath%>admin/order/auctionorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货拍卖订单</a></li>
+
+									</ul></li>
+								<li class="dropdown-submenu"><a tabindex="-1"
+									href="<%=basePath%>admin/order/mobileordersment.jsp?operate=find">手机订单</a>
 									<ul class="dropdown-menu">
-										<li><a tabindex="-1" href="<%=basePath%>admin/order/mobileorderstobeshippedunpayment.jsp?operate=find">未付款——货到付款手机订单</a></li> 
-										<li><a tabindex="-1" href="<%=basePath%>admin/order/mobileorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货手机订单</a></li> 
-						
-									</ul>
-								</li>
+										<li><a tabindex="-1"
+											href="<%=basePath%>admin/order/mobileorderstobeshippedunpayment.jsp?operate=find">未付款——货到付款手机订单</a></li>
+										<li><a tabindex="-1"
+											href="<%=basePath%>admin/order/mobileorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货手机订单</a></li>
+
+									</ul></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#">会员管理 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%=basePath%>admin/member/membergroup.jsp?operate=add">添加会员分组</a></li>
-								<li><a href="<%=basePath%>admin/member/membergroupment.jsp?operate=find">会员分组列表</a></li>
-								<li><a href="<%=basePath%>admin/member/member.jsp?operate=add">添加会员</a></li>
-								<li><a href="<%=basePath%>admin/member/memberment.jsp?operate=find">会员列表</a></li>
-								<li><a href="<%=basePath%>admin/member/membergradement.jsp?operate=find">会员等级设置</a></li>
-								<li><a href="<%=basePath%>admin/member/memberrechargement.jsp?operate=find">会员充值中心</a></li>
+								<li><a
+									href="<%=basePath%>admin/member/membergroup.jsp?operate=add">添加会员分组</a></li>
+								<li><a
+									href="<%=basePath%>admin/member/membergroupment.jsp?operate=find">会员分组列表</a></li>
+								<li><a
+									href="<%=basePath%>admin/member/member.jsp?operate=add">添加会员</a></li>
+								<li><a
+									href="<%=basePath%>admin/member/memberment.jsp?operate=find">会员列表</a></li>
+								<li><a
+									href="<%=basePath%>admin/member/membergradement.jsp?operate=find">会员等级设置</a></li>
+								<li><a
+									href="<%=basePath%>admin/member/memberrechargement.jsp?operate=find">会员充值中心</a></li>
 							</ul></li>
 						<li class="dropdown"><a class="dropdown-toggle"
 							data-toggle="dropdown" href="#"> 内容管理 <b class="caret"></b>
@@ -183,7 +204,7 @@
 									href="<%=basePath%>admin/pagecontent/article.jsp?operate=add">添加文章</a></li>
 								<li><a
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
-									<!-- <li><a
+								<!-- <li><a
 									href="<%=basePath%>admin/pagecontent/advertise.jsp?operate=add">添加广告</a></li>
 									<li><a
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有广告列表</a></li> -->
@@ -258,6 +279,9 @@
 		src="<%=basePath%>admin/js/plugins/flexigrid/myflexigrid.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/jquery.query.js"></script>
+	<script type="text/javascript"
+		src="<%=basePath%>admin/js/plugins/validatorjs/validator.js"></script>
+	
 	<script type="text/javascript" src="<%=basePath%>admin/js/indexjs.js"></script>
 	<script type="text/javascript" src="<%=basePath%>admin/js/base.js"></script>
 

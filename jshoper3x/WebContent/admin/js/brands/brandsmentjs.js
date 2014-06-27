@@ -1,4 +1,5 @@
 $(function() {
+	
 	$("#delpc").click(function() {
 		var str = "";
 		var sum = 0;

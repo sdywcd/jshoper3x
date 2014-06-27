@@ -20,8 +20,6 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
-
 import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
@@ -29,9 +27,7 @@ import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.UtilCommon;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
-import com.jshop.entity.UserT;
 import com.jshop.service.MemberTService;
-import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("jshop")
