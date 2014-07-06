@@ -18,8 +18,10 @@ $(function() {
 		  if(productName==""){
 			  formwarning("#alerterror", "请输入内容再进行查询");
 				return false;
+		  }else{
+			  findProducts(productName);
 		  }
-		  findProducts(productName);
+		 
 	  });
 	  /**
 	   * 重新计算商品件数
@@ -64,7 +66,7 @@ $(function() {
 		  recaluatememberprice(memberprice);
 		  recaluateshouldpay(memberprice);
 	  }
-	  
+
 	  	/**
 		 * 查询货物
 		 */
@@ -72,7 +74,7 @@ $(function() {
 			$("#productsmanagement").flexigrid({
 				url : "findProductByproductName.action?productName="+param,
 				dataType : 'json',
-				cache : false,
+				cache : true,
 				colModel : [ {
 					display : '货号',
 					name : 'productSn',
@@ -167,7 +169,7 @@ $(function() {
 					setGoodsToOrderForm(grid);
 				} 
 			}
-		}
+		},
 		/**
 		 * 将商品加入订单试图中
 		 * @param grid

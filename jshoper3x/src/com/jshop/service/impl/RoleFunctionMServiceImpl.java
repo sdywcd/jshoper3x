@@ -40,12 +40,12 @@ public class RoleFunctionMServiceImpl extends BaseTServiceImpl<RoleFunctionM>imp
 	 * 增加角色权限
 	 * @param rm
 	 */
-	@Transactional(propagation=Propagation.REQUIRED)
+	//@Transactional(propagation=Propagation.REQUIRES_NEW)
 	public void addRoleFunctionM(RoleM rm,String functionids){
 		if(Validate.StrNotNull(functionids)){
 			String []strs=StringUtils.split(functionids,",");
-			RoleFunctionM rfm=new RoleFunctionM();
 			for(String functionid :strs){
+				RoleFunctionM rfm=new RoleFunctionM();
 				rfm.setId(this.getSerial().Serialid(Serial.ROLEFUNCTION));
 				rfm.setRoleid(rm.getId());
 				rfm.setFunctionid(functionid);
