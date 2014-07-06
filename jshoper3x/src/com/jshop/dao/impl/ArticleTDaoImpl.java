@@ -302,7 +302,7 @@ public class ArticleTDaoImpl extends BaseTDaoImpl<ArticleT> implements ArticleTD
 			throw re;
 		}
 	}
-	
+
 	
 	
 }

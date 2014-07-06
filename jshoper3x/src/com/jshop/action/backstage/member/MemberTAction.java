@@ -67,6 +67,7 @@ public class MemberTAction extends BaseTAction {
 	private String userstate;
 	private String headpath;
 	private Date createtime;
+	private String telno;
 	private String creatorid;
 	private String basepath;
 	private MemberT bean=new MemberT();
@@ -422,6 +423,14 @@ public class MemberTAction extends BaseTAction {
 		this.doingTag = doingTag;
 	}
 
+	public String getTelno() {
+		return telno;
+	}
+
+	public void setTelno(String telno) {
+		this.telno = telno;
+	}
+
 	/**
 	 * 增加会员
 	 * @return
@@ -465,6 +474,7 @@ public class MemberTAction extends BaseTAction {
 				mt.setAnswer(this.getAnswer().trim());
 				mt.setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);//激活
 				mt.setHeadpath(this.getHeadpath().trim());
+				mt.setTelno(this.getTelno());
 				mt.setCreatetime(BaseTools.systemtime());
 				mt.setCreatorid(BaseTools.adminCreateId());
 				mt.setUpdatetime(mt.getCreatetime());

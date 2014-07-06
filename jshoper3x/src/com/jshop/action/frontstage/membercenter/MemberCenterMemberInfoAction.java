@@ -64,12 +64,18 @@ ServletResponseAware {
 	private String question;
 	private String answer;
 	private String memberstate;
+	private String headpath;
 	private Date createtime;
 	private String creatorid;
 	private Date updatetime;
 	private String mobile;
-	private String state;
-	private String headpath;
+	private int versiont;
+	private String mid;
+	private String paypassword;
+	private String memberGroupId;
+	private String memberGroupName;
+	private Integer integration;
+	private String telno;
 	private File fileupload; // 和JSP中input标记name同名  
     private String imageUrl;  
     private String attachmentUrl;  
@@ -79,6 +85,7 @@ ServletResponseAware {
     // 如此处为 'fileupload' + 'FileName' = 'fileuploadFileName'  
     private String fileuploadFileName; // 上传来的文件的名字  
 	private MemberT bean= new MemberT();
+	private String redirecturl;
 	private boolean sucflag;
 	@JSON(serialize=false)
 	public MemberTService getMemberTService() {
@@ -167,12 +174,62 @@ ServletResponseAware {
 		this.birthday = birthday;
 	}
 
-	public String getState() {
-		return state;
+
+
+	public int getVersiont() {
+		return versiont;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setVersiont(int versiont) {
+		this.versiont = versiont;
+	}
+
+	public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+
+	public String getPaypassword() {
+		return paypassword;
+	}
+
+	public void setPaypassword(String paypassword) {
+		this.paypassword = paypassword;
+	}
+
+	public String getMemberGroupId() {
+		return memberGroupId;
+	}
+
+	public void setMemberGroupId(String memberGroupId) {
+		this.memberGroupId = memberGroupId;
+	}
+
+	public String getMemberGroupName() {
+		return memberGroupName;
+	}
+
+	public void setMemberGroupName(String memberGroupName) {
+		this.memberGroupName = memberGroupName;
+	}
+
+	public Integer getIntegration() {
+		return integration;
+	}
+
+	public void setIntegration(Integer integration) {
+		this.integration = integration;
+	}
+
+	public String getTelno() {
+		return telno;
+	}
+
+	public void setTelno(String telno) {
+		this.telno = telno;
 	}
 
 	public String getHeadpath() {
@@ -213,6 +270,14 @@ ServletResponseAware {
 
 	public void setFileRealName(String fileRealName) {
 		this.fileRealName = fileRealName;
+	}
+
+	public String getRedirecturl() {
+		return redirecturl;
+	}
+
+	public void setRedirecturl(String redirecturl) {
+		this.redirecturl = redirecturl;
 	}
 
 	public HttpServletResponse getResponse() {
@@ -441,50 +506,34 @@ ServletResponseAware {
 	 * 更新用户更新自己的资料
 	 * @return
 	 */
-	
-	@Action(value = "updateMemberforMyInfo", results = { 
-			@Result(name = "success",type="chain",location = "findMemberInfo"),
-			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
-	})
+	@Action(value = "updateMemberforMyInfo", results = { @Result(name = "json",type="json")})
 	public String updateMemberforMyInfo(){
 		MemberT memberT=(MemberT)ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
-			MemberT m=new MemberT();
-			m.setId(memberT.getId());
-			m.setLoginname(memberT.getLoginname());
-			m.setNick(this.getNick().trim());
-			m.setRealname(this.getRealname().trim());
-			m.setCity(this.getCity().trim());
-			m.setDistrict(this.getDistrict().trim());
-			m.setSex(this.getSex());
-			m.setWhichsex(this.getWhichsex());
-			m.setMerrystatus(this.getMerrystatus());
-			m.setBirthday(this.getBirthday().trim());
-			m.setBlood(this.getBlood());
-			m.setConstellation(this.getConstellation());
-			m.setDes(this.getDes());
-			m.setEmail(this.getEmail());
-			m.setQq(this.getQq());
-			m.setWeixin(this.getWeixin());
-			m.setSinaweibo(this.getSinaweibo());
-			m.setTag(this.getTag());
-			m.setBelove(memberT.getBelove());
-			m.setLoveother(memberT.getLoveother());
-			m.setPostingcount(memberT.getPostingcount());
-			m.setQuestion(memberT.getQuestion());
-			m.setAnswer(memberT.getAnswer());
-			m.setMemberstate(memberT.getMemberstate());
-			m.setHeadpath(this.getHeadpath().trim());
-			m.setCreatetime(memberT.getCreatetime());
-			m.setCreatorid(memberT.getCreatorid());
-			m.setUpdatetime(BaseTools.systemtime());
-			m.setMobile(this.getMobile().trim());
-			m.setVersiont(memberT.getVersiont()+1);
-			m.setMid(memberT.getMid());
-			this.getMemberTService().updateMemberT(m);
-			return SUCCESS;
+			memberT.setNick(this.getNick().trim());
+			memberT.setRealname(this.getRealname().trim());
+			memberT.setCity(this.getCity().trim());
+			memberT.setDistrict(this.getDistrict().trim());
+			memberT.setSex(this.getSex());
+			memberT.setWhichsex(this.getWhichsex());
+			memberT.setMerrystatus(this.getMerrystatus());
+			memberT.setBirthday(this.getBirthday().trim());
+			memberT.setBlood(this.getBlood());
+			memberT.setConstellation(this.getConstellation());
+			memberT.setDes(this.getDes());
+			memberT.setEmail(this.getEmail());
+			memberT.setQq(this.getQq());
+			memberT.setWeixin(this.getWeixin());
+			memberT.setSinaweibo(this.getSinaweibo());
+			memberT.setUpdatetime(BaseTools.systemtime());
+			memberT.setMobile(this.getMobile().trim());
+			memberT.setVersiont(memberT.getVersiont()+1);
+			memberT.setTelno(this.getTelno());
+			this.getMemberTService().updateMemberT(memberT);
+			this.setSucflag(true);
+			return "json";
 		}else{
-			return INPUT;
+			return "json";
 		}
 	}
 	

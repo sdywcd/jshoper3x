@@ -71,7 +71,6 @@ $(function() {
     // 获取url地址用来让用户登录时跳转
     var windowsurl = window.location;
     $('#hidurl').attr("value", windowsurl.pathname);
-
     /**
      * 根据属性搜素商品
      * @param  {[type]} action      [description]
@@ -86,12 +85,8 @@ $(function() {
             attrsarray.push(attrs);
             var strattrs = attrsarray.join(",").toString();
             window.location.href = action + "?navid=" + navid + "&grade=" + grade + "&attrs=" + strattrs;
-
         }
     }
-
-
-
 });
 $(function() {
     // 获取url地址用来让用户登录时跳转
@@ -583,7 +578,6 @@ $(function() {
     $("#savemyaddressinmc").bind("click", function() {
         addnewaddressinmc();
     });
-
     /*
      * 会员中心更新收货地址
      * */
@@ -655,6 +649,108 @@ $(function() {
                 $("#savemyaddressinmc").hide();
             }
         });
-    }
-
+    },
+    /**
+     *更新会员资料
+     *
+     */
+    upatememberinfo = function() {
+        var hidurl = $('#hidurl').val();
+        var nick = $("#nick");
+        var nickspan = $("#nick+span");
+        nickspan.text("");
+        if ($.trim(nick.val()) === "") {
+            nickspan.text("请输入昵称");
+            return false;
+        }
+        var nickv = nick.val();
+        var realname = $("#realname");
+        var realnamespan = $("#realname+span");
+        realnamespan.text("");
+        if ($.trim(realname.val()) === "") {
+            realnamespan.text("请输入姓名");
+            return false;
+        }
+        var realnamev = realname.val();
+        var sex = $('input[name="sex"]:checked').val();
+        var city = $("#city");
+        var cityspan = $("#city+span");
+        cityspan.text("");
+        if ($.trim(city.val()) === "") {
+            cityspan.text("请输入所在城市");
+            return false;
+        }
+        var cityv = city.val();
+        var district = $("#district");
+        var districtspan = $("#district+span");
+        districtspan.text("");
+        if ($.trim(district.val()) === "") {
+            districtspan.text("请输入所在区县");
+            return false;
+        }
+        var districtv = district.val();
+        var whichsex = $('input[name="whichsex"]:checked').val();
+        var merrystatus = $('input[name="merrystatus"]:checked').val();
+        var birthday = $("#birthday");
+        var birthdayspan = $("#birthday+span");
+        birthdayspan.text("");
+        if ($.trim(birthday.val()) === "") {
+            birthdayspan.text("请输入生日");
+            return false;
+        }
+        var birthdayv = birthday.val();
+        var blood = $('input[name="blood"]:checked').val();
+        var constellation = $("#constellation").val();
+        var des = $("#des").val();
+        var mobile = $("#mobile");
+        var mobilespan = $("#mobile+span");
+        mobilespan.text("");
+        if ($.trim(mobile.val()) === "") {
+            mobilespan.text("请输入手机");
+            return false;
+        }
+        var mobilev = mobile.val();
+        var telno = $("#telno").val();
+        var email = $("#email");
+        var emailspan = $("#email+span");
+        emailspan.text("");
+        if ($.trim(email.val()) === "") {
+            emailspan.text("请输入邮箱");
+            return false;
+        }
+        var emailv = email.val();
+        var qq = $("#qq").val();
+        var weixin = $("#weixin").val();
+        var sinaweibo = $("#sinaweibo").val();
+        $.post("updateMemberforMyInfo.action", {
+            "nick": nickv,
+            "realname": realnamev,
+            "sex": sex,
+            "city": cityv,
+            "district": districtv,
+            "whichsex": whichsex,
+            "merrystatus": merrystatus,
+            "birthday": birthdayv,
+            "blood": blood,
+            "constellation": constellation,
+            "des": des,
+            "mobile": mobilev,
+            "telno": telno,
+            "email": emailv,
+            "qq": qq,
+            "weixin": weixin,
+            "sinaweibo": sinaweibo
+        }, function(data) {
+            if (data.sucflag) {
+                window.location.reload();
+            } else {
+                //跳转到登录页面
+                window.location.href = "user/login.html?redirecturl=" + hidurl;
+                return false;
+            }
+        });
+    },
+    $("#doupdatememberinfo").on("click", function() {
+        upatememberinfo();
+    });
 });

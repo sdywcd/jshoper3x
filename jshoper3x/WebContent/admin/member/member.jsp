@@ -142,6 +142,12 @@
 							
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">固话: </span> <input
+							id="telno" name="telno" type="text" value=""
+							class="small" /> 
+							
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">QQ: </span> <input
 							id="qq" name="qq" type="text" value=""
 							class="small" /> 

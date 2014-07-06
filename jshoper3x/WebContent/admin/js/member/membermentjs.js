@@ -56,6 +56,7 @@ $(function() {
 		var constellation=$("#constellation").val();
 		var des=$("#des").val();
 		var mobile=$("#mobile").val();
+		var telno=$("#telno").val();
 		var qq=$("#qq").val();
 		var weixin=$("#weixin").val();
 		var sinaweibo=$("#sinaweibo").val();
@@ -96,6 +97,7 @@ $(function() {
 			"constellation":constellation,
 			"des":des,
 			"mobile":mobile,
+			"telno":telno,
 			"qq":qq,
 			"weixin":weixin,
 			"sinaweibo":sinaweibo,
@@ -156,6 +158,7 @@ $(function() {
 				$("#constellation").val(data.bean.constellation);
 				$("#des").val(data.bean.des);
 				$("#mobile").val(data.bean.mobile);
+				$("#telno").val(data.bean.telno);
 				$("#qq").val(data.bean.qq);
 				$("#weixin").val(data.bean.weixin);
 				$("#sinaweibo").val(data.bean.sinaweibo);
@@ -217,6 +220,7 @@ $(function() {
 		var constellation=$("#constellation").val();
 		var des=$("#des").val();
 		var mobile=$("#mobile").val();
+		var telno=$("#telno").val();
 		var qq=$("#qq").val();
 		var weixin=$("#weixin").val();
 		var sinaweibo=$("#sinaweibo").val();
@@ -255,6 +259,7 @@ $(function() {
 			"constellation":constellation,
 			"des":des,
 			"mobile":mobile,
+			"telno":telno,
 			"qq":qq,
 			"weixin":weixin,
 			"sinaweibo":sinaweibo,
