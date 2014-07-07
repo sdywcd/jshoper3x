@@ -37,7 +37,7 @@ public class MemberCenterIndexAction extends ActionSupport {
 
 	private String hidurl;
 	private DataCollectionTAction dataCollectionTAction;
-	private UserCenterMyorderAction userCenterMyorderAction;
+	private MemberCenterOrderAction userCenterMyorderAction;
 	private OrderTService orderTService;
 	private GoodsTService goodsTService;
 	private int rp=8;//每页显示数量
@@ -64,11 +64,11 @@ public class MemberCenterIndexAction extends ActionSupport {
 		this.orderTService = orderTService;
 	}
 	@JSON(serialize=false) 
-	public UserCenterMyorderAction getUserCenterMyorderAction() {
+	public MemberCenterOrderAction getUserCenterMyorderAction() {
 		return userCenterMyorderAction;
 	}
 
-	public void setUserCenterMyorderAction(UserCenterMyorderAction userCenterMyorderAction) {
+	public void setUserCenterMyorderAction(MemberCenterOrderAction userCenterMyorderAction) {
 		this.userCenterMyorderAction = userCenterMyorderAction;
 	}
 	@JSON(serialize=false) 

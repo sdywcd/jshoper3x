@@ -272,6 +272,10 @@ $(function() {
             s3: "黄浦区" // 默认选中的县区名
         });
     }
+    /**
+     * 初始化订单信息
+     * @return {[type]} [description]
+     */
     initpayandtoaddorder = function() {
         var hidurl = $('#hidurl').val();
         var paymentid = $('input[name="paymentid"]:checked').val();
@@ -380,6 +384,85 @@ $(function() {
     $("#submitorder").bind("click", function() {
         initpayandtoaddorder();
     });
+
+    /**
+     * 初始化支付宝所需的资料信息
+     */
+    InitAgAlipayandUpdateOrder = function() {
+        var orderid = $('#hidorderid').val();
+        var paymentid = $('input[name="paymentid"]:checked').val();
+        var logisticsid = $('input[name="logisticsid"]:checked').val();
+        var freight = $('#goodsfreightprice').html();
+        var deliveraddressid = $('input[name="checkaddress"]:checked').val();
+        var customernotes = $('#customernotes').val();
+        var logisticswebaddress = $('#hd' + logisticsid).val();
+        if (logisticsid == null) {
+            alert("请选择配送方式");
+            return;
+        }
+        if (deliveraddressid == null) {
+            alert("请选择 收获地址");
+            return;
+        }
+        if (paymentid != null) {
+            $.post("InitAgAlipayandUpdateOrder.action", {
+                "orderid": orderid,
+                "paymentid": paymentid,
+                "logisticsid": logisticsid,
+                "logisticswebaddress": logisticswebaddress,
+                "addressid": deliveraddressid,
+                "customernotes": customernotes,
+                "orderTag": "1"
+            }, function(data) {
+                if (!data.slogin) {
+                    //跳转到登录页面
+                    window.location.href = data.basePath + "/html/default/shop/user/login.html?redirecturl=" + hidurl;
+                    return false;
+                }
+                if (data.spayment) {
+                    alert("支付方式获取失败");
+                    return;
+                }
+
+                if (data.supdateorder) {
+                    alert("更新订单出错");
+                    window.location.href = data.basePath + "/html/default/shop/user/login.html?redirecturl=" + hidurl;
+                    return false;
+                } else {
+                     window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
+                    //增加发票到发票记录表
+                    // var inv_Payee = $('#inv_payee').val();
+                    // var orderid = data.orderid;
+                    // var inv_Type = $('#inv_type').val();
+                    // var amount = $('#shouldtotalprice').text();
+                    // if (inv_Payee == "") {
+                    //     //此情况表示支付宝
+                    //     window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
+
+                    // } else {
+                    //     $.post("addOrderInvoice.action", {
+                    //         "orderid": orderid,
+                    //         "invType": inv_Type,
+                    //         "invPayee": inv_Payee,
+                    //         "amount": amount,
+                    //         "invContent": "0"
+                    //     }, function(data) {
+                    //         if (data.saddflag) {
+                    //             window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
+                    //         } else {
+                    //             //alert("发票提交有误请联系客服处理开发票事宜");
+                    //             window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
+
+                    //         }
+                    //     });
+                    // }
+                }
+
+            });
+        } else {
+            alert("请选择支付方式");
+        }
+    },
     //========================================jshoper user address js ==========================================
     /*
      * 增加收货地址

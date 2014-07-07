@@ -45,7 +45,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @ParentPackage("jshop")
 @Namespace("")
 @InterceptorRefs( { @InterceptorRef("defaultStack") })
-public class UserCenterMyorderAction extends ActionSupport {
+public class MemberCenterOrderAction extends ActionSupport {
 	private Serial serial;
 	private LogisticsBusinessTService logisticsBusinessTService;
 	private PaymentMService paymentMService;
@@ -85,7 +85,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 	private int total=0;
 	private int totalpage=1;
 	private boolean slogin;
-	
+	private String basePath;
+	@JSON(serialize = false)
 	public MemberTService getMemberTService() {
 		return memberTService;
 	}
@@ -310,6 +311,38 @@ public class UserCenterMyorderAction extends ActionSupport {
 		this.slogin = slogin;
 	}
 
+	public int getRp() {
+		return rp;
+	}
+
+	public void setRp(int rp) {
+		this.rp = rp;
+	}
+
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
+	public int getTotalpage() {
+		return totalpage;
+	}
+
+	public void setTotalpage(int totalpage) {
+		this.totalpage = totalpage;
+	}
+
+	public String getBasePath() {
+		return basePath;
+	}
+
+	public void setBasePath(String basePath) {
+		this.basePath = basePath;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -518,6 +551,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 		}
 	}
 
+	
+	
 	/**
 	 * 增加发货地址
 	 */
@@ -635,18 +670,21 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 * 
 	 * @param user
 	 */
-	public void UpdateOrderInfo(UserT user) {
+	public void UpdateOrderInfo(MemberT user) {
 		order.setOrderid(oldorder.getOrderid());
 		order.setUserid(oldorder.getUserid());
 		order.setUsername(oldorder.getUsername());
+		order.setMemberid(user.getId());
+		order.setMembername(user.getLoginname());
 		order.setDelivermode(oldorder.getDelivermode());
 		order.setDeliverynumber(null);//这里会有问题
 		order.setOrderstate(oldorder.getOrderstate());
 		order.setPaystate(oldorder.getPaystate());
 		order.setShippingstate(oldorder.getShippingstate());
-
+		order.setProductinfo(oldorder.getProductinfo());
 //		order.setGoodid(oldorder.getGoodid());
 //		order.setGoodsname(oldorder.getGoodsname());
+		order.setOrdername(oldorder.getOrdername());
 		order.setNeedquantity(oldorder.getNeedquantity());
 		order.setFreight(oldorder.getFreight());
 		order.setAmount(oldorder.getAmount());
@@ -667,7 +705,7 @@ public class UserCenterMyorderAction extends ActionSupport {
 		order.setIsprintexpress("0");//未打印快递单
 		order.setIsprintinvoice("0");//未打印发货单
 		order.setIsprintfpinvoice("0");//未开具发票
-		order.setExpressnumber(null);//快递单号
+		order.setExpressnumber("");//快递单号
 		try {
 			this.getOrderTService().updateOrder(order);
 			AlipayConfig.out_trade_no = order.getOrderid();
@@ -690,8 +728,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 	 */
 	@Action(value = "InitAgAlipayandUpdateOrder", results = { @Result(name = "json", type = "json") })
 	public String InitAgAlipayandUpdateOrder() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
+		MemberT membert = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (membert != null) {
 			this.setSlogin(true);
 			//比较发货地址并更新
 			CompareShippingAddress();
@@ -700,7 +738,8 @@ public class UserCenterMyorderAction extends ActionSupport {
 			//比较物流上市并更新
 			CompareLogisticsbusiness();
 			//更新订单
-			UpdateOrderInfo(user);
+			UpdateOrderInfo(membert);
+			this.setBasePath(this.getDataCollectionTAction().getBasePath());
 			return "json";
 		} else {
 			this.setSlogin(false);

@@ -10,7 +10,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.stereotype.Controller;
 
 import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
@@ -19,7 +18,6 @@ import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FavoriteT;
 import com.jshop.entity.MemberT;
-import com.jshop.entity.UserT;
 import com.jshop.service.FavoriteTService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
@@ -29,7 +27,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @InterceptorRefs({
     @InterceptorRef("defaultStack")  
 })
-public class UserCenterMyFavoriteAction extends ActionSupport {
+public class MemberCenterFavoriteAction extends ActionSupport {
 
 	private Serial serial;
 	private FavoriteTService favoriteTService;
@@ -161,10 +159,10 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 	 * 增加我的收藏
 	 * @return
 	 */
-	@Action(value = "addFavorite", results = { 
+	@Action(value = "saveFavorite", results = { 
 			@Result(name = "json",type="json")
 	})
-	public String addFavorite(){
+	public String saveFavorite(){
 		MemberT memberT=(MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(memberT!=null){
 			this.setSlogin(true);
@@ -175,7 +173,7 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 			f.setTag(null);
 			f.setDescript(null);  
 			f.setMemberid(memberT.getId());
-			f.setState("0");
+			f.setState(StaticKey.ONE);
 			f.setAddtime(BaseTools.systemtime());
 			f.setReadcount(Integer.parseInt(this.getReadcount().trim()));
 			f.setMemberprice(this.getMemberprice());
@@ -184,7 +182,6 @@ public class UserCenterMyFavoriteAction extends ActionSupport {
 			return "json";
 			
 		}else{
-			this.setSlogin(false);
 			return "json";
 		}
 	}
