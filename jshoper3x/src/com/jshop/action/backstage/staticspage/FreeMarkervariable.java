@@ -201,4 +201,8 @@ public class FreeMarkervariable {
 	 * 会员信息
 	 */
 	public static final String MEMBERINFO="memberinfo";
+	/**
+	 * 收藏数据
+	 */
+	public static final String FAVORITE="favorite";
 }

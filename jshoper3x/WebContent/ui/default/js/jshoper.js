@@ -384,7 +384,6 @@ $(function() {
     $("#submitorder").bind("click", function() {
         initpayandtoaddorder();
     });
-
     /**
      * 初始化支付宝所需的资料信息
      */
@@ -423,13 +422,12 @@ $(function() {
                     alert("支付方式获取失败");
                     return;
                 }
-
                 if (data.supdateorder) {
                     alert("更新订单出错");
                     window.location.href = data.basePath + "/html/default/shop/user/login.html?redirecturl=" + hidurl;
                     return false;
                 } else {
-                     window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
+                    window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
                     //增加发票到发票记录表
                     // var inv_Payee = $('#inv_payee').val();
                     // var orderid = data.orderid;
@@ -438,7 +436,6 @@ $(function() {
                     // if (inv_Payee == "") {
                     //     //此情况表示支付宝
                     //     window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
-
                     // } else {
                     //     $.post("addOrderInvoice.action", {
                     //         "orderid": orderid,
@@ -452,12 +449,10 @@ $(function() {
                     //         } else {
                     //             //alert("发票提交有误请联系客服处理开发票事宜");
                     //             window.location.href = data.basePath + "/pay/alipay/alipayto.jsp";
-
                     //         }
                     //     });
                     // }
                 }
-
             });
         } else {
             alert("请选择支付方式");
@@ -824,16 +819,39 @@ $(function() {
             "weixin": weixin,
             "sinaweibo": sinaweibo
         }, function(data) {
-            if (data.sucflag) {
-                window.location.reload();
-            } else {
+            if (!data.slogin) {
                 //跳转到登录页面
                 window.location.href = "user/login.html?redirecturl=" + hidurl;
                 return false;
+            }
+            if (data.sucflag) {
+                window.location.reload();
             }
         });
     },
     $("#doupdatememberinfo").on("click", function() {
         upatememberinfo();
+    });
+    /*=========================================加入收藏=========================================================*/
+    /**
+     *加入收藏
+     */
+    savefavorite = function(goodsid) {
+        $.post("saveFavorite.action", {
+            "goodsid": goodsid
+        }, function(data) {
+            if (!data.slogin) {
+                //跳转到登录页面
+                window.location.href = "user/login.html?redirecturl=" + hidurl;
+                return false;
+            }
+            if (data.sucflag) {
+               $("#savefavoritemsg").text("收藏成功");
+            }
+        });
+    },
+    $("#addtofavorite").on("click",function(){
+        var goodsid=$("#hidgoodsid").val();
+        savefavorite(goodsid);
     });
 });

@@ -31,11 +31,11 @@ public class FavoriteTDaoImpl extends BaseTDaoImpl<FavoriteT> implements Favorit
 	
 	private static final Log log = LogFactory.getLog(FavoriteTDaoImpl.class);
 
-	public int countfindAllFavoriteByUserid(String userid) {
+	public int countfindAllFavoriteByUserid(String memberid) {
 		log.debug("count all FavoriteT");
 		try {
-			String queryString = "select count(*) from FavoriteT as f where f.userid=:userid";
-			List list = this.getHibernateTemplate().findByNamedParam(queryString, "userid", userid);
+			String queryString = "select count(*) from FavoriteT as f where f.memberid=:memberid";
+			List list = this.getHibernateTemplate().findByNamedParam(queryString, "memberid", memberid);
 			if (list.size() > 0) {
 				Object o = list.get(0);
 				long l = (Long) o;
@@ -78,25 +78,25 @@ public class FavoriteTDaoImpl extends BaseTDaoImpl<FavoriteT> implements Favorit
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<FavoriteT> findAllFavoriteByUserid(final String userid, final int currentPage, final int lineSize) {
-		log.debug("find all FavoriteT by userid");
+	public List<FavoriteT> findAllFavoriteByUserid(final String memberid, final int currentPage, final int lineSize) {
+		log.debug("find all FavoriteT by memberid");
 		try {
 			List<FavoriteT> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
 
-				String queryString = "from FavoriteT as f where f.userid=:userid order by addtime desc";
+				String queryString = "from FavoriteT as f where f.memberid=:memberid order by addtime desc";
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					query.setFirstResult((currentPage - 1) * lineSize);
 					query.setMaxResults(lineSize);
-					query.setParameter("userid", userid);
+					query.setParameter("memberid", memberid);
 					List list = query.list();
 					return list;
 				}
 			});
 			return list;
 		} catch (RuntimeException re) {
-			log.error("find all FavoriteT by userid error", re);
+			log.error("find all FavoriteT by memberid error", re);
 			throw re;
 		}
 	}

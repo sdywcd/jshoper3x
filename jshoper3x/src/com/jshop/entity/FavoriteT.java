@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-6-16 23:26:00 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-7-19 21:21:18 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,23 +28,25 @@ public class FavoriteT implements java.io.Serializable {
 	private Integer readcount;
 	private String memberprice;
 	private String productid;
+	private String htmlpath;
 
 	public FavoriteT() {
 	}
 
 	public FavoriteT(String favoriteid, String title, String memberid,
-			String state, Date addtime) {
+			String state, Date addtime, String htmlpath) {
 		this.favoriteid = favoriteid;
 		this.title = title;
 		this.memberid = memberid;
 		this.state = state;
 		this.addtime = addtime;
+		this.htmlpath = htmlpath;
 	}
 
 	public FavoriteT(String favoriteid, String title, String goodsid,
 			String tag, String descript, String memberid, String state,
 			Date addtime, Integer readcount, String memberprice,
-			String productid) {
+			String productid, String htmlpath) {
 		this.favoriteid = favoriteid;
 		this.title = title;
 		this.goodsid = goodsid;
@@ -56,6 +58,7 @@ public class FavoriteT implements java.io.Serializable {
 		this.readcount = readcount;
 		this.memberprice = memberprice;
 		this.productid = productid;
+		this.htmlpath = htmlpath;
 	}
 
 	@Id
@@ -68,7 +71,7 @@ public class FavoriteT implements java.io.Serializable {
 		this.favoriteid = favoriteid;
 	}
 
-	@Column(name = "TITLE", nullable = false, length = 100)
+	@Column(name = "TITLE", nullable = false, length = 200)
 	public String getTitle() {
 		return this.title;
 	}
@@ -157,6 +160,15 @@ public class FavoriteT implements java.io.Serializable {
 
 	public void setProductid(String productid) {
 		this.productid = productid;
+	}
+
+	@Column(name = "HTMLPATH", nullable = false)
+	public String getHtmlpath() {
+		return this.htmlpath;
+	}
+
+	public void setHtmlpath(String htmlpath) {
+		this.htmlpath = htmlpath;
 	}
 
 }
