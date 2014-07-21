@@ -62,7 +62,12 @@ public class  StaticKey {
 	 */
 	public static String SYSTEM_CONFIG_FILE="admin/jshoperconfig.properties";
 	
+	/**
+	 * 用户注册返回字符串
+	 */
+	public static final String MEMBER_EXIST="用户已经存在";
 	
+	public static final String MEMBER_REGISTER_SUCCESS="注册成功";
 	
 	//flexigrid default search tag
 	public static final String EMPTY="";
