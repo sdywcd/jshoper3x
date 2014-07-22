@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.utils;
+package com.jshop.action.backstage.utils.order;
 
 public class AllOrderState {
 //

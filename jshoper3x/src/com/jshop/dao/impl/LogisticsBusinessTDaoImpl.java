@@ -156,11 +156,11 @@ public class LogisticsBusinessTDaoImpl extends BaseTDaoImpl<LogisticsBusinessT> 
 		}
 	}
 
-	public List<LogisticsBusinessT> findAllLogisticsBusinessWithoutPage() {
+	public List<LogisticsBusinessT> findAllLogisticsBusiness(String state) {
 		log.debug("find  LogisticsBusinessT");
 		try {
-			String queryString = "from LogisticsBusinessT as lb where lb.state='1'";
-			List<LogisticsBusinessT> list = this.getHibernateTemplate().find(queryString);
+			String queryString = "from LogisticsBusinessT as lb where lb.state=:state";
+			List<LogisticsBusinessT> list = this.getHibernateTemplate().findByNamedParam(queryString, "state", state);
 			return list;
 		} catch (RuntimeException re) {
 			log.error("find LogisticsBusinessT error", re);
@@ -177,6 +177,19 @@ public class LogisticsBusinessTDaoImpl extends BaseTDaoImpl<LogisticsBusinessT> 
 				return list;
 			}
 			return null;
+		} catch (RuntimeException re) {
+			log.error("find LogisticsBusinessT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<LogisticsBusinessT> findLogisticsBusiness(String visible) {
+		log.debug("find  LogisticsBusinessT");
+		try {
+			String queryString = "from LogisticsBusinessT as lb where lb.visible=:visible";
+			List<LogisticsBusinessT> list = this.getHibernateTemplate().findByNamedParam(queryString, "visible", visible);
+			return list;
 		} catch (RuntimeException re) {
 			log.error("find LogisticsBusinessT error", re);
 			throw re;

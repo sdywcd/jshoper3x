@@ -601,7 +601,7 @@ public class GroupOrderAction extends ActionSupport {
 	 * 获取物流商配送方式
 	 */
 	public void GetDefaultLogistictsBusiness() {
-		List<LogisticsBusinessT> list = this.getLogisticsBusinessTService().findAllLogisticsBusinessWithoutPage();
+		List<LogisticsBusinessT> list = this.getLogisticsBusinessTService().findAllLogisticsBusiness(StaticKey.ONE);
 		if (!list.isEmpty()) {
 			for (Iterator it = list.iterator(); it.hasNext();) {
 				LogisticsBusinessT lbt = (LogisticsBusinessT) it.next();
@@ -618,7 +618,7 @@ public class GroupOrderAction extends ActionSupport {
 	 * 获取支付方式
 	 */
 	public void GetDefaultPayment() {
-		List<PaymentM> list = this.getPaymentMService().findAllPaymentWithoutPage();
+		List<PaymentM> list = this.getPaymentMService().findAllPayment(StaticKey.ONE);
 		ActionContext.getContext().put("payments", list);
 	}
 	/**

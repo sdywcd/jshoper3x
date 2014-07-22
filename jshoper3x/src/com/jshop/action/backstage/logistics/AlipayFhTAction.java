@@ -8,7 +8,7 @@ import org.apache.struts2.json.annotations.JSON;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.pay.thirdpartyplatform.alipay.AlipayConfig;
-import com.jshop.action.backstage.utils.AllOrderState;
+import com.jshop.action.backstage.utils.order.AllOrderState;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.OrderTService;

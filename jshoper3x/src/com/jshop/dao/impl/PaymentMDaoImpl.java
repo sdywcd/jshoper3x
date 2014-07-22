@@ -175,11 +175,11 @@ public class PaymentMDaoImpl extends BaseTDaoImpl<PaymentM> implements PaymentMD
 		}
 	}
 
-	public List<PaymentM> findAllPaymentWithoutPage() {
+	public List<PaymentM> findAllPayment(String state) {
 		log.debug("find PaymentM");
 		try {
-			String queryString = "from PaymentM as pm where pm.state='1'";
-			List<PaymentM> list = this.getHibernateTemplate().find(queryString);
+			String queryString = "from PaymentM as pm where pm.state=:state";
+			List<PaymentM> list = this.getHibernateTemplate().findByNamedParam(queryString, "state", state);
 			return list;
 		} catch (RuntimeException re) {
 			log.error("find  PaymentM error", re);

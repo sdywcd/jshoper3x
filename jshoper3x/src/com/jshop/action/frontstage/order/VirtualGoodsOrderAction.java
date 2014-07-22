@@ -362,7 +362,7 @@ public class VirtualGoodsOrderAction extends ActionSupport {
 	 * 获取支付方式
 	 */
 	public List<PaymentM> GetDefaultPayment() {
-		List<PaymentM> list = this.getPaymentMService().findAllPaymentWithoutPage();
+		List<PaymentM> list = this.getPaymentMService().findAllPayment(StaticKey.ONE);
 		return list;
 		
 	}

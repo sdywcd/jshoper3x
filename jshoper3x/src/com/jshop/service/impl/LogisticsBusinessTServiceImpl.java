@@ -47,11 +47,16 @@ public class LogisticsBusinessTServiceImpl extends BaseTServiceImpl<LogisticsBus
 		return this.getLogisticsBusinessTDao().findLogisticsBusinessById(logisticsid);
 	}
 
-	public List<LogisticsBusinessT> findAllLogisticsBusinessWithoutPage() {
-		return this.getLogisticsBusinessTDao().findAllLogisticsBusinessWithoutPage();
+	public List<LogisticsBusinessT> findAllLogisticsBusiness(String state) {
+		return this.getLogisticsBusinessTDao().findAllLogisticsBusiness(state);
 	}
 
 	public List<LogisticsBusinessT> findAllLogisticsBusinessTjson() {
 		return this.getLogisticsBusinessTDao().findAllLogisticsBusinessTjson();
+	}
+
+	@Override
+	public List<LogisticsBusinessT> findLogisticsBusiness(String visible) {
+		return this.getLogisticsBusinessTDao().findLogisticsBusiness(visible);
 	}
 }

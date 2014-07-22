@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.utils;
+package com.jshop.vo;
 /**
  * 商品参数模型
  * @Description TODO

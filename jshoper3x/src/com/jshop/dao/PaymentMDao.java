@@ -61,7 +61,7 @@ public interface PaymentMDao extends BaseTDao<PaymentM>{
 	 * 
 	 * @return
 	 */
-	public List<PaymentM> findAllPaymentWithoutPage();
+	public List<PaymentM> findAllPayment(String state);
 	/**
 	 * 根据id批量删除支付方式
 	 * @param str

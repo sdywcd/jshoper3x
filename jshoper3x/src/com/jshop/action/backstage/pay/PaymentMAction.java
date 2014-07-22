@@ -389,7 +389,7 @@ public class PaymentMAction extends BaseTAction {
 	 */
 	@Action(value = "findAllPaymentForbsOrder", results = { @Result(name = "json", type = "json") })
 	public String findAllPaymentForbsOrder(){
-		beanlist=this.getPaymentMService().findAllPaymentWithoutPage();
+		beanlist=this.getPaymentMService().findAllPayment(StaticKey.ONE);
 		if(!beanlist.isEmpty()){
 			this.setSucflag(true);
 			return "json";

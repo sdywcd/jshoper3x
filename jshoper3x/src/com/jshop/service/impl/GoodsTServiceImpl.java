@@ -5,28 +5,21 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.dao.GoodsAttributeRpTDao;
 import com.jshop.dao.GoodsDetailRpTDao;
 import com.jshop.dao.GoodsTDao;
 import com.jshop.dao.ProductTDao;
-import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.ProductT;
 import com.jshop.service.GoodsSpecificationsProductRpTService;
 import com.jshop.service.GoodsTService;
-import com.taobao.api.domain.Product;
 
 @Service("goodsTService")
 @Scope("prototype")

@@ -50,8 +50,8 @@ public class PaymentMServiceImpl extends BaseTServiceImpl<PaymentM> implements P
 		return this.getPaymentMDao().closePayment(list);
 	}
 
-	public List<PaymentM> findAllPaymentWithoutPage() {
-		return this.getPaymentMDao().findAllPaymentWithoutPage();
+	public List<PaymentM> findAllPayment(String state) {
+		return this.getPaymentMDao().findAllPayment(state);
 	}
 
 	@Override

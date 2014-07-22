@@ -205,4 +205,12 @@ public class FreeMarkervariable {
 	 * 收藏数据
 	 */
 	public static final String FAVORITE="favorite";
+	/**
+	 * 物流商
+	 */
+	public static final String LOGISTICS="logistics";
+	/**
+	 * 支付方式
+	 */
+	public static final String PAYMENTS="payments";
 }

@@ -490,7 +490,7 @@ public class LogisticsBusinessTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllLogisticsBusinessForbsOrder", results = { @Result(name = "json", type = "json") })
 	public String findAllLogisticsBusinessForbsOrder(){
-		logisticsbusiness=this.getLogisticsBusinessTService().findAllLogisticsBusinessWithoutPage();
+		logisticsbusiness=this.getLogisticsBusinessTService().findAllLogisticsBusiness(StaticKey.ONE);
 		if(!logisticsbusiness.isEmpty()){
 			this.setSucflag(true);
 			return "json";

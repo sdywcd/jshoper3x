@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -35,6 +38,7 @@ import com.jshop.service.CartTService;
 import com.jshop.service.DeliverAddressTService;
 import com.jshop.service.LogisticsBusinessTService;
 import com.jshop.service.LogisticsbusinessareaTService;
+import com.jshop.service.OrderBaseProcessTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
 import com.jshop.service.ShippingAddressTService;
@@ -57,6 +61,8 @@ public class FrontOrderAction extends ActionSupport {
 	private VouchersTService vouchersTService;
 	private ShippingAddressTService shippingAddressTService;
 	private OrderTService orderTService;
+	@Resource
+	private OrderBaseProcessTService orderBaseProcessTService;
 	private DataCollectionTAction dataCollectionTAction;
 	
 	/**
@@ -103,7 +109,7 @@ public class FrontOrderAction extends ActionSupport {
 	private boolean sflag = false;
 	private boolean svoucher = false;
 	private boolean spayment = false;//是否支付信息写入成功标记
-	private boolean sshoppingaddress = false;
+	private boolean sshoppingaddress = false;//是否发货地址写入成功
 	private boolean saddorder = false;
 	private boolean supdatecart = false;
 	private boolean slogin;
@@ -597,13 +603,14 @@ public class FrontOrderAction extends ActionSupport {
 
 	/**
 	 * 初始化订单所需信息
-	 * 1,获取用户收获地址列表
+	 * 1,获取用户收获地址列表,有就读取出来没有就增加新的，涉及保存新收获地址
 	 * 2，获取物流商信息
 	 * 3，获取支付方式
 	 * 4，获取购物车中的商品数据并进行重量信息计算
 	 * 5，计算运费
 	 * 6，计算总金额包含运费
-	 * 
+	 * 保存订单需要同时保存发货地址
+	 * 发票初始化，支付宝对接
 	 * @return
 	 */
 	@Action(value = "initOrder", results = { 
@@ -614,15 +621,30 @@ public class FrontOrderAction extends ActionSupport {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
 			//获取用户收获地址
-			getUserDeliverAddress(memberT);
-			//获取物流商
-			getDefaultLogistictsBusiness();
+			ActionContext.getContext().put(FreeMarkervariable.DELIVERADDRESS, orderBaseProcessTService.getMemberDeliverAddress(memberT));
+			//获取物流商 需要设定一个默认物流商来计算运费
+			ActionContext.getContext().put(FreeMarkervariable.LOGISTICS, orderBaseProcessTService.getLogisticstsBusiness(StaticKey.ONE));
 			//获取支付方式
-			getDefaultPayment();
-			//获取购物车中的商品作为订单商品处理
-			getMyCart(memberT);
+			ActionContext.getContext().put(FreeMarkervariable.PAYMENTS, orderBaseProcessTService.getPaymentM(StaticKey.ONE));
+			//获取购物车中的商品
+			List<CartT>list= orderBaseProcessTService.getMemberCart(memberT.getId(), StaticKey.ONE, StaticKey.ORDERTAG_NORMAL);
+			ActionContext.getContext().put(FreeMarkervariable.MEMBERCART,list);
+			//计算购物车信息
+			getMemberCartInfo(list);
+			//获取总价
+			ActionContext.getContext().put(FreeMarkervariable.TOTALPRICE, total);
+			//获取总积分
+			ActionContext.getContext().put(FreeMarkervariable.TOTALPOINTS, totalpoints);
+			//获取购物车ID
+			ActionContext.getContext().put(FreeMarkervariable.CARTID, cartid);
+			//获取购物车中商品ID串
+			ActionContext.getContext().put(FreeMarkervariable.CARTGOODSID, cartgoodsid);
+			//获取购物车中商品名称串
+			ActionContext.getContext().put(FreeMarkervariable.CARTGOODSNAME, cartgoodsname);
+			//获取购物车中商品总数
+			ActionContext.getContext().put(FreeMarkervariable.CARTNEEDQUANTITY, cartneedquantity);
 			//计算运费
-			getLogisticsPrice();
+			ActionContext.getContext().put(FreeMarkervariable.FREIGHT, getLogisticsPrice());
 			//获取总金额+运费
 			Double totalfreight = this.getTotal() + this.getFreight();
 			ActionContext.getContext().put(FreeMarkervariable.TOTALFREIGHT, totalfreight);
@@ -665,11 +687,12 @@ public class FrontOrderAction extends ActionSupport {
 			//预先生成订单编号
 			getSerialidorder();
 			//增加收获信息到发货地址表中
-			addShippingAddress();
+			saveShippingAddress();
 			//获取支付信息
-			InitPayway();
+			initPayway();
 			//增加订单到数据库
-			initOrderInfo(member);
+			saveOrderInfo(member);
+			
 			if (this.isSaddorder()) {
 				if(PaymentCode.PAYMENT_CODE_ALIPAY.equals(this.getPm().getPaymentCode())){
 					BuildAlipayConfig();
@@ -680,11 +703,12 @@ public class FrontOrderAction extends ActionSupport {
 				//String []tempgoodsid=order.getGoodid().split(",");
 				//检查如果购物已经有对应的订单号则不更新
 				//3表示加入订单的购物车
-				List<CartT>list=this.getCartTService().findCartByCartid(this.getCartid(), "3");
-				if(!list.isEmpty()){
-					return "json";
-				}
-				this.getCartTService().updateCartStateandOrderidByGoodsidList(this.getCartid().trim(), this.getSerialidorderid(), member.getId(), "3");
+				this.getCartTService().updateCartStateandOrderidByGoodsidList(this.getCartid().trim(), this.getSerialidorderid(), member.getId(), StaticKey.THREE);
+//				List<CartT>list=this.getCartTService().findCartByCartid(this.getCartid(), StaticKey.THREE);
+//				if(!list.isEmpty()){
+//					return "json";
+//				}
+				//这里为何要在查询一个已经加入订单的购物车信息？？？？
 			}
 			return "json";
 
@@ -693,58 +717,18 @@ public class FrontOrderAction extends ActionSupport {
 		return "json";
 	}
 	
-	//初始化订单操作，包括收货地址是否已经有了。有就读取出来没有就增加新的，涉及保存新收获地址，
-	//读取出新购物车内容，读取出默认的物流商，读取出默认的支付方式，保存订单需要同时保存发货地址
-	//发票初始化，支付宝对接
-	/**
-	 * 获取用户收获地址
-	 */
-	public void getUserDeliverAddress(MemberT memberT) {
-		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
-		ActionContext.getContext().put("deliveraddress", list);
-	
-	}
-
-	/**
-	 * 获取物流商配送方式
-	 */
-	public void getDefaultLogistictsBusiness() {
-		List<LogisticsBusinessT> list = this.getLogisticsBusinessTService().findAllLogisticsBusinessWithoutPage();
-		if (!list.isEmpty()) {
-			for (Iterator it = list.iterator(); it.hasNext();) {
-				LogisticsBusinessT lbt = (LogisticsBusinessT) it.next();
-				if (lbt.getVisible().equals("1")) {
-					this.setDefaultlogisticsid(lbt.getLogisticsid());
-					break;
-				}
-			}
-			ActionContext.getContext().put("logistics", list);
-		}
-	}
-
-	/**
-	 * 获取支付方式
-	 */
-	public void getDefaultPayment() {
-		List<PaymentM> list = this.getPaymentMService().findAllPaymentWithoutPage();
-		ActionContext.getContext().put("payments", list);
-	}
-
 	/**
 	 * 获取购物车中的商品作为订单商品处理
 	 * 
-	 * @param user
+	 * 
 	 */
-	public void getMyCart(MemberT memberT) {
-		String state="1";
-		String orderTag="1";
-		List<CartT> list = this.getCartTService().findAllCartByMemberId(memberT.getId(),state,orderTag);
-		if (list != null) {
+	public void getMemberCartInfo(List<CartT> list) {
+		if (!list.isEmpty()) {
 			this.setTotal(0.0);
 			this.setTotalweight(0.0);
 			this.setTotalpoints(0.0);
-			this.setCartgoodsname("");
-			this.setCartgoodsid("");
+			this.setCartgoodsname(StaticKey.EMPTY);
+			this.setCartgoodsid(StaticKey.EMPTY);
 			this.setCartneedquantity(0);
 			for (Iterator<CartT> it = list.iterator(); it.hasNext();) {
 				CartT ct = (CartT) it.next();
@@ -753,50 +737,45 @@ public class FrontOrderAction extends ActionSupport {
 					totalweight = Arith.add(totalweight, Arith.mul(Double.parseDouble(ct.getWeight()), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
 				}
 				totalpoints = Arith.add(totalpoints, Arith.mul(ct.getPoints(), Double.parseDouble(String.valueOf(ct.getNeedquantity()))));
-				
 				cartgoodsname=ct.getGoodsname();
 				cartgoodsid += ct.getGoodsid() + ",";
 				cartneedquantity += ct.getNeedquantity();
 				cartid = ct.getCartid();//获取购物车中的cartid表示同一个cartid即在同一个订单中
-				mainpicture=ct.getPicture();
+				mainpicture=ct.getPicture();//用于订单界面中显示一个主图
 			}
-			ActionContext.getContext().put(FreeMarkervariable.MEMBERCART, list);
-			ActionContext.getContext().put(FreeMarkervariable.TOTALPRICE, total);
-			ActionContext.getContext().put(FreeMarkervariable.TOTALPOINTS, totalpoints);
-			ActionContext.getContext().put(FreeMarkervariable.CARTID, cartid);
-			ActionContext.getContext().put(FreeMarkervariable.CARTGOODSID, cartgoodsid);
-			ActionContext.getContext().put(FreeMarkervariable.CARTGOODSNAME, cartgoodsname);
-			ActionContext.getContext().put(FreeMarkervariable.CARTNEEDQUANTITY, cartneedquantity);
 		}
 	}
 
 	/**
 	 * 计算运费
 	 */
-	private void getLogisticsPrice() {
-		Double temptotal = this.getTotal();
-		List<LogisticsbusinessareaT> list = this.getLogisticsbusinessareaTService().findAllLogisticsbusinessareaTBylogisticsid(this.getDefaultlogisticsid());
-		if (list != null) {
-			Double tempfreight = 0.0;
-			int tempy = 0;
-			for (Iterator it = list.iterator(); it.hasNext();) {
-//				LogisticsbusinessareaT lbt = (LogisticsbusinessareaT) it.next();
-//				if (this.getTotal() > lbt.getNeedcostmin() && this.getTotal() < lbt.getNeedcostmax() && this.getTotalweight() < lbt.getOvervalue()) {
-//					tempfreight = lbt.getNormalcost();
-//					tempy = (int) (this.getTotalweight() / 1000);
-//				} else if (this.getTotal() > lbt.getNeedcostmin() && this.getTotal() < lbt.getNeedcostmax() && this.getTotalweight() < lbt.getOvervalue()) {
-//					tempfreight = 0.0;
-//					tempy = (int) (this.getTotalweight() / 1000);
-//				} else {
-//					tempfreight = 0.0;
-//					tempy = (int) (this.getTotalweight() / 1000);
-//				}
+	private double getLogisticsPrice() {
+		//Double temptotal = this.getTotal();
+		Double freight=0.0;
+		List<LogisticsBusinessT>lblist=orderBaseProcessTService.getDefaultLogisticsBusinessT(StaticKey.ONE);
+		if(lblist!=null&&lblist.size()>0){
+			List<LogisticsbusinessareaT> list = orderBaseProcessTService.getDefaultLogisticsbusinessareaT(lblist.get(0).getLogisticsid());
+			if (list != null) {
+				Double tempfreight = 0.0;
+				int tempy = 0;
+				for (Iterator it = list.iterator(); it.hasNext();) {
+//					LogisticsbusinessareaT lbt = (LogisticsbusinessareaT) it.next();
+//					if (this.getTotal() > lbt.getNeedcostmin() && this.getTotal() < lbt.getNeedcostmax() && this.getTotalweight() < lbt.getOvervalue()) {
+//						tempfreight = lbt.getNormalcost();
+//						tempy = (int) (this.getTotalweight() / 1000);
+//					} else if (this.getTotal() > lbt.getNeedcostmin() && this.getTotal() < lbt.getNeedcostmax() && this.getTotalweight() < lbt.getOvervalue()) {
+//						tempfreight = 0.0;
+//						tempy = (int) (this.getTotalweight() / 1000);
+//					} else {
+//						tempfreight = 0.0;
+//						tempy = (int) (this.getTotalweight() / 1000);
+//					}
+				}
+				freight = tempfreight + tempy;
+				this.setFreight(freight);
 			}
-			Double freight = tempfreight + tempy;
-			this.setFreight(freight);
-			ActionContext.getContext().put(FreeMarkervariable.FREIGHT, freight);
-
 		}
+		return freight;
 
 	}
 
@@ -807,13 +786,13 @@ public class FrontOrderAction extends ActionSupport {
 	 * @return
 	 * @throws ParseException
 	 */
-	@Action(value = "GetVouchersByname", results = { 
+	@Action(value = "getVouchersByname", results = { 
 			@Result(name = "json",type="json")
 	})
-	public String GetVouchersByname() throws ParseException {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
-			if (Validate.StrNotNull(this.getVouchername())) {
+	public String getVouchersByname() throws ParseException {
+		MemberT membert = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (membert != null) {
+			if (StringUtils.isNotBlank(this.getVouchername())) {
 				VouchersT v = this.getVouchersTService().findVouchersForHonor(this.getVouchername());
 				if (v != null) {
 					this.setVouchercontent(Double.parseDouble(v.getVoucherscontent()));
@@ -858,7 +837,7 @@ public class FrontOrderAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	public void initOrderInfo(MemberT member) {
+	public void saveOrderInfo(MemberT member) {
 		order.setOrderid(this.getSerialidorderid());
 		order.setUserid(member.getId());
 		order.setUsername(member.getLoginname());
@@ -922,7 +901,7 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 在多支付方式情况下初始化订单采用的支付方式所需要的信息
 	 */
-	public void InitPayway(){
+	public void initPayway(){
 		PaymentM list = this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
 		if (list != null) {
 			this.setPm(list);
@@ -997,7 +976,8 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 增加发货地址
 	 */
-	public void addShippingAddress() {
+	public void saveShippingAddress() {
+		//检测收货地址是否存在
 		DeliverAddressT list = this.getDeliverAddressTService().findDeliverAddressById(this.getAddressid());
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
@@ -1014,9 +994,9 @@ public class FrontOrderAction extends ActionSupport {
 			s.setMobile(list.getMobile());
 			s.setEmail(list.getEmail());
 			s.setCreatetime(BaseTools.systemtime());
-			s.setState("1");
+			s.setState(StaticKey.ONE);
 			s.setDeliveraddressid(list.getAddressid());
-			s.setIssend("0");//未发送到这个地址过
+			s.setIssend(StaticKey.ZERO);//未发送到这个地址过
 			s.setOrderid(this.getSerialidorderid());//设置订单号
 			this.getShippingAddressTService().save(s);
 				this.setDt(list);//将收获地址信息存入dt

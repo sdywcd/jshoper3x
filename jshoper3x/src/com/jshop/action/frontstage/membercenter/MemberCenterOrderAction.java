@@ -17,10 +17,10 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.pay.thirdpartyplatform.alipay.AlipayConfig;
 import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
-import com.jshop.action.backstage.utils.AllOrderState;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.PageModel;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.order.AllOrderState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
@@ -483,7 +483,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * 获取物流商配送方式
 	 */
 	public void GetDefaultLogistictsBusiness() {
-		List<LogisticsBusinessT> list = this.getLogisticsBusinessTService().findAllLogisticsBusinessWithoutPage();
+		List<LogisticsBusinessT> list = this.getLogisticsBusinessTService().findAllLogisticsBusiness(StaticKey.ONE);
 		if (list != null) {
 			for (Iterator it = list.iterator(); it.hasNext();) {
 				LogisticsBusinessT lbt = (LogisticsBusinessT) it.next();
@@ -500,7 +500,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * 获取支付方式
 	 */
 	public void GetDefaultPayment() {
-		List<PaymentM> list = this.getPaymentMService().findAllPaymentWithoutPage();	
+		List<PaymentM> list = this.getPaymentMService().findAllPayment(StaticKey.ONE);	
 		ActionContext.getContext().put("payments", list);
 	}
 
