@@ -231,7 +231,7 @@ public class  StaticKey {
 	/**
 	 * 订单状态0表示未确认
 	 */
-	public static final String ORDERSTATE_ZERO_NUM="0";
+	public static final String ORDERSTATE_UNCONFIRMED_ZERO_NUM="0";
 	/**
 	 * 订单状态1表示已确认
 	 */
@@ -273,12 +273,16 @@ public class  StaticKey {
 	 * 订单标记1表示普通订单
 	 */
 	public static final String ORDERTAG_NORMAL="1";
+	/**
+	 * 订单标记2表示团购订单
+	 */
+	public static final String ORDERTAG_GROUPON="2";
 	
 	//支付状态标记
 	/**
 	 * 支付状态 0表示未付款
 	 */
-	public static final String PAYSTATE_ZERO_NUM="0";
+	public static final String PAYSTATE_NOT_PAID_ZERO_NUM="0";
 	/**
 	 * 支付状态 1等于已付款
 	 */
@@ -292,7 +296,7 @@ public class  StaticKey {
 	/**
 	 * 配送发货状态 0表示配货中未发货
 	 */
-	public static final String SHIPPINGSTATE_ZERO_NUM="0";
+	public static final String SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM="0";
 	/**
 	 * 配送发货状态 1表示已发货
 	 */
@@ -301,6 +305,10 @@ public class  StaticKey {
 	 * 配送发货状态 2表示由于订单被关闭就不需要发货
 	 */
 	public static final String SHIPPINGSTATE_TWO_NUM="2";
+	
+	//发货类型
+	public static final String PAY_ON_DELIVERY="货到付款";
+	
 	
 	//快递类型
 	/**
@@ -312,28 +320,30 @@ public class  StaticKey {
 	/**
 	 * 快递单打印状态 0表示未打印
 	 */
-	public static final String ISPRINTEXPRESS_ZERO_NUM="0";
+	public static final String EXPRESS_NOT_PRINT_ZERO_NUM="0";
 	/**
 	 * 快递单打印状态 1表示已打印
 	 */
-	public static final String ISPRINTEXPRESS_ONE_NUM="1";
+	public static final String EXPRESS_HAVE_PRINT_ONE_NUM="1";
 	//发货单打印状态
 	/**
 	 * 发货单打印状态 0表示未打印
 	 */
-	public static final String ISPRINTINVOICE_ZERO_NUM="0";
+	public static final String INVOICE_NOT_PRINT_ZERO_NUM="0";
 	
 	/**
 	 * 发货单打印状态 1表示已打印
 	 */
 	public static final String ISPRINTINVOICE_ONE_NUM="1";
+
+	
 	//发票开具状态
 	/**
 	 * 发票开具状态 0表示发票未开
 	 */
-	public static final String ISPRINTFPINVOICE_ZERO_NUM="0";
+	public static final String PINVOICE_NOT_PRINT_ZERO_NUM="0";
 	/**
-	 * 发票开具状态 0表示发票已开
+	 * 发票开具状态 1表示发票已开
 	 */
 	public static final String ISPRINTFPINVOICE_ONE_NUM="1";
 	//订单错误标记状态
@@ -404,10 +414,14 @@ public class  StaticKey {
 	 */
 	public static final String PAYMENT_CODE_TENPAY="cft";//财付通
 	/**
-	 * 支付宝支付接口类型 3表示双接口
+	 * 支付接口类型 3表示双接口
 	 */
-	public static final String ALIPAY_INTERFACE_CODE_TWOPAY="3";
+	public static final String PAY_INTERFACE_CODE_TWOPAY="3";
 			
+	/**
+	 * 货到付款的特殊标记
+	 */
+	public static final String PAY_ON_DELIVERY_TAG="-1";
 	
 	//会员信息静态字段
 	/**

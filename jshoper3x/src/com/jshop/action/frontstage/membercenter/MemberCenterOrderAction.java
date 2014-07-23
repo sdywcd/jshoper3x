@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -34,6 +37,7 @@ import com.jshop.service.CartTService;
 import com.jshop.service.DeliverAddressTService;
 import com.jshop.service.LogisticsBusinessTService;
 import com.jshop.service.MemberTService;
+import com.jshop.service.OrderBaseProcessTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
 import com.jshop.service.ShippingAddressTService;
@@ -56,6 +60,8 @@ public class MemberCenterOrderAction extends ActionSupport {
 	private UsertService usertService;
 	private DataCollectionTAction dataCollectionTAction;
 	private MemberTService memberTService;
+	@Resource
+	private OrderBaseProcessTService orderBaseProcessTService;
 	//获取隐藏的url
 	private String hidurl;
 	private OrderT order = new OrderT();
@@ -405,12 +411,12 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * @return
 	 */
 	@Action(value = "DelOrderByorderid", results = { @Result(name = "success", type = "chain", location = "findAllUserOrder"), @Result(name = "input", type = "redirect", location = "/html/default/shop/login.html?redirecturl=${hidurl}") })
-	public String DelOrderByorderid() {
-		UserT user = (UserT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-		if (user != null) {
-			String orderstate = "8";//9表示用户自己删除的订单
+	public String delOrderByorderid() {
+		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+		if (memberT != null) {
+			String orderstate = "8";//8表示用户自己删除的订单
 			@SuppressWarnings("unused")
-			int i = this.getOrderTService().delOrderByorderid(user.getUserid(), this.getOrderid().trim(), orderstate);
+			int i = this.getOrderTService().delOrderByorderid(memberT.getId(), this.getOrderid().trim(), orderstate);
 			return SUCCESS;
 		} else {
 			return INPUT;
@@ -470,55 +476,14 @@ public class MemberCenterOrderAction extends ActionSupport {
 		}
 	}
 
-	/**
-	 * 获取用户收获地址
-	 */
-	public void GetUserDeliverAddress(MemberT memberT) {
-		List<DeliverAddressT> list = this.getDeliverAddressTService().findDeliverAddressBymemberid(memberT.getId());
-		ActionContext.getContext().put("deliveraddress", list);
-		
-	}
+	
+
+
+
+
 
 	/**
-	 * 获取物流商配送方式
-	 */
-	public void GetDefaultLogistictsBusiness() {
-		List<LogisticsBusinessT> list = this.getLogisticsBusinessTService().findAllLogisticsBusiness(StaticKey.ONE);
-		if (list != null) {
-			for (Iterator it = list.iterator(); it.hasNext();) {
-				LogisticsBusinessT lbt = (LogisticsBusinessT) it.next();
-				if (lbt.getVisible().equals("1")) {
-					this.setDefaultlogisticsid(lbt.getLogisticsid());
-					break;
-				}
-			}
-			ActionContext.getContext().put("logistics", list);
-		}
-	}
-
-	/**
-	 * 获取支付方式
-	 */
-	public void GetDefaultPayment() {
-		List<PaymentM> list = this.getPaymentMService().findAllPayment(StaticKey.ONE);	
-		ActionContext.getContext().put("payments", list);
-	}
-
-	/**
-	 * 获取本次获取的订单信息
-	 */
-	public void GetthisOrderinfo() {
-		OrderT o = this.getOrderTService().findOrderDetailByorderid(this.getOrderid().trim());
-		if (o != null) {
-			ActionContext.getContext().put("myorderinfo", o);
-			ActionContext.getContext().put("freight", o.getFreight());
-			//把订单信息赋值给全局变量oldorder
-			//oldorder = o;
-		}
-	}
-
-	/**
-	 * 初始化再次支付的页面信息（收货地址，支付方式，抵用券）
+	 * 初始化再次支付的页面信息（收货地址，支付方式，抵用券）用户中心订单付款界面
 	 * 
 	 * @return
 	 */
@@ -527,13 +492,19 @@ public class MemberCenterOrderAction extends ActionSupport {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
 			//获取用户收获地址
-			GetUserDeliverAddress(memberT);
-			//获取物流商
-			GetDefaultLogistictsBusiness();
+			ActionContext.getContext().put(FreeMarkervariable.DELIVERADDRESS, orderBaseProcessTService.getMemberDeliverAddress(memberT));
+			//获取物流商 需要设定一个默认物流商来计算运费
+			ActionContext.getContext().put(FreeMarkervariable.LOGISTICS, orderBaseProcessTService.getLogisticstsBusiness(StaticKey.ONE));
 			//获取支付方式
-			GetDefaultPayment();
+			ActionContext.getContext().put(FreeMarkervariable.PAYMENTS, orderBaseProcessTService.getPaymentM(StaticKey.ONE));
 			//获取订单信息
-			GetthisOrderinfo();
+			OrderT o=orderBaseProcessTService.getOrder(this.getOrderid());
+			if(o!=null){
+				//订单信息
+				ActionContext.getContext().put(FreeMarkervariable.MYORDERINFO,o);
+				//运费
+				ActionContext.getContext().put(FreeMarkervariable.FREIGHT, o.getFreight());
+			}
 			//路径获取
 			ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 			//获取导航数据
@@ -556,7 +527,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	/**
 	 * 增加发货地址
 	 */
-	public void AddShippingAddress(String deliveraddressid) {
+	public void saveShippingAddress(String deliveraddressid) {
 		DeliverAddressT list = this.getDeliverAddressTService().findDeliverAddressById(this.getAddressid());
 		if (list != null) {
 			ShippingAddressT s = new ShippingAddressT();
@@ -623,14 +594,14 @@ public class MemberCenterOrderAction extends ActionSupport {
 			//设定以前的在发货表中的地址到state2表示弃用了。根据orderid获取并更新
 			int i = this.getShippingAddressTService().updateShippingAddressByorderandstate(oldorder.getOrderid(), "2");
 			//增加地址
-			AddShippingAddress(this.getAddressid().trim());
+			saveShippingAddress(this.getAddressid().trim());
 		}
 	}
 
 	/**
 	 * 比较支付方式是不是不同了，不同则更新订单，同则不变
 	 */
-	public void ComparePaymentinfo() {
+	public void comparePaymentinfo() {
 		if (oldorder.getPaymentid().equals(this.getPaymentid().trim())) {
 			PaymentM list = this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
 			if (list != null) {
@@ -657,7 +628,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	/**
 	 * 比较物流方式是否改变
 	 */
-	public void CompareLogisticsbusiness() {
+	public void compareLogisticsbusiness() {
 		if (oldorder.getLogisticsid().equals(this.getLogisticsid().trim())) {
 			order.setLogisticsid(oldorder.getLogisticsid());
 		} else {
@@ -670,7 +641,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * 
 	 * @param user
 	 */
-	public void UpdateOrderInfo(MemberT user) {
+	public void updateOrderInfo(MemberT user) {
 		order.setOrderid(oldorder.getOrderid());
 		order.setUserid(oldorder.getUserid());
 		order.setUsername(oldorder.getUsername());
@@ -727,18 +698,18 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * @return
 	 */
 	@Action(value = "InitAgAlipayandUpdateOrder", results = { @Result(name = "json", type = "json") })
-	public String InitAgAlipayandUpdateOrder() {
+	public String initAgAlipayandUpdateOrder() {
 		MemberT membert = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (membert != null) {
 			this.setSlogin(true);
 			//比较发货地址并更新
 			CompareShippingAddress();
 			//比较支付方式并更新
-			ComparePaymentinfo();
+			comparePaymentinfo();
 			//比较物流上市并更新
-			CompareLogisticsbusiness();
+			compareLogisticsbusiness();
 			//更新订单
-			UpdateOrderInfo(membert);
+			updateOrderInfo(membert);
 			this.setBasePath(this.getDataCollectionTAction().getBasePath());
 			return "json";
 		} else {
@@ -751,7 +722,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	/**
 	 * 获取订单详细
 	 */
-	public void GetOrderDetail(String orderid) {
+	public void getOrderDetail(String orderid) {
 		OrderT o = this.getOrderTService().findOrderDetailByorderid(orderid);
 		if (o != null) {
 			if (o.getOrderstate().equals("0")) {
@@ -813,7 +784,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 			map.put("myorderdetail", o);
 
 			//获取买家信息
-			GetUserBuyerInfo(o.getUserid());
+			getUserBuyerInfo(o.getUserid());
 		}
 	}
 
@@ -822,7 +793,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * 
 	 * @param userid
 	 */
-	public void GetUserBuyerInfo(String memberid) {
+	public void getUserBuyerInfo(String memberid) {
 		MemberT member = this.getMemberTService().findMemberTById(memberid);
 		if (member != null) {
 			map.put("myorderbuyerinfo", member);
@@ -834,7 +805,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * 
 	 * @param orderid
 	 */
-	public void GetOrderGoodsList(String orderid) {
+	public void getOrderGoodsList(String orderid) {
 		List<CartT> list = this.getCartTService().findCartGoodsByOrderid(orderid);
 		if (list != null) {
 			map.put("myordergoods", list);
@@ -846,7 +817,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * 
 	 * @param orderid
 	 */
-	public void GetOrderShippingAddress(String orderid) {
+	public void getOrderShippingAddress(String orderid) {
 		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
 		if (st != null) {
 			map.put("myshipping", st);
@@ -862,17 +833,17 @@ public class MemberCenterOrderAction extends ActionSupport {
 			@Result(name = "success",type="freemarker",location = "/WEB-INF/theme/default/shop/myordersdetail.ftl"),
 			@Result(name = "input",location = "/html/default/shop/user/login.html")
 	})
-	public String InitMyOrdersDetail() {
+	public String initMyOrdersDetail() {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
-			if(Validate.StrNotNull(this.getOrderid())){
+			if(StringUtils.isNotBlank(this.getOrderid())){
 				String orderid = this.getOrderid().trim();
 				//获取订单详细
-				GetOrderDetail(orderid);
+				getOrderDetail(orderid);
 				//获取订单中的商品列表
-				GetOrderGoodsList(orderid);
+				getOrderGoodsList(orderid);
 				//获取发货地址信息
-				GetOrderShippingAddress(orderid);
+				getOrderShippingAddress(orderid);
 				ActionContext.getContext().put("myorder", map);
 				//路径获取
 				ActionContext.getContext().put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());

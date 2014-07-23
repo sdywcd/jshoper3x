@@ -7,6 +7,7 @@ import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.entity.LogisticsbusinessareaT;
 import com.jshop.entity.MemberT;
+import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 
 /**
@@ -54,4 +55,24 @@ public interface OrderBaseProcessTService {
 	 * @return
 	 */
 	public List<LogisticsbusinessareaT>getDefaultLogisticsbusinessareaT(String logisticsid);
+	/**
+	 * 获取当前选择的支付信息
+	 * @param paymentid
+	 * @return
+	 */
+	public PaymentM getSelectedPayMent(String paymentid);
+	/**
+	 * 获取收货地址信息
+	 * @param addressid
+	 * @return
+	 */
+	public DeliverAddressT getDeliverAddress(String addressid);
+	/**
+	 * 获取订单信息
+	 * @param orderid
+	 * @return
+	 */
+	public OrderT getOrder(String orderid);
+	
+	
 }

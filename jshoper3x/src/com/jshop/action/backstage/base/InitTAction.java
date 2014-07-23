@@ -104,7 +104,7 @@ public class InitTAction extends BaseTAction {
 	public List<OrderT>findNewestOrders(){
 		int currentPage=1;
 		int lineSize=5;
-		String shippingstate=StaticKey.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String shippingstate=StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
 		String orderstate=StaticKey.ORDERSTATE_ONE_NUM;//订单状态已确认
 		String paystate=StaticKey.PAYSTATE_ONE_NUM;//付款状态已支付
 		List<OrderT>list=this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, orderstate, paystate, shippingstate);

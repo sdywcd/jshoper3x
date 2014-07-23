@@ -213,4 +213,8 @@ public class FreeMarkervariable {
 	 * 支付方式
 	 */
 	public static final String PAYMENTS="payments";
+	/**
+	 * 我的订单相信
+	 */
+	public static final String MYORDERINFO="myorderinfo";
 }

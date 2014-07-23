@@ -11,12 +11,14 @@ import com.jshop.dao.CartTDao;
 import com.jshop.dao.DeliverAddressTDao;
 import com.jshop.dao.LogisticsBusinessTDao;
 import com.jshop.dao.LogisticsbusinessareaTDao;
+import com.jshop.dao.OrderTDao;
 import com.jshop.dao.PaymentMDao;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.entity.LogisticsbusinessareaT;
 import com.jshop.entity.MemberT;
+import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.OrderBaseProcessTService;
 @Service("orderBaseProcessTService")
@@ -32,7 +34,8 @@ public class OrderBaseProcessTServiceImpl implements OrderBaseProcessTService {
 	private CartTDao cartTDao;
 	@Resource
 	private LogisticsbusinessareaTDao logisticsbusinessareaTDao;
-	
+	@Resource
+	private OrderTDao orderTDao;
 	@Override
 	public List<DeliverAddressT> getMemberDeliverAddress(MemberT m) {
 		return deliverAddressTDao.findDeliverAddressBymemberid(m.getId());
@@ -68,6 +71,24 @@ public class OrderBaseProcessTServiceImpl implements OrderBaseProcessTService {
 	public List<LogisticsbusinessareaT> getDefaultLogisticsbusinessareaT(
 			String logisticsid) {
 		return logisticsbusinessareaTDao.findAllLogisticsbusinessareaTBylogisticsid(logisticsid);
+	}
+
+
+	@Override
+	public PaymentM getSelectedPayMent(String paymentid) {
+		return paymentMDao.findPaymentbyId(paymentid);
+	}
+
+
+	@Override
+	public DeliverAddressT getDeliverAddress(String addressid) {
+		return deliverAddressTDao.findDeliverAddressById(addressid);
+	}
+
+
+	@Override
+	public OrderT getOrder(String orderid) {
+		return orderTDao.findOrderDetailByorderid(orderid);
 	}
 
 }

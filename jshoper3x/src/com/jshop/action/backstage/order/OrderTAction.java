@@ -39,10 +39,8 @@ import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
 import com.jshop.service.ProductTService;
 import com.jshop.service.ShippingAddressTService;
-import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 public class OrderTAction extends BaseTAction {
@@ -524,7 +522,7 @@ public class OrderTAction extends BaseTAction {
 	 * 
 	 * @param order
 	 */
-	public void processOrderList(List<OrderT> order) {
+	private void processOrderList(List<OrderT> order) {
 		rows.clear();
 		for (Iterator<OrderT> it = order.iterator(); it.hasNext();) {
 			OrderT o = (OrderT) it.next();
@@ -740,7 +738,7 @@ public class OrderTAction extends BaseTAction {
 	private void finddefaultAllHavepayTobeShippedOrder() {
 		int currentPage=page;
 		int lineSize=rp;
-		String shippingstate=StaticKey.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String shippingstate=StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
 		String orderstate=StaticKey.ORDERSTATE_ONE_NUM;//订单状态已确认
 		String paystate=StaticKey.PAYSTATE_ONE_NUM;//付款状态已支付
 		total=this.getOrderTService().countfindAllTobeShippedOrders(orderstate, paystate, shippingstate);
@@ -756,9 +754,9 @@ public class OrderTAction extends BaseTAction {
 	public void finddefaultAllUnpayTobeShippedOrder() {
 		int currentPage = page;
 		int lineSize = rp;
-		String shippingstate = StaticKey.SHIPPINGSTATE_ZERO_NUM;//配货中未发货
+		String shippingstate = StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
 		String orderstate=StaticKey.ORDERSTATE_TWO_NUM;//订单状态货到付款
-		String paystate=StaticKey.PAYSTATE_ZERO_NUM;//付款状态未付款
+		String paystate=StaticKey.PAYSTATE_NOT_PAID_ZERO_NUM;//付款状态未付款
 		total = this.getOrderTService().countfindAllTobeShippedOrders(orderstate,paystate,shippingstate);
 		List<OrderT> order = this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize,orderstate,paystate, shippingstate);
 		if (order != null) {
@@ -1214,7 +1212,7 @@ public class OrderTAction extends BaseTAction {
 		orderT.setPaymentname(paymentM.getPaymentname());
 		orderT.setDelivermode(StaticKey.DELIVERMODE_EXPRESS);//快递
 		orderT.setDeliverynumber(StaticKey.ZERO);//默认发货单号是0，在发货单填写过程中输入真正的发货单号
-		orderT.setOrderstate(StaticKey.ORDERSTATE_ZERO_NUM);//未确认
+		orderT.setOrderstate(StaticKey.ORDERSTATE_UNCONFIRMED_ZERO_NUM);//未确认
 		orderT.setLogisticsid(lBusinessT.getLogisticsid());
 		orderT.setLogisticsname(lBusinessT.getLogisticsname());
 		orderT.setLogisticswebaddress(lBusinessT.getWebsite());//查询快递点信息地址
@@ -1234,14 +1232,14 @@ public class OrderTAction extends BaseTAction {
 		orderT.setVouchersid(null);//后台不需要使用优惠券所以设置成null
 		orderT.setProductinfo("["+psbBuffer+"]");//订单中货物信息
 		orderT.setNeedquantity(needquantity);//购物车中的货物数量总和
-		orderT.setPaystate(StaticKey.PAYSTATE_ZERO_NUM);//未付款
-		orderT.setShippingstate(StaticKey.SHIPPINGSTATE_ZERO_NUM);//未发货
+		orderT.setPaystate(StaticKey.PAYSTATE_NOT_PAID_ZERO_NUM);//未付款
+		orderT.setShippingstate(StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM);//未发货
 		orderT.setDeliveraddressid(sAddressT.getDeliveraddressid());//获取收货地址id 此处0表示改订单的收货地址不在会员的收货地址管理中
 		orderT.setShippingusername(sAddressT.getShippingusername());//商户角度来看的收货人，来自于会员的deliveraddress表中或者直接从页面上获取
 		orderT.setCreatetime(BaseTools.systemtime());
-		orderT.setIsprintexpress(StaticKey.ISPRINTEXPRESS_ZERO_NUM);
-		orderT.setIsprintinvoice(StaticKey.ISPRINTINVOICE_ZERO_NUM);
-		orderT.setIsprintfpinvoice(StaticKey.ISPRINTFPINVOICE_ZERO_NUM);
+		orderT.setIsprintexpress(StaticKey.EXPRESS_NOT_PRINT_ZERO_NUM);
+		orderT.setIsprintinvoice(StaticKey.INVOICE_NOT_PRINT_ZERO_NUM);
+		orderT.setIsprintfpinvoice(StaticKey.PINVOICE_NOT_PRINT_ZERO_NUM);
 		orderT.setExpressnumber(null);//快递单号
 		orderT.setTradeNo(null);//支付交易号由第三方提供
 		orderT.setUserid(userid);
