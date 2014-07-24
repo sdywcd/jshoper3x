@@ -568,17 +568,17 @@ public class MemberCenterOrderAction extends ActionSupport {
 	/**
 	 * 比较收货地址和发货地址，判断是否需要更新订单中的收获地址id和发货地址id，和发货地址表中的响应信息
 	 */
-	public void CompareShippingAddress() {
-		//如果选中的地址已经在发货地址表，并且用户选中的发货地址也在订单中，则根据订单总的发货地址id读取信息给支付宝
+	public void compareShippingAddress(String addressid,String orderid) {
+		//如果选中的地址已经在发货地址表，并且用户选中的发货地址也在订单中，则根据订单中的发货地址id读取信息给支付宝
 		//如果用户选中的地址不在发货地址表中，那么新增发货地址并且更新发货地址到过去节点并且更新订单中的发货地址
 		/**
 		 * 获取发货地址表数据，判断传来的收获地址是不是已经在发货地址表中 state="1"表示使用的地址
 		 */
-		List<ShippingAddressT> list = this.getShippingAddressTService().findShippingAddressByDeliveraddressidAndstate(this.getAddressid().trim(), "1", this.getOrderid().trim());
-		if (list != null) {
+		List<ShippingAddressT> list = this.getShippingAddressTService().findShippingAddressByDeliveraddressidAndstate(addressid, StaticKey.ONE, orderid);
+		if (!list.isEmpty()) {
 			//获取一次原始订单比较地址信息
-			oldorder=this.getOrderTService().findOrderDetailByorderid(this.getOrderid());
-			if (oldorder.getDeliveraddressid().equals(this.getAddressid().trim())) {
+			oldorder=this.getOrderTService().findOrderDetailByorderid(orderid);
+			if (StringUtils.equals(oldorder.getDeliveraddressid(), addressid)) {
 				//用户选择的收获地址已经在发货地址表中，那么订单中任然使用原始的发货地址id和收获地址id
 				order.setShippingaddressid(oldorder.getShippingaddressid());
 				order.setDeliveraddressid(oldorder.getDeliveraddressid());
@@ -703,7 +703,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 		if (membert != null) {
 			this.setSlogin(true);
 			//比较发货地址并更新
-			CompareShippingAddress();
+			compareShippingAddress(this.getAddressid(),this.getOrderid());
 			//比较支付方式并更新
 			comparePaymentinfo();
 			//比较物流上市并更新
