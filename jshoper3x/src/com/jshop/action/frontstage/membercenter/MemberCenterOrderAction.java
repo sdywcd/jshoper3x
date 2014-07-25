@@ -67,6 +67,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	private String hidurl;
 	private OrderT order = new OrderT();
 	private PaymentM pm=new PaymentM();
+	private DeliverAddressT dt=new DeliverAddressT();
 	private String cp;
 	private String orderid;//订单编号
 	private String defaultlogisticsid;//默认 物流商id，用来计算默认运费
@@ -88,6 +89,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	private boolean spayment = false;//是否支付信息写入成功标记
 	private boolean sshoppingaddress = false;//发货地址标记
 	private boolean supdateorder = false;//订单更新标记
+	private boolean ischangeaddress;//是否改变了收货地址
 	private String paymentcode;//返回给前台的支付方式
 	private String paymentinterface;//反馈给前台的支付接口类型
 	private int rp=8;//每页显示数量
@@ -385,6 +387,22 @@ public class MemberCenterOrderAction extends ActionSupport {
 		this.spayment = spayment;
 	}
 
+	public boolean isIschangeaddress() {
+		return ischangeaddress;
+	}
+
+	public void setIschangeaddress(boolean ischangeaddress) {
+		this.ischangeaddress = ischangeaddress;
+	}
+
+	public DeliverAddressT getDt() {
+		return dt;
+	}
+
+	public void setDt(DeliverAddressT dt) {
+		this.dt = dt;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -584,16 +602,9 @@ public class MemberCenterOrderAction extends ActionSupport {
 		s.setIssend(StaticKey.ZERO);//未发送到这个地址过
 		s.setOrderid(oldorder.getOrderid());
 		this.getShippingAddressTService().save(s);
+		this.setDt(da);
 		this.setSshoppingaddress(true);
-		order.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
-		order.setDeliveraddressid(da.getAddressid());//设置收货地址到订单中
-		order.setShippingusername(da.getShippingusername());//设置收货人到订单中
-		//设置收货人信息给支付宝借口
-		AlipayConfig.receive_name = da.getShippingusername();
-		AlipayConfig.receive_address = da.getProvince() + da.getCity() + da.getDistrict() + da.getStreet();
-		AlipayConfig.reveive_zip = da.getPostcode();
-		AlipayConfig.reveive_phone = da.getTelno();
-		AlipayConfig.reveive_mobile = da.getMobile();
+		
 		return s;
 
 	}
@@ -611,18 +622,11 @@ public class MemberCenterOrderAction extends ActionSupport {
 		if (sa!=null) {
 			if (StringUtils.equals(oldorder.getDeliveraddressid(), addressid)) {
 				//用户选择的收获地址已经在发货地址表中，那么订单中任然使用原始的发货地址id和收获地址id
-				order.setShippingaddressid(oldorder.getShippingaddressid());
-				order.setDeliveraddressid(oldorder.getDeliveraddressid());
-				order.setShippingusername(oldorder.getShippingusername());
-				//设置收货人信息给支付宝借口
-				AlipayConfig.receive_name = sa.getShippingusername();
-				AlipayConfig.receive_address = sa.getProvince() + sa.getCity() + sa.getDistrict() + sa.getStreet();
-				AlipayConfig.reveive_zip = sa.getPostcode();
-				AlipayConfig.reveive_phone =sa.getTelno();
-				AlipayConfig.reveive_mobile = sa.getMobile();
+				this.setIschangeaddress(false);
 			}
 			return false;
 		} else {
+			this.setIschangeaddress(true);//改变了收货地址信息需要新增收货地址
 			//设定以前这个订单在发货表中的地址到state2表示弃用了。根据orderid获取并更新
 			List<ShippingAddressT>slist=orderBaseProcessTService.getShippingAddress(orderid);
 			for(ShippingAddressT s:slist){
@@ -638,7 +642,7 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * @param paymentid
 	 * @return
 	 */
-	private void getPayway(String paymentid){
+	private PaymentM getPayway(String paymentid){
 		PaymentM pm=orderBaseProcessTService.getSelectedPayMent(paymentid);
 		if(pm!=null){
 			this.setPm(pm);
@@ -657,58 +661,31 @@ public class MemberCenterOrderAction extends ActionSupport {
 		}else{
 			this.setSpayment(false);
 		}
+		return pm;
 	
 	}
 	
 	/**
 	 * 比较支付方式是不是不同了，不同则更新订单，同则不变
 	 */
-	public void getPaymentinfo(String paymentid) {
+	public PaymentM getPaymentinfo(String paymentid) {
 		
 		if(StringUtils.equals(oldorder.getPaymentid(), paymentid)){
-			getPayway(paymentid);	
+			return getPayway(paymentid);	
 		}else{
-			getPayway(paymentid);
+			return getPayway(paymentid);
 		}
-//		if (oldorder.getPaymentid().equals(this.getPaymentid().trim())) {
-//			PaymentM list = this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
-//			if (list != null) {
-//				AlipayConfig.partner = list.getPartnerid();
-//				AlipayConfig.key = list.getSafecode();
-//				AlipayConfig.seller_email = list.getAccount();
-//				//把支付方式id和名称增加到order中
-//				order.setPaymentid(list.getPaymentid());
-//				order.setPaymentname(list.getPaymentname());
-//			}
-//		} else {
-//			PaymentM list = this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
-//			if (list != null) {
-//				AlipayConfig.partner = list.getPartnerid();
-//				AlipayConfig.key = list.getSafecode();
-//				AlipayConfig.seller_email = list.getAccount();
-//				//把支付方式id和名称增加到order中
-//				order.setPaymentid(list.getPaymentid());
-//				order.setPaymentname(list.getPaymentname());
-//			}
-//		}
-		
 	}
 
 	/**
 	 * 比较物流方式是否改变
 	 */
 	public String compareLogisticsbusiness(String logisticsid) {
-//		if(StringUtils.equals(oldorder.getLogisticsid(), logisticsid)){
-//			return oldorder.getLogisticsid();
-//		}else{
-//			return logisticsid;
-//		}
-		if (oldorder.getLogisticsid().equals(this.getLogisticsid().trim())) {
-			order.setLogisticsid(oldorder.getLogisticsid());
-		} else {
-			order.setLogisticsid(this.getLogisticsid().trim());
+		if(StringUtils.equals(oldorder.getLogisticsid(), logisticsid)){
+			return oldorder.getLogisticsid();
+		}else{
+			return logisticsid;
 		}
-		return "";
 	}
 
 	/**
@@ -716,55 +693,62 @@ public class MemberCenterOrderAction extends ActionSupport {
 	 * 
 	 * @param user
 	 */
-	public void updateOrderInfo(MemberT user,PaymentM pm,DeliverAddressT da,ShippingAddressT s) {
+	public void updateOrderInfo(MemberT membert,PaymentM pm,DeliverAddressT da,ShippingAddressT s,String logisticsid) {
 		order.setOrderid(oldorder.getOrderid());
 		order.setUserid(oldorder.getUserid());
 		order.setUsername(oldorder.getUsername());
-		order.setMemberid(user.getId());
-		order.setMembername(user.getLoginname());
-		order.setDelivermode(oldorder.getDelivermode());
-		order.setDeliverynumber(null);//这里会有问题
+		order.setMemberid(membert.getId());
+		order.setMembername(membert.getLoginname());
+		if(StaticKey.PAY_ON_DELIVERY_TAG.equals(this.getPaymentid())){
+			order.setDelivermode(StaticKey.PAY_ON_DELIVERY);
+		}else{
+			order.setDelivermode(oldorder.getDelivermode());
+		}
+		order.setDeliverynumber(StaticKey.EMPTY);//发货单号在发货后填写
 		order.setOrderstate(oldorder.getOrderstate());
 		order.setPaystate(oldorder.getPaystate());
 		order.setShippingstate(oldorder.getShippingstate());
+		order.setLogisticsid(logisticsid);
+		order.setLogisticswebaddress(oldorder.getLogisticswebaddress());
 		order.setProductinfo(oldorder.getProductinfo());
-//		order.setGoodid(oldorder.getGoodid());
-//		order.setGoodsname(oldorder.getGoodsname());
 		order.setOrdername(oldorder.getOrdername());
+		order.setMainpicture(oldorder.getMainpicture());
 		order.setNeedquantity(oldorder.getNeedquantity());
 		order.setFreight(oldorder.getFreight());
 		order.setAmount(oldorder.getAmount());
 		order.setPoints(oldorder.getPoints());
 		order.setPurchasetime(BaseTools.systemtime());
 		order.setDeliverytime(null);
-		order.setDeliverynumber(null);
+		order.setDeliverynumber(StaticKey.EMPTY);
 		order.setIsinvoice(oldorder.getIsinvoice());
 		order.setCustomerordernotes(this.getCustomernotes());
-		order.setLogisticswebaddress(this.getLogisticswebaddress());
 		order.setPaytime(null);
-		order.setOrderTag(this.getOrderTag());
-		order.setToBuyerNotes(null);
+		order.setOrderTag(oldorder.getOrderTag());
+		order.setToBuyerNotes(oldorder.getToBuyerNotes());
 		order.setShouldpay(oldorder.getShouldpay());
 		order.setUsepoints(oldorder.getUsepoints());
 		order.setVouchersid(oldorder.getVouchersid());
-		order.setCreatetime(BaseTools.systemtime());
-		order.setIsprintexpress("0");//未打印快递单
-		order.setIsprintinvoice("0");//未打印发货单
-		order.setIsprintfpinvoice("0");//未开具发票
-		order.setExpressnumber("");//快递单号
-		try {
-			this.getOrderTService().updateOrder(order);
-			AlipayConfig.out_trade_no = order.getOrderid();
-			AlipayConfig.subject = order.getOrdername();
-			AlipayConfig.body = order.getOrdername();
-			AlipayConfig.price = String.valueOf(order.getShouldpay());
-			AlipayConfig.logistics_fee = String.valueOf(order.getFreight());
-			this.setSupdateorder(false);
-		} catch (RuntimeException re) {
-			this.setSupdateorder(true);
-			throw re;
+		order.setCreatetime(oldorder.getCreatetime());
+		order.setUpdatetime(BaseTools.systemtime());
+		order.setIsprintexpress(oldorder.getIsprintexpress());//未打印快递单
+		order.setIsprintinvoice(oldorder.getIsprintinvoice());//未打印发货单
+		order.setIsprintfpinvoice(oldorder.getIsprintfpinvoice());//未开具发票
+		order.setExpressnumber(oldorder.getExpressnumber());//快递单号
+		order.setPaymentid(pm.getPaymentid());
+		order.setPaymentname(pm.getPaymentname());
+		if(!this.isIschangeaddress()){
+			//如果发货地址没有变化则使用以前的订单信息
+			order.setShippingaddressid(oldorder.getShippingaddressid());
+			order.setDeliveraddressid(oldorder.getDeliveraddressid());
+			order.setShippingusername(oldorder.getShippingusername());
+		}else{
+			//如果发货地址变化则使用新的发货地址信息
+			order.setShippingaddressid(s.getShippingaddressid());//设置发货地址到订单中
+			order.setDeliveraddressid(da.getAddressid());//设置收货地址到订单中
+			order.setShippingusername(da.getShippingusername());//设置收货人
 		}
-
+		this.getOrderTService().updateOrder(order);
+		this.setSupdateorder(true);
 	}
 
 	/**
@@ -796,11 +780,19 @@ public class MemberCenterOrderAction extends ActionSupport {
 				if(da!=null){
 					ShippingAddressT s=saveShippingAddress(da);
 					//获取支付方式信息
-					getPaymentinfo(this.getPaymentid());
+					PaymentM pm=getPaymentinfo(this.getPaymentid());
 					//比较物流并更新
-					String logisticsid=compareLogisticsbusiness(this.getLogisticsid());
-					//更新订单
-					updateOrderInfo(membert,pm,da,s);
+					String lid=compareLogisticsbusiness(this.getLogisticsid());
+					if(pm!=null){
+						//更新订单
+						updateOrderInfo(membert,pm,da,s,lid);
+						if(isSupdateorder()){
+							if(PaymentCode.PAYMENT_CODE_ALIPAY.equals(pm.getPaymentCode())){
+								BuildAlipayConfig();
+							}
+						}
+					}
+					
 				}
 			}
 			this.setBasePath(this.getDataCollectionTAction().getBasePath());
@@ -810,6 +802,26 @@ public class MemberCenterOrderAction extends ActionSupport {
 			return "json";
 		}
 
+	}
+	/**
+	 * 开始对支付宝采集数据
+	 */
+	private void BuildAlipayConfig() {
+		AlipayConfig.partner = this.getPm().getPartnerid();
+		AlipayConfig.key = this.getPm().getSafecode();
+		AlipayConfig.seller_email = this.getPm().getAccount();
+		AlipayConfig.out_trade_no = order.getOrderid();
+		AlipayConfig.subject = order.getOrdername();
+		AlipayConfig.body = order.getOrdername();
+		AlipayConfig.price = String.valueOf(order.getShouldpay());
+		AlipayConfig.logistics_fee = String.valueOf(order.getFreight());
+		//设置收货人信息给支付宝借口
+		AlipayConfig.receive_name = this.getDt().getShippingusername();
+		AlipayConfig.receive_address = this.getDt().getProvince() + this.getDt().getCity() + this.getDt().getDistrict() + this.getDt().getStreet();
+		AlipayConfig.reveive_zip = this.getDt().getPostcode();
+		AlipayConfig.reveive_phone = this.getDt().getTelno();
+		AlipayConfig.reveive_mobile = this.getDt().getMobile();
+		
 	}
 
 	/**

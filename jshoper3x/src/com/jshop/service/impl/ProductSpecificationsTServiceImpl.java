@@ -58,4 +58,10 @@ public class ProductSpecificationsTServiceImpl extends BaseTServiceImpl<ProductS
 		return this.getProductSpecificationsTDao().countfindAllProductSpecificationsT();
 	}
 
+	@Override
+	public List<ProductSpecificationsT> findAllProductSpecificationsByGoodsTypeId(
+			String goodsTypeId, String state) {
+		return this.getProductSpecificationsTDao().findAllProductSpecificationsByGoodsTypeId(goodsTypeId, state);
+	}
+
 }

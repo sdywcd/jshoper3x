@@ -171,13 +171,24 @@ public class ProductSpecificationsTDaoImpl extends BaseTDaoImpl<ProductSpecifica
                                                   return list;
                                         }
                               });
-                      if (list.size() > 0) {
-                                return list;
-                      }
-                      return null;
+                      return list;
             } catch (RuntimeException re) {
                       log.error("find all GoodsAttributeT error", re);
                       throw re;
             }
   }
+
+		@Override
+		public List<ProductSpecificationsT> findAllProductSpecificationsByGoodsTypeId(
+				String goodsTypeId,String state) {
+			log.debug("find all findAllProductSpecificationsByGoodsTypeId");
+			try {
+				String queryString = "from ProductSpecificationsT as pst where pst.goodsTypeId=:goodsTypeId and pst.state:=state order by createtime desc";
+				List<ProductSpecificationsT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"goodsTypeId","state"}, new Object[]{goodsTypeId,state});
+				return list;
+			} catch (RuntimeException re) {
+				log.error("find all findAllProductSpecificationsByGoodsTypeId error", re);
+				throw re;
+			}
+		}
 }

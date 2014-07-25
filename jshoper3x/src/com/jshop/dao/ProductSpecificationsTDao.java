@@ -66,5 +66,11 @@ public interface ProductSpecificationsTDao extends BaseTDao<ProductSpecification
 	 */
 	public List<ProductSpecificationsT> sortAllProductSpecificationsT(
 			final int currentPage, final int lineSize, String queryString);
-
+	/**
+	 * 根据商品类型获取规格值信息
+	 * @param goodsTypeId
+	 * @return
+	 */
+	public List<ProductSpecificationsT>findAllProductSpecificationsByGoodsTypeId(String goodsTypeId,String state);
+	
 }

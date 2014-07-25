@@ -820,24 +820,26 @@ public class FrontOrderAction extends ActionSupport {
 	 * 
 	 * @return
 	 */
-	public void saveOrderInfo(MemberT member,PaymentM pm,DeliverAddressT da,ShippingAddressT s) {
+	public void saveOrderInfo(MemberT membert,PaymentM pm,DeliverAddressT da,ShippingAddressT s) {
 		order.setOrderid(this.getSerialidorderid());
-		order.setUserid(member.getId());
-		order.setUsername(member.getLoginname());
-		order.setMemberid(member.getId());
-		order.setMembername(member.getLoginname());
+		order.setUserid(membert.getId());
+		order.setUsername(membert.getLoginname());
+		order.setMemberid(membert.getId());
+		order.setMembername(membert.getLoginname());
 		//未来需要在这里处理是平邮还是快递或者是ems，这样物流商需要选择是平邮还是快递还是ems
 		if (this.getPaymentid().trim().equals(StaticKey.PAY_ON_DELIVERY_TAG)) {
 			order.setDelivermode(StaticKey.PAY_ON_DELIVERY);
 			//未来获取特定的支付标记来标记货到付款
+		}else{
+			//快递
+			order.setDelivermode(StaticKey.DELIVERMODE_EXPRESS);
 		}
-		order.setDelivermode(StaticKey.DELIVERMODE_EXPRESS);
 		order.setDeliverynumber(StaticKey.EMPTY);//发货单号在发货后填写
 		order.setOrderstate(StaticKey.ORDERSTATE_UNCONFIRMED_ZERO_NUM);//待确认
 		order.setPaystate(StaticKey.PAYSTATE_NOT_PAID_ZERO_NUM);//未付款
 		order.setShippingstate(StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM);//未发货
 		order.setLogisticsid(this.getLogisticsid().trim());
-		order.setLogisticswebaddress(this.getLogisticswebaddress());
+		order.setLogisticswebaddress(this.getLogisticswebaddress());//物流商网站需要通过查询获得
 		//这部分的逻辑需要修改，需要组织json来填写productinfo
 		order.setProductinfo(this.getCartgoodsid());
 		order.setOrdername(this.getCartgoodsname());
@@ -869,6 +871,7 @@ public class FrontOrderAction extends ActionSupport {
 		order.setUsepoints(0.0);//用户没有使用积分
 		order.setVouchersid(this.getUsedvoucherid());
 		order.setCreatetime(BaseTools.systemtime());
+		order.setUpdatetime(order.getCreatetime());
 		order.setIsprintexpress(StaticKey.EXPRESS_NOT_PRINT_ZERO_NUM);//未打印快递单
 		order.setIsprintinvoice(StaticKey.INVOICE_NOT_PRINT_ZERO_NUM);//未打印发货单
 		order.setIsprintfpinvoice(StaticKey.PINVOICE_NOT_PRINT_ZERO_NUM);//未开具发票
@@ -895,18 +898,12 @@ public class FrontOrderAction extends ActionSupport {
 				if(StaticKey.PAY_INTERFACE_CODE_TWOPAY.equals(pm.getPaymentInterface())){
 					this.setPaymentinterface(StaticKey.PAY_INTERFACE_CODE_TWOPAY);//双接口
 				}
-				//把支付方式id和名称增加到order中
-//				order.setPaymentid(list.getPaymentid());
-//				order.setPaymentname(list.getPaymentname());
 			}else if(PaymentCode.PAYMENT_CODE_TENPAY.equals(pm.getPaymentCode())){
 				this.setPaymentcode(PaymentCode.PAYMENT_CODE_TENPAY);
 				if(StaticKey.PAY_INTERFACE_CODE_TWOPAY.equals(pm.getPaymentInterface())){
 					//进行财付通的双接口虚拟即时到帐操作，采集即时到帐需要的数据
 					this.setPaymentinterface(StaticKey.PAY_INTERFACE_CODE_TWOPAY);
-				}
-//				order.setPaymentid(this.getPaymentid());
-//				order.setPaymentname(list.getPaymentname());
-				
+				}	
 			}
 			this.setSpayment(true);
 		} else {
@@ -919,7 +916,7 @@ public class FrontOrderAction extends ActionSupport {
 	/**
 	 * 开始对支付宝采集数据
 	 */
-	public void BuildAlipayConfig(){
+	private void BuildAlipayConfig(){
 		AlipayConfig.partner = this.getPm().getPartnerid();
 		AlipayConfig.key = this.getPm().getSafecode();
 		AlipayConfig.seller_email = this.getPm().getAccount();

@@ -71,6 +71,7 @@
 						<div id="triggers"></div>
 
 					</div>
+					<div id="process"></div>
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
 							id="hidid" name="hidid" value="" /> <input
@@ -78,7 +79,7 @@
 							value="提交" /> <input class="btn btn-success" type="button"
 							id="update" name="update" value="更新" style="display: none;" />
 					</div>
-					<div id="process">1212</div>
+					
 				</div>
 
 			</div>
@@ -86,7 +87,8 @@
 		</div>
 
 	</div>
-
+	<script type="text/javascript"
+		src="<%=basePath%>admin/js/material/imagematerialmentjs.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
 	<script type="text/javascript">
