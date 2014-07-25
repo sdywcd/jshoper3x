@@ -13,6 +13,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.ShippingAddressTDao;
+import com.jshop.entity.LogisticsbusinessareaT;
 import com.jshop.entity.ShippingAddressT;
 
 /**
@@ -85,16 +86,13 @@ public class ShippingAddressTDaoImpl extends BaseTDaoImpl<ShippingAddressT> impl
 		log.debug("update ShippingAddressT state2");
 		try {
 			final String queryString = "update ShippingAddressT as st set st.state=:state where st.orderid=:orderid ";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
+			Integer integer=this.getHibernateTemplate().execute(new HibernateCallback() {
 
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					int i = 0;
 					Query query = session.createQuery(queryString);
 					query.setParameter("orderid", orderid);
 					query.setParameter("state", state);
-					i = query.executeUpdate();
-					++i;
-					return i;
+					return query.executeUpdate();
 				}
 			});
 		} catch (RuntimeException re) {
@@ -126,6 +124,19 @@ public class ShippingAddressTDaoImpl extends BaseTDaoImpl<ShippingAddressT> impl
 			return null;
 		} catch (RuntimeException re) {
 			log.error("find all findShippingAddressByOrderid by shippingaddressid error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<ShippingAddressT> findShippingAddressByOrderId(String orderid) {
+		log.debug("find all findShippingAddressByOrderid by orderid");
+		try {
+			String queryString = "from ShippingAddressT as st where st.orderid=:orderid";
+			List<ShippingAddressT> list = this.getHibernateTemplate().findByNamedParam(queryString, "orderid", orderid);
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find all findShippingAddressByOrderid by orderid error", re);
 			throw re;
 		}
 	}

@@ -43,4 +43,9 @@ public class ShippingAddressTServiceImpl extends BaseTServiceImpl<ShippingAddres
 	public ShippingAddressT findShippingAddressByOrderid(String orderid, String state) {
 		return this.getShippingAddressTDao().findShippingAddressByOrderid(orderid, state);
 	}
+
+	@Override
+	public List<ShippingAddressT> findShippingAddressByOrderId(String orderid) {
+		return this.getShippingAddressTDao().findShippingAddressByOrderId(orderid);
+	}
 }

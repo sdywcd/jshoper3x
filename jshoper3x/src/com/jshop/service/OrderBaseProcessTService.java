@@ -9,6 +9,7 @@ import com.jshop.entity.LogisticsbusinessareaT;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
+import com.jshop.entity.ShippingAddressT;
 
 /**
  * 订单生成过程必须调用的方法
@@ -73,6 +74,19 @@ public interface OrderBaseProcessTService {
 	 * @return
 	 */
 	public OrderT getOrder(String orderid);
-	
+	/**
+	 * 根据收货地址id查询是否有对应的发货地址信息
+	 * @param deliveraddressid
+	 * @param state
+	 * @param orderid
+	 * @return
+	 */
+	public ShippingAddressT getShippingAddress(String deliveraddressid,String state,String orderid);
+	/**
+	 * 根据订单获取发货地址
+	 * @param orderid
+	 * @return
+	 */
+	public List<ShippingAddressT>getShippingAddress(String orderid);
 	
 }

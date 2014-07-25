@@ -13,6 +13,7 @@ import com.jshop.dao.LogisticsBusinessTDao;
 import com.jshop.dao.LogisticsbusinessareaTDao;
 import com.jshop.dao.OrderTDao;
 import com.jshop.dao.PaymentMDao;
+import com.jshop.dao.ShippingAddressTDao;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.LogisticsBusinessT;
@@ -20,6 +21,7 @@ import com.jshop.entity.LogisticsbusinessareaT;
 import com.jshop.entity.MemberT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
+import com.jshop.entity.ShippingAddressT;
 import com.jshop.service.OrderBaseProcessTService;
 @Service("orderBaseProcessTService")
 @Scope("prototype")
@@ -36,6 +38,8 @@ public class OrderBaseProcessTServiceImpl implements OrderBaseProcessTService {
 	private LogisticsbusinessareaTDao logisticsbusinessareaTDao;
 	@Resource
 	private OrderTDao orderTDao;
+	@Resource
+	private ShippingAddressTDao shippingAddressTDao;
 	@Override
 	public List<DeliverAddressT> getMemberDeliverAddress(MemberT m) {
 		return deliverAddressTDao.findDeliverAddressBymemberid(m.getId());
@@ -90,5 +94,21 @@ public class OrderBaseProcessTServiceImpl implements OrderBaseProcessTService {
 	public OrderT getOrder(String orderid) {
 		return orderTDao.findOrderDetailByorderid(orderid);
 	}
+
+
+	@Override
+	public ShippingAddressT getShippingAddress(String deliveraddressid,
+			String state, String orderid) {
+		return shippingAddressTDao.findShippingAddressByDeliveraddressidAndstate(deliveraddressid, state, orderid).get(0);
+	}
+
+
+	@Override
+	public List<ShippingAddressT> getShippingAddress(String orderid) {
+		return shippingAddressTDao.findShippingAddressByOrderId(orderid);
+	}
+
+
+	
 
 }

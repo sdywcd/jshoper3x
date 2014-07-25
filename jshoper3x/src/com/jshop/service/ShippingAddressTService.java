@@ -46,5 +46,10 @@ public interface ShippingAddressTService extends BaseTService<ShippingAddressT> 
 	 */
 	public ShippingAddressT findShippingAddressByOrderid(String orderid,
 			String state);
-
+	/**
+	 * 根据订单号和地址状态获取发货地址
+	 * @param orderid
+	 * @return
+	 */
+	public List<ShippingAddressT>findShippingAddressByOrderId(String orderid);
 }
