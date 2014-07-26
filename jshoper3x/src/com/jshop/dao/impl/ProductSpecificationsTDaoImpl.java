@@ -183,7 +183,7 @@ public class ProductSpecificationsTDaoImpl extends BaseTDaoImpl<ProductSpecifica
 				String goodsTypeId,String state) {
 			log.debug("find all findAllProductSpecificationsByGoodsTypeId");
 			try {
-				String queryString = "from ProductSpecificationsT as pst where pst.goodsTypeId=:goodsTypeId and pst.state:=state order by createtime desc";
+				String queryString = "from ProductSpecificationsT as pst where pst.goodsTypeId=:goodsTypeId and pst.state=:state order by createtime desc";
 				List<ProductSpecificationsT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[]{"goodsTypeId","state"}, new Object[]{goodsTypeId,state});
 				return list;
 			} catch (RuntimeException re) {

@@ -360,22 +360,24 @@ public class ProductSpecificationsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateProductSpecification", results = { @Result(name = "json", type = "json") })
 	public String updateProductSpecification() {
-
-		ProductSpecificationsT pst = new ProductSpecificationsT();
-		pst.setSpecificationsid(this.getSpecificationsid().trim());
-		pst.setName(this.getName().trim());
-		pst.setNote(this.getNote());
-		pst.setSort(this.getSort());
-		pst.setSpecificationsType(this.getSpecificationsType());
-		pst.setSpecificationsValue(this.getSpecificationsValue());
-		pst.setCreatetime(BaseTools.systemtime());
-		pst.setCreatorid(BaseTools.adminCreateId());
-		pst.setGoodsTypeId(this.getGoodsTypeId());
-		pst.setGoodsTypeName(this.getGoodsTypeName());
-		@SuppressWarnings("unused")
-		int i = this.getProductSpecificationsTService().updateProductSpecification(pst);
-		this.setSucflag(true);
-		return "json";
+		if(StringUtils.isNotBlank(this.getSpecificationsid())){
+			ProductSpecificationsT pst=this.getProductSpecificationsTService().findByPK(ProductSpecificationsT.class, this.getSpecificationsid());
+			if(pst!=null){
+				pst.setName(this.getName().trim());
+				pst.setNote(this.getNote());
+				pst.setSort(this.getSort());
+				pst.setSpecificationsType(this.getSpecificationsType());
+				pst.setSpecificationsValue(this.getSpecificationsValue());
+				pst.setCreatetime(BaseTools.systemtime());
+				pst.setCreatorid(BaseTools.adminCreateId());
+				pst.setGoodsTypeId(this.getGoodsTypeId());
+				pst.setGoodsTypeName(this.getGoodsTypeName());
+				this.getProductSpecificationsTService().update(pst);
+				this.setSucflag(true);
+				return JSON;
+			}
+		}
+		return JSON;
 
 	}
 
@@ -414,5 +416,20 @@ public class ProductSpecificationsTAction extends BaseTAction {
 		}
 		return "json";
 
+	}
+	
+	/**
+	 * 根据商品类型查询规格值信息
+	 * 
+	 * @return
+	 */
+	@Action(value = "findAllSpecificationsByGoodsTypeId", results = { @Result(name = "json", type = "json") })
+	public String findAllSpecificationsByGoodsTypeId(){
+		if(StringUtils.isNotBlank(this.getGoodsTypeId())){
+			specificationList=this.getProductSpecificationsTService().findAllProductSpecificationsByGoodsTypeId(this.getGoodsTypeId(), StaticKey.ONE);
+			this.setSucflag(true);
+			return JSON;
+		}
+		return JSON;
 	}
 }

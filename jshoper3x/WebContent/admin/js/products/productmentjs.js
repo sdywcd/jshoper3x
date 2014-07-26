@@ -9,8 +9,48 @@ $(function() {
 		  });
 	
 
+	 /**
+	 * 获取所有商品类型
+	 */
+	  findGoodsTypeTNForSelect=function(){
+		$.ajax({
+			url:"findGoodsTypeTNForSelect.action",
+			type:"post",
+			dataType:'json',
+			async:false,
+			success:function(data){
+			if(data.goodstypetnlist!=""){
+				$('#goodstypetn').append(data.goodstypetnlist);
+				}
+			}
+		});
+	},
+	/**
+	 * 根据商品类型获取规格值
+	 */
+	findAllSpecificationsByGoodsTypeId=function(goodsTypeId){
+		$.ajax({
+			url:"findAllSpecificationsByGoodsTypeId.action",
+			data:{"goodsTypeId":goodsTypeId},
+			type:"post",
+			dataType:'json',
+			async:false,
+			success:function(data){
+			if(data.specificationList!=""){
+				$('#goodstypetn').append(data.goodstypetnlist);
+				}
+			}
+		});
+	},
+	/**
+	 * 点击商品类型事件
+	 */
+	$("#goodstypetn").change(function(){
+		var goodsTypeId=$("#goodstypetn").val();
+		findAllSpecificationsByGoodsTypeId(goodsTypeId);
+	});
 	
-
+	
 	/**
 	 * 获取所有产品规格值列表
 	 */
@@ -562,11 +602,13 @@ $(function() {
 			setdttitle("#dttitle","增加"+goodsname+"的货物信息");
 		}
 		$("#hidgoodsid").val(goodsid);
+		findGoodsTypeTNForSelect();
 		findAllSpecificationsforjson();
 		
 	}else if(operate=="edit"){
 		var goodsid=$.query.get("goodsid");
 		if(goodsid==""){
+			findGoodsTypeTNForSelect();
 			findAllSpecificationsforjson();
 			findProductByProductid();
 		}else{
