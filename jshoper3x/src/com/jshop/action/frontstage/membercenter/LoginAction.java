@@ -31,8 +31,17 @@ public class LoginAction extends ActionSupport {
 	private String loginname;
 	private String loginpwd;
 	private String hidurl;
+	private String redirecturl;
 	private boolean loginflag;
 
+
+	public String getRedirecturl() {
+		return redirecturl;
+	}
+
+	public void setRedirecturl(String redirecturl) {
+		this.redirecturl = redirecturl;
+	}
 
 	@JSON(serialize = false)
 	public MemberT getMemberT() {
@@ -108,13 +117,14 @@ public class LoginAction extends ActionSupport {
 	 * @return
 	 */
 	@Action(value = "login", results = { 
-			@Result(name = "success",type="chain",location = "initMcIndex"),
+			@Result(name = "success",type="redirect",location = "${redirecturl}"),
 			@Result(name = "input",type="redirect",location = "/html/default/shop/user/login.html")
 	})
 	public String login() {
 		this.setBasePath(BaseTools.getBasePath());
 		MemberT m = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if(m!=null){
+			
 			ActionContext.getContext().getSession().remove(StaticKey.MEMBER_SESSION_KEY);
 		}
 		MD5Code md5 = new MD5Code();

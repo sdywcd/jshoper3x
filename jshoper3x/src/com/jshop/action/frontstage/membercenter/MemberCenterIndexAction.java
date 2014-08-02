@@ -149,6 +149,11 @@ public class MemberCenterIndexAction extends ActionSupport {
 	public String InitMemberCenterIndex() {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
+//			memberT.setAnswer("1");
+//			ActionContext.getContext().getSession().remove(StaticKey.MEMBER_SESSION_KEY);
+//			ActionContext.getContext().getSession().put(StaticKey.MEMBER_SESSION_KEY,memberT);
+//			MemberT m1 = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
+//			
 			//获取最近的订单信息
 			this.findAllUserOrderOn(memberT.getId());
 			
@@ -167,17 +172,17 @@ public class MemberCenterIndexAction extends ActionSupport {
 		int currentPage=page;
 		int lineSize=rp;
 		List<OrderT>list=this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberid, AllOrderState.ORDERSTATE_EIGHT_NUM, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
-		if(!list.isEmpty()){
-			total=this.getOrderTService().countfindAllOrderByorderstateForOn(memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
-			PageModel<OrderT>pm=new PageModel<>(currentPage, lineSize, list, total);
-			String action=this.getDataCollectionTAction().getBasePath()+"/initMcIndex.action?";
-			ActionContext.getContext().put("actionlink", action);
-			ActionContext.getContext().put("sign", "disstatic");
-			ActionContext.getContext().put("goods", pm);
-			ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
-			ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
-			ActionContext.getContext().put("totalpage",pm.getTotalpage());
-		}
+	
+		total=this.getOrderTService().countfindAllOrderByorderstateForOn(memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
+		PageModel<OrderT>pm=new PageModel<>(currentPage, lineSize, list, total);
+		String action=this.getDataCollectionTAction().getBasePath()+"/initMcIndex.action?";
+		ActionContext.getContext().put("actionlink", action);
+		ActionContext.getContext().put("sign", "disstatic");
+		ActionContext.getContext().put("goods", pm);
+		ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
+		ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
+		ActionContext.getContext().put("totalpage",pm.getTotalpage());
+	
 
 		
 	}

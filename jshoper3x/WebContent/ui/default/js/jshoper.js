@@ -68,7 +68,12 @@ $(function() {
 $(function() {});
 //========================================jshoper goodscategorylist js ==========================================
 $(function() {
-    // 获取url地址用来让用户登录时跳转
+	// 获取url地址用来让用户登录时跳转
+	var redirecturl=$.query.get("redirecturl");
+	if(redirecturl!=undefined&&redirecturl!=""){
+		 $('#redirecturl').attr("value",redirecturl);
+	}
+    // 获取当前页面方法url
     var windowsurl = window.location;
     $('#hidurl').attr("value", windowsurl.pathname);
     /**

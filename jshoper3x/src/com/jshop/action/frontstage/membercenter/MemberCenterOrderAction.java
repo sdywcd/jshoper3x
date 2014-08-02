@@ -438,17 +438,17 @@ public class MemberCenterOrderAction extends ActionSupport {
 		int currentPage=page;
 		int lineSize=rp;
 		List<OrderT>list=this.getOrderTService().findAllOrderByorderstateForOn(currentPage, lineSize, memberid, AllOrderState.ORDERSTATE_EIGHT_NUM, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
-		if(!list.isEmpty()){
-			total=this.getOrderTService().countfindAllOrderByorderstateForOn(memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
-			PageModel<OrderT>pm=new PageModel<>(currentPage, lineSize, list, total);
-			String action=this.getDataCollectionTAction().getBasePath()+"/findAllMemberOrder.action?";
-			ActionContext.getContext().put("actionlink", action);
-			ActionContext.getContext().put("sign", "disstatic");
-			ActionContext.getContext().put("goods", pm);
-			ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
-			ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
-			ActionContext.getContext().put("totalpage",pm.getTotalpage());
-		}
+	
+		total=this.getOrderTService().countfindAllOrderByorderstateForOn(memberid, AllOrderState.ORDERSTATE_EIGHT, AllOrderState.PAYSTATE_TWO_NUM, AllOrderState.SHIPPINGSTATE_TWO_NUM);
+		PageModel<OrderT>pm=new PageModel<>(currentPage, lineSize, list, total);
+		String action=this.getDataCollectionTAction().getBasePath()+"/findAllMemberOrder.action?";
+		ActionContext.getContext().put("actionlink", action);
+		ActionContext.getContext().put("sign", "disstatic");
+		ActionContext.getContext().put("goods", pm);
+		ActionContext.getContext().put(FreeMarkervariable.MEMBERORDERON,list);
+		ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
+		ActionContext.getContext().put("totalpage",pm.getTotalpage());
+		
 
 		
 	}
