@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -18,15 +20,17 @@ import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.PageModel;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.action.frontstage.utils.RedisStaticKey;
 import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.entity.GoodsT;
+import com.jshop.redis.service.RedisBaseTService;
+import com.jshop.redis.vo.RedisGoodsVo;
 import com.jshop.service.ArticleCategoryTService;
 import com.jshop.service.ArticleTService;
 import com.jshop.service.GoodsAttributeRpTService;
 import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.GoodsTService;
-import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.SiteNavigationTService;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -43,6 +47,8 @@ public class GoodsCategoryAction extends ActionSupport{
 	private ArticleTService articleTService;
 	private DataCollectionTAction dataCollectionTAction;
 	private GoodsAttributeRpTService goodsAttributeRpTService;
+	@Resource
+	private RedisBaseTService<RedisGoodsVo> redisBaseTService;
 	private Map<String,Object>map=new HashMap<String,Object>();
 	private List<GoodsT>goodsList;
 	private String navid;
@@ -222,10 +228,19 @@ public class GoodsCategoryAction extends ActionSupport{
 			@Result(name = "input" ,type="redirect",location = "/index.html")
 			})
 	public String searchGoodsByGoodsName(){
+		List<GoodsT> list = null;
 		int currentPage = page;
 		int lineSize = rp;
-		List<GoodsT> list = this.getGoodsTService().findGoodsByGoodsname(currentPage, lineSize, StaticKey.GoodsState.SALE.getState(),this.getTopKeywords().trim());
-		if(!list.isEmpty()){
+		RedisGoodsVo rgv=redisBaseTService.get(this.getTopKeywords(), RedisGoodsVo.class);
+		if(rgv==null){
+			list = this.getGoodsTService().findGoodsByGoodsname(currentPage, lineSize, StaticKey.GoodsState.SALE.getState(),this.getTopKeywords().trim());
+			rgv=new RedisGoodsVo();
+			rgv.setGlist(list);
+			redisBaseTService.put(this.getTopKeywords(), rgv, RedisGoodsVo.class);
+		}else{
+			list=rgv.getGlist();
+		}
+		if(list!=null&&list.size()>0){
 			total=this.getGoodsTService().countfindSearchGoods(this.getTopKeywords().trim());
 			PageModel<GoodsT> pm = new PageModel<GoodsT>(currentPage, lineSize, list,total);			
 			//判断是否有余数
@@ -243,8 +258,11 @@ public class GoodsCategoryAction extends ActionSupport{
 			ActionContext.getContext().put("totalgoods",pm.getTotalRecord());
 			ActionContext.getContext().put("totalpage",pm.getTotalpage());
 			ActionContext.getContext().put("topKeywords",topKeywords);
+			
 		}
+		
 		this.getDataCollectionTAction().putBaseInfoToContext();
+		
 		return SUCCESS;
 		
 	}

@@ -1,7 +1,6 @@
-package com.jshop.redis.dao;
+package com.jshop.redis.service;
 
-
-public interface RedisBaseTDao<T> {
+public interface RedisBaseTService <T> {
 	/**
 	 * 将对象保存至内存
 	 * @param t
