@@ -85,6 +85,8 @@
 								<li><a
 									href="<%=basePath%>admin/user/userment.jsp?operate=find"><i
 										class="icon-user"></i>系统用户列表</i></a></li>
+								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>添加微信账号</i></a></li>
+								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>微信账号设置</i></a></li>
 								<li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li>
 							</ul></li>
 
