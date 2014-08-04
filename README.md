@@ -110,10 +110,15 @@
 >struts2,spring3.0,hibernate4,freemarker,jsp,jquery,dwr,js,html5,css,mysql5,android4,Redis 这些事我们目前用到的
 >我们乐于使用新技术，我们也在系统中使用了很多国内的开源组件
 
+
+##关于Redis的使用
+>我们使用redis做了session管理(请访问http://www.jshoper.org/forum/forum.php?mod=viewthread&tid=81&extra= 获取redis session 管理的配置方法)
+>
+>我们在前端页面使用了redis做缓存(只是简单的使用，仅仅只把查询过的内容缓存，下次直接读取，缓存+静态化的配合使用可以有效提升前端性能，具体怎么做，还需要各位根据自己的实际业务情况考量)
+>
+>
 ##关于未来想加入的技术
 >搜索技术 lucene
->
->缓存 Redis（已加入）
 >
 >nosql
 >
