@@ -56,10 +56,16 @@
 						<span class="label label-required">选择商品类型:</span>
 						<select id="goodstypetn" name="goodstypetn"></select> <span class="label label-info">通过选择商品类型获取该类型下的规格值信息</span>
 					</div>
-					<div class="form-inline">
-						<span class="label label-required">货物规格选择:</span> <select
-							id="isSpecificationsOpen" name="isSpecificationsOpen"></select> <span
+					<div id="isSpecificationsOpenarea" style="display:none;" class="form-inline">
+						<span class="label label-required">货物规格选择:</span>
+						<select id="isSpecificationsOpen" name="isSpecificationsOpen"></select> <span
 							class="label label-info">如果选择一般规格则表示该商品下只有一种规格的货品，如果选择其他则表示该商品下有多个规格货品</span>
+					</div>
+					<div id="specificationvalueareadiv" class="form-inline" style="display: none;">
+							
+							
+						
+
 					</div>
 
 					<div id="specificationsarea" class="form-inline">
@@ -121,16 +127,7 @@
 												type="text" id="freezeStore" name="freezeStore"
 												class="small" />
 										</div>
-										<div id="specificationvalueareadiv" class="form-inline"
-											style="display: none;">
-											<span id="specificationtext" class="label label-required">规格值选择:</span>
-											<div id="specificationvaluearea"
-												style="margin-top: -28px; position: relative; width: 110px; display: inline;">
-
-
-											</div>
-
-										</div>
+										
 
 										<div class="form-inline">
 											<span class="label label-required">仓储地址:</span> <input
