@@ -65,6 +65,10 @@ $(function() {
 //			}
 //		});
 //	},
+	
+	
+	
+	
 	/**
 	 * 根据规格值id获取规格值信息
 	 */
@@ -175,31 +179,58 @@ $(function() {
 					$("input[name='isSalestate']").get(1).checked=true;
 				}
 				//这里绑定选择的规格值(这里的texttype，imgtype，colortype表示的是规格值设置中的规格类型，是定死的，且是一个关键判定标记)
-				findProductSpecificationsTByspecificationsid(data.bean.specificationsid);
+				//findProductSpecificationsTByspecificationsid(data.bean.specificationsid);
+				
+//				if(jsonstr!=null){
+//					$.each(jsonstr,function(k,v){
+//						if(v.type=="texttype"){
+//							$("input[name='texttype']").each(function(){
+//								 if($(this).attr("value")==v.specificationsValue){
+//									 $(this).attr("checked",true);
+//								 }
+//							});
+//						}else if(v.type=="imgtype"){
+//							$("input[name='imgtype']").each(function(){
+//								 if($(this).attr("value")==v.specificationsValue){
+//									 $(this).attr("checked",true);
+//								 }
+//							});
+//						}else if(v.type=="colortype"){
+//							$("input[name='colortype']").each(function(){
+//								 if($(this).attr("value")==v.specificationsValue){
+//									 $(this).attr("checked",true);
+//								 }
+//							});
+//						}
+//					});
+//				}
 				var jsonstr=$.parseJSON(data.bean.specificationsValue);
 				if(jsonstr!=null){
 					$.each(jsonstr,function(k,v){
 						if(v.type=="texttype"){
-							$("input[name='texttype']").each(function(){
-								 if($(this).attr("value")==v.specificationsValue){
-									 $(this).attr("checked",true);
-								 }
-							});
+							var html="<div class='form-inline'><span id='specificationtext' class='label label-required'>"+v.specificationsName+"</span>" +
+							"<div style='margin-right:10px; display: inline;padding-top:5px;padding-bottom:5px;'>" +
+							"<span>"+v.specificationsValue+"</span>" +
+							"</div></div>";
+							$("#specificationvalueareahavediv").append(html);
 						}else if(v.type=="imgtype"){
-							$("input[name='imgtype']").each(function(){
-								 if($(this).attr("value")==v.specificationsValue){
-									 $(this).attr("checked",true);
-								 }
-							});
+							var html="<div class='form-inline'><span id='specificationtext' class='label label-required'>"+v.specificationsName+"</span>"+
+							"<div style='margin-right:10px; display: inline;padding-top:5px;padding-bottom:5px;'>" +
+								"<img width='200px' height='200px' src='../.."+v.specificationsValue+"'/>" +
+								"</div></div>";
+							$("#specificationvalueareahavediv").append(html);
 						}else if(v.type=="colortype"){
-							$("input[name='colortype']").each(function(){
-								 if($(this).attr("value")==v.specificationsValue){
-									 $(this).attr("checked",true);
-								 }
-							});
+							var html="<div class='form-inline'><span id='specificationtext' class='label label-required'>"+v.specificationsName+"</span>" +
+							"<div style='margin-right:10px; display: inline;padding-left:90px;padding-top:5px;padding-bottom:5px;background:"+v.specificationsValue+"'>" +
+								"</div></div>";
+							$("#specificationvalueareahavediv").append(html);
 						}
+						$("#specificationvalueareahavediv").show();
 					});
+					
 				}
+				
+				
 				$("#specificationvalueareadiv").show();
 				$("#hidgoodsid").val(data.bean.goodsid);
 				$("#hidproductid").val(data.bean.productid);
@@ -378,6 +409,18 @@ $(function() {
 		var specificationsName=$("#isSpecificationsOpen").find("option:selected").text();//所选规格值名称
 		//提取选择的规格值
 		var specificationsValue=getselectSpecificationsVal();
+		//规格值id串
+		var specificationsids="";
+		//规格值名称串
+		var specificationsnames="";
+		var specifications=$.parseJSON(specificationsValue);
+		$.each(specifications,function(k,v){
+			specificationsids+=v.specificationsid+",";
+			specificationsnames+=v.specificationsName+",";
+		});
+		specificationsids=specificationsids.substring(0,specificationsids.length-1);
+		specificationsnames=specificationsnames.substring(0,specificationsnames.length-1);
+		
 		var productName=$("#productName").val();
 		if(productName==""){
 			formwarning("#alerterror","请填写商品名称");
@@ -403,8 +446,8 @@ $(function() {
 			"goodsid":goodsid,
 			"productid":productid,
 			"specificationsValue":specificationsValue,
-			"specificationsid":isSpecificationsOpen,
-			"specificationsName":specificationsName,
+			"specificationsid":specificationsids,
+			"specificationsName":specificationsnames,
 			"productName":productName,
 			"productSn":productSn,
 			"cost":cost,

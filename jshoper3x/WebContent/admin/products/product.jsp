@@ -47,11 +47,11 @@
 				<div class="btn-group">
 					<button id="btnback" type="button" class="btn btn-success">返回</button>
 				</div>
-				<!-- 开始显示商品类型form表单 -->
+		
 				<div class="form-actions">
 					<div class="well">
-							<h4>规格信息获取区域（规格信息是商品的组成部分）</h4>
-						</div>
+						<h4>规格信息获取区域（规格信息是商品的组成部分）</h4>
+					</div>
 					<div class="form-inline">
 						<span class="label label-required">选择商品类型:</span>
 						<select id="goodstypetn" name="goodstypetn"></select> <span class="label label-info">通过选择商品类型获取该类型下的规格值信息</span>
@@ -61,11 +61,14 @@
 						<select id="isSpecificationsOpen" name="isSpecificationsOpen"></select> <span
 							class="label label-info">如果选择一般规格则表示该商品下只有一种规格的货品，如果选择其他则表示该商品下有多个规格货品</span>
 					</div>
+					<!-- 规格值内容填充区 -->
 					<div id="specificationvalueareadiv" class="form-inline" style="display: none;">
-							
-							
-						
-
+					</div>
+					<div class="well">
+						<h4>已选规格值</h4>
+					</div>
+					<!-- 规格值内容已选填充区 -->
+					<div id="specificationvalueareahavediv" class="form-inline" style="display: none;">
 					</div>
 
 					<div id="specificationsarea" class="form-inline">
