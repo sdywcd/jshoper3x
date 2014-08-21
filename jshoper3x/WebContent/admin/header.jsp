@@ -206,6 +206,8 @@
 									href="<%=basePath%>admin/pagecontent/article.jsp?operate=add">添加文章</a></li>
 								<li><a
 									href="<%=basePath%>admin/pagecontent/articlement.jsp?operate=find">所有文章</a></li>
+								<li><a
+									href="<%=basePath%>admin/pagecontent/staticpagecontent.jsp?operate=find">静态化内容</a></li>
 								<!-- <li><a
 									href="<%=basePath%>admin/pagecontent/advertise.jsp?operate=add">添加广告</a></li>
 									<li><a

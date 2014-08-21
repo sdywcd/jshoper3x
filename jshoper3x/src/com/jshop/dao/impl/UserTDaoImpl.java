@@ -50,8 +50,8 @@ public class UserTDaoImpl extends BaseTDaoImpl<UserT> implements UserTDao {
 	public UserT login(UserT transientInstance) {
 		log.debug("login user");
 		try {
-			String queryString = "from UserT as u where u.username=:username and u.password=:password and u.userstate='1'";
-			List<UserT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "username", "password"}, new Object[] { transientInstance.getUsername(), transientInstance.getPassword() });
+			String queryString = "from UserT as u where u.username=:username and u.password=:password and u.userstate=:userstate";
+			List<UserT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "username", "password","userstate"}, new Object[] { transientInstance.getUsername(), transientInstance.getPassword(),transientInstance.getUserstate() });
 			if (list.size() > 0) {
 				return list.get(0);
 			} else {

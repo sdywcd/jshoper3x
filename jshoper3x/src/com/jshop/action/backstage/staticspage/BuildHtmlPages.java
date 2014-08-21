@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.InterceptorRefs;
@@ -39,6 +40,11 @@ public class BuildHtmlPages extends ActionSupport {
 	private Map<String, Object> map;
 	private String status;
 	private String buildlog;
+	//商品分类id
+	private String navid;
+	private String ltypeid;
+	private String stypeid;
+	
 	private int processbar;
 	private boolean sucflag;
 	public BuildHtmlPages() {
@@ -116,6 +122,25 @@ public class BuildHtmlPages extends ActionSupport {
 	}
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
+	}
+	
+	public String getNavid() {
+		return navid;
+	}
+	public void setNavid(String navid) {
+		this.navid = navid;
+	}
+	public String getLtypeid() {
+		return ltypeid;
+	}
+	public void setLtypeid(String ltypeid) {
+		this.ltypeid = ltypeid;
+	}
+	public String getStypeid() {
+		return stypeid;
+	}
+	public void setStypeid(String stypeid) {
+		this.stypeid = stypeid;
 	}
 	/**
 	 * 清理错误
@@ -299,8 +324,30 @@ public class BuildHtmlPages extends ActionSupport {
 		return "json";
 	}
 	
-	
-	
+	/**
+	 * 根据商品分类生成商品详情页
+	 * @return
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	@Action(value = "buildGoodsdetailHtml", results = { 
+			@Result(name = "json",type="json")
+	})
+	public String buildGoodsdetailHtml() throws IOException, TemplateException{
+		if(StringUtils.isNotBlank(this.getNavid())){
+			this.getCreateHtml().buildGoodsdetailPageByCategory(this.getNavid(),null,null);
+			this.setSucflag(true);
+		}
+		if(StringUtils.isNotBlank(this.getLtypeid())){
+			this.getCreateHtml().buildGoodsdetailPageByCategory(null,this.getLtypeid(),null);
+			this.setSucflag(true);
+		}
+		if(StringUtils.isNotBlank(this.getStypeid())){
+			this.getCreateHtml().buildGoodsdetailPageByCategory(null,null,this.getStypeid());
+			this.setSucflag(true);
+		}
+		return "json";
+	}
 	
 	
 	

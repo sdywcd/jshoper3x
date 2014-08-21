@@ -250,7 +250,60 @@ public class CreateHtml extends ActionSupport {
 		this.clearErrorsAndMessages();
 
 	}
+	/**
+	 * 将系统基础信息加入map集合中
+	 */
+	private void putBaseInfoToMap(){
+		map.put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
+		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
+		map.put(FreeMarkervariable.SITENAVIGATIONLIST,this.getDataCollectionTAction().findSiteNavigation(StaticKey.SiteNavigationState.SHOW.getVisible()));
+		map.put(FreeMarkervariable.FOOTCATEGORY,this.getDataCollectionTAction().findFooterCateogyrT(StaticKey.DataGrade.FIRST.getState(),StaticKey.DataUsingState.USING.getState()));
+		map.put(FreeMarkervariable.FOOTERATRICLE,this.getDataCollectionTAction().findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 
+	}
+	
+	/**
+	 * 根据商品分类创建对应的静态页商品详情页
+	 * @param navid
+	 * @param ltypeid
+	 * @param stypeid
+	 * @throws TemplateException 
+	 * @throws IOException 
+	 */
+	public void buildGoodsdetailPageByCategory(String navid,String ltypeid,String stypeid) throws IOException, TemplateException{
+		List<GoodsT>list=null;
+		if(navid!=null){
+			list=this.getDataCollectionTAction().getGoodsByNavIdCategoryT(navid);	
+		}
+		if(ltypeid!=null){
+			list=this.getDataCollectionTAction().getGoodsByLtypeIdCategoryT(ltypeid);
+		}
+		if(stypeid!=null){
+			list=this.getDataCollectionTAction().getGoodsByStypeIdCategoryT(stypeid);
+		}
+		putBaseInfoToMap();
+		for (Iterator<GoodsT> it = list.iterator(); it.hasNext();) {
+			GoodsT gt = (GoodsT) it.next();
+			//获取商品详细
+			map.put(FreeMarkervariable.GOODSDETAIL, gt);
+			//页面导航路径
+			map.put(FreeMarkervariable.GOODSCATEGORYPATH, this.getDataCollectionTAction().getGoodsCategoryPath(gt.getNavid()+","+gt.getLtypeid()+","+gt.getStypeid()));
+			//获取此该商品的同级分类
+			map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gt.getNavid(),StaticKey.DataUsingState.USING.getState()));
+			//获取此商品顶级分类的热销商品集合
+			map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().getHostsaleGoodsByCategoryId(gt.getNavid(), null));
+			//获取商品描述信息
+			map.put(FreeMarkervariable.GOODSDES, this.getDataCollectionTAction().getGoodsDetailRpByGoodsId(gt.getGoodsid()));
+			//获取商品参数
+			map.put(FreeMarkervariable.GOODSPARAMETERS,this.getDataCollectionTAction().getGoodsparameters(gt));
+			//获取推荐商品 条件 同分类下，同类型商品
+			map.put(FreeMarkervariable.RECOMMENDGOODSLIST, this.getDataCollectionTAction().getRecommedGoodsListByCategoryId(gt.getNavid()));	
+			String htmlPath = this.createGoodsT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSDETAIL, gt.getGoodsid(), map);
+			this.getGoodsTService().updateHtmlPath(gt.getGoodsid(), htmlPath,gt.getCreatetime());
+		}
+		
+	}
+	
 
 
 	/**

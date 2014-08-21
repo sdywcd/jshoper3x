@@ -29,6 +29,7 @@ import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.MD5Code;
 import com.jshop.action.backstage.utils.PasswordHelper;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.UserEnum;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
@@ -566,30 +567,33 @@ public class UserTAction extends BaseTAction {
 		UserT user = new UserT();
 		user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
 		user.setPassword(md5.getMD5ofStr(password));
-
-		
-		//user.setState(StaticString.THREE);//超级管理员
+		user.setUserstate(UserEnum.UserState.ACTIVE.getState());
 		user = this.getUsertService().login(user);
 		if (user != null) {
-			ActionContext.getContext().getSession().put(StaticKey.BACK_USER_SESSION_KEY, user);
-			this.setParam(md5.getMD5ofStr(user.getUserid()));
-			ActionContext.getContext().getSession().put(StaticKey.BACK_SESSION_KEY, param);
-			//获取默认主题
-			this.getInitTAction().InitDefaultThemeT();
-			//收集权限信息并放入内存
-			List<FunctionM> userfunctionlist = this.getUserRoleMAction().findUserRoleFunctionList(user.getUserid());
-			//List<FunctionM>allfunctionlist=this.getUserRoleMAction().findAllFunctionM();
-			ActionContext.getContext().getSession().put(StaticKey.USERROLEFUNCTION, userfunctionlist);
-			//ActionContext.getContext().getSession().put(BaseTools.ALLROLEFUNCTION, allfunctionlist);
-			//获取前5条需要发货的订单信息
-			List<OrderT>listOrderTs=this.getInitTAction().findNewestOrders();
-			ActionContext.getContext().getSession().put(StaticKey.NEWESTORDERS, listOrderTs);
+			doSysIndexInit(user,md5);
 			return SUCCESS;
 		}
 		this.setParam(StaticKey.ONE);
 		return INPUT;
 	}
-
+	/**
+	 * 进行用户登录有的系统首页数据初始化及用户权限相关初始化
+	 */
+	private void doSysIndexInit(UserT user,MD5Code md5){
+		ActionContext.getContext().getSession().put(StaticKey.BACK_USER_SESSION_KEY, user);
+		this.setParam(md5.getMD5ofStr(user.getUserid()));
+		ActionContext.getContext().getSession().put(StaticKey.BACK_SESSION_KEY, param);
+		//获取默认主题
+		this.getInitTAction().InitDefaultThemeT();
+		//收集权限信息并放入内存
+		List<FunctionM> userfunctionlist = this.getUserRoleMAction().findUserRoleFunctionList(user.getUserid());
+		//List<FunctionM>allfunctionlist=this.getUserRoleMAction().findAllFunctionM();
+		ActionContext.getContext().getSession().put(StaticKey.USERROLEFUNCTION, userfunctionlist);
+		//ActionContext.getContext().getSession().put(BaseTools.ALLROLEFUNCTION, allfunctionlist);
+		//获取前5条需要发货的订单信息
+		List<OrderT>listOrderTs=this.getInitTAction().findNewestOrders();
+		ActionContext.getContext().getSession().put(StaticKey.NEWESTORDERS, listOrderTs);
+	}
 	/**
 	 * 查询所有用户
 	 * 

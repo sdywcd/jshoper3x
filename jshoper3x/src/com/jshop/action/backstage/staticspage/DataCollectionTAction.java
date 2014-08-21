@@ -1,7 +1,6 @@
 package com.jshop.action.backstage.staticspage;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Controller;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
@@ -63,7 +61,6 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import edu.emory.mathcs.backport.java.util.Collections;
-import freemarker.template.utility.StringUtil;
 
 /**
  * 数据收集 收集所有模板页面需要的数据
@@ -797,4 +794,44 @@ public class DataCollectionTAction extends ActionSupport {
 		return Collections.emptyList();
 	}
 	
+	/**
+	 * 根据商品一级分类id获取商品信息
+	 * @param navid
+	 * @return
+	 */
+	public List<GoodsT>getGoodsByNavIdCategoryT(String navid){
+		List<GoodsT>list=this.getGoodsTService().findGoodsByNavid(navid, StaticKey.GoodsState.SALE.getState(), StaticKey.GoodsState.ISMOBILEPLATFORM.getState());
+		if(!list.isEmpty()){
+			return list;
+		}
+		return Collections.emptyList();
+				
+	}
+	/**
+	 * 根据商品二级分类id获取商品信息
+	 * @param navid
+	 * @return
+	 */
+	public List<GoodsT>getGoodsByLtypeIdCategoryT(String ltypeid){
+		List<GoodsT>list=this.getGoodsTService().findGoodsByLtypeid(ltypeid, StaticKey.GoodsState.SALE.getState());
+		if(!list.isEmpty()){
+			return list;
+		}
+		return Collections.emptyList();
+			
+	}
+	
+	/**
+	 * 根据商品三级分类id获取商品信息
+	 * @param navid
+	 * @return
+	 */
+	public List<GoodsT>getGoodsByStypeIdCategoryT(String stypeid){
+		List<GoodsT>list=this.getGoodsTService().findGoodsByStypeid(stypeid, StaticKey.GoodsState.SALE.getState());
+		if(!list.isEmpty()){
+			return list;
+		}
+		return Collections.emptyList();
+			
+	}
 }
