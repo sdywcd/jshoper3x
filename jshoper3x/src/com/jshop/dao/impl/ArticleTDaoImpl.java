@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jshop.dao.ArticleTDao;
 import com.jshop.entity.ArticleT;
+import com.jshop.entity.GoodsT;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -178,12 +179,9 @@ public class ArticleTDaoImpl extends BaseTDaoImpl<ArticleT> implements ArticleTD
 	public List<ArticleT> findAllArticleT(String status) {
 		log.debug("findAllArticleT");
 		try {
-			String queryString = "from ArticleT as at where  at.status=:status";
+			String queryString = "from ArticleT as at where at.status=:status";
 			List list = this.getHibernateTemplate().findByNamedParam(queryString, "status", status);
-			if (list != null && list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("findAllArticleT error", re);
 			throw re;
@@ -299,6 +297,51 @@ public class ArticleTDaoImpl extends BaseTDaoImpl<ArticleT> implements ArticleTD
 			return 0;
 		} catch (RuntimeException re) {
 			log.error("countfindAllArticle error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<ArticleT> findArticlesByNavid(String navid, String status) {
+		log.debug("findArticlesByNavid");
+		try {
+			String queryString = "from ArticleT as at where at.navid=:navid and at.status=:status";
+			List<ArticleT> list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "navid", "status" },
+					new Object[] { navid, status });
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findArticlesByNavid error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<ArticleT> findArticlesByLtypeid(String ltypeid, String status) {
+		log.debug("findArticlesByLtypeid");
+		try {
+			String queryString = "from ArticleT as at where at.ltypeid=:ltypeid and at.status=:status";
+			List<ArticleT> list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "ltypeid", "status" },
+					new Object[] { ltypeid, status });
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findArticlesByLtypeid error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<ArticleT> findArticlesByStypeid(String stypeid, String status) {
+		log.debug("findArticlesByStypeid");
+		try {
+			String queryString = "from ArticleT as at where at.stypeid=:stypeid and at.status=:status";
+			List<ArticleT> list = this.getHibernateTemplate().findByNamedParam(
+					queryString, new String[] { "stypeid", "status" },
+					new Object[] { stypeid, status });
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findArticlesByStypeid error", re);
 			throw re;
 		}
 	}

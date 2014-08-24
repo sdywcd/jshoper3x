@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.dao.ArticleTDao;
 import com.jshop.entity.ArticleT;
@@ -92,6 +90,21 @@ public class ArticleTServiceImpl extends BaseTServiceImpl<ArticleT> implements A
 	public int countfindAllArticle() {
 		return this.getArticleTDao().countfindAllArticle();
 				
+	}
+
+	@Override
+	public List<ArticleT> findArticlesByNavid(String navid, String status) {
+		return this.getArticleTDao().findArticlesByNavid(navid, status);
+	}
+
+	@Override
+	public List<ArticleT> findArticlesByLtypeid(String ltypeid, String status) {
+		return this.getArticleTDao().findArticlesByLtypeid(ltypeid, status);
+	}
+
+	@Override
+	public List<ArticleT> findArticlesByStypeid(String stypeid, String status) {
+		return this.getArticleTDao().findArticlesByStypeid(stypeid, status);
 	}
 
 }

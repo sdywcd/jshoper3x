@@ -7,6 +7,8 @@ package com.jshop.action.backstage.utils.statickey;
  *
  */
 public class  StaticKey {
+	public static final String UNDERLINE="_";
+	
 	/**
 	 * 逗号分隔符
 	 */

@@ -348,7 +348,60 @@ public class BuildHtmlPages extends ActionSupport {
 		}
 		return "json";
 	}
+	/**
+	 * 静态化所有商品详情页
+	 * @return
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	@Action(value = "buildAllGoodsdetailHtml", results = { 
+			@Result(name = "json",type="json")
+	})
+	public String buildAllGoodsdetailHtml() throws IOException, TemplateException{
+		this.getCreateHtml().buildAllGoodsdetailsPage();
+		this.setSucflag(true);
+		return "json";
+	}
 	
+	/**
+	 * 根据商品分类生成商品详情页
+	 * @return
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	@Action(value = "buildArticledetailHtml", results = { 
+			@Result(name = "json",type="json")
+	})
+	public String buildArticledetailHtml(){
+		if(StringUtils.isNotBlank(this.getNavid())){
+			this.getCreateHtml().buildArticlesdetailPage(this.getNavid(),null,null);
+			this.setSucflag(true);
+		}
+		if(StringUtils.isNotBlank(this.getLtypeid())){
+			this.getCreateHtml().buildArticlesdetailPage(null,this.getLtypeid(),null);
+			this.setSucflag(true);
+		}
+		if(StringUtils.isNotBlank(this.getStypeid())){
+			this.getCreateHtml().buildArticlesdetailPage(null,null,this.getStypeid());
+			this.setSucflag(true);
+		}
+		return "json";
+	}
+	
+	/**
+	 * 静态化所有文章详情页
+	 * @return
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	@Action(value = "buildAllArticledetailHtml", results = { 
+			@Result(name = "json",type="json")
+	})
+	public String buildAllArticledetailHtml() throws IOException, TemplateException{
+		this.getCreateHtml().buildAllArticlesdetailPage();
+		this.setSucflag(true);
+		return "json";
+	}
 	
 	
 

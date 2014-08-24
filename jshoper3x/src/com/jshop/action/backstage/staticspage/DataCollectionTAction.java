@@ -493,9 +493,7 @@ public class DataCollectionTAction extends ActionSupport {
 			}
 
 		} catch (Exception e) {
-			this.setLogmsg("<p style='color:red;'>" + e.getMessage() + "</p>");
 		}
-		this.setLogmsg("<p>商城页脚分类数据获取成功</p>");
 		return Collections.emptyList();
 
 	}
@@ -520,13 +518,51 @@ public class DataCollectionTAction extends ActionSupport {
 			}
 
 		} catch (Exception e) {
-			this.setLogmsg("<p style='color:red;'>" + e.getMessage() + "</p>");
+			
 		}
-		this.setLogmsg("<p>获取商城页脚文章成功</p>");
 		return Collections.emptyList();
 
 	}
+	/**
+	 * 根据一级文章分类获取文章数据
+	 * @param navid
+	 * @return
+	 */
+	public List<ArticleT>getArticlesByNavidCategoryT(String navid){
+		List<ArticleT>list=this.getArticleTService().findArticlesByNavid(navid, StaticKey.DataShowState.SHOW.getState());
+		if(!list.isEmpty()){
+			return list;
+		}
+		return Collections.emptyList();
+	}
+	/**
+	 * 根据二级文章分类获取文章数据
+	 * @param ltypeid
+	 * @return
+	 */
+	public List<ArticleT>getArticlesByLtypeidCategoryT(String ltypeid){
+		List<ArticleT>list=this.getArticleTService().findArticlesByLtypeid(ltypeid, StaticKey.DataShowState.SHOW.getState());
+		if(!list.isEmpty()){
+			return list;
+		}
+		return Collections.emptyList();
+	}
+	/**
+	 * 根据三级文章分类获取文章数据
+	 * @param ltypeid
+	 * @return
+	 */
+	public List<ArticleT>getArticlesByStypeidCategoryT(String stypeid){
+		List<ArticleT>list=this.getArticleTService().findArticlesByStypeid(stypeid, StaticKey.DataShowState.SHOW.getState());
+		if(!list.isEmpty()){
+			return list;
+		}
+		return Collections.emptyList();
+	}
+	
 
+	
+	
 	/**
 	 * 获取所有的商品品牌数据
 	 * 

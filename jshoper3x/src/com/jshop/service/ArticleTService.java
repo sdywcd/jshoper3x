@@ -130,5 +130,28 @@ public interface ArticleTService extends BaseTService<ArticleT> {
 	 * @return
 	 */
 	public int delArticleT(String id);
-
+	/**
+	 * 获取一级分类文章列表
+	 * @param navid
+	 * @param status
+	 * @return
+	 */
+	public List<ArticleT>findArticlesByNavid(String navid,String status);
+	
+	/**
+	 * 获取二级分类文章列表
+	 * @param ltypeid
+	 * @param status
+	 * @return
+	 */
+	public List<ArticleT>findArticlesByLtypeid(String ltypeid,String status);
+	/**
+	 * 获取三级分类文章列表
+	 * @param stypeid
+	 * @param status
+	 * @return
+	 */
+	public List<ArticleT>findArticlesByStypeid(String stypeid,String status);
+	
+	
 }

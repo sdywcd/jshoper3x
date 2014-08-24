@@ -71,11 +71,35 @@
 							class="btn btn-success" type="button" id="startbuildgoodshtml"
 							name="startbuildgoodshtml" value="开始静态化商品" />
 					</div>
+					<div id="modifygoodscategory" class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="startbuildallgoodshtml"
+							name="startbuildallgoodshtml" value="开始静态化全部商品" />
+					</div>
+					
 					<div class="well">
 						<h4>静态化文章内容</h4>
 					</div>
-					
-					
+					<div id="selectarticlecategory" class="form-inline">
+						<span class="label label-required">选择文章分类: </span>
+							<select id="articlenavid" name="articlenavid"></select>
+							<!-- 顶级分类一级分类 -->
+							<select id="articleltypeid" name="articleltypeid"></select>
+							<!-- 二级分类 -->
+							<select id="articlestypeid" name="articlestypeid"></select>
+							<!-- 三级分类 -->
+						<span class="label label-info">请选择一个文章分类</span>
+					</div>
+					<div id="modifygoodscategory" class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="startbuildarticleshtml"
+							name="startbuildarticleshtml" value="开始静态化文章" />
+					</div>
+					<div id="modifygoodscategory" class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="startbuildallarticleshtml"
+							name="startbuildallarticleshtml" value="开始静态化全部文章" />
+					</div>
 				</div>
 
 			</div>

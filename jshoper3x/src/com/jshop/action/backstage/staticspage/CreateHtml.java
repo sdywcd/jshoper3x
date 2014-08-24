@@ -304,6 +304,35 @@ public class CreateHtml extends ActionSupport {
 		
 	}
 	
+	/**
+	 * 静态化所有商品详情页
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	public void buildAllGoodsdetailsPage() throws IOException, TemplateException{
+		List<GoodsT> glist = this.getDataCollectionTAction().findAllGoodsT(StaticKey.GoodsState.SALE.getState());
+		putBaseInfoToMap();
+		for (Iterator<GoodsT> it = glist.iterator(); it.hasNext();) {
+			GoodsT gt = (GoodsT) it.next();
+			//获取商品详细
+			map.put(FreeMarkervariable.GOODSDETAIL, gt);
+			//页面导航路径
+			map.put(FreeMarkervariable.GOODSCATEGORYPATH, this.getDataCollectionTAction().getGoodsCategoryPath(gt.getNavid()+","+gt.getLtypeid()+","+gt.getStypeid()));
+			//获取此该商品的同级分类
+			map.put(FreeMarkervariable.SECONDGOODSCATEGORY, this.getDataCollectionTAction().findSecondGoodsCategoryT(gt.getNavid(),StaticKey.DataUsingState.USING.getState()));
+			//获取此商品顶级分类的热销商品集合
+			map.put(FreeMarkervariable.HOTSALEGOODSLIST, this.getDataCollectionTAction().getHostsaleGoodsByCategoryId(gt.getNavid(), null));
+			//获取商品描述信息
+			map.put(FreeMarkervariable.GOODSDES, this.getDataCollectionTAction().getGoodsDetailRpByGoodsId(gt.getGoodsid()));
+			//获取商品参数
+			map.put(FreeMarkervariable.GOODSPARAMETERS,this.getDataCollectionTAction().getGoodsparameters(gt));
+			//获取推荐商品 条件 同分类下，同类型商品
+			map.put(FreeMarkervariable.RECOMMENDGOODSLIST, this.getDataCollectionTAction().getRecommedGoodsListByCategoryId(gt.getNavid()));	
+			String htmlPath = this.createGoodsT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORGOODSDETAIL, gt.getGoodsid(), map);
+			this.getGoodsTService().updateHtmlPath(gt.getGoodsid(), htmlPath,gt.getCreatetime());
+		}
+	}
+	
 
 
 	/**
@@ -340,7 +369,58 @@ public class CreateHtml extends ActionSupport {
 //			}
 		}
 	}
-
+	/**
+	 * 根据文章分类静态化文章详情页
+	 * @param navid
+	 * @param ltypeid
+	 * @param stypeid
+	 */
+	public void buildArticlesdetailPage(String navid,String ltypeid,String stypeid){
+		try{
+			List<ArticleT>list=null;
+			if(navid!=null){
+				list=this.getDataCollectionTAction().getArticlesByNavidCategoryT(navid);
+			}
+			if(ltypeid!=null){
+				list=this.getDataCollectionTAction().getArticlesByLtypeidCategoryT(ltypeid);
+			}
+			if(stypeid!=null){
+				list=this.getDataCollectionTAction().getArticlesByStypeidCategoryT(stypeid);
+			}
+			putBaseInfoToMap();
+			for (Iterator<ArticleT> it = list.iterator(); it.hasNext();) {
+				ArticleT at = (ArticleT) it.next();
+				map.put(FreeMarkervariable.ARTICLE, at);
+				String htmlPath = this.createArticleT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORARTICLE, at.getArticleid(), map);
+				this.getArticleTService().updateHtmlPath(at.getArticleid(), htmlPath,at.getCreatetime());
+			}
+		}catch(Exception e){
+			
+		}
+		
+	}
+	
+	/**
+	 * 静态化所有文章详情页
+	 * @param navid
+	 * @param ltypeid
+	 * @param stypeid
+	 */
+	public void buildAllArticlesdetailPage(){
+		try{
+			List<ArticleT>list=this.getDataCollectionTAction().findAllArticleT(StaticKey.DataShowState.SHOW.getState());
+			putBaseInfoToMap();
+			for (Iterator<ArticleT> it = list.iterator(); it.hasNext();) {
+				ArticleT at = (ArticleT) it.next();
+				map.put(FreeMarkervariable.ARTICLE, at);
+				String htmlPath = this.createArticleT(BaseTools.getApplicationthemesign() + "_" + ContentTag.TEMPLATENAMEFORARTICLE, at.getArticleid(), map);
+				this.getArticleTService().updateHtmlPath(at.getArticleid(), htmlPath,at.getCreatetime());
+			}
+		}catch(Exception e){
+			
+		}
+		
+	}
 	/**
 	 * 生成文章静态页
 	 * 
