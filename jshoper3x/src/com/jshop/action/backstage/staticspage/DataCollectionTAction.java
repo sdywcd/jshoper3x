@@ -321,6 +321,7 @@ public class DataCollectionTAction extends ActionSupport {
 		ActionContext.getContext().put(FreeMarkervariable.FOOTERATRICLE, findFooterArticle(StaticKey.DataShowState.SHOW.getState()));
 	}
 	
+	
 	/**
 	 * 将路径，导航，商城基本信息，页脚分类，页脚文章放入map中用于静态化
 	 * @param map

@@ -7,11 +7,8 @@ import com.jshop.entity.GoodsT;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.vo.GoodsCategoryPathVo;
 
-public class RedisGoodsVo implements Serializable{
+public class RedisGoodsTypeBrandVo implements Serializable{
 	
-	private List<GoodsCategoryPathVo> gcpath;
-
-	private List<GoodsT>glist;
 	
 	private List<GoodsTypeBrandT>gtbrand;
 	
@@ -25,20 +22,6 @@ public class RedisGoodsVo implements Serializable{
 		this.gtbrand = gtbrand;
 	}
 
-	public List<GoodsCategoryPathVo> getGcpath() {
-		return gcpath;
-	}
-
-	public void setGcpath(List<GoodsCategoryPathVo> gcpath) {
-		this.gcpath = gcpath;
-	}
-
-	public List<GoodsT> getGlist() {
-		return glist;
-	}
-
-	public void setGlist(List<GoodsT> glist) {
-		this.glist = glist;
-	}
+	
 	
 }
