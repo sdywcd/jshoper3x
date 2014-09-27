@@ -387,13 +387,13 @@ $(function() {
 									"score" : score
 								},
 								function(data) {
-									if (data.sucflag) {
+							
 										window.location.href = "goodscommentlistment.jsp?operate=edit&goodsid="
 												+ goodsid
 												+ "&goodsname="
 												+ goodsname;
 										return;
-									}
+									
 								});
 			},
 			/**

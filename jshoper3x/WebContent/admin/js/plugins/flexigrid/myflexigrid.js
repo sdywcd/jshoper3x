@@ -8,7 +8,10 @@
  */
 (function ($) {
 	$.addFlex = function (t, p) {
-		if (t.grid) return false; //return if already exist
+		if (t.grid){
+			t.grid.populate_v(p);
+			return true; //return if already exist
+		}
 		p = $.extend({ //apply default properties
 			height: 200, //default height
 			width: 'auto', //auto width
@@ -496,6 +499,77 @@
 				$('.pPageStat', this.pDiv).html(stat);
 			},
 			populate: function () { //get latest data
+				if (this.loading) {
+					return true;
+				}
+				if (p.onSubmit) {
+					var gh = p.onSubmit();
+					if (!gh) {
+						return false;
+					}
+				}
+				this.loading = true;
+				if (!p.url) {
+					return false;
+				}
+				$('.pPageStat', this.pDiv).html(p.procmsg);
+				$('.pReload', this.pDiv).addClass('loading');
+				$(g.block).css({
+					top: g.bDiv.offsetTop
+				});
+				if (p.hideOnSubmit) {
+					$(this.gDiv).prepend(g.block);
+				}
+				if ($.browser.opera) {
+					$(t).css('visibility', 'hidden');
+				}
+				if (!p.newp) {
+					p.newp = 1;
+				}
+				if (p.page > p.pages) {
+					p.page = p.pages;
+				}
+				var param = [{
+					name: 'page',
+					value: p.newp
+				}, {
+					name: 'rp',
+					value: p.rp
+				}, {
+					name: 'sortname',
+					value: p.sortname
+				}, {
+					name: 'sortorder',
+					value: p.sortorder
+				}, {
+					name: 'query',
+					value: p.query
+				}, {
+					name: 'qtype',
+					value: p.qtype
+				}];
+				if (p.params) {
+					for (var pi = 0; pi < p.params.length; pi++) {
+						param[param.length] = p.params[pi];
+					}
+				}
+				$.ajax({
+					type: p.method,
+					url: p.url,
+					data: param,
+					dataType: p.dataType,
+					success: function (data) {
+						g.addData(data);
+					},
+					error: function (XMLHttpRequest, textStatus, errorThrown) {
+						try {
+							if (p.onError) p.onError(XMLHttpRequest, textStatus, errorThrown);
+						} catch (e) {}
+					}
+				});
+			},
+			populate_v: function (ps) { //get latest data
+				var p=ps;
 				if (this.loading) {
 					return true;
 				}
@@ -1248,8 +1322,10 @@
 		return t;
 	};
 	var docloaded = false;
+	//永远可以加载flexigrid
+	//var docloaded = true;
 	$(document).ready(function () {
-		docloaded = true
+		docloaded = true;
 	});
 	$.fn.flexigrid = function (p) {
 		return this.each(function () {
