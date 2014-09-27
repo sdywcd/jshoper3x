@@ -53,6 +53,30 @@
 				<!-- 开始显示商品类型form表单 -->
 				<div class="form-actions">
 					<div class="well">
+						<h4>重新生成模板文件</h4>
+					</div>
+					<div id="modifygoodscategory" class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="recreatetemplate"
+							name="recreatetemplate" value="开始重新生成模板文件" />
+					</div>
+					<div class="well">
+						<h4>静态化全站</h4>
+					</div>
+					<div id="modifygoodscategory" class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="startbuildallhtml"
+							name="startbuildallhtml" value="开始静态化全站" />
+					</div>
+					<div class="well">
+						<h4>首页静态化</h4>
+					</div>
+					<div id="modifygoodscategory" class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="startbuildindexhtml"
+							name="startbuildindexhtml" value="开始静态化首页" />
+					</div>
+					<div class="well">
 						<h4>静态化商品</h4>
 					</div>
 					<div id="selectgoodscategory" class="form-inline">

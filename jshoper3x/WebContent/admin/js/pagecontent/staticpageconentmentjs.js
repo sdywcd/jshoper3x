@@ -82,7 +82,35 @@ $(function() {
 		}
 	});
 
-
+	/**
+	 * 重新生成模板文件
+	 */
+	$("#recreatetemplate").on("click",function(){
+		$.post("recreateTemplate.action",function(data){
+			if(data.sucflag){
+				forminfo("#alertinfo","更新模板文件成功");
+				return;
+			}
+		});
+	});
+	
+	/**
+	 * 全站静态化
+	 */
+	$("#startbuildallhtml").on("click",function(){
+		$.post("buildAllHtml.action", function(data) {
+			forminfo("#alertinfo","全站静态化正在执行，请等待一会查看前台相应页面");
+			return;
+		});
+	});
+	/**
+	 * 静态化首页
+	 */
+	$("#startbuildindexhtml").on("click",function(){
+		$.post("buildIndexHtml.action", function(data) {
+			forminfo("#alertinfo","首页静态化正在执行，请等待一会查看前台相应页面");
+		});
+	});
 
 	/**
 	 * 按照商品分类静态化商品
@@ -101,7 +129,7 @@ $(function() {
 			"stypeid":stypeid
 		}, function(data) {
 			if (data.sucflag) {
-				forminfo("#alertinfo", "商品静态页正在生成，请等待一会查看前台响应页面");
+				forminfo("#alertinfo", "商品静态页正在生成，请等待一会查看前台相应页面");
 			}
 		});
 	});
@@ -111,7 +139,7 @@ $(function() {
 	$("#startbuildallgoodshtml").on('click',function(){
 		$.post("buildAllGoodsdetailHtml.action",function(data) {
 			if (data.sucflag) {
-				forminfo("#alertinfo", "所有商品静态页正在生成，请等待一会查看前台响应页面");
+				forminfo("#alertinfo", "所有商品静态页正在生成，请等待一会查看前台相应页面");
 			}
 		});
 	});
