@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-9-20 0:42:02 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-9-28 23:03:11 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -29,6 +29,7 @@ public class GoodsBelinkedT implements java.io.Serializable {
 	private String sxlinkedgoodsid;
 	private String mainproductid;
 	private String shopid;
+	private String maingoodsname;
 
 	public GoodsBelinkedT() {
 	}
@@ -36,7 +37,7 @@ public class GoodsBelinkedT implements java.io.Serializable {
 	public GoodsBelinkedT(String id, String maingoodsid,
 			String belinkedproductinfo, String mode, String state,
 			String creatorid, Date createtime, Date updatetime, int versiont,
-			String sxlinkedgoodsid) {
+			String sxlinkedgoodsid, String maingoodsname) {
 		this.id = id;
 		this.maingoodsid = maingoodsid;
 		this.belinkedproductinfo = belinkedproductinfo;
@@ -47,12 +48,14 @@ public class GoodsBelinkedT implements java.io.Serializable {
 		this.updatetime = updatetime;
 		this.versiont = versiont;
 		this.sxlinkedgoodsid = sxlinkedgoodsid;
+		this.maingoodsname = maingoodsname;
 	}
 
 	public GoodsBelinkedT(String id, String maingoodsid,
 			String belinkedproductinfo, String mode, String state,
 			String creatorid, Date createtime, Date updatetime, int versiont,
-			String sxlinkedgoodsid, String mainproductid, String shopid) {
+			String sxlinkedgoodsid, String mainproductid, String shopid,
+			String maingoodsname) {
 		this.id = id;
 		this.maingoodsid = maingoodsid;
 		this.belinkedproductinfo = belinkedproductinfo;
@@ -65,6 +68,7 @@ public class GoodsBelinkedT implements java.io.Serializable {
 		this.sxlinkedgoodsid = sxlinkedgoodsid;
 		this.mainproductid = mainproductid;
 		this.shopid = shopid;
+		this.maingoodsname = maingoodsname;
 	}
 
 	@Id
@@ -176,6 +180,15 @@ public class GoodsBelinkedT implements java.io.Serializable {
 
 	public void setShopid(String shopid) {
 		this.shopid = shopid;
+	}
+
+	@Column(name = "MAINGOODSNAME", nullable = false, length = 200)
+	public String getMaingoodsname() {
+		return this.maingoodsname;
+	}
+
+	public void setMaingoodsname(String maingoodsname) {
+		this.maingoodsname = maingoodsname;
 	}
 
 }

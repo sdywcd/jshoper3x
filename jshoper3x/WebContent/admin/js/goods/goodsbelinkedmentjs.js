@@ -292,7 +292,9 @@ $(function(){
 	
 	saveOrUpdateGoodsBelinkedT=function(){
 		var belinkedproductinfo=belinkedproductid.substring(0,belinkedproductid.length-1);
+		var maingoodsid=$("#maintag").val();
 		$.post("saveOrUpdateGoodsBelinkedT.action",{
+			"maingoodsid":maingoodsid,
 			"belinkedproductinfo":belinkedproductinfo
 		},function(data){
 			if(data.sucflag){

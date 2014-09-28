@@ -17,6 +17,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
@@ -28,6 +30,7 @@ import com.jshop.service.GoodsTService;
 import com.jshop.service.ProductTService;
 import com.jshop.service.impl.Serial;
 import com.jshop.vo.GoodsBelinkedModel;
+import com.jshop.vo.GoodsBelinkedProductInfo;
 @Namespace("")
 @ParentPackage("jshop")
 public class GoodsBeLinkedTAction extends BaseTAction {
@@ -222,10 +225,14 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 		//组装关联商品的json数据
 		//这里的关联商品id可以是商品id，或者是productid，默认的逻辑是选择了商品并默认获取期货物id
 		String []belinkedgoodsid=StringUtils.split(this.getBelinkedproductinfo().trim(),",");
-		StringBuilder belinkedstr=new StringBuilder();
-		belinkedstr.append("[");
+		Gson gson=new Gson();
+		List<GoodsBelinkedProductInfo>jsonlist=new ArrayList<GoodsBelinkedProductInfo>();
+		
+//		StringBuilder belinkedstr=new StringBuilder();
+//		belinkedstr.append("[");
 		//belinkproductinfo带有商品id或者是货物id需要处理
 		for(String s:belinkedgoodsid){
+			GoodsBelinkedProductInfo gbp=new GoodsBelinkedProductInfo();
 			//如果用goodsid和默认货物查到了product信息那么就是说明前台是传递的goods信息
 			//如果没查到则用goodsid查询product，默认就是传递的货物信息信息
 			List<ProductT>ptList=this.getProductTService().findProductTByGoodsid(s);
@@ -233,49 +240,54 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 				pt=ptList.get(0);
 				gt=this.getGoodsTService().findGoodsById(pt.getGoodsid());
 				String temp[]=StringUtils.split(gt.getPictureurl(), ',');
-				belinkedstr.append("{");
-				belinkedstr.append("\"goodsid\":\"").append(pt.getGoodsid()).append("\",");
-				belinkedstr.append("\"goodsName\":\"").append(gt.getGoodsname()).append("\",");
-				belinkedstr.append("\"productid\":\"").append(pt.getProductid()).append("\",");
-				belinkedstr.append("\"productName\":\"").append(pt.getProductName()).append("\",");
-				belinkedstr.append("\"htmlpath\":\"").append(gt.getHtmlPath()).append("\",");
-				belinkedstr.append("\"memberprice\":\"").append(pt.getMemberprice()).append("\",");
-				belinkedstr.append("\"price\":\"").append(pt.getPrice()).append("\",");
-				belinkedstr.append("\"pictureurl\":\"").append(temp[0]).append("\"");
-				belinkedstr.append("},");
+				gbp.setGoodsid(pt.getGoodsid());
+				gbp.setGoodsName(gt.getGoodsname());
+				gbp.setProductid(pt.getProductid());
+				gbp.setProductName(pt.getProductName());
+				gbp.setHtmlpath(gt.getHtmlPath());
+				gbp.setMemberprice(String.valueOf(pt.getMemberprice()));
+				gbp.setPrice(String.valueOf(pt.getPrice()));
+				if(temp.length>0){
+					gbp.setPictureurl(temp[0]);
+				}else{
+					gbp.setPictureurl(gt.getPictureurl());
+				}
+				jsonlist.add(gbp);
 			}
-			belinkedstr.deleteCharAt(belinkedstr.length()-1);
-			belinkedstr.append("]");
-			GoodsBelinkedT gbl=new GoodsBelinkedT();
-			List<GoodsBelinkedT>list=this.getGoodsBelinkedTService().findGoodsBelinkedBymaingoodsid(pt.getGoodsid());
-			if(!list.isEmpty()){
-				gbl.setId(list.get(0).getId());
-				gbl.setMaingoodsid(pt.getGoodsid());
-				gbl.setBelinkedproductinfo(belinkedstr.toString());
-				gbl.setMode(StaticKey.ONE);//单向模式
-				gbl.setState(StaticKey.ONE);//开启关联
-				gbl.setMainproductid(pt.getProductid());
-				gbl.setCreatorid(BaseTools.adminCreateId());
-				gbl.setCreatetime(list.get(0).getCreatetime());
-				gbl.setUpdatetime(BaseTools.systemtime());
-				gbl.setVersiont(0);
-				gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
-				this.getGoodsBelinkedTService().updateGoodsBelinked(gbl);
-			}else{
-				gbl.setId(this.getSerial().Serialid(Serial.GOODSBELINKED));
-				gbl.setMaingoodsid(pt.getGoodsid());
-				gbl.setBelinkedproductinfo(belinkedstr.toString());
-				gbl.setMode(StaticKey.ONE);//单向模式
-				gbl.setState(StaticKey.ONE);//开启关联
-				gbl.setMainproductid(pt.getProductid());
-				gbl.setCreatorid(BaseTools.adminCreateId());
-				gbl.setCreatetime(BaseTools.systemtime());
-				gbl.setUpdatetime(BaseTools.systemtime());
-				gbl.setVersiont(0);
-				gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
-				this.getGoodsBelinkedTService().save(gbl);
-			}
-			
+		}
+		String belinkedproductinfo=gson.toJson(jsonlist);
+		//获取主商品名称
+		GoodsT gst=this.getGoodsTService().findByPK(GoodsT.class, this.getMaingoodsid());
+		GoodsBelinkedT gbl=new GoodsBelinkedT();
+		List<GoodsBelinkedT>list=this.getGoodsBelinkedTService().findGoodsBelinkedBymaingoodsid(this.getMaingoodsid());
+		if(!list.isEmpty()){
+			gbl.setId(list.get(0).getId());
+			gbl.setMaingoodsid(this.getMaingoodsid());
+			gbl.setMaingoodsname(gst.getGoodsname());
+			gbl.setBelinkedproductinfo(belinkedproductinfo);
+			gbl.setMode(StaticKey.ONE);//单向模式
+			gbl.setState(StaticKey.ONE);//开启关联
+			gbl.setMainproductid(pt.getProductid());
+			gbl.setCreatorid(BaseTools.adminCreateId());
+			gbl.setCreatetime(list.get(0).getCreatetime());
+			gbl.setUpdatetime(BaseTools.systemtime());
+			gbl.setVersiont(0);
+			gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
+			this.getGoodsBelinkedTService().updateGoodsBelinked(gbl);
+		}else{
+			gbl.setId(this.getSerial().Serialid(Serial.GOODSBELINKED));
+			gbl.setMaingoodsid(this.getMaingoodsid());
+			gbl.setMaingoodsname(gst.getGoodsname());
+			gbl.setBelinkedproductinfo(belinkedproductinfo);
+			gbl.setMode(StaticKey.ONE);//单向模式
+			gbl.setState(StaticKey.ONE);//开启关联
+			gbl.setMainproductid(pt.getProductid());
+			gbl.setCreatorid(BaseTools.adminCreateId());
+			gbl.setCreatetime(BaseTools.systemtime());
+			gbl.setUpdatetime(BaseTools.systemtime());
+			gbl.setVersiont(0);
+			gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
+			this.getGoodsBelinkedTService().save(gbl);
 		}
 		this.setSucflag(true);
 		return "json";
@@ -304,39 +316,24 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 		processGoodsBelinkedList(list);
 	}
 	private void processGoodsBelinkedList(List<GoodsBelinkedT> list) {
+		List<GoodsBelinkedProductInfo>gbpinfo=new ArrayList<GoodsBelinkedProductInfo>();
+		Gson gson=new Gson();
+		String productinfo="";
 		for(Iterator<GoodsBelinkedT> it=list.iterator();it.hasNext();){
 			GoodsBelinkedT gbt=(GoodsBelinkedT) it.next();
-			GoodsBelinkedModel gbm=new GoodsBelinkedModel();
-			gbm.setId(gbt.getId());
-			gbm.setMaingoodsid(gbt.getMaingoodsid());
-			gbm.setProductid(gbt.getMaingoodsid());
-			JSONArray ja=(JSONArray)JSONValue.parse(gbt.getBelinkedproductinfo());
-			StringBuilder sbu=new StringBuilder();
-			sbu.append("[");
-		
-			for(int i=0;i<ja.size();i++){
-				JSONObject jo=(JSONObject) ja.get(i);
-				if(jo.get("goodsName")!=null){
-					gbm.setGoodsname(jo.get("goodsName").toString());
-				}
-				if(jo.get("productName")!=null){
-					sbu.append(jo.get("productName").toString()).append("--");
-				}
-				if(jo.get("memberprice")!=null){
-					sbu.append(jo.get("memberprice").toString()).append("--");
-				}
+			gbpinfo=gson.fromJson(gbt.getBelinkedproductinfo(), new TypeToken<List<GoodsBelinkedProductInfo>>(){}.getType());
+			for(GoodsBelinkedProductInfo g:gbpinfo){
+				productinfo+=g.getProductName()+"["+g.getMemberprice()+"]";
 			}
-			sbu.append("]");
-			gbm.setProductName(sbu.toString());
-			
 			Map<String,Object> cellMap=new HashMap<String,Object>();
-			cellMap.put("id", gbm.getId());
+			cellMap.put("id", gbt.getId());
 			cellMap.put("cell", new Object[]{
-					gbm.getGoodsname(),
-					gbm.getProductName(),
+					gbt.getMaingoodsname(),
+					productinfo,
 					BaseTools.formateDbDate(gbt.getCreatetime())
 			});
 			rows.add(cellMap);
+			productinfo="";
 		}
 		
 	}
