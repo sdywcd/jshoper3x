@@ -64,11 +64,6 @@
 							data-toggle="dropdown">实验室 <b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="http://www.ostocy.com" target="_blank"><i
-									class="icon-tags"></i> 电子点餐系统</a></li>
-							<li><a href="#"><i class="icon-shopping-cart"></i>
-									B2O线下电商</a></li>
-							<li class="divider"></li>
 							<li class="nav-header">未上市产品</li>
 							<li><a href="/admin/tencentweixin/company/weixin_company_index.jsp"><i class="icon-globe"></i>微信OA</a></li>
 						</ul></li>
@@ -78,16 +73,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="#"><i class="icon-star"></i> 授权</a></li>
 								<li><a href="#"><i class="icon-wrench"></i> 技术支持</a></li>
-								<li class="divider"></li>
-								<li><a
-									href="<%=basePath%>admin/user/userment.jsp?operate=find"><i
-										class="icon-user"></i> 账号（管理员）</a></li>
-								<li><a
-									href="<%=basePath%>admin/user/userment.jsp?operate=find"><i
-										class="icon-user"></i>系统用户列表</i></a></li>
-								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>添加微信账号</i></a></li>
-								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>微信账号设置</i></a></li>
-								<li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li>
+							
 							</ul></li>
 
 					</ul>

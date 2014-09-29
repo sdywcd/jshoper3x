@@ -13,9 +13,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,7 +26,6 @@ import com.jshop.service.GoodsBelinkedTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.ProductTService;
 import com.jshop.service.impl.Serial;
-import com.jshop.vo.GoodsBelinkedModel;
 import com.jshop.vo.GoodsBelinkedProductInfo;
 @Namespace("")
 @ParentPackage("jshop")

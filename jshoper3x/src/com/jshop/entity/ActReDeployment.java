@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-9-28 23:03:11 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-9-29 15:34:57 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -25,8 +25,7 @@ public class ActReDeployment implements java.io.Serializable {
 	private String name;
 	private String category;
 	private Date deployTime;
-	private Set<ActGeBytearray> actGeBytearraies = new HashSet<ActGeBytearray>(
-			0);
+	private Set<ActGeBytearray> actGeBytearrays = new HashSet<ActGeBytearray>(0);
 	private Set<ActReModel> actReModels = new HashSet<ActReModel>(0);
 
 	public ActReDeployment() {
@@ -38,13 +37,13 @@ public class ActReDeployment implements java.io.Serializable {
 	}
 
 	public ActReDeployment(String id, String name, String category,
-			Date deployTime, Set<ActGeBytearray> actGeBytearraies,
+			Date deployTime, Set<ActGeBytearray> actGeBytearrays,
 			Set<ActReModel> actReModels) {
 		this.id = id;
 		this.name = name;
 		this.category = category;
 		this.deployTime = deployTime;
-		this.actGeBytearraies = actGeBytearraies;
+		this.actGeBytearrays = actGeBytearrays;
 		this.actReModels = actReModels;
 	}
 
@@ -87,12 +86,12 @@ public class ActReDeployment implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "actReDeployment")
-	public Set<ActGeBytearray> getActGeBytearraies() {
-		return this.actGeBytearraies;
+	public Set<ActGeBytearray> getActGeBytearrays() {
+		return this.actGeBytearrays;
 	}
 
-	public void setActGeBytearraies(Set<ActGeBytearray> actGeBytearraies) {
-		this.actGeBytearraies = actGeBytearraies;
+	public void setActGeBytearrays(Set<ActGeBytearray> actGeBytearrays) {
+		this.actGeBytearrays = actGeBytearrays;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "actReDeployment")
