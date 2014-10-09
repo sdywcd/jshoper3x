@@ -427,7 +427,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setSort(Integer.parseInt(this.getSort().trim()));
 				act.setSign(this.getSign().trim());
 				act.setCreatetime(BaseTools.systemtime());
-				act.setCreatorid(BaseTools.adminCreateId());
+				act.setCreatorid(BaseTools.getAdminCreateId());
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(0);
 				act.setParentName(StaticKey.EMPTY);
@@ -470,7 +470,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
 				act.setStatus(StaticKey.ONE);
-				act.setCreatorid(BaseTools.adminCreateId());
+				act.setCreatorid(BaseTools.getAdminCreateId());
 				act.setPath(StaticKey.EMPTY);
 				act.setSort(Integer.parseInt(this.getSort()));
 				act.setParentId(StaticKey.EMPTY);
@@ -515,7 +515,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setSort(Integer.parseInt(this.getSort().trim()));
 				act.setSign(this.getSign().trim());
 				act.setCreatetime(BaseTools.systemtime());
-				act.setCreatorid(BaseTools.adminCreateId());
+				act.setCreatorid(BaseTools.getAdminCreateId());
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(0);
 				act.setParentId(this.getParentId());
@@ -553,7 +553,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
 				act.setStatus(StaticKey.ONE);
-				act.setCreatorid(BaseTools.adminCreateId());
+				act.setCreatorid(BaseTools.getAdminCreateId());
 				act.setPath(this.getParentId()+","+act.getArticleCategoryTid());
 				act.setSort(Integer.parseInt(this.getSort()));
 				act.setParentId(this.getParentId().trim());
@@ -595,7 +595,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setSort(Integer.parseInt(this.getSort().trim()));
 				act.setSign(this.getSign().trim());
 				act.setCreatetime(BaseTools.systemtime());
-				act.setCreatorid(BaseTools.adminCreateId());
+				act.setCreatorid(BaseTools.getAdminCreateId());
 				act.setUpdatetime(BaseTools.systemtime());
 				act.setVersiont(0);
 				act.setParentId(this.getParentId1());
@@ -633,7 +633,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 				act.setMetaDes(this.getMetaDes().trim());
 				act.setName(this.getName().trim());
 				act.setStatus(StaticKey.ONE);
-				act.setCreatorid(BaseTools.adminCreateId());
+				act.setCreatorid(BaseTools.getAdminCreateId());
 				act.setPath(this.getParentId()+","+this.getParentId1()+","+act.getArticleCategoryTid());
 				act.setSort(Integer.parseInt(this.getSort()));
 				act.setParentId(this.getParentId1().trim());
@@ -693,10 +693,10 @@ public class ArticleCategoryTAction extends BaseTAction {
 		int currentPage = page;
 		int lineSize = rp;
 		this.setStatus("1");
-		total = this.getArticleCategoryTService().countfindAllArticleCategoryT(this.getStatus(), BaseTools.adminCreateId());
+		total = this.getArticleCategoryTService().countfindAllArticleCategoryT(this.getStatus(), BaseTools.getAdminCreateId());
 		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
 			String queryString = "from ArticleCategoryT as act where act.status=:status and act.creatorid=:creatorid  order by " + this.getSortname() + " " + this.getSortorder() + "";
-			List<ArticleCategoryT> list = this.getArticleCategoryTService().sortAllArticleCategoryT(currentPage, lineSize, this.getStatus(), BaseTools.adminCreateId(), queryString);
+			List<ArticleCategoryT> list = this.getArticleCategoryTService().sortAllArticleCategoryT(currentPage, lineSize, this.getStatus(), BaseTools.getAdminCreateId(), queryString);
 			if (!list.isEmpty()) {
 				this.ProcessArticleCategoryTList(list);
 			}

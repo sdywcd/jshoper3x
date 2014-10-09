@@ -262,8 +262,8 @@ public class SystemMailTAction extends BaseTAction {
 		sm.setState(this.getState());
 		sm.setIsdefault(this.getIsdefault());
 		sm.setIsssl(this.getIsssl());
-		sm.setCreatorid(BaseTools.adminCreateId());
-		sm.setCreatorname(BaseTools.adminCreateName());
+		sm.setCreatorid(BaseTools.getAdminCreateId());
+		sm.setCreatorname(BaseTools.getAdminCreateName());
 		sm.setCreatetime(BaseTools.systemtime());
 		sm.setUpdatetime(BaseTools.systemtime());
 		this.getSystemMailTService().save(sm);

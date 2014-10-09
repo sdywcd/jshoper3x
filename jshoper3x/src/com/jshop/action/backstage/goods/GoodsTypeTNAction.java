@@ -189,7 +189,7 @@ public class GoodsTypeTNAction extends BaseTAction {
 			gtn.setGoodsTypeId(this.getSerial().Serialid(Serial.GOODSTYPE));
 			gtn.setName(this.getName().trim());
 			gtn.setCreatetime(BaseTools.systemtime());
-			gtn.setCreatorid(BaseTools.adminCreateId());
+			gtn.setCreatorid(BaseTools.getAdminCreateId());
 			gtn.setGoodsParameter(this.getGoodsParameter());
 			this.getGoodsTypeTNService().save(gtn);
 			this.setSucflag(true);
@@ -306,7 +306,7 @@ public class GoodsTypeTNAction extends BaseTAction {
 		gtn.setGoodsTypeId(this.getGoodsTypeId().trim());
 		gtn.setName(this.getName());
 		gtn.setCreatetime(BaseTools.systemtime());
-		gtn.setCreatorid(BaseTools.adminCreateId());
+		gtn.setCreatorid(BaseTools.getAdminCreateId());
 		gtn.setGoodsParameter(this.getGoodsParameter());
 		@SuppressWarnings("unused")
 		int i = this.getGoodsTypeTNService().updateGoodsTypeTN(gtn);

@@ -256,7 +256,7 @@ public class ProductSpecificationsTAction extends BaseTAction {
 		pst.setSpecificationsType(this.getSpecificationsType());
 		pst.setSpecificationsValue(this.getSpecificationsValue());
 		pst.setCreatetime(BaseTools.systemtime());
-		pst.setCreatorid(BaseTools.adminCreateId());
+		pst.setCreatorid(BaseTools.getAdminCreateId());
 		pst.setState(StaticKey.ONE);
 		pst.setGoodsTypeId(this.getGoodsTypeId());
 		pst.setGoodsTypeName(this.getGoodsTypeName());
@@ -369,7 +369,7 @@ public class ProductSpecificationsTAction extends BaseTAction {
 				pst.setSpecificationsType(this.getSpecificationsType());
 				pst.setSpecificationsValue(this.getSpecificationsValue());
 				pst.setCreatetime(BaseTools.systemtime());
-				pst.setCreatorid(BaseTools.adminCreateId());
+				pst.setCreatorid(BaseTools.getAdminCreateId());
 				pst.setGoodsTypeId(this.getGoodsTypeId());
 				pst.setGoodsTypeName(this.getGoodsTypeName());
 				this.getProductSpecificationsTService().update(pst);

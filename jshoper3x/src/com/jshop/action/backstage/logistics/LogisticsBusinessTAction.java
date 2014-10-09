@@ -325,7 +325,7 @@ public class LogisticsBusinessTAction extends BaseTAction {
 		lb.setBankaddress(this.getBankaddress().trim());
 		lb.setBankaccount(this.getBankaccount().trim());
 		lb.setCreatetime(BaseTools.systemtime());
-		lb.setCreatorid(BaseTools.adminCreateId());
+		lb.setCreatorid(BaseTools.getAdminCreateId());
 		lb.setDes(this.getDes().trim());
 		lb.setInsure(this.getInsure().trim());
 		lb.setIsCod(this.getIsCod().trim());
@@ -418,7 +418,7 @@ public class LogisticsBusinessTAction extends BaseTAction {
 		lb.setBankaddress(this.getBankaddress().trim());
 		lb.setBankaccount(this.getBankaccount().trim());
 		lb.setCreatetime(BaseTools.systemtime());
-		lb.setCreatorid(BaseTools.adminCreateId());
+		lb.setCreatorid(BaseTools.getAdminCreateId());
 		lb.setDes(this.getDes());
 		lb.setInsure(this.getInsure());
 		lb.setIsCod(this.getIsCod());

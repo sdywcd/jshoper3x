@@ -264,7 +264,7 @@ public class GoodsAttributeTAction extends BaseTAction {
 		for (int i = 0; i <jsonsize; i++) {
 			gat.setCreatetime(BaseTools.systemtime());
 			gat.setState(StaticKey.ONE);
-			gat.setCreatorid(BaseTools.adminCreateId());
+			gat.setCreatorid(BaseTools.getAdminCreateId());
 			gat.setGoodsTypeId(this.getGoodsTypeId());
 			gat.setGoodsTypeName(this.getGoodsTypeName());
 			gat.setAttributeIndex(this.getAttributeIndex());

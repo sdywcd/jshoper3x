@@ -245,8 +245,8 @@ public class TemplatesetTAction extends BaseTAction {
 	public void findDefaultAllTemplateset() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getTemplatesetTService().countfindAllTemplatesetT(BaseTools.adminCreateId());
-		List<TemplatesetT> list = this.getTemplatesetTService().findAllTemplatesetT(currentPage, lineSize, BaseTools.adminCreateId());
+		total = this.getTemplatesetTService().countfindAllTemplatesetT(BaseTools.getAdminCreateId());
+		List<TemplatesetT> list = this.getTemplatesetTService().findAllTemplatesetT(currentPage, lineSize, BaseTools.getAdminCreateId());
 		if (!list.isEmpty()) {
 			this.ProcessTemplatesetTlist(list);
 		}
@@ -271,8 +271,8 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "findSystemcontent", results = { @Result(name = "json", type = "json") })
 	public String findSystemcontent() {
-		List<GoodsCategoryT> gclist = this.getGoodsCategoryTService().findAllGoodsCategoryBycreatorid(BaseTools.adminCreateId());
-		List<ArticleCategoryT> aclist = this.getArticleCategoryTService().findAllArticleCategoryBycreatorid(BaseTools.adminCreateId());
+		List<GoodsCategoryT> gclist = this.getGoodsCategoryTService().findAllGoodsCategoryBycreatorid(BaseTools.getAdminCreateId());
+		List<ArticleCategoryT> aclist = this.getArticleCategoryTService().findAllArticleCategoryBycreatorid(BaseTools.getAdminCreateId());
 		//组织商品分类的所有信息
 		this.setSyscontentstrs("");
 		this.setSyscontentstrs("<option value='-1'>---请选择---</option><option value='0'>--自定义系统内容--</option><option value='1'>--以下是所创建的商品分类--</option>");
@@ -311,7 +311,7 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "getAllTemplate", results = { @Result(name = "json", type = "json") })
 	public String getAllTemplate() {
-		List<TemplateT> list = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.adminCreateId(), "1");
+		List<TemplateT> list = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.getAdminCreateId(), "1");
 		if (list != null) {
 			this.setTemplatestrs("");
 			this.setTemplatestrs("<option value='-1'>---请选择---</option>");
@@ -334,7 +334,7 @@ public class TemplatesetTAction extends BaseTAction {
 	@Action(value = "getTemplateOutHtmlPath", results = { @Result(name = "json", type = "json") })
 	public String getTemplateOutHtmlPath() {
 
-		List<TemplatesetT> list = this.getTemplatesetTService().findAllTemplatesetWithNoParam(BaseTools.adminCreateId());
+		List<TemplatesetT> list = this.getTemplatesetTService().findAllTemplatesetWithNoParam(BaseTools.getAdminCreateId());
 		if (list != null) {
 			this.setTemplatesetstrs("<option value='-1'>---请选择---</option>");
 			for (Iterator<TemplatesetT> it = list.iterator(); it.hasNext();) {
@@ -363,7 +363,7 @@ public class TemplatesetTAction extends BaseTAction {
 		tst.setTemplateurl(this.getTemplateurl());
 		tst.setBuildhtmlpath(this.getBuildhtmlpath());
 		tst.setCreatetime(BaseTools.systemtime());
-		tst.setCreatorid(BaseTools.adminCreateId());
+		tst.setCreatorid(BaseTools.getAdminCreateId());
 		tst.setSign(this.getSign());
 		//获取模板主题和状态
 		TemplateT tt = new TemplateT();
@@ -418,7 +418,7 @@ public class TemplatesetTAction extends BaseTAction {
 		tst.setSystemcontent(this.getSystemcontent().trim());
 		tst.setBuildhtmlpath(this.getBuildhtmlpath());
 		tst.setCreatetime(BaseTools.systemtime());
-		tst.setCreatorid(BaseTools.adminCreateId());
+		tst.setCreatorid(BaseTools.getAdminCreateId());
 		tst.setSign(this.getSign());
 		//获取模板主题和状态
 		TemplateT tt = new TemplateT();

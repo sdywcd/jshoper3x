@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-9-29 15:34:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-10-9 18:51:28 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -76,6 +76,9 @@ public class GoodsT implements java.io.Serializable {
 	private String outsitelink;
 	private String subgoodsname;
 	private String shopid;
+	private String shopname;
+	private String isgroup;
+	private String issecondkill;
 
 	public GoodsT() {
 	}
@@ -121,7 +124,7 @@ public class GoodsT implements java.io.Serializable {
 			String ismobileplatformgoods, Integer sales, Integer realsales,
 			Date updatetime, int versiont, String commoditylist,
 			String isoutsite, String outsitelink, String subgoodsname,
-			String shopid) {
+			String shopid, String shopname, String isgroup, String issecondkill) {
 		this.goodsid = goodsid;
 		this.goodsname = goodsname;
 		this.brandname = brandname;
@@ -181,6 +184,9 @@ public class GoodsT implements java.io.Serializable {
 		this.outsitelink = outsitelink;
 		this.subgoodsname = subgoodsname;
 		this.shopid = shopid;
+		this.shopname = shopname;
+		this.isgroup = isgroup;
+		this.issecondkill = issecondkill;
 	}
 
 	@Id
@@ -715,6 +721,33 @@ public class GoodsT implements java.io.Serializable {
 
 	public void setShopid(String shopid) {
 		this.shopid = shopid;
+	}
+
+	@Column(name = "SHOPNAME", length = 45)
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
+	}
+
+	@Column(name = "ISGROUP", length = 1)
+	public String getIsgroup() {
+		return this.isgroup;
+	}
+
+	public void setIsgroup(String isgroup) {
+		this.isgroup = isgroup;
+	}
+
+	@Column(name = "ISSECONDKILL", length = 1)
+	public String getIssecondkill() {
+		return this.issecondkill;
+	}
+
+	public void setIssecondkill(String issecondkill) {
+		this.issecondkill = issecondkill;
 	}
 
 }

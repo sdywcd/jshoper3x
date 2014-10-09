@@ -1,6 +1,6 @@
 package com.jshop.entity;
 
-// Generated 2014-9-29 15:34:57 by Hibernate Tools 3.4.0.CR1
+// Generated 2014-10-9 18:51:28 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,8 +25,8 @@ public class WeixinDepartmentStructureCpT implements java.io.Serializable {
 	private String path;
 	private int sort;
 	private String code;
-	private String basicsettingId;
-	private String basicsettingSitename;
+	private String jshopid;
+	private String jshopname;
 	private Date createtime;
 	private String parentname;
 	private Date updatetime;
@@ -61,9 +61,9 @@ public class WeixinDepartmentStructureCpT implements java.io.Serializable {
 
 	public WeixinDepartmentStructureCpT(String id, String wxgivenid,
 			String name, String parentid, String grade, String path, int sort,
-			String code, String basicsettingId, String basicsettingSitename,
-			Date createtime, String parentname, Date updatetime, int versiont,
-			String logo, String status, String mobilesync, int order) {
+			String code, String jshopid, String jshopname, Date createtime,
+			String parentname, Date updatetime, int versiont, String logo,
+			String status, String mobilesync, int order) {
 		this.id = id;
 		this.wxgivenid = wxgivenid;
 		this.name = name;
@@ -72,8 +72,8 @@ public class WeixinDepartmentStructureCpT implements java.io.Serializable {
 		this.path = path;
 		this.sort = sort;
 		this.code = code;
-		this.basicsettingId = basicsettingId;
-		this.basicsettingSitename = basicsettingSitename;
+		this.jshopid = jshopid;
+		this.jshopname = jshopname;
 		this.createtime = createtime;
 		this.parentname = parentname;
 		this.updatetime = updatetime;
@@ -157,22 +157,22 @@ public class WeixinDepartmentStructureCpT implements java.io.Serializable {
 		this.code = code;
 	}
 
-	@Column(name = "BASICSETTING_ID", length = 20)
-	public String getBasicsettingId() {
-		return this.basicsettingId;
+	@Column(name = "JSHOPID", length = 20)
+	public String getJshopid() {
+		return this.jshopid;
 	}
 
-	public void setBasicsettingId(String basicsettingId) {
-		this.basicsettingId = basicsettingId;
+	public void setJshopid(String jshopid) {
+		this.jshopid = jshopid;
 	}
 
-	@Column(name = "BASICSETTING_SITENAME", length = 45)
-	public String getBasicsettingSitename() {
-		return this.basicsettingSitename;
+	@Column(name = "JSHOPNAME", length = 45)
+	public String getJshopname() {
+		return this.jshopname;
 	}
 
-	public void setBasicsettingSitename(String basicsettingSitename) {
-		this.basicsettingSitename = basicsettingSitename;
+	public void setJshopname(String jshopname) {
+		this.jshopname = jshopname;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

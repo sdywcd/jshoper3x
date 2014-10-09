@@ -709,7 +709,7 @@ public class UserTAction extends BaseTAction {
 				user.setRolemid(StaticKey.ZERO);
 				user.setRolemname(StaticKey.EMPTY);
 				user.setHeadpath(this.getHeadpath().trim());
-				user.setCreatorid(BaseTools.adminCreateId());
+				user.setCreatorid(BaseTools.getAdminCreateId());
 				user.setCreatetime(BaseTools.systemtime());
 				user.setUpdatetime(user.getCreatetime());
 				//ph.encrypPassword(user);

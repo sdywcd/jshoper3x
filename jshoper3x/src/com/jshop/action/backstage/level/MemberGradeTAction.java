@@ -237,7 +237,7 @@ public class MemberGradeTAction extends BaseTAction {
 		mgt.setMpchangepower(this.getMpchangepower());
 		mgt.setDiscount(this.getDiscount());
 		mgt.setCreatetime(BaseTools.systemtime());
-		mgt.setCreatorid(BaseTools.adminCreateId());
+		mgt.setCreatorid(BaseTools.getAdminCreateId());
 		mgt.setUpdatetime(mgt.getCreatetime());
 		mgt.setVersiont(0);
 		this.getMemberGradeTService().save(mgt);
@@ -344,7 +344,7 @@ public class MemberGradeTAction extends BaseTAction {
 		bean.setUpdatetime(BaseTools.systemtime());
 		bean.setVersiont(bean.getVersiont()+1);
 		bean.setDiscount(this.getDiscount());
-		bean.setCreatorid(BaseTools.adminCreateId());
+		bean.setCreatorid(BaseTools.getAdminCreateId());
 		this.getMemberGradeTService().updateMemberGradeTById(bean);
 		this.setSucflag(true);
 		return "json";

@@ -100,7 +100,7 @@ public class GoodsTAspect {
 			gbl.setBelinkedproductinfo(belinkedjson.toString());
 			gbl.setMode("1");//默认单向模式
 			gbl.setState("1");//开启关联
-			gbl.setCreatorid(BaseTools.adminCreateId());
+			gbl.setCreatorid(BaseTools.getAdminCreateId());
 			gbl.setCreatetime(BaseTools.systemtime());
 			gbl.setUpdatetime(BaseTools.systemtime());
 			gbl.setVersiont(0);
@@ -144,7 +144,7 @@ public class GoodsTAspect {
 				gbl.setBelinkedproductinfo(belinkedjson.toString());
 				gbl.setMode("1");//默认单向模式
 				gbl.setState("1");//开启关联
-				gbl.setCreatorid(BaseTools.adminCreateId());
+				gbl.setCreatorid(BaseTools.getAdminCreateId());
 				gbl.setCreatetime(list.get(0).getCreatetime());
 				gbl.setUpdatetime(BaseTools.systemtime());
 				gbl.setVersiont(0);
@@ -157,7 +157,7 @@ public class GoodsTAspect {
 				gbl.setBelinkedproductinfo(belinkedjson.toString());
 				gbl.setMode("1");//默认单向模式
 				gbl.setState("1");//开启关联
-				gbl.setCreatorid(BaseTools.adminCreateId());
+				gbl.setCreatorid(BaseTools.getAdminCreateId());
 				gbl.setCreatetime(BaseTools.systemtime());
 				gbl.setUpdatetime(BaseTools.systemtime());
 				gbl.setVersiont(0);

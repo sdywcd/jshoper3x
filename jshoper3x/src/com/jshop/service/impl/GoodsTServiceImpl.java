@@ -462,6 +462,17 @@ public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsT
 		return this.getGoodsTDao().findrecommendedGoodsT(salestate, recommended, lineSize);
 	}
 
+	@Override
+	public List<GoodsT> findvirtualsaleGoodsT(int currentPage, int lineSize,
+			String isvirtualsale) {
+		return this.getGoodsTDao().findvirtualsaleGoodsT(currentPage, lineSize, isvirtualsale);
+	}
+
+	@Override
+	public int countfindvirtualsaleGoodsT(String isvirtualsale) {
+		return this.getGoodsTDao().countfindvirtualsaleGoodsT(isvirtualsale);
+	}
+
 
 
 

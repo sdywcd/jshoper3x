@@ -1,6 +1,7 @@
 package com.jshop.service.impl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -56,6 +57,22 @@ public class BaseTServiceImpl<T> implements BaseTService<T>{
 	@Override
 	public int deleteAll(Class<T> t, String[] ids) {
 		return baseTDao.deleteAll(t, ids);
+	}
+
+	@Override
+	public List<T> findAllByShopId(Class<T> t, String shopId, int currentPage,
+			int lineSize) {
+		return baseTDao.findAllByShopId(t, shopId, currentPage, lineSize);
+	}
+
+	@Override
+	public int countfindAllByShopId(Class<T> t, String shopId) {
+		return baseTDao.countfindAllByShopId(t, shopId);
+	}
+
+	@Override
+	public void saveOrUpdateAll(List<T> t) {
+		baseTDao.saveOrUpdateAll(t);
 	}
 
 	

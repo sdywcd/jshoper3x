@@ -226,6 +226,7 @@ $(function() {
 	 * 增加商品
 	 */
 	saveGoods=function(){
+		var isvirtualsale=$("input[name='isvirtualsale']:checked").val();
 		var isoutsite=$("input[name='isoutsite']:checked").val();
 		var outsitelink=$('#outsitelink').val();
 		var goodsTypeId=$("#goodsTypeId").val();//商品类型id
@@ -289,6 +290,7 @@ $(function() {
 		this.value="提交中";
 		this.disabled=true;
 		$.post("saveGoods.action",{
+			"isvirtualsale":isvirtualsale,
 			"isoutsite":isoutsite,
 			"outsitelink":outsitelink,
 			"goodsTypeId":goodsTypeId,
@@ -336,6 +338,7 @@ $(function() {
 	 * 更新商品
 	 */
 	updateGoods=function(){
+		var isvirtualsale=$("input[name='isvirtualsale']:checked").val();
 		var isoutsite=$("input[name='isoutsite']:checked").val();
 		var outsitelink=$('#outsitelink').val();
 		var goodsid=$("#hidgoodsid").val();
@@ -414,6 +417,7 @@ $(function() {
 		this.value="提交中";
 		this.disabled=true;
 		$.post("updateGoods.action",{
+			"isvirtualsale":isvirtualsale,
 			"isoutsite":isoutsite,
 			"outsitelink":outsitelink,
 			"goodsid":goodsid,
@@ -634,6 +638,11 @@ $(function() {
 						$("input[name='isoutsite']").get(1).checked=true;
 					}
 					$("#outsitelink").attr("value",data.bean.outsitelink);
+					if("1"===data.bean.isvirtualsale){
+						$("input[name='isvirtualsale']").get(0).checked=true;
+					}else{
+						$("input[name='isvirtualsale']").get(1).checked=true;
+					}
 					KE.html("commoditylist",data.bean.commoditylist);
 					$('#metaKeywords').val(data.bean.metaKeywords);
 					$('#metaDes').val(data.bean.metaDescription);
@@ -815,7 +824,7 @@ $(function() {
 		usepager : true,
 		title : '',
 		useRp : true,
-		rp : 20,
+		rp :20,
 		rpOptions : [ 5, 20, 40, 100 ],
 		showTableToggleBtn : true,
 		showToggleBtn : true,

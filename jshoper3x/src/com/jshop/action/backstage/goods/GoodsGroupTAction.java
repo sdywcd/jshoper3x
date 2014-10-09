@@ -237,7 +237,7 @@ public class GoodsGroupTAction extends BaseTAction {
 		ggt.setGoodsid(this.getGoodsid().trim());
 		ggt.setCreatetime(BaseTools.systemtime());
 		ggt.setGoodsname(this.getGoodsname().trim());
-		ggt.setCreatorid(BaseTools.adminCreateId());
+		ggt.setCreatorid(BaseTools.getAdminCreateId());
 		ggt.setState(this.getState().trim());
 		ggt.setCashstate(this.getCashstate().trim());
 		ggt.setCashlimit(this.getCashlimit());

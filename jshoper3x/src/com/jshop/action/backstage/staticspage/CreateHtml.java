@@ -761,7 +761,7 @@ public class CreateHtml extends ActionSupport {
 		map.put(FreeMarkervariable.BASEPATH, this.getDataCollectionTAction().getBasePath());
 		map.put(FreeMarkervariable.JSHOPBASICINFO, this.getDataCollectionTAction().findJshopbasicInfo(StaticKey.DataShowState.SHOW.getState(),StaticKey.JshopOpenState.OPEN.getOpenstate()));
 		map.put(FreeMarkervariable.USERACTIVATES, emailcontent);
-		return this.createEmail(ContentTag.TEMPLATENAMEFOREMAIL, BaseTools.adminCreateId(), map);
+		return this.createEmail(ContentTag.TEMPLATENAMEFOREMAIL, BaseTools.getAdminCreateId(), map);
 
 	}
 
@@ -1087,7 +1087,7 @@ public class CreateHtml extends ActionSupport {
 	 */
 	public void recreateTemplate() throws IOException, IllegalAccessException {
 		try {
-			List<TemplateT> tlist = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.adminCreateId(), "1");
+			List<TemplateT> tlist = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.getAdminCreateId(), "1");
 			if (!tlist.isEmpty()) {
 				for (Iterator<TemplateT> it = tlist.iterator(); it.hasNext();) {
 					TemplateT tt = (TemplateT) it.next();

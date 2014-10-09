@@ -254,7 +254,10 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 							return list;
 						}
 					});
-			return list;
+			if (list.size() > 0) {
+				return list;
+			}
+			return null;
 		} catch (RuntimeException re) {
 			log.error("findGoodsByLtypeid error", re);
 			throw re;
@@ -306,7 +309,10 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 							return list;
 						}
 					});
-			return list;
+			if (list.size() > 0) {
+				return list;
+			}
+			return null;
 		} catch (RuntimeException re) {
 			log.error("findGoodsByLtypeid error", re);
 			throw re;
@@ -344,7 +350,10 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(
 					queryString, new String[] { "salestate", "stypeid" },
 					new Object[] { salestate, stypeid });
-			return list;
+			if (list != null && list.size() > 0) {
+				return list;
+			}
+			return null;
 		} catch (RuntimeException re) {
 			log.error("findGoodsByStypeid error", re);
 			throw re;
@@ -1272,7 +1281,10 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 			List list = this.getHibernateTemplate().findByNamedParam(
 					queryString, new String[] { "ltypeid", "salestate" },
 					new Object[] { ltypeid, salestate });
-			return list;
+			if (list != null && list.size() > 0) {
+				return list;
+			}
+			return null;
 		} catch (RuntimeException re) {
 			log.error(" findGoodsByLtypeid", re);
 			throw re;
@@ -1947,6 +1959,50 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 			return list;
 		} catch (RuntimeException re) {
 			log.error("findrecommendedGoodsT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<GoodsT> findvirtualsaleGoodsT(final int currentPage, final int lineSize,
+			final String isvirtualsale) {
+		log.debug("findvirtualsaleGoodsT");
+		try {
+			final String queryString = "from GoodsT as gt where gt.isvirtualsale=:isvirtualsale order by gt.createtime desc";
+			List<GoodsT> list = this.getHibernateTemplate().executeFind(
+					new HibernateCallback() {
+						public Object doInHibernate(Session session)
+								throws HibernateException, SQLException {
+							Query query = session.createQuery(queryString);
+							query.setFirstResult((currentPage - 1) * lineSize);
+							query.setMaxResults(lineSize);
+							query.setParameter("isvirtualsale", isvirtualsale);
+							List list = query.list();
+							return list;
+						}
+					});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("findvirtualsaleGoodsT error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int countfindvirtualsaleGoodsT(String isvirtualsale) {
+		log.debug("countfindvirtualsaleGoodsT");
+		try {
+			String queryString = "select count(*) from GoodsT as gt where gt.isvirtualsale=:isvirtualsale";
+			List list = this.getHibernateTemplate().findByNamedParam(
+					queryString, "isvirtualsale", isvirtualsale);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countfindvirtualsaleGoodsT error", re);
 			throw re;
 		}
 	}

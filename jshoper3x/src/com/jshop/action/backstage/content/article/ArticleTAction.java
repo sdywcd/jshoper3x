@@ -482,7 +482,7 @@ public class ArticleTAction extends BaseTAction {
 		at.setReadcount(0);
 		at.setPageCount(1);//默认只分一页
 		at.setCreatetime(BaseTools.systemtime());
-		at.setCreatorid(BaseTools.adminCreateId());
+		at.setCreatorid(BaseTools.getAdminCreateId());
 		at.setUpdatetime(at.getCreatetime());
 		at.setVersiont(0);
 		at.setMobilesync(this.getMobilesync());
@@ -566,7 +566,7 @@ public class ArticleTAction extends BaseTAction {
 		at.setIstop(this.getIstop());
 		at.setReadcount(0);
 		at.setPageCount(1);//默认只分一页
-		at.setCreatorid(BaseTools.adminCreateId());
+		at.setCreatorid(BaseTools.getAdminCreateId());
 		at.setUpdatetime(BaseTools.systemtime());
 		at.setVersiont(at.getVersiont()+1);
 		at.setMobilesync(this.getMobilesync());

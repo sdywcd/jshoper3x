@@ -301,7 +301,7 @@ public class AdvertiseTAction extends BaseTAction {
 		advertiseT.setBegintime(this.getBegintime());
 		advertiseT.setEndtime(this.getEndtime());
 		advertiseT.setCreatetime(BaseTools.systemtime());
-		advertiseT.setCreatorid(BaseTools.adminCreateId());
+		advertiseT.setCreatorid(BaseTools.getAdminCreateId());
 		advertiseT.setState(this.getState());
 		advertiseT.setSort(this.getSort());
 		advertiseT.setHeight(this.getHeight());
