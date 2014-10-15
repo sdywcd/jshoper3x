@@ -167,7 +167,7 @@
 		<url-pattern>/dwr/*</url-pattern>
 	</servlet-mapping>
 	
-	<!-- shiro filter-->
+	<!-- shiro filter
 	<filter>
 	    <filter-name>shiroFilter</filter-name>
 	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -179,8 +179,8 @@
 	<filter-mapping>
 	    <filter-name>shiroFilter</filter-name>
 	    <url-pattern>/a/*</url-pattern>
-	  
+
 	</filter-mapping>
-		
+			  -->
 
 </web-app>

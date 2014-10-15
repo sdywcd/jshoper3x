@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,10 +35,12 @@ import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
+import com.jshop.mongo.dao.PersonAbstractRepository;
 import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
+import com.jshop.vo.Person;
 import com.opensymphony.xwork2.ActionContext;
 
 import freemarker.template.TemplateException;
@@ -51,6 +54,9 @@ public class UserTAction extends BaseTAction {
 	private UserRoleMAction userRoleMAction;
 	private GlobalParamService globalParamService;
 	private DataCollectionTAction dataCollectionTAction;
+	@Resource
+	private PersonAbstractRepository personAbstractRepository;
+	
 	private UserT bean = new UserT();
 	private String param;
 	private List<UserT> user = new ArrayList<UserT>();
@@ -563,6 +569,10 @@ public class UserTAction extends BaseTAction {
 			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
+		Person p=new Person();
+		p.setId("1");
+		p.setName("2");
+		personAbstractRepository.insert(p);
 		MD5Code md5 = new MD5Code();
 		UserT user = new UserT();
 		user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());

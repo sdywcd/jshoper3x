@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.jshop.dao.UserTDao;
-import com.jshop.dao.impl.UserTDaoImpl;
 import com.jshop.entity.RoleFunctionM;
 import com.jshop.entity.UserRoleM;
 import com.jshop.entity.UserT;
@@ -57,6 +56,7 @@ public class UsertServiceImpl extends BaseTServiceImpl<UserT>implements UsertSer
 	}
 
 	public UserT login(UserT transientInstance) {
+	
 		return this.getUserTDao().login(transientInstance);
 	}
 
