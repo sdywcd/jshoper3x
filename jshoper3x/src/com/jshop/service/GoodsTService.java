@@ -768,5 +768,18 @@ public interface GoodsTService extends BaseTService<GoodsT>{
 	 * @return
 	 */
 	public List<GoodsT>findrecommendedGoodsT(String salestate,String recommended,int lineSize);
-	
+	/**
+	 * 获取虚拟商品
+	 * @param currentPage
+	 * @param lineSize
+	 * @param isvirtualsale
+	 * @return
+	 */
+	public List<GoodsT>findvirtualsaleGoodsT(int currentPage,int lineSize,String isvirtualsale);
+	/**
+	 * 统计获取虚拟商品
+	 * @param isvirtualsale
+	 * @return
+	 */
+	public int countfindvirtualsaleGoodsT(String isvirtualsale);
 }

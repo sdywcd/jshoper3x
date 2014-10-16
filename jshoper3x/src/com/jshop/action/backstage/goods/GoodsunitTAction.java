@@ -166,7 +166,7 @@ public class GoodsunitTAction extends BaseTAction {
 		GoodsunitT u = new GoodsunitT();
 		u.setUnitid(this.getSerial().Serialid(Serial.UNIT));
 		u.setUnitname(this.getUnitname().trim());
-		u.setCreatorid(BaseTools.adminCreateId());
+		u.setCreatorid(BaseTools.getAdminCreateId());
 		u.setCreatetime(BaseTools.systemtime());
 		this.getGoodsunitTService().save(u);
 		return SUCCESS;
@@ -214,7 +214,7 @@ public class GoodsunitTAction extends BaseTAction {
 			GoodsunitT u = new GoodsunitT();
 			u.setUnitid(this.getUnitid().trim());
 			u.setUnitname(this.getUnitname().trim());
-			u.setCreatorid(BaseTools.adminCreateId());
+			u.setCreatorid(BaseTools.getAdminCreateId());
 			u.setCreatetime(BaseTools.systemtime());
 			this.getGoodsunitTService().updateGoodsunit(u);
 			return "json";

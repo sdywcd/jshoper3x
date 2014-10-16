@@ -152,7 +152,7 @@ public class MemberGroupTAction extends BaseTAction{
 			mgt.setStatus(this.getStatus());
 			mgt.setAttrs(this.getAttrs());
 			mgt.setCreatetime(BaseTools.systemtime());
-			mgt.setCreatorid(BaseTools.adminCreateId());
+			mgt.setCreatorid(BaseTools.getAdminCreateId());
 			mgt.setUpdatetime(mgt.getCreatetime());
 			mgt.setVersiont(0);
 			this.getMemberGroupTService().save(mgt);

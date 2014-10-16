@@ -210,10 +210,10 @@ public class SiteNavigationTAction extends BaseTAction {
 	public void findDefaultAllSiteNavigation() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getSiteNavigationTService().countfindAllSiteNavigationT(BaseTools.adminCreateId());
+		total = this.getSiteNavigationTService().countfindAllSiteNavigationT(BaseTools.getAdminCreateId());
 		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
 			String queryString = "from SiteNavigationT as st where st.creatorid=:creatorid order by " + getSortname() + " " + getSortorder() + "";
-			List<SiteNavigationT> list = this.getSiteNavigationTService().sortAllSiteNavigationT(currentPage, lineSize, BaseTools.adminCreateId(), queryString);
+			List<SiteNavigationT> list = this.getSiteNavigationTService().sortAllSiteNavigationT(currentPage, lineSize, BaseTools.getAdminCreateId(), queryString);
 			if (list != null) {
 				this.ProcessSiteNavigationList(list);
 			}
@@ -263,7 +263,7 @@ public class SiteNavigationTAction extends BaseTAction {
 		sn.setName(this.getName());
 		sn.setPosition(this.getPosition());
 		sn.setCreatetime(BaseTools.systemtime());
-		sn.setCreatorid(BaseTools.adminCreateId());
+		sn.setCreatorid(BaseTools.getAdminCreateId());
 		sn.setHtmlPath(this.getHtmlPath());
 		sn.setSort(Integer.parseInt(this.getSort()));
 		sn.setSign(this.getSign());
@@ -305,7 +305,7 @@ public class SiteNavigationTAction extends BaseTAction {
 		sn.setName(this.getName());
 		sn.setPosition(this.getPosition());
 		sn.setCreatetime(BaseTools.systemtime());
-		sn.setCreatorid(BaseTools.adminCreateId());
+		sn.setCreatorid(BaseTools.getAdminCreateId());
 		sn.setHtmlPath(this.getHtmlPath());
 		sn.setSort(Integer.parseInt(this.getSort()));
 		sn.setSign(this.getSign());

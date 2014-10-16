@@ -165,6 +165,11 @@ public class Serial {
 	public static String MEMBERRECHARGETRECORDS="memberrechargetrecords";
 	//订单快照
 	public static String ORDERSNAPSHOTT="ordersnapshot";
+	//购物卡类商品
+	public static String GOODSCARDS="goods_cards_t";
+	//商品购物卡密钥id
+	public static String GOODSCARDSPWD="goods_cards_password_t";
+	
 	@Resource
 	private SerialTService serialTService;
 	

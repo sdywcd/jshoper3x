@@ -14,6 +14,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.entity.JshopbasicInfoT;
 import com.jshop.entity.UserT;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -28,8 +29,15 @@ public class BaseTools {
 	/**
 	 * 默认的用户名称，用于在没有登录的情况下生成静态页面，主要是在安装的时候使用
 	 */
-	public static String DEFAULTADMINNAME = "sasasa";
-
+	public static final String DEFAULTADMINNAME = "sasasa";
+	/**
+	 * 默认shopid=0 0表示官方平台发布
+	 */
+	public static final String DEFAULTSHOPID="0";
+	/**
+	 * 默认的店铺名称 
+	 */
+	public static final String DEFAULTSHOPNAME="";
 
 	// 默认时间
 	public static String DEFAULTTIME = "2010-06-25 12:48:21";
@@ -123,26 +131,49 @@ public class BaseTools {
 	 * 
 	 * @return
 	 */
-	public static String adminCreateId() {
+	public static String getAdminCreateId() {
 		UserT userT = (UserT) ActionContext.getContext().getSession()
 				.get(StaticKey.BACK_USER_SESSION_KEY);
 		if (userT!=null) {
 			return userT.getUserid();
 		}
-		return null;
+		return DEFAULTADMINID;
 	}
 	/**
 	 *获取登录用户保存在session中的username
 	 * 
 	 * @return
 	 */
-	public static String adminCreateName() {
+	public static String getAdminCreateName() {
 		UserT userT = (UserT) ActionContext.getContext().getSession()
 				.get(StaticKey.BACK_USER_SESSION_KEY);
 		if (userT!=null) {
 			return userT.getUsername();
 		}
-		return null;
+		return DEFAULTADMINNAME;
+	}
+	
+	/**
+	 * 获取店铺ID
+	 * @return
+	 */
+	public static String getShopId(){
+		JshopbasicInfoT jbi=(JshopbasicInfoT) ActionContext.getContext().getSession().get(StaticKey.BASIC_SHOP_INFO);
+		if(jbi!=null){
+			return jbi.getBasicinfoid();
+		}
+		return DEFAULTSHOPID;
+	}
+	/**
+	 * 获取店铺名称
+	 * @return
+	 */
+	public static String getShopName(){
+		JshopbasicInfoT jbi=(JshopbasicInfoT) ActionContext.getContext().getSession().get(StaticKey.BASIC_SHOP_INFO);
+		if(jbi!=null){
+			return jbi.getJshopname();
+		}
+		return DEFAULTSHOPNAME;
 	}
 
 	/**

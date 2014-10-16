@@ -257,8 +257,8 @@ public class TemplateTAction extends BaseTAction {
 	public void findDefaultAllTemplate() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getTemplateTService().countfindAllTemplate(BaseTools.adminCreateId());
-		List<TemplateT> list = this.getTemplateTService().findAllTemplate(currentPage, lineSize, BaseTools.adminCreateId());
+		total = this.getTemplateTService().countfindAllTemplate(BaseTools.getAdminCreateId());
+		List<TemplateT> list = this.getTemplateTService().findAllTemplate(currentPage, lineSize, BaseTools.getAdminCreateId());
 		if (!list.isEmpty()) {
 			this.ProcessTemplateList(list);
 		}
@@ -377,7 +377,7 @@ public class TemplateTAction extends BaseTAction {
 			@Result(name = "json",type="json")
 	})
 	public String addTemplate() throws IOException, IllegalAccessException {
-		if (this.getTemplateTService().findTemplateBynameandnote(BaseTools.adminCreateId(), this.getNote(), this.getName()) > 0) {
+		if (this.getTemplateTService().findTemplateBynameandnote(BaseTools.getAdminCreateId(), this.getNote(), this.getName()) > 0) {
 			this.setSucflag(false);
 			return "json";
 		}
@@ -388,7 +388,7 @@ public class TemplateTAction extends BaseTAction {
 		tt.setNote(this.getNote());
 		tt.setTvalue(this.getTvalue());
 		tt.setCreatetime(BaseTools.systemtime());
-		tt.setCreatorid(BaseTools.adminCreateId());
+		tt.setCreatorid(BaseTools.getAdminCreateId());
 		tt.setThemeid(this.getThemeid());
 		tt.setThemename(this.getThemename());
 		tt.setSign(this.getSign());
@@ -442,7 +442,7 @@ public class TemplateTAction extends BaseTAction {
 		tt.setThemename(this.getThemename());
 		tt.setSign(this.getSign());
 		tt.setCreatetime(BaseTools.systemtime());
-		tt.setCreatorid(BaseTools.adminCreateId());
+		tt.setCreatorid(BaseTools.getAdminCreateId());
 		tt.setStatus(this.getStatus());
 		this.getTemplateTService().update(tt);
 		updateFTLFile(tt);
@@ -483,7 +483,7 @@ public class TemplateTAction extends BaseTAction {
 			@Result(name = "json",type="json")
 	})
 	public String recreateTemplate() throws UnsupportedEncodingException, IllegalAccessException, IOException {
-			List<TemplateT> list = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.adminCreateId(),"1");
+			List<TemplateT> list = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.getAdminCreateId(),"1");
 			for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
 				TemplateT tt = (TemplateT) it.next();
 				this.updateFTLFile(tt);

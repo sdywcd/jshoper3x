@@ -233,7 +233,7 @@ public class TemplatethemeTAction extends BaseTAction {
 		int lineSize = rp;
 		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
 			String queryString = "from TemplatethemeT as tt where tt.creatorid=:creatorid order by " + this.getSortname() + " " + this.getSortorder() + " ";
-			List<TemplatethemeT> list = this.getTemplatethemeTService().sortAllTemplatetheme(currentPage, lineSize, BaseTools.adminCreateId(), queryString);
+			List<TemplatethemeT> list = this.getTemplatethemeTService().sortAllTemplatetheme(currentPage, lineSize, BaseTools.getAdminCreateId(), queryString);
 			if (list != null) {
 				ProcessTemplatethemeList(list);
 			}
@@ -246,7 +246,7 @@ public class TemplatethemeTAction extends BaseTAction {
 	 * @param list
 	 */
 	public void ProcessTemplatethemeList(List<TemplatethemeT> list) {
-		total = this.getTemplatethemeTService().countfindAllTemplatetheme(BaseTools.adminCreateId());
+		total = this.getTemplatethemeTService().countfindAllTemplatetheme(BaseTools.getAdminCreateId());
 		rows.clear();
 		for (Iterator<TemplatethemeT> it = list.iterator(); it.hasNext();) {
 			TemplatethemeT tt = (TemplatethemeT) it.next();
@@ -281,7 +281,7 @@ public class TemplatethemeTAction extends BaseTAction {
 		tt.setNote(this.getNote().trim());
 		tt.setSign(this.getSign().trim());
 		tt.setCreatetime(BaseTools.systemtime());
-		tt.setCreatorid(BaseTools.adminCreateId());
+		tt.setCreatorid(BaseTools.getAdminCreateId());
 		tt.setStatus(this.getStatus());
 		this.getTemplatethemeTService().save(tt);
 		this.setSucflag(true);
@@ -361,7 +361,7 @@ public class TemplatethemeTAction extends BaseTAction {
 		tt.setNote(this.getNote());
 		tt.setSign(this.getSign());
 		tt.setCreatetime(BaseTools.systemtime());
-		tt.setCreatorid(BaseTools.adminCreateId());
+		tt.setCreatorid(BaseTools.getAdminCreateId());
 		tt.setStatus(this.getStatus());
 		this.getTemplatethemeTService().update(tt);
 		int k = this.getTemplateTService().updateTemplatetBystatus(this.getTtid(), this.getStatus());
@@ -379,7 +379,7 @@ public class TemplatethemeTAction extends BaseTAction {
 	@Action(value = "getAllTemplatetheme", results = { @Result(name = "json", type = "json") })
 	public String getAllTemplatetheme() {
 
-		List<TemplatethemeT> list = this.getTemplatethemeTService().findAllTemplatethemeWithNoParam(BaseTools.adminCreateId());
+		List<TemplatethemeT> list = this.getTemplatethemeTService().findAllTemplatethemeWithNoParam(BaseTools.getAdminCreateId());
 		if (list != null) {
 			this.setTemplatethemestrs("");
 			this.setTemplatethemestrs("<option value='-1'>---请选择---</option>");

@@ -331,7 +331,7 @@ public class ProductTAction extends BaseTAction {
 		pt.setPlaceStore(this.getPlaceStore());
 		pt.setWeight(this.getWeight());
 		pt.setGoodsid(this.getGoodsid());
-		pt.setCreatorid(BaseTools.adminCreateId());
+		pt.setCreatorid(BaseTools.getAdminCreateId());
 		pt.setCreatetime(BaseTools.systemtime());
 		pt.setSpecificationsid(this.getSpecificationsid());
 		pt.setSpecificationsName(this.getSpecificationsName());
@@ -357,7 +357,7 @@ public class ProductTAction extends BaseTAction {
 	@Action(value = "findAllProductTByGoodsid", results = { @Result(name = "json", type = "json") })
 	public String findAllProductTByGoodsid() {
 		if (Validate.StrNotNull(this.getGoodsid())) {
-			this.setBeanlist(this.getProductTService().findAllProductTByGoodsid(BaseTools.adminCreateId(), this.getGoodsid()));
+			this.setBeanlist(this.getProductTService().findAllProductTByGoodsid(BaseTools.getAdminCreateId(), this.getGoodsid()));
 			if (this.getBeanlist() != null) {
 				this.setSucflag(true);
 				return "json";
@@ -503,7 +503,7 @@ public class ProductTAction extends BaseTAction {
 		pt.setWarehouseLocation(this.getWarehouseLocation());
 		pt.setPlaceStore(this.getPlaceStore());
 		pt.setWeight(this.getWeight());
-		pt.setCreatorid(BaseTools.adminCreateId());
+		pt.setCreatorid(BaseTools.getAdminCreateId());
 		pt.setSpecificationsid(this.getSpecificationsid());
 		pt.setSpecificationsName(this.getSpecificationsName());
 		pt.setUpdatetime(BaseTools.systemtime());

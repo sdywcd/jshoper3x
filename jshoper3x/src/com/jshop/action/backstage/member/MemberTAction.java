@@ -476,7 +476,7 @@ public class MemberTAction extends BaseTAction {
 				mt.setHeadpath(this.getHeadpath().trim());
 				mt.setTelno(this.getTelno());
 				mt.setCreatetime(BaseTools.systemtime());
-				mt.setCreatorid(BaseTools.adminCreateId());
+				mt.setCreatorid(BaseTools.getAdminCreateId());
 				mt.setUpdatetime(mt.getCreatetime());
 				mt.setVersiont(0);
 				this.getMemberTService().save(mt);
@@ -626,7 +626,7 @@ public class MemberTAction extends BaseTAction {
 			bean.setMemberstate(StaticKey.ONE);//激活
 			bean.setHeadpath(this.getHeadpath().trim());
 			bean.setUpdatetime(BaseTools.systemtime());
-			bean.setCreatorid(BaseTools.adminCreateId());
+			bean.setCreatorid(BaseTools.getAdminCreateId());
 			bean.setVersiont(bean.getVersiont()+1);
 			this.getMemberTService().updateMemberT(bean);
 			this.setSucflag(true);

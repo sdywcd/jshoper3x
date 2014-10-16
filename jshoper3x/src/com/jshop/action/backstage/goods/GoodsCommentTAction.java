@@ -263,7 +263,7 @@ public class GoodsCommentTAction extends BaseTAction {
 		gct.setGoodsid(this.getGoodsid().trim());
 		gct.setGoodsname(this.getGoodsname().trim());
 		gct.setReplyorcommentusername(this.getReplyorcommentusername());
-		gct.setReplyorcommentuserid(BaseTools.adminCreateId());
+		gct.setReplyorcommentuserid(BaseTools.getAdminCreateId());
 		gct.setPosttime(BaseTools.systemtime());
 		gct.setCommentcontent(this.getCommentcontent());
 		gct.setScore(this.getScore());
@@ -290,7 +290,7 @@ public class GoodsCommentTAction extends BaseTAction {
 		bean = this.getGoodsCommentTService().findGoodsCommentById(
 				this.getCommentid());
 		bean.setReplyorcommentusername(this.getReplyorcommentusername());
-		bean.setReplyorcommentuserid(BaseTools.adminCreateId());
+		bean.setReplyorcommentuserid(BaseTools.getAdminCreateId());
 		bean.setCommentcontent(this.getCommentcontent());
 		bean.setScore(this.getScore());
 		this.getGoodsCommentTService().updateGoodsComment(bean);

@@ -533,7 +533,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setSign(this.getSign().trim());
 				gct.setGoodsTypeId(this.getGoodsTypeId());
 				gct.setCreatetime(BaseTools.systemtime());
-				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setCreatorid(BaseTools.getAdminCreateId());
 				gct.setUpdatetime(BaseTools.systemtime());
 				gct.setVersiont(0);
 				gct.setParentName(StaticKey.EMPTY);
@@ -580,7 +580,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setPath(StaticKey.EMPTY);//将原有分类递归路径设置成空
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
-				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setCreatorid(BaseTools.getAdminCreateId());
 				gct.setUpdatetime(BaseTools.systemtime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
@@ -616,7 +616,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setSign(this.getSign().trim());
 				gct.setGoodsTypeId(this.getGoodsTypeId());
 				gct.setCreatetime(BaseTools.systemtime());
-				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setCreatorid(BaseTools.getAdminCreateId());
 				gct.setUpdatetime(BaseTools.systemtime());
 				gct.setVersiont(0);
 				gct.setParentId(this.getParentId());
@@ -663,7 +663,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 			    gct.setPath(this.getParentId() + "," + gct.getGoodsCategoryTid());//path代表了递归路径，要更新
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
-				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setCreatorid(BaseTools.getAdminCreateId());
 				gct.setUpdatetime(BaseTools.systemtime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
@@ -702,7 +702,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setSign(this.getSign().trim());
 				gct.setGoodsTypeId(this.getGoodsTypeId());
 				gct.setCreatetime(BaseTools.systemtime());
-				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setCreatorid(BaseTools.getAdminCreateId());
 				gct.setUpdatetime(BaseTools.systemtime());
 				gct.setVersiont(0);
 				gct.setParentId(this.getParentId1());
@@ -749,7 +749,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setPath(this.getParentId()+","+this.getParentId1()+","+gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
-				gct.setCreatorid(BaseTools.adminCreateId());
+				gct.setCreatorid(BaseTools.getAdminCreateId());
 				gct.setUpdatetime(BaseTools.systemtime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
@@ -860,7 +860,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 			gct.setMetaDes(this.getMetaDes());
 			gct.setGoodsCategoryTid(this.getGoodsCategoryTid());
 			gct.setCreatetime(BaseTools.systemtime());
-			gct.setCreatorid(BaseTools.adminCreateId());
+			gct.setCreatorid(BaseTools.getAdminCreateId());
 			gct.setUpdatetime(BaseTools.systemtime());
 			gct.setVersiont(0);
 			gct.setLogo(this.getLogo());

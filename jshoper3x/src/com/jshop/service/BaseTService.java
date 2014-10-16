@@ -6,17 +6,38 @@ import java.util.List;
 
 public interface BaseTService<T> {
 
+
+	/**
+	 * 根据持久化对象的主键获取对象
+	 * @param id
+	 * @return
+	 */
+	public T findByPK(Class<T> t,Serializable id);
 	/**
 	 * 持久化对象
 	 * @param t
 	 */
 	public void save(T t);
-	
+	/**
+	 * 保存多个对象
+	 * @param t
+	 */
+	public void saveOrUpdateAll(List<T> t);
 	/**
 	 * 更新持久化对象
 	 * @param t
 	 */
 	public void update(T t);
+	/**
+	 * 删除持久化对象
+	 * @param t
+	 */
+	public void delete(T t);
+	/**
+	 * 批量删除持久化对象
+	 * @param ids
+	 */
+	public int deleteAll(Class<T> t,String []ids);
 //	/**
 //	 * 持久化或者更新对象
 //	 * @param t
@@ -56,22 +77,19 @@ public interface BaseTService<T> {
 	 */
 	public int countfindAll(Class<T>t);
 	/**
-	 * 删除持久化对象
+	 * 根据店铺Id分页查询信息
 	 * @param t
-	 */
-	public void delete(T t);
-	/**
-	 * 批量删除持久化对象
-	 * @param ids
-	 */
-	public int deleteAll(Class<T> t,String []ids);
-	/**
-	 * 根据持久化对象的主键获取对象
-	 * @param id
+	 * @param currentPage
+	 * @param lineSize
 	 * @return
 	 */
-	public T findByPK(Class<T> t,Serializable id);
-	
-	
+	public List<T>findAllByShopId(Class<T>t,String shopId,int currentPage,int lineSize);
+	/**
+	 * 统计根据店铺Id分页查询信息
+	 * @param t
+	 * @param shopId
+	 * @return
+	 */
+	public int countfindAllByShopId(Class<T>t,String shopId);
 	
 }

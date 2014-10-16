@@ -7,8 +7,6 @@ package com.jshop.action.backstage.utils.statickey;
  *
  */
 public class  StaticKey {
-	public static final String UNDERLINE="_";
-	
 	/**
 	 * 逗号分隔符
 	 */
@@ -30,6 +28,10 @@ public class  StaticKey {
 	 * 后台用户登录创建的session用户名称
 	 */
 	public static String BACK_USER_SESSION_KEY = "admin";
+	/**
+	 * 店铺信息session名称
+	 */
+	public static String BASIC_SHOP_INFO="basicshopinfo";
 	/**
 	 * 后台用户登录创建的session_key
 	 */
@@ -491,6 +493,8 @@ public class  StaticKey {
 	
 	public static final String USERSTATEUNACTIVE="未激活";
 	
+	
+	
 	/**
 	 * 订单创建类型标记
 	 * @author sdywcd
@@ -604,7 +608,7 @@ public class  StaticKey {
 	 *
 	 */
 	public enum GoodsState{
-		SALE("上架","1"),UNSALE("下架","0"),HOTSALE("hotsale","1"),RECOMMENDED("recommended","1"),ISMOBILEPLATFORM("mobileplatform","1"),ISNOTMOBILEPLATFORM("isnotmobileplatform","0");
+		SALE("上架","1"),UNSALE("下架","0"),HOTSALE("hotsale","1"),RECOMMENDED("recommended","1"), ISMOBILEPLATFORM("ismobileplatform","1");
 		private String name;
 		private String state;
 		public String getName() {

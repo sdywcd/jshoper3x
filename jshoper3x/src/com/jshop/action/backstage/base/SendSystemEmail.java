@@ -198,7 +198,7 @@ public class SendSystemEmail extends BaseTAction {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+				//ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 //				JavaMailSender sender = (JavaMailSender) ctx.getBean("javamailsenderimpl");
 //				MimeMessage msg = sender.createMimeMessage();
 //				MimeMessageHelper helper = null;

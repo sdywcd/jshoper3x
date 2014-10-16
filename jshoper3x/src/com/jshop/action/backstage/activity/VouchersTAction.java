@@ -222,7 +222,7 @@ public class VouchersTAction extends BaseTAction {
 			vt.setVoucheruseway(this.getVoucheruseway());
 			vt.setState(StaticKey.ZERO);
 			vt.setCreatetime(BaseTools.systemtime());
-			vt.setCreatorid(BaseTools.adminCreateId());
+			vt.setCreatorid(BaseTools.getAdminCreateId());
 			this.getVouchersTService().save(vt);
 			this.setSucflag(true);
 			return "json";

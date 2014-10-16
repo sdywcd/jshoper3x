@@ -359,7 +359,7 @@ public class JshopbasicInfoTAction extends BaseTAction {
 		jbi.setIcpnum(this.getIcpnum());
 		jbi.setState(this.getState());
 		jbi.setDistrict(this.getDistrict());
-		jbi.setCreatorid(BaseTools.adminCreateId());
+		jbi.setCreatorid(BaseTools.getAdminCreateId());
 		jbi.setCreatetime(BaseTools.systemtime());
 		jbi.setMetaDes(this.getMetaDes());
 		jbi.setMetaKeywords(this.getMetaKeywords());
@@ -380,9 +380,9 @@ public class JshopbasicInfoTAction extends BaseTAction {
 
 		int currentPage = page;
 		int lineSize = rp;
-		List<JshopbasicInfoT> list = this.getJshopbasicInfoTService().findAllJshopbasicInfo(currentPage, lineSize, BaseTools.adminCreateId());
+		List<JshopbasicInfoT> list = this.getJshopbasicInfoTService().findAllJshopbasicInfo(currentPage, lineSize, BaseTools.getAdminCreateId());
 		if (list != null) {
-			total = this.getJshopbasicInfoTService().countfindAllJshopbasicInfo(BaseTools.adminCreateId());
+			total = this.getJshopbasicInfoTService().countfindAllJshopbasicInfo(BaseTools.getAdminCreateId());
 			rows.clear();
 			for (Iterator<JshopbasicInfoT> it = list.iterator(); it.hasNext();) {
 				JshopbasicInfoT jbi = (JshopbasicInfoT) it.next();
@@ -455,7 +455,7 @@ public class JshopbasicInfoTAction extends BaseTAction {
 	 */
 	@Action(value = "findJshopbasicInfoTById", results = { @Result(name = "json", type = "json") })
 	public String findJshopbasicInfoTById() {
-		String creatorid=BaseTools.adminCreateId();
+		String creatorid=BaseTools.getAdminCreateId();
 		beanlist = this.getJshopbasicInfoTService().findAllJshopbasicInfo(creatorid);
 		if (beanlist != null) {
 			this.setSucflag(true);
@@ -473,7 +473,7 @@ public class JshopbasicInfoTAction extends BaseTAction {
 	public String delJshopbasicInfo() {
 		if (this.getBasicinfoid() != null) {
 			String[] array = this.getBasicinfoid().trim().split(",");
-			if (this.getJshopbasicInfoTService().delJshopbasicInfo(array, BaseTools.adminCreateId()) > 0) {
+			if (this.getJshopbasicInfoTService().delJshopbasicInfo(array, BaseTools.getAdminCreateId()) > 0) {
 				return "json";
 			}
 		}

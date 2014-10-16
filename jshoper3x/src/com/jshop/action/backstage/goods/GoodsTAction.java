@@ -58,7 +58,7 @@ import com.jshop.vo.GoodsParameterlistVo;
 import com.swetake.util.Qrcode;
 
 import freemarker.template.TemplateException;
-@Namespace("")
+@Namespace("/admin/goods")
 @ParentPackage("jshop")
 public class GoodsTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
@@ -141,7 +141,7 @@ public class GoodsTAction extends BaseTAction {
 	private String ismobileplatformgoods;
 	private String commoditylist;//清单
 	private String belinkedgoodsid;//关联商品id串
-	private String isvirtual;//是否虚拟商品标记
+	private String isvirtualsale;//是否虚拟商品标记
 	private String virtualresults;//虚拟商品返回结果
 	private String productid;
 	private String isoutsite;
@@ -952,13 +952,12 @@ public class GoodsTAction extends BaseTAction {
 	public void setBelinkedgoodsid(String belinkedgoodsid) {
 		this.belinkedgoodsid = belinkedgoodsid;
 	}
-
-	public String getIsvirtual() {
-		return isvirtual;
+	public String getIsvirtualsale() {
+		return isvirtualsale;
 	}
 
-	public void setIsvirtual(String isvirtual) {
-		this.isvirtual = isvirtual;
+	public void setIsvirtualsale(String isvirtualsale) {
+		this.isvirtualsale = isvirtualsale;
 	}
 
 	public String getVirtualresults() {
@@ -1064,6 +1063,7 @@ public class GoodsTAction extends BaseTAction {
 		gt.setRecommended(this.getRecommended());
 		gt.setHotsale(this.getHotsale());
 		gt.setBargainprice(this.getBargainprice());
+		gt.setIsvirtualsale(this.getIsvirtualsale());//是否虚拟商品标记，用于充值卡或者购物卡类没有实物的商品
 		gt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
 		gt.setSalestate(this.getSalestate());
 		gt.setIsSpecificationsOpen(StaticKey.ONE);//默认开启规格值
@@ -1072,7 +1072,7 @@ public class GoodsTAction extends BaseTAction {
 		gt.setMetaDescription(this.getMetaDescription());
 		gt.setMetaKeywords(this.getMetaKeywords());
 		gt.setCreatetime(BaseTools.systemtime());
-		gt.setCreatorid(BaseTools.adminCreateId());
+		gt.setCreatorid(BaseTools.getAdminCreateId());
 		gt.setUpdatetime(BaseTools.systemtime());
 		gt.setIsoutsite(this.getIsoutsite());
 		gt.setOutsitelink(this.getOutsitelink());
@@ -1184,7 +1184,6 @@ public class GoodsTAction extends BaseTAction {
 		if (!list.isEmpty()) {
 			ProcessGoodsList(list);
 		}
-		
 	}
 
 	/**
@@ -1195,32 +1194,33 @@ public class GoodsTAction extends BaseTAction {
 	public void ProcessGoodsList(List<GoodsT> list) {
 		total = this.getGoodsTService().countAllGoods();
 		rows.clear();
+		this.setBasepath(BaseTools.getBasePath());
 		for (Iterator<GoodsT> it = list.iterator(); it.hasNext();) {
 			GoodsT gt = (GoodsT) it.next();
 			if (gt.getRecommended().equals(StaticKey.ONE)) {
-				gt.setRecommended("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
+				gt.setRecommended("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setRecommended("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
+				gt.setRecommended("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (gt.getHotsale().equals(StaticKey.ONE)) {
-				gt.setHotsale("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
+				gt.setHotsale("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setHotsale("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
+				gt.setHotsale("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (gt.getBargainprice().equals(StaticKey.ONE)) {
-				gt.setBargainprice("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
+				gt.setBargainprice("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setBargainprice("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
+				gt.setBargainprice("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (gt.getIsNew().equals(StaticKey.ONE)) {
-				gt.setIsNew("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
+				gt.setIsNew("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setIsNew("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
+				gt.setIsNew("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 			if (gt.getSalestate().equals(StaticKey.ONE)) {
-				gt.setSalestate("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
+				gt.setSalestate("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
-				gt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
+				gt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
 
 			Map<String, Object> cellMap = new HashMap<String, Object>();
@@ -1312,13 +1312,14 @@ public class GoodsTAction extends BaseTAction {
 				bean.setRecommended(this.getRecommended());
 				bean.setHotsale(this.getHotsale());
 				bean.setBargainprice(this.getBargainprice());
+				bean.setIsvirtualsale(this.getIsvirtualsale());
 				bean.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
 				bean.setSalestate(this.getSalestate());
 				bean.setPictureurl(this.getPictureurl());
 				bean.setCommoditylist(this.getCommoditylist());
 				bean.setMetaKeywords(this.getMetaKeywords());
 				bean.setMetaDescription(this.getMetaDescription());
-				bean.setCreatorid(BaseTools.adminCreateId());
+				bean.setCreatorid(BaseTools.getAdminCreateId());
 				bean.setUpdatetime(BaseTools.systemtime());
 				bean.setIsoutsite(this.getIsoutsite());
 				bean.setOutsitelink(this.getOutsitelink());
@@ -1391,9 +1392,9 @@ public class GoodsTAction extends BaseTAction {
 		if (Validate.StrNotNull(this.getGoodsid())) {
 			String[] strs = this.getGoodsid().split(",");
 			for (int i = 0; i < strs.length; i++) {
-				this.getProductTService().delProductTBygoodsid(strs[i], BaseTools.adminCreateId());
+				this.getProductTService().delProductTBygoodsid(strs[i], BaseTools.getAdminCreateId());
 			}
-			int i = this.getGoodsTService().delGoods(strs, BaseTools.adminCreateId());
+			int i = this.getGoodsTService().delGoods(strs, BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -1411,7 +1412,7 @@ public class GoodsTAction extends BaseTAction {
 	public String updateGoodsSaleState() {
 		if (Validate.StrNotNull(this.getGoodsid())) {
 			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsSaleState(strs, this.getSalestate(), BaseTools.adminCreateId());
+			int i = this.getGoodsTService().updateGoodsSaleState(strs, this.getSalestate(), BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -1429,7 +1430,7 @@ public class GoodsTAction extends BaseTAction {
 	public String updateGoodsbargainprice() {
 		if (Validate.StrNotNull(this.getGoodsid())) {
 			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsbargainprice(strs, this.getBargainprice(), BaseTools.adminCreateId());
+			int i = this.getGoodsTService().updateGoodsbargainprice(strs, this.getBargainprice(), BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -1448,7 +1449,7 @@ public class GoodsTAction extends BaseTAction {
 	public String updateGoodshotsale() {
 		if (Validate.StrNotNull(this.getGoodsid())) {
 			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodshotsale(strs, this.getHotsale(), BaseTools.adminCreateId());
+			int i = this.getGoodsTService().updateGoodshotsale(strs, this.getHotsale(), BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -1466,7 +1467,7 @@ public class GoodsTAction extends BaseTAction {
 	public String updateGoodsrecommended() {
 		if (Validate.StrNotNull(this.getGoodsid())) {
 			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsrecommended(strs, this.getRecommended(), BaseTools.adminCreateId());
+			int i = this.getGoodsTService().updateGoodsrecommended(strs, this.getRecommended(), BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -1484,7 +1485,7 @@ public class GoodsTAction extends BaseTAction {
 	public String updateGoodsisNew() {
 		if (Validate.StrNotNull(this.getGoodsid())) {
 			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsisNew(strs, this.getIsNew(), BaseTools.adminCreateId());
+			int i = this.getGoodsTService().updateGoodsisNew(strs, this.getIsNew(), BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		} else {
@@ -1502,7 +1503,7 @@ public class GoodsTAction extends BaseTAction {
 	public String updateGoodsismobileplatformgoods() {
 		if (Validate.StrNotNull(this.getGoodsid())) {
 			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsismobileplatformgoods(strs, this.getIsmobileplatformgoods(), BaseTools.adminCreateId());
+			int i = this.getGoodsTService().updateGoodsismobileplatformgoods(strs, this.getIsmobileplatformgoods(), BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		} else {

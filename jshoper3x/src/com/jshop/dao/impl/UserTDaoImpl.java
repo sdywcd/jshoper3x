@@ -1,13 +1,17 @@
 package com.jshop.dao.impl;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -50,8 +54,15 @@ public class UserTDaoImpl extends BaseTDaoImpl<UserT> implements UserTDao {
 	public UserT login(UserT transientInstance) {
 		log.debug("login user");
 		try {
-			String queryString = "from UserT as u where u.username=:username and u.password=:password and u.userstate=:userstate";
-			List<UserT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "username", "password","userstate"}, new Object[] { transientInstance.getUsername(), transientInstance.getPassword(),transientInstance.getUserstate() });
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("username", transientInstance.getUsername());
+			map.put("password", transientInstance.getPassword());
+			map.put("userstate", transientInstance.getUserstate());
+			DetachedCriteria criteria=DetachedCriteria.forClass(UserT.class);
+			criteria.add(Restrictions.allEq(map));
+			List<UserT> list=this.getHibernateTemplate().findByCriteria(criteria);
+			//String queryString = "from UserT as u where u.username=:username and u.password=:password and u.userstate=:userstate";
+			//List<UserT> list = this.getHibernateTemplate().findByNamedParam(queryString, new String[] { "username", "password","userstate"}, new Object[] { transientInstance.getUsername(), transientInstance.getPassword(),transientInstance.getUserstate() });
 			if (list.size() > 0) {
 				return list.get(0);
 			} else {

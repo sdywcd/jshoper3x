@@ -240,7 +240,7 @@ public class BrandTAction extends BaseTAction {
 		BrandT bt = new BrandT();
 		bt.setBrandid(this.getSerial().Serialid(Serial.BRAND));
 		bt.setBrandname(this.getBrandname().trim());
-		bt.setCreatorid(BaseTools.adminCreateId());
+		bt.setCreatorid(BaseTools.getAdminCreateId());
 		bt.setUsername(this.getUsername());
 		bt.setCreatetime(BaseTools.systemtime());
 		bt.setIntro(this.getIntro());
@@ -268,10 +268,10 @@ public class BrandTAction extends BaseTAction {
 	public String findAllBrandt() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getBrandTService().countfindAllBrandt(BaseTools.adminCreateId());
+		total = this.getBrandTService().countfindAllBrandt(BaseTools.getAdminCreateId());
 		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
 			String queryString = " from BrandT as bt where bt.creatorid=:creatorid order by " + getSortname() + " " + getSortorder() + "";
-			List<BrandT> bt = this.getBrandTService().sortAllBrandt(currentPage, lineSize, BaseTools.adminCreateId(), queryString);
+			List<BrandT> bt = this.getBrandTService().sortAllBrandt(currentPage, lineSize, BaseTools.getAdminCreateId(), queryString);
 			if (bt != null) {
 				for (Iterator<BrandT> it = bt.iterator(); it.hasNext();) {
 					BrandT b = (BrandT) it.next();
@@ -298,7 +298,7 @@ public class BrandTAction extends BaseTAction {
 		BrandT bt = new BrandT();
 		bt.setBrandid(this.getBrandid());
 		bt.setBrandname(this.getBrandname().trim());
-		bt.setCreatorid(BaseTools.adminCreateId());
+		bt.setCreatorid(BaseTools.getAdminCreateId());
 		bt.setUsername(this.getUsername());
 		bt.setCreatetime(BaseTools.systemtime());
 		bt.setIntro(this.getIntro());
@@ -357,7 +357,7 @@ public class BrandTAction extends BaseTAction {
 	public String delBrandt() {
 		if (StringUtils.isNotBlank(this.getBrandid())) {
 			String[] strs = StringUtils.split(this.getBrandid(), ",");
-			this.getBrandTService().delBrandt(strs, BaseTools.adminCreateId());
+			this.getBrandTService().delBrandt(strs, BaseTools.getAdminCreateId());
 			this.setSucflag(true);
 			return "json";
 		}

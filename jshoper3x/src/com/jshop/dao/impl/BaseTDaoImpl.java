@@ -2,6 +2,7 @@ package com.jshop.dao.impl;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -75,11 +76,12 @@ public class BaseTDaoImpl<T> extends HibernateDaoSupport implements BaseTDao<T> 
 
 				String queryString = "from "+t.getName()+" order by createtime desc";
 
+				@SuppressWarnings("unchecked")
 				public Object doInHibernate(Session session) throws HibernateException, SQLException {
 					Query query = session.createQuery(queryString);
 					query.setFirstResult((currentPage - 1) * lineSize);
 					query.setMaxResults(lineSize);
-					List list = query.list();
+					List<T> list = query.list();
 					return list;
 				}
 			});
@@ -127,6 +129,60 @@ public class BaseTDaoImpl<T> extends HibernateDaoSupport implements BaseTDao<T> 
 			return integer;
 		} catch (RuntimeException re) {
 			log.error("deleteAll"+t.getName()+"error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public List<T> findAllByShopId(final Class<T> t, final String shopId, final int currentPage,
+			final int lineSize) {
+		log.debug("find all "+t.getName()+"by shopid");
+		try {
+			List<T> list = this.getHibernateTemplate().executeFind(new HibernateCallback() {
+
+				String queryString = "from "+t.getName()+" as t where t.shopid=:shopid  order by createtime desc";
+
+				@SuppressWarnings("unchecked")
+				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+					Query query = session.createQuery(queryString);
+					query.setFirstResult((currentPage - 1) * lineSize);
+					query.setMaxResults(lineSize);
+					query.setParameter("shopid", shopId);
+					List<T> list = query.list();
+					return list;
+				}
+			});
+			return list;
+		} catch (RuntimeException re) {
+			log.error("find all "+t.getName()+"by shopid error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public int countfindAllByShopId(Class<T> t, String shopId) {
+		log.debug("countfindAll"+t.getName());
+		try {
+			String queryString = "select count(*) from "+t.getName()+" as t where t.shopid=:shopid";
+			List list = this.getHibernateTemplate().findByNamedParam(queryString, "shopid", shopId);
+			if (list.size() > 0) {
+				Object o = list.get(0);
+				long l = (Long) o;
+				return (int) l;
+			}
+			return 0;
+		} catch (RuntimeException re) {
+			log.error("countfindAll"+t.getName()+"error", re);
+			throw re;
+		}
+	}
+
+	@Override
+	public void saveOrUpdateAll(List<T> t) {
+		try{
+			this.getHibernateTemplate().saveOrUpdateAll(t);
+		}catch(RuntimeException re){
+			log.error("save "+t.getClass().getName()+" error", re);
 			throw re;
 		}
 	}

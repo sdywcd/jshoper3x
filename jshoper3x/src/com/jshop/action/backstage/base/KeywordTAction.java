@@ -212,7 +212,7 @@ public class KeywordTAction extends BaseTAction {
 		kt.setState(this.getState());
 		kt.setType(this.getType());
 		kt.setCreatetime(BaseTools.systemtime());
-		kt.setCreatorid(BaseTools.adminCreateId());
+		kt.setCreatorid(BaseTools.getAdminCreateId());
 		this.getKeywordTService().save(kt);
 		this.setSlogin(true);
 			
@@ -257,7 +257,7 @@ public class KeywordTAction extends BaseTAction {
 				kt.setState(this.getState().trim());
 				kt.setType(this.getType().trim());
 				kt.setCreatetime(BaseTools.systemtime());
-				kt.setCreatorid(BaseTools.adminCreateId());
+				kt.setCreatorid(BaseTools.getAdminCreateId());
 				if (this.getKeywordTService().updateKeywordT(kt) > 0) {
 					return "json";
 				}

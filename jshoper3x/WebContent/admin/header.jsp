@@ -126,6 +126,17 @@
 								<li><a
 									href="<%=basePath%>admin/goods/goodsbelinkedsalement.jsp?operate=find">关联销售商品设置
 								</a></li>
+								<li class="divider"></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodscardsment.jsp?operate=find">购物卡商品设置
+								</a></li>
+								<li class="divider"></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodsgroup.jsp?operate=add">添加团购商品
+								</a></li>
+								<li><a
+									href="<%=basePath%>admin/goods/goodsgroupment.jsp?operate=find">团购商品列表
+								</a></li>
 								<!--  <li><a href="#">团购商品 </a></li>
 								<li><a href="#">团购订单管理 </a></li>-->
 								<!-- <li class="dropdown-submenu"><a tabindex="-1" href="#">商品列表</a>
@@ -225,7 +236,10 @@
 						</a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find">商城信息设置</a></li>
+									href="<%=basePath%>admin/setting/basicinfo.jsp?operate=find">商户信息设置</a></li>
+								<li>
+								<li><a
+									href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find">商户信息列表</a></li>
 								<li><a
 									href="<%=basePath%>admin/setting/emailment.jsp?operate=find">邮箱设置</a></li>
 								<li><a
