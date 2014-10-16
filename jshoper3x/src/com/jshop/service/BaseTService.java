@@ -1,7 +1,6 @@
 package com.jshop.service;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 

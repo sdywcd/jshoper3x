@@ -1,6 +1,6 @@
 package com.jshop.mongo.dao;
 
-public interface AbstractRepository<T> {
+public interface AbstractRepositoryDao<T> {
 
 	public void insert(T t);
 }

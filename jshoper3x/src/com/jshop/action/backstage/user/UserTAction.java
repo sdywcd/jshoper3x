@@ -35,12 +35,13 @@ import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
-import com.jshop.mongo.dao.PersonAbstractRepository;
+import com.jshop.mongo.dao.PersonAbstractRepositoryDao;
+import com.jshop.mongo.documents.Person;
+import com.jshop.mongo.service.PersonAbstractRepositoryService;
 import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
-import com.jshop.vo.Person;
 import com.opensymphony.xwork2.ActionContext;
 
 import freemarker.template.TemplateException;
@@ -55,7 +56,7 @@ public class UserTAction extends BaseTAction {
 	private GlobalParamService globalParamService;
 	private DataCollectionTAction dataCollectionTAction;
 	@Resource
-	private PersonAbstractRepository personAbstractRepository;
+	private PersonAbstractRepositoryService personAbstractRepositoryService;
 	
 	private UserT bean = new UserT();
 	private String param;
@@ -570,9 +571,9 @@ public class UserTAction extends BaseTAction {
 			return INPUT;
 		}
 		Person p=new Person();
-		p.setId("1");
-		p.setName("2");
-		personAbstractRepository.insert(p);
+		p.setId("3");
+		p.setName("4");
+		personAbstractRepositoryService.insert(p);
 		MD5Code md5 = new MD5Code();
 		UserT user = new UserT();
 		user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());

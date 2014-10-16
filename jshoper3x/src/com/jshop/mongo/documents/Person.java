@@ -1,4 +1,4 @@
-package com.jshop.vo;
+package com.jshop.mongo.documents;
 
 import java.io.Serializable;
 

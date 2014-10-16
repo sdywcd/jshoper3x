@@ -29,10 +29,10 @@
 	<context:annotation-config />
 	<context:property-placeholder location="classpath*:*.properties" />
 	<!-- mongo配置 -->
-	<mongo:mongo host="localhost" port="27017" />
+	<mongo:mongo host="${mongo.host}" port="${mongo.port}" />
      <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">     
         <constructor-arg ref="mongo"/>     
-        <constructor-arg name="databaseName" value="db1"/>     
+        <constructor-arg name="databaseName" value="${mongo.db}"/>     
    
       </bean>  
       
@@ -114,7 +114,7 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<aop:config>
-		<aop:advisor pointcut="execution(* com.jshop.service.impl.*Service.*(..))"
+		<aop:advisor pointcut="execution(* com.jshop.service.impl.*.*Service.*(..))"
 			advice-ref="txAdvice" />
 	</aop:config>
 
