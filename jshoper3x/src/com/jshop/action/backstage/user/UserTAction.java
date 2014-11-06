@@ -9,13 +9,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.util.ByteSource;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -35,9 +32,6 @@ import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
-import com.jshop.mongo.dao.PersonAbstractRepositoryDao;
-import com.jshop.mongo.documents.Person;
-import com.jshop.mongo.service.PersonAbstractRepositoryService;
 import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
@@ -55,8 +49,6 @@ public class UserTAction extends BaseTAction {
 	private UserRoleMAction userRoleMAction;
 	private GlobalParamService globalParamService;
 	private DataCollectionTAction dataCollectionTAction;
-	@Resource
-	private PersonAbstractRepositoryService personAbstractRepositoryService;
 	
 	private UserT bean = new UserT();
 	private String param;
@@ -570,10 +562,6 @@ public class UserTAction extends BaseTAction {
 			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
-		Person p=new Person();
-		p.setId("3");
-		p.setName("4");
-		personAbstractRepositoryService.insert(p);
 		MD5Code md5 = new MD5Code();
 		UserT user = new UserT();
 		user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
