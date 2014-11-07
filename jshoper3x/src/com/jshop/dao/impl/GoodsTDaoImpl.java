@@ -254,10 +254,7 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 							return list;
 						}
 					});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("findGoodsByLtypeid error", re);
 			throw re;
@@ -309,10 +306,7 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 							return list;
 						}
 					});
-			if (list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("findGoodsByLtypeid error", re);
 			throw re;
@@ -350,10 +344,7 @@ public class GoodsTDaoImpl extends BaseTDaoImpl<GoodsT> implements GoodsTDao {
 			List<GoodsT> list = this.getHibernateTemplate().findByNamedParam(
 					queryString, new String[] { "salestate", "stypeid" },
 					new Object[] { salestate, stypeid });
-			if (list != null && list.size() > 0) {
-				return list;
-			}
-			return null;
+			return list;
 		} catch (RuntimeException re) {
 			log.error("findGoodsByStypeid error", re);
 			throw re;

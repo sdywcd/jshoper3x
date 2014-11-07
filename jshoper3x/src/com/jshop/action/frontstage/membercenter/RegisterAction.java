@@ -216,7 +216,12 @@ public class RegisterAction extends ActionSupport {
 				m.setMid(md5.getMD5ofStr(m.getId()));
 				m.setLoginname(this.getLoginname().toLowerCase(Locale.CHINA).trim());
 				m.setLoginpwd(md5.getMD5ofStr(this.getLoginpwd().trim()));
-				m.setNick("");
+				m.setNick(StaticKey.EMPTY);
+				m.setRealname(StaticKey.EMPTY);
+				m.setCity(StaticKey.EMPTY);
+				m.setDistrict(StaticKey.EMPTY);
+				m.setSex(StaticKey.EMPTY);
+				m.setWhichsex(StaticKey.EMPTY);
 				m.setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);
 				m.setHeadpath("#");
 				m.setCreatetime(BaseTools.systemtime());
