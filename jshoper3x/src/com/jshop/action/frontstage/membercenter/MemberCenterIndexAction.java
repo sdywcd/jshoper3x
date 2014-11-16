@@ -149,11 +149,6 @@ public class MemberCenterIndexAction extends ActionSupport {
 	public String InitMemberCenterIndex() {
 		MemberT memberT = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
 		if (memberT != null) {
-//			memberT.setAnswer("1");
-//			ActionContext.getContext().getSession().remove(StaticKey.MEMBER_SESSION_KEY);
-//			ActionContext.getContext().getSession().put(StaticKey.MEMBER_SESSION_KEY,memberT);
-//			MemberT m1 = (MemberT) ActionContext.getContext().getSession().get(StaticKey.MEMBER_SESSION_KEY);
-//			
 			//获取最近的订单信息
 			this.findAllUserOrderOn(memberT.getId());
 			
