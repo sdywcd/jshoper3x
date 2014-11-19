@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:mongo="http://www.springframework.org/schema/data/mongo" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation=" 
 	http://www.springframework.org/schema/data/mongo   
 		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
@@ -15,12 +12,12 @@
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd  
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-3.2.xsd"
-		
+
 	default-autowire="byName" default-lazy-init="false">
-	
-       
-    
-    
+
+
+
+
 	<aop:aspectj-autoproxy />
 
 	<context:component-scan base-package="com.jshop">
@@ -30,12 +27,12 @@
 	<context:property-placeholder location="classpath*:*.properties" />
 	<!-- mongo配置 -->
 	<mongo:mongo host="${mongo.host}" port="${mongo.port}" />
-     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">     
-        <constructor-arg ref="mongo"/>     
-        <constructor-arg name="databaseName" value="${mongo.db}"/>     
-   
-      </bean>  
-      
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg name="databaseName" value="${mongo.db}" />
+
+	</bean>
+
 	<!-- 数据库连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
@@ -66,6 +63,66 @@
 		</property>
 
 	</bean>
+
+	<!-- activeMq -->
+	<!-- JMS TOPIC MODEL -->
+	<!-- TOPIC链接工厂 -->
+	<bean id="topicSendConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://127.0.0.1:61616" />
+		<property name="useAsyncSend" value="true" />
+	</bean>
+	<bean id="topicListenConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://127.0.0.1:61616" />
+	</bean>
+	<!-- 发送消息的目的地（一个队列） -->
+	<!-- 定义主题 -->
+	<bean id="myTopic" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="jshoper3x.topic" />
+	</bean>
+	<bean id="myTopic2" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="jshoper4x.topic" />
+	</bean>
+	<!-- 消息转换器 -->
+	<bean id="messageConvertForSys" class="com.jshop.activemq.MessageConvertForSys"></bean>
+	<!-- Spring JMS Template -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="topicSendConnectionFactory"></property>
+		<property name="defaultDestination" ref="myTopic" />
+		<property name="messageConverter" ref="messageConvertForSys" />
+		<!-- 开启订阅模式 -->
+		<property name="pubSubDomain" value="true" />
+	</bean>
+	<!-- 消息发送方 -->
+	<bean id="topicMessageSender" class="com.jshop.activemq.SimpleJMSSender">
+		<property name="jmsTemplate" ref="jmsTemplate"></property>
+	</bean>
+	<!-- 消息接收方 -->
+	<bean id="topicMessageReceiver" class="com.jshop.activemq.SimpleJMSReceiver">
+	</bean>
+	<!-- 主题消息监听容器 -->
+	<bean id="listenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="topicListenConnectionFactory" />
+		<property name="pubSubDomain" value="true" /><!-- default is false -->
+		<property name="destination" ref="myTopic" />  <!-- listen topic: myTopic -->
+		<property name="subscriptionDurable" value="true" />
+		<property name="clientId" value="clientId_001" /><!---这里是设置接收客户端的ID，在持久化时，但这个客户端不在线时，消息就存在数据库里，知道被这个ID的客户端消费掉 -->
+		<property name="messageListener" ref="topicMessageReceiver" />
+	</bean>
+
+
+	<!-- 主题消息监听容器2 -->  
+    <bean id="listenerContainer2"    
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer">    
+        <property name="connectionFactory" ref="topicListenConnectionFactory" />    
+        <property name="pubSubDomain" value="true"/><!-- default is false -->  
+        <property name="destination" ref="myTopic2" />  <!-- listen topic: myTopic2 -->  
+        <property name="subscriptionDurable" value="true"/>  
+        <property name="clientId" value="clientId_002"/><!---这里是设置接收客户端的ID，在持久化时，但这个客户端不在线时，消息就存在数据库里，知道被这个ID的客户端消费掉-->  
+        <property name="messageListener" ref="topicMessageReceiver" />    
+    </bean>  
+
+
 	<!-- jedis缓存配置 -->
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
@@ -75,19 +132,21 @@
 	</bean>
 	<bean class="org.springframework.data.redis.core.RedisTemplate"
 		p:connection-factory-ref="jedisConnectionFactory">
-		<property name="keySerializer">  
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
-        </property>  
-        <property name="valueSerializer">  
-            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />  
-        </property>
+		<property name="keySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+		<property name="valueSerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
 	</bean>
 	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
 		<property name="maxActive" value="${redis.pool.maxActive}" />
 		<property name="maxIdle" value="${redis.pool.maxIdle}" />
 		<property name="maxWait" value="${redis.pool.maxWait}" />
 		<property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
-		
+
 	</bean>
 	<!-- org.springframework.orm.hibernate3.LocalSessionFactoryBean -->
 	<bean id="sessionFactory"
@@ -116,7 +175,7 @@
 	</bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		 <property name="sessionFactory" ref="sessionFactory" />  
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -153,38 +212,23 @@
 		<property name="maxPoolSize" value="30"></property>
 	</bean>
 
-	<!-- 配置activiti工作流引擎 
-	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
-		<property name="dataSource" ref="dataSource" />
-		<property name="transactionManager" ref="transactionManager"/>
-		<property name="databaseSchemaUpdate" value="true" />
-		<property name="mailServerHost" value="localhost" />
-		<property name="mailServerPort" value="5025" />
-		<property name="jpaHandleTransaction" value="true" />
-		<property name="jpaCloseEntityManager" value="true" />
-		<property name="jobExecutorActivate" value="false" />
-		 <property name="databaseType" value="mysql" />    
-	</bean>
-	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean"
-		destroy-method="destroy">
-		<property name="processEngineConfiguration" ref="processEngineConfiguration" />
-	</bean>
-	<bean id="repositoryService" factory-bean="processEngine"
-		factory-method="getRepositoryService" />
-	<bean id="runtimeService" factory-bean="processEngine"
-		factory-method="getRuntimeService" />
-	<bean id="taskService" factory-bean="processEngine"
-		factory-method="getTaskService" />
-	<bean id="historyService" factory-bean="processEngine"
-		factory-method="getHistoryService" />
-	<bean id="managementService" factory-bean="processEngine"
-		factory-method="getManagementService" />
-	<bean id="identityService" factory-bean="processEngine"
-		factory-method="getIdentityService" />
-	-->
+	<!-- 配置activiti工作流引擎 <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration"> 
+		<property name="dataSource" ref="dataSource" /> <property name="transactionManager" 
+		ref="transactionManager"/> <property name="databaseSchemaUpdate" value="true" 
+		/> <property name="mailServerHost" value="localhost" /> <property name="mailServerPort" 
+		value="5025" /> <property name="jpaHandleTransaction" value="true" /> <property 
+		name="jpaCloseEntityManager" value="true" /> <property name="jobExecutorActivate" 
+		value="false" /> <property name="databaseType" value="mysql" /> </bean> <bean 
+		id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean" destroy-method="destroy"> 
+		<property name="processEngineConfiguration" ref="processEngineConfiguration" 
+		/> </bean> <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" 
+		/> <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" 
+		/> <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" 
+		/> <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" 
+		/> <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService" 
+		/> <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" 
+		/> -->
 
-    <!--  <import resource="classpath:spring-config-cache.xml"/>
-    <import resource="classpath:spring-config-shiro.xml"/>
-	-->
+	<!-- <import resource="classpath:spring-config-cache.xml"/> <import resource="classpath:spring-config-shiro.xml"/> -->
 </beans>
 	
