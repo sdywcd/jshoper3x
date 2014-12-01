@@ -65,25 +65,20 @@
 	</bean>
 
 	<!-- activeMq -->
-	<!-- JMS TOPIC MODEL -->
+	<!-- 消息转换器 -->
+	<bean id="messageConvertForSys" class="com.jshop.activemq.MessageConvertForSys"></bean>
+	
+	<!-- 消息发布者 -->
 	<!-- TOPIC链接工厂 -->
 	<bean id="topicSendConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="tcp://127.0.0.1:61616" />
 		<property name="useAsyncSend" value="true" />
-	</bean>
-	<bean id="topicListenConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="tcp://127.0.0.1:61616" />
 	</bean>
 	<!-- 发送消息的目的地（一个队列） -->
 	<!-- 定义主题 -->
 	<bean id="myTopic" class="org.apache.activemq.command.ActiveMQTopic">
 		<constructor-arg value="jshoper3x.topic" />
 	</bean>
-	<bean id="myTopic2" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="jshoper4x.topic" />
-	</bean>
-	<!-- 消息转换器 -->
-	<bean id="messageConvertForSys" class="com.jshop.activemq.MessageConvertForSys"></bean>
 	<!-- Spring JMS Template -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="topicSendConnectionFactory"></property>
@@ -91,11 +86,36 @@
 		<property name="messageConverter" ref="messageConvertForSys" />
 		<!-- 开启订阅模式 -->
 		<property name="pubSubDomain" value="true" />
+		<property name="receiveTimeout" value="1000" />
 	</bean>
+	
+	
+	<!-- 订阅者配置 -->
+	<!-- 消息订阅者 -->
+	<!-- TOPIC链接工厂 -->
+	<bean id="topicListenConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://127.0.0.1:61616" />
+		<!-- 接收者ID -->  
+        <property name="clientID" value="client_119" />  
+	</bean>
+	<bean id="myTopic2" class="org.apache.activemq.command.ActiveMQTopic">
+		<constructor-arg value="jshoper4x.topic" />
+	</bean>
+	
 	<!-- 消息发送方 -->
 	<bean id="topicMessageSender" class="com.jshop.activemq.SimpleJMSSender">
 		<property name="jmsTemplate" ref="jmsTemplate"></property>
 	</bean>
+	 <!-- 消息监听器 -->  
+    <bean id="myTopicListener"  
+        class="org.springframework.jms.listener.adapter.MessageListenerAdapter">  
+        <constructor-arg ref="topicMessageReceiver" />  
+        <!-- 接收消息的方法名称 -->  
+        <property name="defaultListenerMethod" value="receive" />  
+        <!-- 不进行消息转换 -->  
+        <property name="messageConverter"><null/></property>  
+    </bean> 
+	
 	<!-- 消息接收方 -->
 	<bean id="topicMessageReceiver" class="com.jshop.activemq.SimpleJMSReceiver">
 	</bean>
@@ -106,21 +126,24 @@
 		<property name="pubSubDomain" value="true" /><!-- default is false -->
 		<property name="destination" ref="myTopic" />  <!-- listen topic: myTopic -->
 		<property name="subscriptionDurable" value="true" />
-		<property name="clientId" value="clientId_001" /><!---这里是设置接收客户端的ID，在持久化时，但这个客户端不在线时，消息就存在数据库里，知道被这个ID的客户端消费掉 -->
-		<property name="messageListener" ref="topicMessageReceiver" />
+		<property name="messageListener" ref="myTopicListener" />
+		<property name="receiveTimeout" value="10000"/>  
+		 <!-- 接收者ID -->  
+        <property name="clientId" value="client_119" />  
+        <property name="durableSubscriptionName" value="client_119"/>  
+		 
 	</bean>
 
 
-	<!-- 主题消息监听容器2 -->  
-    <bean id="listenerContainer2"    
-        class="org.springframework.jms.listener.DefaultMessageListenerContainer">    
-        <property name="connectionFactory" ref="topicListenConnectionFactory" />    
-        <property name="pubSubDomain" value="true"/><!-- default is false -->  
-        <property name="destination" ref="myTopic2" />  <!-- listen topic: myTopic2 -->  
-        <property name="subscriptionDurable" value="true"/>  
-        <property name="clientId" value="clientId_002"/><!---这里是设置接收客户端的ID，在持久化时，但这个客户端不在线时，消息就存在数据库里，知道被这个ID的客户端消费掉-->  
-        <property name="messageListener" ref="topicMessageReceiver" />    
-    </bean>  
+	<!-- 主题消息监听容器2 
+	<bean id="listenerContainer2"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="topicListenConnectionFactory" />
+		<property name="pubSubDomain" value="true" />
+		<property name="destination" ref="myTopic2" />
+		<property name="subscriptionDurable" value="true" />
+		<property name="messageListener" ref="topicMessageReceiver" />
+	</bean>-->
 
 
 	<!-- jedis缓存配置 -->

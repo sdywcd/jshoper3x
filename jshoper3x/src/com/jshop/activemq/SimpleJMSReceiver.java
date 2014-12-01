@@ -4,30 +4,17 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
+import javax.jms.TextMessage;
 
-public class SimpleJMSReceiver implements MessageListener {
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jms.JmsException;
 
-	@Override
-	public void onMessage(Message m) {
-		System.out.println("[receive message]");
+public class SimpleJMSReceiver  {
 
-		ObjectMessage om = (ObjectMessage) m;
-		try {
-			String key1 = om.getStringProperty("key1");
-
-			System.out.println(key1);
-
-			System.out.println("model:" + om.getJMSDeliveryMode());
-			System.out.println("destination:" + om.getJMSDestination());
-			System.out.println("type:" + om.getJMSType());
-			System.out.println("messageId:" + om.getJMSMessageID());
-			System.out.println("time:" + om.getJMSTimestamp());
-			System.out.println("expiredTime:" + om.getJMSExpiration());
-			System.out.println("priority:" + om.getJMSPriority());
-		} catch (JMSException e) {
-			e.printStackTrace();
-		}
-
-	}
+    public void receive(TextMessage message) throws JmsException, JMSException {  
+        System.out.println(message.getStringProperty("phrCode"));  
+        System.out.println(message.getText());  
+    }  
 
 }

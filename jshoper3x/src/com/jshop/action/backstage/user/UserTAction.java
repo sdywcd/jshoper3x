@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.Resource;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +23,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
 
 import com.jshop.action.backstage.authority.UserRoleMAction;
 import com.jshop.action.backstage.base.BaseTAction;
@@ -49,7 +56,8 @@ public class UserTAction extends BaseTAction {
 	private UserRoleMAction userRoleMAction;
 	private GlobalParamService globalParamService;
 	private DataCollectionTAction dataCollectionTAction;
-	
+	@Resource
+	private JmsTemplate jmsTemplate;
 	private UserT bean = new UserT();
 	private String param;
 	private List<UserT> user = new ArrayList<UserT>();
@@ -573,6 +581,22 @@ public class UserTAction extends BaseTAction {
 			return SUCCESS;
 		}
 		this.setParam(StaticKey.ONE);
+		//test jms
+//		for(int i=0;i<1;i++){
+//			final String a=String.valueOf(i);
+//			jmsTemplate.send(new MessageCreator() {
+//				public Message createMessage(Session session)
+//						throws JMSException {
+//					TextMessage msg = session.createTextMessage();
+//					// 设置消息属性
+//					msg.setStringProperty("phrCode", "C00"+a);
+//					// 设置消息内容
+//					msg.setText("Hello World!  "+a);
+//					return msg;
+//				}
+//			});
+//		}
+		
 		return INPUT;
 	}
 	/**

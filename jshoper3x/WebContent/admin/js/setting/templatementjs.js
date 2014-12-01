@@ -190,10 +190,6 @@ $(function() {
 			bclass:'add',
 			onpress:action
 		},{
-			name : '更新模板文件',
-			bclass : 'edit',
-			onpress : action
-		},{
 			name:'首页静态化',
 			bclass:'edit',
 			onpress:action
