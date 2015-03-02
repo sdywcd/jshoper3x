@@ -5,15 +5,15 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-02-23T22:56:03.059+0800")
+@Generated(value="Dali", date="2015-03-02T23:47:49.115+0800")
 @StaticMetamodel(SiteNavigationT.class)
 public class SiteNavigationT_ {
 	public static volatile SingularAttribute<SiteNavigationT, String> snid;
 	public static volatile SingularAttribute<SiteNavigationT, Date> createtime;
+	public static volatile SingularAttribute<SiteNavigationT, String> creatorid;
 	public static volatile SingularAttribute<SiteNavigationT, String> htmlPath;
 	public static volatile SingularAttribute<SiteNavigationT, String> isTargetBlank;
 	public static volatile SingularAttribute<SiteNavigationT, String> isVisible;
-	public static volatile SingularAttribute<SiteNavigationT, String> creatorid;
 	public static volatile SingularAttribute<SiteNavigationT, String> name;
 	public static volatile SingularAttribute<SiteNavigationT, String> position;
 	public static volatile SingularAttribute<SiteNavigationT, String> shopid;

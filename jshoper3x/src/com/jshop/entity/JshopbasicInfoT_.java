@@ -5,15 +5,13 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-02-23T01:04:45.137+0800")
+@Generated(value="Dali", date="2015-03-02T23:47:48.900+0800")
 @StaticMetamodel(JshopbasicInfoT.class)
 public class JshopbasicInfoT_ {
 	public static volatile SingularAttribute<JshopbasicInfoT, String> basicinfoid;
-	public static volatile SingularAttribute<JshopbasicInfoT, Date> createtime;
-	public static volatile SingularAttribute<JshopbasicInfoT, String> metaDes;
-	public static volatile SingularAttribute<JshopbasicInfoT, String> metaKeywords;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> city;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> country;
+	public static volatile SingularAttribute<JshopbasicInfoT, Date> createtime;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> creatorid;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> district;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> emailservice;
@@ -21,6 +19,8 @@ public class JshopbasicInfoT_ {
 	public static volatile SingularAttribute<JshopbasicInfoT, String> jshopname;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> jshopslogan;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> licensed;
+	public static volatile SingularAttribute<JshopbasicInfoT, String> metaDes;
+	public static volatile SingularAttribute<JshopbasicInfoT, String> metaKeywords;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> openstate;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> phoneservice;
 	public static volatile SingularAttribute<JshopbasicInfoT, String> province;

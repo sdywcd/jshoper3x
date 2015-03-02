@@ -4,13 +4,21 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-02-23T01:04:45.115+0800")
+@Generated(value="Dali", date="2015-03-02T23:47:48.713+0800")
 @StaticMetamodel(ExpresstempleteT.class)
 public class ExpresstempleteT_ {
 	public static volatile SingularAttribute<ExpresstempleteT, String> expresstempleteid;
+	public static volatile SingularAttribute<ExpresstempleteT, String> day;
 	public static volatile SingularAttribute<ExpresstempleteT, String> expressCss;
 	public static volatile SingularAttribute<ExpresstempleteT, String> expressImg;
+	public static volatile SingularAttribute<ExpresstempleteT, String> hour;
 	public static volatile SingularAttribute<ExpresstempleteT, String> kindeditorCode;
+	public static volatile SingularAttribute<ExpresstempleteT, String> logisticsid;
+	public static volatile SingularAttribute<ExpresstempleteT, String> minutes;
+	public static volatile SingularAttribute<ExpresstempleteT, String> month;
+	public static volatile SingularAttribute<ExpresstempleteT, String> notes;
+	public static volatile SingularAttribute<ExpresstempleteT, String> orderid;
+	public static volatile SingularAttribute<ExpresstempleteT, String> quantity;
 	public static volatile SingularAttribute<ExpresstempleteT, String> recipientCity;
 	public static volatile SingularAttribute<ExpresstempleteT, String> recipientContactor;
 	public static volatile SingularAttribute<ExpresstempleteT, String> recipientCountry;
@@ -32,14 +40,6 @@ public class ExpresstempleteT_ {
 	public static volatile SingularAttribute<ExpresstempleteT, String> sendStreet;
 	public static volatile SingularAttribute<ExpresstempleteT, String> sendTelno;
 	public static volatile SingularAttribute<ExpresstempleteT, String> sendTime;
-	public static volatile SingularAttribute<ExpresstempleteT, String> day;
-	public static volatile SingularAttribute<ExpresstempleteT, String> hour;
-	public static volatile SingularAttribute<ExpresstempleteT, String> logisticsid;
-	public static volatile SingularAttribute<ExpresstempleteT, String> minutes;
-	public static volatile SingularAttribute<ExpresstempleteT, String> month;
-	public static volatile SingularAttribute<ExpresstempleteT, String> notes;
-	public static volatile SingularAttribute<ExpresstempleteT, String> orderid;
-	public static volatile SingularAttribute<ExpresstempleteT, String> quantity;
 	public static volatile SingularAttribute<ExpresstempleteT, String> state;
 	public static volatile SingularAttribute<ExpresstempleteT, String> year;
 }

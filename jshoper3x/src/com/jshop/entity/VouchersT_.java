@@ -5,12 +5,12 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-02-23T01:04:45.169+0800")
+@Generated(value="Dali", date="2015-03-02T23:47:49.187+0800")
 @StaticMetamodel(VouchersT.class)
 public class VouchersT_ {
 	public static volatile SingularAttribute<VouchersT, String> vouchersid;
-	public static volatile SingularAttribute<VouchersT, Date> createtime;
 	public static volatile SingularAttribute<VouchersT, String> begintime;
+	public static volatile SingularAttribute<VouchersT, Date> createtime;
 	public static volatile SingularAttribute<VouchersT, String> creatorid;
 	public static volatile SingularAttribute<VouchersT, String> endtime;
 	public static volatile SingularAttribute<VouchersT, String> givenmemberid;
