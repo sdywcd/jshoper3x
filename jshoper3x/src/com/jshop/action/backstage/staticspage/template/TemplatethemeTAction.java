@@ -9,29 +9,36 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.TemplateT;
+import com.jshop.entity.TemplatesetT;
 import com.jshop.entity.TemplatethemeT;
 import com.jshop.service.TemplateTService;
 import com.jshop.service.TemplatesetTService;
 import com.jshop.service.TemplatethemeTService;
 import com.jshop.service.impl.Serial;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 public class TemplatethemeTAction extends BaseTAction {
 
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private TemplatethemeTService templatethemeTService;
+	@Resource
 	private TemplateTService templateTService;
+	@Resource
 	private TemplatesetTService templatesetTService;
 	private String ttid;
 	private String note;
@@ -49,30 +56,6 @@ public class TemplatethemeTAction extends BaseTAction {
 	private boolean sucflag;
 	private String msg;
 
-	@JSON(serialize = false)
-	public TemplatethemeTService getTemplatethemeTService() {
-		return templatethemeTService;
-	}
-
-	public void setTemplatethemeTService(TemplatethemeTService templatethemeTService) {
-		this.templatethemeTService = templatethemeTService;
-	}
-	@JSON(serialize = false)
-	public TemplateTService getTemplateTService() {
-		return templateTService;
-	}
-
-	public void setTemplateTService(TemplateTService templateTService) {
-		this.templateTService = templateTService;
-	}
-	@JSON(serialize = false)
-	public TemplatesetTService getTemplatesetTService() {
-		return templatesetTService;
-	}
-
-	public void setTemplatesetTService(TemplatesetTService templatesetTService) {
-		this.templatesetTService = templatesetTService;
-	}
 
 	public TemplatethemeT getBean() {
 		return bean;
@@ -210,19 +193,18 @@ public class TemplatethemeTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllTemplatetheme", results = { @Result(name = "json", type = "json") })
 	public String findAllTemplatetheme() {
-
-		if ("sc".equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.setTotal(0);
 			rows.clear();
 			finddefaultAllTemplatetheme();
 		} else {
-			if (Validate.StrisNull(this.getQtype())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQtype())) {
+				return JSON;
 			} else {
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -231,9 +213,19 @@ public class TemplatethemeTAction extends BaseTAction {
 	public void finddefaultAllTemplatetheme() {
 		int currentPage = page;
 		int lineSize = rp;
-		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
-			String queryString = "from TemplatethemeT as tt where tt.creatorid=:creatorid order by " + this.getSortname() + " " + this.getSortorder() + " ";
-			List<TemplatethemeT> list = this.getTemplatethemeTService().sortAllTemplatetheme(currentPage, lineSize, BaseTools.getAdminCreateId(), queryString);
+		
+		if (StringUtils.isNotBlank(this.getSortname()) && StringUtils.isNotBlank(this.getSortorder())) {
+			//String queryString = "from TemplatethemeT as tt where tt.creatorid=:creatorid order by " + this.getSortname() + " " + this.getSortorder() + " ";
+			Criterion criterion=Restrictions.eq("creatorid", BaseTools.getAdminCreateId());
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}
+			if(StringUtils.equals(this.getSortorder(), StaticKey.DESC)){
+				order=Order.desc(this.getSortname());
+			}
+			total = this.templatethemeTService.count(TemplatethemeT.class, criterion).intValue();
+			List<TemplatethemeT> list = this.templatethemeTService.findByCriteriaByPage(TemplatethemeT.class, criterion, order, currentPage, lineSize);
 			if (list != null) {
 				ProcessTemplatethemeList(list);
 			}
@@ -246,14 +238,14 @@ public class TemplatethemeTAction extends BaseTAction {
 	 * @param list
 	 */
 	public void ProcessTemplatethemeList(List<TemplatethemeT> list) {
-		total = this.getTemplatethemeTService().countfindAllTemplatetheme(BaseTools.getAdminCreateId());
 		rows.clear();
 		for (Iterator<TemplatethemeT> it = list.iterator(); it.hasNext();) {
 			TemplatethemeT tt = (TemplatethemeT) it.next();
-			if (tt.getStatus().equals("1")) {
-				tt.setStatus("启用");
-			} else {
-				tt.setStatus("禁用");
+			if(StringUtils.equals(BaseEnums.DataUsingState.USING.getState(), tt.getStatus())){
+				tt.setStatus(BaseEnums.DataUsingState.USING.getName());
+			}
+			if(StringUtils.equals(BaseEnums.DataUsingState.UNUSING.getState(), tt.getStatus())){
+				tt.setStatus(BaseEnums.DataUsingState.UNUSING.getName());
 			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", tt.getTtid());
@@ -269,10 +261,11 @@ public class TemplatethemeTAction extends BaseTAction {
 	 */
 	@Action(value = "addTemplatetheme", results = { @Result(name = "json", type = "json") })
 	public String addTemplatetheme() {
-
-		if (this.getTemplatethemeTService().checkTemplatethemeBythemenameandsign(this.getThemename(), this.getSign()) > 0) {
+		Criterion criterion=Restrictions.and(Restrictions.eq("themename", this.getThemename())).add(Restrictions.eq("sign", this.getSign()));
+		TemplatethemeT t=this.templatethemeTService.findOneByCriteria(TemplatethemeT.class, criterion);
+		if(t!=null){
 			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 
 		TemplatethemeT tt = new TemplatethemeT();
@@ -280,12 +273,12 @@ public class TemplatethemeTAction extends BaseTAction {
 		tt.setThemename(this.getThemename().trim());
 		tt.setNote(this.getNote().trim());
 		tt.setSign(this.getSign().trim());
-		tt.setCreatetime(BaseTools.systemtime());
+		tt.setCreatetime(BaseTools.getSystemTime());
 		tt.setCreatorid(BaseTools.getAdminCreateId());
 		tt.setStatus(this.getStatus());
-		this.getTemplatethemeTService().save(tt);
+		this.templatethemeTService.save(tt);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 		
 	}
 
@@ -296,33 +289,36 @@ public class TemplatethemeTAction extends BaseTAction {
 	 */
 	@Action(value = "delTemplatetheme", results = { @Result(name = "json", type = "json") })
 	public String delTemplatetheme() {
-		if (Validate.StrNotNull(this.getTtid())) {
-			String[] str = this.getTtid().trim().split(",");
+		if (StringUtils.isNotBlank(this.getTtid())) {
+			String strs[]=StringUtils.split(this.getTtid(), StaticKey.SPLITDOT);
 			String tip = null;
 			int count = 0;
-			TemplateT tt = new TemplateT();
-			for (int i = 0; i < str.length; i++) {
-				tt = this.getTemplateTService().checkTemplatetheme(str[i]);
+			for (String s:strs) {
+				Criterion criterion=Restrictions.eq("themeid", s);
+				TemplateT tt = this.templateTService.findOneByCriteria(TemplateT.class, criterion);
 				if (tt != null) {
 					tip += tt.getThemename() + ",";
 					count++;
 				} else {
-					int j = this.getTemplatethemeTService().delTemplatetheme(str[i]);
+					TemplatethemeT tmt=this.templatethemeTService.findByPK(TemplatethemeT.class, s);
+					if(tmt!=null){
+						this.templatethemeTService.delete(tmt);
+					}
 				}
 			}
 			if (count == 0) {
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			} else {
 				//这里有问题
 				this.setMsg(tip + "模板正在被其他文件使用，如需要删除请先删除模板文件");
 				this.setSucflag(false);
-				return "json";
+				return JSON;
 
 			}
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -332,15 +328,13 @@ public class TemplatethemeTAction extends BaseTAction {
 	 */
 	@Action(value = "findTemplatethemeByttid", results = { @Result(name = "json", type = "json") })
 	public String findTemplatethemeByttid() {
-
-		if (Validate.StrNotNull(this.getTtid())) {
-			bean = this.getTemplatethemeTService().findByPK(TemplatethemeT.class,this.getTtid());
+		if (StringUtils.isNotBlank(this.getTtid())) {
+			bean = this.templatethemeTService.findByPK(TemplatethemeT.class,this.getTtid());
 			if (bean != null) {
-				return "json";
+				return JSON;
 			}
 		}
-
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -350,24 +344,38 @@ public class TemplatethemeTAction extends BaseTAction {
 	 */
 	@Action(value = "updateTemplatetheme", results = { @Result(name = "json", type = "json") })
 	public String updateTemplatetheme() {
-
-		if (this.getTemplatethemeTService().checkTemplatethemeBythemenameandsign(this.getThemename(), this.getSign(), this.getTtid()) > 0) {
+		Map<String,Object>params=new HashMap<String, Object>();
+		params.put("ttid", this.getTtid());
+		params.put("themename", this.getThemename());
+		params.put("sign", this.getSign());
+		Criterion criterion=Restrictions.allEq(params);
+		TemplatethemeT t=this.templatethemeTService.findOneByCriteria(TemplatethemeT.class, criterion);
+		if(t!=null){
 			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 		TemplatethemeT tt = new TemplatethemeT();
 		tt.setTtid(this.getTtid());
 		tt.setThemename(this.getThemename());
 		tt.setNote(this.getNote());
 		tt.setSign(this.getSign());
-		tt.setCreatetime(BaseTools.systemtime());
+		tt.setCreatetime(BaseTools.getSystemTime());
 		tt.setCreatorid(BaseTools.getAdminCreateId());
 		tt.setStatus(this.getStatus());
-		this.getTemplatethemeTService().update(tt);
-		int k = this.getTemplateTService().updateTemplatetBystatus(this.getTtid(), this.getStatus());
-		int j = this.getTemplatesetTService().updateTemplatesetBystatus(this.getTtid(), this.getStatus());
+		this.templatethemeTService.update(tt);
+		Criterion criterion2=Restrictions.eq("themeid", this.getTtid());
+		TemplateT templateT=this.templateTService.findOneByCriteria(TemplateT.class, criterion2);
+		if(templateT!=null){
+			templateT.setStatus(this.getStatus());
+			this.templateTService.update(templateT);
+		}
+		TemplatesetT tsetT=this.templatesetTService.findOneByCriteria(TemplatesetT.class, criterion2);
+		if(tsetT!=null){
+			tsetT.setStatus(this.getStatus());
+			this.templatesetTService.update(tsetT);
+		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 
 	}
 
@@ -378,8 +386,8 @@ public class TemplatethemeTAction extends BaseTAction {
 	 */
 	@Action(value = "getAllTemplatetheme", results = { @Result(name = "json", type = "json") })
 	public String getAllTemplatetheme() {
-
-		List<TemplatethemeT> list = this.getTemplatethemeTService().findAllTemplatethemeWithNoParam(BaseTools.getAdminCreateId());
+		Criterion criterion=Restrictions.eq("creatorid", BaseTools.getAdminCreateId());
+		List<TemplatethemeT> list = this.templatethemeTService.findByCriteria(TemplatethemeT.class, criterion);
 		if (list != null) {
 			this.setTemplatethemestrs("");
 			this.setTemplatethemestrs("<option value='-1'>---请选择---</option>");
@@ -388,10 +396,10 @@ public class TemplatethemeTAction extends BaseTAction {
 				this.templatethemestrs += "<option value='" + tt.getTtid() + "," + tt.getSign() + "'>" + tt.getThemename() + "</option>";
 			}
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 
 	}
 
@@ -403,11 +411,24 @@ public class TemplatethemeTAction extends BaseTAction {
 	@Action(value = "updateTemplatethemestatus", results = { @Result(name = "json", type = "json") })
 	public String updateTemplatethemestatus() {
 
-		if (Validate.StrNotNull(this.getTtid()) && Validate.StrNotNull(this.getStatus())) {
-			int i = this.getTemplatethemeTService().updateTemplatethemestatus(this.getTtid(), this.getStatus());
-			int k = this.getTemplateTService().updateTemplatetBystatus(this.getTtid(), this.getStatus());
-			int j = this.getTemplatesetTService().updateTemplatesetBystatus(this.getTtid(), this.getStatus());
-			this.setSucflag(true);
+		if (StringUtils.isNotBlank(this.getTtid()) && StringUtils.isNotBlank(this.getStatus())) {
+			TemplatethemeT templatethemeT=this.templatethemeTService.findByPK(TemplatethemeT.class, this.getTtid());
+			if(templatethemeT!=null){
+				templatethemeT.setStatus(this.getStatus());
+				this.templatethemeTService.update(templatethemeT);
+			}
+			Criterion criterion=Restrictions.eq("themeid", this.getTtid());
+			
+			TemplateT templateT=this.templateTService.findOneByCriteria(TemplateT.class, criterion);
+			if(templateT!=null){
+				templateT.setStatus(this.getStatus());
+				this.templateTService.update(templateT);
+			}
+			TemplatesetT tsetT=this.templatesetTService.findOneByCriteria(TemplatesetT.class, criterion);
+			if(tsetT!=null){
+				tsetT.setStatus(this.getStatus());
+				this.templatesetTService.update(tsetT);
+			}this.setSucflag(true);
 			return "json";
 		} else {
 			this.setSucflag(false);

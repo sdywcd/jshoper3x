@@ -8,7 +8,7 @@ $(function(){
 	 */
 	setLogisticsid=function(){
 		// 获取物流商id
-		var logisticsid = $.query.get('logisticsid');
+		var logisticsid = $.query.get("logisticsid");
 		$('#logisticsid').attr("value", logisticsid);
 	},
 	/**
@@ -56,8 +56,12 @@ $(function(){
  * flexigrid list
  */
 $(function() {
+	var logisticsid=$.query.get("logisticsid");
+	if(logisticsid==""){
+		return;
+	}
 	$("#logisticsareamanagement").flexigrid( {
-		url : 'findAllLogisticsbusinessareaT.action',
+		url : 'findAllLogisticsbusinessareaT.action?logisticsid='+logisticsid,
 		dataType : 'json',
 		cache : false,
 		colModel : [ {
@@ -159,7 +163,8 @@ $(function() {
 		if (com == '编辑') {
 			if ($('.trSelected', grid).length == 1) {
 				var str = $('.trSelected', grid)[0].id.substr(3);
-				window.location.href="logisticsarea.jsp?operate=edit&folder=setting&logbusareaid="+str;	
+				var logisticsid=$.query.get("logisticsid");
+				window.location.href="logisticsarea.jsp?operate=edit&folder=setting&logbusareaid="+str+"&logisticsid="+logisticsid;	
 				return;
 			} else {
 				formwarning("#alerterror","请选择一条信息");
@@ -220,8 +225,10 @@ $(function() {
 			}
 
 		}else if(com=="添加"){
-			window.location.href = "logisticsarea.jsp?operate=add&folder=setting";
+			var logisticsid=$.query.get("logisticsid");
+			window.location.href = "logisticsarea.jsp?operate=add&folder=setting&logisticsid="+logisticsid;
 			return;
+			
 		}
 	}
 
@@ -261,7 +268,7 @@ $(function(){
 			return false;
 		}
 		var state=$("#state").val();
-		var logisticsid=$("#logisticsid").val();
+		var logisticsid=$.query.get("logisticsid");
 		this.value="提交中";
 		this.disabled=true;
 		$.post("addLogisticsbusinessarea.action",{
@@ -275,7 +282,7 @@ $(function(){
 			"logisticsid":logisticsid
 		},function(data){
 			if(data.sucflag){
-				window.location.href="logisticsareament.jsp?operate=find&folder=setting";
+				window.location.href="logisticsareament.jsp?operate=find&folder=setting&logisticsid="+logisticsid;
 			}else{
 				formwarning("#alerterror","添加物流商区域价格失败");
 				return false;
@@ -318,7 +325,7 @@ $(function(){
 			return false;
 		}
 		var state=$("#state").val();
-		var logisticsid=$("#logisticsid").val();
+		var logisticsid=$.query.get("logisticsid");
 		var logbusareaid=$("#logbusareaid").val();
 		this.value="更新提交中";
 		this.disabled=true;
@@ -334,7 +341,7 @@ $(function(){
 			"logbusareaid":logbusareaid
 		},function(data){
 			if(data.sucflag){
-				window.location.href="logisticsareament.jsp?operate=find&folder=setting";
+				window.location.href="logisticsareament.jsp?operate=find&folder=setting&logisticsid="+logisticsid;
 			}else{
 				formwarning("#alerterror","添加物流商区域价格失败");
 				return false;

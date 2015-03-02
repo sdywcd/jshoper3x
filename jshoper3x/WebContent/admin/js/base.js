@@ -26,10 +26,9 @@ $(function(){
 	 */
 	setdttitle=function(divid,msg){
 		$(divid).text(msg);
-	}
+	};
 	
-	
-	
+
 	
 });
 /*

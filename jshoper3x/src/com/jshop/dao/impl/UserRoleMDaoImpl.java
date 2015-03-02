@@ -32,38 +32,38 @@ public class UserRoleMDaoImpl extends BaseTDaoImpl<UserRoleM> implements UserRol
 
 	
 
-	public int delUserRoleM(final String userid) {
-		log.debug("delRoleFunctionM");
-		try {
-
-			final String queryString = "delete from UserRoleM as rfm where rfm.userid=:userid";
-			this.getHibernateTemplate().execute(new HibernateCallback() {
-
-				public Object doInHibernate(Session session) throws HibernateException, SQLException {
-					Query query = session.createQuery(queryString);
-					int i = 0;
-					query.setParameter("userid", userid);
-					i = query.executeUpdate();
-					return i;
-				}
-			});
-		} catch (RuntimeException re) {
-			log.error("delFunctionM failed", re);
-			throw re;
-		}
-		return 0;
-	}
-
-	public List<UserRoleM> findUserRoleMByuserid(String userid) {
-		log.debug("findUserRoleMByuserid");
-		try {
-			String queryString = "from UserRoleM as urm where urm.userid=:userid";
-			List<UserRoleM> list = this.getHibernateTemplate().findByNamedParam(queryString, "userid", userid);
-			return list;
-		} catch (RuntimeException re) {
-			log.error("findUserRoleMByuserid error", re);
-			throw re;
-		}
-	}
+//	public int delUserRoleM(final String userid) {
+//		log.debug("delRoleFunctionM");
+//		try {
+//
+//			final String queryString = "delete from UserRoleM as rfm where rfm.userid=:userid";
+//			this.getHibernateTemplate().execute(new HibernateCallback() {
+//
+//				public Object doInHibernate(Session session) throws HibernateException, SQLException {
+//					Query query = session.createQuery(queryString);
+//					int i = 0;
+//					query.setParameter("userid", userid);
+//					i = query.executeUpdate();
+//					return i;
+//				}
+//			});
+//		} catch (RuntimeException re) {
+//			log.error("delFunctionM failed", re);
+//			throw re;
+//		}
+//		return 0;
+//	}
+//
+//	public List<UserRoleM> findUserRoleMByuserid(String userid) {
+//		log.debug("findUserRoleMByuserid");
+//		try {
+//			String queryString = "from UserRoleM as urm where urm.userid=:userid";
+//			List<UserRoleM> list = this.getHibernateTemplate().findByNamedParam(queryString, "userid", userid);
+//			return list;
+//		} catch (RuntimeException re) {
+//			log.error("findUserRoleMByuserid error", re);
+//			throw re;
+//		}
+//	}
 	
 }

@@ -7,15 +7,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.GoodsCategoryT;
@@ -26,13 +32,18 @@ import com.jshop.service.GoodsCategoryTService;
 import com.jshop.service.TemplateTService;
 import com.jshop.service.TemplatesetTService;
 import com.jshop.service.impl.Serial;
+
 @Namespace("")
 @ParentPackage("jshop")
 public class TemplatesetTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private TemplatesetTService templatesetTService;
+	@Resource
 	private TemplateTService templateTService;
+	@Resource
 	private GoodsCategoryTService goodsCategoryTService;
+	@Resource
 	private ArticleCategoryTService articleCategoryTService;
 	private String tsid;
 	private String templateurl;
@@ -42,7 +53,7 @@ public class TemplatesetTAction extends BaseTAction {
 	private String creatorid;
 	private String sign;
 	private TemplatesetT bean = new TemplatesetT();
-	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -50,41 +61,6 @@ public class TemplatesetTAction extends BaseTAction {
 	private String templatestrs;
 	private String templatesetstrs;
 	private boolean sucflag;
-	
-	@JSON(serialize = false)
-	public TemplatesetTService getTemplatesetTService() {
-		return templatesetTService;
-	}
-
-	public void setTemplatesetTService(TemplatesetTService templatesetTService) {
-		this.templatesetTService = templatesetTService;
-	}
-	@JSON(serialize = false)
-	public TemplateTService getTemplateTService() {
-		return templateTService;
-	}
-
-	public void setTemplateTService(TemplateTService templateTService) {
-		this.templateTService = templateTService;
-	}
-	@JSON(serialize = false)
-	public GoodsCategoryTService getGoodsCategoryTService() {
-		return goodsCategoryTService;
-	}
-
-	public void setGoodsCategoryTService(GoodsCategoryTService goodsCategoryTService) {
-		this.goodsCategoryTService = goodsCategoryTService;
-	}
-	
-	@JSON(serialize = false)
-	public ArticleCategoryTService getArticleCategoryTService() {
-		return articleCategoryTService;
-	}
-
-	public void setArticleCategoryTService(ArticleCategoryTService articleCategoryTService) {
-		this.articleCategoryTService = articleCategoryTService;
-	}
-
 
 	public String getTsid() {
 		return tsid;
@@ -142,11 +118,11 @@ public class TemplatesetTAction extends BaseTAction {
 		this.bean = bean;
 	}
 
-	public List<Map<String,Object>> getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Map<String,Object>> rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -230,23 +206,29 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllTemplatesetT", results = { @Result(name = "json", type = "json") })
 	public String findAllTemplatesetT() {
-		if ("sc".equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllTemplateset();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQuery())) {
+				return JSON;
 			} else {
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	public void findDefaultAllTemplateset() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getTemplatesetTService().countfindAllTemplatesetT(BaseTools.getAdminCreateId());
-		List<TemplatesetT> list = this.getTemplatesetTService().findAllTemplatesetT(currentPage, lineSize, BaseTools.getAdminCreateId());
+		Criterion criterion = Restrictions.eq("creatorid",
+				BaseTools.getAdminCreateId());
+		Order order = Order.desc("createtime");
+		total = this.templatesetTService.count(TemplatesetT.class, criterion)
+				.intValue();
+		List<TemplatesetT> list = this.templatesetTService
+				.findByCriteriaByPage(TemplatesetT.class, criterion, order,
+						currentPage, lineSize);
 		if (!list.isEmpty()) {
 			this.ProcessTemplatesetTlist(list);
 		}
@@ -256,10 +238,22 @@ public class TemplatesetTAction extends BaseTAction {
 		rows.clear();
 		for (Iterator<TemplatesetT> it = list.iterator(); it.hasNext();) {
 			TemplatesetT tst = (TemplatesetT) it.next();
-			tst.setStatus(StaticKey.DataUsingState.getName(tst.getStatus()));
+			tst.setStatus(BaseEnums.DataUsingState.getName(tst.getStatus()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", tst.getTsid());
-			cellMap.put("cell", new Object[] { tst.getThemename(), tst.getSystemcontent(), tst.getSign(), tst.getStatus(), tst.getTemplateurl(), tst.getBuildhtmlpath(), BaseTools.formateDbDate(tst.getCreatetime()), "<a  id='edittemplateset' href='templateset.jsp?operate=edit&folder=setting&tsid=" + tst.getTsid() + "' name='edittemplateset'>[编辑]</a>" });
+			cellMap.put(
+					"cell",
+					new Object[] {
+							tst.getThemename(),
+							tst.getSystemcontent(),
+							tst.getSign(),
+							tst.getStatus(),
+							tst.getTemplateurl(),
+							tst.getBuildhtmlpath(),
+							BaseTools.formateDbDate(tst.getCreatetime()),
+							"<a  id='edittemplateset' href='templateset.jsp?operate=edit&folder=setting&tsid="
+									+ tst.getTsid()
+									+ "' name='edittemplateset'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 	}
@@ -271,38 +265,65 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "findSystemcontent", results = { @Result(name = "json", type = "json") })
 	public String findSystemcontent() {
-		List<GoodsCategoryT> gclist = this.getGoodsCategoryTService().findAllGoodsCategoryBycreatorid(BaseTools.getAdminCreateId());
-		List<ArticleCategoryT> aclist = this.getArticleCategoryTService().findAllArticleCategoryBycreatorid(BaseTools.getAdminCreateId());
-		//组织商品分类的所有信息
+		Criterion criterion = Restrictions.eq("creatorid",
+				BaseTools.getAdminCreateId());
+		List<GoodsCategoryT> gclist = this.goodsCategoryTService
+				.findByCriteria(GoodsCategoryT.class, criterion);
+		List<ArticleCategoryT> aclist = this.articleCategoryTService
+				.findByCriteria(ArticleCategoryT.class, criterion);
+		// 组织商品分类的所有信息
 		this.setSyscontentstrs("");
 		this.setSyscontentstrs("<option value='-1'>---请选择---</option><option value='0'>--自定义系统内容--</option><option value='1'>--以下是所创建的商品分类--</option>");
-		if(!gclist.isEmpty()){
+		if (!gclist.isEmpty()) {
 			for (Iterator<GoodsCategoryT> it = gclist.iterator(); it.hasNext();) {
 				GoodsCategoryT gct = (GoodsCategoryT) it.next();
-				if (gct.getGrade().equals("0")) {
-					this.syscontentstrs += "<option value='" + gct.getGoodsCategoryTid() + "," + gct.getSign() + "'>" + gct.getName() + "</option>";
-				} else if (gct.getGrade().equals("1")) {
-					this.syscontentstrs += "<option value='" + gct.getGoodsCategoryTid() + "," + gct.getSign() + "'>&nbsp;&nbsp;" + gct.getName() + "</option>";
+				if (StringUtils.equals(
+						BaseEnums.CategoryGrade.FIRST.getState(),
+						gct.getGrade())) {
+					this.syscontentstrs += "<option value='"
+							+ gct.getGoodsCategoryTid() + "," + gct.getSign()
+							+ "'>" + gct.getName() + "</option>";
+				} else if (StringUtils.equals(
+						BaseEnums.CategoryGrade.SECOND.getState(),
+						gct.getGrade())) {
+					this.syscontentstrs += "<option value='"
+							+ gct.getGoodsCategoryTid() + "," + gct.getSign()
+							+ "'>&nbsp;&nbsp;" + gct.getName() + "</option>";
 				} else {
-					this.syscontentstrs += "<option value='" + gct.getGoodsCategoryTid() + "," + gct.getSign() + "'>&nbsp;&nbsp;&nbsp;" + gct.getName() + "</option>";
+					this.syscontentstrs += "<option value='"
+							+ gct.getGoodsCategoryTid() + "," + gct.getSign()
+							+ "'>&nbsp;&nbsp;&nbsp;" + gct.getName()
+							+ "</option>";
 				}
 			}
 		}
 		if (!aclist.isEmpty()) {
 			this.syscontentstrs += "<option value='2'>--以下是所创建的文章分类--</option>";
-			for (Iterator<ArticleCategoryT> it = aclist.iterator(); it.hasNext();) {
+			for (Iterator<ArticleCategoryT> it = aclist.iterator(); it
+					.hasNext();) {
 				ArticleCategoryT act = (ArticleCategoryT) it.next();
-				if (act.getGrade().equals("0")) {
-					this.syscontentstrs += "<option value='" + act.getArticleCategoryTid() + "," + act.getSign() + "'>" + act.getName() + "</option>";
-				} else if (act.getGrade().equals("1")) {
-					this.syscontentstrs += "<option value='" + act.getArticleCategoryTid() + "," + act.getSign() + "'>&nbsp;&nbsp;" + act.getName() + "</option>";
+				if (StringUtils.equals(
+						BaseEnums.CategoryGrade.FIRST.getState(),
+						act.getGrade())) {
+					this.syscontentstrs += "<option value='"
+							+ act.getArticleCategoryTid() + "," + act.getSign()
+							+ "'>" + act.getName() + "</option>";
+				} else if (StringUtils.equals(
+						BaseEnums.CategoryGrade.SECOND.getState(),
+						act.getGrade())) {
+					this.syscontentstrs += "<option value='"
+							+ act.getArticleCategoryTid() + "," + act.getSign()
+							+ "'>&nbsp;&nbsp;" + act.getName() + "</option>";
 				} else {
-					this.syscontentstrs += "<option value='" + act.getArticleCategoryTid() + "," + act.getSign() + "'>&nbsp;&nbsp;&nbsp;" + act.getName() + "</option>";
+					this.syscontentstrs += "<option value='"
+							+ act.getArticleCategoryTid() + "," + act.getSign()
+							+ "'>&nbsp;&nbsp;&nbsp;" + act.getName()
+							+ "</option>";
 				}
 			}
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 
 	}
 
@@ -311,19 +332,25 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "getAllTemplate", results = { @Result(name = "json", type = "json") })
 	public String getAllTemplate() {
-		List<TemplateT> list = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.getAdminCreateId(), "1");
-		if (list != null) {
+		Criterion criterion = Restrictions.and(
+				Restrictions.eq("creatorid", BaseTools.getAdminCreateId()))
+				.add(Restrictions.eq("status",
+						BaseEnums.DataUsingState.USING.getState()));
+		List<TemplateT> list = this.templateTService.findByCriteria(
+				TemplateT.class, criterion);
+		if (list != null && list.size() > 0) {
 			this.setTemplatestrs("");
 			this.setTemplatestrs("<option value='-1'>---请选择---</option>");
 			for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
 				TemplateT tt = (TemplateT) it.next();
-				this.templatestrs += "<option value='" + tt.getUrl() + "," + tt.getSign() + "'>" + tt.getUrl() + "</option>";
+				this.templatestrs += "<option value='" + tt.getUrl() + ","
+						+ tt.getSign() + "'>" + tt.getUrl() + "</option>";
 			}
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -333,19 +360,23 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "getTemplateOutHtmlPath", results = { @Result(name = "json", type = "json") })
 	public String getTemplateOutHtmlPath() {
-
-		List<TemplatesetT> list = this.getTemplatesetTService().findAllTemplatesetWithNoParam(BaseTools.getAdminCreateId());
-		if (list != null) {
+		Criterion criterion = Restrictions.eq("creatorid",
+				BaseTools.getAdminCreateId());
+		List<TemplatesetT> list = this.templatesetTService.findByCriteria(
+				TemplatesetT.class, criterion);
+		if (list != null && list.size() > 0) {
 			this.setTemplatesetstrs("<option value='-1'>---请选择---</option>");
 			for (Iterator<TemplatesetT> it = list.iterator(); it.hasNext();) {
 				TemplatesetT tst = (TemplatesetT) it.next();
-				this.templatesetstrs += "<option value='" + tst.getBuildhtmlpath() + "'>" + tst.getSystemcontent() + "</option>";
+				this.templatesetstrs += "<option value='"
+						+ tst.getBuildhtmlpath() + "'>"
+						+ tst.getSystemcontent() + "</option>";
 			}
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 
 	}
 
@@ -356,27 +387,29 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "addTemplatesetT", results = { @Result(name = "json", type = "json") })
 	public String addTemplatesetT() {
-
 		TemplatesetT tst = new TemplatesetT();
 		tst.setTsid(this.getSerial().Serialid(Serial.TEMPLATESET));
 		tst.setSystemcontent(this.getSystemcontent().trim());
 		tst.setTemplateurl(this.getTemplateurl());
 		tst.setBuildhtmlpath(this.getBuildhtmlpath());
-		tst.setCreatetime(BaseTools.systemtime());
+		tst.setCreatetime(BaseTools.getSystemTime());
 		tst.setCreatorid(BaseTools.getAdminCreateId());
 		tst.setSign(this.getSign());
-		//获取模板主题和状态
-		TemplateT tt = new TemplateT();
-		tt = this.getTemplateTService().findTemplateBysign(this.getSign(), "1");
+		// 获取模板主题和状态
+		Criterion criterion = Restrictions.and(
+				Restrictions.eq("sign", this.getSign())).add(
+				Restrictions.eq("status",
+						BaseEnums.DataUsingState.USING.getState()));
+		TemplateT tt = this.templateTService.findOneByCriteria(TemplateT.class,
+				criterion);
 		if (tt != null) {
 			tst.setThemeid(tt.getThemeid());
 			tst.setThemename(tt.getThemename());
 			tst.setStatus(tt.getStatus());
 		}
-		this.getTemplatesetTService().save(tst);
+		this.templatesetTService.save(tst);
 		this.setSucflag(true);
-		return "json";
-		
+		return JSON;
 
 	}
 
@@ -388,18 +421,19 @@ public class TemplatesetTAction extends BaseTAction {
 	@Action(value = "findTemplatesetTBytsid", results = { @Result(name = "json", type = "json") })
 	public String findTemplatesetTBytsid() {
 
-		if (Validate.StrNotNull(this.getTsid())) {
-			bean = this.getTemplatesetTService().findTemplatesetTBytsid(this.getTsid());
+		if (StringUtils.isNotBlank(this.getTsid())) {
+			bean = this.templatesetTService.findByPK(TemplatesetT.class,
+					this.getTsid());
 			if (bean != null) {
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			} else {
 				this.setSucflag(false);
-				return "json";
+				return JSON;
 			}
 		} else {
 			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 
 	}
@@ -411,29 +445,33 @@ public class TemplatesetTAction extends BaseTAction {
 	 */
 	@Action(value = "updateTemplatesetT", results = { @Result(name = "json", type = "json") })
 	public String updateTemplatesetT() {
-
-		TemplatesetT tst = new TemplatesetT();
-		tst.setTsid(this.getTsid());
-		tst.setTemplateurl(this.getTemplateurl());
-		tst.setSystemcontent(this.getSystemcontent().trim());
-		tst.setBuildhtmlpath(this.getBuildhtmlpath());
-		tst.setCreatetime(BaseTools.systemtime());
-		tst.setCreatorid(BaseTools.getAdminCreateId());
-		tst.setSign(this.getSign());
-		//获取模板主题和状态
-		TemplateT tt = new TemplateT();
-		tt = this.getTemplateTService().findTemplateBysign(this.getSign(), "1");
-		if (tt != null) {
-			tst.setThemeid(tt.getThemeid());
-			tst.setThemename(tt.getThemename());
-			tst.setStatus(tt.getStatus());
-		}
-		if (this.getTemplatesetTService().updateTemplatesetT(tst) > 0) {
+		TemplatesetT tst = this.templatesetTService.findByPK(
+				TemplatesetT.class, this.getTsid());
+		if (tst != null) {
+			tst.setTemplateurl(this.getTemplateurl());
+			tst.setSystemcontent(this.getSystemcontent().trim());
+			tst.setBuildhtmlpath(this.getBuildhtmlpath());
+			tst.setCreatetime(BaseTools.getSystemTime());
+			tst.setCreatorid(BaseTools.getAdminCreateId());
+			tst.setSign(this.getSign());
+			// 获取模板主题和状态
+			Criterion criterion = Restrictions.and(
+					Restrictions.eq("sign", this.getSign())).add(
+					Restrictions.eq("status",
+							BaseEnums.DataUsingState.USING.getState()));
+			TemplateT tt = this.templateTService.findOneByCriteria(
+					TemplateT.class, criterion);
+			if (tt != null) {
+				tst.setThemeid(tt.getThemeid());
+				tst.setThemename(tt.getThemename());
+				tst.setStatus(tt.getStatus());
+			}
+			this.templatesetTService.update(tst);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 
 	}
 
@@ -445,14 +483,19 @@ public class TemplatesetTAction extends BaseTAction {
 	@Action(value = "delTemplatesetT", results = { @Result(name = "json", type = "json") })
 	public String delTemplatesetT() {
 
-		if (Validate.StrNotNull(this.getTsid())) {
-			String[] strs = this.getTsid().split(",");
-			this.getTemplatesetTService().delTemplatesetT(strs);
+		if (StringUtils.isNotBlank(this.getTsid())) {
+			String[] strs = StringUtils.split(this.getTsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				TemplatesetT tst=this.templatesetTService.findByPK(TemplatesetT.class, s);
+				if(tst!=null){
+					this.templatesetTService.delete(tst);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 
 	}
 }

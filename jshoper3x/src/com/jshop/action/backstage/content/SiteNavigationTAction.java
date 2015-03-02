@@ -5,23 +5,31 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Order;
+
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.SiteNavPosition;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.SiteNavigationT;
 import com.jshop.service.SiteNavigationTService;
 import com.jshop.service.impl.Serial;
+
 @Namespace("")
 @ParentPackage("jshop")
 public class SiteNavigationTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private SiteNavigationTService siteNavigationTService;
 	private String snid;
 	private String isTargetBlank;
@@ -34,20 +42,11 @@ public class SiteNavigationTAction extends BaseTAction {
 	private String sort;
 	private String sign;
 	private SiteNavigationT bean = new SiteNavigationT();
-	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-
-	@JSON(serialize = false)
-	public SiteNavigationTService getSiteNavigationTService() {
-		return siteNavigationTService;
-	}
-
-	public void setSiteNavigationTService(SiteNavigationTService siteNavigationTService) {
-		this.siteNavigationTService = siteNavigationTService;
-	}
 
 	public String getSnid() {
 		return snid;
@@ -177,7 +176,6 @@ public class SiteNavigationTAction extends BaseTAction {
 		this.sign = sign;
 	}
 
-
 	/**
 	 * 清理错误
 	 */
@@ -195,32 +193,42 @@ public class SiteNavigationTAction extends BaseTAction {
 
 	@Action(value = "findAllSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String findAllSiteNavigationT() {
-		if (StaticKey.SC.equals(this.getQtype())) {
+		if (StringUtils.equals(StaticKey.SC, this.getQtype())) {
 			this.findDefaultAllSiteNavigation();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQuery())) {
+				return JSON;
 			} else {
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	public void findDefaultAllSiteNavigation() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getSiteNavigationTService().countfindAllSiteNavigationT(BaseTools.getAdminCreateId());
-		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
-			String queryString = "from SiteNavigationT as st where st.creatorid=:creatorid order by " + getSortname() + " " + getSortorder() + "";
-			List<SiteNavigationT> list = this.getSiteNavigationTService().sortAllSiteNavigationT(currentPage, lineSize, BaseTools.getAdminCreateId(), queryString);
-			if (list != null) {
-				this.ProcessSiteNavigationList(list);
+		total = this.siteNavigationTService.countfindAll(SiteNavigationT.class);
+		if (StringUtils.isNotBlank(getSortname())
+				&& StringUtils.isNotBlank(getSortorder())) {
+			// String queryString =
+			// "from SiteNavigationT as st where st.creatorid=:creatorid order by "
+			// + getSortname() + " " + getSortorder() + "";
+			Order order = null;
+			if (StringUtils.equals(this.getSortorder(), StaticKey.ASC)) {
+				order = Order.asc(this.getSortname());
 			}
+			if (StringUtils.equals(this.getSortorder(), StaticKey.DESC)) {
+				order = Order.desc(this.getSortname());
+			}
+			List<SiteNavigationT> list = this.siteNavigationTService
+					.findByCriteriaByPage(SiteNavigationT.class, order,
+							currentPage, lineSize);
+			this.processSiteNavigationList(list);
 		}
 	}
 
-	public void ProcessSiteNavigationList(List<SiteNavigationT> list) {
+	public void processSiteNavigationList(List<SiteNavigationT> list) {
 		rows.clear();
 		for (Iterator<SiteNavigationT> it = list.iterator(); it.hasNext();) {
 			SiteNavigationT sn = (SiteNavigationT) it.next();
@@ -234,16 +242,24 @@ public class SiteNavigationTAction extends BaseTAction {
 			} else {
 				sn.setIsVisible("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (sn.getPosition().equals(StaticKey.ONE)) {
-				sn.setPosition("页面上部");
-			} else if (sn.getPosition().equals(StaticKey.TWO)) {
-				sn.setPosition("页面中部");
-			} else {
-				sn.setPosition("页面下部");
-			}
+			sn.setPosition(SiteNavPosition.getName(sn.getPosition()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", sn.getSnid());
-			cellMap.put("cell", new Object[] { sn.getName(), sn.getPosition(), sn.getSign(), sn.getSort(), sn.getIsTargetBlank(), sn.getIsVisible(), BaseTools.formateDbDate(sn.getCreatetime()), sn.getCreatorid(), "<a id='editsitenavigation' href='sitenavigation.jsp?operate=edit&folder=pagecontent&snid=" + sn.getSnid() + "' name='editsitenavigation'>[编辑]</a>" });
+			cellMap.put(
+					"cell",
+					new Object[] {
+							sn.getShopname(),
+							sn.getName(),
+							sn.getPosition(),
+							sn.getSign(),
+							sn.getSort(),
+							sn.getIsTargetBlank(),
+							sn.getIsVisible(),
+							BaseTools.formateDbDate(sn.getCreatetime()),
+							sn.getCreatorid(),
+							"<a id='editsitenavigation' href='sitenavigation.jsp?operate=edit&folder=pagecontent&snid="
+									+ sn.getSnid()
+									+ "' name='editsitenavigation'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 	}
@@ -255,22 +271,23 @@ public class SiteNavigationTAction extends BaseTAction {
 	 */
 	@Action(value = "addSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String addSiteNavigationT() {
-
 		SiteNavigationT sn = new SiteNavigationT();
 		sn.setSnid(this.getSerial().Serialid(Serial.SITENAVIGATION));
 		sn.setIsTargetBlank(this.getIsTargetBlank());
 		sn.setIsVisible(this.getIsVisible());
 		sn.setName(this.getName());
 		sn.setPosition(this.getPosition());
-		sn.setCreatetime(BaseTools.systemtime());
+		sn.setCreatetime(BaseTools.getSystemTime());
 		sn.setCreatorid(BaseTools.getAdminCreateId());
 		sn.setHtmlPath(this.getHtmlPath());
 		sn.setSort(Integer.parseInt(this.getSort()));
 		sn.setSign(this.getSign());
-		this.getSiteNavigationTService().save(sn);
-		//这里需要对应模板生成静态页面
+		sn.setShopid(BaseTools.getShopId());
+		sn.setShopname(BaseTools.getShopName());
+		this.siteNavigationTService.save(sn);
+		// 这里需要对应模板生成静态页面
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -280,14 +297,12 @@ public class SiteNavigationTAction extends BaseTAction {
 	 */
 	@Action(value = "findSiteNavigationBysnid", results = { @Result(name = "json", type = "json") })
 	public String findSiteNavigationBysnid() {
-
-		bean = this.getSiteNavigationTService().findSiteNavigationBysnid(this.getSnid());
+		bean = this.siteNavigationTService.findByPK(SiteNavigationT.class,
+				this.getSnid());
 		if (bean != null) {
 			this.setSucflag(true);
-			return "json";
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 
 	}
 
@@ -298,24 +313,25 @@ public class SiteNavigationTAction extends BaseTAction {
 	 */
 	@Action(value = "updateSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String updateSiteNavigationT() {
-		SiteNavigationT sn = new SiteNavigationT();
-		sn.setSnid(this.getSnid());
-		sn.setIsTargetBlank(this.getIsTargetBlank());
-		sn.setIsVisible(this.getIsVisible());
-		sn.setName(this.getName());
-		sn.setPosition(this.getPosition());
-		sn.setCreatetime(BaseTools.systemtime());
-		sn.setCreatorid(BaseTools.getAdminCreateId());
-		sn.setHtmlPath(this.getHtmlPath());
-		sn.setSort(Integer.parseInt(this.getSort()));
-		sn.setSign(this.getSign());
-		if (this.getSiteNavigationTService().updateSiteNavigationT(sn) > 0) {
-			//更新模板页面数据
+		SiteNavigationT sn = this.siteNavigationTService.findByPK(
+				SiteNavigationT.class, this.getSnid());
+		if (sn != null) {
+			sn.setIsTargetBlank(this.getIsTargetBlank());
+			sn.setIsVisible(this.getIsVisible());
+			sn.setName(this.getName());
+			sn.setPosition(this.getPosition());
+			sn.setCreatetime(BaseTools.getSystemTime());
+			sn.setCreatorid(BaseTools.getAdminCreateId());
+			sn.setHtmlPath(this.getHtmlPath());
+			sn.setSort(Integer.parseInt(this.getSort()));
+			sn.setSign(this.getSign());
+			sn.setShopid(BaseTools.getShopId());
+			sn.setShopname(BaseTools.getShopName());
+			this.siteNavigationTService.update(sn);
+			// 更新模板页面数据
 			this.setSucflag(true);
-			return "json";
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 
 	}
 
@@ -326,13 +342,19 @@ public class SiteNavigationTAction extends BaseTAction {
 	 */
 	@Action(value = "delSiteNavigationT", results = { @Result(name = "json", type = "json") })
 	public String delSiteNavigationT() {
-		if(StringUtils.isNotBlank(this.getSnid())){
-			String[] strs = StringUtils.split(this.getSnid(), ",");
-			this.getSiteNavigationTService().delSiteNavigationT(strs);
+		if (StringUtils.isNotBlank(this.getSnid())) {
+			String[] strs = StringUtils.split(this.getSnid(),
+					StaticKey.SPLITDOT);
+			for (String s : strs) {
+				SiteNavigationT sn = this.siteNavigationTService.findByPK(
+						SiteNavigationT.class, s);
+				if (sn != null) {
+					this.siteNavigationTService.delete(sn);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 
 	}
 }

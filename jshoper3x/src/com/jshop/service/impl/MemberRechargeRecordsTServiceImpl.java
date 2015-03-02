@@ -13,35 +13,35 @@ import com.jshop.service.MemberRechargeRecordsTService;
 @Scope("prototype")
 public class MemberRechargeRecordsTServiceImpl extends BaseTServiceImpl<MemberRechargeRecordsT>implements
 		MemberRechargeRecordsTService {
-	private MemberRechargeRecordsTDao memberRechargeRecordsTDao;
-
-	public MemberRechargeRecordsTDao getMemberRechargeRecordsTDao() {
-		return memberRechargeRecordsTDao;
-	}
-
-	public void setMemberRechargeRecordsTDao(
-			MemberRechargeRecordsTDao memberRechargeRecordsTDao) {
-		this.memberRechargeRecordsTDao = memberRechargeRecordsTDao;
-	}
-
-
-	@Override
-	public List<MemberRechargeRecordsT> findAllMemberRechargeRecordsT(
-			int currentPage, int lineSize) {
-		return this.getMemberRechargeRecordsTDao()
-				.findAllMemberRechargeRecordsT(currentPage, lineSize);
-	}
-
-	@Override
-	public int countfindAllMemberRechargeRecordsT() {
-		return this.getMemberRechargeRecordsTDao()
-				.countfindAllMemberRechargeRecordsT();
-	}
-
-	@Override
-	public void delMemberRechargeRecordsT(String[] strs) {
-		this.getMemberRechargeRecordsTDao().delMemberRechargeRecordsT(strs);
-
-	}
+//	private MemberRechargeRecordsTDao memberRechargeRecordsTDao;
+//
+//	public MemberRechargeRecordsTDao getMemberRechargeRecordsTDao() {
+//		return memberRechargeRecordsTDao;
+//	}
+//
+//	public void setMemberRechargeRecordsTDao(
+//			MemberRechargeRecordsTDao memberRechargeRecordsTDao) {
+//		this.memberRechargeRecordsTDao = memberRechargeRecordsTDao;
+//	}
+//
+//
+//	@Override
+//	public List<MemberRechargeRecordsT> findAllMemberRechargeRecordsT(
+//			int currentPage, int lineSize) {
+//		return this.getMemberRechargeRecordsTDao()
+//				.findAllMemberRechargeRecordsT(currentPage, lineSize);
+//	}
+//
+//	@Override
+//	public int countfindAllMemberRechargeRecordsT() {
+//		return this.getMemberRechargeRecordsTDao()
+//				.countfindAllMemberRechargeRecordsT();
+//	}
+//
+//	@Override
+//	public void delMemberRechargeRecordsT(String[] strs) {
+//		this.getMemberRechargeRecordsTDao().delMemberRechargeRecordsT(strs);
+//
+//	}
 
 }

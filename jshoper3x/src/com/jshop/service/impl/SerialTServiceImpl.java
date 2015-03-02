@@ -1,6 +1,7 @@
 package com.jshop.service.impl;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -15,31 +16,20 @@ public class SerialTServiceImpl extends BaseTServiceImpl<SerialT>implements Seri
 	@Resource
 	private SerialTDao serialTDao;
 
-	public SerialTDao getSerialTDao() {
-		return serialTDao;
-	}
-
-	public void setSerialTDao(SerialTDao serialTDao) {
-		this.serialTDao = serialTDao;
-	}
-
 	public SerialT findBybaseid(String biz) {
-		return this.getSerialTDao().findBybaseid(biz);
-	}
-
-	public void save(SerialT transientInstance) {
-		this.getSerialTDao().save(transientInstance);
+		return this.serialTDao.findBybaseid(biz);
 	}
 
 	public int updateBybaseid(SerialT transientInstance) {
-		return this.getSerialTDao().updateBybaseid(transientInstance);
+		return this.serialTDao.updateBybaseid(transientInstance);
 	}
 
+	@Transactional
 	@Override
 	public SerialT SerialTlastId(String serialkey) {
-		SerialT st = this.getSerialTDao().findBybaseid(serialkey);
+		SerialT st = this.serialTDao.findBybaseid(serialkey);
 		if (st != null) {
-			this.getSerialTDao().updateBybaseid(st);
+			this.serialTDao.updateBybaseid(st);
 		}
 		return st;
 

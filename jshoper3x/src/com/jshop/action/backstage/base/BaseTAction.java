@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public class BaseTAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
+	
 	private Serial serial;
 	private String query;//text
 	private String qtype;//select

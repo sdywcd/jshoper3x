@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -17,14 +19,17 @@ import org.apache.struts2.json.annotations.JSON;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ModuleM;
-import com.jshop.service.ModuleMService;
+import com.jshop.service.BaseTService;
 import com.jshop.service.impl.Serial;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 @Namespace("")
 @ParentPackage("jshop")
 public class ModuleMAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
-	private ModuleMService moduleMService;
+	@Resource
+	private BaseTService<ModuleM>baseTService;
 	private String id;
 	private String modulename;
 	private Date createtime;
@@ -38,13 +43,7 @@ public class ModuleMAction extends BaseTAction {
 	private String query;
 	private String qtype;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public ModuleMService getModuleMService() {
-		return moduleMService;
-	}
-	public void setModuleMService(ModuleMService moduleMService) {
-		this.moduleMService = moduleMService;
-	}
+	
 	public String getId() {
 		return id;
 	}
@@ -143,8 +142,8 @@ public class ModuleMAction extends BaseTAction {
 		ModuleM mm=new ModuleM();
 		mm.setId(this.getSerial().Serialid(Serial.MODULE));
 		mm.setModulename(this.getModulename());
-		mm.setCreatetime(BaseTools.systemtime());
-		this.getModuleMService().save(mm);
+		mm.setCreatetime(BaseTools.getSystemTime());
+		this.baseTService.save(mm);
 		this.setSucflag(true);
 		return "json";
 	}
@@ -155,8 +154,8 @@ public class ModuleMAction extends BaseTAction {
 	 */
 	@Action(value = "findModuleMById", results = { @Result(name = "json", type = "json") })
 	public String findModuleMById(){
-		if(Validate.StrNotNull(this.getId())){
-			bean=this.getModuleMService().findModuleMById(this.getId().trim());
+		if(StringUtils.isNotBlank(this.getId())){
+			bean=this.baseTService.findByPK(ModuleM.class, this.getId());
 			if(bean!=null){
 				this.setSucflag(true);
 				return "json";
@@ -176,8 +175,8 @@ public class ModuleMAction extends BaseTAction {
 	public String updateModuleM(){
 		bean.setId(this.getId());
 		bean.setModulename(this.getModulename());
-		bean.setCreatetime(BaseTools.systemtime());
-		this.getModuleMService().updateModuleM(bean);
+		bean.setCreatetime(BaseTools.getSystemTime());
+		this.baseTService.update(bean);
 		this.setSucflag(true);
 		return "json";
 	}
@@ -188,7 +187,7 @@ public class ModuleMAction extends BaseTAction {
 	 */
 	@Action(value = "findAllModuleM", results = { @Result(name = "json", type = "json") })	
 	public String findAllModuleM(){
-		if("sc".equals(this.getQtype())){
+		if(StaticKey.SC.equals(this.getQtype())){
 			this.findDefaultAllModuleM();
 		}else{
 			return "json";
@@ -197,7 +196,7 @@ public class ModuleMAction extends BaseTAction {
 	}
 	
 	public void findDefaultAllModuleM(){
-		List<ModuleM>list=this.getModuleMService().findAllModuleM();
+		List<ModuleM>list=this.baseTService.findAll(ModuleM.class);
 		if(!list.isEmpty()){
 			total=list.size();
 			this.ProcessModuleMList(list);
@@ -224,13 +223,15 @@ public class ModuleMAction extends BaseTAction {
 	 */
 	@Action(value = "delModuleM", results = { @Result(name = "json", type = "json") })
 	public String delModuleM(){
-		if(Validate.StrNotNull(this.getId())){
-			String []strs=StringUtils.split(this.getId(), ",");
-			if(this.getModuleMService().delModuleM(strs)>0){
-				this.setSucflag(true);
-				return "json";
+		if(StringUtils.isNotBlank(this.getId())){
+			String []strs=StringUtils.split(this.getId(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				ModuleM mm=this.baseTService.findByPK(ModuleM.class, s);
+				if(mm!=null){
+					this.baseTService.delete(mm);
+				}
 			}
-			this.setSucflag(false);
+			this.setSucflag(true);
 			return "json";
 		}
 		this.setSucflag(false);
@@ -244,7 +245,7 @@ public class ModuleMAction extends BaseTAction {
 	@Action(value = "findAllModuleForselect", results = { @Result(name = "json", type = "json") })
 	public String findAllModuleForselect(){
 		this.setModuleselectstr("");
-		List<ModuleM>list=this.getModuleMService().findAllModuleM();
+		List<ModuleM>list=this.baseTService.findAll(ModuleM.class);
 		if(!list.isEmpty()){
 			this.setModuleselectstr("<option value='0'>---请选择---</option>");
 			for(Iterator<ModuleM> it=list.iterator();it.hasNext();){

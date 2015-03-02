@@ -32,7 +32,13 @@ $(function() {
 		url : 'findAllArticleCategoryT.action',
 		dataType : 'json',
 		cache : false,
-		colModel : [ {
+		colModel : [{
+			display : '店铺名',
+			name : 'shopname',
+			width : 200,
+			sortable : true,
+			align : 'center'
+		}, {
 			display : '分类名称',
 			name : 'name',
 			width : 215,

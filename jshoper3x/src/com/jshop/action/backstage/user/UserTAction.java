@@ -1,6 +1,5 @@
 package com.jshop.action.backstage.user;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -10,10 +9,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.Session;
-import javax.jms.TextMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,45 +18,51 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
-import org.springframework.jms.core.JmsTemplate;
-import org.springframework.jms.core.MessageCreator;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.authority.UserRoleMAction;
+//import com.jshop.action.backstage.authority.UserRoleMAction;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.base.InitTAction;
-import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.MD5Code;
-import com.jshop.action.backstage.utils.PasswordHelper;
-import com.jshop.action.backstage.utils.Validate;
-import com.jshop.action.backstage.utils.enums.UserEnum;
+import com.jshop.action.backstage.utils.enums.BaseEnums;
+import com.jshop.action.backstage.utils.enums.BaseEnums.UserType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.OrderT;
+//import com.jshop.entity.FunctionM;
+//import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
-import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 
-import freemarker.template.TemplateException;
-@Namespace("/bk/user")
+//import com.jshop.action.backstage.staticspage.DataCollectionTAction;
+
+@Namespace("")
 @ParentPackage("jshop")
 public class UserTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
-	private UsertService usertService;
-	private InitTAction initTAction;
-	private UserRoleMService userRoleMService;
-	private UserRoleMAction userRoleMAction;
-	private GlobalParamService globalParamService;
-	private DataCollectionTAction dataCollectionTAction;
 	@Resource
-	private JmsTemplate jmsTemplate;
+	private UsertService usertService;
+	@Resource
+	private InitTAction initTAction;
+	@Resource
+	private UserRoleMService userRoleMService;
+	@Resource
+	private UserRoleMAction userRoleMAction;
+	// private GlobalParamService globalParamService;
+	// private DataCollectionTAction dataCollectionTAction;
+	// @Resource
+	// private JmsTemplate jmsTemplate;
 	private UserT bean = new UserT();
 	private String param;
 	private List<UserT> user = new ArrayList<UserT>();
-	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
@@ -101,59 +102,52 @@ public class UserTAction extends BaseTAction {
 	private boolean sauthority;
 	private String baseurl;
 	private String basepath;
-	
-	@JSON(serialize = false)
-	public DataCollectionTAction getDataCollectionTAction() {
-		return dataCollectionTAction;
-	}
 
-	public void setDataCollectionTAction(DataCollectionTAction dataCollectionTAction) {
-		this.dataCollectionTAction = dataCollectionTAction;
-	}
+	// @JSON(serialize = false)
+	// public DataCollectionTAction getDataCollectionTAction() {
+	// return dataCollectionTAction;
+	// }
+	//
+	// public void setDataCollectionTAction(DataCollectionTAction
+	// dataCollectionTAction) {
+	// this.dataCollectionTAction = dataCollectionTAction;
+	// }
 
-	@JSON(serialize = false)
-	public GlobalParamService getGlobalParamService() {
-		return globalParamService;
-	}
+	// @JSON(serialize = false)
+	// public GlobalParamService getGlobalParamService() {
+	// return globalParamService;
+	// }
+	//
+	// public void setGlobalParamService(GlobalParamService globalParamService)
+	// {
+	// this.globalParamService = globalParamService;
+	// }
 
-	public void setGlobalParamService(GlobalParamService globalParamService) {
-		this.globalParamService = globalParamService;
-	}
+	// @JSON(serialize = false)
+	// public UserRoleMAction getUserRoleMAction() {
+	// return userRoleMAction;
+	// }
+	//
+	// public void setUserRoleMAction(UserRoleMAction userRoleMAction) {
+	// this.userRoleMAction = userRoleMAction;
+	// }
 
-	@JSON(serialize = false)
-	public UserRoleMAction getUserRoleMAction() {
-		return userRoleMAction;
-	}
-
-	public void setUserRoleMAction(UserRoleMAction userRoleMAction) {
-		this.userRoleMAction = userRoleMAction;
-	}
-
-	@JSON(serialize = false)
-	public UserRoleMService getUserRoleMService() {
-		return userRoleMService;
-	}
-
-	public void setUserRoleMService(UserRoleMService userRoleMService) {
-		this.userRoleMService = userRoleMService;
-	}
-	@JSON(serialize = false)
-	public InitTAction getInitTAction() {
-		return initTAction;
-	}
-
-	public void setInitTAction(InitTAction initTAction) {
-		this.initTAction = initTAction;
-	}
-
-	@JSON(serialize = false)
-	public UsertService getUsertService() {
-		return usertService;
-	}
-
-	public void setUsertService(UsertService usertService) {
-		this.usertService = usertService;
-	}
+	// @JSON(serialize = false)
+	// public UserRoleMService getUserRoleMService() {
+	// return userRoleMService;
+	// }
+	//
+	// public void setUserRoleMService(UserRoleMService userRoleMService) {
+	// this.userRoleMService = userRoleMService;
+	// }
+	// @JSON(serialize = false)
+	// public InitTAction getInitTAction() {
+	// return initTAction;
+	// }
+	//
+	// public void setInitTAction(InitTAction initTAction) {
+	// this.initTAction = initTAction;
+	// }
 
 	@JSON(serialize = false)
 	public String getUserid() {
@@ -181,6 +175,7 @@ public class UserTAction extends BaseTAction {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	@JSON(serialize = false)
 	public HttpServletResponse getResponse() {
 		return response;
@@ -198,6 +193,7 @@ public class UserTAction extends BaseTAction {
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
 	}
+
 	public String getRealname() {
 		return realname;
 	}
@@ -261,7 +257,7 @@ public class UserTAction extends BaseTAction {
 	public void setParam(String param) {
 		this.param = param;
 	}
-	
+
 	public String getSection() {
 		return section;
 	}
@@ -343,11 +339,11 @@ public class UserTAction extends BaseTAction {
 		this.user = user;
 	}
 
-	public List<Map<String,Object>> getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Map<String,Object>> rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -382,6 +378,7 @@ public class UserTAction extends BaseTAction {
 	public void setSlogin(boolean slogin) {
 		this.slogin = slogin;
 	}
+
 	public String getMessage() {
 		return message;
 	}
@@ -398,7 +395,6 @@ public class UserTAction extends BaseTAction {
 		this.sucflag = sucflag;
 	}
 
-
 	public String getRoleid() {
 		return roleid;
 	}
@@ -414,6 +410,7 @@ public class UserTAction extends BaseTAction {
 	public void setBaseurl(String baseurl) {
 		this.baseurl = baseurl;
 	}
+
 	public String getRolemname() {
 		return rolemname;
 	}
@@ -519,15 +516,16 @@ public class UserTAction extends BaseTAction {
 
 	}
 
-
 	/**
 	 * 验证登陆
 	 */
-	@Action(value = "/checklogin", results = { @Result(name = "json", type = "json", params = { "includeProperties", "slogin" }) })
+	@Action(value = "/checklogin", results = { @Result(name = "json", type = "json", params = {
+			"includeProperties", "slogin" }) })
 	public String checklogin() {
-		this.setBasepath(this.getDataCollectionTAction().getBasePath());
-		UserT admin = (UserT) ActionContext.getContext().getSession().get(StaticKey.BACK_USER_SESSION_KEY);
-		if (admin!=null) {
+		// this.setBasepath(this.getDataCollectionTAction().getBasePath());
+		UserT admin = (UserT) ActionContext.getContext().getSession()
+				.get(StaticKey.BACK_USER_SESSION_KEY);
+		if (admin != null) {
 			this.setSlogin(false);
 			return "json";
 		} else {
@@ -535,24 +533,25 @@ public class UserTAction extends BaseTAction {
 			return "json";
 		}
 	}
-	
-	
-	@Action(value = "/checkAuthorityException", results = { @Result(name = "json", type = "json", params = { "includeProperties", "sauthority" }) })
-	public String checkAuthorityException(){
-		String authorityE=(String) ActionContext.getContext().getSession().get(StaticKey.AUTHORITYEXCEPTION);
-		if(authorityE!=null){
-			if(StaticKey.ONE.equals(authorityE)){
+
+	@Action(value = "/checkAuthorityException", results = { @Result(name = "json", type = "json", params = {
+			"includeProperties", "sauthority" }) })
+	public String checkAuthorityException() {
+		String authorityE = (String) ActionContext.getContext().getSession()
+				.get(StaticKey.AUTHORITYEXCEPTION);
+		if (authorityE != null) {
+			if (StaticKey.ONE.equals(authorityE)) {
 				this.setSauthority(true);
-				ActionContext.getContext().getSession().remove(StaticKey.AUTHORITYEXCEPTION);
+				ActionContext.getContext().getSession()
+						.remove(StaticKey.AUTHORITYEXCEPTION);
 				return "json";
 			}
-		}else{
+		} else {
 			this.setSauthority(false);
 			return "json";
 		}
 		return "json";
 	}
-
 
 	/**
 	 * 管理员登陆
@@ -560,13 +559,15 @@ public class UserTAction extends BaseTAction {
 	 * @return
 	 * @throws Exception
 	 */
-	@Action(value = "/adminlogin", results = { @Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
+	@Action(value = "/adminlogin", results = {
+			@Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"),
+			@Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
 	public String adminlogin() throws Exception {
-		if(StringUtils.isBlank(this.getUsername())){
+		if (StringUtils.isBlank(this.getUsername())) {
 			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
-		if(StringUtils.isBlank(this.getPassword())){
+		if (StringUtils.isBlank(this.getPassword())) {
 			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
@@ -574,49 +575,62 @@ public class UserTAction extends BaseTAction {
 		UserT user = new UserT();
 		user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
 		user.setPassword(md5.getMD5ofStr(password));
-		user.setUserstate(UserEnum.UserState.ACTIVE.getState());
-		user = this.getUsertService().login(user);
+		user.setUserstate(BaseEnums.UserState.ACTIVE.getState());
+		Criterion criterion = Restrictions
+				.and(Restrictions.eq("username", user.getUsername()))
+				.add(Restrictions.eq("password", user.getPassword()))
+				.add(Restrictions.eq("userstate", user.getUserstate()));
+		user = this.usertService.findOneByCriteria(UserT.class, criterion);
 		if (user != null) {
-			doSysIndexInit(user,md5);
+			doSysIndexInit(user, md5);
 			return SUCCESS;
 		}
+
 		this.setParam(StaticKey.ONE);
-		//test jms
-//		for(int i=0;i<1;i++){
-//			final String a=String.valueOf(i);
-//			jmsTemplate.send(new MessageCreator() {
-//				public Message createMessage(Session session)
-//						throws JMSException {
-//					TextMessage msg = session.createTextMessage();
-//					// 设置消息属性
-//					msg.setStringProperty("phrCode", "C00"+a);
-//					// 设置消息内容
-//					msg.setText("Hello World!  "+a);
-//					return msg;
-//				}
-//			});
-//		}
-		
+		// test jms
+		// for(int i=0;i<1;i++){
+		// final String a=String.valueOf(i);
+		// jmsTemplate.send(new MessageCreator() {
+		// public Message createMessage(Session session)
+		// throws JMSException {
+		// TextMessage msg = session.createTextMessage();
+		// // 设置消息属性
+		// msg.setStringProperty("phrCode", "C00"+a);
+		// // 设置消息内容
+		// msg.setText("Hello World!  "+a);
+		// return msg;
+		// }
+		// });
+		// }
+
 		return INPUT;
 	}
+
 	/**
 	 * 进行用户登录有的系统首页数据初始化及用户权限相关初始化
 	 */
-	private void doSysIndexInit(UserT user,MD5Code md5){
-		ActionContext.getContext().getSession().put(StaticKey.BACK_USER_SESSION_KEY, user);
+	private void doSysIndexInit(UserT user, MD5Code md5) {
+		ActionContext.getContext().getSession()
+				.put(StaticKey.BACK_USER_SESSION_KEY, user);
 		this.setParam(md5.getMD5ofStr(user.getUserid()));
-		ActionContext.getContext().getSession().put(StaticKey.BACK_SESSION_KEY, param);
-		//获取默认主题
-		this.getInitTAction().InitDefaultThemeT();
-		//收集权限信息并放入内存
-		List<FunctionM> userfunctionlist = this.getUserRoleMAction().findUserRoleFunctionList(user.getUserid());
-		//List<FunctionM>allfunctionlist=this.getUserRoleMAction().findAllFunctionM();
-		ActionContext.getContext().getSession().put(StaticKey.USERROLEFUNCTION, userfunctionlist);
-		//ActionContext.getContext().getSession().put(BaseTools.ALLROLEFUNCTION, allfunctionlist);
-		//获取前5条需要发货的订单信息
-		List<OrderT>listOrderTs=this.getInitTAction().findNewestOrders();
-		ActionContext.getContext().getSession().put(StaticKey.NEWESTORDERS, listOrderTs);
+		ActionContext.getContext().getSession()
+				.put(StaticKey.BACK_SESSION_KEY, param);
+		// 获取默认主题
+		this.initTAction.InitDefaultThemeT();
+		// 收集权限信息并放入内存
+		List<FunctionM> userfunctionlist = this.userRoleMAction
+				.findUserRoleFunctionList(user.getUserid());
+		// List<FunctionM>allfunctionlist=this.userRoleMAction.findAllFunctionM();
+		ActionContext.getContext().getSession()
+				.put(StaticKey.USERROLEFUNCTION, userfunctionlist);
+		// ActionContext.getContext().getSession().put(BaseTools.ALLROLEFUNCTION,
+		// allfunctionlist);
+		// 获取前5条需要发货的订单信息
+		List<OrderT> listOrderTs = this.initTAction.findNewestOrders();
+		ActionContext.getContext().getSession()
+				.put(StaticKey.NEWESTORDERS, listOrderTs);
 	}
+
 	/**
 	 * 查询所有用户
 	 * 
@@ -624,24 +638,25 @@ public class UserTAction extends BaseTAction {
 	 */
 	@Action(value = "/findAllUsert", results = { @Result(name = "json", type = "json") })
 	public String findAllUsert() {
-		if(StaticKey.SC.equals(this.getQtype())){
+		if (StaticKey.SC.equals(this.getQtype())) {
 			finddefaultAllUserT();
-		}else{
-			if(StringUtils.isBlank(this.getQtype())){
-				return "json";
-			}else{
-				return "json";
+		} else {
+			if (StringUtils.isBlank(this.getQtype())) {
+				return JSON;
+			} else {
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	private void finddefaultAllUserT() {
 		int currentPage = page;
 		int lineSize = rp;
-		total=this.getUsertService().countfindAllUsert();
-		List<UserT>list=this.getUsertService().findAllUsert(currentPage, lineSize);
-		if(!list.isEmpty()){
+		total = this.usertService.countfindAll(UserT.class);
+		List<UserT> list = this.usertService.findAll(UserT.class, currentPage,
+				lineSize);
+		if (!list.isEmpty()) {
 			processUserList(list);
 		}
 	}
@@ -649,76 +664,99 @@ public class UserTAction extends BaseTAction {
 	private void processUserList(List<UserT> list) {
 		for (Iterator<UserT> it = list.iterator(); it.hasNext();) {
 			UserT u = (UserT) it.next();
-			if (StaticKey.ONE.equals(u.getState())) {
-				u.setState(StaticKey.NORMALUSER);
+			if (StringUtils.equals(BaseEnums.UserType.NORMALMANAGER.getState(),
+					u.getState())) {
+				u.setState(BaseEnums.UserType.NORMALMANAGER.getName());
 			}
-			if (StaticKey.TWO.equals(u.getState())) {
-				u.setState(StaticKey.MANAGERUSER);
+			if (StringUtils.equals(BaseEnums.UserType.SHOPMANAGER.getState(),
+					u.getState())) {
+				u.setState(BaseEnums.UserType.SHOPMANAGER.getName());
 			}
-			if (StaticKey.THREE.equals(u.getState())) {
-				u.setState(StaticKey.SUPERMANAGER);
+			if (StringUtils.equals(BaseEnums.UserType.SUPERMANAGER.getState(),
+					u.getState())) {
+				u.setState(BaseEnums.UserType.SUPERMANAGER.getName());
 			}
-			if (StaticKey.ZERO.equals(u.getUserstate())) {
-				u.setUserstate(StaticKey.USERSTATEUNACTIVE);
+
+			if (StringUtils.equals(BaseEnums.UserState.ACTIVE.getState(),
+					u.getUserstate())) {
+				u.setUserstate(BaseEnums.UserState.ACTIVE.getName());
 			}
-			if (StaticKey.ONE.equals(u.getUserstate())) {
-				u.setUserstate(StaticKey.USERSTATEACTIVE);
+			if (StringUtils.equals(BaseEnums.UserState.UNACTIVE.getState(),
+					u.getUserstate())) {
+				u.setUserstate(BaseEnums.UserState.UNACTIVE.getName());
 			}
-			Map<String,Object> cellMap = new HashMap<String, Object>();
+			if (StringUtils.equals(BaseEnums.UserState.LOCK.getState(),
+					u.getUserstate())) {
+				u.setUserstate(BaseEnums.UserState.LOCK.getName());
+			}
+			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", u.getUserid());
-			cellMap.put("cell", new Object[] { 
-					u.getUsername(), 
-					u.getRealname(), 
-					u.getEmail(),
-					u.getMobile(),
-					u.getRolemname(),
-					u.getState(),
-					u.getUserstate(),
-					"<a id='edituser' href='user.jsp?operate=edit&folder=user&userid="+u.getUserid()+"' name='edituser'>[编辑]</a>"
-					});
+			cellMap.put(
+					"cell",
+					new Object[] {
+							u.getShopname(),
+							u.getUsername(),
+							u.getRealname(),
+							u.getEmail(),
+							u.getMobile(),
+							u.getRolemname(),
+							u.getState(),
+							u.getUserstate(),
+							"<a id='edituser' href='user.jsp?operate=edit&folder=user&userid="
+									+ u.getUserid()
+									+ "' name='edituser'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
-		
+
 	}
 
 	/**
 	 * 管理员增加用户
-	 * 
+	 *
 	 * @return
 	 */
 	@Action(value = "/saveUserT", results = { @Result(name = "json", type = "json") })
 	public String saveUserT() {
-		if(StringUtils.isNotBlank(this.getUsername())&&StringUtils.isNotBlank(this.getPassword())&&StringUtils.isNotBlank(this.getEmail())){
+		if (StringUtils.isNotBlank(this.getUsername())
+				&& StringUtils.isNotBlank(this.getPassword())
+				&& StringUtils.isNotBlank(this.getEmail())) {
 			MD5Code md5 = new MD5Code();
-			PasswordHelper ph=new PasswordHelper();
+			// PasswordHelper ph = new PasswordHelper();
 			UserT u = new UserT();
-			u.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
+			u.setUsername(this.getUsername().trim());
 			u.setEmail(this.getEmail().trim());
-			u = this.getUsertService().checkUserByUsername(u);
+			Criterion criterion = Restrictions.and(
+					Restrictions.eq("username", u.getUsername())).add(
+					Restrictions.eq("email", u.getEmail()));
+			u = this.usertService.findOneByCriteria(UserT.class, criterion);
 			if (u != null) {
-				this.setMessage("用户已经存在");//表示用户已经存在
+				this.setMessage("用户已经存在");// 表示用户已经存在
 				return "json";
 			} else {
 				u = new UserT();
 				u.setUsername(this.getUsername().trim());
 				u.setEmail(this.getEmail().trim());
-				u = this.getUsertService().checkUserByEmail(u);
+				Criterion criterion2 = Restrictions.and(
+						Restrictions.eq("username", u.getUsername())).add(
+						Restrictions.eq("email", u.getEmail()));
+				u = this.usertService
+						.findOneByCriteria(UserT.class, criterion2);
+
 				if (u != null) {
-					this.setMessage("用户邮箱已经存在");//表示用户邮箱存在
+					this.setMessage("用户邮箱已经存在");// 表示用户邮箱存在
 					return "json";
 				}
 				UserT user = new UserT();
-				
 				user.setUserid(this.getSerial().Serialid(Serial.USER));
 				user.setUid(md5.getMD5ofStr(user.getUserid()));
-				user.setUsername(this.getUsername().toLowerCase(Locale.CHINA).trim());
+				user.setUsername(this.getUsername().trim());
 				user.setRealname(this.getRealname().trim());
 				user.setEmail(this.getEmail().trim());
-				user.setTelno(null);
+				user.setTelno(StaticKey.EMPTY);
 				user.setMobile(this.getMobile().trim());
 				user.setQuestion(this.getQuestion().trim());
 				user.setAnswer(this.getAnswer().trim());
-				user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));//默认密码7个1
+				user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));// 默认密码7个1
 				user.setUserstate(this.getUserstate());
 				user.setPostingcount(0);
 				user.setSection(StaticKey.EMPTY);
@@ -728,189 +766,161 @@ public class UserTAction extends BaseTAction {
 				user.setParttime2(StaticKey.EMPTY);
 				user.setParttime3(StaticKey.EMPTY);
 				user.setQq(this.getQq().trim());
+				user.setSinaweibo(StaticKey.EMPTY);
+				user.setWeixin(StaticKey.EMPTY);
 				user.setState(this.getState());
 				user.setRolemid(StaticKey.ZERO);
 				user.setRolemname(StaticKey.EMPTY);
 				user.setHeadpath(this.getHeadpath().trim());
 				user.setCreatorid(BaseTools.getAdminCreateId());
-				user.setCreatetime(BaseTools.systemtime());
+				user.setCreatetime(BaseTools.getSystemTime());
 				user.setUpdatetime(user.getCreatetime());
-				//ph.encrypPassword(user);
-				this.getUsertService().save(user);
+				user.setSalt(StaticKey.EMPTY);
+				user.setCredentialsalt(StaticKey.EMPTY);
+				user.setShopid(StaticKey.ZERO);
+				user.setShopname(StaticKey.ZERO);
+				// ph.encrypPassword(user);
+				this.usertService.save(user);
 				this.setSucflag(true);
 				return "json";
-				
+
 			}
 		}
 		this.setMessage("邮箱，用户名，密码必须填写");
 		return "json";
-		
+
 	}
+
 	/**
 	 * 更新系统用户
+	 * 
 	 * @return
 	 */
 	@Action(value = "/updateUserT", results = { @Result(name = "json", type = "json") })
-	public String updateUserT(){
-		if(StringUtils.isBlank(this.getUserid())){
-			return "json";
+	public String updateUserT() {
+		if (StringUtils.isBlank(this.getUserid())) {
+			return JSON;
 		}
-		bean=this.getUsertService().findById(this.getUserid());
-		bean.setRealname(this.getRealname());
-		bean.setMobile(this.getMobile());
-		bean.setQq(this.getQq());
-		bean.setWeixin(this.getWeixin());
-		bean.setSinaweibo(this.getSinaweibo());
-		bean.setHeadpath(this.getHeadpath());
-		bean.setEmail(this.getEmail());
-		bean.setQuestion(this.getQuestion());
-		bean.setAnswer(this.getAnswer());
-		bean.setUserstate(this.getUserstate());
-		bean.setState(this.getState());
-		bean.setUpdatetime(BaseTools.systemtime());
-		this.getUsertService().updateUserT(bean);
-		this.setSucflag(true);
-		return "json";
+		bean = this.usertService.findByPK(UserT.class, this.getUserid());
+		if (bean != null) {
+			bean.setRealname(this.getRealname());
+			bean.setMobile(this.getMobile());
+			bean.setQq(this.getQq());
+			bean.setWeixin(this.getWeixin());
+			bean.setSinaweibo(this.getSinaweibo());
+			bean.setHeadpath(this.getHeadpath());
+			bean.setEmail(this.getEmail());
+			bean.setQuestion(this.getQuestion());
+			bean.setAnswer(this.getAnswer());
+			bean.setUserstate(this.getUserstate());
+			bean.setState(this.getState());
+			bean.setUpdatetime(BaseTools.getSystemTime());
+			this.usertService.update(bean);
+			this.setSucflag(true);
+			return JSON;
+		}
+		return JSON;
 	}
-	
+
 	/**
 	 * 根据用户id获取用户信息
-	 * 
+	 *
 	 * @return
 	 */
 	@Action(value = "/findUserById", results = { @Result(name = "json", type = "json") })
 	public String findUserById() {
 		if (StringUtils.isNotBlank(this.getUserid())) {
-			bean = this.getUsertService().findById(this.getUserid());
+			bean = this.usertService.findByPK(UserT.class, this.getUserid());
 			if (bean != null) {
-				bean.setHeadpath(BaseTools.getBasePath()+bean.getHeadpath());
+				bean.setHeadpath(BaseTools.getBasePath() + bean.getHeadpath());
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
-	 *管理员更新用户信息，不包含密码等安全信息
-	 * 
+	 * 管理员更新用户信息，不包含密码等安全信息
+	 *
 	 * @return
 	 */
 	@Action(value = "/UpdateUserTunpwd", results = { @Result(name = "json", type = "json") })
 	public String UpdateUserTunpwd() {
 		this.checklogin();
 		if (!this.isSlogin()) {
-			UserT user = new UserT();
-			user.setUserid(this.getUserid());
-			user.setUsername(this.getUsername().trim());
-			user.setEmail(this.getEmail().trim());
-			user.setUserstate(this.getUserstate());
-			user.setState(this.getState());
-			if(this.getUsertService().updateUserTunpwd(user)>0){
+			UserT user = this.usertService.findByPK(UserT.class,
+					this.getUserid());
+			if (user != null) {
+				user.setUsername(this.getUsername().trim());
+				user.setEmail(this.getEmail().trim());
+				user.setUserstate(this.getUserstate());
+				user.setState(this.getState());
+				this.usertService.update(user);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
 	 * 管理员批量删除用户
-	 * 
+	 *
 	 * @return
 	 */
 	@Action(value = "/DelUsert", results = { @Result(name = "json", type = "json") })
 	public String DelUsert() {
-		if (Validate.StrNotNull(this.getUserid())) {
-			String[] list = this.getUserid().trim().split(",");
-			if (this.getUsertService().delUser(list) > 0) {
-				return "json";
+		if (StringUtils.isNotBlank(this.getUserid())) {
+			String[] strs = StringUtils.split(this.getUserid(),
+					StaticKey.SPLITDOT);
+			for (String s : strs) {
+				UserT user = this.usertService.findByPK(UserT.class, s);
+				if (user != null) {
+					this.usertService.delete(user);
+				}
 			}
-			return "json";
+			this.setSucflag(true);
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
 	 * 更改管理员密码
-	 * 
+	 *
 	 * @return
 	 */
 	@Action(value = "/UpdateUserMember", results = { @Result(name = "json", type = "json") })
 	public String UpdateUserMember() {
 		this.checklogin();
 		if (!this.isSlogin()) {
-			if (this.CheckUser()) {
-				MD5Code md5 = new MD5Code();
-				UserT user = new UserT();
-				user.setUserid(this.getUserid().trim());
-				user.setUsername(this.getUsername().trim());
-				user.setPassword(md5.getMD5ofStr(this.getNewpassword().trim()));
-				this.getUsertService().updateUserMember(user);
-				return "json";
-			}
-		}
-		return "json";
-	}
-
-	/**
-	 * 修改管理员密码，判断数据库是否存在
-	 * 
-	 * @return
-	 */
-	public boolean CheckUser() {
-		this.checklogin();
-		if (!this.isSlogin()) {
 			MD5Code md5 = new MD5Code();
-			UserT user = new UserT();
-			user.setUsername(this.getUsername().trim());
-			user.setPassword(md5.getMD5ofStr(this.getPassword().trim()));
-			UserT userlist = this.getUsertService().usert(user);
-			if (userlist != null) {
-				return true;
-			} else {
-				return false;
+			UserT user = this.usertService.findByPK(UserT.class,
+					this.getUserid());
+			if (user != null) {
+				user.setPassword(md5.getMD5ofStr(this.getNewpassword().trim()));
+				this.usertService.update(user);
 			}
+			return JSON;
 
 		}
-		return true;
+		return JSON;
 	}
-
-	/**
-	 * 发送激活邮件
-	 * 
-	 * @param user
-	 * @throws IOException
-	 * @throws TemplateException
-	 * @throws javax.mail.MessagingException
-	 */
-//	@Action(value = "sendeMail", results = { @Result(name = "json", type = "json") })
-//	public String sendeMail() throws IOException, TemplateException, javax.mail.MessagingException {
-//		this.findUserById();
-//		if (beanlist.getUserstate().equals("1")) {
-//			this.setSlogin(false);
-//			return "json";
-//		} else {
-//			sendSystemEmail.sendTextMail(beanlist);
-//			this.setSlogin(true);
-//			return "json";
-//		}
-//	}
 
 	@Action(value = "/updateUserbyuserstate", results = { @Result(name = "json", type = "json") })
 	public String updateUserbyuserstate() {
 		if (StringUtils.isNotBlank(this.getUserid())) {
-			UserT user = new UserT();
-			user = this.getUsertService().findById(this.getUserid());
+			UserT user = this.usertService.findByPK(UserT.class,
+					this.getUserid());
 			if (user != null) {
-				if (user.getUserstate().equals("0")) {
+				if (StringUtils.equals(user.getUserstate(), StaticKey.ZERO)) {
 					this.setSucflag(false);
-					return "json";
+					return JSON;
 				} else {
 					user.setUserstate(this.getUserstate());
-					this.getUsertService().updateUserstate(user);
-
+					this.usertService.update(user);
 					this.setSucflag(true);
 					return "json";
 				}
@@ -924,17 +934,25 @@ public class UserTAction extends BaseTAction {
 
 	/**
 	 * 更新用户表中后台管理者的权限标记，后期可能全面启用写死的userstate模式改成此模式
+	 * 
 	 * @return
 	 */
 	@Action(value = "/updateUserRoleMByuserid", results = { @Result(name = "json", type = "json") })
-	public String updateUserRoleMByuserid(){
-		if(Validate.StrNotNull(this.getUserid())&&Validate.StrNotNull(this.getRoleid())&&Validate.StrNotNull(this.getRolemname())){
-			if(this.getUsertService().updateUserRoleMByuserid(this.getUserid(),this.getRoleid(), this.getRolemname())>0){
+	public String updateUserRoleMByuserid() {
+		if (StringUtils.isNotBlank(this.getUserid())
+				&& StringUtils.isNotBlank(this.getRoleid())
+				&& StringUtils.isNotBlank(this.getRolemname())) {
+			UserT user = this.usertService.findByPK(UserT.class,
+					this.getUserid());
+			if (user != null) {
+				user.setRolemid(this.getRoleid());
+				user.setRolemname(this.getRolemname());
+				this.usertService.update(user);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -942,12 +960,30 @@ public class UserTAction extends BaseTAction {
 	 */
 	@Action(value = "/adminlogout", results = { @Result(name = "json", type = "json") })
 	public String adminlogout() {
-		ActionContext.getContext().getSession().remove(StaticKey.BACK_USER_SESSION_KEY);
-		ActionContext.getContext().getSession().remove(StaticKey.USERROLEFUNCTION);
-		ActionContext.getContext().getSession().remove(StaticKey.BACK_SESSION_KEY);
-		return "json";
-
+		ActionContext.getContext().getSession()
+				.remove(StaticKey.BACK_USER_SESSION_KEY);
+		ActionContext.getContext().getSession()
+				.remove(StaticKey.USERROLEFUNCTION);
+		ActionContext.getContext().getSession()
+				.remove(StaticKey.BACK_SESSION_KEY);
+		return JSON;
 	}
-
+	
+	/**
+	 * 查询所有
+	 * @return
+	 */
+	@Action(value = "findShopAdminUser", results = { @Result(name = "json", type = "json") })
+	public String findShopAdminUser(){
+		//用户账号类型是店铺管理员且shopid＝0
+		Criterion criterion=Restrictions.and(Restrictions.eq("state", UserType.SHOPMANAGER.getState())).add(Restrictions.eq("shopid", StaticKey.ZERO));
+		Order order=Order.desc("updatetime");
+		List<UserT>list=usertService.findByCriteria(UserT.class, criterion, order);
+		if(!list.isEmpty()){
+			this.setUser(list);
+			this.setSucflag(true);
+		}
+		return JSON;
+	}
 
 }

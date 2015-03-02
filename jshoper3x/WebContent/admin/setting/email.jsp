@@ -82,7 +82,7 @@
 						<span class="label label-required">状态：</span> <input type="radio"
 							id="state" name="state" value="1" checked /> <label
 							for="radio-1">开启 </label> <input type="radio" id="state"
-							name="state" value="0" /> <label for="radio-2">关闭 </label>
+							name="state" value="0" /> <label for="radio-2">禁用 </label>
 					</div>
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"

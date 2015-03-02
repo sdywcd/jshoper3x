@@ -63,7 +63,13 @@ $(function() {
 		url : 'findAllSystemMail.action',
 		dataType : 'json',
 		cache : false,
-		colModel : [ {
+		colModel : [{
+			display : '店铺名',
+			name : 'shopname',
+			width : 200,
+			sortable : true,
+			align : 'center'
+		}, {
 			display : '邮箱账号',
 			name : 'email',
 			width : 220,

@@ -56,6 +56,12 @@ $(function() {
 		dataType : 'json',
 		cache : false,
 		colModel : [{ 
+			display:'店铺名',
+			name:'shopname',
+			width:200,
+			sortable:true,
+			align:'center'
+		},{ 
 			display:'支付方式名称',
 			name:'paymentname',
 			width:215,

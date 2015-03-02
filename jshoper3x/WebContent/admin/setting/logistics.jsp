@@ -118,8 +118,8 @@
 					<div class="form-inline">
 						<span class="label label-required">默认显示:</span> <select
 							id="visible" name="visible">
-							<option value="1">是</option>
-							<option value="0">否</option>
+							<option value="1">显示</option>
+							<option value="0">隐藏</option>
 						</select>
 					</div>
 					<div class="form-inline">

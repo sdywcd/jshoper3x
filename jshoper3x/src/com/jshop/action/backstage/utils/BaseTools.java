@@ -14,7 +14,7 @@ import org.apache.struts2.ServletActionContext;
 
 import com.jshop.action.backstage.staticspage.FreeMarkervariable;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
-import com.jshop.entity.JshopbasicInfoT;
+//import com.jshop.entity.JshopbasicInfoT;
 import com.jshop.entity.UserT;
 import com.opensymphony.xwork2.ActionContext;
 
@@ -31,9 +31,9 @@ public class BaseTools {
 	 */
 	public static final String DEFAULTADMINNAME = "sasasa";
 	/**
-	 * 默认shopid=0 0表示官方平台发布
+	 * 默认shopid=1 1表示官方平台发布
 	 */
-	public static final String DEFAULTSHOPID="0";
+	public static final String DEFAULTSHOPID="1";
 	/**
 	 * 默认的店铺名称 
 	 */
@@ -95,7 +95,7 @@ public class BaseTools {
 	 * @return
 	 * @throws ParseException
 	 */
-	public static Date systemtime() {
+	public static Date getSystemTime() {
 		Date date = new Date();
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA);
 		String dateString = formatter.format(date);
@@ -158,9 +158,10 @@ public class BaseTools {
 	 * @return
 	 */
 	public static String getShopId(){
-		JshopbasicInfoT jbi=(JshopbasicInfoT) ActionContext.getContext().getSession().get(StaticKey.BASIC_SHOP_INFO);
-		if(jbi!=null){
-			return jbi.getBasicinfoid();
+		UserT userT = (UserT) ActionContext.getContext().getSession()
+				.get(StaticKey.BACK_USER_SESSION_KEY);
+		if (userT!=null) {
+			return userT.getShopid();
 		}
 		return DEFAULTSHOPID;
 	}
@@ -169,9 +170,10 @@ public class BaseTools {
 	 * @return
 	 */
 	public static String getShopName(){
-		JshopbasicInfoT jbi=(JshopbasicInfoT) ActionContext.getContext().getSession().get(StaticKey.BASIC_SHOP_INFO);
-		if(jbi!=null){
-			return jbi.getJshopname();
+		UserT userT = (UserT) ActionContext.getContext().getSession()
+				.get(StaticKey.BACK_USER_SESSION_KEY);
+		if (userT!=null) {
+			return userT.getShopname();
 		}
 		return DEFAULTSHOPNAME;
 	}

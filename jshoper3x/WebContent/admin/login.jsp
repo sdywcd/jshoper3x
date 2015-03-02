@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>登录 &middot; jshoper</title>
+<title>登录 &middot; jshoper11</title>
 
 <!-- Le styles -->
 <link href="<%=basePath%>admin/ui/assets/css/bootstrap.css"
@@ -90,7 +90,7 @@ html {
 	<div class="container">
 
 
-		<form class="form-signin" action="bk/user/adminlogin.action"
+		<form class="form-signin" action="adminlogin.action"
 			method="post">
 			<h2 class="form-signin-heading">
 				<img src="<%=basePath%>admin/ui/assets/img/logo.png" width="280"

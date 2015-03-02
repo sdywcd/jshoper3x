@@ -30,37 +30,14 @@
 
 			<interceptor name="json"
 				class="org.apache.struts2.json.JSONInterceptor" />
-			<interceptor name="goodsmoduleGoodsTypeTNInterecptor"
-				class="com.jshop.action.backstage.interceptor.impl.GoodsmoduleGoodsTypeTNInterecptor" />
-			<interceptor name="goodsmoduleGoodsCategoryTInterecptor"
-				class="com.jshop.action.backstage.interceptor.impl.GoodsmoduleGoodsCategoryTInterecptor" />
-			<interceptor name="articlemoduleArticleInterecptor"
-				class="com.jshop.action.backstage.interceptor.impl.ArticlemoduleArticleInterecptor" />
-			<!-- 前台用户登录拦截器 -->
-			<interceptor name="isfrontlogin"
-				class="com.jshop.action.backstage.interceptor.impl.FrontLogininterecptor" />
-			<!-- 新增登录验证拦截器 -->
-			<interceptor name="authoritylogin"
-				class="com.jshop.action.backstage.interceptor.impl.AuthorityLogininterceptor"></interceptor>
-			<!-- 定义全部变量拦截器!是否开启用户注册 -->
-			<interceptor name="isusercanregister"
-				class="com.jshop.action.backstage.interceptor.impl.MyIsusercanregisterInterceptor" />
-			<!-- 定义全局变量拦截器 是否允许用户注册多个商城信息 -->
-			<interceptor name="canuserregistermoreshopinfo"
-				class="com.jshop.action.backstage.interceptor.impl.CanuserregistermoreshopinfoInterceptor"></interceptor>
-			<!-- 定义全局变量拦截器是否允许发送激活邮件 -->
-			<interceptor name="issendactivatemail"
-				class="com.jshop.action.backstage.interceptor.impl.Issendactivatemail" />
+			
 			<!-- 这是jshop的拦截器 -->
 			<interceptor-stack name="jshopdefaultStack">
 				<interceptor-ref name="defaultStack">
 					<param name="exception.logEnabled">true</param>
 					<param name="exception.logLevel">error</param>
 				</interceptor-ref>
-				<!-- 将登录验证拦截器加入默认的拦截器栈中 -->
-				<interceptor-ref name="authoritylogin">
-					<param name="excludeMethods">adminlogin,uploadFiles,findAllCoupon,loginforAndroid,registerforAndroid,adminlogout,checklogin,checkAuthorityException,textJson</param>
-				</interceptor-ref>
+				
 
 				<interceptor-ref name="json">
 					<param name="excludeNullProperties">true</param>

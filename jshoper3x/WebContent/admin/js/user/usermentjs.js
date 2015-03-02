@@ -185,7 +185,13 @@ $(function(){
 			url : 'bk/user/findAllUsert.action',
 			dataType : 'json',
 			cache : false,
-			colModel : [ { 
+			colModel : [ {
+				display:'店铺名',
+				name:'shopname',
+				width:200,
+				sortable:true,
+				align:'center'
+			},{ 
 				display:'用户名',
 				name:'username',
 				width:215,
@@ -239,10 +245,6 @@ $(function(){
 				onpress : action
 			},{
 				name : '编辑',
-				bclass : 'edit',
-				onpress : action
-			},{
-				name : '修改密码',
 				bclass : 'edit',
 				onpress : action
 			},{
@@ -336,21 +338,6 @@ $(function(){
 			}else if(com=="添加"){
 				window.location.href="user.jsp?operate=add";
 				return;
-			}else if(com=="修改密码"){
-				if ($('.trSelected', grid).length == 1) {
-					var str = $('.trSelected', grid)[0].id.substr(3);
-					$.post("findUserById.action",{"userid":str},function(data){
-						if(data.beanlist.state!=3 && data.beanlist.state!=2){
-							formwarning("#alerterror", "这不是管理员和超级管理员，不能修改");
-							return false;
-						}else{
-							window.location.href="editmember.jsp?session="+session+"#member&userid="+str+"";
-						}
-					});
-				} else {
-					formwarning("#alerterror", "请选择一条信息");
-					return false;
-				}
 			}else if(com=='激活'){
 				if ($('.trSelected', grid).length == 1) {
 					var str = $('.trSelected', grid)[0].id.substr(3);

@@ -7,15 +7,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Order;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberGroupT;
 import com.jshop.service.MemberGroupTService;
@@ -25,6 +28,7 @@ import com.jshop.service.impl.Serial;
 @ParentPackage("jshop")
 public class MemberGroupTAction extends BaseTAction{
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private MemberGroupTService memberGroupTService;
 	private String id;
 	private String name;
@@ -41,13 +45,7 @@ public class MemberGroupTAction extends BaseTAction{
 	private int total = 0;
 	private boolean sucflag;
 	
-	@JSON(serialize = false)
-	public MemberGroupTService getMemberGroupTService() {
-		return memberGroupTService;
-	}
-	public void setMemberGroupTService(MemberGroupTService memberGroupTService) {
-		this.memberGroupTService = memberGroupTService;
-	}
+	
 	public String getId() {
 		return id;
 	}
@@ -151,52 +149,54 @@ public class MemberGroupTAction extends BaseTAction{
 			mgt.setName(this.getName().trim());
 			mgt.setStatus(this.getStatus());
 			mgt.setAttrs(this.getAttrs());
-			mgt.setCreatetime(BaseTools.systemtime());
+			mgt.setCreatetime(BaseTools.getSystemTime());
 			mgt.setCreatorid(BaseTools.getAdminCreateId());
 			mgt.setUpdatetime(mgt.getCreatetime());
 			mgt.setVersiont(0);
-			this.getMemberGroupTService().save(mgt);
+			mgt.setShopid(BaseTools.getShopId());
+			mgt.setShopname(BaseTools.getShopName());
+			this.memberGroupTService.save(mgt);
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 		
 	}
 	
 	@Action(value = "findAllMemberGroupT", results = {@Result(name = "json",type="json")})
 	public String findAllMemberGroupT(){
-		if(StaticKey.SC.equals(this.getQtype())){
+		if(StringUtils.equals(StaticKey.SC, this.getQtype())){
 			this.findDefautlAllMemberGroup();
-		
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
-				return "json";
+				return JSON;
 			}else{
 				//TODO what you want other search
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 	
 	
 	private void findDefautlAllMemberGroup() {
 		int currentPage=page;
 		int lineSize=rp;
-		total=this.getMemberGroupTService().countfindAllMemberGroupT();
-		List<MemberGroupT>list=this.getMemberGroupTService().findAllMemberGroupT(currentPage, lineSize);
+		total=this.memberGroupTService.count(MemberGroupT.class).intValue();
+		Order order=Order.desc("createtime");
+		List<MemberGroupT>list=this.memberGroupTService.findByCriteriaByPage(MemberGroupT.class, order, currentPage, lineSize);
 		if(!list.isEmpty()){
-			this.ProcessMemberGroupList(list);
+			this.processMemberGroupList(list);
 		}
 		
 	}
-	private void ProcessMemberGroupList(List<MemberGroupT> list) {
+	private void processMemberGroupList(List<MemberGroupT> list) {
 		for(Iterator<MemberGroupT> it=list.iterator();it.hasNext();){
 			MemberGroupT mgt=(MemberGroupT)it.next();
-			mgt.setStatus(StaticKey.DataUsingState.getName(mgt.getStatus()));
+			mgt.setStatus(DataUsingState.getName(mgt.getStatus()));
 			Map<String, Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", mgt.getId());
 			cellMap.put("cell", new Object[]{
+				mgt.getShopname(),
 				mgt.getName(),
 				mgt.getStatus(),
 				BaseTools.formateDbDate(mgt.getCreatetime()),
@@ -214,14 +214,13 @@ public class MemberGroupTAction extends BaseTAction{
 	@Action(value = "findMemberGroupTById", results = {@Result(name = "json",type="json")})
 	public String findMemberGroupTById(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		bean=this.getMemberGroupTService().findMemberGroupTById(this.getId().trim());
+		bean=this.memberGroupTService.findByPK(MemberGroupT.class, this.getId());
 		if(bean!=null){
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -231,20 +230,21 @@ public class MemberGroupTAction extends BaseTAction{
 	@Action(value = "updateMemberGroupT", results = {@Result(name = "json",type="json")})
 	public String updateMemberGroupT(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		bean=this.getMemberGroupTService().findMemberGroupTById(this.getId().trim());
+		bean=this.memberGroupTService.findByPK(MemberGroupT.class, this.getId());
 		if(bean!=null){
 			bean.setName(this.getName().trim());
 			bean.setStatus(this.getStatus().trim());
-			bean.setUpdatetime(BaseTools.systemtime());
+			bean.setUpdatetime(BaseTools.getSystemTime());
 			bean.setVersiont(bean.getVersiont()+1);
 			bean.setAttrs(this.getAttrs());
-			this.getMemberGroupTService().updateMemberGroupT(bean);
+			bean.setShopid(BaseTools.getShopId());
+			bean.setShopname(BaseTools.getShopName());
+			this.memberGroupTService.update(bean);
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -254,15 +254,17 @@ public class MemberGroupTAction extends BaseTAction{
 	@Action(value = "delMemberGroupT", results = {@Result(name = "json",type="json")})
 	public String delMemberGroupT(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		String []strs=StringUtils.split(this.getId(), ",");
-		if(this.getMemberGroupTService().delMemberGroupT(strs)>0){
-			this.setSucflag(true);
-			return "json";
+		String []strs=StringUtils.split(this.getId(), StaticKey.SPLITDOT);
+		for(String s:strs){
+			MemberGroupT mgt=this.memberGroupTService.findByPK(MemberGroupT.class, s);
+			if(mgt!=null){
+				this.memberGroupTService.delete(mgt);
+			}
 		}
-		return "json";
-		
+		this.setSucflag(true);
+		return JSON;
 	}
 //	/**
 //	 * 获取所有可用会员分组

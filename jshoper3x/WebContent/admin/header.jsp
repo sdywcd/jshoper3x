@@ -83,8 +83,8 @@
 									href="<%=basePath%>admin/user/userment.jsp?operate=find"><i
 										class="icon-user"></i> 账号（管理员）</a></li>
 								<li><a
-									href="<%=basePath%>admin/user/userment.jsp?operate=find"><i
-										class="icon-user"></i>系统用户列表</i></a></li>
+									href="<%=basePath%>admin/shop/shopment.jsp?operate=find"><i
+										class="icon-user"></i>店铺列表</i></a></li>
 								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>添加微信账号</i></a></li>
 								<li><a href="<%=basePath%>admin/user/userment.jsp?operate=find"><i class="icon-user"></i>微信账号设置</i></a></li>
 								<li><a href="#"><i class="icon-envelope"></i> 信息中心 (0)</a></li>
@@ -235,11 +235,6 @@
 							data-toggle="dropdown" href="#"> 系统设置 <b class="caret"></b>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a
-									href="<%=basePath%>admin/setting/basicinfo.jsp?operate=find">商户信息设置</a></li>
-								<li>
-								<li><a
-									href="<%=basePath%>admin/setting/basicinfoment.jsp?operate=find">商户信息列表</a></li>
 								<li><a
 									href="<%=basePath%>admin/setting/emailment.jsp?operate=find">邮箱设置</a></li>
 								<li><a

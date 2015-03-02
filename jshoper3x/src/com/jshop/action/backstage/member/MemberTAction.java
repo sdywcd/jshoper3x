@@ -8,14 +8,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.xml.ws.soap.MTOM;
+import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -25,19 +27,15 @@ import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.MD5Code;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberT;
-import com.jshop.redis.dao.RedisBaseTDao;
-import com.jshop.redis.service.RedisMemberService;
 import com.jshop.service.MemberTService;
 import com.jshop.service.impl.Serial;
-import com.taobao.api.domain.Member;
 @Namespace("")
 @ParentPackage("jshop")
 public class MemberTAction extends BaseTAction {
 
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private MemberTService memberTService;
-	private RedisMemberService redisMemberService;
-	private RedisBaseTDao redisBaseTDao;
 	private String id;
 	private String loginname;
 	private String loginpwd;
@@ -79,31 +77,8 @@ public class MemberTAction extends BaseTAction {
 	private boolean sucflag;
 	private boolean doingTag;//用于aspect的标记
 
-	public RedisBaseTDao<MemberT> getRedisBaseTDao() {
-		return redisBaseTDao;
-	}
 
-	public void setRedisBaseTDao(RedisBaseTDao redisBaseTDao) {
-		this.redisBaseTDao = redisBaseTDao;
-	}
 
-	@JSON(serialize = false)
-	public RedisMemberService getRedisMemberService() {
-		return redisMemberService;
-	}
-
-	public void setRedisMemberService(RedisMemberService redisMemberService) {
-		this.redisMemberService = redisMemberService;
-	}
-
-	@JSON(serialize = false)
-	public MemberTService getMemberTService() {
-		return memberTService;
-	}
-
-	public void setMemberTService(MemberTService memberTService) {
-		this.memberTService = memberTService;
-	}
 
 	public String getMobile() {
 		return mobile;
@@ -439,10 +414,11 @@ public class MemberTAction extends BaseTAction {
 	public String saveMemberT(){
 		if(!doingTag){
 			this.setMessage("系统关闭了注册服务,请在系统管理/全局参数设置/基础相关中开启注册服务");
-			return "json";
+			return JSON;
 		}
 		if(StringUtils.isNotBlank(this.getLoginname())&&StringUtils.isNotBlank(this.getLoginpwd())){
-			List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getLoginname().toLowerCase(Locale.CHINA).trim());
+			Criterion criterion=Restrictions.eq("loginname", this.getLoginname().toLowerCase(Locale.CHINA).trim());
+			List<MemberT>list=this.memberTService.findByCriteria(MemberT.class, criterion);
 			if(list.isEmpty()){
 				MD5Code md5=new MD5Code();
 				MemberT mt=new MemberT();
@@ -475,23 +451,20 @@ public class MemberTAction extends BaseTAction {
 				mt.setMemberstate(StaticKey.MEMBERSTATE_ONE_NUM);//激活
 				mt.setHeadpath(this.getHeadpath().trim());
 				mt.setTelno(this.getTelno());
-				mt.setCreatetime(BaseTools.systemtime());
+				mt.setCreatetime(BaseTools.getSystemTime());
 				mt.setCreatorid(BaseTools.getAdminCreateId());
 				mt.setUpdatetime(mt.getCreatetime());
 				mt.setVersiont(0);
-				this.getMemberTService().save(mt);
-//				//放置到redis中去
-//				this.getRedisMemberService().save(mt);
-				//this.getRedisBaseTDao().put(mt.getId(), mt, MemberT.class);
+				this.memberTService.save(mt);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}else{
 				this.setMessage("该用户已经存在");
-				return "json";
+				return JSON;
 			}
 			
 		}
-		return "json";
+		return JSON;
 		
 	}
 	
@@ -506,35 +479,27 @@ public class MemberTAction extends BaseTAction {
 			
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
-				return "json";
+				return JSON;
 			}else{
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	private void findDefaultAllMemberT() {
 		int currentPage=page;
 		int lineSize=rp;
-		total=this.getMemberTService().countfindAllMemberT();
 		
-		List<MemberT>list=this.getMemberTService().findAllMemberT(currentPage, lineSize);
-		
-		
-		
-		
+		total=this.memberTService.count(MemberT.class).intValue();
+		Order order=Order.desc("createtime");
+		List<MemberT>list=this.memberTService.findByCriteriaByPage(MemberT.class, order, currentPage, lineSize);
 		if(!list.isEmpty()){
-//			//put to redis
-//			for(Iterator<MemberT> it=list.iterator();it.hasNext();){
-//				MemberT mt=it.next();
-//				this.getRedisBaseTDao().put(mt.getId(), mt, MemberT.class);
-//			}
-			this.ProcessMemberList(list);
+			this.processMemberList(list);
 		}
 	}
 
-	private void ProcessMemberList(List<MemberT> list) {
+	private void processMemberList(List<MemberT> list) {
 		for(Iterator<MemberT> it=list.iterator();it.hasNext();){
 			MemberT mt=(MemberT) it.next();
 			if(mt.getSex()!=null){
@@ -625,7 +590,7 @@ public class MemberTAction extends BaseTAction {
 			bean.setAnswer(this.getAnswer().trim());
 			bean.setMemberstate(StaticKey.ONE);//激活
 			bean.setHeadpath(this.getHeadpath().trim());
-			bean.setUpdatetime(BaseTools.systemtime());
+			bean.setUpdatetime(BaseTools.getSystemTime());
 			bean.setCreatorid(BaseTools.getAdminCreateId());
 			bean.setVersiont(bean.getVersiont()+1);
 			this.getMemberTService().updateMemberT(bean);

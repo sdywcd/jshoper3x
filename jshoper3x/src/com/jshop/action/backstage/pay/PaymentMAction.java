@@ -6,23 +6,36 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
+import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.PayMentType;
+import com.jshop.action.backstage.utils.enums.BaseEnums.SupportType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.PaymentM;
 import com.jshop.service.PaymentMService;
 import com.jshop.service.impl.Serial;
+
+import freemarker.cache.StringTemplateLoader;
+
 @Namespace("")
 @ParentPackage("jshop")
 public class PaymentMAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private PaymentMService paymentMService;
 	private String paymentid;
 	private String paymentname;
@@ -35,22 +48,16 @@ public class PaymentMAction extends BaseTAction {
 	private String des;
 	private String isFast;
 	private String state;
+	private String shopid;
 	private PaymentM bean = new PaymentM();
-	private List<PaymentM>beanlist=new ArrayList<PaymentM>();
-	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
+	private List<PaymentM> beanlist = new ArrayList<PaymentM>();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
 
-	@JSON(serialize = false)
-	public PaymentMService getPaymentMService() {
-		return paymentMService;
-	}
 
-	public void setPaymentMService(PaymentMService paymentMService) {
-		this.paymentMService = paymentMService;
-	}
 
 	public String getPaymentid() {
 		return paymentid;
@@ -132,11 +139,11 @@ public class PaymentMAction extends BaseTAction {
 		this.state = state;
 	}
 
-	public List<Map<String,Object>> getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Map<String,Object>> rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -196,6 +203,14 @@ public class PaymentMAction extends BaseTAction {
 		this.beanlist = beanlist;
 	}
 
+	public String getShopid() {
+		return shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -224,10 +239,13 @@ public class PaymentMAction extends BaseTAction {
 		pm.setDes(this.getDes().trim());
 		pm.setIsFast(this.getIsFast().trim());
 		pm.setState(this.getState().trim());
-		this.getPaymentMService().save(pm);
+		pm.setShopid(BaseTools.getShopId());
+		pm.setShopname(BaseTools.getShopName());
+		this.paymentMService.save(pm);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
+
 	/**
 	 * 增加支付方式
 	 * 
@@ -235,75 +253,90 @@ public class PaymentMAction extends BaseTAction {
 	 */
 	@Action(value = "updatePayment", results = { @Result(name = "json", type = "json") })
 	public String updatePayment() {
-		PaymentM pm = new PaymentM();
-		pm.setPaymentid(this.getPaymentid());
-		pm.setPaymentname(this.getPaymentname().trim());
-		pm.setPaymentCode(this.getPaymentCode().trim());
-		pm.setPaymentFree(this.getPaymentFree());
-		pm.setPaymentInterface(this.getPaymentInterface());
-		pm.setAccount(this.getAccount().trim());
-		pm.setSafecode(this.getSafecode().trim());
-		pm.setPartnerid(this.getPartnerid().trim());
-		pm.setDes(this.getDes().trim());
-		pm.setIsFast(this.getIsFast().trim());
-		pm.setState(this.getState().trim());
-		if (this.getPaymentMService().updatePayment(pm) > 0) {
-			this.setSucflag(true);
-			return "json";
+		if (StringUtils.isBlank(this.getPaymentid())) {
+			return JSON;
 		}
-		return "json";
+		PaymentM pm = this.paymentMService.findByPK(PaymentM.class,
+				this.getPaymentid());
+		if (pm != null) {
+			pm.setPaymentname(this.getPaymentname().trim());
+			pm.setPaymentCode(this.getPaymentCode().trim());
+			pm.setPaymentFree(this.getPaymentFree());
+			pm.setPaymentInterface(this.getPaymentInterface());
+			pm.setAccount(this.getAccount().trim());
+			pm.setSafecode(this.getSafecode().trim());
+			pm.setPartnerid(this.getPartnerid().trim());
+			pm.setDes(this.getDes().trim());
+			pm.setIsFast(this.getIsFast().trim());
+			pm.setState(this.getState().trim());
+			pm.setShopid(BaseTools.getShopId());
+			pm.setShopname(BaseTools.getShopName());
+			this.paymentMService.update(pm);
+			this.setSucflag(true);
+			return JSON;
+		}
+		return JSON;
 	}
 
 	/**
-	 *查询所有支付方式
+	 * 查询所有支付方式
 	 * 
 	 * @return
 	 */
 	@Action(value = "findAllPayment", results = { @Result(name = "json", type = "json") })
 	public String findAllPayment() {
-		if(StaticKey.SC.equals(this.getQtype())){
+		if (StringUtils.equals(StaticKey.SC, this.getQtype())) {
 			this.findDefaultAllPayment();
-		}else{
-			if(Validate.StrisNull(this.getQuery())){
-				return "json";
-			}else{
-				return "json";
+		} else {
+			if(StringUtils.isBlank(this.getQuery())) {
+				return JSON;
+			} else {
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
-	public void findDefaultAllPayment(){
-		int currentPage=page;
-		int lineSize=rp;
-		total=this.getPaymentMService().countfindAllPayment();
-		List<PaymentM> list = this.getPaymentMService().findAllPayment(currentPage, lineSize);
-		this.ProcessPayment(list);
+	public void findDefaultAllPayment() {
+		int currentPage = page;
+		int lineSize = rp;
+		Order order=Order.desc("paymentid");
+		total = this.paymentMService.count(PaymentM.class).intValue();
+		List<PaymentM> list = this.paymentMService.findByCriteriaByPage(PaymentM.class, order, currentPage, lineSize);
+		this.processPayment(list);
 	}
-	
-	public void ProcessPayment(List<PaymentM>list){
+
+	public void processPayment(List<PaymentM> list) {
 		rows.clear();
 		for (Iterator<PaymentM> it = list.iterator(); it.hasNext();) {
 			PaymentM pm = (PaymentM) it.next();
-			if (StaticKey.ONE.equals(pm.getPaymentInterface())) {
-				pm.setPaymentInterface(StaticKey.INSTANTINTERFACE);
-			} else if (StaticKey.TWO.equals(pm.getPaymentInterface())) {
-				pm.setPaymentInterface(StaticKey.SECUREDINTERFACE);
-			} else {
-				pm.setPaymentInterface(StaticKey.STANDARD);
+			if(StringUtils.equals(PayMentType.INSTANTINTERFACE.getState(), pm.getPaymentInterface())){
+				pm.setPaymentInterface(PayMentType.INSTANTINTERFACE.getName());
 			}
-			if(StaticKey.ONE.equals(pm.getIsFast())){
-				pm.setIsFast(StaticKey.SUPPORT);
-			}else{
-				pm.setIsFast(StaticKey.UNSUPPORT);
+			if(StringUtils.equals(PayMentType.SECUREDINTERFACE.getState(), pm.getPaymentInterface())){
+				pm.setPaymentInterface(PayMentType.SECUREDINTERFACE.getName());
 			}
-			pm.setState(StaticKey.DataUsingState.getName(pm.getState()));
+			if(StringUtils.equals(PayMentType.STANDARD.getState(), pm.getPaymentInterface())){
+				pm.setPaymentInterface(PayMentType.STANDARD.getName());
+			}
+			if(StringUtils.equals(SupportType.SUPPORT.getState(), pm.getIsFast())){
+				pm.setIsFast(SupportType.SUPPORT.getName());
+			}
+			if(StringUtils.equals(SupportType.UNSUPPORT.getState(), pm.getIsFast())){
+				pm.setIsFast(SupportType.UNSUPPORT.getName());
+			}
+			pm.setState(BaseEnums.DataUsingState.getName(pm.getState()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", pm.getPaymentid());
-			cellMap.put("cell", new Object[] { pm.getPaymentname(), pm.getPaymentCode(), pm.getPaymentFree(), pm.getPaymentInterface(), pm.getDes(),pm.getIsFast(), pm.getState() });
+			cellMap.put(
+					"cell",
+					new Object[] {pm.getShopname(), pm.getPaymentname(), pm.getPaymentCode(),
+							pm.getPaymentFree(), pm.getPaymentInterface(),
+							pm.getDes(), pm.getIsFast(), pm.getState()});
 			rows.add(cellMap);
 		}
 	}
+
 	/**
 	 * 开启支付方式
 	 * 
@@ -311,17 +344,19 @@ public class PaymentMAction extends BaseTAction {
 	 */
 	@Action(value = "openPayment", results = { @Result(name = "json", type = "json") })
 	public String openPayment() {
-
-		if (Validate.StrNotNull(this.getPaymentid())) {
-			String[] strs = StringUtils.split(this.getPaymentid(), ",");
-			if (this.getPaymentMService().openPayment(strs) > 0) {
-				this.setSucflag(true);
-				return "json";
+		if (StringUtils.isNotBlank(this.getPaymentid())) {
+			String[] strs = StringUtils.split(this.getPaymentid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				PaymentM pm=this.paymentMService.findByPK(PaymentM.class, s);
+				if(pm!=null){
+					pm.setState(DataUsingState.USING.getState());
+					this.paymentMService.update(pm);
+				}
 			}
-			return "json";
+			this.setSucflag(true);
+			return JSON;
 		}
-		return "json";
-
+		return JSON;
 	}
 
 	/**
@@ -331,16 +366,19 @@ public class PaymentMAction extends BaseTAction {
 	 */
 	@Action(value = "closePayment", results = { @Result(name = "json", type = "json") })
 	public String closePayment() {
-
-		if (Validate.StrNotNull(this.getPaymentid())) {
-			String[] strs = StringUtils.split(this.getPaymentid(), ",");
-			if (this.getPaymentMService().closePayment(strs) > 0) {
-				this.setSucflag(true);
-				return "json";
+		if (StringUtils.isNotBlank(this.getPaymentid())) {
+			String[] strs = StringUtils.split(this.getPaymentid(),StaticKey.SPLITDOT);
+			for(String s:strs){
+				PaymentM pm=this.paymentMService.findByPK(PaymentM.class, s);
+				if(pm!=null){
+					pm.setState(DataUsingState.UNUSING.getState());
+					this.paymentMService.update(pm);
+				}
 			}
-			return "json";
+			this.setSucflag(true);
+			return JSON;
 		}
-		return "json";
+		return JSON;
 
 	}
 
@@ -351,18 +389,17 @@ public class PaymentMAction extends BaseTAction {
 	 */
 	@Action(value = "findPaymentbyId", results = { @Result(name = "json", type = "json") })
 	public String findPaymentbyId() {
-		if (Validate.StrNotNull(this.getPaymentid())) {
-			bean = this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
+		if (StringUtils.isNotBlank(this.getPaymentid())) {
+			bean = this.paymentMService.findByPK(PaymentM.class, this.getPaymentid());
 			if (bean != null) {
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 
 	}
-	
-	
+
 	/**
 	 * 禁止支付方式
 	 * 
@@ -370,34 +407,31 @@ public class PaymentMAction extends BaseTAction {
 	 */
 	@Action(value = "delPaymentByid", results = { @Result(name = "json", type = "json") })
 	public String delPaymentByid() {
-
-		if (Validate.StrNotNull(this.getPaymentid())) {
-			String[] strs = StringUtils.split(this.getPaymentid(), ",");
-			if (this.getPaymentMService().delPaymentByid(strs) > 0) {
-				this.setSucflag(true);
-				return "json";
+		if (StringUtils.isNotBlank(this.getPaymentid())) {
+			String[] strs = StringUtils.split(this.getPaymentid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				PaymentM pm=this.paymentMService.findByPK(PaymentM.class, s);
+				if(pm!=null){
+					this.paymentMService.delete(pm);
+				}
 			}
-			return "json";
+			this.setSucflag(true);
 		}
-		return "json";
+		return JSON;
 
 	}
-	
-	
+
 	/**
-	 *  获取后台新增订单时所需要的支付方式信息
+	 * 获取后台新增订单时所需要的支付方式信息
 	 */
 	@Action(value = "findAllPaymentForbsOrder", results = { @Result(name = "json", type = "json") })
-	public String findAllPaymentForbsOrder(){
-		beanlist=this.getPaymentMService().findAllPayment(StaticKey.ONE);
-		if(!beanlist.isEmpty()){
+	public String findAllPaymentForbsOrder() {
+		Criterion criterion=Restrictions.eq("state", DataUsingState.USING.getState());
+		beanlist = this.paymentMService.findByCriteria(PaymentM.class, criterion);
+		if (!beanlist.isEmpty()) {
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 	}
-	
-	
-	
-	
+
 }

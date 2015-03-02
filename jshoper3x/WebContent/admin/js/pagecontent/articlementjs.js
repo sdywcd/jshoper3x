@@ -394,6 +394,12 @@ $(function(){
 			dataType : 'json',
 			cache : false,
 			colModel : [ {
+				display : '店铺名',
+				name : 'shopname',
+				width : 200,
+				sortable : true,
+				align : 'center'
+			}, {
 				display : '标题',
 				name : 'title',
 				width : 315,

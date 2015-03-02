@@ -1,6 +1,5 @@
 package com.jshop.action.backstage.content.article;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,13 +9,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Font;
@@ -25,9 +28,10 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.staticspage.CreateHtml;
-import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.FileUploadTool;
+import com.jshop.action.backstage.utils.enums.BaseEnums;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.entity.ArticleT;
@@ -36,13 +40,18 @@ import com.jshop.service.ArticleTService;
 import com.jshop.service.impl.Serial;
 
 import freemarker.template.TemplateException;
+
 @Namespace("")
 @ParentPackage("jshop")
 public class ArticleTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private ArticleTService articleTService;
+	@Resource
 	private ArticleCategoryTService articleCategoryTService;
-	private DataCollectionTAction dataCollectionTAction;
+//	@Resource
+//	private DataCollectionTAction dataCollectionTAction;
+	@Resource
 	private CreateHtml createHtml;
 	private String articleid;
 	private String tipcontent;
@@ -78,48 +87,14 @@ public class ArticleTAction extends BaseTAction {
 	private ArticleT bean = new ArticleT();
 	private ArticleCategoryT actbean = new ArticleCategoryT();
 	private Map<String, Object> map = new HashMap<String, Object>();
-	private List<Map<String,Object>> rows = new ArrayList<Map<String,Object>>();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
 	private String basepath;
-	@JSON(serialize = false)
-	public ArticleTService getArticleTService() {
-		return articleTService;
-	}
-
-	public void setArticleTService(ArticleTService articleTService) {
-		this.articleTService = articleTService;
-	}
-	@JSON(serialize = false)
-	public ArticleCategoryTService getArticleCategoryTService() {
-		return articleCategoryTService;
-	}
-
-	public void setArticleCategoryTService(ArticleCategoryTService articleCategoryTService) {
-		this.articleCategoryTService = articleCategoryTService;
-	}
-
-
-	@JSON(serialize = false)
-	public DataCollectionTAction getDataCollectionTAction() {
-		return dataCollectionTAction;
-	}
-
-	public void setDataCollectionTAction(DataCollectionTAction dataCollectionTAction) {
-		this.dataCollectionTAction = dataCollectionTAction;
-	}
 
 	
-	@JSON(serialize = false)
-	public CreateHtml getCreateHtml() {
-		return createHtml;
-	}
-
-	public void setCreateHtml(CreateHtml createHtml) {
-		this.createHtml = createHtml;
-	}
 	public String getArticleid() {
 		return articleid;
 	}
@@ -240,11 +215,11 @@ public class ArticleTAction extends BaseTAction {
 		this.bean = bean;
 	}
 
-	public List<Map<String,Object>> getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Map<String,Object>> rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -271,6 +246,7 @@ public class ArticleTAction extends BaseTAction {
 	public void setTotal(int total) {
 		this.total = total;
 	}
+
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -295,7 +271,6 @@ public class ArticleTAction extends BaseTAction {
 		this.actbean = actbean;
 	}
 
-
 	public String getIsnotice() {
 		return isnotice;
 	}
@@ -304,7 +279,6 @@ public class ArticleTAction extends BaseTAction {
 		this.isnotice = isnotice;
 	}
 
-	
 	public Date getCreatetime() {
 		return createtime;
 	}
@@ -450,8 +424,6 @@ public class ArticleTAction extends BaseTAction {
 
 	}
 
-
-
 	/**
 	 * 增加文章
 	 * 
@@ -474,14 +446,14 @@ public class ArticleTAction extends BaseTAction {
 		at.setMetaKeywords(this.getMetaKeywords());
 		at.setMetaDes(this.getMetaDes());
 		at.setContentvalue(this.getContentvalue());
-		at.setStatus(StaticKey.ONE);//显示
+		at.setStatus(StaticKey.ONE);// 显示
 		at.setAuthor(this.getAuthor());
 		at.setIspublication(this.getIspublication());
 		at.setIsrecommend(this.getIsrecommend());
 		at.setIstop(this.getIstop());
 		at.setReadcount(0);
-		at.setPageCount(1);//默认只分一页
-		at.setCreatetime(BaseTools.systemtime());
+		at.setPageCount(1);// 默认只分一页
+		at.setCreatetime(BaseTools.getSystemTime());
 		at.setCreatorid(BaseTools.getAdminCreateId());
 		at.setUpdatetime(at.getCreatetime());
 		at.setVersiont(0);
@@ -492,19 +464,28 @@ public class ArticleTAction extends BaseTAction {
 		at.setMainpicture(this.getMainpicture().trim());
 		at.setIsoutsite(this.getIsoutsite());
 		at.setOutsitelink(this.getOutsitelink());
-		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticKey.ONE, this.getNavid());
-		if(!list.isEmpty()){
-			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticKey.ONE)) {
+		at.setShopid(BaseTools.getShopId());
+		at.setShopname(BaseTools.getShopName());
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("status", DataUsingState.USING.getState());
+		params.put("parentId", this.getNavid());
+		params.put("shopid", BaseTools.getShopId());
+		Criterion criterion = Restrictions.allEq(params);
+		List<ArticleCategoryT> list = this.articleCategoryTService
+				.findByCriteria(ArticleCategoryT.class, criterion);
+		if (!list.isEmpty()) {
+			if (list.get(0).getPosition() != null
+					&& list.get(0).getPosition().equals(StaticKey.ONE)) {
 				at.setPosition(StaticKey.ONE);
 			} else {
 				at.setPosition(StaticKey.ZERO);
 			}
 		}
 		at.setIsnotice(this.getIsnotice());
-		this.getArticleTService().save(at);
+		this.articleTService.save(at);
 		this.setBean(at);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -514,7 +495,12 @@ public class ArticleTAction extends BaseTAction {
 	 * @param htmlPath
 	 */
 	public void updateHtmlPath(String articleid, String htmlPath) {
-		this.getArticleTService().updateHtmlPath(articleid, htmlPath);
+		ArticleT articleT = this.articleTService.findByPK(ArticleT.class,
+				articleid);
+		if (articleT != null) {
+			articleT.setHtmlPath(htmlPath);
+			this.articleTService.update(articleT);
+		}
 	}
 
 	/**
@@ -524,16 +510,15 @@ public class ArticleTAction extends BaseTAction {
 	 */
 	@Action(value = "findArticleByarticleid", results = { @Result(name = "json", type = "json") })
 	public String findArticleByarticleid() {
-		if(StringUtils.isNotBlank(this.getArticleid())){
-			bean = this.getArticleTService().findArticleByarticleid(this.getArticleid().trim());
+		if (StringUtils.isNotBlank(this.getArticleid())) {
+			bean = this.articleTService.findByPK(ArticleT.class,
+					this.getArticleid());
 			if (bean != null) {
 				this.setBasepath(BaseTools.getBasePath());
 				this.setSucflag(true);
-				return "json";
 			}
-			return "json";
 		}
-		return "json";
+		return JSON;
 
 	}
 
@@ -547,7 +532,7 @@ public class ArticleTAction extends BaseTAction {
 	@Action(value = "updateArticleT", results = { @Result(name = "json", type = "json") })
 	public String updateArticleT() throws IOException, TemplateException {
 		ArticleT at = new ArticleT();
-		at=this.getArticleTService().findArticleByarticleid(this.getArticleid());
+		at = this.articleTService.findByPK(ArticleT.class, this.getArticleid());
 		at.setNname(this.getNname());
 		at.setNavid(this.getNavid());
 		at.setLname(this.getLname());
@@ -559,37 +544,43 @@ public class ArticleTAction extends BaseTAction {
 		at.setMetaKeywords(this.getMetaKeywords());
 		at.setMetaDes(this.getMetaDes());
 		at.setContentvalue(this.getContentvalue());
-		at.setStatus(StaticKey.ONE);//显示
+		at.setStatus(StaticKey.ONE);// 显示
 		at.setAuthor(this.getAuthor());
 		at.setIspublication(this.getIspublication());
 		at.setIsrecommend(this.getIsrecommend());
 		at.setIstop(this.getIstop());
 		at.setReadcount(0);
-		at.setPageCount(1);//默认只分一页
+		at.setPageCount(1);// 默认只分一页
 		at.setCreatorid(BaseTools.getAdminCreateId());
-		at.setUpdatetime(BaseTools.systemtime());
-		at.setVersiont(at.getVersiont()+1);
+		at.setUpdatetime(BaseTools.getSystemTime());
+		at.setVersiont(at.getVersiont() + 1);
 		at.setMobilesync(this.getMobilesync());
 		at.setTipcontent(this.getTipcontent());
 		at.setSort(Integer.parseInt(this.getSort()));
 		at.setMainpicture(this.getMainpicture().trim());
 		at.setIsoutsite(this.getIsoutsite());
 		at.setOutsitelink(this.getOutsitelink());
-		List<ArticleCategoryT>list=this.getArticleCategoryTService().findArticleCategoryByparentId(StaticKey.ONE, this.getNavid());
-		if(!list.isEmpty()){
-			if (list.get(0).getPosition() != null && list.get(0).getPosition().equals(StaticKey.ONE)) {
+		at.setShopid(BaseTools.getShopId());
+		at.setShopname(BaseTools.getShopName());
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("status", BaseEnums.DataUsingState.USING.getState());
+		params.put("parentId", this.getNavid());
+		params.put("shopid", BaseTools.getShopId());
+		Criterion criterion = Restrictions.allEq(params);
+		List<ArticleCategoryT> list = this.articleCategoryTService.findByCriteria(ArticleCategoryT.class, criterion);
+		if (!list.isEmpty()) {
+			if (list.get(0).getPosition() != null
+					&& list.get(0).getPosition().equals(StaticKey.ONE)) {
 				at.setPosition(StaticKey.ONE);
 			} else {
 				at.setPosition(StaticKey.ZERO);
 			}
 		}
 		at.setIsnotice(this.getIsnotice());
-		if (this.getArticleTService().updateArticleT(at) > 0) {
-			this.setBean(at);
-			this.setSucflag(true);
-			return "json";
-		}
-		return "json";
+		this.articleTService.update(at);
+		this.setBean(at);
+		this.setSucflag(true);
+		return JSON;
 	}
 
 	/**
@@ -599,125 +590,127 @@ public class ArticleTAction extends BaseTAction {
 	 */
 	@Action(value = "delArticleT", results = { @Result(name = "json", type = "json") })
 	public String delArticleT() {
-		String[] strs = StringUtils.split(this.getArticleid(), ",");
-		for(String s:strs){
-			this.getArticleTService().delArticleT(s);
+		String[] strs = StringUtils.split(this.getArticleid(),StaticKey.SPLITDOT);
+		for (String s : strs) {
+			ArticleT articleT=this.articleTService.findByPK(ArticleT.class, s);
+			if(articleT!=null){
+				this.articleTService.delete(articleT);
+			}
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
 	 * 查询所有文章
 	 * 
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Action(value = "findAllArticleT", results = { @Result(name = "json", type = "json") })
 	public String findAllArticleT() throws Exception {
 		if (StaticKey.SC.equals(this.getQtype())) {
-			this.findDefaultAllArticle();				
+			this.findDefaultAllArticle();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQuery())) {
+				return JSON;
 			} else {
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	public void findDefaultAllArticle() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getArticleTService().countfindAllArticle();
-		List<ArticleT> list = this.getArticleTService().findAllArticleT(currentPage, lineSize);
+		Criterion criterion=Restrictions.eq("shopid", BaseTools.getShopId());
+		Order order=Order.desc("createtime");
+		total = this.articleTService.count(ArticleT.class, criterion).intValue();
+		List<ArticleT> list = this.articleTService.findByCriteriaByPage(ArticleT.class, order, currentPage, lineSize);
 		if (list != null) {
-			this.ProcessArticleTList(list);
+			this.processArticleTList(list);
 		}
 	}
 
-	public void ProcessArticleTList(List<ArticleT> list) {
+	public void processArticleTList(List<ArticleT> list) {
 		for (Iterator<ArticleT> it = list.iterator(); it.hasNext();) {
 			ArticleT at = (ArticleT) it.next();
-			if (at.getIspublication().equals("1")) {
+			if (at.getIspublication().equals(StaticKey.ONE)) {
 				at.setIspublication("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				at.setIspublication("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (at.getIsrecommend().equals("1")) {
+			if (at.getIsrecommend().equals(StaticKey.ONE)) {
 				at.setIsrecommend("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				at.setIsrecommend("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (at.getIstop().equals("1")) {
+			if (at.getIstop().equals(StaticKey.ONE)) {
 				at.setIstop("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				at.setIstop("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (at.getIsnotice().equals("1")) {
+			if (at.getIsnotice().equals(StaticKey.ONE)) {
 				at.setIsnotice("<span class='truestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				at.setIsnotice("<span class='falsestatue'><img width='20px' height='20px' src='../ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			
+
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", at.getArticleid());
-			cellMap.put("cell", new Object[] { at.getTitle(), at.getNname(),at.getIsnotice(), at.getIspublication(), at.getIsrecommend(), at.getIstop(), BaseTools.formateDbDate(at.getCreatetime()), "<a id='editarticle' href='article.jsp?operate=edit&folder=pagecontent&articleid=" + at.getArticleid() + "' name='editarticle'>[编辑]</a><a id='showarticle' href="+BaseTools.getBasePath()+"/"+at.getHtmlPath()+" name='showarticle'>[预览]</a>" });
+			cellMap.put(
+					"cell",
+					new Object[] {
+							at.getShopname(),
+							at.getTitle(),
+							at.getNname(),
+							at.getIsnotice(),
+							at.getIspublication(),
+							at.getIsrecommend(),
+							at.getIstop(),
+							BaseTools.formateDbDate(at.getCreatetime()),
+							"<a id='editarticle' href='article.jsp?operate=edit&folder=pagecontent&articleid="
+									+ at.getArticleid()
+									+ "' name='editarticle'>[编辑]</a><a id='showarticle' href="
+									+ BaseTools.getBasePath()
+									+ "/"
+									+ at.getHtmlPath()
+									+ " name='showarticle'>[预览]</a>" });
 			rows.add(cellMap);
 		}
 	}
-	/**
-	 * 生成文章PDF文件
-	 * @return
-	 * @throws Exception
-	 */
-	@Action(value="PDF", results = { @Result(name = "json", type = "json")})
-	public  String PDF() throws Exception{		
-		Document d = new Document();
-		try {
-			bean=this.getArticleTService().findArticleByarticleid(this.getArticleid());
-			String path=ServletActionContext.getServletContext().getRealPath("");//获取根目录
-			String savePath=isexistdir();
-			savePath=path+savePath;
-			String savePDF= savePath+bean.getTitle();
-			PdfWriter.getInstance(d, new FileOutputStream(savePDF+".PDF"));
-			BaseFont bf = BaseFont.createFont( "c:\\windows\\fonts\\simsun.ttc,1", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-			d.addAuthor("作者-alextao");
-			d.open();
-			d.add(new Paragraph(bean.getContentvalue(),new Font(bf)));
-			d.close();
-		} catch (Exception e) {
-			throw e;
-		} 
-		return "json";
-		
-	}
-	/**
-	 * 检测目录是否存在
-	 * 
-	 * @return
-	 */
 
-	public static String isexistdir() {
-		String nowTimeStr = "";
-		String savedir = "/PDF/";
-		String realpath = "";
-//		SimpleDateFormat sDateFormat;
-//		sDateFormat = new SimpleDateFormat("yyyyMMdd");
-//		nowTimeStr = sDateFormat.format(new Date());
-		String savePath = ServletActionContext.getServletContext().getRealPath("");
-		savePath = savePath + savedir ;
-		File dir = new File(savePath);
-		if (!dir.exists()) {
-			dir.mkdirs();
-			realpath = savedir ;
-			return realpath;
-		} else {
-			realpath = savedir ;
-			return realpath;
-		}
-	}
+//	/**
+//	 * 生成文章PDF文件
+//	 * 
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	@Action(value = "PDF", results = { @Result(name = "json", type = "json") })
+//	public String PDF() throws Exception {
+//		Document d = new Document();
+//		try {
+//			bean = this.articleTService.findByPK(ArticleT.class, this.getArticleid());
+//			String path = ServletActionContext.getServletContext().getRealPath(
+//					"");// 获取根目录
+//			String savePath = FileUploadTool.isexistPdfdir();
+//			savePath = path + savePath;
+//			String savePDF = savePath + bean.getTitle();
+//			PdfWriter.getInstance(d, new FileOutputStream(savePDF + ".PDF"));
+//			BaseFont bf = BaseFont.createFont(
+//					"c:\\windows\\fonts\\simsun.ttc,1", BaseFont.IDENTITY_H,
+//					BaseFont.EMBEDDED);
+//			d.addAuthor("作者-alextao");
+//			d.open();
+//			d.add(new Paragraph(bean.getContentvalue(), new Font(bf)));
+//			d.close();
+//		} catch (Exception e) {
+//			throw e;
+//		}
+//		return "json";
+//
+//	}
 
-	
+
 }

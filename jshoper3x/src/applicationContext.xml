@@ -6,12 +6,12 @@
 	xsi:schemaLocation=" 
 	http://www.springframework.org/schema/data/mongo   
 		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd  
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd  
-        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd  
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-3.2.xsd"
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
 
 	default-autowire="byName" default-lazy-init="false">
 
@@ -64,86 +64,9 @@
 
 	</bean>
 
-	<!-- activeMq -->
-	<!-- 消息转换器 -->
-	<bean id="messageConvertForSys" class="com.jshop.activemq.MessageConvertForSys"></bean>
-	
-	<!-- 消息发布者 -->
-	<!-- TOPIC链接工厂 -->
-	<bean id="topicSendConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="tcp://127.0.0.1:61616" />
-		<property name="useAsyncSend" value="true" />
-	</bean>
-	<!-- 发送消息的目的地（一个队列） -->
-	<!-- 定义主题 -->
-	<bean id="myTopic" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="jshoper3x.topic" />
-	</bean>
-	<!-- Spring JMS Template -->
-	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
-		<property name="connectionFactory" ref="topicSendConnectionFactory"></property>
-		<property name="defaultDestination" ref="myTopic" />
-		<property name="messageConverter" ref="messageConvertForSys" />
-		<!-- 开启订阅模式 -->
-		<property name="pubSubDomain" value="true" />
-		<property name="receiveTimeout" value="1000" />
-	</bean>
-	
-	
-	<!-- 订阅者配置 -->
-	<!-- 消息订阅者 -->
-	<!-- TOPIC链接工厂 -->
-	<bean id="topicListenConnectionFactory" class="org.apache.activemq.spring.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="tcp://127.0.0.1:61616" />
-		<!-- 接收者ID -->  
-        <property name="clientID" value="client_119" />  
-	</bean>
-	<bean id="myTopic2" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="jshoper4x.topic" />
-	</bean>
-	
-	<!-- 消息发送方 -->
-	<bean id="topicMessageSender" class="com.jshop.activemq.SimpleJMSSender">
-		<property name="jmsTemplate" ref="jmsTemplate"></property>
-	</bean>
-	 <!-- 消息监听器 -->  
-    <bean id="myTopicListener"  
-        class="org.springframework.jms.listener.adapter.MessageListenerAdapter">  
-        <constructor-arg ref="topicMessageReceiver" />  
-        <!-- 接收消息的方法名称 -->  
-        <property name="defaultListenerMethod" value="receive" />  
-        <!-- 不进行消息转换 -->  
-        <property name="messageConverter"><null/></property>  
-    </bean> 
-	
-	<!-- 消息接收方 -->
-	<bean id="topicMessageReceiver" class="com.jshop.activemq.SimpleJMSReceiver">
-	</bean>
-	<!-- 主题消息监听容器 -->
-	<bean id="listenerContainer"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-		<property name="connectionFactory" ref="topicListenConnectionFactory" />
-		<property name="pubSubDomain" value="true" /><!-- default is false -->
-		<property name="destination" ref="myTopic" />  <!-- listen topic: myTopic -->
-		<property name="subscriptionDurable" value="true" />
-		<property name="messageListener" ref="myTopicListener" />
-		<property name="receiveTimeout" value="10000"/>  
-		 <!-- 接收者ID -->  
-        <property name="clientId" value="client_119" />  
-        <property name="durableSubscriptionName" value="client_119"/>  
-		 
-	</bean>
 
 
-	<!-- 主题消息监听容器2 
-	<bean id="listenerContainer2"
-		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-		<property name="connectionFactory" ref="topicListenConnectionFactory" />
-		<property name="pubSubDomain" value="true" />
-		<property name="destination" ref="myTopic2" />
-		<property name="subscriptionDurable" value="true" />
-		<property name="messageListener" ref="topicMessageReceiver" />
-	</bean>-->
+
 
 
 	<!-- jedis缓存配置 -->
@@ -173,7 +96,7 @@
 	</bean>
 	<!-- org.springframework.orm.hibernate3.LocalSessionFactoryBean -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
@@ -192,17 +115,18 @@
 				hibernate.cache.use_query_cache=${hibernate.cache.use_query_cache}
 				hibernate.jdbc.batch_size=${hibernate.jdbc.batch_size}
 				hibernate.jdbc.fetch_size=${hibernate.jdbc.fetch_size}
+			
 			</value>
 		</property>
 
 	</bean>
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
-	<aop:config>
+	<aop:config >
 		<aop:advisor pointcut="execution(* com.jshop.service.impl.*.*Service.*(..))"
 			advice-ref="txAdvice" />
 	</aop:config>
@@ -214,12 +138,12 @@
 			<tx:method name="save*" propagation="REQUIRED" />
 			<tx:method name="del*" propagation="REQUIRED" />
 			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="query*" read-only="true" />
-			<tx:method name="find*" read-only="true" />
-			<tx:method name="load*" read-only="true" />
-			<tx:method name="count*" read-only="true" />
-			<tx:method name="check*" read-only="true" />
+			<tx:method name="get*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="query*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="find*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="load*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="count*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="check*" read-only="true" propagation="REQUIRED" />
 			<tx:method name="*" rollback-for="Exception" />
 		</tx:attributes>
 	</tx:advice>

@@ -12,26 +12,35 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.TemplateT;
 import com.jshop.entity.TemplatesetT;
 import com.jshop.service.TemplateTService;
 import com.jshop.service.TemplatesetTService;
 import com.jshop.service.impl.Serial;
+
 @Namespace("")
 @ParentPackage("jshop")
 public class TemplateTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private TemplateTService templateTService;
+	@Resource
 	private TemplatesetTService templatesetTService;
 	private String tid;
 	private String url;
@@ -46,30 +55,13 @@ public class TemplateTAction extends BaseTAction {
 	private String type;
 	private String status;
 	private String templatehtml;
-	private TemplateT bean=new TemplateT();
-	private List<Map<String,Object>> rows=new ArrayList<Map<String,Object>>();
+	private TemplateT bean = new TemplateT();
+	private List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
 	private int rp;
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-	
-	@JSON(serialize = false)
-	public TemplatesetTService getTemplatesetTService() {
-		return templatesetTService;
-	}
 
-	public void setTemplatesetTService(TemplatesetTService templatesetTService) {
-		this.templatesetTService = templatesetTService;
-	}
-
-	@JSON(serialize = false)
-	public TemplateTService getTemplateTService() {
-		return templateTService;
-	}
-
-	public void setTemplateTService(TemplateTService templateTService) {
-		this.templateTService = templateTService;
-	}
 	public String getTid() {
 		return tid;
 	}
@@ -102,7 +94,6 @@ public class TemplateTAction extends BaseTAction {
 		this.name = name;
 	}
 
-	
 	public Date getCreatetime() {
 		return createtime;
 	}
@@ -119,11 +110,11 @@ public class TemplateTAction extends BaseTAction {
 		this.creatorid = creatorid;
 	}
 
-	public List<Map<String,Object>> getRows() {
+	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
 
-	public void setRows(List<Map<String,Object>> rows) {
+	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
 
@@ -231,34 +222,37 @@ public class TemplateTAction extends BaseTAction {
 		this.clearErrorsAndMessages();
 
 	}
-	
+
 	/**
 	 * 读取所有模板数据
 	 * 
 	 * @return
 	 */
-	@Action(value = "findAllTemplate", results = { 
-			@Result(name = "json",type="json")
-	})
+	@Action(value = "findAllTemplate", results = { @Result(name = "json", type = "json") })
 	public String findAllTemplate() {
-			if (StaticKey.SC.equals(this.getQtype())) {
-				this.findDefaultAllTemplate();
+		if (StaticKey.SC.equals(this.getQtype())) {
+			this.findDefaultAllTemplate();
+		} else {
+			if (StringUtils.isBlank(this.getQuery())) {
+				return JSON;
 			} else {
-				if (Validate.StrisNull(this.getQuery())) {
-					return "json";
-				} else {
-					this.findTemplateByLikeName();
-					return "json";
-				}
+				this.findTemplateByLikeName();
+				return JSON;
 			}
-			return "json";
+		}
+		return JSON;
 	}
 
 	public void findDefaultAllTemplate() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getTemplateTService().countfindAllTemplate(BaseTools.getAdminCreateId());
-		List<TemplateT> list = this.getTemplateTService().findAllTemplate(currentPage, lineSize, BaseTools.getAdminCreateId());
+		Criterion criterion = Restrictions.eq("creatorid",
+				BaseTools.getAdminCreateId());
+		Order order = Order.desc("createtime");
+		total = this.templateTService.count(TemplateT.class, criterion)
+				.intValue();
+		List<TemplateT> list = this.templateTService.findByCriteriaByPage(
+				TemplateT.class, criterion, order, currentPage, lineSize);
 		if (!list.isEmpty()) {
 			this.ProcessTemplateList(list);
 		}
@@ -267,32 +261,44 @@ public class TemplateTAction extends BaseTAction {
 	public void ProcessTemplateList(List<TemplateT> list) {
 		for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
 			TemplateT t = (TemplateT) it.next();
-			if (t.getType().equals("1")) {
-				t.setType("页面模板");
+			if (StringUtils
+					.equals(BaseEnums.TemplateType.PAGETEMPLATE.getState(),
+							t.getType())) {
+				t.setType(BaseEnums.TemplateType.PAGETEMPLATE.getName());
 			}
-			if (t.getType().equals("2")) {
-				t.setType("邮件模板");
+			if (StringUtils
+					.equals(BaseEnums.TemplateType.MAILTEMPLATE.getState(),
+							t.getType())) {
+				t.setType(BaseEnums.TemplateType.MAILTEMPLATE.getName());
 			}
-			if (t.getType().equals("3")) {
-				t.setType("打印模板");
+			if (StringUtils.equals(
+					BaseEnums.TemplateType.PRINTTEMPLATE.getState(),
+					t.getType())) {
+				t.setType(BaseEnums.TemplateType.PRINTTEMPLATE.getName());
 			}
-			if(t.getStatus().equals("1")){
-				t.setStatus("启用");
-			}else{
-				t.setStatus("禁用");
+			if (StringUtils.equals(BaseEnums.DataUsingState.USING.getState(),
+					t.getStatus())) {
+				t.setStatus(BaseEnums.DataUsingState.USING.getName());
+			}
+			if (StringUtils.equals(BaseEnums.DataUsingState.UNUSING.getState(),
+					t.getStatus())) {
+				t.setStatus(BaseEnums.DataUsingState.UNUSING.getName());
 			}
 
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", t.getTid());
-			cellMap.put("cell", new Object[] { 
-					t.getSign(),
-					t.getThemename(),
-					t.getName(), 
-					t.getType(), 
-					t.getNote(), 
-					t.getStatus(),
-					t.getUrl(), 
-					"<a  id='edittemplate' href='template.jsp?operate=edit&folder=setting&tid=" + t.getTid() + "' name='edittemplate'>[编辑]</a>" });
+			cellMap.put("cell",
+					new Object[] {
+							t.getSign(),
+							t.getThemename(),
+							t.getName(),
+							t.getType(),
+							t.getNote(),
+							t.getStatus(),
+							t.getUrl(),
+							"<a  id='edittemplate' href='template.jsp?operate=edit&folder=setting&tid="
+									+ t.getTid()
+									+ "' name='edittemplate'>[编辑]</a>" });
 			rows.add(cellMap);
 		}
 
@@ -317,22 +323,23 @@ public class TemplateTAction extends BaseTAction {
 	 * @throws IOException
 	 * @throws IllegalAccessException
 	 */
-	public void createFTLFile(TemplateT tt) throws IOException, IllegalAccessException {
-		String path = getWebInfoPath() + "/theme/" + tt.getThemename() + "/shop";
+	public void createFTLFile(TemplateT tt) throws IOException,
+			IllegalAccessException {
+		String path = getWebInfoPath() + "/theme/" + tt.getThemename()
+				+ "/shop";
 		File dir = new File(path);
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
 		String filepath = path + "/" + tt.getName() + ".ftl";
 		File file = new File(filepath);
-		if(!file.exists()){
+		if (!file.exists()) {
 			file.createNewFile();
 			FileOutputStream out = new FileOutputStream(file, true);
 			out.write(tt.getTvalue().toString().getBytes("utf-8"));
 			out.close();
 		}
-		
-		
+
 	}
 
 	/**
@@ -343,8 +350,10 @@ public class TemplateTAction extends BaseTAction {
 	 * @throws UnsupportedEncodingException
 	 * @throws IOException
 	 */
-	public void updateFTLFile(TemplateT tt) throws IllegalAccessException, UnsupportedEncodingException, IOException {
-		String path = getWebInfoPath() + "/theme/" + tt.getThemename() + "/shop";
+	public void updateFTLFile(TemplateT tt) throws IllegalAccessException,
+			UnsupportedEncodingException, IOException {
+		String path = getWebInfoPath() + "/theme/" + tt.getThemename()
+				+ "/shop";
 		File dir = new File(path);
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -373,13 +382,18 @@ public class TemplateTAction extends BaseTAction {
 	 * @throws IllegalAccessException
 	 * @throws IOException
 	 */
-	@Action(value = "addTemplate", results = { 
-			@Result(name = "json",type="json")
-	})
+	@Action(value = "addTemplate", results = { @Result(name = "json", type = "json") })
 	public String addTemplate() throws IOException, IllegalAccessException {
-		if (this.getTemplateTService().findTemplateBynameandnote(BaseTools.getAdminCreateId(), this.getNote(), this.getName()) > 0) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("creatorid", BaseTools.getAdminCreateId());
+		params.put("note", this.getNote());
+		params.put("name", this.getName());
+		Criterion criterion = Restrictions.allEq(params);
+		TemplateT t = this.templateTService.findOneByCriteria(TemplateT.class,
+				criterion);
+		if (t != null) {
 			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 		TemplateT tt = new TemplateT();
 		tt.setTid(this.getSerial().Serialid(Serial.TEMPLATE));
@@ -387,18 +401,18 @@ public class TemplateTAction extends BaseTAction {
 		tt.setUrl(this.getUrl().trim());
 		tt.setNote(this.getNote());
 		tt.setTvalue(this.getTvalue());
-		tt.setCreatetime(BaseTools.systemtime());
+		tt.setCreatetime(BaseTools.getSystemTime());
 		tt.setCreatorid(BaseTools.getAdminCreateId());
 		tt.setThemeid(this.getThemeid());
 		tt.setThemename(this.getThemename());
 		tt.setSign(this.getSign());
 		tt.setType(this.getType());
-		tt.setStatus("1");//默认开启
-		this.getTemplateTService().save(tt);
+		tt.setStatus(BaseEnums.DataUsingState.USING.getState());// 默认开启
+		this.templateTService.save(tt);
 		createFTLFile(tt);
 		this.setSucflag(true);
-		return "json";
-	
+		return JSON;
+
 	}
 
 	/**
@@ -406,17 +420,16 @@ public class TemplateTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "findTemplateByTid", results = { 
-			@Result(name = "json",type="json")
-	})
+	@Action(value = "findTemplateByTid", results = { @Result(name = "json", type = "json") })
 	public String findTemplateByTid() {
-		if (Validate.StrNotNull(this.getTid())) {
-			bean = this.getTemplateTService().findByPK(TemplateT.class, this.getTid());
+		if (StringUtils.isNotBlank(this.getTid())) {
+			bean = this.templateTService.findByPK(TemplateT.class,
+					this.getTid());
 			if (bean != null) {
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -427,27 +440,29 @@ public class TemplateTAction extends BaseTAction {
 	 * @throws IllegalAccessException
 	 * @throws UnsupportedEncodingException
 	 */
-	@Action(value = "updateTemplate", results = { 
-			@Result(name = "json",type="json")
-	})
-	public String updateTemplate() throws UnsupportedEncodingException, IllegalAccessException, IOException {
-		TemplateT tt = new TemplateT();
-		tt.setTid(this.getTid().trim());
-		tt.setName(this.getName().trim());
-		tt.setNote(this.getNote().trim());
-		tt.setUrl(this.getUrl().trim());
-		tt.setTvalue(this.getTvalue());
-		tt.setType(this.getType());
-		tt.setThemeid(this.getThemeid());
-		tt.setThemename(this.getThemename());
-		tt.setSign(this.getSign());
-		tt.setCreatetime(BaseTools.systemtime());
-		tt.setCreatorid(BaseTools.getAdminCreateId());
-		tt.setStatus(this.getStatus());
-		this.getTemplateTService().update(tt);
-		updateFTLFile(tt);
-		this.setSucflag(true);
-		return "json";
+	@Action(value = "updateTemplate", results = { @Result(name = "json", type = "json") })
+	public String updateTemplate() throws UnsupportedEncodingException,
+			IllegalAccessException, IOException {
+		TemplateT tt = this.templateTService.findByPK(TemplateT.class,
+				this.getTid());
+		if (tt != null) {
+			tt.setName(this.getName().trim());
+			tt.setNote(this.getNote().trim());
+			tt.setUrl(this.getUrl().trim());
+			tt.setTvalue(this.getTvalue());
+			tt.setType(this.getType());
+			tt.setThemeid(this.getThemeid());
+			tt.setThemename(this.getThemename());
+			tt.setSign(this.getSign());
+			tt.setCreatetime(BaseTools.getSystemTime());
+			tt.setCreatorid(BaseTools.getAdminCreateId());
+			tt.setStatus(this.getStatus());
+			this.templateTService.update(tt);
+			updateFTLFile(tt);
+			this.setSucflag(true);
+			return JSON;
+		}
+		return JSON;
 	}
 
 	/**
@@ -455,20 +470,21 @@ public class TemplateTAction extends BaseTAction {
 	 * 
 	 * @return
 	 */
-	@Action(value = "delTemplate", results = { 
-			@Result(name = "json",type="json")
-	})
+	@Action(value = "delTemplate", results = { @Result(name = "json", type = "json") })
 	public String delTemplate() {
-		if (Validate.StrNotNull(this.getTid())) {
-			String[] strs =StringUtils.split(this.getTid().trim(), ","); 
-			@SuppressWarnings("unused")
-			int i = this.getTemplateTService().delTemplate(strs);
+		if (StringUtils.isNotBlank(this.getTid())) {
+			String[] strs = StringUtils.split(this.getTid().trim(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				TemplateT t=this.templateTService.findByPK(TemplateT.class, s);
+				if(t!=null){
+					this.templateTService.delete(t);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		this.setSucflag(false);
-		return "json";
-	
+		return JSON;
+
 	}
 
 	/**
@@ -479,43 +495,50 @@ public class TemplateTAction extends BaseTAction {
 	 * @throws IllegalAccessException
 	 * @throws UnsupportedEncodingException
 	 */
-	@Action(value = "recreateTemplate", results = { 
-			@Result(name = "json",type="json")
-	})
-	public String recreateTemplate() throws UnsupportedEncodingException, IllegalAccessException, IOException {
-			List<TemplateT> list = this.getTemplateTService().findAllTemplateWithNoParam(BaseTools.getAdminCreateId(),"1");
-			for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
-				TemplateT tt = (TemplateT) it.next();
-				this.updateFTLFile(tt);
-			}
-			this.setSucflag(true);
-			return "json";
+	@Action(value = "recreateTemplate", results = { @Result(name = "json", type = "json") })
+	public String recreateTemplate() throws UnsupportedEncodingException,
+			IllegalAccessException, IOException {
+		Criterion criterion=Restrictions.and(Restrictions.eq("creatorid", BaseTools.getAdminCreateId())).add(Restrictions.eq("status", BaseEnums.DataUsingState.USING.getState()));
+		List<TemplateT> list = this.templateTService.findByCriteria(TemplateT.class, criterion);
+		for (Iterator<TemplateT> it = list.iterator(); it.hasNext();) {
+			TemplateT tt = (TemplateT) it.next();
+			this.updateFTLFile(tt);
+		}
+		this.setSucflag(true);
+		return JSON;
 	}
+
 	/**
 	 * 根据名称模糊查询
+	 * 
 	 * @return
 	 */
-	@Action(value="findTemplateByLikeName",results={@Result(name="json",type="json")})
-	public void findTemplateByLikeName(){
+	@Action(value = "findTemplateByLikeName", results = { @Result(name = "json", type = "json") })
+	public void findTemplateByLikeName() {
 		int currentPage = page;
 		int lineSize = rp;
-		total=this.getTemplateTService().countTemplateTBYLikeNmae(this.getQuery());
-		List<TemplateT> list = this.getTemplateTService().findTemplateTByLikeName(currentPage, lineSize, this.getQuery());
-		if(!list.isEmpty()){
+		Criterion criterion=Restrictions.like("name", this.getQuery());
+		Order order=Order.asc("createtime");
+		total = this.templateTService.count(TemplateT.class, criterion).intValue();
+		List<TemplateT> list = this.templateTService.findByCriteriaByPage(TemplateT.class, criterion, order, currentPage, lineSize);
+		if (!list.isEmpty()) {
 			this.ProcessTemplateList(list);
 		}
-		//return "json";
 	}
-	@Action(value="previewTemplate",results={@Result(name="json",type="json")})
-	public String previewTemplate(){
-		TemplateT tt=this.getTemplateTService().findByPK(TemplateT.class, tid);
-		if(tt!=null){
-			TemplatesetT tst=this.getTemplatesetTService().findTemplatesetTBysign(tt.getSign());
-			if(tst!=null){
-				this.setTemplatehtml(BaseTools.getBasePath()+"/"+tst.getBuildhtmlpath());
+
+	@Action(value = "previewTemplate", results = { @Result(name = "json", type = "json") })
+	public String previewTemplate() {
+		TemplateT tt = this.templateTService
+				.findByPK(TemplateT.class, this.getTid());
+		if (tt != null) {
+			Criterion criterion=Restrictions.eq("sign", tt.getSign());
+			TemplatesetT tst = this.templatesetTService.findOneByCriteria(TemplatesetT.class, criterion);
+			if (tst != null) {
+				this.setTemplatehtml(BaseTools.getBasePath() + "/"
+						+ tst.getBuildhtmlpath());
 			}
 		}
 		return JSON;
 	}
-	
+
 }

@@ -8,7 +8,13 @@ $(function() {
 		url : 'findAllSiteNavigationT.action',
 		dataType : 'json',
 		cache : false,
-		colModel : [ {
+		colModel : [{
+			display : '店铺名',
+			name : 'shopname',
+			width : 200,
+			sortable : true,
+			align : 'center'
+		},  {
 			display : '名称',
 			name : 'name',
 			width : 215,
