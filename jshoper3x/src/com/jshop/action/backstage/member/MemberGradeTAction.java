@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -26,6 +28,7 @@ import com.jshop.service.impl.Serial;
 public class MemberGradeTAction extends BaseTAction {
 
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private MemberGradeTService memberGradeTService;
 	private String id;
 	private String type;
