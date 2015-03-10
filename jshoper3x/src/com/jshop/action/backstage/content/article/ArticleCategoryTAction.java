@@ -814,8 +814,7 @@ public class ArticleCategoryTAction extends BaseTAction {
 			Order order = null;
 			if (StringUtils.equals(this.getSortorder(), StaticKey.ASC)) {
 				order = Order.asc(this.getSortname());
-			}
-			if (StringUtils.equals(this.getSortorder(), StaticKey.DESC)) {
+			}else{
 				order = Order.desc(this.getSortname());
 			}
 			List<ArticleCategoryT> list = this.articleCategoryTService.findByCriteriaByPage(ArticleCategoryT.class, criterion, order, currentPage, lineSize);

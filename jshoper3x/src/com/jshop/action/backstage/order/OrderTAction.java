@@ -13,7 +13,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.Arith;
@@ -42,7 +44,6 @@ import com.jshop.service.CartTService;
 import com.jshop.service.DeliverAddressTService;
 import com.jshop.service.GoodsTService;
 import com.jshop.service.LogisticsBTService;
-import com.jshop.service.LogisticsBusinessTService;
 import com.jshop.service.MemberTService;
 import com.jshop.service.OrderTService;
 import com.jshop.service.PaymentMService;
@@ -514,13 +515,16 @@ public class OrderTAction extends BaseTAction {
 	public void finddefaultAllOrder() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getOrderTService().countfindAllOrderT();
-		if (Validate.StrNotNull(this.getSortname()) && Validate.StrNotNull(this.getSortorder())) {
-			String queryString = "from OrderT order by " + this.getSortname() + " " + this.getSortorder() + "";
-			List<OrderT> order = this.getOrderTService().sortAllOrderT(currentPage, lineSize, queryString);
-			if (order != null) {
-				this.processOrderList(order);
+		total = this.orderTService.count(OrderT.class).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
 			}
+			List<OrderT>list=this.orderTService.findByCriteriaByPage(OrderT.class, order, currentPage, lineSize);
+			this.processOrderList(list);
 		}
 	}
 
@@ -532,11 +536,11 @@ public class OrderTAction extends BaseTAction {
 	public void findOrderInfoByorderid(String orderid) {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getOrderTService().countfindOrderbyOrderid(orderid);
-		List<OrderT> order = this.getOrderTService().findOrderByOrderid(currentPage, lineSize, orderid);
-		if (order != null) {
-			this.processOrderList(order);
-		}
+		Criterion criterion=Restrictions.eq("orderid", orderid);
+		Order order=Order.desc("createtime");
+		total = this.orderTService.count(OrderT.class, criterion).intValue();
+		List<OrderT> list = this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+		this.processOrderList(list);
 	}
 
 	/**
@@ -547,11 +551,11 @@ public class OrderTAction extends BaseTAction {
 	public void findOrderInfoByShippingUsername(String shippingusername) {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getOrderTService().countfindOrderByShippingUsername(shippingusername);
-		List<OrderT> order = this.getOrderTService().findOrderByOrderid(currentPage, lineSize, orderid);
-		if (order != null) {
-			this.processOrderList(order);
-		}
+		Criterion criterion=Restrictions.eq("shippingusername", shippingusername);
+		Order order=Order.desc("createtime");
+		total = this.orderTService.count(OrderT.class, criterion).intValue();
+		List<OrderT> list = this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+		this.processOrderList(list);
 	}
 
 	/**
@@ -564,19 +568,19 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String findAllOrders() {
-		if ("sc".equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.setTotal(0);
 			rows.clear();
 			this.finddefaultAllOrder();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQtype())) {
+				return JSON;
 			} else {
-				if ("orderid".equals(this.getQtype())) {
+				if (StringUtils.equals("orderid", this.getQtype())) {
 					//根据订单id获取订单数据
 					this.findOrderInfoByorderid(this.getQuery().trim());
 				}
-				if ("shippingusername".equals(this.getQtype())) {
+				if (StringUtils.equals("shippingusername", this.getQtype())) {
 					//根据收货人查询订单数据
 					this.findOrderInfoByShippingUsername(this.getQuery().trim());
 				}
