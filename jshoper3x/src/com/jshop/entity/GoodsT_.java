@@ -5,27 +5,32 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-02T23:47:48.824+0800")
+@Generated(value="Dali", date="2015-03-06T22:20:42.901+0800")
 @StaticMetamodel(GoodsT.class)
 public class GoodsT_ {
 	public static volatile SingularAttribute<GoodsT, String> goodsid;
+	public static volatile SingularAttribute<GoodsT, Date> createtime;
+	public static volatile SingularAttribute<GoodsT, Integer> freezeStore;
+	public static volatile SingularAttribute<GoodsT, String> goodsParameterValue;
+	public static volatile SingularAttribute<GoodsT, String> goodsTypeId;
+	public static volatile SingularAttribute<GoodsT, String> goodsTypeName;
+	public static volatile SingularAttribute<GoodsT, String> htmlPath;
+	public static volatile SingularAttribute<GoodsT, String> isNew;
+	public static volatile SingularAttribute<GoodsT, String> isSpecificationsOpen;
+	public static volatile SingularAttribute<GoodsT, String> metaDescription;
+	public static volatile SingularAttribute<GoodsT, String> metaKeywords;
+	public static volatile SingularAttribute<GoodsT, String> placeStore;
+	public static volatile SingularAttribute<GoodsT, String> productSn;
+	public static volatile SingularAttribute<GoodsT, Date> updatetime;
 	public static volatile SingularAttribute<GoodsT, String> bargainprice;
 	public static volatile SingularAttribute<GoodsT, String> brandid;
 	public static volatile SingularAttribute<GoodsT, String> brandname;
 	public static volatile SingularAttribute<GoodsT, String> commoditylist;
 	public static volatile SingularAttribute<GoodsT, Double> cost;
-	public static volatile SingularAttribute<GoodsT, Date> createtime;
 	public static volatile SingularAttribute<GoodsT, String> creatorid;
 	public static volatile SingularAttribute<GoodsT, String> fname;
-	public static volatile SingularAttribute<GoodsT, Integer> freezeStore;
-	public static volatile SingularAttribute<GoodsT, String> goodsParameterValue;
-	public static volatile SingularAttribute<GoodsT, String> goodsTypeId;
-	public static volatile SingularAttribute<GoodsT, String> goodsTypeName;
 	public static volatile SingularAttribute<GoodsT, String> goodsname;
 	public static volatile SingularAttribute<GoodsT, String> hotsale;
-	public static volatile SingularAttribute<GoodsT, String> htmlPath;
-	public static volatile SingularAttribute<GoodsT, String> isNew;
-	public static volatile SingularAttribute<GoodsT, String> isSpecificationsOpen;
 	public static volatile SingularAttribute<GoodsT, String> isgroup;
 	public static volatile SingularAttribute<GoodsT, String> ismobileplatformgoods;
 	public static volatile SingularAttribute<GoodsT, String> isoutsite;
@@ -36,16 +41,12 @@ public class GoodsT_ {
 	public static volatile SingularAttribute<GoodsT, String> lname;
 	public static volatile SingularAttribute<GoodsT, String> ltypeid;
 	public static volatile SingularAttribute<GoodsT, Double> memberprice;
-	public static volatile SingularAttribute<GoodsT, String> metaDescription;
-	public static volatile SingularAttribute<GoodsT, String> metaKeywords;
 	public static volatile SingularAttribute<GoodsT, String> navid;
 	public static volatile SingularAttribute<GoodsT, String> nname;
 	public static volatile SingularAttribute<GoodsT, String> outsitelink;
 	public static volatile SingularAttribute<GoodsT, String> pictureurl;
-	public static volatile SingularAttribute<GoodsT, String> placeStore;
 	public static volatile SingularAttribute<GoodsT, Double> points;
 	public static volatile SingularAttribute<GoodsT, Double> price;
-	public static volatile SingularAttribute<GoodsT, String> productSn;
 	public static volatile SingularAttribute<GoodsT, Integer> quantity;
 	public static volatile SingularAttribute<GoodsT, Integer> readcount;
 	public static volatile SingularAttribute<GoodsT, Integer> realsales;
@@ -66,7 +67,6 @@ public class GoodsT_ {
 	public static volatile SingularAttribute<GoodsT, Integer> totalstaruser;
 	public static volatile SingularAttribute<GoodsT, String> unitname;
 	public static volatile SingularAttribute<GoodsT, String> unitnameid;
-	public static volatile SingularAttribute<GoodsT, Date> updatetime;
 	public static volatile SingularAttribute<GoodsT, String> usersetnum;
 	public static volatile SingularAttribute<GoodsT, Integer> versiont;
 	public static volatile SingularAttribute<GoodsT, String> weight;

@@ -35,7 +35,7 @@ import com.jshop.entity.OrderT;
 public class OrderTDaoImpl extends BaseTDaoImpl<OrderT> implements OrderTDao {
 	
 
-//	private static final Log log = LogFactory.getLog(OrderTDaoImpl.class);
+	private static final Log log = LogFactory.getLog(OrderTDaoImpl.class);
 //	
 //	public int addOrder(OrderT o) {
 //		log.debug("save OrderT");

@@ -94,7 +94,13 @@ $(function() {
 			url : 'findAllMemberGroupT.action',
 			dataType : 'json',
 			cache : false,
-			colModel : [ { 
+			colModel : [{ 
+				display:'店铺名',
+				name:'shopname',
+				width:215,
+				sortable:true,
+				align:'center'
+			}, { 
 				display:'分组名称',
 				name:'name',
 				width:215,

@@ -5,13 +5,14 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-02T23:47:49.084+0800")
+@Generated(value="Dali", date="2015-03-06T22:20:43.060+0800")
 @StaticMetamodel(SaleGoodsrecordT.class)
 public class SaleGoodsrecordT_ {
 	public static volatile SingularAttribute<SaleGoodsrecordT, String> salerecordid;
 	public static volatile SingularAttribute<SaleGoodsrecordT, Date> begingtime;
-	public static volatile SingularAttribute<SaleGoodsrecordT, String> email;
 	public static volatile SingularAttribute<SaleGoodsrecordT, Date> endingtime;
+	public static volatile SingularAttribute<SaleGoodsrecordT, Date> saletradetime;
+	public static volatile SingularAttribute<SaleGoodsrecordT, String> email;
 	public static volatile SingularAttribute<SaleGoodsrecordT, Double> hiprice;
 	public static volatile SingularAttribute<SaleGoodsrecordT, String> htmlpath;
 	public static volatile SingularAttribute<SaleGoodsrecordT, Integer> joinnumber;
@@ -31,7 +32,6 @@ public class SaleGoodsrecordT_ {
 	public static volatile SingularAttribute<SaleGoodsrecordT, String> salepeople;
 	public static volatile SingularAttribute<SaleGoodsrecordT, Double> saleprice;
 	public static volatile SingularAttribute<SaleGoodsrecordT, Double> salestartingprice;
-	public static volatile SingularAttribute<SaleGoodsrecordT, Date> saletradetime;
 	public static volatile SingularAttribute<SaleGoodsrecordT, String> sex;
 	public static volatile SingularAttribute<SaleGoodsrecordT, String> telno;
 	public static volatile SingularAttribute<SaleGoodsrecordT, String> username;

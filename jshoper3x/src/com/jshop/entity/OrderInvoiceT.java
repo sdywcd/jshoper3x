@@ -24,6 +24,7 @@ public class OrderInvoiceT implements Serializable {
 	private String membername;
 	private String orderid;
 	private String shopid;
+	private String shopname;
 	private String state;
 	private Date updatetime;
 	private int versiont;
@@ -125,6 +126,15 @@ public class OrderInvoiceT implements Serializable {
 
 	public void setShopid(String shopid) {
 		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 

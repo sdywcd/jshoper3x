@@ -1,7 +1,201 @@
 package com.jshop.action.backstage.utils.enums;
 
 public class BaseEnums {
+	/**
+	 * 订单开票状态
+	 * 
+	 * @ClassName: OrderIsInvoice
+	 * @Description: TODO(这里用一句话描述这个类的作用)
+	 * @author jcchen
+	 * @date 2015年2月17日 下午11:10:28
+	 *
+	 */
+	public enum OrderIsInvoice {
+		ORDERISINVOICE_DO_ONE_NUM("开票", "1"),
+		ORDERISINVOICE_UNDO_ZERO_NUM("不开票","0");	
+		private String name;
+		private String state;
 
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private OrderIsInvoice(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String state) {
+			for (OrderIsInvoice orderstate : OrderIsInvoice.values()) {
+				if (orderstate.getState().equals(state)) {
+					return orderstate.getName();
+				}
+			}
+			return "";
+		}
+	}
+	/**
+	 * 订单配送方式
+	 * 
+	 * @ClassName: OrderDeliverMode
+	 * @Description: TODO(这里用一句话描述这个类的作用)
+	 * @author jcchen
+	 * @date 2015年2月17日 下午11:10:28
+	 *
+	 */
+	public enum OrderDeliverMode {
+		ORDERDELIVERMODE_EXPRESS("快递", "EXPRESS"),
+		ORDERDELIVERMODE_POST("平邮","POST"),
+		ORDERDELIVERMODE_EMS("EMS","EMS");
+		
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private OrderDeliverMode(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String state) {
+			for (OrderDeliverMode orderstate : OrderDeliverMode.values()) {
+				if (orderstate.getState().equals(state)) {
+					return orderstate.getName();
+				}
+			}
+			return "";
+		}
+	}
+
+	
+	/**
+	 * 订单配送状态
+	 * 
+	 * @ClassName: OrderShippingState
+	 * @Description: TODO(这里用一句话描述这个类的作用)
+	 * @author jcchen
+	 * @date 2015年2月17日 下午11:10:28
+	 *
+	 */
+	public enum OrderShippingState {
+		ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM("配货中(未发货)", "0"),
+		ORDERSHIPPINGSTATE_HAVE_DELIVER_GOODS_ONE_NUM("已发货","1"),
+		ORDERSHIPPINGSTATE_CLOSE_TWO_NUM("订单关闭","2");
+		
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private OrderShippingState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String state) {
+			for (OrderShippingState orderstate : OrderShippingState.values()) {
+				if (orderstate.getState().equals(state)) {
+					return orderstate.getName();
+				}
+			}
+			return "";
+		}
+	}
+
+	/**
+	 * 订单支付状态
+	 * 
+	 * @ClassName: OrderPayState
+	 * @Description: TODO(这里用一句话描述这个类的作用)
+	 * @author jcchen
+	 * @date 2015年2月17日 下午11:10:28
+	 *
+	 */
+	public enum OrderPayState {
+		ORDERPAYSTATE_UNPAY_ZERO_NUM("未付款", "0"),
+		ORDERPAYSTATE_HAVEPAY_ONE_NUM("已付款","1"),
+		ORDERPAYSTATE_CLOSE_TWO_NUM("订单关闭","2");
+		
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private OrderPayState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String state) {
+			for (OrderPayState orderstate : OrderPayState.values()) {
+				if (orderstate.getState().equals(state)) {
+					return orderstate.getName();
+				}
+			}
+			return "";
+		}
+	}
+
+	
 	/**
 	 * 订单状态
 	 * 
@@ -12,9 +206,19 @@ public class BaseEnums {
 	 *
 	 */
 	public enum OrderState {
-		ORDERSTATE_UNCONFIRMED_ZERO_NUM("未确认", "0");
+		ORDERSTATE_UNCONFIRMED_ZERO_NUM("未确认", "0"),
+		ORDERSTATE_CONFIRMED_ONE_NUM("已确认","1"),
+		ORDERSTATE_PAYMENT_AFTER_ARRIVAL_OF_GOODS_TWO_NUM("货到付款","2"),
+		ORDERSTATE_WAIT_CONFIRM_RECEIVE_THREE_NUM("待确认收货","3"),
+		ORDERSTATE_RETURN_GOODS_FOUR_NUM("退货","4"),
+		ORDERSTATE_CLOSE_FIVE_NUM("订单关闭","5"),
+		ORDERSTATE_MEMBER_HAVE_REVEIVE_GOODS_SIX_NUM("用户已收货","6"),
+		ORDERSTATE_OUT_OF_STACK_SEVEN_NUM("缺货","7"),
+		ORDERSTATE_MEMBER_DELETE_EIGHT_NUM("用户删除","8"),
+		ORDERSTATE_SUCCESS_NINE_NUM("成功","9");
+		
 		private String name;
-		private String value;
+		private String state;
 
 		public String getName() {
 			return name;
@@ -24,22 +228,23 @@ public class BaseEnums {
 			this.name = name;
 		}
 
-		public String getValue() {
-			return value;
+
+		public String getState() {
+			return state;
 		}
 
-		public void setValue(String value) {
-			this.value = value;
+		public void setState(String state) {
+			this.state = state;
 		}
 
-		private OrderState(String name, String value) {
+		private OrderState(String name, String state) {
 			this.name = name;
-			this.value = value;
+			this.state = state;
 		}
 
-		public static String getName(String value) {
+		public static String getName(String state) {
 			for (OrderState orderstate : OrderState.values()) {
-				if (orderstate.getValue().equals(value)) {
+				if (orderstate.getState().equals(state)) {
 					return orderstate.getName();
 				}
 			}
@@ -55,7 +260,11 @@ public class BaseEnums {
 	 *
 	 */
 	public enum ORDERCREATETAG {
-		NORMAL("普通订单", "1");
+		ORDERTAG_NORMAL_ONE_NUM("普通订单", "1"),
+		ORDERTAG_GROUPON_TWO_NUM("团购订单","2"),
+		ORDERTAG_AUCTION_THREE_NUM("拍卖订单","3"),
+		ORDERTAG_MOBILE_FOUR_NUM("手机订单","4"),
+		ORDERTAG_GROUP_GOODS_FIVE_NUM("组合商品订单","5");
 		private String name;
 		private String state;
 
@@ -741,7 +950,143 @@ public class BaseEnums {
 		}
 	}
 	
+	/**
+	 * 用户等级类型
+	* @ClassName: MemberGradeType 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum MemberGradeType {
+		CREDITVALUE("信用值", "1"),EMPIRICALVALUE("经验值","2");
 
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private MemberGradeType(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (MemberGradeType d : MemberGradeType.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
 	
+
+	/**
+	 * 开票类型类型
+	* @ClassName: InvType 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum InvType {
+		PERSONAL("个人", "1"),COMPANY("公司","2");
+
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private InvType(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (InvType d : InvType.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	
+	/**
+	 * 开票否
+	* @ClassName: InvState 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum InvState {
+		DO("开", "1"),UNDO("未开","0");
+
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private InvState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (InvState d : InvState.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+
 
 }

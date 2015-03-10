@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.json.simple.JSONArray;
@@ -76,8 +77,6 @@ public class MemberTAction extends BaseTAction {
 	private String message;
 	private boolean sucflag;
 	private boolean doingTag;//用于aspect的标记
-
-
 
 
 	public String getMobile() {
@@ -490,7 +489,6 @@ public class MemberTAction extends BaseTAction {
 	private void findDefaultAllMemberT() {
 		int currentPage=page;
 		int lineSize=rp;
-		
 		total=this.memberTService.count(MemberT.class).intValue();
 		Order order=Order.desc("createtime");
 		List<MemberT>list=this.memberTService.findByCriteriaByPage(MemberT.class, order, currentPage, lineSize);
@@ -509,7 +507,6 @@ public class MemberTAction extends BaseTAction {
 					mt.setSex(StaticKey.SEXFEMAL);
 				}
 			}
-			
 			if(mt.getMemberstate().equals(StaticKey.MEMBERSTATE_ONE_NUM)){
 				mt.setMemberstate(StaticKey.DOACTIVE);
 			}else{
@@ -565,9 +562,9 @@ public class MemberTAction extends BaseTAction {
 	@Action(value = "updateMemberT", results = {@Result(name = "json",type="json")})
 	public String updateMemberT(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		bean=this.getMemberTService().findMemberTById(this.getId().trim());
+		bean=this.memberTService.findByPK(MemberT.class, this.getId());
 		if(bean!=null){
 			bean.setNick(this.getNick().trim());
 			bean.setRealname(this.getRealname().trim());
@@ -593,11 +590,11 @@ public class MemberTAction extends BaseTAction {
 			bean.setUpdatetime(BaseTools.getSystemTime());
 			bean.setCreatorid(BaseTools.getAdminCreateId());
 			bean.setVersiont(bean.getVersiont()+1);
-			this.getMemberTService().updateMemberT(bean);
+			this.memberTService.update(bean);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -607,20 +604,16 @@ public class MemberTAction extends BaseTAction {
 	@Action(value = "findMemberTById", results = {@Result(name = "json",type="json")})
 	public String findMemberTById(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-//		MemberT mt=this.getRedisBaseTDao().get(this.getId(), MemberT.class);
-//		if(mt!=null){
-//			System.out.println(mt.getNick());
-//		}
-		bean=this.getMemberTService().findMemberTById(this.getId().trim());
+		bean=this.memberTService.findByPK(MemberT.class, this.getId());
 		if(bean!=null){
 			bean.setTag(this.getPersonalTag(bean.getTag()));
 			this.setBasepath(BaseTools.getBasePath());
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	
 	
@@ -631,15 +624,17 @@ public class MemberTAction extends BaseTAction {
 	@Action(value = "delMemberT", results = {@Result(name = "json",type="json")})
 	public String delMemberT(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		String []strs=StringUtils.split(this.getId(), ",");
-		if(this.getMemberTService().delMemberT(strs)>0){
-			this.setSucflag(true);
-			return "json";
+		String []strs=StringUtils.split(this.getId(), StaticKey.SPLITDOT);
+		for(String s:strs){
+			MemberT mt=this.memberTService.findByPK(MemberT.class, s);
+			if(mt!=null){
+				this.memberTService.delete(mt);
+			}
 		}
-		return "json";
-		
+		this.setSucflag(true);
+		return JSON;
 	}
 	
 	/**
@@ -649,15 +644,16 @@ public class MemberTAction extends BaseTAction {
 	@Action(value = "findMemberByloginname", results = {@Result(name = "json",type="json")})
 	public String findMemberByloginname(){
 		if(StringUtils.isBlank(this.getLoginname())){
-			return "json";
+			return JSON;
 		}
-		List<MemberT>beanlist=this.getMemberTService().findMemberTByloginname(this.getLoginname());
-		if(!beanlist.isEmpty()){
-			this.setBean(beanlist.get(0));
+		Criterion criterion=Restrictions.eq("loginname", this.getLoginname());
+		MemberT mt=this.memberTService.findOneByCriteria(MemberT.class, criterion);
+		if(mt!=null){
+			this.setBean(mt);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 根据会员名称模糊查询
@@ -666,14 +662,15 @@ public class MemberTAction extends BaseTAction {
 	@Action(value = "findMemberLikeloginname", results = {@Result(name = "json",type="json")})
 	public String findMemberLikeloginname(){
 		if(StringUtils.isBlank(this.getLoginname())){
-			return "json";
+			return JSON;
 		}
-		List<MemberT>list=this.getMemberTService().findMemberLikeLoginname(this.getLoginname());
+		Criterion criterion=Restrictions.like("loginname", this.getLoginname(), MatchMode.ANYWHERE);
+		List<MemberT>list=this.memberTService.findByCriteria(MemberT.class, criterion);
 		if(!list.isEmpty()){
-			ProcessMemberList(list);
+			processMemberList(list);
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 	

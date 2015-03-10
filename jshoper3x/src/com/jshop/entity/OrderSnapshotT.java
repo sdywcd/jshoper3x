@@ -37,6 +37,7 @@ public class OrderSnapshotT implements Serializable {
 	private int quantity;
 	private String shippingaddressid;
 	private String shopid;
+	private String shopname;
 	private String state;
 	private int storeTag;
 	private double subtotal;
@@ -258,6 +259,15 @@ public class OrderSnapshotT implements Serializable {
 
 	public void setShopid(String shopid) {
 		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 

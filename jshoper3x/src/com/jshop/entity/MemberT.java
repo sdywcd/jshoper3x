@@ -44,6 +44,8 @@ public class MemberT implements Serializable {
 	private String question;
 	private String realname;
 	private String sex;
+	private String shopid;
+	private String shopname;
 	private String sinaweibo;
 	private String tag;
 	private String telno;
@@ -327,6 +329,24 @@ public class MemberT implements Serializable {
 
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+
+
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 

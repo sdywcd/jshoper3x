@@ -14,15 +14,17 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Order;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.enums.BaseEnums;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.MemberGradeType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.MemberGradeT;
 import com.jshop.service.MemberGradeTService;
 import com.jshop.service.impl.Serial;
+import com.taobao.api.domain.Member;
 @Namespace("")
 @ParentPackage("jshop")
 public class MemberGradeTAction extends BaseTAction {
@@ -50,14 +52,7 @@ public class MemberGradeTAction extends BaseTAction {
 	private int total = 0;
 	private boolean sucflag;
 	
-	@JSON(serialize = false)
-	public MemberGradeTService getMemberGradeTService() {
-		return memberGradeTService;
-	}
 
-	public void setMemberGradeTService(MemberGradeTService memberGradeTService) {
-		this.memberGradeTService = memberGradeTService;
-	}
 
 	
 	public String getId() {
@@ -244,9 +239,9 @@ public class MemberGradeTAction extends BaseTAction {
 		mgt.setCreatorid(BaseTools.getAdminCreateId());
 		mgt.setUpdatetime(mgt.getCreatetime());
 		mgt.setVersiont(0);
-		this.getMemberGradeTService().save(mgt);
+		this.memberGradeTService.save(mgt);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -260,33 +255,29 @@ public class MemberGradeTAction extends BaseTAction {
 			this.findDefaultAllMemberGradeT();
 		}else{
 			if(StringUtils.isBlank(this.getQuery())){
-				return "json";
+				return JSON;
 			}else{
-				return "json";
+				return JSON;
 			}
 		}
 		
-		return "json";
+		return JSON;
 	}
 
 	private void findDefaultAllMemberGradeT() {
 		int currentPage=page;
 		int lineSize=rp;
-		total=this.getMemberGradeTService().countfindAllMemberGradeT();
-		List<MemberGradeT>list=this.getMemberGradeTService().findAllMemberGradeT(currentPage, lineSize);
-		this.ProcessMemberGradeTList(list);
-		
+		total=this.memberGradeTService.count(MemberGradeT.class).intValue();
+		Order order=Order.desc("createtime");
+		List<MemberGradeT>list=this.memberGradeTService.findByCriteriaByPage(MemberGradeT.class, order, currentPage, lineSize);
+		this.processMemberGradeTList(list);
 	}
 
-	private void ProcessMemberGradeTList(List<MemberGradeT> list) {
+	private void processMemberGradeTList(List<MemberGradeT> list) {
 		for(Iterator<MemberGradeT> it=list.iterator();it.hasNext();){
 			MemberGradeT mgt=(MemberGradeT) it.next();
-			if(StaticKey.ONE.equals(mgt.getType())){
-				mgt.setType(StaticKey.CREDITVALUE);
-			}else{
-				mgt.setType(StaticKey.EMPIRICALVALUE);
-			}
-			mgt.setMpstate(BaseEnums.DataUsingState.getName(mgt.getMpstate()));
+			mgt.setType(MemberGradeType.getName(mgt.getType()));
+			mgt.setMpstate(DataUsingState.getName(mgt.getMpstate()));
 			Map<String,Object>cellMap=new HashMap<String, Object>();
 			cellMap.put("id", mgt.getId());
 			cellMap.put("cell", new Object[]{
@@ -316,14 +307,13 @@ public class MemberGradeTAction extends BaseTAction {
 	@Action(value = "findMemberGradeTById", results = { @Result(name = "json", type = "json") })
 	public String findMemberGradeTById() {
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		bean=this.getMemberGradeTService().findMemberGradeTById(this.getId());
+		bean=this.memberGradeTService.findByPK(MemberGradeT.class, this.getId());
 		if(bean!=null){
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -334,9 +324,9 @@ public class MemberGradeTAction extends BaseTAction {
 	@Action(value = "updateMemberGradeTById", results = { @Result(name = "json", type = "json") })
 	public String updateMemberGradeTById() {
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		bean=this.getMemberGradeTService().findMemberGradeTById(this.getId());
+		bean=this.memberGradeTService.findByPK(MemberGradeT.class, this.getId());
 		bean.setType(this.getType());
 		bean.setName(this.getName());
 		bean.setStart(this.getStart());
@@ -349,9 +339,9 @@ public class MemberGradeTAction extends BaseTAction {
 		bean.setVersiont(bean.getVersiont()+1);
 		bean.setDiscount(this.getDiscount());
 		bean.setCreatorid(BaseTools.getAdminCreateId());
-		this.getMemberGradeTService().updateMemberGradeTById(bean);
+		this.memberGradeTService.update(bean);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 批量删除会员等级设置
@@ -360,12 +350,17 @@ public class MemberGradeTAction extends BaseTAction {
 	@Action(value = "delMemberGradeT", results = { @Result(name = "json", type = "json") })
 	public String delMemberGradeT(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		String strs[]=StringUtils.split(this.getId(), ",");
-		this.getMemberGradeTService().delMemberGradeT(strs);
+		String strs[]=StringUtils.split(this.getId(), StaticKey.SPLITDOT);
+		for(String s:strs){
+			MemberGradeT mgt=this.memberGradeTService.findByPK(MemberGradeT.class, s);
+			if(mgt!=null){
+				this.memberGradeTService.delete(mgt);
+			}
+		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 获取所有等级信息用于select控件
@@ -373,14 +368,12 @@ public class MemberGradeTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGradeForselect", results = { @Result(name = "json", type = "json") })
 	public String findAllGradeForselect(){
-		List<MemberGradeT>list=this.getMemberGradeTService().findAllMemberGradeT();
+		List<MemberGradeT>list=this.memberGradeTService.findAll(MemberGradeT.class);
 		if(!list.isEmpty()){
 			this.setSucflag(true);
 			this.setBeanlist(list);
-			return "json";
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 	
 	

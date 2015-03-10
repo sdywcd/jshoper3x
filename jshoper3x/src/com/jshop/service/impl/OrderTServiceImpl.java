@@ -1,20 +1,38 @@
 package com.jshop.service.impl;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.dao.CartTDao;
+import com.jshop.dao.OrderInvoiceTDao;
+import com.jshop.dao.OrderTDao;
+import com.jshop.dao.ShippingAddressTDao;
+import com.jshop.entity.CartT;
+import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.OrderT;
+import com.jshop.entity.ShippingAddressT;
 import com.jshop.service.OrderTService;
 
 @Service("orderTService")
 @Scope("prototype")
 public class OrderTServiceImpl extends BaseTServiceImpl<OrderT>implements OrderTService {
-//	@Resource
-//	private OrderTDao orderTDao;
-//	private Serial serial;
-//	private ShippingAddressTDao shippingAddressTDao;
-//	private CartTDao cartTDao;
-//	private OrderInvoiceTDao orderInvoiceTDao;
+	@Resource
+	private OrderTDao orderTDao;
+	@Resource
+	private Serial serial;
+	@Resource
+	private ShippingAddressTDao shippingAddressTDao;
+	@Resource
+	private CartTDao cartTDao;
+	@Resource
+	private OrderInvoiceTDao orderInvoiceTDao;
 //	
 //	public OrderInvoiceTDao getOrderInvoiceTDao() {
 //		return orderInvoiceTDao;
@@ -159,35 +177,35 @@ public class OrderTServiceImpl extends BaseTServiceImpl<OrderT>implements OrderT
 //	public List<OrderT> findAllreturnOrder(int currentPage, int lineSize, String orderstate) {
 //		return this.getOrderTDao().findAllreturnOrder(currentPage, lineSize, orderstate);
 //	}
-//	
-//	@Override
-//	@Transactional(propagation=Propagation.REQUIRED)
-//	public void saveNormalOrderNeedInfoBack(OrderT ordert,
-//			ShippingAddressT sAddressT,List<CartT>cartLists,OrderInvoiceT oit) {
-//		//生成一个订单号
-//		String orderid=this.getSerial().Serialid(Serial.ORDER);
-//		//生成一个同批次购物车号
-//		String cartid=this.getSerial().Serialid(Serial.CART);
-//		//加入购物车表
-//		for(CartT c:cartLists){
-//			c.setOrderid(orderid);
-//			c.setCartid(cartid);
-//			c.setState(StaticKey.CARTSTATE_RELBYORDER_NUM);
-//			this.getCartTDao().save(c);
-//		}
-//		//加入到发货地址表中
-//		sAddressT.setOrderid(orderid);
-//		this.getShippingAddressTDao().save(sAddressT);
-//		//加入订单表
-//		ordert.setOrderid(orderid);
-//		this.getOrderTDao().save(ordert);
-//		//加入订单发票表
-//		oit.setOrderInvoiceid(this.getSerial().Serialid(Serial.ORDERINVOICE));
-//		oit.setOrderid(orderid);
-//		this.getOrderInvoiceTDao().save(oit);
-//	}
-//
-//
+	
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void saveNormalOrderNeedInfoBack(OrderT ordert,
+			ShippingAddressT sAddressT,List<CartT>cartLists,OrderInvoiceT oit) {
+		//生成一个订单号
+		String orderid=this.serial.Serialid(Serial.ORDER);
+		//生成一个同批次购物车号
+		String cartid=this.serial.Serialid(Serial.CART);
+		//加入购物车表
+		for(CartT c:cartLists){
+			c.setOrderid(orderid);
+			c.setCartid(cartid);
+			c.setState(StaticKey.CARTSTATE_RELBYORDER_NUM);
+			this.cartTDao.save(c);
+		}
+		//加入到发货地址表中
+		sAddressT.setOrderid(orderid);
+		this.shippingAddressTDao.save(sAddressT);
+		//加入订单表
+		ordert.setOrderid(orderid);
+		this.orderTDao.save(ordert);
+		//加入订单发票表
+		oit.setOrderInvoiceid(this.serial.Serialid(Serial.ORDERINVOICE));
+		oit.setOrderid(orderid);
+		this.orderInvoiceTDao.save(oit);
+	}
+
+
 
 	
 	

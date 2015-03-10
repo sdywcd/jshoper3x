@@ -8,7 +8,6 @@
 		<class>com.jshop.entity.BasicUserT</class>
 		<class>com.jshop.entity.BasicsettingT</class>
 		<class>com.jshop.entity.BrandT</class>
-		<class>com.jshop.entity.CartT</class>
 		<class>com.jshop.entity.CouponT</class>
 		<class>com.jshop.entity.DeliverAddressT</class>
 		<class>com.jshop.entity.DepartmentStructureT</class>
@@ -52,13 +51,9 @@
 		<class>com.jshop.entity.MemberLocationT</class>
 		<class>com.jshop.entity.MemberRechargeRecordsT</class>
 		<class>com.jshop.entity.MemberRechargeT</class>
-		<class>com.jshop.entity.MemberT</class>
 		<class>com.jshop.entity.ModuleM</class>
 		<class>com.jshop.entity.MsgtextT</class>
 		<class>com.jshop.entity.NoticeT</class>
-		<class>com.jshop.entity.OrderInvoiceT</class>
-		<class>com.jshop.entity.OrderSnapshotT</class>
-		<class>com.jshop.entity.OrderT</class>
 		<class>com.jshop.entity.OutsideGoodsT</class>
 		<class>com.jshop.entity.OutsidegoodsTwocodeRelationshipT</class>
 		<class>com.jshop.entity.PaymentM</class>
@@ -89,5 +84,10 @@
 		<class>com.jshop.entity.WeixinMediaFileT</class>
 		<class>com.jshop.entity.WexinCompanyBaseCpT</class>
 		<class>com.jshop.entity.LogisticsBusinessShopRpT</class>
+		<class>com.jshop.entity.MemberT</class>
+		<class>com.jshop.entity.OrderInvoiceT</class>
+		<class>com.jshop.entity.CartT</class>
+		<class>com.jshop.entity.OrderSnapshotT</class>
+		<class>com.jshop.entity.OrderT</class>
 	</persistence-unit>
 </persistence>

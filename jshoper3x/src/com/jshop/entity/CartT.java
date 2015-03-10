@@ -35,6 +35,7 @@ public class CartT implements Serializable {
 	private String productid;
 	private int quantity;
 	private String shopid;
+	private String shopname;
 	private String state;
 	private int storeTag;
 	private double subtotal;
@@ -238,6 +239,15 @@ public class CartT implements Serializable {
 
 	public void setShopid(String shopid) {
 		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 

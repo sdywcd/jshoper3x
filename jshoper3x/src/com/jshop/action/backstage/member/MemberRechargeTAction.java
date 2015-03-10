@@ -6,12 +6,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.Arith;
@@ -25,7 +29,9 @@ import com.jshop.service.impl.Serial;
 @ParentPackage("jshop")
 public class MemberRechargeTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private MemberRechargeRecordsTService memberRechargeRecordsTService;
+	@Resource
 	private MemberRechargeTService memberRechargeTService;
 	private String id;
 	private String memberid;
@@ -40,22 +46,7 @@ public class MemberRechargeTAction extends BaseTAction {
 	private int total = 0;
 	private boolean sucflag;
 
-	@JSON(serialize = false)
-	public MemberRechargeRecordsTService getMemberRechargeRecordsTService() {
-		return memberRechargeRecordsTService;
-	}
-	public void setMemberRechargeRecordsTService(
-			MemberRechargeRecordsTService memberRechargeRecordsTService) {
-		this.memberRechargeRecordsTService = memberRechargeRecordsTService;
-	}
-	@JSON(serialize = false)
-	public MemberRechargeTService getMemberRechargeTService() {
-		return memberRechargeTService;
-	}
-	public void setMemberRechargeTService(
-			MemberRechargeTService memberRechargeTService) {
-		this.memberRechargeTService = memberRechargeTService;
-	}
+	
 	public String getId() {
 		return id;
 	}
@@ -140,16 +131,17 @@ public class MemberRechargeTAction extends BaseTAction {
 	 * 首次增加充值账户余额
 	 * @return
 	 */
-	@Action(value = "saveMemberRechargeRecordsT", results = { @Result(name = "json", type = "json") })
+	@Action(value = "saveMemberRechargeRecordsT", results = { @Result(name = JSON, type = JSON) })
 	public String saveMemberRechargeRecordsT(){
 		if(StringUtils.isBlank(String.valueOf(this.getBalance()))){
-			return "json";
+			return JSON;
 		}
 		if(StringUtils.isBlank(this.getMemberid())){
-			return "json";
+			return JSON;
 		}
 		MemberRechargeT mrt=new MemberRechargeT();
-		mrt=this.getMemberRechargeTService().findMemberRechargeTByMemberId(this.getMemberid().trim());
+		Criterion criterion=Restrictions.eq("memberid", this.getMemberid());
+		mrt=this.memberRechargeTService.findOneByCriteria(MemberRechargeT.class, criterion);
 		if(mrt!=null){
 			double mbalance=0.0;
 			//如果是增加余额
@@ -163,23 +155,23 @@ public class MemberRechargeTAction extends BaseTAction {
 			mrt.setMemberid(this.getMemberid());
 			mrt.setMembername(this.getMembername());
 			mrt.setBalance(mbalance);
-			mrt.setUpdatetime(BaseTools.systemtime());
+			mrt.setUpdatetime(BaseTools.getSystemTime());
 			mrt.setVersiont(mrt.getVersiont()+1);
-			this.getMemberRechargeTService().updateMemberRechargeT(mrt);
+			this.memberRechargeTService.update(mrt);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}else{
 			MemberRechargeT mrtt=new MemberRechargeT();
 			mrtt.setId(this.getSerial().Serialid(Serial.MEMBERRECHARGET));
 			mrtt.setMemberid(this.getMemberid());
 			mrtt.setMembername(this.getMembername());
 			mrtt.setBalance(this.getBalance());
-			mrtt.setCreatetime(BaseTools.systemtime());
+			mrtt.setCreatetime(BaseTools.getSystemTime());
 			mrtt.setUpdatetime(mrtt.getCreatetime());
 			mrtt.setVersiont(0);
-			this.getMemberRechargeTService().save(mrtt);
+			this.memberRechargeTService.save(mrtt);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
 		
 	}
@@ -188,24 +180,25 @@ public class MemberRechargeTAction extends BaseTAction {
 	 * 查询所有会员充值账户余额
 	 * @return
 	 */
-	@Action(value = "findAllMemberRechargeT", results = {@Result(name = "json",type="json")})
+	@Action(value = "findAllMemberRechargeT", results = {@Result(name = JSON,type=JSON)})
 	public String findAllMemberRechargeT(){
 		if(StaticKey.SC.equals(this.getQtype())){
 			this.findDefaultAllMemberRechargeT();
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
-				return "json";
+				return JSON;
 			}else{
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 	private void findDefaultAllMemberRechargeT() {
 		int currentPage=page;
 		int lineSize=rp;
-		total=this.getMemberRechargeTService().countfindAllMemberRechargeT();
-		List<MemberRechargeT>list=this.getMemberRechargeTService().findAllMemberRechargeT(currentPage, lineSize);
+		total=this.memberRechargeTService.count(MemberRechargeT.class).intValue();
+		Order order =Order.desc("createtime");
+		List<MemberRechargeT>list=this.memberRechargeTService.findByCriteriaByPage(MemberRechargeT.class, order, currentPage, lineSize);
 		if(!list.isEmpty()){
 			this.processMemberRechargeTList(list);
 		}
@@ -224,7 +217,6 @@ public class MemberRechargeTAction extends BaseTAction {
 			});
 			rows.add(cellMap);
 		}
-		
 	}
 	
 	

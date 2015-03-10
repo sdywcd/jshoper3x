@@ -51,6 +51,7 @@ public class OrderT implements Serializable {
 	private String shippingstate;
 	private String shippingusername;
 	private String shopid;
+	private String shopname;
 	private double shouldpay;
 	private String toBuyerNotes;
 	private String tradeNo;
@@ -403,6 +404,15 @@ public class OrderT implements Serializable {
 
 	public void setShopid(String shopid) {
 		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 

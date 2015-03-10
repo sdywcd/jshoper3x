@@ -1,11 +1,9 @@
 package com.jshop.service;
 
 
-import java.util.Date;
 import java.util.List;
 
 import com.jshop.entity.CartT;
-import com.jshop.entity.GoodsT;
 import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.ShippingAddressT;
@@ -13,7 +11,7 @@ import com.jshop.entity.ShippingAddressT;
 public interface OrderTService extends BaseTService<OrderT>{
 
 
-	
+//	
 //	/**
 //	 * 根据订单状态获取订单信息
 //	 * @param currentPage
@@ -218,11 +216,11 @@ public interface OrderTService extends BaseTService<OrderT>{
 //	 * @return
 //	 */
 //	public  int countAllreturnOrder(String orderstate);
-//	/**
-//	 * 初始化普通订单需要的信息并增加到数据表
-//	 * @param ordert
-//	 * @param sAddressT
-//	 */
-//	public void saveNormalOrderNeedInfoBack(OrderT ordert,ShippingAddressT sAddressT,List<CartT>cartLists,OrderInvoiceT oit);
-//	
+	/**
+	 * 初始化普通订单需要的信息并增加到数据表
+	 * @param ordert
+	 * @param sAddressT
+	 */
+	public void saveNormalOrderNeedInfoBack(OrderT ordert,ShippingAddressT sAddressT,List<CartT>cartLists,OrderInvoiceT oit);
+	
 }
