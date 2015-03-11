@@ -586,7 +586,7 @@ public class OrderTAction extends BaseTAction {
 				}
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -601,13 +601,13 @@ public class OrderTAction extends BaseTAction {
 		if (this.getQtype().equals(StaticKey.SC)) {
 			this.finddefaultAllUnpayTobeShippedOrder();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQtype())) {
+				return JSON;
 			} else {
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 获取默认的所有已付款需要发货的普通订单
@@ -620,13 +620,13 @@ public class OrderTAction extends BaseTAction {
 		if(StaticKey.SC.equals(this.getQtype())){
 			this.finddefaultAllHavepayTobeShippedOrder();
 		}else{
-			if(StringUtils.isBlank(this.getQuery())){
-				return "json";
+			if(StringUtils.isBlank(this.getQtype())){
+				return JSON;
 			}else{
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -635,14 +635,21 @@ public class OrderTAction extends BaseTAction {
 	private void finddefaultAllHavepayTobeShippedOrder() {
 		int currentPage=page;
 		int lineSize=rp;
-		String shippingstate=StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
-		String orderstate=StaticKey.ORDERSTATE_ONE_NUM;//订单状态已确认
-		String paystate=StaticKey.PAYSTATE_ONE_NUM;//付款状态已支付
-		total=this.getOrderTService().countfindAllTobeShippedOrders(orderstate, paystate, shippingstate);
-		List<OrderT>orderTs=this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize, orderstate, paystate, shippingstate);
-		if(orderTs!=null){
-			this.processOrderList(orderTs);
-		}
+		//String shippingstate=StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
+		//String orderstate=StaticKey.ORDERSTATE_ONE_NUM;//订单状态已确认
+		//String paystate=StaticKey.PAYSTATE_ONE_NUM;//付款状态已支付
+		String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM.getState();//配货中未发货
+		String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();//订单状态已确认
+		String paystate=OrderPayState.ORDERPAYSTATE_HAVEPAY_ONE_NUM.getState();//付款状态已支付
+		Map<String, String>params=new HashMap<String,String>();
+		params.put("orderstate", orderstate);
+		params.put("shippingstate", shippingstate);
+		params.put("paystate", paystate);
+		Criterion criterion=Restrictions.allEq(params);
+		Order order=Order.desc("updatetime");
+		total=this.orderTService.count(OrderT.class, criterion).intValue();
+		List<OrderT>list=this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+		this.processOrderList(list);
 	}
 
 	/**
@@ -654,6 +661,7 @@ public class OrderTAction extends BaseTAction {
 		String shippingstate = StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
 		String orderstate=StaticKey.ORDERSTATE_TWO_NUM;//订单状态货到付款
 		String paystate=StaticKey.PAYSTATE_NOT_PAID_ZERO_NUM;//付款状态未付款
+		
 		total = this.getOrderTService().countfindAllTobeShippedOrders(orderstate,paystate,shippingstate);
 		List<OrderT> order = this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize,orderstate,paystate, shippingstate);
 		if (order != null) {
