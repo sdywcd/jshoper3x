@@ -306,7 +306,7 @@ public class BaseEnums {
 	 *
 	 */
 	public enum CARTGOODSSTATE {
-		NEWADDTOCART_NUM("新加入购物车的商品", "1");
+		NEWADDTOCART_BACKSTAGE_ZERO_NUM("从后台加入购物车的商品","0"),NEWADDTOCART_NUM("新加入购物车的商品", "1");
 		private String name;
 		private String state;
 
@@ -341,6 +341,177 @@ public class BaseEnums {
 		}
 	}
 
+	/**
+	 * 发货地址是否绑定了订单
+	 * 
+	 * @author sdywcd
+	 *
+	 */
+	public enum ShippingIsOrderState {
+		SHIPPING_BIND_ORDER("发货地址已经绑定订单","1"),SHIPPING_UNBIND_ORDER("发货地址未绑定订单", "0");
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private ShippingIsOrderState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (ShippingIsOrderState d : ShippingIsOrderState.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+
+	
+	/**
+	 * 发货地址是否和收获地址绑定
+	 * 
+	 * @author sdywcd
+	 *
+	 */
+	public enum ShippingHaveDeliverAddress {
+		SHIPPING_HAVE_DA_ONE_NUM("发货地址有对应收获地址","1"),SHIPPING_UNHAVE_DA_ZERO_NUM("发货地址没有对应收获地址", "0");
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private ShippingHaveDeliverAddress(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (ShippingHaveDeliverAddress d : ShippingHaveDeliverAddress.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	/**
+	 * 在发货地址中是否已经发货
+	 * 
+	 * @author sdywcd
+	 *
+	 */
+	public enum ShippingIsSend {
+		SHIPPING_HAVESEND("已发货","1"),SHIPPING_UNSEND("未发货", "0");
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private ShippingIsSend(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (ShippingIsSend d : ShippingIsSend.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	
+	/**
+	 * 快递单打印状态
+	 * 
+	 * @author sdywcd
+	 *
+	 */
+	public enum PrintExpressState {
+		EXPRESS_NOT_PRINT_ZERO_NUM("未打印", "0"), EXPRESS_HAVE_PRINT_ONE_NUM("已打印", "1");
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private PrintExpressState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (PrintExpressState d : PrintExpressState.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	
 	/**
 	 * 数据分类等级 一级 二级 三级
 	 * 
@@ -552,6 +723,51 @@ public class BaseEnums {
 		}
 	}
 
+	
+	/**
+	 * 数据记录有效性状态
+	 * 
+	 * @author sdywcd
+	 *
+	 */
+	public enum DataEffectiveState {
+		EFFECTIVE("有效", "1"), DISEFFECTIVE("失效", "0");
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private DataEffectiveState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (DataEffectiveState d : DataEffectiveState.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+
+	
+	
 	/**
 	 * 数据记录状态
 	 * 
@@ -1087,6 +1303,97 @@ public class BaseEnums {
 		}
 	}
 	
+	
+	/**
+	 * 是否打印了发货单
+	* @ClassName: PrintInvoiceState 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum PrintInvoiceState{
+		INVOICE_NOT_PRINT_ZERO_NUM("未打印", "0"),INVOICE_HAVE_PRINT_ZERO_NUM("已打印","1");
 
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private PrintInvoiceState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (PrintInvoiceState d : PrintInvoiceState.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+
+	/**
+	 * 是否打印发票
+	* @ClassName: PrintInvoiceState 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum PrintFaPiaoInvoiceState{
+		FAPIAOINVOICE_NOT_PRINT_ZERO_NUM("未打印", "0"),FAPIAOINVOICE_HAVE_PRINT_ZERO_NUM("已打印","1");
+
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private PrintFaPiaoInvoiceState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (PrintFaPiaoInvoiceState d : PrintFaPiaoInvoiceState.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
 
 }

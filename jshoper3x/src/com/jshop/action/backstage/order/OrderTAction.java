@@ -21,12 +21,21 @@ import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.Arith;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.CARTGOODSSTATE;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataEffectiveState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.ORDERCREATETAG;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderDeliverMode;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderIsInvoice;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderPayState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderShippingState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.PrintExpressState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.PrintFaPiaoInvoiceState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.PrintInvoiceState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.ShippingHaveDeliverAddress;
+import com.jshop.action.backstage.utils.enums.BaseEnums.ShippingIsOrderState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.ShippingIsSend;
 import com.jshop.action.backstage.utils.order.AllOrderState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
@@ -658,81 +667,37 @@ public class OrderTAction extends BaseTAction {
 	public void finddefaultAllUnpayTobeShippedOrder() {
 		int currentPage = page;
 		int lineSize = rp;
-		String shippingstate = StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
-		String orderstate=StaticKey.ORDERSTATE_TWO_NUM;//订单状态货到付款
-		String paystate=StaticKey.PAYSTATE_NOT_PAID_ZERO_NUM;//付款状态未付款
-		
-		total = this.getOrderTService().countfindAllTobeShippedOrders(orderstate,paystate,shippingstate);
-		List<OrderT> order = this.getOrderTService().findAllTobeShippedOrders(currentPage, lineSize,orderstate,paystate, shippingstate);
-		if (order != null) {
-			this.processOrderList(order);
-		}
+		//String shippingstate = StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM;//配货中未发货
+		//String orderstate=StaticKey.ORDERSTATE_TWO_NUM;//订单状态货到付款
+		//String paystate=StaticKey.PAYSTATE_NOT_PAID_ZERO_NUM;//付款状态未付款
+		String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM.getState();//配货中未发货
+		String orderstate=OrderState.ORDERSTATE_PAYMENT_AFTER_ARRIVAL_OF_GOODS_TWO_NUM.getState();//订单状态货到付款
+		String paystate=OrderPayState.ORDERPAYSTATE_UNPAY_ZERO_NUM.getState();//付款货到付款
+		Map<String,String>params=new HashMap<String,String>();
+		params.put("shippingstate", shippingstate);
+		params.put("orderstate",orderstate);
+		params.put("paystate", paystate);
+		Criterion criterion=Restrictions.allEq(params);
+		Order order=Order.desc("updatetime");
+		total = this.orderTService.count(OrderT.class, criterion).intValue();
+		List<OrderT> list = this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+		this.processOrderList(list);
 	}
 
 	/**
 	 * 获取订单详细
 	 */
-	public void GetOrderDetail(String orderid) {
-		OrderT o = this.getOrderTService().findOrderDetailByorderid(orderid);
+	public void getOrderDetail(String orderid) {
+		Criterion criterion=Restrictions.eq("orderid", orderid);
+		OrderT o = this.orderTService.findOneByCriteria(OrderT.class, criterion);
 		if (o != null) {
-			if (o.getOrderstate().equals("0")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_ZERO);
-			} else if (o.getOrderstate().equals("1")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_ONE);
-			} else if (o.getOrderstate().equals("2")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_TWO);
-			} else if (o.getOrderstate().equals("3")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_THREE);
-			} else if (o.getOrderstate().equals("4")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_FOUR);
-			} else if (o.getOrderstate().equals("5")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_FIVE);
-			} else if (o.getOrderstate().equals("6")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_SIX);
-			} else if (o.getOrderstate().equals("7")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_SEVEN);
-			} else if (o.getOrderstate().equals("8")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_EIGHT);
-			} else {
-				o.setOrderstate(AllOrderState.ORDERSTATE_NINE);
-			}
-
-			if (o.getPaystate().equals("0")) {
-				o.setPaystate(AllOrderState.PAYSTATE_ZERO);
-			} else if (o.getPaystate().equals("1")) {
-				o.setPaystate(AllOrderState.PAYSTATE_ONE);
-			} else {
-				o.setPaystate(AllOrderState.PAYSTATE_TWO);
-			}
-
-			if (o.getShippingstate().equals("0")) {
-				o.setShippingstate(AllOrderState.SHIPPINGSTATE_ZERO);
-			} else if (o.getShippingstate().equals("1")) {
-				o.setShippingstate(AllOrderState.SHIPPINGSTATE_ONE);
-			} else {
-				o.setShippingstate(AllOrderState.SHIPPINGSTATE_TWO);
-			}
-
-			if (o.getIsinvoice().equals("0")) {
-				o.setIsinvoice(AllOrderState.INVOICE_ZERO);
-			} else {
-				o.setIsinvoice(AllOrderState.INVOICE_ONE);
-			}
-			if (o.getDelivermode().equals("EXPRESS")) {
-				o.setDelivermode(AllOrderState.EXPRESS);
-			} else if (o.getDelivermode().equals("POST")) {
-				o.setDelivermode(AllOrderState.POST);
-			} else {
-				o.setDelivermode(AllOrderState.EMS);
-			}
-			if (o.getOrderTag().equals("1")) {
-				o.setOrderTag(AllOrderState.ORDERTAG_ONE);
-			} else if (o.getOrderTag().equals("2")) {
-				o.setOrderTag(AllOrderState.ORDERTAG_TWO);
-			}
-
+			o.setOrderstate(OrderState.getName(o.getOrderstate()));
+			o.setPaystate(OrderPayState.getName(o.getPaystate()));
+			o.setShippingstate(OrderShippingState.getName(o.getShippingstate()));
+			o.setIsinvoice(OrderIsInvoice.getName(o.getIsinvoice()));
+			o.setDelivermode(OrderDeliverMode.getName(o.getDelivermode()));
+			o.setOrderTag(ORDERCREATETAG.getName(o.getOrderTag()));
 			map.put("orderdetail", o);
-
 			//获取买家信息
 			getMemberBuyerInfo(o.getMemberid());
 		}
@@ -744,7 +709,7 @@ public class OrderTAction extends BaseTAction {
 	 * @param userid
 	 */
 	public void getMemberBuyerInfo(String memberid) {
-		MemberT memberT = this.getMemberTService().findMemberTById(memberid);
+		MemberT memberT = this.memberTService.findByPK(MemberT.class, memberid);
 		if (memberT != null) {
 			map.put("orderbuyerinfo", memberT);
 		}
@@ -756,7 +721,8 @@ public class OrderTAction extends BaseTAction {
 	 * @param orderid
 	 */
 	public void getOrderGoodsList(String orderid) {
-		List<CartT> list = this.getCartTService().findCartGoodsByOrderid(orderid);
+		Criterion criterion=Restrictions.eq("orderid", orderid);
+		List<CartT> list = this.cartTService.findByCriteria(CartT.class, criterion);
 		if (list != null) {
 			map.put("ordergoods", list);
 		}
@@ -768,7 +734,8 @@ public class OrderTAction extends BaseTAction {
 	 * @param orderid
 	 */
 	public void getOrderShippingAddress(String orderid) {
-		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
+		Criterion criterion=Restrictions.and(Restrictions.eq("orderid", orderid)).add(Restrictions.eq("state", DataEffectiveState.EFFECTIVE.getState()));
+		ShippingAddressT st = this.shippingAddressTService.findOneByCriteria(ShippingAddressT.class, criterion);
 		if (st != null) {
 			map.put("shipping", st);
 		}
@@ -787,7 +754,7 @@ public class OrderTAction extends BaseTAction {
 		map.clear();
 		String orderid = this.getOrderid().trim();
 		//获取订单详细
-		GetOrderDetail(orderid);
+		getOrderDetail(orderid);
 		//获取订单中的商品列表
 		getOrderGoodsList(orderid);
 		//获取发货地址信息
@@ -806,12 +773,20 @@ public class OrderTAction extends BaseTAction {
 	})
 	public String updateOrderToClose() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_FIVE_NUM;//关闭
-		String paystate = AllOrderState.PAYSTATE_TWO_NUM;//表示关闭订单后的付款状态制空
-		String shippingstate = AllOrderState.SHIPPINGSTATE_TWO_NUM;//表示关闭订单后的发货状态制空
-		this.getOrderTService().updateOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_FIVE_NUM;//关闭
+		//String paystate = AllOrderState.PAYSTATE_TWO_NUM;//表示关闭订单后的付款状态制空
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_TWO_NUM;//表示关闭订单后的发货状态制空
+		OrderT order=this.orderTService.findByPK(OrderT.class, orderid);
+		if(order!=null){
+			String orderstate=OrderState.ORDERSTATE_CLOSE_FIVE_NUM.getState();//订单关闭
+			String paystate=OrderPayState.ORDERPAYSTATE_CLOSE_TWO_NUM.getState();//关闭订单后支付状态到关闭
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_CLOSE_TWO_NUM.getState();//关闭订单后发货状态关闭
+			order.setOrderstate(orderstate);
+			order.setPaystate(paystate);
+			order.setShippingstate(shippingstate);
+			this.orderTService.update(order);
+		}
+		return JSON;
 	}
 
 	/**
@@ -824,12 +799,20 @@ public class OrderTAction extends BaseTAction {
 	})
 	public String updateOrderToConfirm() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
-		String paystate = AllOrderState.PAYSTATE_ZERO_NUM;//未付款
-		String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//配货，未发货
-		int i = this.getOrderTService().updateOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
+		//String paystate = AllOrderState.PAYSTATE_ZERO_NUM;//未付款
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//配货，未发货
+		OrderT order=this.orderTService.findByPK(OrderT.class, orderid);
+		if(order!=null){
+			String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();//已确认
+			String paystate=OrderPayState.ORDERPAYSTATE_UNPAY_ZERO_NUM.getState();//未付款
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM.getState();//配送未发货
+			order.setOrderstate(orderstate);
+			order.setPaystate(paystate);
+			order.setShippingstate(shippingstate);
+			this.orderTService.update(order);
+		}
+		return JSON;
 	}
 
 	/**
@@ -842,12 +825,20 @@ public class OrderTAction extends BaseTAction {
 	})
 	public String updateOrderToDelivery() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_THREE_NUM;//等待确认收获
-		String paystate = this.getPaystate().trim();//付款状态
-		String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
-		int i = this.getOrderTService().updateOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_THREE_NUM;//等待确认收获
+		//String paystate = this.getPaystate().trim();//付款状态
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
+		OrderT order=this.orderTService.findByPK(OrderT.class, orderid);
+		if(order!=null){
+			String orderstate=OrderState.ORDERSTATE_WAIT_CONFIRM_RECEIVE_THREE_NUM.getState();//等待确认收获
+			String paystate=this.getPaystate().trim();//付款状态
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_HAVE_DELIVER_GOODS_ONE_NUM.getState();//发货
+			order.setOrderstate(orderstate);
+			order.setPaystate(paystate);
+			order.setShippingstate(shippingstate);
+			this.orderTService.update(order);
+		}
+		return JSON;
 	}
 
 	/**
@@ -860,12 +851,20 @@ public class OrderTAction extends BaseTAction {
 	})
 	public String updateOrderToPay() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
-		String paystate = AllOrderState.PAYSTATE_ONE_NUM;//付款
-		String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//未发货，这里需要斟酌
-		int i = this.getOrderTService().updateOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
+		//String paystate = AllOrderState.PAYSTATE_ONE_NUM;//付款
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//未发货，这里需要斟酌
+		OrderT order=this.orderTService.findByPK(OrderT.class,orderid);
+		if(order!=null){
+			String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();
+			String paystate=OrderPayState.ORDERPAYSTATE_HAVEPAY_ONE_NUM.getState();
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM.getState();
+			order.setOrderstate(orderstate);
+			order.setShippingstate(shippingstate);
+			order.setPaystate(paystate);
+			this.orderTService.update(order);
+		}
+		return JSON;
 	}
 
 	/**
@@ -877,16 +876,18 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String updateExpressnumberByOrderId() {
-		if (Validate.StrNotNull(this.getExpressnumber())&&Validate.StrNotNull(this.getOrderid())) {
-			int i = this.getOrderTService().updateExpressnumberByOrderId(this.getOrderid().trim(), this.getExpressnumber().trim());
-			//更新发货状态到已发货
-			String orderid = this.getOrderid().trim();
-			String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
-			this.getOrderTService().updateOrderShippingstateByorderid(orderid, shippingstate);
-			return "json";
+		if(StringUtils.isNotBlank(this.getExpressnumber())&&StringUtils.isNotBlank(this.getOrderid())){
+			OrderT order=this.orderTService.findByPK(OrderT.class, this.getOrderid());
+			if(order!=null){
+				//更新快递单号
+				order.setExpressnumber(this.getExpressnumber());
+				//更新发货状态-->已发货
+				order.setShippingstate(OrderShippingState.ORDERSHIPPINGSTATE_HAVE_DELIVER_GOODS_ONE_NUM.getState());
+				this.orderTService.update(order);
+				this.setSucflag(true);
+			}
 		}
-		return "json";
-	
+		return JSON;
 	}
 
 	/**
@@ -898,12 +899,18 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String updateInvoicenumberByOrderId() {
-		if (Validate.StrNotNull(this.getInvoicenumber())&&Validate.StrNotNull(this.getOrderid())) {
-			int i = this.getOrderTService().updateInvoicenumberByOrderId(this.getOrderid().trim(), this.getInvoicenumber().trim(), BaseTools.systemtime());
-			return "json";
+		if(StringUtils.isNotBlank(this.getInvoicenumber())&&StringUtils.isNotBlank(this.getOrderid())){
+			OrderT order=this.orderTService.findByPK(OrderT.class, this.getOrderid());
+			if(order!=null){
+				//发货单号
+				order.setDeliverynumber(this.getInvoicenumber());
+				//发货时间
+				order.setDeliverytime(BaseTools.getSystemTime());
+				this.orderTService.update(order);
+				this.setSucflag(true);
+			}
 		}
-		return "json";
-
+		return JSON;
 	}
 
 	/**
@@ -916,16 +923,18 @@ public class OrderTAction extends BaseTAction {
 	})
 	public String getAlipayFhNeedParams() {
 		if(StringUtils.isNotBlank(this.getOrderid())){
-			OrderT o = this.getOrderTService().findOrderDetailByorderid(this.getOrderid().trim());
+			OrderT o = this.orderTService.findByPK(OrderT.class, this.getOrderid());
 			this.setTradeno(o.getTradeNo());//支付宝交易号
 			this.setExpressnumber(o.getExpressnumber());//快递单号，发货单号
 			this.setDelivermode(o.getDelivermode());
 			this.setPaymentid(o.getPaymentid());
-			LogisticsBusinessT lt = this.getLogisticsBusinessTService().findLogisticsBusinessById(o.getLogisticsid());
-			this.setLogisticsname(lt.getLogisticsname());
-			return "json";
+			LogisticsBusinessT lt =this.logisticsBTService.findByPK(LogisticsBusinessT.class, this.getLogisticsid());
+			if(lt!=null){
+				this.setLogisticsname(lt.getLogisticsname());
+			}
+			this.setSucflag(true);
 		}
-		return "json";
+		return JSON;
 	
 	}
 	/**
@@ -941,13 +950,13 @@ public class OrderTAction extends BaseTAction {
 			rows.clear();
 			this.defaultfindAllhaveshippedOrder();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQtype())) {
+				return JSON;
 			} else {	
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";	
+		return JSON;	
 	}
 	/**
 	 * 默认查询所有没有条件的已发货订单
@@ -955,12 +964,12 @@ public class OrderTAction extends BaseTAction {
 	public void defaultfindAllhaveshippedOrder(){
 		int currentPage=page;
 		int lineSize=rp;
-		String shippingstate="1";
-		total = this.getOrderTService().countAllhaveshippedOrder(shippingstate);
-		List<OrderT> order =this.getOrderTService().findAllhaveshippedOrder(currentPage, lineSize, shippingstate);
-		if(order!=null){
-			this.processOrderList(order);
-		}
+		String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_HAVE_DELIVER_GOODS_ONE_NUM.getState();//已发货
+		Criterion criterion=Restrictions.eq("shippingstate", shippingstate);
+		Order order=Order.desc("createtime");
+		total = this.orderTService.count(OrderT.class, criterion).intValue();
+		List<OrderT> list =this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+		this.processOrderList(list);
 	}
 	/**
 	 * 查询所有已退货的订单
@@ -970,17 +979,16 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String findAllrenturnOrder(){
-		if ("sc".equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.setTotal(0);
 			rows.clear();
 			this.defaultfindAllreturnOrder();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
-			} else {				
+			if (StringUtils.isBlank(this.getQtype())) {
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 默认查询所有没有条件的退货订单
@@ -988,12 +996,12 @@ public class OrderTAction extends BaseTAction {
 	public void defaultfindAllreturnOrder(){
 		int currentPage=page;
 		int lineSize=rp;
-		String orderstate="4";
-		total = this.getOrderTService().countAllreturnOrder(orderstate);
-		List<OrderT> order =this.getOrderTService().findAllreturnOrder(currentPage, lineSize, orderstate);
-		if(order!=null){
-			this.processOrderList(order);
-		}
+		String orderstate=OrderState.ORDERSTATE_RETURN_GOODS_FOUR_NUM.getState();//退货
+		Criterion criterion=Restrictions.eq("orderstate", orderstate);
+		Order order=Order.desc("createtime");
+		total = this.orderTService.count(OrderT.class, criterion).intValue();
+		List<OrderT> list =this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+		this.processOrderList(list);
 	}
 	
 	
@@ -1009,7 +1017,7 @@ public class OrderTAction extends BaseTAction {
 	})
 	public String InitNormalOrderNeedInfoBack(){
 		if(StringUtils.isBlank(this.getProductid())||StringUtils.isBlank(this.getPaymentid())||StringUtils.isBlank(this.getLogisticsid())){
-			return "json";
+			return JSON;
 		}
 		//获取管理员id和名称
 		UserT usert=(UserT) ActionContext.getContext().getSession().get(StaticKey.BACK_USER_SESSION_KEY);
@@ -1029,13 +1037,13 @@ public class OrderTAction extends BaseTAction {
 //			CartT cart=this.getCartTService().findProductInCart(memberid, p.getGoodsid(), p.getProductid(),StaticString.CARTSTATE_NEWADDTOCART);
 //			if(cart==null){
 //			}
-			GoodsT g=this.getGoodsTService().findGoodsById(p.getGoodsid());
+			GoodsT g=this.goodsTService.findByPK(GoodsT.class, p.getGoodsid());
 			if(g!=null){
 				//如果购物车中没有该货物信息，则加入购物车,并标记来自系统订单
 				CartT t=new CartT();
 				t.setId(this.getSerial().Serialid(Serial.CARTINFO));//购物车的主键
-				t.setCartid(null);//一批货物，在做订单分拆时可以通过这个标记来区分本次购物中需要分拆的货物
-				t.setOrderid(null);//订单id
+				t.setCartid(StaticKey.EMPTY);//一批货物，在做订单分拆时可以通过这个标记来区分本次购物中需要分拆的货物
+				t.setOrderid(StaticKey.EMPTY);//订单id
 				t.setGoodsid(p.getGoodsid());
 				t.setGoodsname(p.getProductName());
 				t.setUserid(userid);//当前管理员id
@@ -1046,20 +1054,20 @@ public class OrderTAction extends BaseTAction {
 				t.setChangeprice(Math.abs(p.getPrice()-p.getMemberprice()));
 				t.setPoints(g.getPoints());//设置商品积分等于会员价 且可以通过aop进行全局控制
 				t.setSubtotal(1.00*p.getMemberprice());//价格小计
-				t.setAddtime(BaseTools.systemtime());
+				t.setAddtime(BaseTools.getSystemTime());
 				t.setQuantity(p.getStore());//库存
 				if(g.getPictureurl()!=null&&g.getPictureurl().length()>0){//处理图片
-					t.setPicture(StringUtils.split(g.getPictureurl(),",")[0]);
+					t.setPicture(StringUtils.split(g.getPictureurl(),StaticKey.SPLITDOT)[0]);
 				}
-				t.setPicture("");
+				t.setPicture(StaticKey.EMPTY);
 				t.setUsersetnum(g.getUsersetnum());
 				t.setWeight(p.getWeight());
-				t.setState(StaticKey.CARTSTATE_NEWADDTOCART_NUM);//新加入购物车的状态
+				t.setState(CARTGOODSSTATE.NEWADDTOCART_NUM.getState());//新加入购物车的状态
 				t.setHtmlpath(g.getHtmlPath());//货物的静态页沿用商品的静态页
 				t.setProductid(p.getProductid());
-				t.setOrderTag(StaticKey.CART_ORDER_TAG_NORMALPRODUCT);
+				t.setOrderTag(ORDERCREATETAG.ORDERTAG_NORMAL_ONE_NUM.getState());//普通订单
 				t.setProductName(p.getProductName());
-				t.setCartTag(StaticKey.CARTTAG_PRODUCTFROM);
+				t.setCartTag(CARTGOODSSTATE.NEWADDTOCART_BACKSTAGE_ZERO_NUM.getState());//从后台加入的购物车
 				t.setMemberid(memberid);
 				t.setMembername(membername);
 				cartlists.add(t);//将购物车信息加入购物车集合
@@ -1070,7 +1078,7 @@ public class OrderTAction extends BaseTAction {
 		//货发地址实体类
 		ShippingAddressT sAddressT=new ShippingAddressT();
 		DeliverAddressT deliverAddressTs=new DeliverAddressT();
-		deliverAddressTs=this.getDeliverAddressTService().findDeliverAddressById(this.getHidshippingaddressid());
+		deliverAddressTs=this.deliverAddressTService.findByPK(DeliverAddressT.class, this.getHidshippingaddressid());
 		if(deliverAddressTs!=null){
 			sAddressT.setShippingaddressid(this.getSerial().Serialid(Serial.SHIPPINGADDRESS));
 			sAddressT.setMemberid(memberid);
@@ -1083,19 +1091,18 @@ public class OrderTAction extends BaseTAction {
 			sAddressT.setTelno(deliverAddressTs.getTelno());
 			sAddressT.setMobile(deliverAddressTs.getMobile());
 			sAddressT.setEmail(deliverAddressTs.getEmail());
-			sAddressT.setCreatetime(BaseTools.systemtime());
-			sAddressT.setState(StaticKey.SHIPPINGSTATE_HAVEORDER);//有对应订单的发货地址
-			sAddressT.setDeliveraddressid(StaticKey.SHIPPINGADDRESS_DELIVERADDRESSID);
-			sAddressT.setIssend(StaticKey.SHIPPINGISSEND_NOSEND);
-			sAddressT.setOrderid(null);
+			sAddressT.setCreatetime(BaseTools.getSystemTime());
+			sAddressT.setState(ShippingIsOrderState.SHIPPING_BIND_ORDER.getState());//有对应订单的发货地址
+			sAddressT.setDeliveraddressid(ShippingHaveDeliverAddress.SHIPPING_UNHAVE_DA_ZERO_NUM.getState());//发货地址没有对应收获地址
+			sAddressT.setIssend(ShippingIsSend.SHIPPING_UNSEND.getState());
+			sAddressT.setOrderid(StaticKey.EMPTY);
 			sAddressT.setCountry(deliverAddressTs.getCountry());
-			sAddressT.setShopid(null);//店铺id 未来支持入住模式时启用
+			sAddressT.setShopid(BaseTools.getShopId());//店铺id 未来支持入住模式时启用
 		}
-		
 		//收集支付方式数据
-		PaymentM paymentM=this.getPaymentMService().findPaymentbyId(this.getPaymentid().trim());
+		PaymentM paymentM=this.paymentMService.findByPK(PaymentM.class, this.getPaymentid().trim());
 		//收集物流商数据
-		LogisticsBusinessT lBusinessT=this.getLogisticsBusinessTService().findLogisticsBusinessById(this.getLogisticsid().trim());
+		LogisticsBusinessT lBusinessT=this.logisticsBTService.findByPK(LogisticsBusinessT.class, this.getLogisticsid().trim());
 		//收集本次购物积分数据，组织ORDERT中PRODUCTINFO 和GOODSINFO字段
 		double totalpoints=0.0;//{productid:"",productname:"",goodsid:""}
 		String productinfo=null;
@@ -1115,69 +1122,67 @@ public class OrderTAction extends BaseTAction {
 		orderT.setMembername(membername);
 		orderT.setPaymentid(paymentM.getPaymentid());
 		orderT.setPaymentname(paymentM.getPaymentname());
-		orderT.setDelivermode(StaticKey.DELIVERMODE_EXPRESS);//快递
+		orderT.setDelivermode(OrderDeliverMode.ORDERDELIVERMODE_EXPRESS.getState());//快递
 		orderT.setDeliverynumber(StaticKey.ZERO);//默认发货单号是0，在发货单填写过程中输入真正的发货单号
-		orderT.setOrderstate(StaticKey.ORDERSTATE_UNCONFIRMED_ZERO_NUM);//未确认
+		orderT.setOrderstate(OrderState.ORDERSTATE_UNCONFIRMED_ZERO_NUM.getState());//未确认
 		orderT.setLogisticsid(lBusinessT.getLogisticsid());
 		orderT.setLogisticsname(lBusinessT.getLogisticsname());
 		orderT.setLogisticswebaddress(lBusinessT.getWebsite());//查询快递点信息地址
 		orderT.setFreight(this.getFreight());//运费
 		orderT.setAmount(Arith.add(this.getAmount(), this.getFreight()));//此处可能有一个抵用券逻辑
 		orderT.setPoints(totalpoints);//积分
-		orderT.setPurchasetime(BaseTools.systemtime());
+		orderT.setPurchasetime(BaseTools.getSystemTime());
 		orderT.setDeliverytime(null);//目前没有到发货步骤所以设置成null
 		orderT.setIsinvoice(this.getIsinvoice().trim());//是否需要开票
 		orderT.setShippingaddressid(sAddressT.getShippingaddressid());//获取发货地址id
 		orderT.setCustomerordernotes(this.getCustomerordernotes());//会员留的订单备注，后台等于管理员留给物流部的备注
 		orderT.setPaytime(null);//支付时间，在获得支付宝回调时更新
 		orderT.setOrderTag(this.getOrderTag());//从页面获取订单标记，表示订单来自原那个类型1普通订单 
-		orderT.setToBuyerNotes(null);//管理员给订单所有人的留言
+		orderT.setToBuyerNotes(StaticKey.EMPTY);//管理员给订单所有人的留言
 		orderT.setShouldpay(this.getShouldpay());//直接从页面上拿应支付,处理修改订单价格的需求
 		orderT.setUsepoints(0.0);//用户如果使用了积分这里可以从页面上拿积分
-		orderT.setVouchersid(null);//后台不需要使用优惠券所以设置成null
+		orderT.setVouchersid(StaticKey.EMPTY);//后台不需要使用优惠券所以设置成null
 		orderT.setProductinfo("["+psbBuffer+"]");//订单中货物信息
 		orderT.setNeedquantity(needquantity);//购物车中的货物数量总和
-		orderT.setPaystate(StaticKey.PAYSTATE_NOT_PAID_ZERO_NUM);//未付款
-		orderT.setShippingstate(StaticKey.SHIPPINGSTATE_NOT_DELIVER_ZERO_NUM);//未发货
+		orderT.setPaystate(OrderPayState.ORDERPAYSTATE_UNPAY_ZERO_NUM.getState());//未付款
+		orderT.setShippingstate(OrderShippingState.ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM.getState());//未发货
 		orderT.setDeliveraddressid(sAddressT.getDeliveraddressid());//获取收货地址id 此处0表示改订单的收货地址不在会员的收货地址管理中
 		orderT.setShippingusername(sAddressT.getShippingusername());//商户角度来看的收货人，来自于会员的deliveraddress表中或者直接从页面上获取
-		orderT.setCreatetime(BaseTools.systemtime());
-		orderT.setIsprintexpress(StaticKey.EXPRESS_NOT_PRINT_ZERO_NUM);
-		orderT.setIsprintinvoice(StaticKey.INVOICE_NOT_PRINT_ZERO_NUM);
-		orderT.setIsprintfpinvoice(StaticKey.PINVOICE_NOT_PRINT_ZERO_NUM);
-		orderT.setExpressnumber(null);//快递单号
-		orderT.setTradeNo(null);//支付交易号由第三方提供
+		orderT.setCreatetime(BaseTools.getSystemTime());
+		orderT.setIsprintexpress(PrintExpressState.EXPRESS_NOT_PRINT_ZERO_NUM.getState());
+		orderT.setIsprintinvoice(PrintInvoiceState.INVOICE_NOT_PRINT_ZERO_NUM.getState());
+		orderT.setIsprintfpinvoice(PrintFaPiaoInvoiceState.FAPIAOINVOICE_NOT_PRINT_ZERO_NUM.getState());
+		orderT.setExpressnumber(StaticKey.EMPTY);//快递单号
+		orderT.setTradeNo(StaticKey.EMPTY);//支付交易号由第三方提供
 		orderT.setUserid(userid);
 		orderT.setUsername(username);
 		orderT.setErrorOrderTag(StaticKey.ERRORORDERTAG_ZERO_NUM);//订单目前没有错误
 		orderT.setVersiont(1);
 		orderT.setOrdername(this.getOrdername());
-		orderT.setShopid(null);//店铺id 未来支持入住模式时启用
+		orderT.setShopid(BaseTools.getShopId());//店铺id 未来支持入住模式时启用
+		orderT.setShopname(BaseTools.getShopName());
 		if(this.getMemberdelivertime()!=null){
 			orderT.setMemberdelivertime(BaseTools.getMemberDeliverTime(this.getMemberdelivertime()));
 		}else{
-			orderT.setMemberdelivertime(BaseTools.systemtime());
+			orderT.setMemberdelivertime(BaseTools.getSystemTime());
 			
 		}
-		
-		
 		//构建订单发票实体
 		OrderInvoiceT oit=new OrderInvoiceT();
 		oit.setInvType(this.getIsinvoice());
 		oit.setInvPayee(this.getInvPayee());
-		oit.setAmount(this.getAmount()+"");
+		oit.setAmount(this.getAmount()+StaticKey.EMPTY);
 		oit.setMemberid(memberid);
-		oit.setState(StaticKey.ZERO);
+		oit.setState(DataUsingState.USING.getState());
 		oit.setMembername(membername);
-		oit.setInvContent("");
-		oit.setCreatetime(BaseTools.systemtime());
+		oit.setInvContent(StaticKey.EMPTY);
+		oit.setCreatetime(BaseTools.getSystemTime());
 		oit.setUpdatetime(oit.getCreatetime());
 		oit.setVersiont(1);
-		
-		this.getOrderTService().saveNormalOrderNeedInfoBack(orderT, sAddressT, cartlists,oit);
+		this.orderTService.saveNormalOrderNeedInfoBack(orderT, sAddressT, cartlists,oit);
 		//调用订单发票逻辑
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 	
@@ -1199,9 +1204,9 @@ public class OrderTAction extends BaseTAction {
 	private List<ProductT>collectProductsForCart(String productid){
 		
 		List<ProductT>lists=new ArrayList<ProductT>();
-		String strs[]=StringUtils.split(productid, ",");
+		String strs[]=StringUtils.split(productid, StaticKey.SPLITDOT);
 		for(String s:strs){
-			ProductT bean=this.getProductTService().findProductByProductid(s);
+			ProductT bean=this.productTService.findByPK(ProductT.class, s);
 			if(bean!=null){
 				lists.add(bean);
 			}
@@ -1218,24 +1223,24 @@ public class OrderTAction extends BaseTAction {
 	})
 	public String findDeliverAddressBymemberName(){
 		if(StringUtils.isBlank(this.getMembername())){
-			return "json";
+			return JSON;
 		}
 		this.findDefaultMemberDeliverAddress();
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 	
 	
 	private void findDefaultMemberDeliverAddress() {
-		List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getMembername());
-		if(!list.isEmpty()){
-			List<DeliverAddressT>deliverlists=this.getDeliverAddressTService().findDeliverAddressBymemberid(list.get(0).getId());
+		Criterion criterion=Restrictions.eq("loginname", this.getMembername());
+		MemberT member=this.memberTService.findOneByCriteria(MemberT.class, criterion);
+		if(member!=null){
+			Criterion criterion2=Restrictions.eq("memberid", member.getId());
+			List<DeliverAddressT>deliverlists=this.deliverAddressTService.findByCriteria(DeliverAddressT.class, criterion2);
 			this.ProcessDeliverAddress(deliverlists);
 			total=deliverlists.size();
 		}
-	
-		
 	}
 
 	private void ProcessDeliverAddress(List<DeliverAddressT> list) {
@@ -1262,7 +1267,6 @@ public class OrderTAction extends BaseTAction {
 					BaseTools.formateDbDate(dt.getCreatetime())	
 			});
 			rows.add(cellMap);
-			
 		}
 	}
 	
@@ -1274,11 +1278,12 @@ public class OrderTAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String saveDeliverAddressbsOrder(){
-		List<MemberT>list=this.getMemberTService().findMemberTByloginname(this.getMembername());
-		if(!list.isEmpty()){
+		Criterion criterion=Restrictions.eq("loginname", this.getMembername());
+		MemberT member=this.memberTService.findOneByCriteria(MemberT.class, criterion);
+		if(member!=null){
 			DeliverAddressT dt=new DeliverAddressT();
 			dt.setAddressid(this.getSerial().Serialid(Serial.DELIVERADDRESS));
-			dt.setMemberid(list.get(0).getId());
+			dt.setMemberid(member.getId());
 			dt.setShippingusername(this.getShippingusername().trim());
 			dt.setProvince(this.getProvince().trim());
 			dt.setCity(this.getCity().trim());
@@ -1288,12 +1293,12 @@ public class OrderTAction extends BaseTAction {
 			dt.setTelno(this.getTelno().trim());
 			dt.setMobile(this.getMobile().trim());
 			dt.setEmail(this.getEmail().trim());
-			dt.setCreatetime(BaseTools.systemtime());
-			dt.setState(StaticKey.DELIVERADDRESSSTATE_ZERO_NUM);
+			dt.setCreatetime(BaseTools.getSystemTime());
+			dt.setState(DataUsingState.UNUSING.getState());
 			dt.setCountry(this.getCountry().trim());
-			this.getDeliverAddressTService().save(dt);
+			this.deliverAddressTService.save(dt);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
 		return "json";
 		
