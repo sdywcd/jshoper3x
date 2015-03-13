@@ -7,7 +7,6 @@
 		<class>com.jshop.entity.AuthorityT</class>
 		<class>com.jshop.entity.BasicUserT</class>
 		<class>com.jshop.entity.BasicsettingT</class>
-		<class>com.jshop.entity.BrandT</class>
 		<class>com.jshop.entity.CouponT</class>
 		<class>com.jshop.entity.DeliverAddressT</class>
 		<class>com.jshop.entity.DepartmentStructureT</class>
@@ -89,5 +88,8 @@
 		<class>com.jshop.entity.CartT</class>
 		<class>com.jshop.entity.OrderSnapshotT</class>
 		<class>com.jshop.entity.OrderT</class>
+		<class>com.jshop.entity.BrandT</class>
+		<class>com.jshop.entity.GoodsCardsPasswordT</class>
+		<class>com.jshop.entity.GoodsCardsT</class>
 	</persistence-unit>
 </persistence>

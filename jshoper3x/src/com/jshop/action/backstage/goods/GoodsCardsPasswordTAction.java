@@ -14,6 +14,9 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
@@ -141,8 +144,10 @@ public class GoodsCardsPasswordTAction extends BaseTAction {
 		int currentPage=page;
 		int lineSize=rp;
 		String goodsCradsId=this.getGoodsCardsId();
-		total=goodsCardsPasswordTService.countfindGoodsCardsPasswordByGoodsCardsId(goodsCradsId);
-		List<GoodsCardsPasswordT>list=goodsCardsPasswordTService.findGoodsCardsPasswordByGoodsCardsId(currentPage, lineSize, goodsCradsId);
+		Criterion criterion=Restrictions.eq("goodsCardsId", goodsCardsId);
+		Order order=Order.desc("updatetime");
+		total=goodsCardsPasswordTService.count(GoodsCardsPasswordT.class, criterion).intValue();
+		List<GoodsCardsPasswordT>list=goodsCardsPasswordTService.findByCriteriaByPage(GoodsCardsPasswordT.class, criterion, order, currentPage, lineSize);
 		processGoodsCardsPassword(list);
 	}
 	private void processGoodsCardsPassword(List<GoodsCardsPasswordT> list) {

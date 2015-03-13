@@ -1,8 +1,16 @@
 package com.jshop.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -20,6 +28,8 @@ public class BrandT implements Serializable {
 	private String creatorid;
 	private String intro;
 	private String logoPath;
+	private String shopid;
+	private String shopname;
 	private int sort;
 	private String url;
 	private String username;
@@ -83,6 +93,24 @@ public class BrandT implements Serializable {
 
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
+	}
+
+
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 

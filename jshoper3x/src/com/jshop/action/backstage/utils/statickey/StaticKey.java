@@ -96,9 +96,9 @@ public class  StaticKey {
 //	
 //	public static final String HIDDEN="隐藏";
 	
-	public static final String SUPPORT="支持";
+///	public static final String SUPPORT="支持";
 	
-	public static final String UNSUPPORT="不支持";
+//	public static final String UNSUPPORT="不支持";
 	
 //	public static final String FRONTUSE="前端可用";
 //	
@@ -109,9 +109,9 @@ public class  StaticKey {
 	public static final String WEIGHTMODEL="重量模式";
 
 	
-	public static final String OPEN="开启";
+	//public static final String OPEN="开启";
 	
-	public static final String CLOSE="关闭";
+	//public static final String CLOSE="关闭";
 	
 	public static final String YES="是";
 	

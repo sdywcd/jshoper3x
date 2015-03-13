@@ -21,6 +21,7 @@ import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.staticspage.CreateHtml;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.enums.BaseEnums;
+import com.jshop.action.backstage.utils.enums.BaseEnums.SupportType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.SystemMailT;
 import com.jshop.service.SystemMailTService;
@@ -335,11 +336,7 @@ public class SystemMailTAction extends BaseTAction {
 		rows.clear();
 		for (Iterator<SystemMailT> it = list.iterator(); it.hasNext();) {
 			SystemMailT sm = (SystemMailT) it.next();
-			if (StaticKey.ONE.equals(sm.getIsssl())) {
-				sm.setIsssl(StaticKey.SUPPORT);
-			} else {
-				sm.setIsssl(StaticKey.UNSUPPORT);
-			}
+			sm.setIsssl(SupportType.getName(sm.getIsssl()));
 			if (StaticKey.ONE.equals(sm.getIsdefault())) {
 				sm.setIsdefault(StaticKey.YES);
 			} else {

@@ -1395,5 +1395,50 @@ public class BaseEnums {
 		}
 	}
 	
+	
+	/**
+	 * 商品类型
+	* @ClassName: GoodsType 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum GoodsType{
+		VIRTUALGOODS("虚拟商品", "0"),NORMALGOODS("普通商品","1");
+
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private GoodsType(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (GoodsType d : GoodsType.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
 
 }

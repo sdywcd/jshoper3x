@@ -14,9 +14,14 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.dao.GoodsTDao;
 import com.jshop.entity.GoodsCardsPasswordT;
@@ -189,10 +194,10 @@ public class GoodsCardsTAction extends BaseTAction {
 		gct.setGoodsid(this.getGoodsid());
 		gct.setGoodsname(this.getGoodsname());
 		gct.setAmount(this.getAmount());
-		gct.setStatus(StaticKey.DataUsingState.USING.getState());
-		gct.setCreatetime(BaseTools.systemtime());
+		gct.setStatus(DataUsingState.USING.getState());
+		gct.setCreatetime(BaseTools.getSystemTime());
 		gct.setCreatorid(BaseTools.getAdminCreateId());
-		gct.setUpdatetime(BaseTools.systemtime());
+		gct.setUpdatetime(BaseTools.getSystemTime());
 		gct.setCardname(this.getCardname());
 		goodsCardsTService.save(gct);
 		buildCardsPassword(gct.getId(),gct.getAmount());
@@ -247,7 +252,7 @@ public class GoodsCardsTAction extends BaseTAction {
 		bean.setGoodsid(this.getGoodsid());
 		bean.setGoodsname(this.getGoodsname());
 		bean.setCreatorid(BaseTools.getAdminCreateId());
-		bean.setUpdatetime(BaseTools.systemtime());
+		bean.setUpdatetime(BaseTools.getSystemTime());
 		goodsCardsTService.update(bean);
 		this.setSucflag(true);
 		return JSON;
@@ -293,9 +298,9 @@ public class GoodsCardsTAction extends BaseTAction {
 					gcp.setGoodsCardsId(goodsCardsId);
 					gcp.setMemberid(StaticKey.EMPTY);
 					gcp.setPassword(String.valueOf(System.currentTimeMillis()+radomNum));
-					gcp.setStatus(StaticKey.DataUsingState.UNUSING.getState());//0未绑定，1已绑定，2未使用，3已使用，4无效
-					gcp.setCreatetime(BaseTools.systemtime());
-					gcp.setUpdatetime(BaseTools.systemtime());
+					gcp.setStatus(DataUsingState.UNUSING.getState());//0未绑定，1已绑定，2未使用，3已使用，4无效
+					gcp.setCreatetime(BaseTools.getSystemTime());
+					gcp.setUpdatetime(BaseTools.getSystemTime());
 					pwdlists.add(gcp);
 				}
 			}
@@ -323,8 +328,10 @@ public class GoodsCardsTAction extends BaseTAction {
 			int currentPage=page;
 			int lineSize=rp;
 			//statickey.one标识虚拟商品
-			total=goodsTService.countfindvirtualsaleGoodsT(StaticKey.ONE);
-			List<GoodsT>list=goodsTService.findvirtualsaleGoodsT(currentPage, lineSize, StaticKey.ONE);
+			Criterion criterion=Restrictions.eq("isvirtualsale", GoodsType.VIRTUALGOODS.getState());
+			Order order=Order.desc("updatetime");
+			total=goodsTService.count(GoodsT.class, criterion).intValue();
+			List<GoodsT>list=goodsTService.findByCriteriaByPage(GoodsT.class, criterion, order, currentPage, lineSize);
 			processVirtualGoodsT(list);
 		}
 

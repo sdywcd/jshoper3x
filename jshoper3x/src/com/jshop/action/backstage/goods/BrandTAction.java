@@ -6,17 +6,25 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.apache.catalina.valves.CrawlerSessionManagerValve;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.BrandT;
+import com.jshop.entity.BrandT_;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.service.BrandTService;
 import com.jshop.service.GoodsTypeBrandTService;
@@ -25,7 +33,9 @@ import com.jshop.service.impl.Serial;
 @ParentPackage("jshop")
 public class BrandTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private BrandTService brandTService;
+	@Resource
 	private GoodsTypeBrandTService goodsTypeBrandTService;
 	private String brandid;
 	private String brandname;
@@ -46,24 +56,6 @@ public class BrandTAction extends BaseTAction {
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public GoodsTypeBrandTService getGoodsTypeBrandTService() {
-		return goodsTypeBrandTService;
-	}
-
-	public void setGoodsTypeBrandTService(
-			GoodsTypeBrandTService goodsTypeBrandTService) {
-		this.goodsTypeBrandTService = goodsTypeBrandTService;
-	}
-
-	@JSON(serialize = false)
-	public BrandTService getBrandTService() {
-		return brandTService;
-	}
-
-	public void setBrandTService(BrandTService brandTService) {
-		this.brandTService = brandTService;
-	}
 
 	public String getBrandid() {
 		return brandid;
@@ -242,11 +234,13 @@ public class BrandTAction extends BaseTAction {
 		bt.setBrandname(this.getBrandname().trim());
 		bt.setCreatorid(BaseTools.getAdminCreateId());
 		bt.setUsername(this.getUsername());
-		bt.setCreatetime(BaseTools.systemtime());
+		bt.setCreatetime(BaseTools.getSystemTime());
 		bt.setIntro(this.getIntro());
 		bt.setLogoPath(this.getLogoPath().trim());
 		bt.setSort(Integer.parseInt(this.getSort().trim()));
 		bt.setUrl(this.getUrl().trim());
+		bt.setShopid(BaseTools.getShopId());
+		bt.setShopname(BaseTools.getShopName());
 		//增加商品品牌和商品类型的关系
 		GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
 		gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
@@ -254,9 +248,9 @@ public class BrandTAction extends BaseTAction {
 		gtbt.setBrandname(bt.getBrandname());
 		gtbt.setGoodsTypeId(this.getGoodsTypeId());
 		gtbt.setName(this.getGoodsTypeName());
-		this.getBrandTService().saveBrandTransaction(bt, gtbt);
+		this.brandTService.saveBrandTransaction(bt, gtbt);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -266,26 +260,40 @@ public class BrandTAction extends BaseTAction {
 	 */
 	@Action(value = "/findAllBrandt", results = { @Result(name = "json", type = "json") })
 	public String findAllBrandt() {
+		if(StringUtils.equals(StaticKey.SC, this.getQtype())){
+			this.findDefaultBrand();
+		}else{
+			if(StringUtils.isBlank(this.getQtype())){
+				return JSON;
+			}
+		}
+		return JSON;
+	}
+
+	private void findDefaultBrand() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getBrandTService().countfindAllBrandt(BaseTools.getAdminCreateId());
-		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
-			String queryString = " from BrandT as bt where bt.creatorid=:creatorid order by " + getSortname() + " " + getSortorder() + "";
-			List<BrandT> bt = this.getBrandTService().sortAllBrandt(currentPage, lineSize, BaseTools.getAdminCreateId(), queryString);
-			if (bt != null) {
-				for (Iterator<BrandT> it = bt.iterator(); it.hasNext();) {
-					BrandT b = (BrandT) it.next();
-					Map<String, Object> cellMap = new HashMap<String, Object>();
-					cellMap.put("id", b.getBrandid());
-					cellMap.put("cell", new Object[] {b.getBrandname(), b.getSort(), BaseTools.formateDbDate(b.getCreatetime()), b.getCreatorid(),"<a id='editbrands' name='editbrands' href='brands.jsp?operate=edit&folder=goods&brandid=" + b.getBrandid()+ "'>[编辑]</a>" });
-					rows.add(cellMap);
-				}
-				return "json";
+		total = this.brandTService.count(BrandT.class).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.DESC)){
+				order=Order.desc(this.getSortname());
+			}else{
+				order=Order.asc(this.getSortname());
 			}
-			return "json";
+			List<BrandT>list=this.brandTService.findByCriteriaByPage(BrandT.class, order, currentPage, lineSize);
+			this.processList(list);
 		}
-		return "json";
+	}
 
+	private void processList(List<BrandT> list) {
+		for (Iterator<BrandT> it = list.iterator(); it.hasNext();) {
+			BrandT b = (BrandT) it.next();
+			Map<String, Object> cellMap = new HashMap<String, Object>();
+			cellMap.put("id", b.getBrandid());
+			cellMap.put("cell", new Object[] {b.getShopname(),b.getBrandname(), b.getSort(), BaseTools.formateDbDate(b.getCreatetime()), b.getCreatorid(),"<a id='editbrands' name='editbrands' href='brands.jsp?operate=edit&folder=goods&brandid=" + b.getBrandid()+ "'>[编辑]</a>" });
+			rows.add(cellMap);
+		}
 	}
 
 	/**
@@ -295,32 +303,37 @@ public class BrandTAction extends BaseTAction {
 	 */
 	@Action(value = "/updateBrandt", results = { @Result(name = "json", type = "json") })
 	public String updateBrandt() {
-		BrandT bt = new BrandT();
-		bt.setBrandid(this.getBrandid());
-		bt.setBrandname(this.getBrandname().trim());
-		bt.setCreatorid(BaseTools.getAdminCreateId());
-		bt.setUsername(this.getUsername());
-		bt.setCreatetime(BaseTools.systemtime());
-		bt.setIntro(this.getIntro());
-		bt.setLogoPath(this.getLogoPath().trim());
-		bt.setSort(Integer.parseInt(this.getSort().trim()));
-		bt.setUrl(this.getUrl().trim());
-		this.getBrandTService().updateBrandt(bt);
-		GoodsTypeBrandT list = this.getGoodsTypeBrandTService().findGoodsTypeBrandByBrandid(bt.getBrandid(), this.getGoodsTypeId());
-		if (list==null) {
-			//增加商品品牌和商品类型的关系
-			GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
-			gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
-			gtbt.setBrandid(bt.getBrandid());
-			gtbt.setBrandname(bt.getBrandname());
-			gtbt.setGoodsTypeId(this.getGoodsTypeId());
-			gtbt.setName(this.getGoodsTypeName());
-			this.getGoodsTypeBrandTService().save(gtbt);
-			this.setSucflag(true);
-			return "json";
+		if(StringUtils.isBlank(this.getBrandid())){
+			return JSON;
 		}
-		this.setSucflag(true);
-		return "json";
+		BrandT bt = this.brandTService.findByPK(BrandT.class, this.getBrandid());
+		if(bt!=null){
+			bt.setBrandname(this.getBrandname().trim());
+			bt.setCreatorid(BaseTools.getAdminCreateId());
+			bt.setUsername(this.getUsername());
+			bt.setCreatetime(BaseTools.getSystemTime());
+			bt.setIntro(this.getIntro());
+			bt.setLogoPath(this.getLogoPath().trim());
+			bt.setSort(Integer.parseInt(this.getSort().trim()));
+			bt.setUrl(this.getUrl().trim());
+			bt.setShopid(BaseTools.getShopId());
+			bt.setShopname(BaseTools.getShopName());
+			this.brandTService.update(bt);
+			Criterion criterion=Restrictions.and(Restrictions.eq("brandid", bt.getBrandid())).add(Restrictions.eq("goodsTypeId", this.getGoodsTypeId()));
+			GoodsTypeBrandT gtb =this.goodsTypeBrandTService.findOneByCriteria(GoodsTypeBrandT.class, criterion);
+			if (gtb==null) {
+				//增加商品品牌和商品类型的关系
+				GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
+				gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
+				gtbt.setBrandid(bt.getBrandid());
+				gtbt.setBrandname(bt.getBrandname());
+				gtbt.setGoodsTypeId(this.getGoodsTypeId());
+				gtbt.setName(this.getGoodsTypeName());
+				this.goodsTypeBrandTService.save(gtbt);
+				this.setSucflag(true);
+			}
+		}
+		return JSON;
 	}
 
 	/**
@@ -330,22 +343,21 @@ public class BrandTAction extends BaseTAction {
 	 */
 	@Action(value = "/findBrandById", results = { @Result(name = "json", type = "json") })
 	public String findBrandById() {
-		if (Validate.StrNotNull(this.getBrandid())) {
-			bean = this.getBrandTService().findBrandById(this.getBrandid().trim());
+		if (StringUtils.isNotBlank(this.getBrandid())) {
+			bean = this.brandTService.findByPK(BrandT.class, this.getBrandid());
 			if (bean != null) {
 				//bean.setLogoPath(BaseTools.getBasePath()+bean.getLogoPath());
-				GoodsTypeBrandT gtbt=this.getGoodsTypeBrandTService().findGoodsTypeIdByBrandid(bean.getBrandid());
+				Criterion criterion=Restrictions.eq("brandid",this.getBrandid());
+				GoodsTypeBrandT gtbt=this.goodsTypeBrandTService.findOneByCriteria(GoodsTypeBrandT.class, criterion);
 				if(gtbt==null){
 					this.setSucflag(false);
 				}else{
 					this.setGoodsTypeId(gtbt.getGoodsTypeId());
 					this.setSucflag(true);
-					return "json";
 				}
-				
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -356,12 +368,16 @@ public class BrandTAction extends BaseTAction {
 	@Action(value = "/delBrandt", results = { @Result(name = "json", type = "json") })
 	public String delBrandt() {
 		if (StringUtils.isNotBlank(this.getBrandid())) {
-			String[] strs = StringUtils.split(this.getBrandid(), ",");
-			this.getBrandTService().delBrandt(strs, BaseTools.getAdminCreateId());
+			String[] strs = StringUtils.split(this.getBrandid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				BrandT bt=this.brandTService.findByPK(BrandT.class, s);
+				if(bt!=null){
+					this.brandTService.delete(bt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 
 	}
 
@@ -373,17 +389,16 @@ public class BrandTAction extends BaseTAction {
 	@Action(value = "/findAllBrandtjson", results = { @Result(name = "json", type = "json") })
 	public String findAllBrandtjson() {
 		this.setBrandjson("");
-		this.brand = this.getBrandTService().findAllBrandt();
-		if (this.brand != null) {
+		this.brand = this.brandTService.findAll(BrandT.class);
+		if (brand != null) {
 			for (Iterator<BrandT> it = this.brand.iterator(); it.hasNext();) {
 				BrandT b = (BrandT) it.next();
 				this.brandjson += "<option value='" + b.getBrandid() + "'>" + b.getBrandname() + "</option>";
 			}
 			this.setBrandjson(brandjson);
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 
 	}
 	

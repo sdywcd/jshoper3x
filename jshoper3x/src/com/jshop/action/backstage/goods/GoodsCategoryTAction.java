@@ -8,18 +8,24 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.staticspage.CreateHtml;
 import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.CategoryGrade;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.service.ArticleCategoryTService;
@@ -38,14 +44,21 @@ import freemarker.template.TemplateException;
 //    @InterceptorRef("defaultStack")
 //})
 public class GoodsCategoryTAction extends BaseTAction {
-	
+	@Resource
 	private GoodsCategoryTService goodsCategoryTService;
+	@Resource
 	private GoodsTService goodsTService;
+	@Resource
 	private JshopbasicInfoTService jshopbasicInfoTService;
+	@Resource
 	private SiteNavigationTService siteNavigationTService;
+	@Resource
 	private ArticleCategoryTService articleCategoryTService;
+	@Resource
 	private ArticleTService articleTService;
+	@Resource
 	private CreateHtml createHtml;
+	@Resource
 	private DataCollectionTAction dataCollectionTAction;
 	private String goodsCategoryTid;
 	private String grade;
@@ -82,72 +95,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 	private int total = 0;
 	private boolean sucflag;
 	private String basepath;
-	@JSON(serialize = false)
-	public DataCollectionTAction getDataCollectionTAction() {
-		return dataCollectionTAction;
-	}
-
-	public void setDataCollectionTAction(DataCollectionTAction dataCollectionTAction) {
-		this.dataCollectionTAction = dataCollectionTAction;
-	}
-
-	@JSON(serialize = false)
-	public GoodsCategoryTService getGoodsCategoryTService() {
-		return goodsCategoryTService;
-	}
-
-	public void setGoodsCategoryTService(GoodsCategoryTService goodsCategoryTService) {
-		this.goodsCategoryTService = goodsCategoryTService;
-	}
-	@JSON(serialize = false)
-	public GoodsTService getGoodsTService() {
-		return goodsTService;
-	}
-
-	public void setGoodsTService(GoodsTService goodsTService) {
-		this.goodsTService = goodsTService;
-	}
-	@JSON(serialize = false)
-	public JshopbasicInfoTService getJshopbasicInfoTService() {
-		return jshopbasicInfoTService;
-	}
-
-	public void setJshopbasicInfoTService(JshopbasicInfoTService jshopbasicInfoTService) {
-		this.jshopbasicInfoTService = jshopbasicInfoTService;
-	}
-	@JSON(serialize = false)
-	public SiteNavigationTService getSiteNavigationTService() {
-		return siteNavigationTService;
-	}
-
-	public void setSiteNavigationTService(SiteNavigationTService siteNavigationTService) {
-		this.siteNavigationTService = siteNavigationTService;
-	}
-	@JSON(serialize = false)
-	public ArticleCategoryTService getArticleCategoryTService() {
-		return articleCategoryTService;
-	}
-
-	public void setArticleCategoryTService(ArticleCategoryTService articleCategoryTService) {
-		this.articleCategoryTService = articleCategoryTService;
-	}
-	@JSON(serialize = false)
-	public ArticleTService getArticleTService() {
-		return articleTService;
-	}
-
-	public void setArticleTService(ArticleTService articleTService) {
-		this.articleTService = articleTService;
-	}
-
-	@JSON(serialize = false)
-	public CreateHtml getCreateHtml() {
-		return createHtml;
-	}
-
-	public void setCreateHtml(CreateHtml createHtml) {
-		this.createHtml = createHtml;
-	}
+	
 	public String getGoodsCategoryTid() {
 		return goodsCategoryTid;
 	}
@@ -443,16 +391,20 @@ public class GoodsCategoryTAction extends BaseTAction {
 	@Action(value = "findGoodsCategoryByGradeZeroone", results = { @Result(name = "json", type = "json") })
 	public String findGoodsCategoryByGradeZeroone() {
 		this.setGoodscategoryzero("");
-		String grade="0";//表示顶级分类
-		String state="1";//表示启用的分类
-		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade(grade, state);
+		String grade=CategoryGrade.FIRST.getState();//表示顶级分类
+		String state=DataUsingState.USING.getState();//表示启用的分类
+		Map<String,String>params=new HashMap<String, String>();
+		params.put("grade", grade);
+		params.put("state", state);
+		Criterion criterion=Restrictions.allEq(params);
+		List<GoodsCategoryT> list = this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class,criterion);
 		this.goodscategoryzero = "";
 		for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 			GoodsCategoryT gct = (GoodsCategoryT) it.next();
 			this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 
@@ -465,11 +417,13 @@ public class GoodsCategoryTAction extends BaseTAction {
 	public String findGoodscategoryByparentId(){
 		this.setGoodscategorytwo("");
 		if(StringUtils.isBlank(this.getParentId())){
-			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
-		String state="1";
+		String state=DataUsingState.USING.getState();
 		String parentId=this.getParentId().trim();
+		Map<String,String>params=new HashMap<String, String>();
+		params.put("state", state);
+		params.put("parentId", parentId);
 		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findGoodscategoryByparentId(state, parentId);
 		if(!list.isEmpty()){
 			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";

@@ -3,12 +3,17 @@ package com.jshop.action.backstage.goods;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.data.annotation.Reference;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.entity.GoodsAttributeRpT;
@@ -17,19 +22,13 @@ import com.jshop.service.GoodsAttributeRpTService;
 @ParentPackage("jshop")
 public class GoodsAttributeRpTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GoodsAttributeRpTService goodsAttributeRpTService;
 	private String goodsid;
 	private String goodsAttrsVals;
 	private List<GoodsAttributeRpT> beanlist=new ArrayList<GoodsAttributeRpT>();
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public GoodsAttributeRpTService getGoodsAttributeRpTService() {
-		return goodsAttributeRpTService;
-	}
-	public void setGoodsAttributeRpTService(
-			GoodsAttributeRpTService goodsAttributeRpTService) {
-		this.goodsAttributeRpTService = goodsAttributeRpTService;
-	}
+	
 	public String getGoodsAttrsVals() {
 		return goodsAttrsVals;
 	}
@@ -71,15 +70,14 @@ public class GoodsAttributeRpTAction extends BaseTAction {
 	})
 	public String findGoodsAttributeRpTBygoodsid(){
 		if(StringUtils.isNotBlank(this.getGoodsid())){
-			List<GoodsAttributeRpT>list=this.getGoodsAttributeRpTService().findGoodsAttributeRpTBygoodsid(this.getGoodsid());
+			Criterion criterion=Restrictions.eq("goodsid", this.getGoodsid());
+			List<GoodsAttributeRpT>list=this.goodsAttributeRpTService.findByCriteria(GoodsAttributeRpT.class, criterion);
 			if(!list.isEmpty()){
 				beanlist=list;
 				this.setSucflag(true);
-				return "json";
 			}
-			return "json";
 		}
-		return "json";
+		return JSON;
 	}
 	
 

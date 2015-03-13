@@ -7,12 +7,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -35,8 +40,11 @@ import com.jshop.vo.GoodsBelinkedProductInfo;
 @ParentPackage("jshop")
 public class GoodsBeLinkedTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GoodsBelinkedTService goodsBelinkedTService;
+	@Resource
 	private ProductTService productTService;
+	@Resource
 	private GoodsTService goodsTService;
 	private String id;
 	private String maingoodsid;
@@ -55,28 +63,7 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public ProductTService getProductTService() {
-		return productTService;
-	}
-	public void setProductTService(ProductTService productTService) {
-		this.productTService = productTService;
-	}
-	@JSON(serialize = false)
-	public GoodsTService getGoodsTService() {
-		return goodsTService;
-	}
-	public void setGoodsTService(GoodsTService goodsTService) {
-		this.goodsTService = goodsTService;
-	}
-	@JSON(serialize = false)
-	public GoodsBelinkedTService getGoodsBelinkedTService() {
-		return goodsBelinkedTService;
-	}
-	public void setGoodsBelinkedTService(GoodsBelinkedTService goodsBelinkedTService) {
-		this.goodsBelinkedTService = goodsBelinkedTService;
-	}
-	
+
 	public String getMaingoodsid() {
 		return maingoodsid;
 	}
@@ -197,14 +184,15 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodsBelinkedBymaingoodsid", results = { @Result(name = "json", type = "json") })
 	public String findGoodsBelinkedBymaingoodsid(){
-		List<GoodsBelinkedT>list=this.getGoodsBelinkedTService().findGoodsBelinkedBymaingoodsid(this.getMaingoodsid());
-		if(!list.isEmpty()){
-			this.setBean(list.get(0));
-			this.setSucflag(true);
-			return "json";
+		if(StringUtils.isNotBlank(this.getMaingoodsid())){
+			Criterion criterion=Restrictions.eq("maingoodsid", this.getMaingoodsid());
+			List<GoodsBelinkedT>list=this.goodsBelinkedTService.findByCriteria(GoodsBelinkedT.class, criterion);
+			if(!list.isEmpty()){
+				this.setBean(list.get(0));
+				this.setSucflag(true);
+			}
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 增加关联商品
@@ -218,13 +206,13 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 	@Action(value = "saveOrUpdateGoodsBelinkedT", results = { @Result(name = "json", type = "json") })
 	public String saveOrUpdateGoodsBelinkedT(){
 		if(StringUtils.isBlank(this.getBelinkedproductinfo())){
-			return "json";
+			return JSON;
 		}
 		ProductT pt=null;
 		GoodsT gt=null;
 		//组装关联商品的json数据
 		//这里的关联商品id可以是商品id，或者是productid，默认的逻辑是选择了商品并默认获取期货物id
-		String []belinkedgoodsid=StringUtils.split(this.getBelinkedproductinfo().trim(),",");
+		String []belinkedgoodsid=StringUtils.split(this.getBelinkedproductinfo().trim(),StaticKey.SPLITDOT);
 		Gson gson=new Gson();
 		List<GoodsBelinkedProductInfo>jsonlist=new ArrayList<GoodsBelinkedProductInfo>();
 		
@@ -235,11 +223,12 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 			GoodsBelinkedProductInfo gbp=new GoodsBelinkedProductInfo();
 			//如果用goodsid和默认货物查到了product信息那么就是说明前台是传递的goods信息
 			//如果没查到则用goodsid查询product，默认就是传递的货物信息信息
-			List<ProductT>ptList=this.getProductTService().findProductTByGoodsid(s);
+			Criterion criterion=Restrictions.eq("goodsid", s);
+			List<ProductT>ptList=this.productTService.findByCriteria(ProductT.class, criterion);
 			if(ptList.size()==1){//默认目前只处理1号情况
 				pt=ptList.get(0);
-				gt=this.getGoodsTService().findGoodsById(pt.getGoodsid());
-				String temp[]=StringUtils.split(gt.getPictureurl(), ',');
+				gt=this.goodsTService.findByPK(GoodsT.class, pt.getGoodsid());
+				String temp[]=StringUtils.split(gt.getPictureurl(),StaticKey.SPLITDOT);
 				gbp.setGoodsid(pt.getGoodsid());
 				gbp.setGoodsName(gt.getGoodsname());
 				gbp.setProductid(pt.getProductid());
@@ -257,9 +246,10 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 		}
 		String belinkedproductinfo=gson.toJson(jsonlist);
 		//获取主商品名称
-		GoodsT gst=this.getGoodsTService().findByPK(GoodsT.class, this.getMaingoodsid());
+		GoodsT gst=this.goodsTService.findByPK(GoodsT.class, this.getMaingoodsid());
 		GoodsBelinkedT gbl=new GoodsBelinkedT();
-		List<GoodsBelinkedT>list=this.getGoodsBelinkedTService().findGoodsBelinkedBymaingoodsid(this.getMaingoodsid());
+		Criterion criterion=Restrictions.eq("maingoodsid", this.getMaingoodsid());
+		List<GoodsBelinkedT>list=this.goodsBelinkedTService.findByCriteria(GoodsBelinkedT.class, criterion);
 		if(!list.isEmpty()){
 			gbl.setId(list.get(0).getId());
 			gbl.setMaingoodsid(this.getMaingoodsid());
@@ -270,10 +260,10 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 			gbl.setMainproductid(pt.getProductid());
 			gbl.setCreatorid(BaseTools.getAdminCreateId());
 			gbl.setCreatetime(list.get(0).getCreatetime());
-			gbl.setUpdatetime(BaseTools.systemtime());
+			gbl.setUpdatetime(BaseTools.getSystemTime());
 			gbl.setVersiont(0);
 			gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
-			this.getGoodsBelinkedTService().updateGoodsBelinked(gbl);
+			this.goodsBelinkedTService.update(gbl);
 		}else{
 			gbl.setId(this.getSerial().Serialid(Serial.GOODSBELINKED));
 			gbl.setMaingoodsid(this.getMaingoodsid());
@@ -283,14 +273,14 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 			gbl.setState(StaticKey.ONE);//开启关联
 			gbl.setMainproductid(pt.getProductid());
 			gbl.setCreatorid(BaseTools.getAdminCreateId());
-			gbl.setCreatetime(BaseTools.systemtime());
-			gbl.setUpdatetime(BaseTools.systemtime());
+			gbl.setCreatetime(BaseTools.getSystemTime());
+			gbl.setUpdatetime(BaseTools.getSystemTime());
 			gbl.setVersiont(0);
 			gbl.setSxlinkedgoodsid(StaticKey.ONE);//单向关联模式时设置成0
-			this.getGoodsBelinkedTService().save(gbl);
+			this.goodsBelinkedTService.save(gbl);
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -303,16 +293,17 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 			finddefaultAllGoodsBelinked();
 		}else{
 			if(StringUtils.isBlank(this.getQtype())){
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 	private void finddefaultAllGoodsBelinked() {
 		int currentPage=page;
 		int lineSize=rp;
-		total=this.getGoodsBelinkedTService().countfindAllGoodsBelinked();
-		List<GoodsBelinkedT>list=this.getGoodsBelinkedTService().findAllGoodsBelinked(currentPage, lineSize);
+		total=this.goodsBelinkedTService.count(GoodsBelinkedT.class).intValue();
+		Order order=Order.desc("updatetime");
+		List<GoodsBelinkedT>list=this.goodsBelinkedTService.findByCriteriaByPage(GoodsBelinkedT.class, order, currentPage, lineSize);
 		processGoodsBelinkedList(list);
 	}
 	private void processGoodsBelinkedList(List<GoodsBelinkedT> list) {
@@ -344,12 +335,17 @@ public class GoodsBeLinkedTAction extends BaseTAction {
 	@Action(value = "delGoodsBelinked", results = {@Result(name = "json",type="json")})
 	public String delGoodsBelinked(){
 		if(StringUtils.isBlank(this.getId())){
-			return "json";
+			return JSON;
 		}
-		String []strs=StringUtils.split(this.getId(),",");
-		this.getGoodsBelinkedTService().delGoodsBelinked(strs);
+		String []strs=StringUtils.split(this.getId(),StaticKey.SPLITDOT);
+		for(String s:strs){
+			GoodsBelinkedT gbt=this.goodsBelinkedTService.findByPK(GoodsBelinkedT.class, s);
+			if(gbt!=null){
+				this.goodsBelinkedTService.delete(gbt);
+			}
+		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 	

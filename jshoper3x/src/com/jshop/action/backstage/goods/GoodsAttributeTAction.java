@@ -7,12 +7,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Criterion;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -20,6 +26,8 @@ import org.json.simple.JSONValue;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.SupportType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsAttributeT;
 import com.jshop.service.GoodsAttributeTService;
@@ -28,6 +36,7 @@ import com.jshop.service.impl.Serial;
 @ParentPackage("jshop")
 public class GoodsAttributeTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GoodsAttributeTService goodsAttributeTService;
 	private String goodsattributeid;
 	private String goodsattributename;
@@ -53,15 +62,6 @@ public class GoodsAttributeTAction extends BaseTAction {
 	private boolean sucflag;
 
 
-	@JSON(serialize = false)
-	public GoodsAttributeTService getGoodsAttributeTService() {
-		return goodsAttributeTService;
-	}
-
-
-	public void setGoodsAttributeTService(GoodsAttributeTService goodsAttributeTService) {
-		this.goodsAttributeTService = goodsAttributeTService;
-	}
 	public String getGoodsattributeid() {
 		return goodsattributeid;
 	}
@@ -262,33 +262,27 @@ public class GoodsAttributeTAction extends BaseTAction {
 		int jsonsize=ja.size();
 		GoodsAttributeT gat = new GoodsAttributeT();
 		for (int i = 0; i <jsonsize; i++) {
-			gat.setCreatetime(BaseTools.systemtime());
-			gat.setState(StaticKey.ONE);
+			gat.setCreatetime(BaseTools.getSystemTime());
+			gat.setState(DataUsingState.USING.getState());
 			gat.setCreatorid(BaseTools.getAdminCreateId());
 			gat.setGoodsTypeId(this.getGoodsTypeId());
 			gat.setGoodsTypeName(this.getGoodsTypeName());
 			gat.setAttributeIndex(this.getAttributeIndex());
 			JSONObject jo=(JSONObject)ja.get(i);
-
 			gat.setGoodsattributename(jo.get(StaticKey.GOODSATTRIBUTENAME).toString());
-		
 			gat.setAttributeType(jo.get(StaticKey.ATTRIBUTETYPE).toString());
-
 			gat.setAttributelist(jo.get(StaticKey.ATTRIBUTELIST).toString());
-		
 			gat.setSort(jo.get(StaticKey.SORT).toString());
-
 			gat.setGoodsattributeid(jo.get(StaticKey.GOODSATTRIBUTEID).toString());
-				
 			if(gat.getGoodsattributeid().length()==0){
 				gat.setGoodsattributeid(this.getSerial().Serialid(Serial.GOODSATTRIBUTE));
-				this.getGoodsAttributeTService().save(gat);
+				this.goodsAttributeTService.save(gat);
 			}else{
-				this.getGoodsAttributeTService().updateGoodsAttributeT(gat);
+				this.goodsAttributeTService.update(gat);
 			}
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -299,28 +293,33 @@ public class GoodsAttributeTAction extends BaseTAction {
 		if (StaticKey.SC.equals(this.getQtype())) {
 			this.findDefaultAllGoodsAttributeT();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isBlank(this.getQtype())) {
+				return JSON;
 			} else {
-				if(this.getQtype().equals("goodsTypeName")){
+				if(StringUtils.equals(this.getQtype(), "goodsTypeName")){
 					findGoodsAttributeByParams();
 				}
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 
 	}
 
 	private void findGoodsAttributeByParams() {
 		int currentPage=page;
 		int lineSize=rp;
-		String qs="select count(*) from GoodsAttributeT where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
-		total=this.getGoodsAttributeTService().countsortAllGoodsAttributeT(qs);
+		Criterion criterion=Restrictions.like(this.getQtype(), this.getQuery(), MatchMode.ANYWHERE);
+		total=this.goodsAttributeTService.count(GoodsAttributeT.class, criterion).intValue();
 		if(StringUtils.isNotBlank(getSortname()) &&StringUtils.isNotBlank(getSortorder())){
-			String queryString="from GoodsAttributeT as gat where gat."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + getSortname() + " " + getSortorder() + "";
-			List<GoodsAttributeT>list=this.getGoodsAttributeTService().sortAllGoodsAttributeT(currentPage, lineSize, queryString);
-			this.ProcessGoodsAttributeTList(list);
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
+			}
+			List<GoodsAttributeT>list=this.goodsAttributeTService.findByCriteriaByPage(GoodsAttributeT.class, criterion, order, currentPage, lineSize);
+			this.processGoodsAttributeTList(list);
 		}
 		
 	}
@@ -329,14 +328,13 @@ public class GoodsAttributeTAction extends BaseTAction {
 	public void findDefaultAllGoodsAttributeT() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getGoodsAttributeTService().countfindAllGoodsAttributeT();
-		List<GoodsAttributeT> list = this.getGoodsAttributeTService().findAllGoodsAttributeT(currentPage, lineSize);
-		if (list != null) {
-			this.ProcessGoodsAttributeTList(list);
-		}
+		total = this.goodsAttributeTService.count(GoodsAttributeT.class).intValue();
+		Order order=Order.desc("createtime");
+		List<GoodsAttributeT> list = this.goodsAttributeTService.findByCriteriaByPage(GoodsAttributeT.class, order, currentPage, lineSize);
+		this.processGoodsAttributeTList(list);
 	}
 
-	public void ProcessGoodsAttributeTList(List<GoodsAttributeT> list) {
+	public void processGoodsAttributeTList(List<GoodsAttributeT> list) {
 		rows.clear();
 		for (Iterator<GoodsAttributeT> it = list.iterator(); it.hasNext();) {
 			GoodsAttributeT gat = (GoodsAttributeT) it.next();
@@ -345,16 +343,8 @@ public class GoodsAttributeTAction extends BaseTAction {
 			}else{
 				gat.setAttributeType(StaticKey.INPUTITEM);
 			}
-			if(StaticKey.ONE.equals(gat.getIssearch())){
-				gat.setIssearch(StaticKey.SUPPORT);
-			}else{
-				gat.setIssearch(StaticKey.UNSUPPORT);
-			}
-			if(StaticKey.ONE.equals(gat.getIssametolink())){
-				gat.setIssametolink(StaticKey.SUPPORT);
-			}else{
-				gat.setIssametolink(StaticKey.UNSUPPORT);
-			}
+			gat.setIssearch(SupportType.getName(gat.getIssearch()));
+			gat.setIssametolink(SupportType.getName(gat.getIssametolink()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gat.getGoodsattributeid());
 			cellMap.put("cell", new Object[] {gat.getGoodsattributename(), gat.getAttributeType(), gat.getAttributelist(), gat.getSort(), gat.getGoodsTypeName(),gat.getIssearch(),gat.getIssametolink(), BaseTools.formateDbDate(gat.getCreatetime()),"<a id='editgoodsattribute' name='editgoodsattribute' href='goodsattribute.jsp?operate=edit&folder=goods&goodsTypeName=" + gat.getGoodsTypeName() + "'>[编辑]</a>" });
@@ -369,15 +359,17 @@ public class GoodsAttributeTAction extends BaseTAction {
 	 */
 	@Action(value = "delGoodsAttributeT", results = { @Result(name = "json", type = "json") })
 	public String delGoodsAttributeT() {
-
-		if (Validate.StrNotNull(this.getGoodsattributeid())) {
-			String[] list = StringUtils.split(this.getGoodsattributeid(), ",");
-			this.getGoodsAttributeTService().delGoodsAttributeT(list);
+		if (StringUtils.isNotBlank(this.getGoodsattributeid())) {
+			String[] strs = StringUtils.split(this.getGoodsattributeid(),StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsAttributeT gat=this.goodsAttributeTService.findByPK(GoodsAttributeT.class, s);
+				if(gat!=null){
+					this.goodsAttributeTService.delete(gat);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -387,17 +379,15 @@ public class GoodsAttributeTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodsAttributeTByGoodsTypeName", results = { @Result(name = "json", type = "json") })
 	public String findGoodsAttributeTByGoodsTypeName() {
-
-		if (Validate.StrNotNull(this.getGoodsTypeName())) {
-			List<GoodsAttributeT> list = this.getGoodsAttributeTService().findGoodsAttributeTByGoodsTypeName(this.getGoodsTypeName().trim());
+		if (StringUtils.isNotBlank(this.getGoodsTypeName())) {
+			Criterion criterion=Restrictions.eq("goodsTypeName", this.getGoodsTypeName());
+			List<GoodsAttributeT> list = this.goodsAttributeTService.findByCriteria(GoodsAttributeT.class, criterion);
 			if (!list.isEmpty()) {
 				beanlist = list;
 				this.setSucflag(true);
-				return "json";
 			}
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -407,21 +397,15 @@ public class GoodsAttributeTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodsAttributeTBygoodsTypeId", results = { @Result(name = "json", type = "json") })
 	public String findGoodsAttributeTBygoodsTypeId() {
-
-		if (Validate.StrNotNull(this.getGoodsTypeId())) {
-			List<GoodsAttributeT> list = this.getGoodsAttributeTService().findGoodsAttributeTBygoodsTypeId(this.getGoodsTypeId());
+		if (StringUtils.isNotBlank(this.getGoodsTypeId())) {
+			Criterion criterion=Restrictions.eq("goodsTypeId", this.getGoodsTypeId());
+			List<GoodsAttributeT> list =this.goodsAttributeTService.findByCriteria(GoodsAttributeT.class, criterion);
 			if (!list.isEmpty()) {
 				gatbeanlist = list;
 				this.setSucflag(true);
-				return "json";
-			} else {
-				this.setSucflag(true);
-				return "json";
 			}
 		}
-		this.setSucflag(true);
-		return "json";
-
+		return JSON;
 	}
 	
 	
@@ -431,17 +415,18 @@ public class GoodsAttributeTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsAttributeissearchBygoodsattributeid", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsAttributeissearchBygoodsattributeid(){
-		if(Validate.StrNotNull(this.getGoodsattributeid())){
-			String []strs=StringUtils.split(this.getGoodsattributeid(), ",");
-			if(this.getGoodsAttributeTService().updateGoodsAttributeissearchBygoodsattributeid(strs, this.getIssearch())>0){
-				this.setSucflag(true);
-				return "json";
+		if(StringUtils.isNotBlank(this.getGoodsattributeid())){
+			String []strs=StringUtils.split(this.getGoodsattributeid(),StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsAttributeT gat=this.goodsAttributeTService.findByPK(GoodsAttributeT.class, s);
+				if(gat!=null){
+					gat.setIssearch(this.getIssearch());
+					this.goodsAttributeTService.update(gat);
+				}
 			}
-			this.setSucflag(false);
-			return "json";
+			this.setSucflag(true);
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -450,17 +435,18 @@ public class GoodsAttributeTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsAttributeissametolinkBygoodsattributeid", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsAttributeissametolinkBygoodsattributeid(){
-		if(Validate.StrNotNull(this.getGoodsattributeid())){
-			String []strs=StringUtils.split(this.getGoodsattributeid(),",");
-			if(this.getGoodsAttributeTService().updateGoodsAttributeissametolinkBygoodsattributeid(strs, this.getIssametolink())>0){
-				this.setSucflag(true);
-				return "json";
+		if(StringUtils.isNotBlank(this.getGoodsattributeid())){
+			String []strs=StringUtils.split(this.getGoodsattributeid(),StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsAttributeT gat=this.goodsAttributeTService.findByPK(GoodsAttributeT.class, s);
+				if(gat!=null){
+					gat.setIssametolink(this.getIssametolink());
+					this.goodsAttributeTService.update(gat);
+				}
 			}
-			this.setSucflag(false);
-			return "json";
+			this.setSucflag(true);
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 	
 	
