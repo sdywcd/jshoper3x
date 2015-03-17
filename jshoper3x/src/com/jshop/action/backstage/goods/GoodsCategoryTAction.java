@@ -15,15 +15,13 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.staticspage.CreateHtml;
-import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.enums.BaseEnums.CategoryGrade;
 import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
@@ -58,8 +56,6 @@ public class GoodsCategoryTAction extends BaseTAction {
 	private ArticleTService articleTService;
 	@Resource
 	private CreateHtml createHtml;
-	@Resource
-	private DataCollectionTAction dataCollectionTAction;
 	private String goodsCategoryTid;
 	private String grade;
 	private String metaKeywords;
@@ -390,7 +386,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodsCategoryByGradeZeroone", results = { @Result(name = "json", type = "json") })
 	public String findGoodsCategoryByGradeZeroone() {
-		this.setGoodscategoryzero("");
+		this.setGoodscategoryzero(StaticKey.EMPTY);
 		String grade=CategoryGrade.FIRST.getState();//表示顶级分类
 		String state=DataUsingState.USING.getState();//表示启用的分类
 		Map<String,String>params=new HashMap<String, String>();
@@ -398,7 +394,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 		params.put("state", state);
 		Criterion criterion=Restrictions.allEq(params);
 		List<GoodsCategoryT> list = this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class,criterion);
-		this.goodscategoryzero = "";
+		this.goodscategoryzero = StaticKey.EMPTY;
 		for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 			GoodsCategoryT gct = (GoodsCategoryT) it.next();
 			this.goodscategoryzero += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
@@ -415,7 +411,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodscategoryByparentId", results = { @Result(name = "json", type = "json") })
 	public String findGoodscategoryByparentId(){
-		this.setGoodscategorytwo("");
+		this.setGoodscategorytwo(StaticKey.EMPTY);
 		if(StringUtils.isBlank(this.getParentId())){
 			return JSON;
 		}
@@ -424,7 +420,8 @@ public class GoodsCategoryTAction extends BaseTAction {
 		Map<String,String>params=new HashMap<String, String>();
 		params.put("state", state);
 		params.put("parentId", parentId);
-		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findGoodscategoryByparentId(state, parentId);
+		Criterion criterion=Restrictions.allEq(params);
+		List<GoodsCategoryT>list=this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class, criterion);
 		if(!list.isEmpty()){
 			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
 			for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
@@ -436,7 +433,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 		
 		
 	}
@@ -446,8 +443,14 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodsCategoryByGradeTwo", results = { @Result(name = "json", type = "json") })
 	public String findGoodsCategoryByGradeTwo() {
-		this.setGoodscategorytwo("");
-		List<GoodsCategoryT> list = this.getGoodsCategoryTService().findGoodsCategoryByGrade("1", "1");
+		this.setGoodscategorytwo(StaticKey.EMPTY);
+		String state=DataUsingState.USING.getState();
+		String grade=CategoryGrade.SECOND.getState();
+		Map<String,String>params=new HashMap<String, String>();
+		params.put("state", state);
+		params.put("grade", grade);
+		Criterion criterion=Restrictions.allEq(params);
+		List<GoodsCategoryT> list = this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class, criterion);
 		if (list != null) {
 			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
 			for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
@@ -455,13 +458,13 @@ public class GoodsCategoryTAction extends BaseTAction {
 				this.goodscategorytwo += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 			}
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		} else {
-			this.setGoodscategorytwo("");
+			this.setGoodscategorytwo(StaticKey.EMPTY);
 			this.goodscategorytwo = "<option value='-1'>---请选择---</option>";
 		}
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -471,9 +474,11 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "addGoodsCategory", results = { @Result(name = "json", type = "json") })
 	public String addGoodsCategory() {
-		int i = this.getGoodsCategoryTService().checkGoodscategoryName(this.getName());
-		int j = this.getGoodsCategoryTService().checkGoodscategorySign(this.getSign());
-		if (i == 0 && j == 0) {
+		Criterion criterion=Restrictions.eq("name", this.getName());
+		GoodsCategoryT gname=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion);
+		Criterion criterion2=Restrictions.eq("sign", this.getSign());
+		GoodsCategoryT gsign=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion2);
+		if (gname==null&& gsign==null) {
 			if (Integer.parseInt(this.getGrade()) == 0) {
 				GoodsCategoryT gct = new GoodsCategoryT();
 				gct.setGoodsCategoryTid(this.getSerial().Serialid(Serial.GOODSCATEGORY));
@@ -481,26 +486,28 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
 				gct.setName(this.getName().trim());
-				gct.setState(StaticKey.ONE);
+				gct.setState(DataUsingState.USING.getState());
 				gct.setPath(gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
 				gct.setGoodsTypeId(this.getGoodsTypeId());
-				gct.setCreatetime(BaseTools.systemtime());
+				gct.setCreatetime(BaseTools.getSystemTime());
 				gct.setCreatorid(BaseTools.getAdminCreateId());
-				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(0);
 				gct.setParentName(StaticKey.EMPTY);
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().save(gct);
+				gct.setShopid(BaseTools.getShopId());
+				gct.setShopname(BaseTools.getShopName());
+				this.goodsCategoryTService.save(gct);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		} else {
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	
 	
@@ -513,15 +520,19 @@ public class GoodsCategoryTAction extends BaseTAction {
 	public String updateGoodsCategory() {
 		//根据goodscategoryid读取商品分类信息
 		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
-			return "json";
+			return JSON;
 		}
 		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
-		GoodsCategoryT gct=new GoodsCategoryT();
-		gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(goodsCategoryTid);
-		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(goodsCategoryTid, gct.getName());
-		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(goodsCategoryTid, gct.getSign());
+		GoodsCategoryT gct=this.goodsCategoryTService.findByPK(GoodsCategoryT.class, goodsCategoryTid);
+		if(gct==null){
+			return JSON;
+		}
+		Criterion criterion=Restrictions.and(Restrictions.eq("name", gct.getName())).add(Restrictions.ne("goodsCategoryTid", goodsCategoryTid));
+		GoodsCategoryT gname=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class,criterion);
+		Criterion criterion2=Restrictions.and(Restrictions.eq("sign", gct.getSign())).add(Restrictions.ne("goodsCategoryTid", goodsCategoryTid));
+		GoodsCategoryT gsign=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion2);
 		//判断更新的一级分类的名称和标示是否和其他分类重复
-		if (i == 0 && j == 0) {
+		if (gname==null && gsign==null) {
 			if (Integer.parseInt(this.getGrade()) == 0) {
 				gct.setGoodsTypeId(this.getGoodsTypeId());//商品类型id
 				gct.setParentId(StaticKey.EMPTY);//将父分类设置成空
@@ -530,21 +541,23 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setName(this.getName().trim());
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
-				gct.setState(StaticKey.ONE);
+				gct.setState(DataUsingState.USING.getState());
 				gct.setPath(StaticKey.EMPTY);//将原有分类递归路径设置成空
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
 				gct.setCreatorid(BaseTools.getAdminCreateId());
-				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+				gct.setShopid(BaseTools.getShopId());
+				gct.setShopname(BaseTools.getShopName());
+				this.goodsCategoryTService.update(gct);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -554,9 +567,11 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "addGoodsCategoryTwo", results = { @Result(name = "json", type = "json") })
 	public String addGoodsCategoryTwo() {
-		int i = this.getGoodsCategoryTService().checkGoodscategoryName(this.getName());
-		int j = this.getGoodsCategoryTService().checkGoodscategorySign(this.getSign());
-		if (i == 0 && j == 0) {
+		Criterion criterion=Restrictions.eq("name", this.getName());
+		GoodsCategoryT gname=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion);
+		Criterion criterion2=Restrictions.eq("sign", this.getSign());
+		GoodsCategoryT gsign=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion2);
+		if (gname==null && gsign== null) {
 			if (Integer.parseInt(this.getGrade()) == 1) {
 				GoodsCategoryT gct = new GoodsCategoryT();
 				gct.setGoodsCategoryTid(this.getSerial().Serialid(Serial.GOODSCATEGORY));
@@ -564,27 +579,29 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
 				gct.setName(this.getName().trim());
-				gct.setState(StaticKey.ONE);
-				gct.setPath(this.getParentId() + "," + gct.getGoodsCategoryTid());
+				gct.setState(DataUsingState.USING.getState());
+				gct.setPath(this.getParentId() + StaticKey.SPLITDOT + gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
 				gct.setGoodsTypeId(this.getGoodsTypeId());
-				gct.setCreatetime(BaseTools.systemtime());
+				gct.setCreatetime(BaseTools.getSystemTime());
 				gct.setCreatorid(BaseTools.getAdminCreateId());
-				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(0);
 				gct.setParentId(this.getParentId());
 				gct.setParentName(this.getParentName());
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().save(gct);
+				gct.setShopid(BaseTools.getShopId());
+				gct.setShopname(BaseTools.getShopName());
+				this.goodsCategoryTService.save(gct);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		} else {
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 
@@ -595,16 +612,19 @@ public class GoodsCategoryTAction extends BaseTAction {
 	public String updateGoodsCategoryTwo() {
 		//根据goodscategoryid读取商品分类信息
 		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
-			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
-		GoodsCategoryT gct=new GoodsCategoryT();
-		gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(goodsCategoryTid);
-		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(goodsCategoryTid, gct.getName());
-		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(goodsCategoryTid, gct.getSign());
+		GoodsCategoryT gct=this.goodsCategoryTService.findByPK(GoodsCategoryT.class, goodsCategoryTid);
+		if(gct==null){
+			return JSON;
+		}
+		Criterion criterion=Restrictions.and(Restrictions.eq("name", gct.getName())).add(Restrictions.ne("goodsCategoryTid", goodsCategoryTid));
+		GoodsCategoryT gname=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class,criterion);
+		Criterion criterion2=Restrictions.and(Restrictions.eq("sign", gct.getSign())).add(Restrictions.ne("goodsCategoryTid", goodsCategoryTid));
+		GoodsCategoryT gsign=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion2);
 		//判断更新的一级分类的名称和标示是否和其他分类重复
-		if (i == 0 && j == 0) {
+		if (gname==null && gsign==null) {
 			if (Integer.parseInt(this.getGrade()) ==1) {
 				gct.setGoodsTypeId(this.getGoodsTypeId());//商品类型id
 				gct.setParentId(this.getParentId().trim());
@@ -613,25 +633,27 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setName(this.getName().trim());
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
-				gct.setState(StaticKey.ONE);
-			    gct.setPath(this.getParentId() + "," + gct.getGoodsCategoryTid());//path代表了递归路径，要更新
+				gct.setState(DataUsingState.USING.getState());
+			    gct.setPath(this.getParentId() + StaticKey.SPLITDOT + gct.getGoodsCategoryTid());//path代表了递归路径，要更新
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
 				gct.setCreatorid(BaseTools.getAdminCreateId());
-				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+				gct.setShopid(BaseTools.getShopId());
+				gct.setShopname(BaseTools.getShopName());
+				this.goodsCategoryTService.update(gct);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		} else {
 			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 增加三级分类
@@ -640,9 +662,11 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "addGoodsCategoryThree", results = { @Result(name = "json", type = "json") })
 	public String addGoodsCategoryThree() {
-		int i = this.getGoodsCategoryTService().checkGoodscategoryName(this.getName());
-		int j = this.getGoodsCategoryTService().checkGoodscategorySign(this.getSign());
-		if (i == 0 && j == 0) {
+		Criterion criterion=Restrictions.eq("name", this.getName());
+		GoodsCategoryT gname=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion);
+		Criterion criterion2=Restrictions.eq("sign", this.getSign());
+		GoodsCategoryT gsign=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion2);
+		if (gname==null && gsign==null) {
 			if (Integer.parseInt(this.getGrade()) == 2) {
 				GoodsCategoryT gct = new GoodsCategoryT();
 				gct.setGoodsCategoryTid(this.getSerial().Serialid(Serial.GOODSCATEGORY));
@@ -650,27 +674,29 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
 				gct.setName(this.getName().trim());
-				gct.setState(StaticKey.ONE);
-				gct.setPath(this.getParentId() + "," + this.getParentId1() + "," + gct.getGoodsCategoryTid());
+				gct.setState(DataUsingState.USING.getState());
+				gct.setPath(this.getParentId() +StaticKey.SPLITDOT + this.getParentId1() + StaticKey.SPLITDOT + gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
 				gct.setGoodsTypeId(this.getGoodsTypeId());
-				gct.setCreatetime(BaseTools.systemtime());
+				gct.setCreatetime(BaseTools.getSystemTime());
 				gct.setCreatorid(BaseTools.getAdminCreateId());
-				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(0);
 				gct.setParentId(this.getParentId1());
 				gct.setParentName(this.getParentName1());
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().save(gct);
+				gct.setShopid(BaseTools.getShopId());
+				gct.setShopname(BaseTools.getShopName());
+				this.goodsCategoryTService.save(gct);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		} else {
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 
@@ -681,16 +707,19 @@ public class GoodsCategoryTAction extends BaseTAction {
 	public String updateGoodsCategoryThree() {
 		//根据goodscategoryid读取商品分类信息
 		if(StringUtils.isBlank(this.getGoodsCategoryTid())){
-			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 		String goodsCategoryTid=this.getGoodsCategoryTid().trim();
-		GoodsCategoryT gct=new GoodsCategoryT();
-		gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(goodsCategoryTid);
-		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(goodsCategoryTid, gct.getName());
-		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(goodsCategoryTid, gct.getSign());
+		GoodsCategoryT gct=this.goodsCategoryTService.findByPK(GoodsCategoryT.class, goodsCategoryTid);
+		if(gct==null){
+			return JSON;
+		}
+		Criterion criterion=Restrictions.and(Restrictions.eq("name", gct.getName())).add(Restrictions.ne("goodsCategoryTid", goodsCategoryTid));
+		GoodsCategoryT gname=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class,criterion);
+		Criterion criterion2=Restrictions.and(Restrictions.eq("sign", gct.getSign())).add(Restrictions.ne("goodsCategoryTid", goodsCategoryTid));
+		GoodsCategoryT gsign=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion2);
 		//判断更新的一级分类的名称和标示是否和其他分类重复
-		if (i == 0 && j == 0) {
+		if (gname==null && gsign==null) {
 			if (Integer.parseInt(this.getGrade()) == 2) {
 				gct.setGoodsTypeId(this.getGoodsTypeId());
 				gct.setParentId(this.getParentId1());
@@ -699,25 +728,27 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setName(this.getName().trim());
 				gct.setMetaKeywords(this.getMetaKeywords().trim());
 				gct.setMetaDes(this.getMetaDes().trim());
-				gct.setState(StaticKey.ONE);
-				gct.setPath(this.getParentId()+","+this.getParentId1()+","+gct.getGoodsCategoryTid());
+				gct.setState(DataUsingState.USING.getState());
+				gct.setPath(this.getParentId()+StaticKey.SPLITDOT+this.getParentId1()+StaticKey.SPLITDOT+gct.getGoodsCategoryTid());
 				gct.setSort(Integer.parseInt(this.getSort().trim()));
 				gct.setSign(this.getSign().trim());
 				gct.setCreatorid(BaseTools.getAdminCreateId());
-				gct.setUpdatetime(BaseTools.systemtime());
+				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
 				gct.setMobilesync(this.getMobilesync());
-				this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+				gct.setShopid(BaseTools.getShopId());
+				gct.setShopname(BaseTools.getShopName());
+				this.goodsCategoryTService.update(gct);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		} else {
 			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
 		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 获取所有商品分类
@@ -733,38 +764,36 @@ public class GoodsCategoryTAction extends BaseTAction {
 //				if("name".equals(this.getQtype())){
 //					this.findGoodsCategoryByName();
 //				}
-				return "json";
+				return JSON;
 			} else {
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	private void findDefaultAllGoodsCategoryT() {
 		int currentPage = page;
 		int lineSize = rp;
-		String state = StaticKey.ONE;
-		total = this.getGoodsCategoryTService().countfindAllGoodsCategoryT(state);
-		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
-			String queryString = "from GoodsCategoryT as gt where state=:state order by " + getSortname() + " " + getSortorder() + " ";
-			List<GoodsCategoryT> list = this.getGoodsCategoryTService().sortAllGoodsCategoryT(currentPage, lineSize, state, queryString);
-			if(!list.isEmpty()){
-				this.ProcessGoodsCategoryTList(list);
+		String state = DataUsingState.USING.getState();
+		Criterion criterion=Restrictions.eq("state", state);
+		total = this.goodsCategoryTService.count(GoodsCategoryT.class, criterion).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
 			}
+			List<GoodsCategoryT>list=this.goodsCategoryTService.findByCriteriaByPage(GoodsCategoryT.class, criterion, order, currentPage, lineSize);
+			this.processGoodsCategoryTList(list);
 		}
 	}
 
-	public void ProcessGoodsCategoryTList(List<GoodsCategoryT> list) {
+	public void processGoodsCategoryTList(List<GoodsCategoryT> list) {
 		for (Iterator<GoodsCategoryT> it = list.iterator(); it.hasNext();) {
 			GoodsCategoryT gct = (GoodsCategoryT) it.next();
-			if (gct.getGrade().equals(StaticKey.ZERO)) {
-				gct.setGrade(StaticKey.TOPCA);
-			} else if (gct.getGrade().equals(StaticKey.ONE)) {
-				gct.setGrade(StaticKey.TWOCA);
-			} else {
-				gct.setGrade(StaticKey.THREECA);
-			}
+			gct.setGrade(CategoryGrade.getName(gct.getGrade()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gct.getGoodsCategoryTid());
 			cellMap.put("cell", new Object[] {"<a href='goodscategory.jsp?operate=edit&folder=goods&goodsCategoryTid=" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</a>", gct.getParentName(), gct.getGrade(), gct.getSign(), gct.getSort(), BaseTools.formateDbDate(gct.getCreatetime()), gct.getCreatorid(), "<a href='goodscategory.jsp?operate=edit&goods&goodsCategoryTid=" + gct.getGoodsCategoryTid() + "'>编辑</a>" });
@@ -780,15 +809,16 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodscategoryBygoodscategoryId", results = { @Result(name = "json", type = "json") })
 	public String findGoodscategoryBygoodscategoryId() {
-		if (Validate.StrNotNull(this.getGoodsCategoryTid())) {
-			bean = this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(this.getGoodsCategoryTid());
+		if (StringUtils.isNotBlank(this.getGoodsCategoryTid())) {
+			bean = this.goodsCategoryTService.findByPK(GoodsCategoryT.class, this.getGoodsCategoryTid());
 			if (bean != null) {
 				//bean.setLogo(BaseTools.getBasePath()+bean.getLogo());
 				this.setBasepath(BaseTools.getBasePath());
-				return "json";
+				this.setSucflag(true);
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -800,12 +830,18 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodscategoryT", results = { @Result(name = "json", type = "json") })
 	public String updateGoodscategoryT() throws IOException, TemplateException {
-		int i = this.getGoodsCategoryTService().checkGoodscategoryNamewithoutMe(this.getGoodsCategoryTid().trim(), this.getName().trim());
-		int j = this.getGoodsCategoryTService().checkGoodscategorySignwithoutMe(this.getGoodsCategoryTid().trim(), this.getSign().trim());
-		if (i == 0 && j == 0) {
-			
-			GoodsCategoryT gct = new GoodsCategoryT();
-			gct=this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(this.getGoodsCategoryTid());
+		if(StringUtils.isBlank(this.getName())&&StringUtils.isBlank(this.getSign())&&StringUtils.isBlank(this.getGoodsCategoryTid())){
+			return JSON;
+		}
+		GoodsCategoryT gct =this.goodsCategoryTService.findByPK(GoodsCategoryT.class, this.getGoodsCategoryTid());
+		if(gct==null){
+			return JSON;
+		}
+		Criterion criterion=Restrictions.and(Restrictions.eq("name", this.getName())).add(Restrictions.ne("goodsCategoryTid", this.getGoodsCategoryTid()));
+		GoodsCategoryT gname=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class,criterion);
+		Criterion criterion2=Restrictions.and(Restrictions.eq("sign", this.getSign())).add(Restrictions.ne("goodsCategoryTid",this.getGoodsCategoryTid()));
+		GoodsCategoryT gsign=this.goodsCategoryTService.findOneByCriteria(GoodsCategoryT.class, criterion2);
+		if (gname== null && gsign == null) {
 			gct.setName(this.getName().trim());
 			gct.setGoodsTypeId(this.getGoodsTypeId().trim());
 			gct.setSign(this.getSign().trim());
@@ -813,21 +849,22 @@ public class GoodsCategoryTAction extends BaseTAction {
 			gct.setMetaKeywords(this.getMetaKeywords());
 			gct.setMetaDes(this.getMetaDes());
 			gct.setGoodsCategoryTid(this.getGoodsCategoryTid());
-			gct.setCreatetime(BaseTools.systemtime());
+			gct.setCreatetime(BaseTools.getSystemTime());
 			gct.setCreatorid(BaseTools.getAdminCreateId());
-			gct.setUpdatetime(BaseTools.systemtime());
+			gct.setUpdatetime(BaseTools.getSystemTime());
 			gct.setVersiont(0);
 			gct.setLogo(this.getLogo());
 			gct.setMobilesync(this.getMobilesync());
-			this.getGoodsCategoryTService().updateGoodscategoryT(gct);
+			gct.setShopid(BaseTools.getShopId());
+			gct.setShopname(BaseTools.getShopName());
+			this.goodsCategoryTService.update(gct);
 			this.setSucflag(true);
 			bean=gct;
-			return "json";
+			return JSON;
 		} else {
 			this.setSucflag(false);
-			return "json";
+			return JSON;
 		}
-
 	}
 
 	/**
@@ -837,7 +874,11 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 * @param htmlPath
 	 */
 	public void updateHtmlPath(String goodsCategoryTid, String htmlpath) {
-		this.getGoodsCategoryTService().updateHtmlPath(goodsCategoryTid, htmlpath);
+		GoodsCategoryT gct=this.goodsCategoryTService.findByPK(GoodsCategoryT.class, goodsCategoryTid);
+		if(gct!=null){
+			gct.setHtmlpath(htmlpath);;
+			this.goodsCategoryTService.update(gct);
+		}
 	}
 
 	/**
@@ -848,43 +889,42 @@ public class GoodsCategoryTAction extends BaseTAction {
 	@Action(value = "delGoodscategoryT", results = { @Result(name = "json", type = "json") })
 	public String delGoodscategoryT() {
 		if (StringUtils.isNotBlank(this.getGoodsCategoryTid())) {
-			String[]strs=StringUtils.split(this.getGoodsCategoryTid().trim(), ",");
-			if(this.getGoodsCategoryTService().delGoodscategoryT(strs)>0){
-				//更新商品分类的静态页路径
-				updateGoodsCategoryhtmlpath();
+			String[]strs=StringUtils.split(this.getGoodsCategoryTid().trim(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsCategoryT gct=this.goodsCategoryTService.findByPK(GoodsCategoryT.class, s);
+				if(gct!=null){
+					this.goodsCategoryTService.delete(gct);
+				}
 			}
-//			for (int i = 0; i < strs.length; i++) {
-//				bean = this.getGoodsCategoryTService().findGoodscategoryBygoodscategoryId(strs[i]);
-//				if (bean != null) {
-//					if (bean.getGrade().equals("0")) {
-//						this.setSucflag(false);
-//						return "json";
-//					} else {
-//						int j = this.getGoodsCategoryTService().delGoodscategoryT(strs[i], "0");
-//						if (j > 0) {
-//							this.setSucflag(true);
-//							return "json";
-//						}
-//					}
-//				}
-//			}
+			this.setSucflag(true);
+			//更新商品分类的静态页路径
+			updateGoodsCategoryhtmlpath();
 		}
-		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 	
 	/**
 	 * 更新商品分类的静态页路径
 	 */
-	public void updateGoodsCategoryhtmlpath(){
-		List<GoodsCategoryT>list=this.getGoodsCategoryTService().findGoodsCategoryByGrade("0","1");
+	private void updateGoodsCategoryhtmlpath(){
+		Criterion criterion=Restrictions.and(Restrictions.eq("grade", CategoryGrade.FIRST.getState())).add(Restrictions.eq("state", DataUsingState.USING.getState()));
+		List<GoodsCategoryT>list=this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class, criterion);
 		for(Iterator<GoodsCategoryT> it=list.iterator();it.hasNext();){
 			GoodsCategoryT gct=(GoodsCategoryT)it.next();
-			List<GoodsCategoryT>glist=this.getGoodsCategoryTService().findGoodscategoryByparentId("1",gct.getParentId());
+			Criterion criterion2=Restrictions.and(Restrictions.eq("parentId", gct.getParentId())).add(Restrictions.eq("state", DataUsingState.USING.getState()));
+			List<GoodsCategoryT>glist=this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class, criterion2);
 			if(glist.isEmpty()){
-				this.getGoodsCategoryTService().updateHtmlPath(gct.getParentId(), "");
+				updateHtmlPath(glist);
 			}
+		}
+	}
+	
+	private void updateHtmlPath(List<GoodsCategoryT>list){
+		for(Iterator<GoodsCategoryT> it=list.iterator();it.hasNext();){
+			GoodsCategoryT gct=(GoodsCategoryT)it.next();
+			gct.setHtmlpath(StaticKey.EMPTY);
+			this.goodsCategoryTService.update(gct);
 		}
 	}
 
@@ -895,20 +935,18 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodscategoryNavid", results = { @Result(name = "json", type = "json") })
 	public String findGoodscategoryNavid() {
-
-		this.setNavidlist("");
-		this.goodstypetnav = this.getGoodsCategoryTService().findGoodscategoryByparentIdnull("1");
-		if (this.goodstypetnav != null) {
+		this.setNavidlist(StaticKey.EMPTY);
+		Criterion criterion=Restrictions.eq("grade", CategoryGrade.FIRST.getState());
+		this.goodstypetnav = this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class, criterion);
+		if(!goodstypetnav.isEmpty()){
 			for (Iterator<GoodsCategoryT> it = goodstypetnav.iterator(); it.hasNext();) {
-				GoodsCategoryT gct = (GoodsCategoryT) it.next();
+				GoodsCategoryT gct = it.next();
 				navidlist += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 			}
-			this.setNavidlist(navidlist);
-			this.setSucflag(true);
-			return "json";
 		}
-		this.setSucflag(false);
-		return "json";
+		this.setNavidlist(navidlist);
+		this.setSucflag(true);
+		return JSON;
 	}
 
 	/**
@@ -918,25 +956,25 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodscategoryLtypeid", results = { @Result(name = "json", type = "json") })
 	public String findGoodscategoryLtypeid() {
-		if (Validate.StrNotNull(this.getParentId())) {
-			this.setLtypeidlist("");
-			this.secondcategory = this.getGoodsCategoryTService().findGoodscategoryByparentId("1", this.getParentId().trim());
-			if (this.secondcategory != null) {
+		if (StringUtils.isNotBlank(this.getParentId())) {
+			this.setLtypeidlist(StaticKey.EMPTY);
+			Criterion criterion=Restrictions.and(Restrictions.eq("parentId", this.getParentId())).add(Restrictions.eq("state", DataUsingState.USING.getState()));
+			this.secondcategory = this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class, criterion);
+			if (!this.secondcategory.isEmpty()) {
 				this.ltypeidlist = "<option value='0'>---请选择---</option>";
 				for (Iterator<GoodsCategoryT> it = this.secondcategory.iterator(); it.hasNext();) {
-					GoodsCategoryT gct = (GoodsCategoryT) it.next();
+					GoodsCategoryT gct = it.next();
 					ltypeidlist += "<option value='" + gct.getGoodsCategoryTid() + "'>" + gct.getName() + "</option>";
 				}
 				this.setLtypeidlist(ltypeidlist);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
-			this.setLtypeidlist("");
+			this.setLtypeidlist(StaticKey.EMPTY);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -946,10 +984,10 @@ public class GoodsCategoryTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodscategoryStypeid", results = { @Result(name = "json", type = "json") })
 	public String findGoodscategoryStypeid() {
-
-		if (Validate.StrNotNull(this.getParentId())) {
-			this.setLtypeidlist("");
-			this.thiredscategory = this.getGoodsCategoryTService().findGoodscategoryByparentId("1", this.getParentId().trim());
+		if (StringUtils.isNotBlank(this.getParentId())) {
+			this.setLtypeidlist(StaticKey.EMPTY);
+			Criterion criterion=Restrictions.and(Restrictions.eq("parentId", this.getParentId())).add(Restrictions.eq("state", DataUsingState.USING.getState()));
+			this.thiredscategory = this.goodsCategoryTService.findByCriteria(GoodsCategoryT.class, criterion);
 			if (this.thiredscategory != null) {
 				this.stypeidlist = "<option value='-1'>---请选择---</option>";
 				for (Iterator<GoodsCategoryT> it = this.thiredscategory.iterator(); it.hasNext();) {
@@ -958,13 +996,12 @@ public class GoodsCategoryTAction extends BaseTAction {
 				}
 				this.setStypeidlist(stypeidlist);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
-			this.setStypeidlist("");
+			this.setStypeidlist(StaticKey.EMPTY);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 }

@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -24,6 +26,7 @@ import com.jshop.entity.ShippingAddressT;
 import com.jshop.entity.UserT;
 import com.jshop.service.GroupCartService;
 import com.jshop.service.GroupOrderTService;
+import com.jshop.service.LogisticsBTService;
 import com.jshop.service.LogisticsBusinessTService;
 import com.jshop.service.ShippingAddressTService;
 import com.jshop.service.UsertService;
@@ -32,11 +35,16 @@ import com.opensymphony.xwork2.ActionContext;
 @ParentPackage("jshop")
 public class GoodsGroupTOrderAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GroupOrderTService groupOrderTService;
+	@Resource
 	private UsertService usertService;
+	@Resource
 	private ShippingAddressTService shippingAddressTService;
+	@Resource
 	private GroupCartService groupCartService;
-	private LogisticsBusinessTService logisticsBusinessTService;
+	@Resource
+	private LogisticsBTService logisticsBTService;
 	private String orderid;
 	private String userid;
 	private String username;
@@ -83,14 +91,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	private String logisticsname;
 	private String formatedeliverytime;//格式化的发货时间
 	private Map<String, Object> map = new HashMap<String, Object>();
-	@JSON(serialize=false)
-	public LogisticsBusinessTService getLogisticsBusinessTService() {
-		return logisticsBusinessTService;
-	}
-	public void setLogisticsBusinessTService(
-			LogisticsBusinessTService logisticsBusinessTService) {
-		this.logisticsBusinessTService = logisticsBusinessTService;
-	}
+	
 	@JSON(serialize=false)
 	public GroupCartService getGroupCartService() {
 		return groupCartService;

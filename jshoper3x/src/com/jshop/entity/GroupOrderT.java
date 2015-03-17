@@ -6,13 +6,13 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the `group_order _t` database table.
+ * The persistent class for the group_order_t database table.
  * 
  */
 @Entity
-@Table(name="`group_order _t`")
-@NamedQuery(name="GroupOrder_T.findAll", query="SELECT g FROM GroupOrder_T g")
-public class GroupOrder_T implements Serializable {
+@Table(name="group_order_t")
+@NamedQuery(name="GroupOrderT.findAll", query="SELECT g FROM GroupOrderT g")
+public class GroupOrderT implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String orderid;
 	private double amount;
@@ -52,7 +52,7 @@ public class GroupOrder_T implements Serializable {
 	private String username;
 	private String vouchersid;
 
-	public GroupOrder_T() {
+	public GroupOrderT() {
 	}
 
 

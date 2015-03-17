@@ -28,6 +28,8 @@ public class GoodsCategoryT implements Serializable {
 	private String parentId;
 	private String parentName;
 	private String path;
+	private String shopid;
+	private String shopname;
 	private String sign;
 	private int sort;
 	private String state;
@@ -169,6 +171,24 @@ public class GoodsCategoryT implements Serializable {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
 	}
 
 

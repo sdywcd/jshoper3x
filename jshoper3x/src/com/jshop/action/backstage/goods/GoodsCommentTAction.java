@@ -7,16 +7,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.DataShowState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsCommentReplyType;
+import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsCommentType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCommentT;
 import com.jshop.entity.GoodsT;
@@ -28,7 +35,9 @@ import com.jshop.service.impl.Serial;
 @ParentPackage("jshop")
 public class GoodsCommentTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GoodsCommentTService goodsCommentTService;
+	@Resource
 	private GoodsTService goodsTService;
 	private String commentid;
 	private String goodsid;
@@ -51,25 +60,6 @@ public class GoodsCommentTAction extends BaseTAction {
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
-
-	@JSON(serialize = false)
-	public GoodsCommentTService getGoodsCommentTService() {
-		return goodsCommentTService;
-	}
-
-	public void setGoodsCommentTService(
-			GoodsCommentTService goodsCommentTService) {
-		this.goodsCommentTService = goodsCommentTService;
-	}
-
-	@JSON(serialize = false)
-	public GoodsTService getGoodsTService() {
-		return goodsTService;
-	}
-
-	public void setGoodsTService(GoodsTService goodsTService) {
-		this.goodsTService = goodsTService;
-	}
 
 	public String getCommentid() {
 		return commentid;
@@ -256,7 +246,7 @@ public class GoodsCommentTAction extends BaseTAction {
 	@Action(value = "addvirtualGoodsComment", results = { @Result(name = "json", type = "json") })
 	public String addvirtualGoodsComment() {
 		if (StringUtils.isBlank(this.getGoodsid())) {
-			return "json";
+			return JSON;
 		}
 		GoodsCommentT gct = new GoodsCommentT();
 		gct.setCommentid(this.getSerial().Serialid(Serial.GOODSCOMMENT));
@@ -264,7 +254,7 @@ public class GoodsCommentTAction extends BaseTAction {
 		gct.setGoodsname(this.getGoodsname().trim());
 		gct.setReplyorcommentusername(this.getReplyorcommentusername());
 		gct.setReplyorcommentuserid(BaseTools.getAdminCreateId());
-		gct.setPosttime(BaseTools.systemtime());
+		gct.setPosttime(BaseTools.getSystemTime());
 		gct.setCommentcontent(this.getCommentcontent());
 		gct.setScore(this.getScore());
 		gct.setState(StaticKey.COMMENT_STATE_ONE_NUM);
@@ -272,9 +262,9 @@ public class GoodsCommentTAction extends BaseTAction {
 		gct.setReplyid(StaticKey.COMMENT_DEFAULT_REPLYID);
 		gct.setEmailable(StaticKey.COMMENT_EMAILABLE_ONE_NUM);
 		gct.setVirtualadd(StaticKey.COMMENT_VIRTUALADD_ONE_NUM);
-		this.getGoodsCommentTService().save(gct);
+		this.goodsCommentTService.save(gct);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -285,17 +275,16 @@ public class GoodsCommentTAction extends BaseTAction {
 	@Action(value = "updateGoodsComment", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsComment() {
 		if (StringUtils.isBlank(this.getCommentid())) {
-			return "json";
+			return JSON;
 		}
-		bean = this.getGoodsCommentTService().findGoodsCommentById(
-				this.getCommentid());
+		bean = this.goodsCommentTService.findByPK(GoodsCommentT.class, this.getCommentid());
 		bean.setReplyorcommentusername(this.getReplyorcommentusername());
 		bean.setReplyorcommentuserid(BaseTools.getAdminCreateId());
 		bean.setCommentcontent(this.getCommentcontent());
 		bean.setScore(this.getScore());
-		this.getGoodsCommentTService().updateGoodsComment(bean);
-		// this.setSucflag(true);
-		return "json";
+		this.goodsCommentTService.update(bean);
+		this.setSucflag(true);
+		return JSON;
 
 	}
 
@@ -304,11 +293,11 @@ public class GoodsCommentTAction extends BaseTAction {
 	 * 
 	 * @param gct
 	 */
-	public void ProcessGoodsCommentList(List<GoodsCommentT> gct) {
-		total = this.getGoodsCommentTService().countfindAllGoodsComment();
+	public void processGoodsCommentList(List<GoodsCommentT> gct) {
+	
 		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
-			gctt.setState(StaticKey.DataShowState.getName(gctt.getState()));
+			gctt.setState(DataShowState.getName(gctt.getState()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gctt.getGoodsid());
 			cellMap.put(
@@ -331,11 +320,10 @@ public class GoodsCommentTAction extends BaseTAction {
 	public void finddefaultAllGoodsComment() {
 		int currentPage = page;
 		int lineSize = rp;
-		List<GoodsCommentT> gct = this.getGoodsCommentTService()
-				.findAllGoodsComment(currentPage, lineSize);
-		if (gct != null) {
-			ProcessGoodsCommentList(gct);
-		}
+		total = this.goodsCommentTService.count(GoodsCommentT.class).intValue();
+		Order order=Order.desc("posttime");
+		List<GoodsCommentT> gct = this.goodsCommentTService.findByCriteriaByPage(GoodsCommentT.class, order, currentPage, lineSize);
+		processGoodsCommentList(gct);
 	}
 
 	/**
@@ -345,15 +333,15 @@ public class GoodsCommentTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoodsComment", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsComment() {
-		if ("sc".equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			// 获取默认的所有商品评论
 			this.setTotal(0);
 			rows.clear();
 			finddefaultAllGoodsComment();
 		} else {
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -364,14 +352,17 @@ public class GoodsCommentTAction extends BaseTAction {
 	@Action(value = "delGoodsComment", results = { @Result(name = "json", type = "json") })
 	public String delGoodsComment() {
 		if (StringUtils.isNotBlank(this.getCommentid())) {
-			String[] strs = StringUtils.split(this.getCommentid(), ",");
-			if (this.getGoodsCommentTService().delGoodsComment(strs) > 0) {
-				this.setSucflag(true);
-				return "json";
+			String[] strs = StringUtils.split(this.getCommentid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsCommentT gct=this.goodsCommentTService.findByPK(GoodsCommentT.class, s);
+				if(gct!=null){
+					this.goodsCommentTService.delete(gct);
+				}
 			}
-			return "json";
+			this.setSucflag(true);
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -385,25 +376,23 @@ public class GoodsCommentTAction extends BaseTAction {
 			this.finddefaultAllGoodsCommentByGoodsId();
 		} else {
 			if (StringUtils.isBlank(this.getQuery())) {
-				return "json";
+				return JSON;
 			} else {
 
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	private void finddefaultAllGoodsCommentByGoodsId() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getGoodsCommentTService().countfindGoodsCommentByGoodsid(
-				this.getGoodsid());
-		List<GoodsCommentT> list = this.getGoodsCommentTService()
-				.findGoodsCommentByGoodsid(this.getGoodsid(), currentPage,
-						lineSize);
-		ProcessGoodsCommentListByGoodsid(list);
-
+		Criterion criterion=Restrictions.eq("goodsid", this.getGoodsid());
+		Order order=Order.desc("posttime");
+		total = this.goodsCommentTService.count(GoodsCommentT.class, criterion).intValue();
+		List<GoodsCommentT> list = this.goodsCommentTService.findByCriteriaByPage(GoodsCommentT.class, criterion, order, currentPage, lineSize);
+		processGoodsCommentListByGoodsid(list);
 	}
 
 	/**
@@ -411,23 +400,12 @@ public class GoodsCommentTAction extends BaseTAction {
 	 * 
 	 * @param gct
 	 */
-	public void ProcessGoodsCommentListByGoodsid(List<GoodsCommentT> gct) {
-		total = this.getGoodsCommentTService().countfindAllGoodsComment();
+	public void processGoodsCommentListByGoodsid(List<GoodsCommentT> gct) {
 		for (Iterator<GoodsCommentT> it = gct.iterator(); it.hasNext();) {
 			GoodsCommentT gctt = (GoodsCommentT) it.next();
-			gctt.setState(StaticKey.DataShowState.getName(gctt.getState()));
-			if (gctt.getVirtualadd().equals(
-					StaticKey.COMMENT_VIRTUALADD_ONE_NUM)) {
-				gctt.setVirtualadd(StaticKey.COMMENT_VIRTULADD);
-			} else {
-				gctt.setVirtualadd(StaticKey.COMMENT_NOTVIRTULADD);
-			}
-			if (gctt.getReplyorcomment()
-					.equals(StaticKey.COMMENT_REPLY_ONE_NUM)) {
-				gctt.setReplyorcomment(StaticKey.COMMENT_REPLY_ONE);
-			} else {
-				gctt.setReplyorcomment(StaticKey.COMMENT_REPLY_TWO);
-			}
+			gctt.setState(DataShowState.getName(gctt.getState()));
+			gctt.setVirtualadd(GoodsCommentType.getName(gctt.getVirtualadd()));
+			gctt.setReplyorcomment(GoodsCommentReplyType.getName(gctt.getReplyorcomment()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gctt.getCommentid());
 			cellMap.put(
@@ -454,20 +432,20 @@ public class GoodsCommentTAction extends BaseTAction {
 	 */
 	@Action(value = "getGoodscommentDetails", results = { @Result(name = "json", type = "json") })
 	public String getGoodscommentDetails() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
 			String goodsid = this.getGoodsid().trim();
 			int currentPage = 1;
-			int lineSize = 65535;
-			List<GoodsCommentT> list = this.getGoodsCommentTService()
-					.findGoodsCommentByGoodsid(goodsid, currentPage, lineSize);
+			int lineSize = 1000;
+			Criterion criterion=Restrictions.eq("goodsid", goodsid);
+			Order order=Order.desc("posttime");
+			List<GoodsCommentT> list = this.goodsCommentTService.findByCriteriaByPage(GoodsCommentT.class, criterion, order, currentPage, lineSize);
 			if (!list.isEmpty()) {
 				this.setBeanlist(list);
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -477,17 +455,20 @@ public class GoodsCommentTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsCommentorReplyByState", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsCommentorReplyByState() {
-		if (Validate.StrNotNull(this.getCommentid())) {
-			String[] strs = StringUtils.split(this.getCommentid().trim(), ',');
+		if (StringUtils.isNotBlank(this.getCommentid())) {
+			String[] strs = StringUtils.split(this.getCommentid().trim(), StaticKey.SPLITDOT);
 			String state = this.getState().trim();
-			this.getGoodsCommentTService().updateGoodsCommentorReplyByState(
-					state, strs);
+			for(String s:strs){
+				GoodsCommentT gct=this.goodsCommentTService.findByPK(GoodsCommentT.class, s);
+				if(gct!=null){
+					gct.setState(state);
+					this.goodsCommentTService.update(gct);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-
+			return JSON;
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -498,15 +479,14 @@ public class GoodsCommentTAction extends BaseTAction {
 	@Action(value = "findGoodsCommentById", results = { @Result(name = "json", type = "json") })
 	public String findGoodsCommentById() {
 		if (StringUtils.isBlank(this.getCommentid())) {
-			return "json";
+			return JSON;
 		}
-		bean = this.getGoodsCommentTService().findGoodsCommentById(
-				this.getCommentid());
+		bean = this.goodsCommentTService.findByPK(GoodsCommentT.class, this.getCommentid());
 		if (bean != null) {
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 
 }

@@ -7,14 +7,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.service.GoodsGroupTService;
 import com.jshop.service.impl.Serial;
@@ -23,7 +30,8 @@ import com.jshop.service.impl.Serial;
 public class GoodsGroupTAction extends BaseTAction {
 
 	private static final long serialVersionUID = 1L;
-	public GoodsGroupTService goodsGroupTService;
+	@Resource
+	private GoodsGroupTService goodsGroupTService;
 	private String pictureurl;
 	private String groupid;
 	private String goodsid;
@@ -48,16 +56,10 @@ public class GoodsGroupTAction extends BaseTAction {
 	private int total=0;
 	private int page=1;
 	private int rp;
-	private boolean goodsgroup =false;
+	private boolean sucflag;
 	private GoodsGroupT groupList= new GoodsGroupT();
 	private List<Map<String,Object>> rows= new ArrayList<Map<String,Object>>();
-	@JSON(serialize=false)
-	public GoodsGroupTService getGoodsGroupTService() {
-		return goodsGroupTService;
-	}
-	public void setGoodsGroupTService(GoodsGroupTService goodsGroupTService) {
-		this.goodsGroupTService = goodsGroupTService;
-	}
+	
 	public String getGroupid() {
 		return groupid;
 	}
@@ -185,12 +187,6 @@ public class GoodsGroupTAction extends BaseTAction {
 		this.rp = rp;
 	}
 
-	public boolean isGoodsgroup() {
-		return goodsgroup;
-	}
-	public void setGoodsgroup(boolean goodsgroup) {
-		this.goodsgroup = goodsgroup;
-	}
 	public GoodsGroupT getGroupList() {
 		return groupList;
 	}
@@ -221,6 +217,13 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setGroupprice(double groupprice) {
 		this.groupprice = groupprice;
 	}
+	
+	public boolean isSucflag() {
+		return sucflag;
+	}
+	public void setSucflag(boolean sucflag) {
+		this.sucflag = sucflag;
+	}
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();
@@ -235,7 +238,7 @@ public class GoodsGroupTAction extends BaseTAction {
 		GoodsGroupT ggt = new GoodsGroupT();		
 		ggt.setGroupid(this.getSerial().Serialid(Serial.GOODSGROUPT));
 		ggt.setGoodsid(this.getGoodsid().trim());
-		ggt.setCreatetime(BaseTools.systemtime());
+		ggt.setCreatetime(BaseTools.getSystemTime());
 		ggt.setGoodsname(this.getGoodsname().trim());
 		ggt.setCreatorid(BaseTools.getAdminCreateId());
 		ggt.setState(this.getState().trim());
@@ -253,22 +256,20 @@ public class GoodsGroupTAction extends BaseTAction {
 		ggt.setMemberprice(this.getMemberprice());
 		ggt.setDetail(this.getDetail().trim());		
 		ggt.setPictureurl(this.getPictureurl());
-		ggt.setHtmlpath(" ");
-		this.getGoodsGroupTService().save(ggt);
-		this.setGoodsgroup(true);
-		return "json";			
-		
+		ggt.setHtmlpath(StaticKey.EMPTY);
+		this.goodsGroupTService.save(ggt);
+		this.setSucflag(true);
+		return JSON;			
 	}
 
 	/**
 	 * 处理迭代商品信息
 	 * @param ggtList
 	 */
-	public void ProcessGoodsGroupTList(List<GoodsGroupT> ggtList){
-		total = this.getGoodsGroupTService().countAllGoodsGroupT();
+	public void processGoodsGroupTList(List<GoodsGroupT> ggtList){
 		rows.clear();
 		for(Iterator<GoodsGroupT> it = ggtList.iterator();it.hasNext();){
-			GoodsGroupT ggt =(GoodsGroupT) it.next();
+			GoodsGroupT ggt =it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", ggt.getGroupid());
 			cellMap.put("cell", new Object[]{
@@ -297,15 +298,17 @@ public class GoodsGroupTAction extends BaseTAction {
 	public  void defaultfindAllGoodsGroupT(){
 		int currentPage= page;
 		int lineSize = rp;
-		if(Validate.StrNotNull(getSortname())&&Validate.StrNotNull(getSortorder())){
-			String queryString = "from GoodsGroupT  order by "+getSortname()+" "+ getSortorder() +"";
-			List<GoodsGroupT> list = this.getGoodsGroupTService().sortAllGoodsGroup(currentPage, lineSize, queryString);
-			if(!list.isEmpty()){
-				ProcessGoodsGroupTList(list);
+		total = this.goodsGroupTService.count(GoodsGroupT.class).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
 			}
-			
+			List<GoodsGroupT> list = this.goodsGroupTService.findByCriteriaByPage(GoodsGroupT.class, order, currentPage, lineSize);
+			processGoodsGroupTList(list);
 		}
-		
 	}
 	/**
 	 * 获取所有团购商品的信息
@@ -313,18 +316,16 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="findAllGoodsGroupT",results={@Result(name="json",type="json")})
 	public String findAllGoodsGroupT(){
-		if(this.getQtype().equals("sc")){
+		if(this.getQtype().equals(StaticKey.SC)){
 			defaultfindAllGoodsGroupT();
 		}else{
-			if(Validate.StrisNull(this.getQtype())){
-				return "json";
+			if(StringUtils.isBlank(this.getQtype())){
+				return JSON;
 			}else{
-				return "json";
+				return JSON;
 			}
-			
 		}
-		return "json";
-		
+		return JSON;
 	}
 	/**
 	 * 根据groupid 获取团购商品信息
@@ -332,13 +333,14 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="findGoodsGroupById",results={@Result(name="json",type="json")})
 	public String findGoodsGroupById(){
-		if(Validate.StrNotNull(this.getGroupid())){
-			groupList= this.getGoodsGroupTService().findGoodsGroupById(this.getGroupid().trim());
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			groupList= this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
 			if(groupList!=null){
-			return "json";
+				this.setSucflag(true);
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 修改团购商品的信息
@@ -346,31 +348,32 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="updateGoodsGroup",results={@Result(name="json",type="json")})
 	public String updateGoodsGroup(){
-		GoodsGroupT ggt = new GoodsGroupT();
-		ggt.setGroupid(this.getGroupid().trim());
-		ggt.setBegintime(this.getBegintime());
-		ggt.setEndtime(this.getEndtime());
-		ggt.setDetail(this.getDetail().trim());
-		ggt.setCashlimit(this.getCashlimit());
-		ggt.setCashstate(this.getCashstate().trim());
-		ggt.setLimitbuy(this.getLimitbuy());
-//		ggt.setGoodsid(this.getGoodsid().trim());
-		ggt.setCreatetime(BaseTools.systemtime());
-		ggt.setGoodsname(this.getGoodsname().trim());
-		ggt.setState(this.getState().trim());
-		ggt.setSalequantity(this.getSalequantity());
-//		ggt.setSOrderCount(0);
-//		ggt.setTotalOrderCount(0);
-		ggt.setSendpoint(this.getSendpoint());
-		ggt.setGroupprice(this.getGroupprice());
-		ggt.setMemberprice(this.getMemberprice());
-		ggt.setPictureurl(this.getPictureurl());
-		if(this.getGoodsGroupTService().updateGoodsGroupT(ggt)>0){
-			this.setGoodsgroup(true);
-			return "json";
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			GoodsGroupT ggt=this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
+			if(ggt!=null){
+				ggt.setBegintime(this.getBegintime());
+				ggt.setEndtime(this.getEndtime());
+				ggt.setDetail(this.getDetail().trim());
+				ggt.setCashlimit(this.getCashlimit());
+				ggt.setCashstate(this.getCashstate().trim());
+				ggt.setLimitbuy(this.getLimitbuy());
+//				ggt.setGoodsid(this.getGoodsid().trim());
+				ggt.setCreatetime(BaseTools.getSystemTime());
+				ggt.setGoodsname(this.getGoodsname().trim());
+				ggt.setState(this.getState().trim());
+				ggt.setSalequantity(this.getSalequantity());
+//				ggt.setSOrderCount(0);
+//				ggt.setTotalOrderCount(0);
+				ggt.setSendpoint(this.getSendpoint());
+				ggt.setGroupprice(this.getGroupprice());
+				ggt.setMemberprice(this.getMemberprice());
+				ggt.setPictureurl(this.getPictureurl());
+				this.goodsGroupTService.update(ggt);
+				this.setSucflag(true);
+				return JSON;
+			}
 		}
-			return "json";
-		
+		return JSON;
 	}
 	/**
 	 * 根据groupid批量删除团购商品
@@ -378,14 +381,17 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="delGoodsGroup",results={@Result(name="json",type="json")})
 	public String delGoodsGroup(){
-		if(Validate.StrNotNull(this.getGroupid())){
-			String [] s = this.getGroupid().trim().split(",");
-			this.getGoodsGroupTService().delGoodsGroupT(s);
-				this.setGoodsgroup(true);
-				return "json";
-			
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String []strs = StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsGroupT ggt=this.goodsGroupTService.findByPK(GoodsGroupT.class, s);
+				if(ggt!=null){
+					this.goodsGroupTService.delete(ggt);
+				}
+			}
+			this.setSucflag(true);
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 修改团购状态
@@ -393,11 +399,16 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="updateState",results={@Result(name="json",type="json")})
 	public String updateState(){
-		GoodsGroupT ggt = new GoodsGroupT();
-		ggt.setGroupid(this.getGroupid().trim());
-		ggt.setState("2");
-		this.getGoodsGroupTService().updateState(ggt);
-		return "json";
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			GoodsGroupT ggt=this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
+			if(ggt!=null){
+				ggt.setState("2");
+				this.goodsGroupTService.update(ggt);
+				this.setSucflag(true);
+			}
+		}
+		return JSON;
+		
 	}
 	/**
 	 * 根据团购商品状态是“1”的 获取商品信息
@@ -405,11 +416,13 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="findGoodsGroupByState",results={@Result(name="json", type="json")})
 	public String findGoodsGroupByState(){
-		List<GoodsGroupT> list =this.getGoodsGroupTService().findGoodsGroupByState("1");
+		Criterion criterion=Restrictions.eq("state", "1");
+		List<GoodsGroupT> list =this.goodsGroupTService.findByCriteria(GoodsGroupT.class, criterion);
 		if(!list.isEmpty()){
-			return "json";
+			this.setSucflag(true);
+			return JSON;
 		}
-		return "json";
+		return JSON;
 		
 	}
 }

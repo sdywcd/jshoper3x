@@ -1,5 +1,7 @@
 package com.jshop.action.backstage.goods;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -15,19 +17,11 @@ import com.jshop.service.GoodsDetailRpTService;
 public class GoodsDetailRpTAction extends BaseTAction {
 
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GoodsDetailRpTService goodsDetailRpTService;
 	private String goodsid;
 	private GoodsDetailRpT bean=new GoodsDetailRpT();
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public GoodsDetailRpTService getGoodsDetailRpTService() {
-		return goodsDetailRpTService;
-	}
-
-	public void setGoodsDetailRpTService(GoodsDetailRpTService goodsDetailRpTService) {
-		this.goodsDetailRpTService = goodsDetailRpTService;
-	}
-
 	
 	public GoodsDetailRpT getBean() {
 		return bean;
@@ -69,13 +63,13 @@ public class GoodsDetailRpTAction extends BaseTAction {
 	@Action(value = "findGoodsDetialRpTBygoodsid", results = { @Result(name = "json", type = "json") })
 	public String findGoodsDetialRpTBygoodsid(){
 		if(StringUtils.isNotBlank(this.getGoodsid())){
-			bean=this.getGoodsDetailRpTService().findGoodsDetailRpBygoodsid(this.getGoodsid());
+			bean=this.goodsDetailRpTService.findByPK(GoodsDetailRpT.class, this.getGoodsid());
 			if(bean!=null){
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 		
 	}
 	

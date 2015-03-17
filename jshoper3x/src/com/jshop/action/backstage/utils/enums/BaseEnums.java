@@ -1440,5 +1440,94 @@ public class BaseEnums {
 			return "";
 		}
 	}
+	/**
+	 * 商品评论类型
+	* @ClassName: GoodsCommentType 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum GoodsCommentType{
+		VIRTULADD("虚拟评论", "1"),NOTVIRTULADD("会员评论","2");
 
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private GoodsCommentType(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (GoodsCommentType d : GoodsCommentType.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+
+	
+	/**
+	 * 商品评论回复类型
+	* @ClassName: GoodsCommentReplyType 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum GoodsCommentReplyType{
+		MEMBERREPLY("来自会员的评论", "1"),OFFICIALRELPY("来自官方的回复","2");
+
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private GoodsCommentReplyType(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (GoodsCommentReplyType d : GoodsCommentReplyType.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
 }
