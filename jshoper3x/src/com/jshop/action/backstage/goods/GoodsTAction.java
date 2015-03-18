@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,16 +23,24 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import com.jshop.action.backstage.base.BaseTAction;
+import com.jshop.action.backstage.base.DataCollectionTAction;
 import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.staticspage.CreateHtml;
-import com.jshop.action.backstage.staticspage.DataCollectionTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsSaleState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.IsDefault;
+import com.jshop.action.backstage.utils.enums.BaseEnums.SupportType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
@@ -62,21 +71,36 @@ import freemarker.template.TemplateException;
 @ParentPackage("jshop")
 public class GoodsTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GoodsTService goodsTService;
+	@Resource
 	private ImgTAction imgTAction;
+	@Resource
 	private ProductTService productTService;
+	@Resource
 	private ArticleTService articleTService;
+	@Resource
 	private ArticleCategoryTService articleCategoryTService;
+	@Resource
 	private JshopbasicInfoTService jshopbasicInfoTService;
+	@Resource
 	private SiteNavigationTService siteNavigationTService;
+	@Resource
 	private GoodsAttributeRpTService goodsAttributeRpTService;
+	@Resource
 	private GoodsDetailRpTService goodsDetailRpTService;
+	@Resource
 	private GoodsCommentTService goodsCommentTService;
+	@Resource
 	private GoodsTypeTNService goodsTypeTNService;
+	@Resource
 	private GoodsBelinkedTService goodsBelinkedTService;
+	@Resource
 	private CreateHtml createHtml;
 	private DataCollectionTAction dataCollectionTAction;
+	@Resource
 	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
+	@Resource
 	private GoodsTwocodeRelationshipTService goodsTwocodeRelationshipTService;
 	private String goodsid;
 	private String goodsname;
@@ -165,154 +189,7 @@ public class GoodsTAction extends BaseTAction {
 	private String twocodepath;
 	private String basepath;
 	private boolean sucflag;
-	@JSON(serialize = false)
-	public ProductTService getProductTService() {
-		return productTService;
-	}
-
-	public void setProductTService(ProductTService productTService) {
-		this.productTService = productTService;
-	}
-
-	@JSON(serialize = false)
-	public GoodsDetailRpTService getGoodsDetailRpTService() {
-		return goodsDetailRpTService;
-	}
-
-	public void setGoodsDetailRpTService(GoodsDetailRpTService goodsDetailRpTService) {
-		this.goodsDetailRpTService = goodsDetailRpTService;
-	}
-
-	@JSON(serialize = false)
-	public GoodsAttributeRpTService getGoodsAttributeRpTService() {
-		return goodsAttributeRpTService;
-	}
-
-	public void setGoodsAttributeRpTService(
-			GoodsAttributeRpTService goodsAttributeRpTService) {
-		this.goodsAttributeRpTService = goodsAttributeRpTService;
-	}
-
-	@JSON(serialize = false)
-	public GoodsTwocodeRelationshipTService getGoodsTwocodeRelationshipTService() {
-		return goodsTwocodeRelationshipTService;
-	}
-
-	public void setGoodsTwocodeRelationshipTService(
-			GoodsTwocodeRelationshipTService goodsTwocodeRelationshipTService) {
-		this.goodsTwocodeRelationshipTService = goodsTwocodeRelationshipTService;
-	}
-
-	@JSON(serialize = false)
-	public GoodsBelinkedTService getGoodsBelinkedTService() {
-		return goodsBelinkedTService;
-	}
-
-	public void setGoodsBelinkedTService(GoodsBelinkedTService goodsBelinkedTService) {
-		this.goodsBelinkedTService = goodsBelinkedTService;
-	}
-
-	@JSON(serialize = false)
-	public GoodsTypeTNService getGoodsTypeTNService() {
-		return goodsTypeTNService;
-	}
-
-	public void setGoodsTypeTNService(GoodsTypeTNService goodsTypeTNService) {
-		this.goodsTypeTNService = goodsTypeTNService;
-	}
-
-	@JSON(serialize = false)
-	public DataCollectionTAction getDataCollectionTAction() {
-		return dataCollectionTAction;
-	}
-
-	public void setDataCollectionTAction(DataCollectionTAction dataCollectionTAction) {
-		this.dataCollectionTAction = dataCollectionTAction;
-	}
-
-	@JSON(serialize = false)
-	public GoodsTService getGoodsTService() {
-		return goodsTService;
-	}
-
-	public void setGoodsTService(GoodsTService goodsTService) {
-		this.goodsTService = goodsTService;
-	}
-
-	@JSON(serialize = false)
-	public ArticleTService getArticleTService() {
-		return articleTService;
-	}
-
-	public void setArticleTService(ArticleTService articleTService) {
-		this.articleTService = articleTService;
-	}
-
-	@JSON(serialize = false)
-	public ArticleCategoryTService getArticleCategoryTService() {
-		return articleCategoryTService;
-	}
-
-	public void setArticleCategoryTService(ArticleCategoryTService articleCategoryTService) {
-		this.articleCategoryTService = articleCategoryTService;
-	}
-
-	@JSON(serialize = false)
-	public JshopbasicInfoTService getJshopbasicInfoTService() {
-		return jshopbasicInfoTService;
-	}
-
-	public void setJshopbasicInfoTService(JshopbasicInfoTService jshopbasicInfoTService) {
-		this.jshopbasicInfoTService = jshopbasicInfoTService;
-	}
-
-	@JSON(serialize = false)
-	public SiteNavigationTService getSiteNavigationTService() {
-		return siteNavigationTService;
-	}
-
-	public void setSiteNavigationTService(SiteNavigationTService siteNavigationTService) {
-		this.siteNavigationTService = siteNavigationTService;
-	}
-
-	@JSON(serialize = false)
-	public GoodsCommentTService getGoodsCommentTService() {
-		return goodsCommentTService;
-	}
-
-	public void setGoodsCommentTService(GoodsCommentTService goodsCommentTService) {
-		this.goodsCommentTService = goodsCommentTService;
-	}
 	
-	@JSON(serialize = false)
-	public GoodsSpecificationsProductRpTService getGoodsSpecificationsProductRpTService() {
-		return goodsSpecificationsProductRpTService;
-	}
-
-	public void setGoodsSpecificationsProductRpTService(
-			GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService) {
-		this.goodsSpecificationsProductRpTService = goodsSpecificationsProductRpTService;
-	}
-
-
-	@JSON(serialize = false)
-	public ImgTAction getImgTAction() {
-		return imgTAction;
-	}
-
-	public void setImgTAction(ImgTAction imgTAction) {
-		this.imgTAction = imgTAction;
-	}
-
-	@JSON(serialize = false)
-	public CreateHtml getCreateHtml() {
-		return createHtml;
-	}
-
-	public void setCreateHtml(CreateHtml createHtml) {
-		this.createHtml = createHtml;
-	}
-
 	public String getBasepath() {
 		return basepath;
 	}
@@ -1066,16 +943,18 @@ public class GoodsTAction extends BaseTAction {
 		gt.setIsvirtualsale(this.getIsvirtualsale());//是否虚拟商品标记，用于充值卡或者购物卡类没有实物的商品
 		gt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
 		gt.setSalestate(this.getSalestate());
-		gt.setIsSpecificationsOpen(StaticKey.ONE);//默认开启规格值
+		gt.setIsSpecificationsOpen(SupportType.SUPPORT.getState());//默认支持规格值
 		gt.setPictureurl(this.getPictureurl());
 		gt.setCommoditylist(this.getCommoditylist());
 		gt.setMetaDescription(this.getMetaDescription());
 		gt.setMetaKeywords(this.getMetaKeywords());
-		gt.setCreatetime(BaseTools.systemtime());
+		gt.setCreatetime(BaseTools.getSystemTime());
 		gt.setCreatorid(BaseTools.getAdminCreateId());
-		gt.setUpdatetime(BaseTools.systemtime());
+		gt.setUpdatetime(BaseTools.getSystemTime());
 		gt.setIsoutsite(this.getIsoutsite());
 		gt.setOutsitelink(this.getOutsitelink());
+		gt.setShopid(BaseTools.getShopId());
+		gt.setShopname(BaseTools.getShopName());
 		//构造goodsdetail和goods关系
 		GoodsDetailRpT gdpt=new GoodsDetailRpT();
 		gdpt.setId(this.getSerial().Serialid(Serial.GOODSDETAILRPT));
@@ -1090,8 +969,8 @@ public class GoodsTAction extends BaseTAction {
 		pt.setSaleprice(gt.getSaleprice());
 		pt.setFreezeStore(0);
 		pt.setStore(0);
-		pt.setIsDefault(StaticKey.ONE);//表示默认
-		pt.setIsSalestate(StaticKey.ONE);//表示对外销售状态
+		pt.setIsDefault(IsDefault.DEFAULT.getState());//表示默认
+		pt.setIsSalestate(GoodsSaleState.SALE.getState());//表示对外销售状态
 		pt.setProductName(gt.getGoodsname());
 		pt.setProductSn(gt.getUsersetnum());
 		pt.setSpecificationsValue(StaticKey.EMPTY);
@@ -1110,12 +989,12 @@ public class GoodsTAction extends BaseTAction {
 		gspt.setGoodsSpecificationsProductRpTid(this.getSerial().Serialid(Serial.GOODSSPECIFICATIONSPRODUCTRPT));
 		gspt.setGoodsid(gt.getGoodsid());
 		gspt.setProductid(pt.getProductid());
-		gspt.setSpecidicationsid("0");//0表示默认规格
+		gspt.setSpecidicationsid(StaticKey.ZERO);//0表示默认规格
 		
-		this.getGoodsTService().saveGoodsProcess(gt,gdpt,pt,gspt);
+		this.goodsTService.saveGoodsProcess(gt,gdpt,pt,gspt);
 		this.saveGoodsAttributeRp(gt, this.getGoodsAttrsVals());
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	
 		
 		
@@ -1134,7 +1013,7 @@ public class GoodsTAction extends BaseTAction {
 			gart.setGoodsid(gt.getGoodsid());
 			JSONObject jo=(JSONObject) ja.get(i);
 			gart.setAttrval(jo.get(StaticKey.ATTRVAL).toString());
-			this.getGoodsAttributeRpTService().save(gart);
+			this.goodsAttributeRpTService.save(gart);
 		}
 	}
 
@@ -1155,7 +1034,7 @@ public class GoodsTAction extends BaseTAction {
 				}
 			}
 		}
-		return "json";
+		return JSON;
 
 	}
 	/**
@@ -1164,12 +1043,17 @@ public class GoodsTAction extends BaseTAction {
 	private void findGoodsByGoodsname() {
 		int currentPage=page;
 		int lineSize=rp;
-		String qs="select count(*) from GoodsT where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
-		total=this.getGoodsTService().countfindAllGoodsByattribute(qs);
+		Criterion criterion=Restrictions.like(this.getQtype(), this.getQuery().trim(), MatchMode.ANYWHERE);
+		total=this.goodsTService.count(GoodsT.class, criterion).intValue();
 		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
-			String queryString="from GoodsT as gt where gt."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " +this.getSortname()+" "+this.getSortorder()+"";
-			List<GoodsT>list=this.getGoodsTService().findAllGoodsByattribute(currentPage, lineSize, queryString);
-			this.ProcessGoodsList(list);
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
+			}
+			List<GoodsT>list=this.goodsTService.findByCriteriaByPage(GoodsT.class, criterion, order, currentPage, lineSize);
+			this.processGoodsList(list);
 		}
 	}
 
@@ -1179,11 +1063,10 @@ public class GoodsTAction extends BaseTAction {
 	private void finddefaultAllGoods() {
 		int currentPage = page;
 		int lineSize = rp;
-		total=this.getGoodsTService().countAllGoods();
-		List<GoodsT> list = this.getGoodsTService().findAllGoods(currentPage, lineSize);
-		if (!list.isEmpty()) {
-			ProcessGoodsList(list);
-		}
+		total=this.goodsTService.count(GoodsT.class).intValue();
+		Order order=Order.desc("updatetime");
+		List<GoodsT> list = this.goodsTService.findByCriteriaByPage(GoodsT.class, order, currentPage, lineSize);
+		processGoodsList(list);
 	}
 
 	/**
@@ -1191,33 +1074,32 @@ public class GoodsTAction extends BaseTAction {
 	 * 
 	 * @param list
 	 */
-	public void ProcessGoodsList(List<GoodsT> list) {
-		total = this.getGoodsTService().countAllGoods();
+	public void processGoodsList(List<GoodsT> list) {
 		rows.clear();
 		this.setBasepath(BaseTools.getBasePath());
 		for (Iterator<GoodsT> it = list.iterator(); it.hasNext();) {
 			GoodsT gt = (GoodsT) it.next();
-			if (gt.getRecommended().equals(StaticKey.ONE)) {
+			if (gt.getRecommended().equals(GoodsState.RECOMMENDED.getState())) {
 				gt.setRecommended("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setRecommended("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getHotsale().equals(StaticKey.ONE)) {
+			if (gt.getHotsale().equals(GoodsState.HOTSALE.getState())) {
 				gt.setHotsale("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setHotsale("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getBargainprice().equals(StaticKey.ONE)) {
+			if (gt.getBargainprice().equals(GoodsState.BARGAINPRICE.getState())) {
 				gt.setBargainprice("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setBargainprice("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getIsNew().equals(StaticKey.ONE)) {
+			if (gt.getIsNew().equals(GoodsState.NEW.getState())) {
 				gt.setIsNew("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setIsNew("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getSalestate().equals(StaticKey.ONE)) {
+			if (gt.getSalestate().equals(GoodsSaleState.SALE.getState())) {
 				gt.setSalestate("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
@@ -1225,7 +1107,7 @@ public class GoodsTAction extends BaseTAction {
 
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gt.getGoodsid());
-			cellMap.put("cell", new Object[] { 
+			cellMap.put("cell", new Object[] {
 					gt.getGoodsname(), 
 					gt.getUsersetnum(), 
 					gt.getMemberprice(),
@@ -1248,22 +1130,20 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodsById", results = { @Result(name = "json", type = "json",params = { "excludeNullProperties", "true","goods","bean"}) })
 	public String findGoodsById() {
-
 		if (StringUtils.isNotBlank(this.getGoodsid())) {
-			bean = this.getGoodsTService().findGoodsById(this.getGoodsid().trim());
+			bean = this.goodsTService.findByPK(GoodsT.class, this.getGoodsid());
 			if (bean != null) {
-				List<ProductT>list=this.getProductTService().findProductTByGoodsid(bean.getGoodsid());
-				if(!list.isEmpty()){
-					this.setProductid(list.get(0).getProductid());
+				Criterion criterion=Restrictions.eq("goodsid", bean.getGoodsid());
+				ProductT pt=this.productTService.findOneByCriteria(ProductT.class, criterion);
+				if(pt!=null){
+					this.setProductid(pt.getProductid());
 				}
 				this.setBasepath(BaseTools.getBasePath());
 				this.setSucflag(true);
-				return "json";
+				return JSON;
 			}
 		}
-		this.setSucflag(false);
-		return "json";
-
+		return JSON;
 	}
 
 	/**
@@ -1273,7 +1153,12 @@ public class GoodsTAction extends BaseTAction {
 	 * @param htmlPath
 	 */
 	public void updateHtmlPath(String goodsid, String htmlPath) {
-		this.getGoodsTService().updateHtmlPath(goodsid, htmlPath);
+		GoodsT gt=this.goodsTService.findByPK(GoodsT.class, goodsid);
+		if(gt!=null){
+			gt.setHtmlPath(htmlPath);
+			this.goodsTService.update(gt);
+		}
+	
 	}
 
 	/**
@@ -1286,7 +1171,7 @@ public class GoodsTAction extends BaseTAction {
 	@Action(value = "updateGoods", results = { @Result(name = "json", type = "json",params = { "excludeNullProperties", "true" }) })
 	public String updateGoods() throws IOException, TemplateException {
 		if(StringUtils.isNotBlank(this.getGoodsid())){
-			bean=this.getGoodsTService().findGoodsById(this.getGoodsid());
+			bean=this.goodsTService.findByPK(GoodsT.class, this.getGoodsid());
 			if(bean!=null){
 				bean.setGoodsTypeId(this.getGoodsTypeId());
 				bean.setGoodsTypeName(this.getGoodsTypeName());
@@ -1320,22 +1205,22 @@ public class GoodsTAction extends BaseTAction {
 				bean.setMetaKeywords(this.getMetaKeywords());
 				bean.setMetaDescription(this.getMetaDescription());
 				bean.setCreatorid(BaseTools.getAdminCreateId());
-				bean.setUpdatetime(BaseTools.systemtime());
+				bean.setUpdatetime(BaseTools.getSystemTime());
 				bean.setIsoutsite(this.getIsoutsite());
 				bean.setOutsitelink(this.getOutsitelink());
 				//构造product
 				ProductT pt=new ProductT();
 				//根据商品和规格货物关系，通过spid0和goodsid来取出addgoods时唯一对照的默认规格值的productdid进行级联更新
 				//this.getGoodsSpecificationsProductRpTService().checkSpecificationRelationshipBygoodssetid(this.getGoodsid());
-				pt=this.getProductTService().findProductByProductid(this.getProductid());
+				pt=this.productTService.findByPK(ProductT.class, this.getProductid());
 				pt.setPrice(bean.getPrice());
 				pt.setMemberprice(bean.getMemberprice());
 				pt.setCost(bean.getCost());
 				pt.setSaleprice(bean.getSaleprice());
 				pt.setFreezeStore(0);
 				pt.setStore(0);
-				pt.setIsDefault(StaticKey.ONE);//表示默认
-				pt.setIsSalestate(StaticKey.ONE);//表示对外销售状态
+				pt.setIsDefault(IsDefault.DEFAULT.getState());//表示默认
+				pt.setIsSalestate(GoodsSaleState.SALE.getState());//表示对外销售状态
 				pt.setProductName(bean.getGoodsname());
 				pt.setProductSn(bean.getUsersetnum());
 				pt.setSpecificationsValue(StaticKey.EMPTY);
@@ -1349,14 +1234,13 @@ public class GoodsTAction extends BaseTAction {
 				pt.setSpecificationsName(StaticKey.DEFAULTSPECIFNAME);//默认规格值名称
 				pt.setUpdatetime(bean.getCreatetime());
 				pt.setUnit(StaticKey.EMPTY);
-				this.getGoodsTService().updateGoodsProcess(bean, this.getDetail(),pt);
+				this.goodsTService.updateGoodsProcess(bean, this.getDetail(),pt);
 				this.updateGoodsAttributeRp(bean, this.getGoodsAttrsVals());
 				this.setSucflag(true);
-				return "json";
-				
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 		
 	}
 
@@ -1366,7 +1250,10 @@ public class GoodsTAction extends BaseTAction {
 	 * @param goodsattrvals
 	 */
 	private void updateGoodsAttributeRp(GoodsT gt,String goodsattrvals){
-		if(this.getGoodsAttributeRpTService().delBygoodsid(gt.getGoodsid())>0){
+		Criterion criterion=Restrictions.eq("goodsid", gt.getGoodsid());
+		GoodsAttributeRpT garpt=this.goodsAttributeRpTService.findOneByCriteria(GoodsAttributeRpT.class, criterion);
+		if(garpt!=null){
+			this.goodsAttributeRpTService.delete(garpt);
 			JSONArray ja=(JSONArray)JSONValue.parse(goodsattrvals);
 			int jsonsize=ja.size();
 			GoodsAttributeRpT gart=new GoodsAttributeRpT();
@@ -1375,10 +1262,9 @@ public class GoodsTAction extends BaseTAction {
 				gart.setGoodsid(gt.getGoodsid());
 				JSONObject jo=(JSONObject) ja.get(i);
 				gart.setAttrval(jo.get(StaticKey.ATTRVAL).toString());
-				this.getGoodsAttributeRpTService().save(gart);
+				this.goodsAttributeRpTService.save(gart);
 			}
 		}
-		
 	}
 	
 	/**
@@ -1389,18 +1275,21 @@ public class GoodsTAction extends BaseTAction {
 	@Action(value = "delGoods", results = { @Result(name = "json", type = "json") })
 	//判断是否上架
 	public String delGoods() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			for (int i = 0; i < strs.length; i++) {
-				this.getProductTService().delProductTBygoodsid(strs[i], BaseTools.getAdminCreateId());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for (String s:strs) {
+				ProductT pt=this.productTService.findByPK(ProductT.class, s);
+				if(pt!=null){
+					this.productTService.delete(pt);
+				}
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class,s);
+				if(gt!=null){
+					this.goodsTService.delete(gt);
+				}
 			}
-			int i = this.getGoodsTService().delGoods(strs, BaseTools.getAdminCreateId());
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+		} 
+		return "json";
 	}
 
 	/**
@@ -1410,15 +1299,18 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsSaleState", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsSaleState() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsSaleState(strs, this.getSalestate(), BaseTools.getAdminCreateId());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class, s);
+				if(gt!=null){
+					gt.setSalestate(this.getSalestate());
+					this.goodsTService.update(gt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+			}
+		return JSON;
 	}
 
 	/**
@@ -1428,16 +1320,18 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsbargainprice", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsbargainprice() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsbargainprice(strs, this.getBargainprice(), BaseTools.getAdminCreateId());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class, s);
+				if(gt!=null){
+					gt.setBargainprice(this.getBargainprice());
+					this.goodsTService.update(gt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
-
+			}
+		return JSON;
 	}
 
 	/**
@@ -1447,15 +1341,18 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodshotsale", results = { @Result(name = "json", type = "json") })
 	public String updateGoodshotsale() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodshotsale(strs, this.getHotsale(), BaseTools.getAdminCreateId());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class, s);
+				if(gt!=null){
+					gt.setHotsale(this.getHotsale());
+					this.goodsTService.update(gt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+			}
+		return JSON;
 	}
 
 	/**
@@ -1465,15 +1362,18 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsrecommended", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsrecommended() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsrecommended(strs, this.getRecommended(), BaseTools.getAdminCreateId());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class, s);
+				if(gt!=null){
+					gt.setRecommended(this.getRecommended());
+					this.goodsTService.update(gt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+			}
+		return JSON;
 	}
 
 	/**
@@ -1483,15 +1383,18 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsisNew", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsisNew() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsisNew(strs, this.getIsNew(), BaseTools.getAdminCreateId());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class, s);
+				if(gt!=null){
+					gt.setIsNew(this.getIsNew());
+					this.goodsTService.update(gt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+			}
+		return JSON;
 	}
 
 	/**
@@ -1501,15 +1404,18 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsismobileplatformgoods", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsismobileplatformgoods() {
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateGoodsismobileplatformgoods(strs, this.getIsmobileplatformgoods(), BaseTools.getAdminCreateId());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class, s);
+				if(gt!=null){
+					gt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+					this.goodsTService.update(gt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
+			}
+		return JSON;
 	}
 
 	/**
@@ -1519,17 +1425,22 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updateFiveGoodsState", results = { @Result(name = "json", type = "json") })
 	public String updateFiveGoodsState() {
-
-		if (Validate.StrNotNull(this.getGoodsid())) {
-			String[] strs = this.getGoodsid().split(",");
-			int i = this.getGoodsTService().updateFiveGoodsState(strs, this.getRecommended(), this.getHotsale(), this.getBargainprice(), this.getIsNew(), this.getIsmobileplatformgoods());
+		if (StringUtils.isNotBlank(this.getGoodsid())) {
+			String[] strs = StringUtils.split(this.getGoodsid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsT gt=this.goodsTService.findByPK(GoodsT.class, s);
+				if(gt!=null){
+					gt.setRecommended(this.getRecommended());
+					gt.setHotsale(this.getHotsale());
+					gt.setBargainprice(this.getBargainprice());
+					gt.setIsNew(this.getIsNew());
+					gt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+					this.goodsTService.update(gt);
+				}
+			}
 			this.setSucflag(true);
-			return "json";
-		} else {
-			this.setSucflag(false);
-			return "json";
-		}
-
+			}
+		return JSON;
 	}
 
 	/**
@@ -1539,9 +1450,15 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updatestarsumBygoodsid", results = { @Result(name = "json", type = "json") })
 	public String updatestarsumBygoodsid() {
-		this.getGoodsTService().updatestarsumBygoodsid(this.getGoodsid().trim(), Integer.parseInt(this.getStar()));
-		this.setSucflag(true);
-		return "json";
+		if(StringUtils.isNotBlank(this.getGoodsid())){
+			GoodsT gt=this.goodsTService.findByPK(GoodsT.class, this.getGoodsid());
+			if(gt!=null){
+				gt.setTotalstar(Integer.parseInt(this.getStar()));
+				this.goodsTService.update(gt);
+				this.setSucflag(true);
+			}
+		}
+		return JSON;
 	}
 
 	/**
@@ -1551,9 +1468,15 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updatestarusersumBygoodsid", results = { @Result(name = "json", type = "json") })
 	public String updatestarusersumBygoodsid() {
-		this.getGoodsTService().updatestarusersumBygoodsid(this.getGoodsid(), Integer.parseInt(this.getStaruser()));
-		this.setSucflag(true);
-		return "json";
+		if(StringUtils.isNotBlank(this.getGoodsid())){
+			GoodsT gt=this.goodsTService.findByPK(GoodsT.class, this.getGoodsid());
+			if(gt!=null){
+				gt.setTotalstaruser(Integer.parseInt(this.getStaruser()));
+				this.goodsTService.update(gt);
+				this.setSucflag(true);
+			}
+		}
+		return JSON;
 	}
 
 	/**
@@ -1563,9 +1486,15 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "updatecommentsumBygoodsid", results = { @Result(name = "json", type = "json") })
 	public String updatecommentsumBygoodsid() {
-		this.getGoodsTService().updatecommentsumBygoodsid(this.getGoodsid(), Integer.parseInt(this.getTotalcomment()));
-		this.setSucflag(true);
-		return "json";
+		if(StringUtils.isNotBlank(this.getGoodsid())){
+			GoodsT gt=this.goodsTService.findByPK(GoodsT.class, this.getGoodsid());
+			if(gt!=null){
+				gt.setTotalcomment(Integer.parseInt(this.getTotalcomment()));
+				this.goodsTService.update(gt);
+				this.setSucflag(true);
+			}
+		}
+		return JSON;
 	}
 	
 
@@ -1576,170 +1505,181 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	@Action(value = "findAllGoodsByCategory", results = { @Result(name = "json", type = "json") })
 	public String findAllGoodsByCategory(){
-		if(!"-1".equals(this.getNavid())&&"-1".equals(this.getLtypeid())&&"-1".equals(this.getStypeid())){
+		if(!StaticKey.FONE.equals(this.getNavid())&&StaticKey.FONE.equals(this.getLtypeid())&&StaticKey.FONE.equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
-			String salestate=StaticKey.ONE;//上架
-			String isSpecificationsOpen=StaticKey.ONE;//默认都开启规格
-			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavid(navid, salestate,isSpecificationsOpen);
-			if(!list.isEmpty()){
-				this.ProcessGoodsList(list);
-			}
+			String salestate=GoodsSaleState.SALE.getState();//上架
+			String isSpecificationsOpen=SupportType.SUPPORT.getState();//默认都支持规格
+			Map<String,String>params=new HashMap<String, String>();
+			params.put("navid", navid);
+			params.put("salestate", salestate);
+			params.put("isSpecificationsOpen", isSpecificationsOpen);
+			Criterion criterion=Restrictions.allEq(params);
+			List<GoodsT>list=this.goodsTService.findByCriteria(GoodsT.class, criterion);
+			this.processGoodsList(list);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		if(!"-1".equals(this.getNavid())&&!"-1".equals(this.getLtypeid())&&"-1".equals(this.getStypeid())){
+		if(!StaticKey.FONE.equals(this.getNavid())&&!StaticKey.FONE.equals(this.getLtypeid())&&StaticKey.FONE.equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
 			String ltypeid=this.getLtypeid().trim();
-			String salestate=StaticKey.ONE;//上架
-			String isSpecificationsOpen=StaticKey.ONE;//开启规格
-			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavidandltypeid(navid, ltypeid, salestate, isSpecificationsOpen);
-			if(!list.isEmpty()){
-				this.ProcessGoodsList(list);
-			}
+			String salestate=GoodsSaleState.SALE.getState();//上架
+			String isSpecificationsOpen=SupportType.SUPPORT.getState();//开启规格
+			Map<String,String>params=new HashMap<String, String>();
+			params.put("navid", navid);
+			params.put("ltypeid", ltypeid);
+			params.put("isSpecificationsOpen", isSpecificationsOpen);
+			Criterion criterion=Restrictions.allEq(params);
+			List<GoodsT>list=this.goodsTService.findByCriteria(GoodsT.class, criterion);
+			this.processGoodsList(list);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		if(!"-1".equals(this.getNavid())&&!"-1".equals(this.getLtypeid())&&!"-1".equals(this.getStypeid())){
+		if(!StaticKey.FONE.equals(this.getNavid())&&!StaticKey.FONE.equals(this.getLtypeid())&&!StaticKey.FONE.equals(this.getStypeid())){
 			String navid=this.getNavid().trim();
 			String ltypeid=this.getLtypeid().trim();
 			String stypeid=this.getStypeid().trim();
-			String salestate=StaticKey.ONE;//上架
-			String isSpecificationsOpen=StaticKey.ONE;//开启规格
-			List<GoodsT>list=this.getGoodsTService().findAllGoodsBynavidandltypeidandstypeid(navid, ltypeid, stypeid, salestate, isSpecificationsOpen);
-			if(!list.isEmpty()){
-				this.ProcessGoodsList(list);
-			}
+			String salestate=GoodsSaleState.SALE.getState();//上架
+			String isSpecificationsOpen=SupportType.SUPPORT.getState();//开启规格
+			Map<String,String>params=new HashMap<String, String>();
+			params.put("navid", navid);
+			params.put("ltypeid", ltypeid);
+			params.put("stypeid", stypeid);
+			params.put("salestate",salestate);
+			params.put("isSpecificationsOpen", isSpecificationsOpen);
+			Criterion criterion=Restrictions.allEq(params);
+			List<GoodsT>list=this.goodsTService.findByCriteria(GoodsT.class, criterion);
+			this.processGoodsList(list);
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	
-	/**
-	 * 生成商品静态路径二维码
-	 * @return
-	 * @throws IOException
-	 */
-	@Action(value="encoderQRcode",results={@Result(name="json",type="json")})
-	public String encoderQRcode() throws IOException{
-		GoodsT goods=new GoodsT();
-		Qrcode qr =new Qrcode();
-		qr.setQrcodeErrorCorrect('M');
-		qr.setQrcodeEncodeMode('B');
-		qr.setQrcodeVersion(7);
-		BufferedImage bufImg= new BufferedImage(140, 140, BufferedImage.TYPE_INT_RGB);
-		Graphics2D gs = bufImg.createGraphics();
-		gs.setBackground(Color.WHITE);
-		gs.clearRect(0, 0, 140,140);
-		  // 设定图像颜色 > BLACK  
-		gs.setColor(Color.BLACK);
-		// 设置偏移量 不设置可能导致解析出错
-		int pixoff=2;
-		byte[] htmlPath;
-		 // 根据商品id获取商品数据
-			if (Validate.StrNotNull(this.getGoodsid())) {
-				goods = this.getGoodsTService().findGoodsById(this.getGoodsid().trim());
-				
-				if (goods != null) {					
-					HttpServletRequest requet=ServletActionContext.getRequest();
-					String Path="http://"+requet.getRemoteAddr()+"/"+ goods.getHtmlPath();
-					 htmlPath=Path.getBytes("utf-8");
-					 // 输出内容 > 二维码  
-					if(htmlPath.length>0 && htmlPath.length<120){
-						boolean[][] codeOut=qr.calQrcode(htmlPath);
-						for(int i=0;i<codeOut.length;i++){
-							for(int j=0;j<codeOut.length;j++){
-								if(codeOut[j][i]){
-									gs.fillRect(j * 3 + pixoff, i * 3 + pixoff, 3, 3);
-								}
-							}
-						}
-					}
-					gs.dispose();
-					bufImg.flush();
-					String jshoppath=ServletActionContext.getServletContext().getRealPath("");//获取根目录
-					String path=jshoppath+isexistdir();
-					//根目录路径
-					String codePath=path+goods.getGoodsid()+".png";
-					//文件夹路径
-					String code = isexistdir()+goods.getGoodsid()+".png";
-					//生成二维码图片名称
-					File imgFile= new File(codePath);
-					// 生成二维码QRCode图片
-					ImageIO.write(bufImg, "png", imgFile);
-					GoodsTwocodeRpT list = this.getGoodsTwocodeRelationshipTService().findGoodsQRCodeByGoodsid(goods.getGoodsid());
-					GoodsTwocodeRpT goodscode = new GoodsTwocodeRpT();
-					//当数据里面存在此记录的时候，只修改二维码路径
-					if(list!=null){						
-						this.getGoodsTwocodeRelationshipTService().updateGoodsQRCode(goods.getGoodsid(), code);
-						this.setSucflag(true);
-						return "json";
-					}else{
-						//生成商品与二维码关系的记录
-						
-						goodscode.setProductname(goods.getGoodsname());
-						goodscode.setGoodsid(goods.getGoodsid());
-						goodscode.setId(this.getSerial().Serialid(Serial.GOODSQRCODE));
-						goodscode.setState("1");
-						goodscode.setTwocodepath(code);
-						this.getGoodsTwocodeRelationshipTService().save(goodscode);
-						this.setSucflag(true);
-						return "json";
-					}
-				}
-				
-			}else{
-				htmlPath=this.getOtherPath().getBytes("utf-8");	
-					 // 输出内容 > 二维码  
-					if(htmlPath.length>0 && htmlPath.length<120){
-						boolean[][] codeOut=qr.calQrcode(htmlPath);
-						for(int i=0;i<codeOut.length;i++){
-							for(int j=0;j<codeOut.length;j++){
-								if(codeOut[j][i]){
-									gs.fillRect(j * 3 + pixoff, i * 3 + pixoff, 3, 3);
-								}
-							}
-						}
-				}
-				gs.dispose();
-				bufImg.flush();
-				String jshoppath=ServletActionContext.getServletContext().getRealPath("");//获取根目录
-				String path=jshoppath+isexistdir();
-				//生成二维码图片名称
-				File imgFile= new File(path+this.getPathName()+".png");
-				// 生成二维码QRCode图片
-				ImageIO.write(bufImg, "png", imgFile);
-				
-				this.setSucflag(true);
-				return "json";
-			}
-			return "json";
-	}
+//	/**
+//	 * 生成商品静态路径二维码
+//	 * @return
+//	 * @throws IOException
+//	 */
+//	@Action(value="encoderQRcode",results={@Result(name="json",type="json")})
+//	public String encoderQRcode() throws IOException{
+//		GoodsT goods=new GoodsT();
+//		Qrcode qr =new Qrcode();
+//		qr.setQrcodeErrorCorrect('M');
+//		qr.setQrcodeEncodeMode('B');
+//		qr.setQrcodeVersion(7);
+//		BufferedImage bufImg= new BufferedImage(140, 140, BufferedImage.TYPE_INT_RGB);
+//		Graphics2D gs = bufImg.createGraphics();
+//		gs.setBackground(Color.WHITE);
+//		gs.clearRect(0, 0, 140,140);
+//		  // 设定图像颜色 > BLACK  
+//		gs.setColor(Color.BLACK);
+//		// 设置偏移量 不设置可能导致解析出错
+//		int pixoff=2;
+//		byte[] htmlPath;
+//		 // 根据商品id获取商品数据
+//			if (Validate.StrNotNull(this.getGoodsid())) {
+//				goods = this.getGoodsTService().findGoodsById(this.getGoodsid().trim());
+//				
+//				if (goods != null) {					
+//					HttpServletRequest requet=ServletActionContext.getRequest();
+//					String Path="http://"+requet.getRemoteAddr()+"/"+ goods.getHtmlPath();
+//					 htmlPath=Path.getBytes("utf-8");
+//					 // 输出内容 > 二维码  
+//					if(htmlPath.length>0 && htmlPath.length<120){
+//						boolean[][] codeOut=qr.calQrcode(htmlPath);
+//						for(int i=0;i<codeOut.length;i++){
+//							for(int j=0;j<codeOut.length;j++){
+//								if(codeOut[j][i]){
+//									gs.fillRect(j * 3 + pixoff, i * 3 + pixoff, 3, 3);
+//								}
+//							}
+//						}
+//					}
+//					gs.dispose();
+//					bufImg.flush();
+//					String jshoppath=ServletActionContext.getServletContext().getRealPath("");//获取根目录
+//					String path=jshoppath+isexistdir();
+//					//根目录路径
+//					String codePath=path+goods.getGoodsid()+".png";
+//					//文件夹路径
+//					String code = isexistdir()+goods.getGoodsid()+".png";
+//					//生成二维码图片名称
+//					File imgFile= new File(codePath);
+//					// 生成二维码QRCode图片
+//					ImageIO.write(bufImg, "png", imgFile);
+//					GoodsTwocodeRpT list = this.getGoodsTwocodeRelationshipTService().findGoodsQRCodeByGoodsid(goods.getGoodsid());
+//					GoodsTwocodeRpT goodscode = new GoodsTwocodeRpT();
+//					//当数据里面存在此记录的时候，只修改二维码路径
+//					if(list!=null){						
+//						this.getGoodsTwocodeRelationshipTService().updateGoodsQRCode(goods.getGoodsid(), code);
+//						this.setSucflag(true);
+//						return "json";
+//					}else{
+//						//生成商品与二维码关系的记录
+//						
+//						goodscode.setProductname(goods.getGoodsname());
+//						goodscode.setGoodsid(goods.getGoodsid());
+//						goodscode.setId(this.getSerial().Serialid(Serial.GOODSQRCODE));
+//						goodscode.setState("1");
+//						goodscode.setTwocodepath(code);
+//						this.getGoodsTwocodeRelationshipTService().save(goodscode);
+//						this.setSucflag(true);
+//						return "json";
+//					}
+//				}
+//				
+//			}else{
+//				htmlPath=this.getOtherPath().getBytes("utf-8");	
+//					 // 输出内容 > 二维码  
+//					if(htmlPath.length>0 && htmlPath.length<120){
+//						boolean[][] codeOut=qr.calQrcode(htmlPath);
+//						for(int i=0;i<codeOut.length;i++){
+//							for(int j=0;j<codeOut.length;j++){
+//								if(codeOut[j][i]){
+//									gs.fillRect(j * 3 + pixoff, i * 3 + pixoff, 3, 3);
+//								}
+//							}
+//						}
+//				}
+//				gs.dispose();
+//				bufImg.flush();
+//				String jshoppath=ServletActionContext.getServletContext().getRealPath("");//获取根目录
+//				String path=jshoppath+isexistdir();
+//				//生成二维码图片名称
+//				File imgFile= new File(path+this.getPathName()+".png");
+//				// 生成二维码QRCode图片
+//				ImageIO.write(bufImg, "png", imgFile);
+//				
+//				this.setSucflag(true);
+//				return "json";
+//			}
+//			return "json";
+//	}
 	/**
 	 * 检测目录是否存在
 	 * 
 	 * @return
 	 */
 
-	public static String isexistdir() {
-		String nowTimeStr = "";
-		String savedir = "/QRcode/";
-		String realpath = "";
-//		SimpleDateFormat sDateFormat;
-//		sDateFormat = new SimpleDateFormat("yyyyMMdd");
-//		nowTimeStr = sDateFormat.format(new Date());
-		String savePath = ServletActionContext.getServletContext().getRealPath("");
-		savePath = savePath + savedir ;
-		File dir = new File(savePath);
-		if (!dir.exists()) {
-			dir.mkdirs();
-			realpath = savedir ;
-			return realpath;
-		} else {
-			realpath = savedir ;
-			return realpath;
-		}
-	}
+//	public static String isexistdir() {
+//		String nowTimeStr = "";
+//		String savedir = "/QRcode/";
+//		String realpath = "";
+////		SimpleDateFormat sDateFormat;
+////		sDateFormat = new SimpleDateFormat("yyyyMMdd");
+////		nowTimeStr = sDateFormat.format(new Date());
+//		String savePath = ServletActionContext.getServletContext().getRealPath("");
+//		savePath = savePath + savedir ;
+//		File dir = new File(savePath);
+//		if (!dir.exists()) {
+//			dir.mkdirs();
+//			realpath = savedir ;
+//			return realpath;
+//		} else {
+//			realpath = savedir ;
+//			return realpath;
+//		}
+//	}
 	/**
 	 * 根据商品名称搜索商品
 	 * @return
@@ -1747,16 +1687,21 @@ public class GoodsTAction extends BaseTAction {
 	@Action(value = "searchGoodsBygoodsname", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
 	public String searchGoodsBygoodsname(){
 		if(StringUtils.isBlank(this.getGoodsname())){
-			return "json";
+			return JSON;
 		}
-		int currentPage=1;
-		int lineSize=100;
-		String queryString="from GoodsT as gt where gt.goodsname like '%"+this.getGoodsname()+"%' order by " +this.getSortname()+" "+this.getSortorder()+"";
-		beanlist=this.getGoodsTService().findAllGoodsByattribute(currentPage, lineSize, queryString);
-		if(!beanlist.isEmpty()){
-			this.ProcessGoodsList(beanlist);
+		int currentPage=page;
+		int lineSize=rp;
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
+			}
+			Criterion criterion=Restrictions.like("goodsname", this.getGoodsname(),MatchMode.ANYWHERE);
+			beanlist=this.goodsTService.findByCriteriaByPage(GoodsT.class, criterion, order, currentPage, lineSize);
+			this.processGoodsList(beanlist);
 			this.setSucflag(true);
-			return "json";
 		}
 		return "json";
 		

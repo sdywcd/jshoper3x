@@ -259,7 +259,7 @@ public class BaseEnums {
 	 * @author sdywcd
 	 *
 	 */
-	public enum ORDERCREATETAG {
+	public enum OrderCreateTag {
 		ORDERTAG_NORMAL_ONE_NUM("普通订单", "1"),
 		ORDERTAG_GROUPON_TWO_NUM("团购订单","2"),
 		ORDERTAG_AUCTION_THREE_NUM("拍卖订单","3"),
@@ -284,13 +284,13 @@ public class BaseEnums {
 			this.state = state;
 		}
 
-		private ORDERCREATETAG(String name, String state) {
+		private OrderCreateTag(String name, String state) {
 			this.name = name;
 			this.state = state;
 		}
 
 		public static String getName(String tag) {
-			for (ORDERCREATETAG d : ORDERCREATETAG.values()) {
+			for (OrderCreateTag d : OrderCreateTag.values()) {
 				if (d.getState().equals(tag)) {
 					return d.getName();
 				}
@@ -305,8 +305,8 @@ public class BaseEnums {
 	 * @author sdywcd
 	 *
 	 */
-	public enum CARTGOODSSTATE {
-		NEWADDTOCART_BACKSTAGE_ZERO_NUM("从后台加入购物车的商品","0"),NEWADDTOCART_NUM("新加入购物车的商品", "1");
+	public enum CartGoodstate {
+		NEWADDTOCART_BACKSTAGE_ZERO_NUM("从后台加入购物车的商品","0"),NEWADDTOCART_ONE_NUM("新加入购物车的商品", "1"),HAVE_DELETETOCART_TWO_NUM("从购物车中删除的商品","2"),HAVE_ADDTOCART_THREE_NUM("被加入订单的商品","3");
 		private String name;
 		private String state;
 
@@ -326,13 +326,13 @@ public class BaseEnums {
 			this.state = state;
 		}
 
-		private CARTGOODSSTATE(String name, String state) {
+		private CartGoodstate(String name, String state) {
 			this.name = name;
 			this.state = state;
 		}
 
 		public static String getName(String tag) {
-			for (CARTGOODSSTATE d : CARTGOODSSTATE.values()) {
+			for (CartGoodstate d : CartGoodstate.values()) {
 				if (d.getState().equals(tag)) {
 					return d.getName();
 				}
@@ -348,7 +348,7 @@ public class BaseEnums {
 	 *
 	 */
 	public enum ShippingIsOrderState {
-		SHIPPING_BIND_ORDER("发货地址已经绑定订单","1"),SHIPPING_UNBIND_ORDER("发货地址未绑定订单", "0");
+		SHIPPING_BIND_ORDER("发货地址已经绑定订单","1"),SHIPPING_UNBIND_ORDER("发货地址未绑定订单", "0"),SHIPPING_BIND_OLD_ORDER("发货地址绑定订单但已经失效","2");
 		private String name;
 		private String state;
 
@@ -555,6 +555,47 @@ public class BaseEnums {
 	}
 
 	/**
+	 * 商品是否上架状态
+	 * 
+	 * @author sdywcd
+	 *
+	 */
+	public enum GoodsSaleState {
+		SALE("上架", "1"), UNSALE("下架", "0");
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private GoodsSaleState(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (GoodsSaleState d : GoodsSaleState.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	/**
 	 * 商品记录相关状态
 	 * 
 	 * @author sdywcd
@@ -562,7 +603,7 @@ public class BaseEnums {
 	 */
 	public enum GoodsState {
 		SALE("上架", "1"), UNSALE("下架", "0"), HOTSALE("hotsale", "1"), RECOMMENDED(
-				"recommended", "1"), ISMOBILEPLATFORM("ismobileplatform", "1");
+				"recommended", "1"), ISMOBILEPLATFORM("ismobileplatform", "1"),BARGAINPRICE("bargainprice","1"),NEW("new","1");
 		private String name;
 		private String state;
 
@@ -1523,6 +1564,52 @@ public class BaseEnums {
 
 		public static String getName(String tag) {
 			for (GoodsCommentReplyType d : GoodsCommentReplyType.values()) {
+				if (d.getState().equals(tag)) {
+					return d.getName();
+				}
+			}
+			return "";
+		}
+	}
+	
+	
+	/**
+	 * 是否默认的
+	* @ClassName: IsDefault 
+	* @Description: TODO(这里用一句话描述这个类的作用) 
+	* @author jcchen
+	* @date 2015年3月6日 下午10:42:19 
+	*
+	 */
+	public enum IsDefault{
+		DEFAULT("默认", "1"),UN_DEFAULT("非默认","0");
+
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private IsDefault(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String tag) {
+			for (IsDefault d : IsDefault.values()) {
 				if (d.getState().equals(tag)) {
 					return d.getName();
 				}

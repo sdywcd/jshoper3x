@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-17T16:18:57.765+0800")
+@Generated(value="Dali", date="2015-03-17T18:48:28.797+0800")
 @StaticMetamodel(TemplatesetT.class)
 public class TemplatesetT_ {
 	public static volatile SingularAttribute<TemplatesetT, String> tsid;

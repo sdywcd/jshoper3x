@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-17T16:18:57.709+0800")
+@Generated(value="Dali", date="2015-03-17T18:48:28.743+0800")
 @StaticMetamodel(ExpresstempleteT.class)
 public class ExpresstempleteT_ {
 	public static volatile SingularAttribute<ExpresstempleteT, String> expresstempleteid;

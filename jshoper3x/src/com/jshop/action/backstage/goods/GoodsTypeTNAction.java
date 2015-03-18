@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.InterceptorRef;
@@ -15,6 +17,10 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
@@ -33,6 +39,7 @@ import com.opensymphony.xwork2.ActionSupport;
 })
 public class GoodsTypeTNAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
+	@Resource
 	private GoodsTypeTNService goodsTypeTNService;
 	private String goodsTypeId;
 	private String name;
@@ -48,14 +55,6 @@ public class GoodsTypeTNAction extends BaseTAction {
 	private int total = 0;
 	private boolean sucflag;
 
-	@JSON(serialize = false)
-	public GoodsTypeTNService getGoodsTypeTNService() {
-		return goodsTypeTNService;
-	}
-
-	public void setGoodsTypeTNService(GoodsTypeTNService goodsTypeTNService) {
-		this.goodsTypeTNService = goodsTypeTNService;
-	}
 	
 	public String getGoodsTypeId() {
 		return goodsTypeId;
@@ -179,24 +178,24 @@ public class GoodsTypeTNAction extends BaseTAction {
 	 */
 	@Action(value = "addGoodsTypeTN", results = { @Result(name = "json", type = "json") })
 	public String addGoodsTypeTN() {
-		if(Validate.StrisNull(this.getName())){
-			this.setSucflag(true);
-			return "json";
+		if(StringUtils.isBlank(this.getName())){
+			//this.setSucflag(true);
+			return JSON;
 		}
-		List<GoodsTypeTN> list=this.getGoodsTypeTNService().findGoodsTypeTNByName(this.getName());
+		Criterion criterion=Restrictions.eq("name", this.getName());
+		List<GoodsTypeTN> list=this.goodsTypeTNService.findByCriteria(GoodsTypeTN.class, criterion);
 		if(list.isEmpty()){
 			GoodsTypeTN gtn = new GoodsTypeTN();
 			gtn.setGoodsTypeId(this.getSerial().Serialid(Serial.GOODSTYPE));
 			gtn.setName(this.getName().trim());
-			gtn.setCreatetime(BaseTools.systemtime());
+			gtn.setCreatetime(BaseTools.getSystemTime());
 			gtn.setCreatorid(BaseTools.getAdminCreateId());
 			gtn.setGoodsParameter(this.getGoodsParameter());
-			this.getGoodsTypeTNService().save(gtn);
+			this.goodsTypeTNService.save(gtn);
 			this.setSucflag(true);
-			return "json";
-			
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -205,21 +204,18 @@ public class GoodsTypeTNAction extends BaseTAction {
 	 */
 	@Action(value = "addgoodsParameter", results = { @Result(name = "json", type = "json") })
 	public String addgoodsParameter() {
-		if(Validate.StrisNull(this.getName())){
-			this.setSucflag(true);
-			return "json";
+		if(StringUtils.isBlank(this.getName())){
+			//this.setSucflag(true);
+			return JSON;
 		}
-		List<GoodsTypeTN> list=this.getGoodsTypeTNService().findGoodsTypeTNByName(this.getName());
-		if(!list.isEmpty()){
-			GoodsTypeTN gtn = new GoodsTypeTN();
-			gtn=list.get(0);
+		Criterion criterion=Restrictions.eq("name", this.getName());
+		GoodsTypeTN gtn=this.goodsTypeTNService.findOneByCriteria(GoodsTypeTN.class, criterion);
+		if(gtn!=null){
 			gtn.setGoodsParameter(this.getGoodsParameter());
-			if (this.getGoodsTypeTNService().updateGoodsTypeTN(gtn) > 0) {
-				this.setSucflag(true);
-				return "json";
-			}
+			this.goodsTypeTNService.update(gtn);
+			this.setSucflag(true);
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -232,23 +228,23 @@ public class GoodsTypeTNAction extends BaseTAction {
 		if (StaticKey.SC.equals(this.getQtype())) {
 			findDefaultAllGoodsTypeTN();
 		} else {
-			if (Validate.StrisNull(this.getQuery())) {
-				return "json";
+			if (StringUtils.isNotBlank(this.getQtype())) {
+				return JSON;
 			} else {
 				if(this.getQtype().equals("name")){
 					findGoodsTypeTNByParams();
 				}
-				return "json";
+				return JSON;
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	
 
-	public void ProcessGoodsTypeTNList(List<GoodsTypeTN> list) {
+	public void processGoodsTypeTNList(List<GoodsTypeTN> list) {
 		for (Iterator<GoodsTypeTN> it = list.iterator(); it.hasNext();) {
-			GoodsTypeTN gtn = (GoodsTypeTN) it.next();
+			GoodsTypeTN gtn = it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gtn.getGoodsTypeId());
 			cellMap.put("cell", new Object[] {gtn.getName(), BaseTools.formateDbDate(gtn.getCreatetime()),"<a id='editegoodstypetn' name='editegoodstypetn' href='goodstypetn.jsp?operate=edit&folder=goods&goodsTypeId=" + gtn.getGoodsTypeId() + "'>[编辑]</a>" });
@@ -259,22 +255,32 @@ public class GoodsTypeTNAction extends BaseTAction {
 	private void findGoodsTypeTNByParams() {
 		int currentPage = page;
 		int lineSize = rp;
-		String qs= "select count(*) from GoodsTypeTN  where "+this.getQtype()+" like '%"+this.getQuery().trim()+"%' ";
-		total = this.getGoodsTypeTNService().countsortAllGoodsTypeTN(qs);
-		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
-			String queryString = "from GoodsTypeTN as gtn where gtn."+this.getQtype()+" like '%"+this.getQuery().trim()+"%' order by " + getSortname() + " " + getSortorder() + "";
-			List<GoodsTypeTN> list = this.getGoodsTypeTNService().sortAllGoodsTypeTN(currentPage, lineSize, queryString);
-			this.ProcessGoodsTypeTNList(list);
+		Criterion criterion=Restrictions.like(this.getQtype(), this.getQuery().trim(), MatchMode.ANYWHERE);
+		total = this.goodsTypeTNService.count(GoodsTypeTN.class, criterion).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
+			}
+			List<GoodsTypeTN>list=this.goodsTypeTNService.findByCriteriaByPage(GoodsTypeTN.class, criterion, order, currentPage, lineSize);
+			this.processGoodsTypeTNList(list);
 		}
 	}
 	public void findDefaultAllGoodsTypeTN() {
 		int currentPage = page;
 		int lineSize = rp;
-		total = this.getGoodsTypeTNService().countfindAllGoodsTypeTN();
-		if (Validate.StrNotNull(getSortname()) && Validate.StrNotNull(getSortorder())) {
-			String queryString = "from GoodsTypeTN  order by " + getSortname() + " " + getSortorder() + "";
-			List<GoodsTypeTN> list = this.getGoodsTypeTNService().sortAllGoodsTypeTN(currentPage, lineSize, queryString);
-			this.ProcessGoodsTypeTNList(list);
+		total = this.goodsTypeTNService.count(GoodsTypeTN.class).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
+			}
+			List<GoodsTypeTN>list=this.goodsTypeTNService.findByCriteriaByPage(GoodsTypeTN.class,order, currentPage, lineSize);
+			this.processGoodsTypeTNList(list);
 		}
 	}
 
@@ -285,14 +291,13 @@ public class GoodsTypeTNAction extends BaseTAction {
 	 */
 	@Action(value = "findGoodsTypeTNById", results = { @Result(name = "json", type = "json") })
 	public String findGoodsTypeTNById() {
-		if (Validate.StrNotNull(this.getGoodsTypeId())) {
-			List<GoodsTypeTN> list=this.getGoodsTypeTNService().findGoodsTypeTNById(this.getGoodsTypeId().trim());
-			if(!list.isEmpty()){
-				bean=new GoodsTypeTN();
-				bean=list.get(0);
+		if (StringUtils.isNotBlank(this.getGoodsTypeId())) {
+			bean=this.goodsTypeTNService.findByPK(GoodsTypeTN.class, this.getGoodsTypeId());
+			if(bean!=null){
+				this.setSucflag(true);
 			}
 		}
-		return "json";
+		return JSON;
 	}
 
 	/**
@@ -302,16 +307,20 @@ public class GoodsTypeTNAction extends BaseTAction {
 	 */
 	@Action(value = "updateGoodsTypeTN", results = { @Result(name = "json", type = "json") })
 	public String updateGoodsTypeTN() {
-		GoodsTypeTN gtn = new GoodsTypeTN();
-		gtn.setGoodsTypeId(this.getGoodsTypeId().trim());
-		gtn.setName(this.getName());
-		gtn.setCreatetime(BaseTools.systemtime());
-		gtn.setCreatorid(BaseTools.getAdminCreateId());
-		gtn.setGoodsParameter(this.getGoodsParameter());
-		@SuppressWarnings("unused")
-		int i = this.getGoodsTypeTNService().updateGoodsTypeTN(gtn);
-		this.setSucflag(true);
-		return "json";
+		if(StringUtils.isBlank(this.getGoodsTypeId())){
+			return JSON;
+		}
+		GoodsTypeTN gtn = this.goodsTypeTNService.findByPK(GoodsTypeTN.class, this.getGoodsTypeId());
+		if(gtn!=null){
+			gtn.setGoodsTypeId(this.getGoodsTypeId().trim());
+			gtn.setName(this.getName());
+			gtn.setCreatetime(BaseTools.getSystemTime());
+			gtn.setCreatorid(BaseTools.getAdminCreateId());
+			gtn.setGoodsParameter(this.getGoodsParameter());
+			this.goodsTypeTNService.update(gtn);
+			this.setSucflag(true);
+		}
+		return JSON;
 	}
 
 	/**
@@ -321,29 +330,34 @@ public class GoodsTypeTNAction extends BaseTAction {
 	 */
 	@Action(value = "delGoodsTypeTN", results = { @Result(name = "json", type = "json") })
 	public String delGoodsTypeTN() {
-		if (Validate.StrNotNull(this.getGoodsTypeId())) {
-			String[] list = this.getGoodsTypeId().trim().split(",");
-			int i = this.getGoodsTypeTNService().delGoodsTypeTN(list);
-			return "json";
+		if (StringUtils.isNotBlank(this.getGoodsTypeId())) {
+			String[] strs = StringUtils.split(this.getGoodsTypeId(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				GoodsTypeTN gtn=this.goodsTypeTNService.findByPK(GoodsTypeTN.class, s);
+				if(gtn!=null){
+					this.goodsTypeTNService.delete(gtn);
+				}
+			}
+			this.setSucflag(true);
 		}
-		return "json";
+		return JSON;
 	}
 
 	@Action(value = "findGoodsTypeTNForSelect", results = { @Result(name = "json", type = "json") })
 	public String findGoodsTypeTNForSelect() {
-		this.setGoodstypetnlist("");
-		List<GoodsTypeTN> list = this.getGoodsTypeTNService().findAllGoodsTypeTNNopage();
+		this.setGoodstypetnlist(StaticKey.EMPTY);
+		List<GoodsTypeTN> list = this.goodsTypeTNService.findAll(GoodsTypeTN.class);
 		if (list != null) {
 			this.setGoodstypetnlist("<option value='0'>---请选择---</option>");
 			for (Iterator<GoodsTypeTN> it = list.iterator(); it.hasNext();) {
-				GoodsTypeTN gtn = (GoodsTypeTN) it.next();
+				GoodsTypeTN gtn =it.next();
 				this.goodstypetnlist += "<option value='" + gtn.getGoodsTypeId() + "'>" + gtn.getName() + "</option>";
 			}
 			this.setGoodstypetnlist(goodstypetnlist);
-			return "json";
+			return JSON;
 		}
-		this.setGoodstypetnlist("");
-		return "json";
+		this.setGoodstypetnlist(StaticKey.EMPTY);
+		return JSON;
 
 	}
 
@@ -355,15 +369,12 @@ public class GoodsTypeTNAction extends BaseTAction {
 	@Action(value = "findGoodsParameter", results = { @Result(name = "json", type = "json") })
 	public String findGoodsParameter() {
 		if(StringUtils.isNotBlank(this.getGoodsTypeId())){
-			List<GoodsTypeTN>list=this.getGoodsTypeTNService().findGoodsTypeTNById(this.getGoodsTypeId());
-			if(!list.isEmpty()){
-				bean=list.get(0);
+			bean=this.goodsTypeTNService.findByPK(GoodsTypeTN.class, this.getGoodsTypeId());
+			if(bean!=null){
 				this.setSucflag(true);
-				return "json";
 			}
 		}
-		this.setSucflag(false);
-		return "json";
+		return JSON;
 
 	}
 

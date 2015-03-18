@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-17T16:18:57.772+0800")
+@Generated(value="Dali", date="2015-03-17T18:48:28.807+0800")
 @StaticMetamodel(WexinCompanyBaseCpT.class)
 public class WexinCompanyBaseCpT_ {
 	public static volatile SingularAttribute<WexinCompanyBaseCpT, String> id;

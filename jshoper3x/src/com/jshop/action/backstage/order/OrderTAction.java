@@ -20,11 +20,10 @@ import org.hibernate.criterion.Restrictions;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.Arith;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
-import com.jshop.action.backstage.utils.enums.BaseEnums.CARTGOODSSTATE;
+import com.jshop.action.backstage.utils.enums.BaseEnums.CartGoodstate;
 import com.jshop.action.backstage.utils.enums.BaseEnums.DataEffectiveState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
-import com.jshop.action.backstage.utils.enums.BaseEnums.ORDERCREATETAG;
+import com.jshop.action.backstage.utils.enums.BaseEnums.OrderCreateTag;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderDeliverMode;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderIsInvoice;
 import com.jshop.action.backstage.utils.enums.BaseEnums.OrderPayState;
@@ -36,7 +35,6 @@ import com.jshop.action.backstage.utils.enums.BaseEnums.PrintInvoiceState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.ShippingHaveDeliverAddress;
 import com.jshop.action.backstage.utils.enums.BaseEnums.ShippingIsOrderState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.ShippingIsSend;
-import com.jshop.action.backstage.utils.order.AllOrderState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.CartT;
 import com.jshop.entity.DeliverAddressT;
@@ -489,7 +487,7 @@ public class OrderTAction extends BaseTAction {
 			//配送方式
 			o.setDelivermode(OrderDeliverMode.getName(o.getDelivermode()));
 			//订单类型
-			o.setOrderTag(ORDERCREATETAG.getName(o.getOrderTag()));
+			o.setOrderTag(OrderCreateTag.getName(o.getOrderTag()));
 			if(o.getDeliverytime()!=null){
 				this.setFormatedeliverytime(BaseTools.formateDbDate(o.getDeliverytime()));
 			}else{
@@ -696,7 +694,7 @@ public class OrderTAction extends BaseTAction {
 			o.setShippingstate(OrderShippingState.getName(o.getShippingstate()));
 			o.setIsinvoice(OrderIsInvoice.getName(o.getIsinvoice()));
 			o.setDelivermode(OrderDeliverMode.getName(o.getDelivermode()));
-			o.setOrderTag(ORDERCREATETAG.getName(o.getOrderTag()));
+			o.setOrderTag(OrderCreateTag.getName(o.getOrderTag()));
 			map.put("orderdetail", o);
 			//获取买家信息
 			getMemberBuyerInfo(o.getMemberid());
@@ -1062,12 +1060,12 @@ public class OrderTAction extends BaseTAction {
 				t.setPicture(StaticKey.EMPTY);
 				t.setUsersetnum(g.getUsersetnum());
 				t.setWeight(p.getWeight());
-				t.setState(CARTGOODSSTATE.NEWADDTOCART_NUM.getState());//新加入购物车的状态
+				t.setState(CartGoodstate.NEWADDTOCART_ONE_NUM.getState());//新加入购物车的状态
 				t.setHtmlpath(g.getHtmlPath());//货物的静态页沿用商品的静态页
 				t.setProductid(p.getProductid());
-				t.setOrderTag(ORDERCREATETAG.ORDERTAG_NORMAL_ONE_NUM.getState());//普通订单
+				t.setOrderTag(OrderCreateTag.ORDERTAG_NORMAL_ONE_NUM.getState());//普通订单
 				t.setProductName(p.getProductName());
-				t.setCartTag(CARTGOODSSTATE.NEWADDTOCART_BACKSTAGE_ZERO_NUM.getState());//从后台加入的购物车
+				t.setCartTag(CartGoodstate.NEWADDTOCART_BACKSTAGE_ZERO_NUM.getState());//从后台加入的购物车
 				t.setMemberid(memberid);
 				t.setMembername(membername);
 				cartlists.add(t);//将购物车信息加入购物车集合

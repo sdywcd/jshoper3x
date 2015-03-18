@@ -9,25 +9,39 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.CartGoodstate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.OrderCreateTag;
+import com.jshop.action.backstage.utils.enums.BaseEnums.OrderDeliverMode;
+import com.jshop.action.backstage.utils.enums.BaseEnums.OrderIsInvoice;
+import com.jshop.action.backstage.utils.enums.BaseEnums.OrderPayState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.OrderShippingState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.OrderState;
+import com.jshop.action.backstage.utils.enums.BaseEnums.ShippingIsOrderState;
 import com.jshop.action.backstage.utils.order.AllOrderState;
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GroupCartT;
 import com.jshop.entity.GroupOrderT;
 import com.jshop.entity.LogisticsBusinessT;
+import com.jshop.entity.MemberT;
 import com.jshop.entity.ShippingAddressT;
 import com.jshop.entity.UserT;
 import com.jshop.service.GroupCartService;
 import com.jshop.service.GroupOrderTService;
 import com.jshop.service.LogisticsBTService;
-import com.jshop.service.LogisticsBusinessTService;
+import com.jshop.service.MemberTService;
 import com.jshop.service.ShippingAddressTService;
 import com.jshop.service.UsertService;
 import com.opensymphony.xwork2.ActionContext;
@@ -38,7 +52,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	@Resource
 	private GroupOrderTService groupOrderTService;
 	@Resource
-	private UsertService usertService;
+	private MemberTService memberTService;
 	@Resource
 	private ShippingAddressTService shippingAddressTService;
 	@Resource
@@ -91,29 +105,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	private String logisticsname;
 	private String formatedeliverytime;//格式化的发货时间
 	private Map<String, Object> map = new HashMap<String, Object>();
-	
-	@JSON(serialize=false)
-	public GroupCartService getGroupCartService() {
-		return groupCartService;
-	}
-	public void setGroupCartService(GroupCartService groupCartService) {
-		this.groupCartService = groupCartService;
-	}
-	@JSON(serialize=false)
-	public ShippingAddressTService getShippingAddressTService() {
-		return shippingAddressTService;
-	}
-	public void setShippingAddressTService(
-			ShippingAddressTService shippingAddressTService) {
-		this.shippingAddressTService = shippingAddressTService;
-	}
-	@JSON(serialize=false)
-	public UsertService getUsertService() {
-		return usertService;
-	}
-	public void setUsertService(UsertService usertService) {
-		this.usertService = usertService;
-	}
+	private boolean sucflag;
 	
 	public String getTradeno() {
 		return tradeno;
@@ -133,13 +125,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	public void setMap(Map<String, Object> map) {
 		this.map = map;
 	}
-	@JSON(serialize=false)
-	public GroupOrderTService getGroupOrderTService() {
-		return groupOrderTService;
-	}
-	public void setGroupOrderTService(GroupOrderTService groupOrderTService) {
-		this.groupOrderTService = groupOrderTService;
-	}
+	
 	public String getOrderid() {
 		return orderid;
 	}
@@ -400,6 +386,14 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	public void setFormatedeliverytime(String formatedeliverytime) {
 		this.formatedeliverytime = formatedeliverytime;
 	}
+	
+	
+	public boolean isSucflag() {
+		return sucflag;
+	}
+	public void setSucflag(boolean sucflag) {
+		this.sucflag = sucflag;
+	}
 	/**
 	 * 迭代显示数据
 	 * @param list
@@ -407,207 +401,94 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	public void processGroupOrder(List<GroupOrderT> list){
 		rows.clear();
 		for(Iterator<GroupOrderT> it = list.iterator();it.hasNext();){
-			GroupOrderT grouporder = (GroupOrderT) it.next();
-			if (grouporder.getOrderstate().equals("0")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_ZERO);
-			} else if (grouporder.getOrderstate().equals("1")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_ONE);
-			} else if (grouporder.getOrderstate().equals("2")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_TWO);
-			} else if (grouporder.getOrderstate().equals("3")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_THREE);
-			} else if (grouporder.getOrderstate().equals("4")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_FOUR);
-			} else if (grouporder.getOrderstate().equals("5")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_FIVE);
-			} else if (grouporder.getOrderstate().equals("6")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_SIX);
-			} else if (grouporder.getOrderstate().equals("7")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_SEVEN);
-			} else if (grouporder.getOrderstate().equals("8")) {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_EIGHT);
-			} else {
-				grouporder.setOrderstate(AllOrderState.ORDERSTATE_NINE);
-			}
-
-			if (grouporder.getPaystate().equals("0")) {
-				grouporder.setPaystate(AllOrderState.PAYSTATE_ZERO);
-			} else if (grouporder.getPaystate().equals("1")) {
-				grouporder.setPaystate(AllOrderState.PAYSTATE_ONE);
-			} else {
-				grouporder.setPaystate(AllOrderState.PAYSTATE_TWO);
-			}
-
-			if (grouporder.getShippingstate().equals("0")) {
-				grouporder.setShippingstate(AllOrderState.SHIPPINGSTATE_ZERO);
-			} else if (grouporder.getShippingstate().equals("1")) {
-				grouporder.setShippingstate(AllOrderState.SHIPPINGSTATE_ONE);
-			} else {
-				grouporder.setShippingstate(AllOrderState.SHIPPINGSTATE_TWO);
-			}
-
-			if (grouporder.getInvoice().equals("0")) {
-				grouporder.setInvoice(AllOrderState.INVOICE_ZERO);
-			} else {
-				grouporder.setInvoice(AllOrderState.INVOICE_ONE);
-			}
-			if (grouporder.getDelivermode().equals("EXPRESS")) {
-				grouporder.setDelivermode(AllOrderState.EXPRESS);
-			} else if (grouporder.getDelivermode().equals("POST")) {
-				grouporder.setDelivermode(AllOrderState.POST);
-			} else {
-				grouporder.setDelivermode(AllOrderState.EMS);
-			}
-			if (grouporder.getOrderTag().equals("1")) {
-				grouporder.setOrderTag(AllOrderState.ORDERTAG_ONE);
-			} else if (grouporder.getOrderTag().equals("2")) {
-				grouporder.setOrderTag(AllOrderState.ORDERTAG_TWO);
-			}
-			if(grouporder.getDeliverytime()!=null){
-				this.setFormatedeliverytime(BaseTools.formateDbDate(grouporder.getDeliverytime()));
+			GroupOrderT gt =it.next();
+			gt.setOrderstate(OrderState.getName(gt.getOrderstate()));
+			gt.setPaystate(OrderPayState.getName(gt.getPaystate()));
+			gt.setShippingstate(OrderShippingState.getName(gt.getShippingstate()));
+			gt.setIsinvoice(OrderIsInvoice.getName(gt.getIsinvoice()));
+			gt.setDelivermode(OrderDeliverMode.getName(gt.getDelivermode()));
+			gt.setOrderTag(OrderCreateTag.getName(gt.getOrderTag()));
+			if(gt.getDeliverytime()!=null){
+				this.setFormatedeliverytime(BaseTools.formateDbDate(gt.getDeliverytime()));
 			}else{
-				this.setFormatedeliverytime("");
+				this.setFormatedeliverytime(StaticKey.EMPTY);
 			}
 			Map<String,Object> cellmap=new HashMap<String,Object>();
-			cellmap.put("id", grouporder.getOrderid());
+			cellmap.put("id", gt.getOrderid());
 			cellmap.put("cell",new Object[]{
-					grouporder.getOrderid(),
-					"<a id='orderdetial' target='_blank' href='InitgroupOrdersDetail?orderid=" + grouporder.getOrderid() + "'   name='orderdetail'>" + grouporder.getGoodsname() + "</a>",
-					
-					grouporder.getAmount(),
-					grouporder.getNeedquantity(), 
-					grouporder.getUsername(), 
-					grouporder.getShippingusername(), 
-					grouporder.getPaymentname(), 
-					grouporder.getDelivermode(), 
-					grouporder.getOrderstate(), 
-					grouporder.getPaystate(), 
-					grouporder.getShippingstate(), 
-					BaseTools.formateDbDate(grouporder.getPurchasetime()),  
-					grouporder.getInvoice(), 
-					grouporder.getOrderTag() 
+					gt.getOrderid(),
+					"<a id='orderdetial' target='_blank' href='InitgtsDetail?orderid=" + gt.getOrderid() + "'   name='orderdetail'>" + gt.getOrdername() + "</a>",
+					gt.getAmount(),
+					gt.getNeedquantity(), 
+					gt.getUsername(), 
+					gt.getShippingusername(), 
+					gt.getPaymentname(), 
+					gt.getDelivermode(), 
+					gt.getOrderstate(), 
+					gt.getPaystate(),
+					gt.getShippingstate(), 
+					BaseTools.formateDbDate(gt.getPurchasetime()),  
+					gt.getIsinvoice(), 
+					gt.getOrderTag() 
 			});
-			
 			rows.add(cellmap);
 			}
 	}
-	/**]
+	/**
 	 * 查询默认所有的订单
 	 */
 	public void  finddefaultGroupOrder(){
 		int currentPage = page;
 		int lineSize= rp;
-
-//		total = this.getGroupOrderTService().countAllGroupOrder();
-//		if(Validate.StrNotNull(sortname)&& Validate.StrNotNull(sortorder)){
-//			String queryString ="from GroupOrderT order by "+ sortname +" "+ sortorder +"";
-//			List<GroupOrderT> order = this.getGroupOrderTService().sortAllGroupOrder(currentPage, lineSize, queryString);
-//			if(order!=null){
-//				this.processGroupOrder(order);
-//			}
-//		}
-
-		total = this.getGroupOrderTService().countfindAllGroupOrderT();
-		if(Validate.StrNotNull(getSortname())&& Validate.StrNotNull(getSortorder())){
-			String queryString ="from GroupOrderT order by "+ getSortname() +" "+ getSortorder() +"";
-			List<GroupOrderT> order = this.getGroupOrderTService().sortAllGroupOrderT(currentPage, lineSize, queryString);
-			if(order!=null){
-				this.processGroupOrder(order);
+		total = this.groupOrderTService.count(GroupOrderT.class).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
 			}
+			List<GroupOrderT>list=this.groupOrderTService.findByCriteriaByPage(GroupOrderT.class, order, currentPage, lineSize);
+			this.processGroupOrder(list);
 		}
-
 	}
 	/**
 	 * 查询所有团购订单信息
 	 * @return
 	 */
 	@Action(value="findAllGroupOrder",results={@Result(name="json",type="json")})
-
 	public String  findAllGroupOrder(){
-		if ("sc".equals(this.getQtype())) {
+		if (StaticKey.SC.equals(this.getQtype())) {
 			this.setTotal(0);
 			rows.clear();
 			this.finddefaultGroupOrder();
 		}
-		return "json";
+		return JSON;
 	}
 	/**
 	 * 获取订单详细
 	 */
 	public void GetGroupOrderDetail(String orderid) {
-		GroupOrderT o = this.getGroupOrderTService().findgroupOrderDetailByorderid(orderid);
-		if (o != null) {
-			if (o.getOrderstate().equals("0")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_ZERO);
-			} else if (o.getOrderstate().equals("1")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_ONE);
-			} else if (o.getOrderstate().equals("2")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_TWO);
-			} else if (o.getOrderstate().equals("3")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_THREE);
-			} else if (o.getOrderstate().equals("4")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_FOUR);
-			} else if (o.getOrderstate().equals("5")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_FIVE);
-			} else if (o.getOrderstate().equals("6")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_SIX);
-			} else if (o.getOrderstate().equals("7")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_SEVEN);
-			} else if (o.getOrderstate().equals("8")) {
-				o.setOrderstate(AllOrderState.ORDERSTATE_EIGHT);
-			} else {
-				o.setOrderstate(AllOrderState.ORDERSTATE_NINE);
-			}
-
-			if (o.getPaystate().equals("0")) {
-				o.setPaystate(AllOrderState.PAYSTATE_ZERO);
-			} else if (o.getPaystate().equals("1")) {
-				o.setPaystate(AllOrderState.PAYSTATE_ONE);
-			} else {
-				o.setPaystate(AllOrderState.PAYSTATE_TWO);
-			}
-
-			if (o.getShippingstate().equals("0")) {
-				o.setShippingstate(AllOrderState.SHIPPINGSTATE_ZERO);
-			} else if (o.getShippingstate().equals("1")) {
-				o.setShippingstate(AllOrderState.SHIPPINGSTATE_ONE);
-			} else {
-				o.setShippingstate(AllOrderState.SHIPPINGSTATE_TWO);
-			}
-
-			if (o.getInvoice().equals("0")) {
-				o.setInvoice(AllOrderState.INVOICE_ZERO);
-			} else {
-				o.setInvoice(AllOrderState.INVOICE_ONE);
-			}
-			if (o.getDelivermode().equals("EXPRESS")) {
-				o.setDelivermode(AllOrderState.EXPRESS);
-			} else if (o.getDelivermode().equals("POST")) {
-				o.setDelivermode(AllOrderState.POST);
-			} else {
-				o.setDelivermode(AllOrderState.EMS);
-			}
-			if (o.getOrderTag().equals("1")) {
-				o.setOrderTag(AllOrderState.ORDERTAG_ONE);
-			} else if (o.getOrderTag().equals("2")) {
-				o.setOrderTag(AllOrderState.ORDERTAG_TWO);
-			}
-
-			map.put("orderdetail", o);
-
-			//获取买家信息
-			GetUserBuyerInfo(o.getUserid());
-		}
+		GroupOrderT o = this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		o.setOrderstate(OrderState.getName(o.getOrderstate()));
+		o.setPaystate(OrderPayState.getName(o.getPaystate()));
+		o.setShippingstate(OrderShippingState.getName(o.getShippingstate()));
+		o.setIsinvoice(OrderIsInvoice.getName(o.getIsinvoice()));
+		o.setDelivermode(OrderDeliverMode.getName(o.getDelivermode()));
+		o.setOrderTag(OrderCreateTag.getName(o.getOrderTag()));
+		map.put("orderdetail", o);
+		//获取买家信息
+		getBuyerInfo(o.getMemberid());
 	}
 	/**
 	 * 获取买家信息
 	 * 
 	 * @param userid
 	 */
-	public void GetUserBuyerInfo(String userid) {
-		UserT user = this.getUsertService().findById(userid);
-		if (user != null) {
-			map.put("orderbuyerinfo", user);
+	public void getBuyerInfo(String memberid) {
+		MemberT memberT = this.memberTService.findByPK(MemberT.class, memberid);
+		if (memberT != null) {
+			map.put("orderbuyerinfo", memberT);
 		}
 	}
 	/**
@@ -615,8 +496,9 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	 * 
 	 * @param orderid
 	 */
-	public void GetgroupOrderShippingAddress(String orderid) {
-		ShippingAddressT st = this.getShippingAddressTService().findShippingAddressByOrderid(orderid, "1");
+	public void getgroupOrderShippingAddress(String orderid) {
+		Criterion criterion=Restrictions.and(Restrictions.eq("orderid", orderid)).add(Restrictions.eq("state", ShippingIsOrderState.SHIPPING_BIND_ORDER.getState()));
+		ShippingAddressT st = this.shippingAddressTService.findOneByCriteria(ShippingAddressT.class, criterion);
 		if (st != null) {
 			map.put("shipping", st);
 		}
@@ -636,9 +518,9 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 		//获取订单详细
 		GetGroupOrderDetail(orderid);
 		//获取订单中的商品列表
-		GetGroupOrderGoodsList(orderid);
+		getGroupOrderGoodsList(orderid);
 		//获取发货地址信息
-		GetgroupOrderShippingAddress(orderid);
+		getgroupOrderShippingAddress(orderid);
 		ActionContext.getContext().put("order", map);
 		return SUCCESS;
 	}
@@ -647,8 +529,9 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	 * 
 	 * @param orderid
 	 */
-	public void GetGroupOrderGoodsList(String orderid) {
-		List<GroupCartT> list = this.getGroupCartService().findGroupCartGoodsByOrderid(orderid);
+	public void getGroupOrderGoodsList(String orderid) {
+		Criterion criterion=Restrictions.and(Restrictions.eq("orderid", orderid)).add(Restrictions.eq("state", CartGoodstate.HAVE_ADDTOCART_THREE_NUM.getState()));
+		List<GroupCartT> list = this.groupCartService.findByCriteria(GroupCartT.class, criterion);
 		if (list != null) {
 			map.put("ordergoods", list);
 		}
@@ -663,12 +546,21 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	})
 	public String UpdateGroupOrderToClose() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_FIVE_NUM;//关闭
-		String paystate = AllOrderState.PAYSTATE_TWO_NUM;//表示关闭订单后的付款状态制空
-		String shippingstate = AllOrderState.SHIPPINGSTATE_TWO_NUM;//表示关闭订单后的发货状态制空
-		this.getGroupOrderTService().updateGroupOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_FIVE_NUM;//关闭
+		//String paystate = AllOrderState.PAYSTATE_TWO_NUM;//表示关闭订单后的付款状态制空
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_TWO_NUM;//表示关闭订单后的发货状态制空
+		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		if(got!=null){
+			String orderstate=OrderState.ORDERSTATE_CLOSE_FIVE_NUM.getState();//关闭
+			String paystate=OrderPayState.ORDERPAYSTATE_CLOSE_TWO_NUM.getState();
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_CLOSE_TWO_NUM.getState();
+			got.setOrderstate(orderstate);
+			got.setPaystate(paystate);
+			got.setShippingstate(shippingstate);
+			this.groupOrderTService.update(got);
+			this.setSucflag(true);
+		}
+		return JSON;
 	}
 	/**
 	 * 更新订单到确认状态（当订单被关闭或者货到付款模式需要确认订单）
@@ -680,12 +572,20 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	})
 	public String UpdateGroupOrderToConfirm() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
-		String paystate = AllOrderState.PAYSTATE_ZERO_NUM;//未付款
-		String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//配货，未发货
-		int i = this.getGroupOrderTService().updateGroupOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
+		//String paystate = AllOrderState.PAYSTATE_ZERO_NUM;//未付款
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//配货，未发货
+		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		if(got!=null){
+			String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();//已确认
+			String paystate=OrderPayState.ORDERPAYSTATE_UNPAY_ZERO_NUM.getState();//未付款
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM.getState();//配货中
+			got.setOrderstate(orderstate);
+			got.setPaystate(paystate);
+			got.setShippingstate(shippingstate);
+			this.setSucflag(true);
+		}
+		return JSON;
 	}
 	/**
 	 * 更新订单到发货状态（需要判断订单是否已经付款）
@@ -697,12 +597,21 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	})
 	public String UpdateOrderToDelivery() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_THREE_NUM;//等待确认收获
-		String paystate = this.getPaystate().trim();//付款状态
-		String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
-		int i = this.getGroupOrderTService().updateGroupOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_THREE_NUM;//等待确认收获
+		//String paystate = this.getPaystate().trim();//付款状态
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
+		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		if(got!=null){
+			String orderstate=OrderState.ORDERSTATE_WAIT_CONFIRM_RECEIVE_THREE_NUM.getState();//等待确认收获
+			String paystate=this.getPaystate().trim();//付款状态
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_HAVE_DELIVER_GOODS_ONE_NUM.getState();//发货
+			got.setOrderstate(orderstate);
+			got.setPaystate(paystate);
+			got.setShippingstate(shippingstate);
+			this.groupOrderTService.update(got);
+			this.setSucflag(true);
+		}
+		return JSON;
 	}
 	/**
 	 * 更新订单到付款状态（货到付款使用）
@@ -714,12 +623,21 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	})
 	public String UpdateGroupOrderToPay() {
 		String orderid = this.getOrderid().trim();
-		String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
-		String paystate = AllOrderState.PAYSTATE_ONE_NUM;//付款
-		String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
-		int i = this.getGroupOrderTService().updateGroupOrderPayShippingState(orderid, orderstate, paystate, shippingstate);
-		//InitOrdersDetail();
-		return "json";
+		//String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
+		//String paystate = AllOrderState.PAYSTATE_ONE_NUM;//付款
+		//String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
+		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		if(got!=null){
+			String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();//已确认
+			String paystate=OrderPayState.ORDERPAYSTATE_HAVEPAY_ONE_NUM.getState();//付款
+			String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_HAVE_DELIVER_GOODS_ONE_NUM.getState();//发货
+			got.setOrderstate(orderstate);
+			got.setPaystate(paystate);
+			got.setShippingstate(shippingstate);
+			this.groupOrderTService.update(got);
+			this.setSucflag(true);
+		}
+		return JSON;
 	}
 	/**
 	 *更新订单快递单号
@@ -730,11 +648,15 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String UpdateExpressnumberByGroupOrderId() {
-		if (Validate.StrNotNull(this.getExpressnumber())&&Validate.StrNotNull(this.getOrderid())) {
-			int i = this.getGroupOrderTService().updateExpressnumberByGroupOrderId(this.getOrderid().trim(), this.getExpressnumber().trim());
-			return "json";
+		if(StringUtils.isNotBlank(this.getExpressnumber())&&StringUtils.isNotBlank(this.getOrderid())){
+			GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, this.getOrderid());
+			if(got!=null){
+				got.setExpressnumber(this.getExpressnumber());
+				this.groupOrderTService.update(got);
+				this.setSucflag(true);
+			}
 		}
-		return "json";		
+		return JSON;		
 	}
 	/**
 	 * 更新发货单号
@@ -745,11 +667,15 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String UpdateInvoicenumberByGroupOrderId() {
-		if (Validate.StrNotNull(this.getInvoicenumber())&&Validate.StrNotNull(this.getOrderid())) {
-			int i = this.getGroupOrderTService().updateInvoicenumberByOrderId(this.getOrderid().trim(), this.getInvoicenumber().trim(), BaseTools.systemtime());
-			return "json";
+		if(StringUtils.isNotBlank(this.getInvoicenumber())&&StringUtils.isNotBlank(this.getOrderid())){
+			GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, this.getOrderid());
+			if(got!=null){
+				got.setDeliverynumber(this.getInvoicenumber());
+				this.groupOrderTService.update(got);
+				this.setSucflag(true);
+			}
 		}
-		return "json";
+		return JSON;
 
 	}
 	/**
@@ -761,14 +687,21 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 			@Result(name="json",type="json")
 	})
 	public String GetAlipayFhNeedParamsGroup() {
-		GroupOrderT o = this.getGroupOrderTService().findgroupOrderDetailByorderid(this.getOrderid().trim());
-		this.setTradeno(o.getTradeNo());//支付宝交易号
-		this.setExpressnumber(o.getExpressnumber());//快递单号，发货单号
-		this.setDelivermode(o.getDelivermode());
-		this.setPaymentid(o.getPaymentid());
-		LogisticsBusinessT lt = this.getLogisticsBusinessTService().findLogisticsBusinessById(o.getLogisticsid());
-		this.setLogisticsname(lt.getLogisticsname());
-		return "json";
+		if(StringUtils.isNotBlank(this.getOrderid())){
+			GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, this.getOrderid());
+			if(got!=null){
+				this.setTradeno(got.getTradeNo());//支付宝交易号
+				this.setExpressnumber(got.getExpressnumber());//快递单号，发货单号
+				this.setDelivermode(got.getDelivermode());
+				this.setPaymentid(got.getPaymentid());
+				LogisticsBusinessT lt = this.logisticsBTService.findByPK(LogisticsBusinessT.class, got.getLogisticsid());
+				if(lt!=null){
+					this.setLogisticsname(lt.getLogisticsname());
+				}
+				this.setSucflag(true);
+			}
+		}
+		return JSON;
 	}
 	
 }

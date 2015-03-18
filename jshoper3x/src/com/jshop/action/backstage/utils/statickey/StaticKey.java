@@ -7,6 +7,8 @@ package com.jshop.action.backstage.utils.statickey;
  *
  */
 public class  StaticKey {
+	public static final String DEFAULT_THEME="default";
+	public static final String FONE="-1";
 	public static final String ASC="asc";
 	public static final String DESC="desc";
 	/**

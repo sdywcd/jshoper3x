@@ -16,40 +16,51 @@ public class GroupOrderT implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String orderid;
 	private double amount;
+	private String code;
 	private Date createtime;
-	private String customernotes;
+	private String customerordernotes;
 	private String deliveraddressid;
 	private String delivermode;
 	private String deliverynumber;
 	private Date deliverytime;
+	private String errorOrderTag;
 	private String expressnumber;
 	private double freight;
-	private String goodid;
-	private String goodsname;
-	private String hasprintexpress;
-	private String hasprintfpinvoice;
-	private String hasprintinvoice;
-	private String invoice;
+	private String isinvoice;
+	private String isprintexpress;
+	private String isprintfpinvoice;
+	private String isprintinvoice;
 	private String logisticsid;
+	private String logisticsname;
 	private String logisticswebaddress;
+	private String mainpicture;
+	private Date memberdelivertime;
+	private String memberid;
+	private String membername;
 	private int needquantity;
 	private String orderTag;
+	private String ordername;
 	private String orderstate;
 	private String paymentid;
 	private String paymentname;
 	private String paystate;
 	private Date paytime;
 	private double points;
+	private String productinfo;
 	private Date purchasetime;
 	private String shippingaddressid;
 	private String shippingstate;
 	private String shippingusername;
+	private String shopid;
+	private String shopname;
 	private double shouldpay;
-	private String toBuyer;
+	private String toBuyerNotes;
 	private String tradeNo;
+	private Date updatetime;
 	private double usepoints;
 	private String userid;
 	private String username;
+	private int versiont;
 	private String vouchersid;
 
 	public GroupOrderT() {
@@ -75,6 +86,15 @@ public class GroupOrderT implements Serializable {
 	}
 
 
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreatetime() {
 		return this.createtime;
@@ -85,12 +105,12 @@ public class GroupOrderT implements Serializable {
 	}
 
 
-	public String getCustomernotes() {
-		return this.customernotes;
+	public String getCustomerordernotes() {
+		return this.customerordernotes;
 	}
 
-	public void setCustomernotes(String customernotes) {
-		this.customernotes = customernotes;
+	public void setCustomerordernotes(String customerordernotes) {
+		this.customerordernotes = customerordernotes;
 	}
 
 
@@ -131,6 +151,16 @@ public class GroupOrderT implements Serializable {
 	}
 
 
+	@Column(name="ERROR_ORDER_TAG")
+	public String getErrorOrderTag() {
+		return this.errorOrderTag;
+	}
+
+	public void setErrorOrderTag(String errorOrderTag) {
+		this.errorOrderTag = errorOrderTag;
+	}
+
+
 	public String getExpressnumber() {
 		return this.expressnumber;
 	}
@@ -149,57 +179,39 @@ public class GroupOrderT implements Serializable {
 	}
 
 
-	public String getGoodid() {
-		return this.goodid;
+	public String getIsinvoice() {
+		return this.isinvoice;
 	}
 
-	public void setGoodid(String goodid) {
-		this.goodid = goodid;
-	}
-
-
-	public String getGoodsname() {
-		return this.goodsname;
-	}
-
-	public void setGoodsname(String goodsname) {
-		this.goodsname = goodsname;
+	public void setIsinvoice(String isinvoice) {
+		this.isinvoice = isinvoice;
 	}
 
 
-	public String getHasprintexpress() {
-		return this.hasprintexpress;
+	public String getIsprintexpress() {
+		return this.isprintexpress;
 	}
 
-	public void setHasprintexpress(String hasprintexpress) {
-		this.hasprintexpress = hasprintexpress;
-	}
-
-
-	public String getHasprintfpinvoice() {
-		return this.hasprintfpinvoice;
-	}
-
-	public void setHasprintfpinvoice(String hasprintfpinvoice) {
-		this.hasprintfpinvoice = hasprintfpinvoice;
+	public void setIsprintexpress(String isprintexpress) {
+		this.isprintexpress = isprintexpress;
 	}
 
 
-	public String getHasprintinvoice() {
-		return this.hasprintinvoice;
+	public String getIsprintfpinvoice() {
+		return this.isprintfpinvoice;
 	}
 
-	public void setHasprintinvoice(String hasprintinvoice) {
-		this.hasprintinvoice = hasprintinvoice;
+	public void setIsprintfpinvoice(String isprintfpinvoice) {
+		this.isprintfpinvoice = isprintfpinvoice;
 	}
 
 
-	public String getInvoice() {
-		return this.invoice;
+	public String getIsprintinvoice() {
+		return this.isprintinvoice;
 	}
 
-	public void setInvoice(String invoice) {
-		this.invoice = invoice;
+	public void setIsprintinvoice(String isprintinvoice) {
+		this.isprintinvoice = isprintinvoice;
 	}
 
 
@@ -212,12 +224,58 @@ public class GroupOrderT implements Serializable {
 	}
 
 
+	public String getLogisticsname() {
+		return this.logisticsname;
+	}
+
+	public void setLogisticsname(String logisticsname) {
+		this.logisticsname = logisticsname;
+	}
+
+
 	public String getLogisticswebaddress() {
 		return this.logisticswebaddress;
 	}
 
 	public void setLogisticswebaddress(String logisticswebaddress) {
 		this.logisticswebaddress = logisticswebaddress;
+	}
+
+
+	public String getMainpicture() {
+		return this.mainpicture;
+	}
+
+	public void setMainpicture(String mainpicture) {
+		this.mainpicture = mainpicture;
+	}
+
+
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getMemberdelivertime() {
+		return this.memberdelivertime;
+	}
+
+	public void setMemberdelivertime(Date memberdelivertime) {
+		this.memberdelivertime = memberdelivertime;
+	}
+
+
+	public String getMemberid() {
+		return this.memberid;
+	}
+
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
+	}
+
+
+	public String getMembername() {
+		return this.membername;
+	}
+
+	public void setMembername(String membername) {
+		this.membername = membername;
 	}
 
 
@@ -237,6 +295,15 @@ public class GroupOrderT implements Serializable {
 
 	public void setOrderTag(String orderTag) {
 		this.orderTag = orderTag;
+	}
+
+
+	public String getOrdername() {
+		return this.ordername;
+	}
+
+	public void setOrdername(String ordername) {
+		this.ordername = ordername;
 	}
 
 
@@ -295,6 +362,15 @@ public class GroupOrderT implements Serializable {
 	}
 
 
+	public String getProductinfo() {
+		return this.productinfo;
+	}
+
+	public void setProductinfo(String productinfo) {
+		this.productinfo = productinfo;
+	}
+
+
 	@Temporal(TemporalType.TIMESTAMP)
 	public Date getPurchasetime() {
 		return this.purchasetime;
@@ -332,6 +408,24 @@ public class GroupOrderT implements Serializable {
 	}
 
 
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
+	}
+
+
+	public String getShopname() {
+		return this.shopname;
+	}
+
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
+	}
+
+
 	public double getShouldpay() {
 		return this.shouldpay;
 	}
@@ -341,13 +435,13 @@ public class GroupOrderT implements Serializable {
 	}
 
 
-	@Column(name="TO_BUYER")
-	public String getToBuyer() {
-		return this.toBuyer;
+	@Column(name="TO_BUYER_NOTES")
+	public String getToBuyerNotes() {
+		return this.toBuyerNotes;
 	}
 
-	public void setToBuyer(String toBuyer) {
-		this.toBuyer = toBuyer;
+	public void setToBuyerNotes(String toBuyerNotes) {
+		this.toBuyerNotes = toBuyerNotes;
 	}
 
 
@@ -358,6 +452,16 @@ public class GroupOrderT implements Serializable {
 
 	public void setTradeNo(String tradeNo) {
 		this.tradeNo = tradeNo;
+	}
+
+
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getUpdatetime() {
+		return this.updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
 	}
 
 
@@ -385,6 +489,15 @@ public class GroupOrderT implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+
+	public int getVersiont() {
+		return this.versiont;
+	}
+
+	public void setVersiont(int versiont) {
+		this.versiont = versiont;
 	}
 
 

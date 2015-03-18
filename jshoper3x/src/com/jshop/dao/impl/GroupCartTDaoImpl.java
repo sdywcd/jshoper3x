@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.jshop.dao.GroupCartDao;
 import com.jshop.entity.GroupCartT;
 @Repository("groupCartDao")
-public class GroupCatTDaoImpl extends BaseTDaoImpl<GroupCartT> implements GroupCartDao {
+public class GroupCartTDaoImpl extends BaseTDaoImpl<GroupCartT> implements GroupCartDao {
 	private static final Log log = LogFactory.getLog(CartTDaoImpl.class);
 //	@Override
 //	public List<GroupCartT> findGroupById(final String cartid) {
