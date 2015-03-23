@@ -311,32 +311,32 @@
 	      sizeLimit: 1073741824,
 	      allowedExtensions: ['jpeg','jpg','gif','png'],
 	      onComplete: function(id, fileName, responseJSON){
-	        var jsonstr=$.parseJSON(responseJSON);
-	        $.each(jsonstr,function(k,v){
+	        var v=responseJSON;
+	   
 	          var cloudhtml="";
 	          if(v.isCloudImg){
-	            if(v.normalfilepath!=""){
+	            if(v.normalfilepath!=undefined){
 	              cloudhtml+= "<img id='"+id+"' src='"+v.normalfilepath+"' rel='#"+fileName+"'/>";
 	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.normalfilepath+"' /> ";
 	            }
-	            if(v.compressfilepath!=""){
+	            if(v.compressfilepath!=undefined){
 	              cloudhtml+= "<img id='"+id+"' src='"+v.compressfilepath+"' rel='#"+fileName+"'/>";
-	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
+	              cloudhtml+= "<input id='"+id+"' name='compresspcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
 	            }
 	          }else{
-	            if(v.normalfilepath!=""){
-	              var localpath="<%=basePath%>"+'"+v.normalfilepath+"';
+	            if(v.normalfilepath!=undefined){
+	              var localpath="<%=basePath%>"+v.normalfilepath;
 	              cloudhtml+= "<img id='"+id+"' src='"+localpath+"' rel='#"+fileName+"'/>";
 	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.normalfilepath+"' /> ";
 	            }
-	            if(v.compressfilepath!=""){
-	              var compresslocalpath="<%=basePath%>"+'"+v.compressfilepath+"';
+	            if(v.compressfilepath!=undefined){
+	            	var compresslocalpath="<%=basePath%>"+v.compressfilepath;
 	              cloudhtml+= "<img id='"+id+"' src='"+compresslocalpath+"' rel='#"+fileName+"'/>";
-	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
+	              cloudhtml+= "<input id='"+id+"' name='compresspcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
 	            }
 	          }
 	          $("#triggers").append(cloudhtml);
-	        });
+	     
 	      }
 	    });
 	}

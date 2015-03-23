@@ -17,7 +17,7 @@ public class QiNiuConfig {
 	/**
 	 * 七牛HOST
 	 */
-	public final static String QINIUIMGHOST="7xi5wl.com1.z0.glb.clouddn.com";
+	public final static String QINIUIMGHOST="http://7xi5wl.com1.z0.glb.clouddn.com/";
 	/**
 	 * 七牛ACCESS_KEY
 	 */

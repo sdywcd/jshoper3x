@@ -20,7 +20,7 @@ import org.apache.commons.io.IOUtils;
  * 
  */
 public class ImgCutTools {
-	private static String[] imgExts = new String[] { "jpeg", "jpg", "gif","png" };
+	private static String[] imgExts = new String[] { ".jpeg", ".jpg", ".gif",".png" };
 	public static boolean checkIsImg(String extName){
 		boolean isImg = false;
 		String en = extName;

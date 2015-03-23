@@ -23,7 +23,7 @@ import com.qiniu.api.rs.PutPolicy;
  */
 public class QiNiuUploadFiles {
 
-	public static int upLoads(String key,String localFile) throws AuthException, JSONException{
+	public static int upLoads(String localFile,String key) throws AuthException, JSONException{
 		Config.ACCESS_KEY = QiNiuConfig.ACCESS_KEY;
 		Config.SECRET_KEY = QiNiuConfig.SECRET_KEY;
 		Mac mac = new Mac(Config.ACCESS_KEY, Config.SECRET_KEY);

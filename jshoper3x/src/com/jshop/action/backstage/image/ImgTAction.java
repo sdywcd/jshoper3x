@@ -1,7 +1,6 @@
 package com.jshop.action.backstage.image;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,10 +33,8 @@ import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jshop.action.backstage.aspect.ImgTAspect;
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.FileUploadTool;
 import com.jshop.action.backstage.utils.GsonJson;
 import com.jshop.action.backstage.utils.ImgCutTools;
 import com.jshop.action.backstage.utils.ServerFileInfo;
@@ -49,14 +45,7 @@ import com.jshop.action.backstage.utils.qiniu.ImgFileBean;
 import com.jshop.action.backstage.utils.qiniu.QiNiuConfig;
 import com.jshop.action.backstage.utils.qiniu.QiNiuUploadFiles;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
-import com.opensymphony.xwork2.ActionContext;
 import com.qiniu.api.auth.AuthException;
-import com.qiniu.api.auth.digest.Mac;
-import com.qiniu.api.config.Config;
-import com.qiniu.api.io.IoApi;
-import com.qiniu.api.io.PutExtra;
-import com.qiniu.api.io.PutRet;
-import com.qiniu.api.rs.PutPolicy;
 
 @Namespace("")
 @ParentPackage("jshop")
@@ -433,7 +422,8 @@ public class ImgTAction extends BaseTAction implements ServletResponseAware,
 	@Action(value = "ajaxFileUploads", results = { @Result(name = "json", type = "json") })
 	public String ajaxFileUploads() throws JSONException, AuthException {
 		String extName=StaticKey.EMPTY;
-		String newFilename = StaticKey.EMPTY;
+		String newFileFullname = StaticKey.EMPTY;//包含后缀的文件名
+		String newFileName=StaticKey.EMPTY;//没有包含后缀的文件名
 		String nowTimeStr = StaticKey.EMPTY;
 		String realpath = StaticKey.EMPTY;
 		if (Validate.StrNotNull(this.getImgdirpath())) {
@@ -454,19 +444,22 @@ public class ImgTAction extends BaseTAction implements ServletResponseAware,
 		if (filename.lastIndexOf(StaticKey.DOT) >= 0) {
 			extName = filename.substring(filename.lastIndexOf(StaticKey.DOT));
 		}
-		newFilename = nowTimeStr + rannum + extName;
+		//包含后缀的文件全名
+		newFileFullname = nowTimeStr + rannum + extName;
+		//不包含后缀的文件全名
+		newFileName=nowTimeStr+rannum;
 		PrintWriter writer = null;
 		InputStream is = null;
 		FileOutputStream fos = null;
 		try {
 			writer = response.getWriter();
 			is = request.getInputStream();
-			fos = new FileOutputStream(new File(savePath + newFilename));
+			fos = new FileOutputStream(new File(savePath + newFileFullname));
 			IOUtils.copy(is, fos);
 			
 			ImgFileBean ifb=new ImgFileBean();
-			String localFile = savePath + newFilename;// 已上传到本地的图片路径
-			String cloudFileKey = realpath + newFilename;// 云上的文件名称
+			String localFile = savePath + newFileFullname;// 已上传到本地的图片路径
+			String cloudFileKey = realpath + newFileFullname;// 云上的文件名称
 			String compressLocalFile=StaticKey.EMPTY;//已上传到本地的压缩图片路径
 			String compresscloudFileKey=StaticKey.EMPTY;//云上的压缩文件名称
 			Properties p = ReadSysConfig.getJConfig();
@@ -485,7 +478,7 @@ public class ImgTAction extends BaseTAction implements ServletResponseAware,
 			}else if(StringUtils.equals(issaveimgtocloud, StaticKey.ZERO)){
 				//如果不启用云存储表示本地存储
 				ifb.setSucflag(true);
-				ifb.setNormalfilepath(localFile);
+				ifb.setNormalfilepath(cloudFileKey);
 			}
 			boolean isImg=ImgCutTools.checkIsImg(extName);
 			if(isImg){
@@ -502,7 +495,7 @@ public class ImgTAction extends BaseTAction implements ServletResponseAware,
 							GlobalParam.DEFAULTHEIGHT));
 					compressLocalFile=ImgCutTools.compressImages(localFile, savePath,
 							width, height);
-					compresscloudFileKey=newFilename+ "_" + String.valueOf(width) + "_"
+					compresscloudFileKey=newFileName+ "_" + String.valueOf(width) + "_"
 							+ String.valueOf(height) + extName;
 					if(compressLocalFile!=null){
 						if (StringUtils.equals(issaveimgtocloud, StaticKey.ONE)) {
@@ -515,7 +508,7 @@ public class ImgTAction extends BaseTAction implements ServletResponseAware,
 							}
 						}else if(StringUtils.equals(issaveimgtocloud, StaticKey.ZERO)){
 							ifb.setSucflag(true);
-							ifb.setCompressfilepath(compressLocalFile);
+							ifb.setCompressfilepath(realpath+compresscloudFileKey);
 						}
 					}
 				}
