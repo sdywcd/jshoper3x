@@ -64,9 +64,10 @@ public class FreeMarkerController extends ActionSupport {
 		}catch(Exception e){
 			this.setLogmsg("<p style='color:red;'>" + e.getMessage() + "</p>");
 		}finally{
-			
-			out.flush();
-			out.close();
+			if(out!=null){
+				out.flush();
+				out.close();
+			}
 		}
 		
 	}

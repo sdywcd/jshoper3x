@@ -7,7 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>首页 &middot; jshoper</title>
+
+<title>店铺首页 &middot; jshoper</title>
 
 </head>
 <body>
@@ -25,12 +26,12 @@
 
 			<div class="span2">
 				<a href="#" class="thumbnail"><img
-					src="<s:property value="#session.admin.headpath"/>" alt=""
+					src="<s:property value="#session.basicshopinfo.sitelogo"/>" alt=""
 					class="caption"> </a>
 				<div class="well well-small smallt">
 					<h4><s:property value="#session.admin.realname"/> ，你好！</h4>
 					<p>
-						欢迎您再次来到<br />Jshoper3o
+						欢迎您再次来到<br />Jshoper3ms
 					</p>
 					<button class="btn btn-block btn-primary" type="button">我的工作</button>
 				</div>

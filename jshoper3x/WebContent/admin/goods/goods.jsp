@@ -302,24 +302,46 @@
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/kindeditor/kindeditor-min.js"></script>
 	<script type="text/javascript">
- 		function createUploader(){            
-             var uploader = new qq.FileUploader({
-                 element: document.getElementById('uploadergoodpc'),
-                 action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
-                 debug: true,
-                 minSizeLimit:1024,
-                 sizeLimit: 1073741824,
-                 allowedExtensions: ['jpeg','jpg','gif','png'],
-                 onComplete: function(id, fileName, responseJSON){
-                	var pcpath1="<%=basePath%>"+ responseJSON.success;
-							var pcpath = responseJSON.success;
-							var htm = "<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
-							var checkpc = "<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
-							$("#triggers").append(htm).append(checkpc);
-						},
-					});
-		}
-		window.onload = createUploader;
+	function createUploader(){
+	    var uploader = new qq.FileUploader({
+	      element: document.getElementById('uploadergoodpc'),
+	      action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
+	      debug: true,
+	      minSizeLimit:1024,
+	      sizeLimit: 1073741824,
+	      allowedExtensions: ['jpeg','jpg','gif','png'],
+	      onComplete: function(id, fileName, responseJSON){
+	        var jsonstr=$.parseJSON(responseJSON);
+	        $.each(jsonstr,function(k,v){
+	          var cloudhtml="";
+	          if(v.isCloudImg){
+	            if(v.normalfilepath!=""){
+	              cloudhtml+= "<img id='"+id+"' src='"+v.normalfilepath+"' rel='#"+fileName+"'/>";
+	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.normalfilepath+"' /> ";
+	            }
+	            if(v.compressfilepath!=""){
+	              cloudhtml+= "<img id='"+id+"' src='"+v.compressfilepath+"' rel='#"+fileName+"'/>";
+	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
+	            }
+	          }else{
+	            if(v.normalfilepath!=""){
+	              var localpath="<%=basePath%>"+'"+v.normalfilepath+"';
+	              cloudhtml+= "<img id='"+id+"' src='"+localpath+"' rel='#"+fileName+"'/>";
+	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.normalfilepath+"' /> ";
+	            }
+	            if(v.compressfilepath!=""){
+	              var compresslocalpath="<%=basePath%>"+'"+v.compressfilepath+"';
+	              cloudhtml+= "<img id='"+id+"' src='"+compresslocalpath+"' rel='#"+fileName+"'/>";
+	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
+	            }
+	          }
+	          $("#triggers").append(cloudhtml);
+	        });
+	      }
+	    });
+	}
+	window.onload = createUploader;
+
 	</script>
 	<script type="text/javascript">
  		KE.show({

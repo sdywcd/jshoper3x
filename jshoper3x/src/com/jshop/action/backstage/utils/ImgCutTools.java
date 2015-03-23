@@ -20,22 +20,35 @@ import org.apache.commons.io.IOUtils;
  * 
  */
 public class ImgCutTools {
-
-	public static void compressImages(String needCutImgPath,
+	private static String[] imgExts = new String[] { "jpeg", "jpg", "gif","png" };
+	public static boolean checkIsImg(String extName){
+		boolean isImg = false;
+		String en = extName;
+		for (int i = 0; i < imgExts.length; i++) {
+			if (en.equalsIgnoreCase(imgExts[i])) {
+				isImg = true;
+				break;
+			}
+		}
+		return isImg;
+	}
+	public static String compressImages(String needCutImgPath,
 			String targetSavePath, int width, int height) throws IOException {
 		File file = new File(needCutImgPath);
 		if (!file.exists()) {
 			throw new IOException("图片不存在:" + needCutImgPath);
 		}
+		// 截取文件名称
+		String fileName = file.getName();
+		// 文件后缀
+		String extName = null;
+		// 新文件名
+		String newFileName = null;
+		// 图片类型
+		String formatName = null;
+		//压缩后的图片路径
+		String compressFilePath=null;
 		if (width != 0 && height != 0) {
-			// 截取文件名称
-			String fileName = file.getName();
-			// 文件后缀
-			String extName = null;
-			// 新文件名
-			String newFileName = null;
-			// 图片类型
-			String formatName = null;
 			if (fileName.lastIndexOf(".") >= 0) {
 				extName = fileName.substring(fileName.lastIndexOf("."));
 				fileName = fileName.substring(0, fileName.lastIndexOf("."));
@@ -44,13 +57,17 @@ public class ImgCutTools {
 			//缩略图名称
 			newFileName = fileName + "_" + String.valueOf(width) + "_"
 					+ String.valueOf(height) + extName;
-			copyImageFile(file, targetSavePath+newFileName);
+			compressFilePath=targetSavePath+newFileName;
+			copyImageFile(file, compressFilePath);
 			BufferedImage bufferedImage = ImageIO.read(file);
 			BufferedImage zoomImage = compress(bufferedImage, width, height);
-			ImageIO.write(zoomImage, formatName, new File(targetSavePath
+			boolean isWriteOK=ImageIO.write(zoomImage, formatName, new File(targetSavePath
 					+ newFileName));
-
+			if(isWriteOK){
+				return compressFilePath;
+			}
 		}
+		return compressFilePath;
 	}
 
 	/**

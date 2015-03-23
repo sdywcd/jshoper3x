@@ -424,8 +424,17 @@
 							value="20" />
 					</div>
 					-->
+					
 					<div class="form-inline">
-						<span class="label label-required">保留原图:</span> <input
+						<span class="label label-required">云存储资源:</span> <input
+							type="radio" id="issaveimgtocloud"
+							name="issaveimgtocloud" value="1" /> <label for="radio-1">七牛云存储
+						</label> <input type="radio" id="issaveimgtocloud"
+							name="issaveimgtocloud" value="0" /> <label for="radio-2">
+							关闭 </label>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">本地保留原图:</span> <input
 							type="radio" id="issaveoriginalbitmap"
 							name="issaveoriginalbitmap" value="1" /> <label for="radio-1">开启
 						</label> <input type="radio" id="issaveoriginalbitmap"

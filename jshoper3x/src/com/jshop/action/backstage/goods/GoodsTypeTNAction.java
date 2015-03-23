@@ -33,10 +33,10 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
-@InterceptorRefs({  
-    @InterceptorRef("goodsmoduleGoodsTypeTNInterecptor"),  
-    @InterceptorRef("defaultStack")
-})
+//@InterceptorRefs({  
+//    @InterceptorRef("goodsmoduleGoodsTypeTNInterecptor"),  
+//    @InterceptorRef("defaultStack")
+//})
 public class GoodsTypeTNAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	@Resource

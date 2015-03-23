@@ -16,6 +16,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.stereotype.Controller;
 
+import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
@@ -191,7 +192,7 @@ public class FileUploadTool extends ActionSupport {
 				}
 			}
 			if ("time".equals(tag)) {
-				String nowTimeStr = this.collectNowTime(BaseTools.DATEFORMATEYMD);
+				String nowTimeStr = this.collectNowTime(StaticKey.DF_YYYMMDD);
 				String savedir = "/Uploads/";
 				String realpath = "";
 				String savePath = "";
@@ -239,7 +240,6 @@ public class FileUploadTool extends ActionSupport {
 	@Action(value = "delFile", results = { @Result(type = "json", name = "json") })
 	public String delServerFile() {
 		String savePath = ServletActionContext.getServletContext().getRealPath("") + this.getFilepath();
-		System.out.println(savePath);
 		File file = new File(savePath);
 		if (file.exists()) {
 			if (file.delete()) {

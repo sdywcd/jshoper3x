@@ -333,6 +333,14 @@ $(function(){
 								$("input[name='issaveoriginalbitmap']").get(1).checked=true;
 							}
 						}
+					}else if(v.gkey=="issaveimgtocloud"){
+						if($("input[name='issaveimgtocloud']").length>0){
+							if(v.gvalue=="1"){
+								$("input[name='issaveimgtocloud']").get(0).checked=true;
+							}else{
+								$("input[name='issaveimgtocloud']").get(1).checked=true;
+							}
+						}
 					}else if(v.gkey=="thumbnailwidth"){
 						$("#thumbnailwidth").attr("value",v.gvalue);
 					}else if(v.gkey=="thumbnailheight"){
@@ -666,6 +674,7 @@ $(function(){
 	 * 更新图片相关设置
 	 */
 	$("#imgupdate").click(function(data){
+		var issaveimgtocloud=$("input[name='issaveimgtocloud']:checked").val();
 		var watermarkfileimg=$("#watermarkfileimg").val();
 		var watermarkclarity=$("#watermarkclarity").val();
 		var issaveoriginalbitmap=$("input[name='issaveoriginalbitmap']:checked").val();
@@ -677,6 +686,7 @@ $(function(){
 		this.value="更新提交中";
 		this.disabled=true;
 		$.post("updateGolbalParambygkey.action",{
+			"issaveimgtocloud":issaveimgtocloud,
 			"watermarkfileimg":watermarkfileimg,
 			"watermarkclarity":watermarkclarity,
 			"issaveoriginalbitmap":issaveoriginalbitmap,

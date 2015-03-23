@@ -41,6 +41,8 @@ public class GoodsT implements Serializable {
 	private String keywordname;
 	private String lname;
 	private String ltypeid;
+	private String mainPicture;
+	private String mainSmaillPicture;
 	private double memberprice;
 	private String metaDescription;
 	private String metaKeywords;
@@ -63,6 +65,7 @@ public class GoodsT implements Serializable {
 	private String salestate;
 	private String shopid;
 	private String shopname;
+	private String smaillPictures;
 	private String sname;
 	private int sort;
 	private String stypeid;
@@ -333,6 +336,26 @@ public class GoodsT implements Serializable {
 	}
 
 
+	@Column(name="MAIN_PICTURE")
+	public String getMainPicture() {
+		return this.mainPicture;
+	}
+
+	public void setMainPicture(String mainPicture) {
+		this.mainPicture = mainPicture;
+	}
+
+
+	@Column(name="MAIN_SMAILL_PICTURE")
+	public String getMainSmaillPicture() {
+		return this.mainSmaillPicture;
+	}
+
+	public void setMainSmaillPicture(String mainSmaillPicture) {
+		this.mainSmaillPicture = mainSmaillPicture;
+	}
+
+
 	public double getMemberprice() {
 		return this.memberprice;
 	}
@@ -532,6 +555,16 @@ public class GoodsT implements Serializable {
 
 	public void setShopname(String shopname) {
 		this.shopname = shopname;
+	}
+
+
+	@Column(name="SMAILL_PICTURES")
+	public String getSmaillPictures() {
+		return this.smaillPictures;
+	}
+
+	public void setSmaillPictures(String smaillPictures) {
+		this.smaillPictures = smaillPictures;
 	}
 
 

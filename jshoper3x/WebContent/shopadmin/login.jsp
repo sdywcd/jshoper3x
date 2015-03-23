@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>登录-店铺 &middot; jshoper</title>
+<title>掌柜登录-店铺 &middot; jshoper</title>
 
 <!-- Le styles -->
 <link href="<%=basePath%>admin/ui/assets/css/bootstrap.css"
@@ -90,11 +90,15 @@ html {
 	<div class="container">
 
 
-		<form class="form-signin" action="bk/user/shopadminlogin.action"
+		<form class="form-signin" action="shopadmin/login.action"
 			method="post">
 			<h2 class="form-signin-heading">
-				店铺管理
+				<img src="<%=basePath%>admin/ui/assets/img/logo.png" width="280"
+					height="48">
 			</h2>
+			<div style="text-align:center;font-size: 20px;">
+				<span>店铺管理</span>
+			</div>
 
 			<div class="messages">
 				<div style="display: none;" id="message-error"
@@ -108,11 +112,9 @@ html {
 			</div>
 			<hr />
 			<input id="username" name="username" type="text"
-				class="input-block-level" placeholder="Username"> <input
+				class="input-block-level" placeholder="请输入账号"> <input
 				id="password" name="password" type="password"
-				class="input-block-level" placeholder="Password"> <label
-				class="checkbox"><input type="checkbox" value="remember-me">
-				记住我 </label>
+				class="input-block-level" placeholder="请输入密码">
 			<button class="btn btn-large btn-primary" type="submit">
 				<i class="icon-user icon-white"></i>掌柜登录
 			</button>

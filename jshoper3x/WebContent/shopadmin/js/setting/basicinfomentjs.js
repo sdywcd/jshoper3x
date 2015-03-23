@@ -30,37 +30,37 @@ $(function(){
 	 * 查询当前商店信息
 	 */
 	findJshopbasicInfoTById=function(){
-		$.post("findJshopbasicInfoTById.action",function(data){
+		$.post("shopadmin/findShopInfo.action",function(data){
 			if(data.sucflag){
 				$("#submit").hide();
 				$("#update").show();
-				$("#jshopname").attr("value",data.beanlist.jshopname);
-				$("#jshopslogan").attr("value",data.beanlist.jshopslogan);
-				$("#metaKeywords").attr("value",data.beanlist.metaKeywords);
-				$("#metaDes").attr("value",data.beanlist.metaDes);
-				$("#country").val(data.beanlist.country);
-				$("#province").val(data.beanlist.province);
-				$("#city").val(data.beanlist.city);
-				$("#district").val(data.beanlist.district);
-				$("#street").attr("value",data.beanlist.street);
-				$("#qqservice").attr("value",data.beanlist.qqservice);
-				$("#skypeservice").attr("value",data.beanlist.skypeservice);
-				$("#weixinservice").attr("value",data.beanlist.weixinservice);
-				$("#skypeservice").attr("value",data.beanlist.skypeservice);
-				$("#sinaweiboservice").attr("value",data.beanlist.sinaweiboservice);
-				$("#emailservice").attr("value",data.beanlist.emailservice);
-				$("#phoneservice").attr("value",data.beanlist.phoneservice);
-				$("#openstate").val(data.beanlist.openstate);
-				$("#siteclosenotes").attr("value",data.beanlist.siteclosenotes);
-				$("#licensed").val(data.beanlist.licensed);
-				$("#icpnum").attr("value",data.beanlist.icpnum);
-				$("#state").val(data.beanlist.state);
-				$("#shopmanager").val(data.beanlist.shopmanager);
-				$("#shopaccount").val(data.beanlist.shopaccount);
-				$("#hidbasicinfoid").attr("value",data.beanlist.basicinfoid);
+				$("#jshopname").attr("value",data.bean.jshopname);
+				$("#jshopslogan").attr("value",data.bean.jshopslogan);
+				$("#metaKeywords").attr("value",data.bean.metaKeywords);
+				$("#metaDes").attr("value",data.bean.metaDes);
+				$("#country").val(data.bean.country);
+				$("#province").val(data.bean.province);
+				$("#city").val(data.bean.city);
+				$("#district").val(data.bean.district);
+				$("#street").attr("value",data.bean.street);
+				$("#qqservice").attr("value",data.bean.qqservice);
+				$("#skypeservice").attr("value",data.bean.skypeservice);
+				$("#weixinservice").attr("value",data.bean.weixinservice);
+				$("#skypeservice").attr("value",data.bean.skypeservice);
+				$("#sinaweiboservice").attr("value",data.bean.sinaweiboservice);
+				$("#emailservice").attr("value",data.bean.emailservice);
+				$("#phoneservice").attr("value",data.bean.phoneservice);
+				$("#openstate").val(data.bean.openstate);
+				$("#siteclosenotes").attr("value",data.bean.siteclosenotes);
+				$("#licensed").val(data.bean.licensed);
+				$("#icpnum").attr("value",data.bean.icpnum);
+				$("#state").val(data.bean.state);
+				$("#shopmanager").val(data.bean.shopmanager);
+				$("#shopaccount").val(data.bean.shopaccount);
+				$("#hidbasicinfoid").attr("value",data.bean.basicinfoid);
 				// 图片显示
 				var pcpath="";
-				var pcurl=data.beanlist.sitelogo;
+				var pcurl=data.bean.sitelogo;
 				var htm="";
 				var checkpc="";
 				var temp=pcurl.split(',');

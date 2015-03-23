@@ -158,7 +158,7 @@
 						</a>
 							<ul class="dropdown-menu">
 								<li><a
-									href="<%=basePath%>admin/shop/setting/basicinfo.jsp?operate=find">商城信息设置</a></li>
+									href="<%=basePath%>shopadmin/setting/basicinfo.jsp?operate=find">店铺信息设置</a></li>
 								<li><a
 									href="<%=basePath%>admin/shop/setting/emailment.jsp?operate=find">邮箱设置</a></li>
 								<li><a
@@ -209,8 +209,8 @@
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/validatorjs/validator.js"></script>
 	
-	<script type="text/javascript" src="<%=basePath%>admin/shop/js/indexjs.js"></script>
-	<script type="text/javascript" src="<%=basePath%>admin/shop/js/base.js"></script>
+	<script type="text/javascript" src="<%=basePath%>shopadmin/js/indexjs.js"></script>
+	<script type="text/javascript" src="<%=basePath%>shopadmin/js/base.js"></script>
 
 
 </body>

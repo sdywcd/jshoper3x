@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.user;
+package com.jshop.action.backstage.shopadmin.user;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,17 +33,19 @@ import com.jshop.action.backstage.utils.enums.BaseEnums;
 import com.jshop.action.backstage.utils.enums.BaseEnums.UserType;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
+import com.jshop.entity.JshopbasicInfoT;
 import com.jshop.entity.OrderT;
 //import com.jshop.entity.FunctionM;
 //import com.jshop.entity.OrderT;
 import com.jshop.entity.UserT;
 import com.jshop.service.GlobalParamService;
+import com.jshop.service.JshopbasicInfoTService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 
-@Namespace("")
+@Namespace("/shopadmin")
 @ParentPackage("jshop")
 public class UserTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
@@ -59,6 +61,8 @@ public class UserTAction extends BaseTAction {
 	private GlobalParamService globalParamService;
 	@Resource
 	private DataCollectionTAction dataCollectionTAction;
+	@Resource
+	private JshopbasicInfoTService jshopbasicInfoTService;
 	// @Resource
 	// private JmsTemplate jmsTemplate;
 	private UserT bean = new UserT();
@@ -511,20 +515,18 @@ public class UserTAction extends BaseTAction {
 	}
 
 	/**
-	 * 管理员登陆
+	 * 店铺管理员登陆
 	 * 
 	 * @return
 	 * @throws Exception
 	 */
-	@Action(value = "/adminlogin", results = {
-			@Result(name = "success", type = "redirect", location = "/admin/index.jsp?session=${param}"),
-			@Result(name = "input", type = "redirect", location = "/admin/login.jsp?msg=${param}") })
-	public String adminlogin() throws Exception {
-		if (StringUtils.isBlank(this.getUsername())) {
+	@Action(value = "/login", results = { @Result(name = "success", type = "redirect", location = "/shopadmin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/shopadmin/login.jsp?msg=${param}") })
+	public String shopadminlogin() throws Exception {
+		if(StringUtils.isBlank(this.getUsername())){
 			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
-		if (StringUtils.isBlank(this.getPassword())) {
+		if(StringUtils.isBlank(this.getPassword())){
 			this.setParam(StaticKey.ONE);
 			return INPUT;
 		}
@@ -539,30 +541,26 @@ public class UserTAction extends BaseTAction {
 				.add(Restrictions.eq("userstate", user.getUserstate()));
 		user = this.usertService.findOneByCriteria(UserT.class, criterion);
 		if (user != null) {
-			doSysIndexInit(user, md5);
+			doSysIndexInit(user,md5);
+			setBasicShopInfoToSessionContext(user.getShopid());
 			return SUCCESS;
 		}
-
 		this.setParam(StaticKey.ONE);
-		// test jms
-		// for(int i=0;i<1;i++){
-		// final String a=String.valueOf(i);
-		// jmsTemplate.send(new MessageCreator() {
-		// public Message createMessage(Session session)
-		// throws JMSException {
-		// TextMessage msg = session.createTextMessage();
-		// // 设置消息属性
-		// msg.setStringProperty("phrCode", "C00"+a);
-		// // 设置消息内容
-		// msg.setText("Hello World!  "+a);
-		// return msg;
-		// }
-		// });
-		// }
-
 		return INPUT;
 	}
 
+	/**
+	 * 获取店铺基础信息
+	 * @param username
+	 */
+	private void setBasicShopInfoToSessionContext(String shopid){
+		if(!StringUtils.equals(shopid, StaticKey.ZERO)){
+			JshopbasicInfoT jbi=this.jshopbasicInfoTService.findByPK(JshopbasicInfoT.class, shopid);
+			if(jbi!=null){
+				ActionContext.getContext().getSession().put(StaticKey.BASIC_SHOP_INFO, jbi);
+			}
+		}
+	}
 	/**
 	 * 进行用户登录有的系统首页数据初始化及用户权限相关初始化
 	 */

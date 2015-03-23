@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>登录 &middot; jshoper11</title>
+<title>超级管理 &middot;登录 &middot; jshoper</title>
 
 <!-- Le styles -->
 <link href="<%=basePath%>admin/ui/assets/css/bootstrap.css"

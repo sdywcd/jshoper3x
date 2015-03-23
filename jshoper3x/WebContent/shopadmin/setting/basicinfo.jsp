@@ -7,19 +7,19 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="magi">
-<title>基本信息设置 &middot; jshoper</title>
+<title>店铺信息设置 &middot; jshoper</title>
 </head>
 
 <body data-spy="scroll" data-target=".subnav" data-offset-top="40">
 	<!-- header 包含头部导航-->
-	<%@include file="/admin/shop/header.jsp"%>
+	<%@include file="/shopadmin/header.jsp"%>
 	<!-- end header -->
 	<div class="navbar">
 		<div class="navbar-innert">
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
-				height="30" alt=""></a> <a class="brand" href="#">基本信息</a> <a
-				class="brand2">基本信息浏览</a>
+				height="30" alt=""></a> <a class="brand" href="#">店铺信息</a> <a
+				class="brand2">店铺信息浏览</a>
 		</div>
 
 	</div>
@@ -29,7 +29,7 @@
 
 			<div class="span2">
 				<!-- 引入左侧导航 -->
-				<%@include file="/admin/shop/left.jsp"%>
+				<%@include file="/shopadmin/left.jsp"%>
 			</div>
 
 			<div class="span10">
@@ -191,7 +191,7 @@
 	</div>
 
 	<script type="text/javascript"
-		src="<%=basePath%>admin/shop/js/setting/basicinfomentjs.js"></script>
+		src="<%=basePath%>shopadmin/js/setting/basicinfomentjs.js"></script>
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
 	<script type="text/javascript">
@@ -214,7 +214,7 @@
          }
  		window.onload = createUploader; 
  	</script>
-	<%@include file="/admin/shop/footer.jsp"%>
+	<%@include file="/shopadmin/footer.jsp"%>
 
 </body>
 </html>

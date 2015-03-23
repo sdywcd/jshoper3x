@@ -14,6 +14,7 @@ import java.util.Properties;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -21,7 +22,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 
 import com.jshop.action.backstage.base.BaseTAction;
-import com.jshop.action.backstage.utils.statickey.GlobalParam;
+import com.jshop.action.backstage.utils.config.GlobalParam;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GlobalParamM;
 import com.jshop.service.GlobalParamService;
@@ -84,6 +85,7 @@ public class GlobalParamSetTAction extends BaseTAction {
 	private String defaultstock;
 	private String inventorywarning;
 	// 图片相关
+	private String issaveimgtocloud;
 	private String watermarkfileimg;
 	private String watermarkclarity;
 	private String issaveoriginalbitmap;
@@ -604,6 +606,14 @@ public class GlobalParamSetTAction extends BaseTAction {
 		this.freeshoppinglines = freeshoppinglines;
 	}
 
+	public String getIssaveimgtocloud() {
+		return issaveimgtocloud;
+	}
+
+	public void setIssaveimgtocloud(String issaveimgtocloud) {
+		this.issaveimgtocloud = issaveimgtocloud;
+	}
+
 	/**
 	 * 获取所有全局参数
 	 * 
@@ -984,6 +994,12 @@ public class GlobalParamSetTAction extends BaseTAction {
 				if (this.getIcp()!=null&&!gm.getGvalue().equals(this.getIcp())) {
 					gm.setGkey(GlobalParam.ICP);
 					gm.setGvalue(this.getIcp());
+					this.globalParamService.update(gm);
+				}
+			}else if(StringUtils.equals(GlobalParam.ISSAVEIMGTOCLOUD, gm.getGkey())){
+				if (this.getIssaveimgtocloud()!=null&&!gm.getGvalue().equals(this.getIssaveimgtocloud())) {
+					gm.setGkey(GlobalParam.ISSAVEIMGTOCLOUD);
+					gm.setGvalue(this.getIssaveimgtocloud());
 					this.globalParamService.update(gm);
 				}
 			}

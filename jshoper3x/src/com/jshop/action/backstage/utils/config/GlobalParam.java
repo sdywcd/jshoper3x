@@ -1,4 +1,4 @@
-package com.jshop.action.backstage.utils.statickey;
+package com.jshop.action.backstage.utils.config;
 /**
  * 全局参数
  * @author chenda
@@ -152,6 +152,9 @@ public class GlobalParam {
 	
 	//水印透明度
 	public static final String WATERMARKCLARITY="watermarkclarity";
+	
+	//是否采用云存储
+	public static final String ISSAVEIMGTOCLOUD="issaveimgtocloud";
 	
 	//保留原图
 	public static final String ISSAVEORIGINALBITMAP="issaveoriginalbitmap";

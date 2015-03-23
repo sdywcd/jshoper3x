@@ -66,11 +66,11 @@ $(function() {
 		if (data.slogin) {
 			var pathnamearray = window.location.pathname.split("/");
 			var pathname = pathnamearray[1] + "/";
-			if (pathname == "admin/shop/") {
+			if (pathname == "shopadmin/") {
 				pathname = "";
 			}
 			
-			top.location.href ="http://" + window.location.host +"/"+pathname+"admin/shop/login.jsp";
+			top.location.href ="http://" + window.location.host +"/"+pathname+"shopadmin/login.jsp";
 		} else {
 			if (data.length > 0) {
 				var pathnamearray = window.location.pathname.split("/");
@@ -78,7 +78,7 @@ $(function() {
 				if (pathname == "admin/shop/") {
 					pathname = "";
 				}
-				top.location.href = "http://" + window.location.host + "/" + pathname + "admin/shop/login.jsp";
+				top.location.href = "http://" + window.location.host + "/" + pathname + "shopadmin/login.jsp";
 			} else {
 				return;
 			}

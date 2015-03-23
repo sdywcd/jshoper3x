@@ -1,12 +1,64 @@
 package com.jshop.action.backstage.utils.statickey;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.jshop.action.backstage.utils.BaseTools;
+
 
 /**
  * 这个类是用来定义一些系统使用的字符串
  * @author chenda
  *
  */
-public class  StaticKey {
+public class StaticKey {
+
+	/**
+	 * 默认的用户ID，用于在没有登录的情况下生成静态页面，主要是在安装的时候使用
+	 */
+	public static String DEFAULTADMINID = "20100721001";
+	/**
+	 * 默认的用户名称，用于在没有登录的情况下生成静态页面，主要是在安装的时候使用
+	 */
+	public static final String DEFAULTADMINNAME = "sasasa";
+	/**
+	 * 默认shopid=1 1表示官方平台发布
+	 */
+	public static final String DEFAULTSHOPID="1";
+	/**
+	 * 默认的店铺名称 
+	 */
+	public static final String DEFAULTSHOPNAME="";
+
+	/**
+	 * 默认时间
+	 */
+	public static String DEFAULTTIME = "2010-06-25 12:48:21";
+	
+	/**
+	 * 日期格式化yyyyMMdd
+	 */
+	public static final String DF_YYYMMDD = "yyyyMMdd";
+	/**
+	 * 日期格式化yyyy-MM-dd HH:mm:ss
+	 */
+	public static final String DF_YYYY_MM_DD_HH_MM_SS="yyyy-MM-dd HH:mm:ss";
+	/**
+	 * 日期格式化yyyy-MM-dd
+	 */
+	public static final String DF_YYYY_MM_DD="yyyy-MM-dd";
+	/**
+	 * 日期格式化yyyyMMddHHmmss
+	 */
+	public static final String DATEFORMATEYMDHMS = "yyyyMMddHHmmss";
+	/**
+	 * 日期格式化yy-MM-dd
+	 */
+	public static final String DF_FF_MM_DD="yy-MM-dd";
+	
+	
+	public static final String X_FILE_NAME="X-File-Name";
+	public static final String DOT=".";
 	public static final String DEFAULT_THEME="default";
 	public static final String FONE="-1";
 	public static final String ASC="asc";
