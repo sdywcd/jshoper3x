@@ -14,7 +14,7 @@
 <title>掌柜登录-店铺 &middot; jshoper</title>
 
 <!-- Le styles -->
-<link href="<%=basePath%>admin/ui/assets/css/bootstrap.css"
+<link href="<%=basePath%>madmin/ui/assets/css/bootstrap.css"
 	rel="stylesheet">
 <style type="text/css">
 html {
@@ -66,13 +66,13 @@ html {
 	padding: 7px 9px;
 }
 </style>
-<link href="<%=basePath%>admin/ui/assets/css/bootstrap-responsive.css"
+<link href="<%=basePath%>madmin/ui/assets/css/bootstrap-responsive.css"
 	rel="stylesheet">
-<link href="<%=basePath%>admin/ui/assets/css/docs.css" rel="stylesheet">
+<link href="<%=basePath%>madmin/ui/assets/css/docs.css" rel="stylesheet">
 <link
-	href="<%=basePath%>admin/ui/assets/js/google-code-prettify/prettify.css"
+	href="<%=basePath%>madmin/ui/assets/js/google-code-prettify/prettify.css"
 	rel="stylesheet">
-<link href="<%=basePath%>admin/ui/assets/css/base.css" rel="stylesheet">
+<link href="<%=basePath%>madmin/ui/assets/css/base.css" rel="stylesheet">
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 <!--[if lt IE 9]>
@@ -81,7 +81,7 @@ html {
 
 <!-- Fav and touch icons -->
 <link rel="shortcut icon"
-	href="<%=basePath%>admin/ui/assets/ico/favicon.ico" />
+	href="<%=basePath%>madmin/ui/assets/ico/favicon.ico" />
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar"
@@ -93,7 +93,7 @@ html {
 		<form class="form-signin" action="shopadmin/login.action"
 			method="post">
 			<h2 class="form-signin-heading">
-				<img src="<%=basePath%>admin/ui/assets/img/logo.png" width="280"
+				<img src="<%=basePath%>madmin/ui/assets/img/logo.png" width="280"
 					height="48">
 			</h2>
 			<div style="text-align:center;font-size: 20px;">
@@ -105,7 +105,7 @@ html {
 					class="message message-error">
 					<div class="image">
 						<img
-							src="<%=basePath%>admin/ui/assets/img/header/icon-48-alert.png"
+							src="<%=basePath%>madmin/ui/assets/img/header/icon-48-alert.png"
 							alt="Error" height="32" /> <span>您输入的用户名或者密码错误</span>
 					</div>
 				</div>
@@ -141,21 +141,9 @@ html {
 	<!-- Le javascript
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="<%=basePath%>admin/ui/assets/js/jquery.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-transition.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-alert.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-modal.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-dropdown.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-scrollspy.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-tab.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-tooltip.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-popover.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-button.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-collapse.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-carousel.js"></script>
-	<script src="<%=basePath%>admin/ui/assets/js/bootstrap-typeahead.js"></script>
+	<script src="<%=basePath%>madmin/ui/assets/js/jquery.js"></script>
 	<script type="text/javascript"
-		src="<%=basePath%>admin/js/jquery.query.js"></script>
+		src="<%=basePath%>madmin/js/jquery.query.js"></script>
 	<script type="text/javascript">
 	$(function() {
 		//读取登录返回状态并显示提示

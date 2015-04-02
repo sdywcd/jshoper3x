@@ -45,7 +45,7 @@ import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
 import com.opensymphony.xwork2.ActionContext;
 
-@Namespace("/shopadmin")
+@Namespace("/madmin")
 @ParentPackage("jshop")
 public class UserTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
@@ -520,7 +520,7 @@ public class UserTAction extends BaseTAction {
 	 * @return
 	 * @throws Exception
 	 */
-	@Action(value = "/login", results = { @Result(name = "success", type = "redirect", location = "/shopadmin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/shopadmin/login.jsp?msg=${param}") })
+	@Action(value = "/login", results = { @Result(name = "success", type = "redirect", location = "/madmin/index.jsp?session=${param}"), @Result(name = "input", type = "redirect", location = "/madmin/login.jsp?msg=${param}") })
 	public String shopadminlogin() throws Exception {
 		if(StringUtils.isBlank(this.getUsername())){
 			this.setParam(StaticKey.ONE);

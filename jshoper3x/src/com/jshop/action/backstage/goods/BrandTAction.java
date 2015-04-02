@@ -42,6 +42,7 @@ public class BrandTAction extends BaseTAction {
 	private String creatorid;
 	private String username;
 	private String createtime;
+	private String remark;
 	private String intro;
 	private String logoPath;
 	private String sort;
@@ -56,6 +57,14 @@ public class BrandTAction extends BaseTAction {
 	private int page = 1;
 	private int total = 0;
 	private boolean sucflag;
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public String getBrandid() {
 		return brandid;
@@ -233,12 +242,13 @@ public class BrandTAction extends BaseTAction {
 		bt.setBrandid(this.getSerial().Serialid(Serial.BRAND));
 		bt.setBrandname(this.getBrandname().trim());
 		bt.setCreatorid(BaseTools.getAdminCreateId());
-		bt.setUsername(this.getUsername());
+		bt.setUsername(StaticKey.EMPTY);
 		bt.setCreatetime(BaseTools.getSystemTime());
 		bt.setIntro(this.getIntro());
 		bt.setLogoPath(this.getLogoPath().trim());
 		bt.setSort(Integer.parseInt(this.getSort().trim()));
 		bt.setUrl(this.getUrl().trim());
+		bt.setRemark(this.getRemark());
 		bt.setShopid(BaseTools.getShopId());
 		bt.setShopname(BaseTools.getShopName());
 		//增加商品品牌和商品类型的关系
@@ -316,6 +326,7 @@ public class BrandTAction extends BaseTAction {
 			bt.setLogoPath(this.getLogoPath().trim());
 			bt.setSort(Integer.parseInt(this.getSort().trim()));
 			bt.setUrl(this.getUrl().trim());
+			bt.setRemark(this.getRemark());
 			bt.setShopid(BaseTools.getShopId());
 			bt.setShopname(BaseTools.getShopName());
 			this.brandTService.update(bt);

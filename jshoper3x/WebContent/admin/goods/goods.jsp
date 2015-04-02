@@ -4,11 +4,7 @@
 	String htmlData = request.getParameter("detail") != null ? request
 			.getParameter("detail") : "";
 %>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String htmlDatacommoditylist = request.getParameter("commoditylist") != null ? request
-			.getParameter("commoditylist") : "";
-%>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -58,27 +54,10 @@
 				</div>
 				<!-- 开始显示商品类型form表单 -->
 				<div class="form-actions">
-					<div class="form-inline">
-						<span class="label label-required">虚拟商品:</span> <input
-							type="radio" id="isvirtualsale" name="isvirtualsale" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="isvirtualsale" name="isvirtualsale" value="0" /> <label
-							for="radio-2">否 </label>
-					</div>
-					<div class="form-inline">
-						<span class="label label-required">外链:</span> <input
-							type="radio" id="isoutsite" name="isoutsite" value="1"
-							checked="checked" /> <label for="radio-1">是 </label> <input
-							type="radio" id="isoutsite" name="isoutsite" value="0" /> <label
-							for="radio-2">否 </label>
-					</div>
-					<div class="form-inline">
-						<span class="label label-required">外链地址:</span> <input type="text"
-							id="outsitelink" name="outsitelink" class="medium"  value="" />
-					</div>
+					
 					<div class="form-inline">
 						<span class="label label-required">选择商品类型: </span> <select
-							id="goodsTypeId" name="goodsTypeId"  >
+							id="goodsTypeId" name="goodsTypeId" >
 
 						</select> <span class="label label-info">请选择一个商品类型</span>
 					</div>
@@ -230,14 +209,55 @@
 							name="salestate" value="0" /> <label for="radio-2">否 </label> <span
 							class="label label-info">这里的上架选项和货品中的上架选项不同，这里控制多个，货品仅控制自己一个</span>
 					</div>
-
-
+					<div class="form-inline">
+						<span class="label label-required">虚拟商品:</span> <input
+							type="radio" id="isvirtualsale" name="isvirtualsale" value="1"
+							checked="checked" /> <label for="radio-1">是 </label> <input
+							type="radio" id="isvirtualsale" name="isvirtualsale" value="0" /> <label
+							for="radio-2">否 </label>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">外链:</span> <input
+							type="radio" id="isoutsite" name="isoutsite" value="1"
+							checked="checked" /> <label for="radio-1">是 </label> <input
+							type="radio" id="isoutsite" name="isoutsite" value="0" /> <label
+							for="radio-2">否 </label>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">外链地址:</span> <input type="text"
+							id="outsitelink" name="outsitelink" class="medium"  value="" />
+					</div>
 					<div class="form-inline">
 						<table>
 							<tr>
 								<td><span class="label label-required">主图:</span></td>
 								<td>
-									<div id="uploadergoodpc">
+									<div id="mainpicture">
+										<noscript>
+											Please enable JavaScript to use file uploader.
+											<!-- or put a simple form for upload here -->
+										</noscript>
+
+									</div>
+								</td>
+							</tr>
+						</table>
+						<!-- trigger elements -->
+						<div id="maintriggers"></div>
+
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">操作:</span> <input
+							class="btn btn-success" type="button" id="maindelpc" name="maindelpc"
+							value="删除所选主图片" />
+					</div>
+
+					<div class="form-inline">
+						<table>
+							<tr>
+								<td><span class="label label-required">展示图:</span></td>
+								<td>
+									<div id="pclist">
 										<noscript>
 											Please enable JavaScript to use file uploader.
 											<!-- or put a simple form for upload here -->
@@ -265,7 +285,7 @@
 					<div class="form-inline">
 						<span class="label label-required">商品清单:</span>
 						<textarea id="commoditylist" name="commoditylist" cols="50"
-							rows="12" style="width: 100%; height: 400px; visibility: hidden;"><%=htmlspecialchars(htmlDatacommoditylist)%></textarea>
+							rows="12" style="width: 100%; height: 400px;"></textarea>
 					</div>
 
 					<div class="form-inline">
@@ -302,45 +322,86 @@
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/kindeditor/kindeditor-min.js"></script>
 	<script type="text/javascript">
-	function createUploader(){
-	    var uploader = new qq.FileUploader({
-	      element: document.getElementById('uploadergoodpc'),
-	      action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
-	      debug: true,
-	      minSizeLimit:1024,
-	      sizeLimit: 1073741824,
-	      allowedExtensions: ['jpeg','jpg','gif','png'],
-	      onComplete: function(id, fileName, responseJSON){
-	        var v=responseJSON;
-	   
-	          var cloudhtml="";
-	          if(v.isCloudImg){
-	            if(v.normalfilepath!=undefined){
-	              cloudhtml+= "<img id='"+id+"' src='"+v.normalfilepath+"' rel='#"+fileName+"'/>";
-	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.normalfilepath+"' /> ";
-	            }
-	            if(v.compressfilepath!=undefined){
-	              cloudhtml+= "<img id='"+id+"' src='"+v.compressfilepath+"' rel='#"+fileName+"'/>";
-	              cloudhtml+= "<input id='"+id+"' name='compresspcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
-	            }
-	          }else{
-	            if(v.normalfilepath!=undefined){
-	              var localpath="<%=basePath%>"+v.normalfilepath;
-	              cloudhtml+= "<img id='"+id+"' src='"+localpath+"' rel='#"+fileName+"'/>";
-	              cloudhtml+= "<input id='"+id+"' name='pcpath' type='checkbox' value='"+v.normalfilepath+"' /> ";
-	            }
-	            if(v.compressfilepath!=undefined){
-	            	var compresslocalpath="<%=basePath%>"+v.compressfilepath;
-	              cloudhtml+= "<img id='"+id+"' src='"+compresslocalpath+"' rel='#"+fileName+"'/>";
-	              cloudhtml+= "<input id='"+id+"' name='compresspcpath' type='checkbox' value='"+v.compressfilepath+"' /> ";
-	            }
-	          }
-	          $("#triggers").append(cloudhtml);
-	     
-	      }
-	    });
-	}
-	window.onload = createUploader;
+	$(function(){
+		//创建主图上传控件
+		createMainPictureUploader=function(){
+			var uploader = new qq.FileUploader({
+	      		element: document.getElementById('mainpicture'),
+	      		action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
+	      		debug: true,
+      			minSizeLimit:1024,
+	      		sizeLimit: 1073741824,
+	      		allowedExtensions: ['jpeg','jpg','gif','png'],
+	      		onComplete: function(id, fileName, responseJSON){
+	        		var v=responseJSON;
+		          	var cloudhtml="";
+		          	if(v.isCloudImg){
+			            if(v.normalfilepath!=undefined){
+			              cloudhtml+= "<img id='"+id+"' src='"+v.normalfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='mainpc' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			              cloudhtml+= "<img id='"+id+"' src='"+v.compressfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='maincompresspc' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}else{
+			            if(v.normalfilepath!=undefined){
+			              var localpath="<%=basePath%>"+v.normalfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+localpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='mainpc' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			            	var compresslocalpath="<%=basePath%>"+v.compressfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+compresslocalpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='maincompresspc' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}
+		          	$("#maintriggers").append(cloudhtml);
+	      		}
+	    	});
+		},
+		//创建多图上传控件
+		createPicturesUploader=function(){
+			var uploader = new qq.FileUploader({
+	      		element: document.getElementById('pclist'),
+	      		action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
+	      		debug: true,
+      			minSizeLimit:1024,
+	      		sizeLimit: 1073741824,
+	      		allowedExtensions: ['jpeg','jpg','gif','png'],
+	      		onComplete: function(id, fileName, responseJSON){
+	        		var v=responseJSON;
+		          	var cloudhtml="";
+		          	if(v.isCloudImg){
+			            if(v.normalfilepath!=undefined){
+				            
+			              cloudhtml+= "<img id='"+id+"' src='"+v.normalfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='pclist' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			              cloudhtml+= "<img id='"+id+"' src='"+v.compressfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='compresspclist' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}else{
+			            if(v.normalfilepath!=undefined){
+			              var localpath="<%=basePath%>"+v.normalfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+localpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='pclist' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			            	var compresslocalpath="<%=basePath%>"+v.compressfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+compresslocalpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='compresspclist' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}
+		          	$("#triggers").append(cloudhtml);
+	      		}
+	    	});
+		},
+		createMainPictureUploader();
+		createPicturesUploader();
+	});
+	
 
 	</script>
 	<script type="text/javascript">
@@ -355,13 +416,6 @@
 				});
 			}
 		});
- 		KE.show({
-			id : 'commoditylist',
-			items : ['fontname', 'fontsize', '|', 'textcolor', 'bgcolor', 'bold', 'italic', 'underline',
-					'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist','insertunorderedlist']
-		});
- 		
-
  		
  	</script>
 	<%@include file="/admin/footer.jsp"%>

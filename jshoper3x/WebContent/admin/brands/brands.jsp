@@ -60,12 +60,7 @@
 				<!-- 开始显示商品类型form表单 -->
 				<form id="brandsform">
 				<div  class="form-actions">
-					<div class="form-inline">
-						<span class="label label-required">选择商品类型: </span> <select required
-							id="goodstypetn" name="goodstypetn">
-
-						</select> <span class="label label-info">请选择一个商品类型</span>
-					</div>
+					
 					<div class="form-inline">
 						<span class="label label-required">品牌名称: </span> <input
 							id="brandname" name="brandname" type="text" value=""
@@ -131,8 +126,9 @@
 		src="<%=basePath%>admin/js/plugins/kindeditor/kindeditor-min.js"></script>
 
 	<script type="text/javascript">
- 		function createUploader(){            
-             var uploader = new qq.FileUploader({
+	$(function(){
+		createBrandLogoUploader=function(){
+			var uploader = new qq.FileUploader({
                  element: document.getElementById('uploaderbrandlogo'),
                  action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
                  debug: true,
@@ -140,16 +136,35 @@
                  sizeLimit: 1073741824,
                  allowedExtensions: ['jpeg','jpg','gif','png'],
                  onComplete: function(id, fileName, responseJSON){
-                	var pcpath1="<%=basePath%>"+responseJSON.success;
-                	var pcpath=responseJSON.success;
-  					var htm="<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
-  					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
-  					$("#triggers").append(htm).append(checkpc);
-                 },
-             });           
-         }
- 		window.onload = createUploader; 
- 
+	        		var v=responseJSON;
+		          	var cloudhtml="";
+		          	if(v.isCloudImg){
+			            if(v.normalfilepath!=undefined){
+			              cloudhtml+= "<img id='"+id+"' src='"+v.normalfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='mainpc' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			              cloudhtml+= "<img id='"+id+"' src='"+v.compressfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='maincompresspc' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}else{
+			            if(v.normalfilepath!=undefined){
+			              var localpath="<%=basePath%>"+v.normalfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+localpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='mainpc' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			            	var compresslocalpath="<%=basePath%>"+v.compressfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+compresslocalpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='maincompresspc' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}
+		          	$("#triggers").append(cloudhtml);
+	      		}
+            });  
+		}
+		createBrandLogoUploader();
+	});
  	</script>
 	<script type="text/javascript">
  		KE.show({

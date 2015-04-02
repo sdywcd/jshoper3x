@@ -20,6 +20,7 @@ public class BrandT implements Serializable {
 	private String creatorid;
 	private String intro;
 	private String logoPath;
+	private String remark;
 	private String shopid;
 	private String shopname;
 	private int sort;
@@ -85,6 +86,15 @@ public class BrandT implements Serializable {
 
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
+	}
+
+
+	public String getRemark() {
+		return this.remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 

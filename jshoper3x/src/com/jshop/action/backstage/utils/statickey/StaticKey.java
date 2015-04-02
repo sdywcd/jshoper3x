@@ -1,9 +1,5 @@
 package com.jshop.action.backstage.utils.statickey;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.jshop.action.backstage.utils.BaseTools;
 
 
 /**
@@ -12,7 +8,10 @@ import com.jshop.action.backstage.utils.BaseTools;
  *
  */
 public class StaticKey {
-
+	/**
+	 * 服务器繁忙提示
+	 */
+	public static String SERVER_BUSY="服务器繁忙请稍后再试......";
 	/**
 	 * 默认的用户ID，用于在没有登录的情况下生成静态页面，主要是在安装的时候使用
 	 */

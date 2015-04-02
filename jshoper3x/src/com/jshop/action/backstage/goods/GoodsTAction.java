@@ -1,8 +1,5 @@
 package com.jshop.action.backstage.goods;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -13,16 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -36,7 +29,6 @@ import com.jshop.action.backstage.base.DataCollectionTAction;
 import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.staticspage.CreateHtml;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsSaleState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsState;
 import com.jshop.action.backstage.utils.enums.BaseEnums.IsDefault;
@@ -46,7 +38,6 @@ import com.jshop.entity.GoodsAttributeRpT;
 import com.jshop.entity.GoodsDetailRpT;
 import com.jshop.entity.GoodsSpecificationsProductRpT;
 import com.jshop.entity.GoodsT;
-import com.jshop.entity.GoodsTwocodeRpT;
 import com.jshop.entity.GoodsTypeTN;
 import com.jshop.entity.ProductT;
 import com.jshop.service.ArticleCategoryTService;
@@ -64,17 +55,15 @@ import com.jshop.service.ProductTService;
 import com.jshop.service.SiteNavigationTService;
 import com.jshop.service.impl.Serial;
 import com.jshop.vo.GoodsParameterlistVo;
-import com.swetake.util.Qrcode;
 
 import freemarker.template.TemplateException;
-@Namespace("/admin/goods")
+@Namespace("")
 @ParentPackage("jshop")
 public class GoodsTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	@Resource
 	private GoodsTService goodsTService;
-	@Resource
-	private ImgTAction imgTAction;
+
 	@Resource
 	private ProductTService productTService;
 	@Resource
@@ -104,6 +93,7 @@ public class GoodsTAction extends BaseTAction {
 	private GoodsTwocodeRelationshipTService goodsTwocodeRelationshipTService;
 	private String goodsid;
 	private String goodsname;
+	private String subgoodsname;
 	private String brandname;
 	private String nname;
 	private String lname;
@@ -170,6 +160,18 @@ public class GoodsTAction extends BaseTAction {
 	private String productid;
 	private String isoutsite;
 	private String outsitelink;
+	/**
+	 * 原图主图
+	 */
+	private String mainPicture;
+	/**
+	 * 缩略图主图
+	 */
+	private String mainSmallPicture;
+	/**
+	 * 多张缩略图不包含缩略图主图
+	 */
+	private String smallPictures;
 	private String rejson;
 	private GoodsT bean = new GoodsT();
 	private GoodsT gt = new GoodsT();
@@ -190,6 +192,38 @@ public class GoodsTAction extends BaseTAction {
 	private String basepath;
 	private boolean sucflag;
 	
+	public String getSubgoodsname() {
+		return subgoodsname;
+	}
+
+	public void setSubgoodsname(String subgoodsname) {
+		this.subgoodsname = subgoodsname;
+	}
+
+	public String getMainPicture() {
+		return mainPicture;
+	}
+
+	public void setMainPicture(String mainPicture) {
+		this.mainPicture = mainPicture;
+	}
+
+	public String getMainSmallPicture() {
+		return mainSmallPicture;
+	}
+
+	public void setMainSmallPicture(String mainSmallPicture) {
+		this.mainSmallPicture = mainSmallPicture;
+	}
+
+	public String getSmallPictures() {
+		return smallPictures;
+	}
+
+	public void setSmallPictures(String smallPictures) {
+		this.smallPictures = smallPictures;
+	}
+
 	public String getBasepath() {
 		return basepath;
 	}
@@ -943,8 +977,21 @@ public class GoodsTAction extends BaseTAction {
 		gt.setIsvirtualsale(this.getIsvirtualsale());//是否虚拟商品标记，用于充值卡或者购物卡类没有实物的商品
 		gt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
 		gt.setSalestate(this.getSalestate());
+		gt.setUnitname(StaticKey.EMPTY);
+		gt.setKeywordname(StaticKey.EMPTY);
+		gt.setWeight(StaticKey.EMPTY);
+		gt.setRelatedproductid(StaticKey.EMPTY);
+		gt.setPlaceStore(StaticKey.EMPTY);
+		gt.setHtmlPath(StaticKey.EMPTY);
+		gt.setProductSn(StaticKey.EMPTY);
+		gt.setKeywordid(StaticKey.EMPTY);
+		gt.setUnitnameid(StaticKey.EMPTY);
+		gt.setSubgoodsname(this.getSubgoodsname());
 		gt.setIsSpecificationsOpen(SupportType.SUPPORT.getState());//默认支持规格值
+		gt.setMainPicture(this.getMainPicture());
+		gt.setMainSmallPicture(this.getMainSmallPicture());
 		gt.setPictureurl(this.getPictureurl());
+		gt.setSmallPictures(this.getSmallPictures());
 		gt.setCommoditylist(this.getCommoditylist());
 		gt.setMetaDescription(this.getMetaDescription());
 		gt.setMetaKeywords(this.getMetaKeywords());
@@ -953,6 +1000,8 @@ public class GoodsTAction extends BaseTAction {
 		gt.setUpdatetime(BaseTools.getSystemTime());
 		gt.setIsoutsite(this.getIsoutsite());
 		gt.setOutsitelink(this.getOutsitelink());
+		gt.setIsgroup(StaticKey.EMPTY);
+		gt.setIssecondkill(StaticKey.EMPTY);
 		gt.setShopid(BaseTools.getShopId());
 		gt.setShopname(BaseTools.getShopName());
 		//构造goodsdetail和goods关系
@@ -1138,7 +1187,7 @@ public class GoodsTAction extends BaseTAction {
 				if(pt!=null){
 					this.setProductid(pt.getProductid());
 				}
-				this.setBasepath(BaseTools.getBasePath());
+				this.setBasepath(BaseTools.getBasePath()+"/");
 				this.setSucflag(true);
 				return JSON;
 			}

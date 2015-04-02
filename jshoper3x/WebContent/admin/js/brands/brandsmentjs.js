@@ -20,22 +20,7 @@ $(function() {
 			$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
 		});
 	});
-	/*
-	 * Get Goods Type for select elements
-	 */
-	findGoodsTypeTNForSelect=function(){
-		$.ajax({
-			url:"findGoodsTypeTNForSelect.action",
-			type:"post",
-			dataType:'json',
-			async:false,
-			success:function(data){
-			if(data.goodstypetnlist!=""){
-				$('#goodstypetn').append(data.goodstypetnlist);
-				}
-			}
-		});
-	},
+
 	/**
 	 * 增加品牌
 	 */
@@ -72,9 +57,7 @@ $(function() {
 			"url" : url,
 			"logoPath" : logoPath,
 			"sort" : sort,
-			"intro" : intro,
-			"goodsTypeId":goodsTypeId,
-			"goodsTypeName":goodsTypeName
+			"intro" : intro
 		}, function(data) {
 			if (data.sucflag) {
 				window.location.href = "brandsment.jsp?operate=find&folder=goods";
@@ -176,11 +159,10 @@ $(function() {
 $(function(){
 	var operate = $.query.get("operate");
 	if (operate == "edit") {
-		findGoodsTypeTNForSelect();
 		findBrandById();
 		return;
 	}else if(operate=="add"){
-		findGoodsTypeTNForSelect();
+		
 		return;
 	}
 });
@@ -197,7 +179,13 @@ $(function() {
 		url : 'findAllBrandt.action',
 		dataType : 'json',
 		cache : false,
-		colModel : [ {
+		colModel : [{
+			display : '店铺名称',
+			name : 'shopname',
+			width : 200,
+			sortable : true,
+			align : 'center'
+		}, {
 			display : '商品品牌名称',
 			name : 'brandname',
 			width : 215,
@@ -206,7 +194,7 @@ $(function() {
 		}, {
 			display : '排序',
 			name : 'sort',
-			width : 115,
+			width : 80,
 			sortable : true,
 			align : 'center'
 		}, {

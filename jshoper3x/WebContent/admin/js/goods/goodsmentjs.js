@@ -1,24 +1,76 @@
 $(function() {
-	  $("#delpc").click(function() {
-			var str = "";
-			var sum = 0;
-			$(":checkbox[name='pcpath']").each(function() {
-				if ($(this).attr("checked")) {
-					sum++;
-					str += this.id + ",";
-				}
-			});
-			if (sum == 0) {
-				alert('只有在选择图片后才能删除');
-				return false;
+	/**
+	 * 删除主图片和缩略图片，采用假删除
+	 */
+	deleteMainPicture=function(){
+		var str = "";
+		var sum = 0;
+		//主图片遍历
+		$(":checkbox[name='mainpc']").each(function() {
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
 			}
-			var array = new Array();
-			array = str.split(",");
-			$(array).each(function(k, v) {
-				$("#triggers img").remove("img[id=" + v + "]");
-				$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
-			});
 		});
+		//主压缩图片遍历
+		$(":checkbox[name='maincompresspc']").each(function(){
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		if (sum == 0) {
+			alert('只有在选择图片后才能删除');
+			return false;
+		}
+		var array = new Array();
+		array = str.split(",");
+		$(array).each(function(k, v) {
+			$("#maintriggers img").remove("img[id=" + v + "]");
+			$("#maintriggers input[name='mainpc']").remove("input[id=" + v + "]");
+			$("#maintriggers input[name='maincompresspc']").remove("input[id=" + v + "]");
+		});
+	},
+	$("#maindelpc").on("click",function(){
+		deleteMainPicture();
+	});
+	/**
+	 * 删除多图片和缩略图片，采用假删除
+	 */
+	deletePictureList=function(){
+		var str = "";
+		var sum = 0;
+		//主图片遍历
+		$(":checkbox[name='pclist']").each(function() {
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		//主压缩图片遍历
+		$(":checkbox[name='compresspclist']").each(function(){
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		if (sum == 0) {
+			alert('只有在选择图片后才能删除');
+			return false;
+		}
+		var array = new Array();
+		array = str.split(",");
+		$(array).each(function(k, v) {
+			$("#triggers img").remove("img[id=" + v + "]");
+			$("#triggers input[name='pclist']").remove("input[id=" + v + "]");
+			$("#triggers input[name='compresspclist']").remove("input[id=" + v + "]");
+		});
+	},
+	$("#delpc").on("click",function(){
+		deletePictureList();
+	});
+
+
 	/**
 	 * 获取商品类型下拉框
 	 */
@@ -275,14 +327,37 @@ $(function() {
 		var bargainprice=$("input[name='bargainprice']:checked").val();
 		var ismobileplatformgoods=$("input[name='ismobileplatformgoods']:checked").val();
 		var salestate=$("input[name='salestate']:checked").val();
-		//获取商品图片路径集合
+		//获取商品主图原图图片路径
+		var mainpicture="";
+		$(":checkbox[name='mainpc']").each(function() {
+			if($(this).attr("checked")){
+				mainpicture=this.value;
+			}
+		});
+		//获取商品主图缩略图图片路径
+		var mainsmallpicture="";
+		$(":checkbox[name='maincompresspc']").each(function() {
+			if($(this).attr("checked")){
+				mainsmallpicture=this.value;
+			}
+		});
+		//获取商品原图图片路径集合
 		var pictureurl="";
-		$(":checkbox[name='pcpath']").each(function() {
+		$(":checkbox[name='pclist']").each(function() {
 			if($(this).attr("checked")){
 				pictureurl+=this.value+",";
 			}
 		});
 		pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
+		//获取缩略图图片路径集合
+		var smallpictures="";
+		$(":checkbox[name='compresspclist']").each(function(){
+			if($(this).attr("checked")){
+				smallpictures+=this.value+",";
+			}
+		});
+		smallpictures=smallpictures.toString().substring(0, smallpictures.length-1);
+		
 		var detail=$('#detail').val();
 		var commoditylist=$('#commoditylist').val();
 		var metaKeywords=$('#metaKeywords').val();
@@ -320,7 +395,10 @@ $(function() {
 			"bargainprice":bargainprice,
 			"ismobileplatformgoods":ismobileplatformgoods,
 			"salestate":salestate,
+			"mainPicture":mainpicture,
+			"mainSmallPicture":mainsmallpicture,
 			"pictureurl":pictureurl,
+			"smallPictures":smallpictures,
 			"detail":detail,
 			"commoditylist":commoditylist,
 			"metaKeywords":metaKeywords,
@@ -401,14 +479,37 @@ $(function() {
 		var bargainprice=$("input[name='bargainprice']:checked").val();
 		var ismobileplatformgoods=$("input[name='ismobileplatformgoods']:checked").val();
 		var salestate=$("input[name='salestate']:checked").val();
-		//获取商品图片路径集合
+		//获取商品主图原图图片路径
+		var mainpicture="";
+		$(":checkbox[name='mainpc']").each(function() {
+			if($(this).attr("checked")){
+				mainpicture=this.value;
+			}
+		});
+		//获取商品主图缩略图图片路径
+		var mainsmallpicture="";
+		$(":checkbox[name='maincompresspc']").each(function() {
+			if($(this).attr("checked")){
+				mainsmallpicture=this.value;
+			}
+		});
+		//获取商品原图图片路径集合
 		var pictureurl="";
-		$(":checkbox[name='pcpath']").each(function() {
+		$(":checkbox[name='pclist']").each(function() {
 			if($(this).attr("checked")){
 				pictureurl+=this.value+",";
 			}
 		});
 		pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
+		//获取缩略图图片路径集合
+		var smallpictures="";
+		$(":checkbox[name='compresspclist']").each(function(){
+			if($(this).attr("checked")){
+				smallpictures+=this.value+",";
+			}
+		});
+		smallpictures=smallpictures.toString().substring(0, smallpictures.length-1);
+		
 		var detail=$('#detail').val();
 		var commoditylist=$('#commoditylist').val();
 		var metaKeywords=$('#metaKeywords').val();
@@ -448,7 +549,10 @@ $(function() {
 			"bargainprice":bargainprice,
 			"ismobileplatformgoods":ismobileplatformgoods,
 			"salestate":salestate,
+			"mainPicture":mainpicture,
+			"mainSmallPicture":mainsmallpicture,
 			"pictureurl":pictureurl,
+			"smallPictures":smallpictures,
 			"detail":detail,
 			"commoditylist":commoditylist,
 			"metaKeywords":metaKeywords,
@@ -611,26 +715,62 @@ $(function() {
 					if("1"==data.bean.salestate){
 						$("input[name='salestate']").get(0).checked=true;
 					}else{
-						$("input[name='salestate']").get(1).checked=true;
+						$("input[name='salstate']").get(1).checked=true;
 					}
-				
-					//获取商品图片路径集合
-					var pcpath="";
-					var pcurl=data.bean.pictureurl;
-					var htm="";
-					var checkpc="";
-					var temp=pcurl.split(',');
-					var allpcpath="";
-					$.each(temp,function(n,value){
-						if(""==value){
+
+					//显示商品主图
+					var mainPicture=data.bean.mainPicture;
+					var mainPHtml="<img id='0' src='"+data.basepath+mainPicture+"'/><input id='0' name='mainpc' type='checkbox' value='"+mainPicture+"' checked/>";
+					//显示商品缩略图
+					var mainSmallPicture=data.bean.mainSmallPicture;
+					mainPHtml+="<img id='1' src='"+data.basepath+mainSmallPicture+"'/><input id='0' name='mainpc' type='checkbox' value='"+mainSmallPicture+"' checked/>";
+					$("#maintriggers").append(mainPHtml);
+
+					//显示展示图集包含缩略图
+					var pictureurlHtml="";
+					//原图集合
+					var pictureurls=data.bean.pictureurl;
+					var pctemp=pictureurls.split(',');
+					
+					//缩略图集合
+					var smallPictures=data.bean.smallPictures;
+					var smallpctemp=smallPictures.split(',');
+
+					$.each(pctemp,function(k,v){
+						if(""==v){
 							return;
 						}
-						pcpath=value;
-						htm="<img id='"+value+"' src='"+data.basepath+pcpath+"'></img>";
-						checkpc="<input id='"+value+"' name='pcpath' type='checkbox' value='"+value+"' checked/>";
-						allpcpath=htm+checkpc;
-						$('#triggers').append(allpcpath);
+						pictureurlHtml+="<img id='"+v+"' src='"+data.basepath+v+"'/><input id='"+v+"' name='pcpath' type='checkbox' value='"+v+"' checked/>";
+						$.each(smallpctemp,function(k,v){
+							if(""==v){
+								return;
+							}
+							pictureurlHtml+="<img id='"+v+"' src='"+data.basepath+v+"'/><input id='"+v+"' name='pcpath' type='checkbox' value='"+v+"' checked/>";				
+						});
 					});
+					$('#triggers').append(pictureurlHtml);
+					
+
+					//显示
+
+					// //获取商品图片路径集合
+					// var pcpath="";
+					// var pcurl=data.bean.pictureurl;
+					// var htm="";
+					// var checkpc="";
+					// var temp=pcurl.split(',');
+					// var allpcpath="";
+					// $.each(temp,function(n,value){
+					// 	if(""==value){
+					// 		return;
+					// 	}
+					// 	pcpath=value;
+					// 	htm="<img id='"+value+"' src='"+data.basepath+pcpath+"'></img>";
+					// 	checkpc="<input id='"+value+"' name='pcpath' type='checkbox' value='"+value+"' checked/>";
+					// 	allpcpath=htm+checkpc;
+					// 	$('#triggers').append(allpcpath);
+					// });
+
 					findGoodsDetialRpTBygoodsid(data.bean.goodsid);
 					if("1"==data.bean.isoutsite){
 						$("input[name='isoutsite']").get(0).checked=true;
@@ -643,7 +783,7 @@ $(function() {
 					}else{
 						$("input[name='isvirtualsale']").get(1).checked=true;
 					}
-					KE.html("commoditylist",data.bean.commoditylist);
+					$('#commoditylist').val(data.bean.commoditylist);
 					$('#metaKeywords').val(data.bean.metaKeywords);
 					$('#metaDes').val(data.bean.metaDescription);
 					$("#hidgoodsid").val(data.bean.goodsid);
@@ -669,14 +809,16 @@ $(function() {
 		findGoodsTypeTNForSelect();
 		findGoodsCategoryByGradeZeroone();
 		findAllBrandtjson();
-
 		
+
 	}else if(operate=="edit"){
 		findGoodsTypeTNForSelect();
 		findGoodsCategoryByGradeZeroone();
 		findAllBrandtjson();
 		findGoodsById();
 
+	}else if(operate=="find"){
+		a();
 	}
 });
 
@@ -684,6 +826,9 @@ $(function() {
  * flexigrid list
  */
 $(function() {
+	a=function(){
+		
+	}
 	$("#goodsmanagement").flexigrid({
 		url : 'findAllGoods.action',
 		dataType : 'json',

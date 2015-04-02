@@ -162,16 +162,7 @@
 							<option value="0">隐藏</option>
 						</select> <span class="label label-info">关系到是否可以在系统内容正常获取推送信息！</span>
 					</div>
-					<div class="form-inline">
-						<span class="label label-required">店铺负责人姓名:</span> <input
-							type="text" id="shopmanager" name="shopmanager"  readonly/> <span
-							class="label label-info">请填写店铺负责人</span>
-					</div>
-					<div class="form-inline">
-						<span class="label label-required">店铺负责人账号:</span> <input
-							type="text" id="shopaccount" name="shopaccount"  readonly /> <span
-							class="label label-info">请填写店铺负责人在本平台账号</span>
-					</div>
+					
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input
 							class="btn btn-success" type="button" id="submit" name="submit"

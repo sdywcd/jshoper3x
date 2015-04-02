@@ -31,6 +31,7 @@ public class GoodsCategoryT implements Serializable {
 	private String shopid;
 	private String shopname;
 	private String sign;
+	private String smallLogo;
 	private int sort;
 	private String state;
 	private Date updatetime;
@@ -198,6 +199,16 @@ public class GoodsCategoryT implements Serializable {
 
 	public void setSign(String sign) {
 		this.sign = sign;
+	}
+
+
+	@Column(name="SMALL_LOGO")
+	public String getSmallLogo() {
+		return this.smallLogo;
+	}
+
+	public void setSmallLogo(String smallLogo) {
+		this.smallLogo = smallLogo;
 	}
 
 

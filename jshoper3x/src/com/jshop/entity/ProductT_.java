@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-17T18:48:28.787+0800")
+@Generated(value="Dali", date="2015-03-25T17:19:39.129+0800")
 @StaticMetamodel(ProductT.class)
 public class ProductT_ {
 	public static volatile SingularAttribute<ProductT, String> productid;

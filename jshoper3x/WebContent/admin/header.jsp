@@ -60,18 +60,7 @@
 				<div class="nav-collapse collapse navbar-inverse-collapse">
 					<ul class="nav">
 						<li class="active"><a href="<%=basePath%>admin/index.jsp">主页</a></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown">实验室 <b class="caret"></b>
-						</a>
-						<ul class="dropdown-menu">
-							<li><a href="http://www.ostocy.com" target="_blank"><i
-									class="icon-tags"></i> 电子点餐系统</a></li>
-							<li><a href="#"><i class="icon-shopping-cart"></i>
-									B2O线下电商</a></li>
-							<li class="divider"></li>
-							<li class="nav-header">未上市产品</li>
-							<li><a href="/admin/tencentweixin/company/weixin_company_index.jsp"><i class="icon-globe"></i>微信OA</a></li>
-						</ul></li>
+						
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">管理 <b class="caret"></b>
 						</a>

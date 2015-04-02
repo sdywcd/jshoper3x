@@ -11,12 +11,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.InterceptorRef;
-import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.json.annotations.JSON;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
@@ -24,13 +21,10 @@ import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsTypeTN;
 import com.jshop.service.GoodsTypeTNService;
 import com.jshop.service.impl.Serial;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
 @Namespace("")
 @ParentPackage("jshop")
 //@InterceptorRefs({  
@@ -179,7 +173,6 @@ public class GoodsTypeTNAction extends BaseTAction {
 	@Action(value = "addGoodsTypeTN", results = { @Result(name = "json", type = "json") })
 	public String addGoodsTypeTN() {
 		if(StringUtils.isBlank(this.getName())){
-			//this.setSucflag(true);
 			return JSON;
 		}
 		Criterion criterion=Restrictions.eq("name", this.getName());

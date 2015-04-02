@@ -27,8 +27,6 @@
 		<class>com.jshop.entity.GoodsCommentT</class>
 		<class>com.jshop.entity.GoodsDetailRpT</class>
 		<class>com.jshop.entity.GoodsGroupT</class>
-		<class>com.jshop.entity.GoodsSpecificationsProductRpT</class>
-		<class>com.jshop.entity.GoodsT</class>
 		<class>com.jshop.entity.GoodsTwocodeRelationshipT</class>
 		<class>com.jshop.entity.GoodsTwocodeRpT</class>
 		<class>com.jshop.entity.GoodsTypeBrandT</class>
@@ -66,7 +64,6 @@
 		<class>com.jshop.entity.PaymentM</class>
 		<class>com.jshop.entity.PlaceoforiginT</class>
 		<class>com.jshop.entity.ProductSpecificationsT</class>
-		<class>com.jshop.entity.ProductT</class>
 		<class>com.jshop.entity.QuestionnaireT</class>
 		<class>com.jshop.entity.RoleFunctionM</class>
 		<class>com.jshop.entity.RoleM</class>
@@ -90,5 +87,8 @@
 		<class>com.jshop.entity.WeixinDepartmentStructureCpT</class>
 		<class>com.jshop.entity.WeixinMediaFileT</class>
 		<class>com.jshop.entity.WexinCompanyBaseCpT</class>
+		<class>com.jshop.entity.GoodsT</class>
+		<class>com.jshop.entity.GoodsSpecificationsProductRpT</class>
+		<class>com.jshop.entity.ProductT</class>
 	</persistence-unit>
 </persistence>

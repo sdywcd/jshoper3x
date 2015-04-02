@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-03-23T14:40:40.161+0800")
+@Generated(value="Dali", date="2015-03-24T08:20:28.980+0800")
 @StaticMetamodel(GoodsT.class)
 public class GoodsT_ {
 	public static volatile SingularAttribute<GoodsT, String> goodsid;
@@ -17,10 +17,13 @@ public class GoodsT_ {
 	public static volatile SingularAttribute<GoodsT, String> htmlPath;
 	public static volatile SingularAttribute<GoodsT, String> isNew;
 	public static volatile SingularAttribute<GoodsT, String> isSpecificationsOpen;
+	public static volatile SingularAttribute<GoodsT, String> mainPicture;
+	public static volatile SingularAttribute<GoodsT, String> mainSmallPicture;
 	public static volatile SingularAttribute<GoodsT, String> metaDescription;
 	public static volatile SingularAttribute<GoodsT, String> metaKeywords;
 	public static volatile SingularAttribute<GoodsT, String> placeStore;
 	public static volatile SingularAttribute<GoodsT, String> productSn;
+	public static volatile SingularAttribute<GoodsT, String> smallPictures;
 	public static volatile SingularAttribute<GoodsT, Date> updatetime;
 	public static volatile SingularAttribute<GoodsT, String> bargainprice;
 	public static volatile SingularAttribute<GoodsT, String> brandid;
@@ -70,7 +73,4 @@ public class GoodsT_ {
 	public static volatile SingularAttribute<GoodsT, String> usersetnum;
 	public static volatile SingularAttribute<GoodsT, Integer> versiont;
 	public static volatile SingularAttribute<GoodsT, String> weight;
-	public static volatile SingularAttribute<GoodsT, String> mainPicture;
-	public static volatile SingularAttribute<GoodsT, String> mainSmaillPicture;
-	public static volatile SingularAttribute<GoodsT, String> smaillPictures;
 }
