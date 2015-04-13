@@ -1,5 +1,8 @@
 package com.jshop.redis.service.impl;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
@@ -22,6 +25,21 @@ public class RedisBaseTServiceImpl<T> implements RedisBaseTService<T> {
 	@Override
 	public T get(String key, Class<T> cls) {
 		return redisBaseTDao.get(key, cls);
+	}
+
+	@Override
+	public void put(String key, T t, Class<T> cls, long timeout, TimeUnit timeUnit) {
+		redisBaseTDao.put(key, t, cls, timeout, timeUnit);
+	}
+
+	@Override
+	public void delete(String key) {
+		redisBaseTDao.delete(key);
+	}
+
+	@Override
+	public void delete(List<String> keys) {
+		redisBaseTDao.delete(keys);
 	}
 
 }
