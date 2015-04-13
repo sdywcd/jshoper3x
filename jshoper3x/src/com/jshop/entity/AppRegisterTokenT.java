@@ -6,20 +6,21 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the app_post_token_t database table.
+ * The persistent class for the app_register_token_t database table.
  * 
  */
 @Entity
-@Table(name="app_post_token_t")
-@NamedQuery(name="AppPostTokenT.findAll", query="SELECT a FROM AppPostTokenT a")
-public class AppPostTokenT implements Serializable {
+@Table(name="app_register_token_t")
+@NamedQuery(name="AppRegisterTokenT.findAll", query="SELECT a FROM AppRegisterTokenT a")
+public class AppRegisterTokenT implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String aid;
 	private Date createtime;
 	private String memberid;
+	private String token;
 	private String uuid;
 
-	public AppPostTokenT() {
+	public AppRegisterTokenT() {
 	}
 
 
@@ -49,6 +50,15 @@ public class AppPostTokenT implements Serializable {
 
 	public void setMemberid(String memberid) {
 		this.memberid = memberid;
+	}
+
+
+	public String getToken() {
+		return this.token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 

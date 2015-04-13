@@ -90,6 +90,6 @@
 		<class>com.jshop.entity.GoodsT</class>
 		<class>com.jshop.entity.GoodsSpecificationsProductRpT</class>
 		<class>com.jshop.entity.ProductT</class>
-		<class>com.jshop.entity.AppPostTokenT</class>
+		<class>com.jshop.entity.AppRegisterTokenT</class>
 	</persistence-unit>
 </persistence>

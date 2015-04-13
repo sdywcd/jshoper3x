@@ -22,23 +22,32 @@
 	<!-- 指定允许上传的文件最大字节数,默认值是2097152(2M),使用struts常量扩大默认上传文件大小 -->
 	<constant name="struts.multipart.maxSize" value="104857600"></constant>
 	<package name="jshop" extends="struts-default,json-default" namespace="/">
-		<!--<result-types>
-			<result-type name="json" class="org.apache.struts2.json.JSONResult"></result-type>
-		</result-types>  -->
-
+		<!-- 后台拦截器定义 -->
 		<interceptors>
-
 			<interceptor name="json"
 				class="org.apache.struts2.json.JSONInterceptor" />
-			
+			<interceptor name="validateapp" class="com.jshop.action.app.interceptor.ValidateAppInterceptor"></interceptor>
+	       
 			<!-- 这是jshop的拦截器 -->
 			<interceptor-stack name="jshopdefaultStack">
 				<interceptor-ref name="defaultStack">
 					<param name="exception.logEnabled">true</param>
 					<param name="exception.logLevel">error</param>
 				</interceptor-ref>
-				
-
+				<interceptor-ref name="json">
+					<param name="excludeNullProperties">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			
+			<!-- 接口拦截器定义 -->
+		    <interceptor-stack name="appstack">
+		        <interceptor-ref name="validateapp">
+		            <param name="excludeMethods">registerUuid4App</param>
+		        </interceptor-ref>
+		        <interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">error</param>
+				</interceptor-ref>
 				<interceptor-ref name="json">
 					<param name="excludeNullProperties">true</param>
 				</interceptor-ref>
@@ -46,8 +55,7 @@
 
 		</interceptors>
 		<default-interceptor-ref name="jshopdefaultStack" />
-
-
+		
 		<global-results>
 			<result name="adminloginfailed" type="redirect">/admin/jump.jsp</result>
 			<result name="success">/jshop/admin/authorfailed.jsp</result>
@@ -69,7 +77,5 @@
 			<interceptor-ref name="defaultStack"></interceptor-ref>
 		</action>
 		<!-- 文件下载，支持中文附件名 -->
-
-
 	</package>
 </struts>

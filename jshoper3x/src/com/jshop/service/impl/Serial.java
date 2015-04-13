@@ -172,7 +172,10 @@ public class Serial {
 	public static String GOODSCARDS = "goods_cards_t";
 	// 商品购物卡密钥id
 	public static String GOODSCARDSPWD = "goods_cards_password_t";
-
+	// app注册表
+	public static String APPREGISTERTOKEN="app_post_token_t";
+	//tokenkey
+	public static String TOKENKEY="tokenkey";
 	@Resource
 	private SerialTService serialTService;
 

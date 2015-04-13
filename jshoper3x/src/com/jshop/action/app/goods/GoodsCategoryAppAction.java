@@ -39,7 +39,7 @@ import com.opensymphony.xwork2.ActionContext;
  */
 @Namespace("/app")
 @ParentPackage("jshop")
-@InterceptorRefs({ @InterceptorRef("defaultStack") })
+@InterceptorRefs({ @InterceptorRef("appstack") })
 public class GoodsCategoryAppAction extends BaseTAction implements
 ServletRequestAware, ServletResponseAware {
 	private static final long serialVersionUID = 1L;
@@ -65,7 +65,6 @@ ServletRequestAware, ServletResponseAware {
 	 */
 	@Action(value = "getAllGoodsCategory4App")
 	public void getAllGoodsCategory4App(){
-		
 		PrintWriter out = null;
 		RequestGoodsCategoryMsg rm=new RequestGoodsCategoryMsg();
 		try{
