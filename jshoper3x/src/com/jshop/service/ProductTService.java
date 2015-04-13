@@ -113,19 +113,19 @@ public interface ProductTService extends BaseTService<ProductT>{
 //	 * @return
 //	 */
 //	public int delProductT(String []strs);
-//	/**
-//	 * 货物信息增加过程
-//	 * @param pt
-//	 * @param gsrt
-//	 */
-//	public void saveProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt);
-//	/**
-//	 * 货物信息更新过程
-//	 * @param pt
-//	 * @param gsrt
-//	 * @param oldQuantity 当前货物的原始库存
-//	 */
-//	public void updateProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt,int oldQuantity);
+	/**
+	 * 货物信息增加过程
+	 * @param pt
+	 * @param gsrt
+	 */
+	public void saveProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt);
+	/**
+	 * 货物信息更新过程
+	 * @param pt
+	 * @param gsrt
+	 * @param oldQuantity 当前货物的原始库存
+	 */
+	public void updateProductProcess(ProductT pt,GoodsSpecificationsProductRpT gsrt,int oldQuantity);
 //	/**
 //	 * 根据货物名称获取货物信息
 //	 * @param productName

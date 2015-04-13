@@ -25,7 +25,7 @@ public class GoodsGroupT implements Serializable {
 	private String goodsid;
 	private String goodsname;
 	private double groupprice;
-	private String htmlpath;
+	private String htmlpath;   
 	private int limitbuy;
 	private double memberprice;
 	private String pictureurl;

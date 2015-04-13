@@ -857,6 +857,7 @@
 		$(g.gDiv).append(t);
 		//set toolbar
 		if (p.buttons) {
+			//植入权限判定逻辑
 			g.tDiv.className = 'tDiv';
 			var tDiv2 = document.createElement('div');
 			tDiv2.className = 'tDiv2';

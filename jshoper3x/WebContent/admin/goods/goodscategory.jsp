@@ -72,9 +72,9 @@
 					<div class="form-inline">
 						<table>
 							<tr>
-								<td><span class="label label-required">分类图标:</span></td>
+								<td><span class="label label-required">主图:</span></td>
 								<td>
-									<div id="uploadercategorylogo">
+									<div id="mainpicture">
 										<noscript>
 											Please enable JavaScript to use file uploader.
 											<!-- or put a simple form for upload here -->
@@ -85,14 +85,15 @@
 							</tr>
 						</table>
 						<!-- trigger elements -->
-						<div id="triggers"></div>
+						<div id="maintriggers"></div>
 
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">操作:</span> <input
-							class="btn btn-success" type="button" id="delpc" name="delpc"
-							value="删除所选图片" />
+							class="btn btn-success" type="button" id="maindelpc" name="maindelpc"
+							value="删除所选主图片" />
 					</div>
+
 					<div class="form-inline">
 						<span class="label label-required">静态化标示:</span> <input
 							type="text" id="sign" name="sign" class="small" />
@@ -142,25 +143,46 @@
 	<script type="text/javascript"
 		src="<%=basePath%>admin/js/plugins/uploader/fileuploader.js"></script>
 	<script type="text/javascript">
- 		function createUploader(){            
-             var uploader = new qq.FileUploader({
-                 element: document.getElementById('uploadercategorylogo'),
-                 action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
-                 debug: true,
-                 minSizeLimit:1024,
-                 sizeLimit: 1073741824,
-                 allowedExtensions: ['jpeg','jpg','gif','png'],
-                 onComplete: function(id, fileName, responseJSON){
-                	var pcpath1="<%=basePath%>"+responseJSON.success;
-                	var pcpath=responseJSON.success;
-  					var htm="<img id='"+id+"' src='"+pcpath1+"' rel='#"+fileName+"'/>";
-  					var checkpc="<input id='"+id+"' name='pcpath' type='checkbox' value='"+pcpath+"' /> ";
-  					$("#triggers").append(htm).append(checkpc);
-                 },
-             });           
-         }
- 		window.onload = createUploader; 
- 
+	$(function(){
+		//创建主图上传控件
+		createMainPictureUploader=function(){
+			var uploader = new qq.FileUploader({
+	      		element: document.getElementById('mainpicture'),
+	      		action: '<%=basePath%>ajaxFileUploads.action;jsessionid=<%=session.getId()%>',
+	      		debug: true,
+      			minSizeLimit:1024,
+	      		sizeLimit: 1073741824,
+	      		allowedExtensions: ['jpeg','jpg','gif','png'],
+	      		onComplete: function(id, fileName, responseJSON){
+	        		var v=responseJSON;
+		          	var cloudhtml="";
+		          	if(v.isCloudImg){
+			            if(v.normalfilepath!=undefined){
+			              cloudhtml+= "<img id='"+id+"' src='"+v.normalfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='mainpc' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			              cloudhtml+= "<img id='"+id+"' src='"+v.compressfilepath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='maincompresspc' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}else{
+			            if(v.normalfilepath!=undefined){
+			              var localpath="<%=basePath%>"+v.normalfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+localpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='mainpc' type='checkbox' value='"+v.normalfilepath+"' /> ";
+			            }
+			            if(v.compressfilepath!=undefined){
+			            	var compresslocalpath="<%=basePath%>"+v.compressfilepath;
+			              cloudhtml+= "<img id='"+id+"' src='"+compresslocalpath+"' rel='#"+fileName+"'/>";
+			              cloudhtml+= "<input id='"+id+"' name='maincompresspc' type='checkbox' value='"+v.compressfilepath+"' /> ";
+			            }
+		          	}
+		          	$("#maintriggers").append(cloudhtml);
+	      		}
+	    	});
+		}
+		createMainPictureUploader();
+	});
  	</script>
 	<%@include file="/admin/footer.jsp"%>
 </body>

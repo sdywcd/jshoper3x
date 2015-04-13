@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -41,6 +43,7 @@ import com.jshop.service.GlobalParamService;
 import com.jshop.service.UserRoleMService;
 import com.jshop.service.UsertService;
 import com.jshop.service.impl.Serial;
+import com.jshop.shiro.LoginUsernamePasswordToken;
 import com.opensymphony.xwork2.ActionContext;
 
 @Namespace("")
@@ -567,6 +570,13 @@ public class UserTAction extends BaseTAction {
 	 * 进行用户登录有的系统首页数据初始化及用户权限相关初始化
 	 */
 	private void doSysIndexInit(UserT user, MD5Code md5) {
+		Subject subject=SecurityUtils.getSubject();
+		LoginUsernamePasswordToken token=new LoginUsernamePasswordToken();
+		token.setUsername(user.getUsername());
+		token.setPassword(user.getPassword().toCharArray());
+		subject.login(token);
+		//ddddd
+		this.setParam(StaticKey.ONE);
 		ActionContext.getContext().getSession()
 				.put(StaticKey.BACK_USER_SESSION_KEY, user);
 		this.setParam(md5.getMD5ofStr(user.getUserid()));
@@ -917,12 +927,13 @@ public class UserTAction extends BaseTAction {
 	 */
 	@Action(value = "/adminlogout", results = { @Result(name = "json", type = "json") })
 	public String adminlogout() {
-		ActionContext.getContext().getSession()
-				.remove(StaticKey.BACK_USER_SESSION_KEY);
-		ActionContext.getContext().getSession()
-				.remove(StaticKey.USERROLEFUNCTION);
-		ActionContext.getContext().getSession()
-				.remove(StaticKey.BACK_SESSION_KEY);
+		SecurityUtils.getSubject().logout();
+//		ActionContext.getContext().getSession()
+//				.remove(StaticKey.BACK_USER_SESSION_KEY);
+//		ActionContext.getContext().getSession()
+//				.remove(StaticKey.USERROLEFUNCTION);
+//		ActionContext.getContext().getSession()
+//				.remove(StaticKey.BACK_SESSION_KEY);
 		return JSON;
 	}
 	

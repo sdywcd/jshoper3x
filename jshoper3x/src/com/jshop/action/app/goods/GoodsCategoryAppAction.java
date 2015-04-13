@@ -28,6 +28,7 @@ import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsCategoryT;
 import com.jshop.service.GoodsCategoryTService;
+import com.opensymphony.xwork2.ActionContext;
 /**
  * app 商品分类页面接口
 * @ClassName: GoodsCategoryAppAction 
@@ -64,6 +65,7 @@ ServletRequestAware, ServletResponseAware {
 	 */
 	@Action(value = "getAllGoodsCategory4App")
 	public void getAllGoodsCategory4App(){
+		
 		PrintWriter out = null;
 		RequestGoodsCategoryMsg rm=new RequestGoodsCategoryMsg();
 		try{
@@ -82,8 +84,10 @@ ServletRequestAware, ServletResponseAware {
 					+ e.getMessage());
 			rm.setMsg(StaticKey.SERVER_BUSY);
 		}finally{
-			out.flush();
-			out.close();
+			if(out!=null){
+				out.flush();
+				out.close();
+			}
 		}
 	}
 

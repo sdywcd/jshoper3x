@@ -1,9 +1,20 @@
 $(function() {
 	
-	$("#delpc").click(function() {
+	/**
+	 * 删除主图片和缩略图片，采用假删除
+	 */
+	deleteMainPicture=function(){
 		var str = "";
 		var sum = 0;
-		$(":checkbox[name='pcpath']").each(function() {
+		//主图片遍历
+		$(":checkbox[name='mainpc']").each(function() {
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		//主压缩图片遍历
+		$(":checkbox[name='maincompresspc']").each(function(){
 			if ($(this).attr("checked")) {
 				sum++;
 				str += this.id + ",";
@@ -16,48 +27,61 @@ $(function() {
 		var array = new Array();
 		array = str.split(",");
 		$(array).each(function(k, v) {
-			$("#triggers img").remove("img[id=" + v + "]");
-			$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
+			$("#maintriggers img").remove("img[id=" + v + "]");
+			$("#maintriggers input[name='mainpc']").remove("input[id=" + v + "]");
+			$("#maintriggers input[name='maincompresspc']").remove("input[id=" + v + "]");
 		});
+	},
+	$("#maindelpc").on("click",function(){
+		deleteMainPicture();
 	});
 
 	/**
 	 * 增加品牌
 	 */
 	$('#submit').click(function() {
-		var goodsTypeId=$('#goodstypetn').val();
-		if(goodsTypeId=="0"){
-			formwarning("#alerterror","请选择商品类型");
-			return false;
-		}
-		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var brandname = $('#brandname').val();
 		if (brandname == "") {
 			formwarning("#alerterror","请填写品牌名称");
 			return false;
 		}
 		var url = $('#url').val();
-		// 获logo路径集合
+		//获取品牌logo路径
 		var logoPath = "";
 		var sum=0;
-		$(":checkbox[name='pcpath']").each(function() {
+		$(":checkbox[name='mainpc']").each(function() {
 			if($(this).attr("checked")){
 				sum++;
 				logoPath=this.value;
 			}
 		});
+		//获取品牌logo缩略图路径
+		var smallLogoPath="";
+		$(":checkbox[name='maincompresspc']").each(function() {
+			if($(this).attr("checked")){
+				sum++;
+				smallLogoPath=this.value;
+			}
+		});
+		if(sum==0){
+			formwarning("#alerterror","请选择一个LOGO");
+			return false;
+		}
 		var sort = $('#sort').val();
 		if (sort == "") {
 			formwarning("#alerterror","请填写排序");
 			return false;
 		}
 		var intro = $('#intro').val();
+		var remark=$("#remark").val();
 		$.post("addBrandt.action", {
 			"brandname" : brandname,
 			"url" : url,
 			"logoPath" : logoPath,
+			"smallLogoPath":smallLogoPath,
 			"sort" : sort,
-			"intro" : intro
+			"intro" : intro,
+			"remark":remark
 		}, function(data) {
 			if (data.sucflag) {
 				window.location.href = "brandsment.jsp?operate=find&folder=goods";
@@ -78,24 +102,20 @@ $(function() {
 				$('#brandname').attr("value", data.bean.brandname);
 				$('#url').attr("value", data.bean.url);
 				$('#hidbrandid').attr("value", data.bean.brandid);
-				if (data.bean.logoPath == "") {
-					return;
-				}else{
-					
-					var htm = "<img id='logoPath' src='../.."
-							+ data.bean.logoPath + "'/>";
-					var checkpc = "<input id='logoPath' name='pcpath' type='checkbox' value='"
-							+ data.bean.logoPath
-							+ "' checked />";
-					$("#triggers").html(htm).append(checkpc);
-				}
+				//显示logo
+				var mainPicture=data.bean.logoPath;
+				var mainPHtml="<img id='0' src='"+data.basepath+mainPicture+"'/><input id='0' name='mainpc' type='checkbox' value='"+mainPicture+"' checked/>";
+				//显示缩略图logo
+				var mainSmallPicture=data.bean.smallLogoPath;
+				mainPHtml+="<img id='1' src='"+data.basepath+mainSmallPicture+"'/><input id='0' name='mainpc' type='checkbox' value='"+mainSmallPicture+"' checked/>";
+				$("#maintriggers").append(mainPHtml);
 				$('#sort').attr("value", data.bean.sort);
 				if (data.bean.intro == null) {
 					KE.html("intro", "");
 				} else {
 					KE.html("intro", data.bean.intro);
 				}
-				$("#goodstypetn").val(data.goodsTypeId);
+				$("#remark").val(data.bean.remark);
 				$('#submit').hide();
 				$('#update').show();
 			}
@@ -103,31 +123,34 @@ $(function() {
 	},
 	
 	$('#update').click(function() {
-		var goodsTypeId=$('#goodstypetn').val();
-		if(goodsTypeId=="0"){
-			formwarning("#alerterror","请选择商品类型");
-			return false;
-		}
-		var goodsTypeName=$('#goodstypetn').find("option:selected").text();
 		var brandname = $('#brandname').val();
 		if (brandname == "") {
 			formwarning("#alerterror","请填写品牌名称");
 			return false;
 		}
 		var url = $('#url').val();
-		// 获logo路径集合
+		//获取品牌logo路径
 		var logoPath = "";
-		var sum=0;
-		$(":checkbox[name='pcpath']").each(function() {
+		var sum=0
+		$(":checkbox[name='mainpc']").each(function() {
 			if($(this).attr("checked")){
 				sum++;
 				logoPath=this.value;
 			}
 		});
+		//获取品牌logo缩略图路径
+		var smallLogoPath="";
+		$(":checkbox[name='maincompresspc']").each(function() {
+			if($(this).attr("checked")){
+				sum++;
+				smallLogoPath=this.value;
+			}
+		});
 		if(sum==0){
-			formwarning("#alerterror","请选择一个商店LOGO");
+			formwarning("#alerterror","请选择一个LOGO");
 			return false;
 		}
+		
 		var sort = $('#sort').val();
 		if (sort == "") {
 			formwarning("#alerterror","请填写排序");

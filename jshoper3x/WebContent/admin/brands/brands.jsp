@@ -86,12 +86,12 @@
 							</tr>
 						</table>
 						<!-- trigger elements -->
-						<div id="triggers"></div>
+						<div id="maintriggers"></div>
 
 					</div>
 					<div class="form-inline">
 						<span class="label label-required">操作:</span> <input
-							class="btn btn-success" type="button" id="delpc" name="delpc"
+							class="btn btn-success" type="button" id="maindelpc" name="maindelpc"
 							value="删除所选图片" />
 					</div>
 					<div class="form-inline">
@@ -102,6 +102,10 @@
 						<span class="label label-required">介绍: </span>
 						<textarea id="intro" name="intro" cols="50" rows="12"
 							style="width: 100%; height: 600px; visibility: hidden;"><%=htmlspecialchars(htmlData)%></textarea>
+					</div>
+					<div class="form-inline">
+						<span class="label label-required">备注说明: </span> <input id="remark"
+							name="remark" type="text" value="" class="small" required/>
 					</div>
 					<div class="form-inline">
 						<label class="label label-submit"></label> <input type="hidden"
@@ -159,7 +163,7 @@
 			              cloudhtml+= "<input id='"+id+"' name='maincompresspc' type='checkbox' value='"+v.compressfilepath+"' /> ";
 			            }
 		          	}
-		          	$("#triggers").append(cloudhtml);
+		          	$("#maintriggers").append(cloudhtml);
 	      		}
             });  
 		}

@@ -1446,7 +1446,7 @@ public class BaseEnums {
 	*
 	 */
 	public enum GoodsType{
-		VIRTUALGOODS("虚拟商品", "0"),NORMALGOODS("普通商品","1");
+		VIRTUALGOODS("虚拟商品", "1");
 
 		private String name;
 		private String state;

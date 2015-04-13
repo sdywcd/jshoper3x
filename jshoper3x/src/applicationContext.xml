@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation=" 
 	http://www.springframework.org/schema/data/mongo   
 		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
@@ -11,7 +12,11 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
         http://www.springframework.org/schema/tx
-        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/cache
+		http://www.springframework.org/schema/cache/spring-cache.xsd"
 
 	default-autowire="byName" default-lazy-init="false">
 
@@ -63,10 +68,6 @@
 		</property>
 
 	</bean>
-
-
-
-
 
 
 	<!-- jedis缓存配置 -->
@@ -157,6 +158,55 @@
 		<property name="corePoolSize" value="10"></property>
 		<!-- 设置最大池子的大小 -->
 		<property name="maxPoolSize" value="30"></property>
+	</bean>
+	
+	<!-- 权限框架shiro -->
+	
+	<!-- ehcache 的配置 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager">
+		<!--  <property name="configLocation" value="classpath:ehcache-shiro.xml"/> -->
+	</bean>
+	
+	<bean id="basehiroRealm" class="com.jshop.shiro.BaseShiroRealm"> 
+    	<!--  用来实现用户名密码的查询 --> 
+    	<property name="cacheManager" ref="cacheManager"/> 
+	    <property name="authenticationCacheName" value="shiroAuthorizationCache"></property>
+  	</bean>
+  	
+  	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"> 
+  	 	<!-- <property name="sessionMode" value="native" />
+  	 	<property name="sessionManager" ref="sessionManager" />  -->
+  	 <!-- 	<property name="cacheManager" ref="shiroCacheManager"/>  -->
+   	 	<property name="realm" ref="basehiroRealm"/>
+ 	</bean> 
+ 	
+ 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/> 
+	
+	<!-- <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
+    	<property name="cacheManager" ref="cacheManager"/> 
+    </bean> -->
+    
+	<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"/>
+	 
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"/>
+		<property name="loginUrl" value="/admin/login.jsp"/> 
+	    <property name="successUrl" value="/admin/index.jsp"/> 
+	    <property name="unauthorizedUrl" value="/admin/error/error.jsp"/> 
+	    <property name="filters"> 
+	       <util:map> 
+	         <entry key="authc" value-ref="formAuthenticationFilter"/> 
+	       </util:map>
+    	</property> 
+	    <property name="filterChainDefinitions"> 
+	       <value>
+	         /admin/**=anon
+	       	 /admin/js/** = authc
+	       	 /admin/ui/** = anon
+	       	 /login.action = anon
+	       	 /app/*.action=anon
+	       </value>
+	    </property> 
 	</bean>
 
 	<!-- 配置activiti工作流引擎 <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration"> 

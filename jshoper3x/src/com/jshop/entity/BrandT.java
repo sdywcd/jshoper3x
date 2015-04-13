@@ -23,6 +23,7 @@ public class BrandT implements Serializable {
 	private String remark;
 	private String shopid;
 	private String shopname;
+	private String smallLogoPath;
 	private int sort;
 	private String url;
 	private String username;
@@ -113,6 +114,16 @@ public class BrandT implements Serializable {
 
 	public void setShopname(String shopname) {
 		this.shopname = shopname;
+	}
+
+
+	@Column(name="SMALL_LOGO_PATH")
+	public String getSmallLogoPath() {
+		return this.smallLogoPath;
+	}
+
+	public void setSmallLogoPath(String smallLogoPath) {
+		this.smallLogoPath = smallLogoPath;
 	}
 
 

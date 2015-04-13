@@ -26,7 +26,6 @@ import org.json.simple.JSONValue;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.base.DataCollectionTAction;
-import com.jshop.action.backstage.image.ImgTAction;
 import com.jshop.action.backstage.staticspage.CreateHtml;
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsSaleState;
@@ -63,7 +62,6 @@ public class GoodsTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	@Resource
 	private GoodsTService goodsTService;
-
 	@Resource
 	private ProductTService productTService;
 	@Resource
@@ -86,6 +84,7 @@ public class GoodsTAction extends BaseTAction {
 	private GoodsBelinkedTService goodsBelinkedTService;
 	@Resource
 	private CreateHtml createHtml;
+	@Resource
 	private DataCollectionTAction dataCollectionTAction;
 	@Resource
 	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
@@ -1033,6 +1032,7 @@ public class GoodsTAction extends BaseTAction {
 		pt.setSpecificationsName(StaticKey.DEFAULTSPECIFNAME);//默认规格值名称
 		pt.setUpdatetime(gt.getCreatetime());
 		pt.setUnit(StaticKey.EMPTY);
+		pt.setShopid(BaseTools.getShopId());
 		//构造goodsspecificationproductrp
 		GoodsSpecificationsProductRpT gspt=new GoodsSpecificationsProductRpT();
 		gspt.setGoodsSpecificationsProductRpTid(this.getSerial().Serialid(Serial.GOODSSPECIFICATIONSPRODUCTRPT));
@@ -1283,6 +1283,7 @@ public class GoodsTAction extends BaseTAction {
 				pt.setSpecificationsName(StaticKey.DEFAULTSPECIFNAME);//默认规格值名称
 				pt.setUpdatetime(bean.getCreatetime());
 				pt.setUnit(StaticKey.EMPTY);
+				pt.setShopid(BaseTools.getShopId());
 				this.goodsTService.updateGoodsProcess(bean, this.getDetail(),pt);
 				this.updateGoodsAttributeRp(bean, this.getGoodsAttrsVals());
 				this.setSucflag(true);
@@ -1563,6 +1564,7 @@ public class GoodsTAction extends BaseTAction {
 			params.put("salestate", salestate);
 			params.put("isSpecificationsOpen", isSpecificationsOpen);
 			Criterion criterion=Restrictions.allEq(params);
+			total=this.goodsTService.count(GoodsT.class, criterion).intValue();
 			List<GoodsT>list=this.goodsTService.findByCriteria(GoodsT.class, criterion);
 			this.processGoodsList(list);
 			this.setSucflag(true);
@@ -1576,8 +1578,10 @@ public class GoodsTAction extends BaseTAction {
 			Map<String,String>params=new HashMap<String, String>();
 			params.put("navid", navid);
 			params.put("ltypeid", ltypeid);
+			params.put("salestate", salestate);
 			params.put("isSpecificationsOpen", isSpecificationsOpen);
 			Criterion criterion=Restrictions.allEq(params);
+			total=this.goodsTService.count(GoodsT.class, criterion).intValue();
 			List<GoodsT>list=this.goodsTService.findByCriteria(GoodsT.class, criterion);
 			this.processGoodsList(list);
 			this.setSucflag(true);
@@ -1596,6 +1600,7 @@ public class GoodsTAction extends BaseTAction {
 			params.put("salestate",salestate);
 			params.put("isSpecificationsOpen", isSpecificationsOpen);
 			Criterion criterion=Restrictions.allEq(params);
+			total=this.goodsTService.count(GoodsT.class, criterion).intValue();
 			List<GoodsT>list=this.goodsTService.findByCriteria(GoodsT.class, criterion);
 			this.processGoodsList(list);
 			this.setSucflag(true);

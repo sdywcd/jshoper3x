@@ -49,6 +49,8 @@ public class BrandTAction extends BaseTAction {
 	private String url;
 	private String goodsTypeId;
 	private String goodsTypeName;
+	private String smallLogoPath;
+
 	private BrandT bean=new BrandT();
 	private String brandjson;
 	private List<BrandT> brand = new ArrayList<BrandT>();
@@ -56,7 +58,24 @@ public class BrandTAction extends BaseTAction {
 	private int rp;
 	private int page = 1;
 	private int total = 0;
+	private String basepath;
 	private boolean sucflag;
+
+	public String getBasepath() {
+		return basepath;
+	}
+
+	public void setBasepath(String basepath) {
+		this.basepath = basepath;
+	}
+
+	public String getSmallLogoPath() {
+		return smallLogoPath;
+	}
+
+	public void setSmallLogoPath(String smallLogoPath) {
+		this.smallLogoPath = smallLogoPath;
+	}
 
 	public String getRemark() {
 		return remark;
@@ -246,19 +265,21 @@ public class BrandTAction extends BaseTAction {
 		bt.setCreatetime(BaseTools.getSystemTime());
 		bt.setIntro(this.getIntro());
 		bt.setLogoPath(this.getLogoPath().trim());
+		bt.setSmallLogoPath(this.getSmallLogoPath());
 		bt.setSort(Integer.parseInt(this.getSort().trim()));
 		bt.setUrl(this.getUrl().trim());
 		bt.setRemark(this.getRemark());
 		bt.setShopid(BaseTools.getShopId());
 		bt.setShopname(BaseTools.getShopName());
+		this.brandTService.save(bt);
 		//增加商品品牌和商品类型的关系
-		GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
-		gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
-		gtbt.setBrandid(bt.getBrandid());
-		gtbt.setBrandname(bt.getBrandname());
-		gtbt.setGoodsTypeId(this.getGoodsTypeId());
-		gtbt.setName(this.getGoodsTypeName());
-		this.brandTService.saveBrandTransaction(bt, gtbt);
+//		GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
+//		gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
+//		gtbt.setBrandid(bt.getBrandid());
+//		gtbt.setBrandname(bt.getBrandname());
+//		gtbt.setGoodsTypeId(this.getGoodsTypeId());
+//		gtbt.setName(this.getGoodsTypeName());
+//		this.brandTService.saveBrandTransaction(bt, gtbt);
 		this.setSucflag(true);
 		return JSON;
 	}
@@ -324,25 +345,27 @@ public class BrandTAction extends BaseTAction {
 			bt.setCreatetime(BaseTools.getSystemTime());
 			bt.setIntro(this.getIntro());
 			bt.setLogoPath(this.getLogoPath().trim());
+			bt.setSmallLogoPath(this.getSmallLogoPath());
 			bt.setSort(Integer.parseInt(this.getSort().trim()));
 			bt.setUrl(this.getUrl().trim());
 			bt.setRemark(this.getRemark());
 			bt.setShopid(BaseTools.getShopId());
 			bt.setShopname(BaseTools.getShopName());
 			this.brandTService.update(bt);
-			Criterion criterion=Restrictions.and(Restrictions.eq("brandid", bt.getBrandid())).add(Restrictions.eq("goodsTypeId", this.getGoodsTypeId()));
-			GoodsTypeBrandT gtb =this.goodsTypeBrandTService.findOneByCriteria(GoodsTypeBrandT.class, criterion);
-			if (gtb==null) {
-				//增加商品品牌和商品类型的关系
-				GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
-				gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
-				gtbt.setBrandid(bt.getBrandid());
-				gtbt.setBrandname(bt.getBrandname());
-				gtbt.setGoodsTypeId(this.getGoodsTypeId());
-				gtbt.setName(this.getGoodsTypeName());
-				this.goodsTypeBrandTService.save(gtbt);
-				this.setSucflag(true);
-			}
+//			Criterion criterion=Restrictions.and(Restrictions.eq("brandid", bt.getBrandid())).add(Restrictions.eq("goodsTypeId", this.getGoodsTypeId()));
+//			GoodsTypeBrandT gtb =this.goodsTypeBrandTService.findOneByCriteria(GoodsTypeBrandT.class, criterion);
+//			if (gtb==null) {
+//				//增加商品品牌和商品类型的关系
+//				GoodsTypeBrandT gtbt = new GoodsTypeBrandT();
+//				gtbt.setGoodsTypeBrandTid(this.getSerial().Serialid(Serial.GOODSTYPEBRAND));
+//				gtbt.setBrandid(bt.getBrandid());
+//				gtbt.setBrandname(bt.getBrandname());
+//				gtbt.setGoodsTypeId(this.getGoodsTypeId());
+//				gtbt.setName(this.getGoodsTypeName());
+//				this.goodsTypeBrandTService.save(gtbt);
+//				this.setSucflag(true);
+//			}
+			this.setSucflag(true);
 		}
 		return JSON;
 	}
@@ -357,15 +380,8 @@ public class BrandTAction extends BaseTAction {
 		if (StringUtils.isNotBlank(this.getBrandid())) {
 			bean = this.brandTService.findByPK(BrandT.class, this.getBrandid());
 			if (bean != null) {
-				//bean.setLogoPath(BaseTools.getBasePath()+bean.getLogoPath());
-				Criterion criterion=Restrictions.eq("brandid",this.getBrandid());
-				GoodsTypeBrandT gtbt=this.goodsTypeBrandTService.findOneByCriteria(GoodsTypeBrandT.class, criterion);
-				if(gtbt==null){
-					this.setSucflag(false);
-				}else{
-					this.setGoodsTypeId(gtbt.getGoodsTypeId());
-					this.setSucflag(true);
-				}
+				this.setBasepath(BaseTools.getBasePath()+"/");
+				this.setSucflag(true);
 			}
 		}
 		return JSON;

@@ -74,6 +74,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 	private String creatorid;
 	private String logo;
 	private String mobilesync;
+	private String smallLogo;
 	private String goodscategoryzero = null;
 	private String goodscategorythree = null;
 	private String goodscategorytwo = null;
@@ -92,6 +93,14 @@ public class GoodsCategoryTAction extends BaseTAction {
 	private boolean sucflag;
 	private String basepath;
 	
+	public String getSmallLogo() {
+		return smallLogo;
+	}
+
+	public void setSmallLogo(String smallLogo) {
+		this.smallLogo = smallLogo;
+	}
+
 	public String getGoodsCategoryTid() {
 		return goodsCategoryTid;
 	}
@@ -497,6 +506,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setVersiont(0);
 				gct.setParentName(StaticKey.EMPTY);
 				gct.setLogo(this.getLogo());
+				gct.setSmallLogo(this.getSmallLogo());
 				gct.setMobilesync(this.getMobilesync());
 				gct.setShopid(BaseTools.getShopId());
 				gct.setShopname(BaseTools.getShopName());
@@ -549,6 +559,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
+				gct.setSmallLogo(this.getSmallLogo());
 				gct.setMobilesync(this.getMobilesync());
 				gct.setShopid(BaseTools.getShopId());
 				gct.setShopname(BaseTools.getShopName());
@@ -591,6 +602,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setParentId(this.getParentId());
 				gct.setParentName(this.getParentName());
 				gct.setLogo(this.getLogo());
+				gct.setSmallLogo(this.getSmallLogo());
 				gct.setMobilesync(this.getMobilesync());
 				gct.setShopid(BaseTools.getShopId());
 				gct.setShopname(BaseTools.getShopName());
@@ -641,6 +653,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
+				gct.setSmallLogo(this.getSmallLogo());
 				gct.setMobilesync(this.getMobilesync());
 				gct.setShopid(BaseTools.getShopId());
 				gct.setShopname(BaseTools.getShopName());
@@ -686,6 +699,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setParentId(this.getParentId1());
 				gct.setParentName(this.getParentName1());
 				gct.setLogo(this.getLogo());
+				gct.setSmallLogo(this.getSmallLogo());
 				gct.setMobilesync(this.getMobilesync());
 				gct.setShopid(BaseTools.getShopId());
 				gct.setShopname(BaseTools.getShopName());
@@ -736,6 +750,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 				gct.setUpdatetime(BaseTools.getSystemTime());
 				gct.setVersiont(gct.getVersiont()+1);
 				gct.setLogo(this.getLogo());
+				gct.setSmallLogo(this.getSmallLogo());
 				gct.setMobilesync(this.getMobilesync());
 				gct.setShopid(BaseTools.getShopId());
 				gct.setShopname(BaseTools.getShopName());
@@ -812,8 +827,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 		if (StringUtils.isNotBlank(this.getGoodsCategoryTid())) {
 			bean = this.goodsCategoryTService.findByPK(GoodsCategoryT.class, this.getGoodsCategoryTid());
 			if (bean != null) {
-				//bean.setLogo(BaseTools.getBasePath()+bean.getLogo());
-				this.setBasepath(BaseTools.getBasePath());
+				this.setBasepath(BaseTools.getBasePath()+"/");
 				this.setSucflag(true);
 				return JSON;
 			}
@@ -854,6 +868,7 @@ public class GoodsCategoryTAction extends BaseTAction {
 			gct.setUpdatetime(BaseTools.getSystemTime());
 			gct.setVersiont(0);
 			gct.setLogo(this.getLogo());
+			gct.setSmallLogo(this.getSmallLogo());
 			gct.setMobilesync(this.getMobilesync());
 			gct.setShopid(BaseTools.getShopId());
 			gct.setShopname(BaseTools.getShopName());

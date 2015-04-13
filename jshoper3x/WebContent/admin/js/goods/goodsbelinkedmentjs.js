@@ -299,7 +299,8 @@ $(function(){
 		},function(data){
 			if(data.sucflag){
 				formwarning("#alertinfo", "增加关联商品成功");
-				return false;
+				window.location.href="goodsbelinkedsalement.jsp?operate=find";
+				return true;
 			}
 		})
 	}
@@ -328,7 +329,6 @@ $(function(){
 			formwarning("#alerterror", "请选择商品分类");
 			return false;
 		}else{
-			
 			var param="?navid="+navid+"&ltypeid="+ltypeid+"&stypeid="+stypeid+"&folder=goods";
 			findAllGoodsByCategory(param);
 		}

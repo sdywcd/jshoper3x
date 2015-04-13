@@ -1,8 +1,5 @@
 package com.jshop.service;
 
-import java.util.List;
-
-import com.jshop.dao.GoodsTypeBrandTDao;
 import com.jshop.entity.GoodsTypeBrandT;
 
 public interface GoodsTypeBrandTService extends BaseTService<GoodsTypeBrandT> {

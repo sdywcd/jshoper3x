@@ -1,12 +1,20 @@
 
 $(function() {
-	/*
-	 * 删除图片按钮
+	/**
+	 * 删除主图片和缩略图片，采用假删除
 	 */
-	$("#delpc").click(function() {
+	deleteMainPicture=function(){
 		var str = "";
 		var sum = 0;
-		$(":checkbox[name='pcpath']").each(function() {
+		//主图片遍历
+		$(":checkbox[name='mainpc']").each(function() {
+			if ($(this).attr("checked")) {
+				sum++;
+				str += this.id + ",";
+			}
+		});
+		//主压缩图片遍历
+		$(":checkbox[name='maincompresspc']").each(function(){
 			if ($(this).attr("checked")) {
 				sum++;
 				str += this.id + ",";
@@ -19,9 +27,13 @@ $(function() {
 		var array = new Array();
 		array = str.split(",");
 		$(array).each(function(k, v) {
-			$("#triggers img").remove("img[id=" + v + "]");
-			$("#triggers input[name='pcpath']").remove("input[id=" + v + "]");
+			$("#maintriggers img").remove("img[id=" + v + "]");
+			$("#maintriggers input[name='mainpc']").remove("input[id=" + v + "]");
+			$("#maintriggers input[name='maincompresspc']").remove("input[id=" + v + "]");
 		});
+	},
+	$("#maindelpc").on("click",function(){
+		deleteMainPicture();
 	});
 	
 	/**
@@ -147,9 +159,17 @@ $(function() {
 		var metaDes = $('#metaDes').val();
         // 获logo路径集合
 		var logoPath = "";
-		$(":checkbox[name='pcpath']").each(function() {
+		$(":checkbox[name='mainpc']").each(function() {
 			if($(this).attr("checked")){
 				logoPath=this.value;
+			}
+		});
+		
+		//获取缩略logo路径
+		var smallLogo="";
+		$(":checkbox[name='maincompresspc']").each(function() {
+			if($(this).attr("checked")){
+				smallLogo=this.value;
 			}
 		});
 		var mobilesync=$("input[name='mobilesync']:checked").val();
@@ -163,6 +183,7 @@ $(function() {
 				"sign" : sign,
 				"goodsTypeId" : goodsTypeId,
                 "logo":logoPath,
+                "smallLogo":smallLogo,
                 "mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
@@ -184,6 +205,7 @@ $(function() {
 				"sign" : sign,
 				"goodsTypeId" : goodsTypeId,
                 "logo":logoPath,
+                "smallLogo":smallLogo,
                 "mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
@@ -206,6 +228,7 @@ $(function() {
 				"sign" : sign,
 				"goodsTypeId" : goodsTypeId,
                 "logo":logoPath,
+                "smallLogo":smallLogo,
                 "mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
@@ -244,17 +267,19 @@ $(function() {
 				$('#metaKeywords').attr("value", data.bean.metaKeywords);
 				$('#metaDes').attr("value", data.bean.metaDes);
 				$('#hidgoodsCategoryTid').attr("value", data.bean.goodsCategoryTid);
-				if(data.bean.logo!=""){
-					 var htm = "<img id='logo' src='" + data.basepath+data.bean.logo + "'/>";
-			         var checkpc = "<input id='logo' name='pcpath' type='checkbox' value='" + data.bean.logo+ "' checked='true' />";
-			         $("#triggers").html(htm).append(checkpc);
-				}
+				//显示logo
+				var mainPicture=data.bean.logo;
+				var mainPHtml="<img id='0' src='"+data.basepath+mainPicture+"'/><input id='0' name='mainpc' type='checkbox' value='"+mainPicture+"' checked/>";
+				//显示缩略图logo
+				var mainSmallPicture=data.bean.smallLogo;
+				mainPHtml+="<img id='1' src='"+data.basepath+mainSmallPicture+"'/><input id='0' name='maincompresspc' type='checkbox' value='"+mainSmallPicture+"' checked/>";
+				$("#maintriggers").append(mainPHtml);
+				
 	            if(data.bean.mobilesync=="1"){
 	            	$("input[name='mobilesync']").get(0).checked=true;
 	            }else{
 	            	$("input[name='mobilesync']").get(1).checked=true;
 	            }
-	        
 	            $('#submit').hide();
 				$('#addfl').hide();
 				$('#modfl').show();//上级分类显示区域
@@ -285,9 +310,17 @@ $(function() {
 		var goodsCategoryTid = $('#hidgoodsCategoryTid').val();
 		// 获logo路径集合
 		var logoPath = "";
-		$(":checkbox[name='pcpath']").each(function() {
+		$(":checkbox[name='mainpc']").each(function() {
 			if($(this).attr("checked")){
 				logoPath=this.value;
+			}
+		});
+		
+		//获取缩略logo路径
+		var smallLogo="";
+		$(":checkbox[name='maincompresspc']").each(function() {
+			if($(this).attr("checked")){
+				smallLogo=this.value;
 			}
 		});
 		//这里需要重新定义
@@ -382,6 +415,7 @@ $(function() {
 				"sign" : sign,
 				"goodsTypeId" : goodsTypeId,
                 "logo":logoPath,
+                "smallLogo":smallLogo,
                 "mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
@@ -404,6 +438,7 @@ $(function() {
 				"sign" : sign,
 				"goodsTypeId" : goodsTypeId,
                 "logo":logoPath,
+                "smallLogo":smallLogo,
                 "mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {
@@ -427,6 +462,7 @@ $(function() {
 				"sign" : sign,
 				"goodsTypeId" : goodsTypeId,
                 "logo":logoPath,
+                "smallLogo":smallLogo,
                 "mobilesync":mobilesync
 			}, function(data) {
 				if (data.sucflag) {

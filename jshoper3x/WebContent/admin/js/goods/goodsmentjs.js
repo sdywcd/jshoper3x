@@ -479,10 +479,13 @@ $(function() {
 		var bargainprice=$("input[name='bargainprice']:checked").val();
 		var ismobileplatformgoods=$("input[name='ismobileplatformgoods']:checked").val();
 		var salestate=$("input[name='salestate']:checked").val();
+		
+		var sum=0;
 		//获取商品主图原图图片路径
 		var mainpicture="";
 		$(":checkbox[name='mainpc']").each(function() {
 			if($(this).attr("checked")){
+				sum++;
 				mainpicture=this.value;
 			}
 		});
@@ -490,9 +493,16 @@ $(function() {
 		var mainsmallpicture="";
 		$(":checkbox[name='maincompresspc']").each(function() {
 			if($(this).attr("checked")){
+				sum++;
 				mainsmallpicture=this.value;
 			}
 		});
+		if(sum==0){
+			formwarning("#alerterror","请选择一个主图");
+			return false;
+		}
+		
+		
 		//获取商品原图图片路径集合
 		var pictureurl="";
 		$(":checkbox[name='pclist']").each(function() {
@@ -500,6 +510,7 @@ $(function() {
 				pictureurl+=this.value+",";
 			}
 		});
+		
 		pictureurl=pictureurl.toString().substring(0, pictureurl.length-1);
 		//获取缩略图图片路径集合
 		var smallpictures="";
@@ -723,7 +734,7 @@ $(function() {
 					var mainPHtml="<img id='0' src='"+data.basepath+mainPicture+"'/><input id='0' name='mainpc' type='checkbox' value='"+mainPicture+"' checked/>";
 					//显示商品缩略图
 					var mainSmallPicture=data.bean.mainSmallPicture;
-					mainPHtml+="<img id='1' src='"+data.basepath+mainSmallPicture+"'/><input id='0' name='mainpc' type='checkbox' value='"+mainSmallPicture+"' checked/>";
+					mainPHtml+="<img id='1' src='"+data.basepath+mainSmallPicture+"'/><input id='0' name='maincompresspc' type='checkbox' value='"+mainSmallPicture+"' checked/>";
 					$("#maintriggers").append(mainPHtml);
 
 					//显示展示图集包含缩略图
@@ -740,36 +751,15 @@ $(function() {
 						if(""==v){
 							return;
 						}
-						pictureurlHtml+="<img id='"+v+"' src='"+data.basepath+v+"'/><input id='"+v+"' name='pcpath' type='checkbox' value='"+v+"' checked/>";
+						pictureurlHtml+="<img id='"+v+"' src='"+data.basepath+v+"'/><input id='"+v+"' name='pclist' type='checkbox' value='"+v+"' checked/>";
 						$.each(smallpctemp,function(k,v){
 							if(""==v){
 								return;
 							}
-							pictureurlHtml+="<img id='"+v+"' src='"+data.basepath+v+"'/><input id='"+v+"' name='pcpath' type='checkbox' value='"+v+"' checked/>";				
+							pictureurlHtml+="<img id='"+v+"' src='"+data.basepath+v+"'/><input id='"+v+"' name='compresspclist' type='checkbox' value='"+v+"' checked/>";				
 						});
 					});
 					$('#triggers').append(pictureurlHtml);
-					
-
-					//显示
-
-					// //获取商品图片路径集合
-					// var pcpath="";
-					// var pcurl=data.bean.pictureurl;
-					// var htm="";
-					// var checkpc="";
-					// var temp=pcurl.split(',');
-					// var allpcpath="";
-					// $.each(temp,function(n,value){
-					// 	if(""==value){
-					// 		return;
-					// 	}
-					// 	pcpath=value;
-					// 	htm="<img id='"+value+"' src='"+data.basepath+pcpath+"'></img>";
-					// 	checkpc="<input id='"+value+"' name='pcpath' type='checkbox' value='"+value+"' checked/>";
-					// 	allpcpath=htm+checkpc;
-					// 	$('#triggers').append(allpcpath);
-					// });
 
 					findGoodsDetialRpTBygoodsid(data.bean.goodsid);
 					if("1"==data.bean.isoutsite){
@@ -818,7 +808,7 @@ $(function() {
 		findGoodsById();
 
 	}else if(operate=="find"){
-		a();
+		
 	}
 });
 
@@ -826,9 +816,6 @@ $(function() {
  * flexigrid list
  */
 $(function() {
-	a=function(){
-		
-	}
 	$("#goodsmanagement").flexigrid({
 		url : 'findAllGoods.action',
 		dataType : 'json',

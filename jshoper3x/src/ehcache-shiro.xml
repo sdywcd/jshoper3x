@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- defaultCache节点为缺省的缓存策略 maxElementsInMemory 内存中最大允许存在的对象数量 eternal 设置缓存中的对象是否永远不过期 
+	overflowToDisk 把溢出的对象存放到硬盘上 timeToIdleSeconds 指定缓存对象空闲多长时间就过期,过期的对象会被清除掉 
+	timeToLiveSeconds 指定缓存对象总的存活时间 diskPersistent 当jvm结束是是否持久化对象 diskExpiryThreadIntervalSeconds 
+	指定专门用于清除过期对象的监听线程的轮询时间 -->
+<ehcache>
+
+	<diskStore path="java.io.tmpdir/tuan-oauth" />
+
+
+
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="false"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
+
+	<!-- We want eternal="true" (with no timeToIdle or timeToLive settings) 
+		because Shiro manages session expirations explicitly. If we set it to false 
+		and then set corresponding timeToIdle and timeToLive properties, ehcache 
+		would evict sessions without Shiro's knowledge, which would cause many problems 
+		(e.g. "My Shiro session timeout is 30 minutes - why isn't a session available 
+		after 2 minutes?" Answer - ehcache expired it due to the timeToIdle property 
+		set to 120 seconds.) diskPersistent=true since we want an enterprise session 
+		management feature - ability to use sessions after even after a JVM restart. -->
+	<cache name="shiro-activeSessionCache" maxElementsInMemory="10000"
+		eternal="true" overflowToDisk="true" diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="600" />
+
+	<cache name="shiro.authorizationCache" maxElementsInMemory="100"
+		eternal="false" timeToLiveSeconds="600" overflowToDisk="false" />
+
+</ehcache>
