@@ -21,6 +21,10 @@ public class RepositoryServiceImpl<T> implements RepositoryService<T> {
 		repositoryDao.insert(t);
 	}
 	@Override
+	public void insertAll(List<T> t) {
+		repositoryDao.insertAll(t);
+	}
+	@Override
 	public boolean deleteById(String id, Class<T> t) {
 		return repositoryDao.deleteById(id, t);
 	}
@@ -59,6 +63,10 @@ public class RepositoryServiceImpl<T> implements RepositoryService<T> {
 		return repositoryDao.findAndModify(query, update, t);
 	}
 	@Override
+	public T findAndRemove(Query query,Class<T> t) {
+		return repositoryDao.findAndRemove(query, t);
+	}
+	@Override
 	public void saveOrUpdate(T t) {
 		repositoryDao.saveOrUpdate(t);
 	}
@@ -75,5 +83,6 @@ public class RepositoryServiceImpl<T> implements RepositoryService<T> {
 		repositoryDao.drop(t);
 		
 	}
+
 
 }

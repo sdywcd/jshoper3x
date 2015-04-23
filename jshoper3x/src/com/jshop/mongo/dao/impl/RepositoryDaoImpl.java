@@ -21,6 +21,10 @@ public class RepositoryDaoImpl<T> implements RepositoryDao<T>{
 		mongoTemplate.insert(t);
 	}
 	@Override
+	public void insertAll(List<T> t) {
+		mongoTemplate.insertAll(t);
+	}
+	@Override
 	public boolean deleteById(String id,Class<T>t) {
 		Criteria criteria=Criteria.where("_id").in(id);
 		if(null!=criteria){
@@ -40,6 +44,7 @@ public class RepositoryDaoImpl<T> implements RepositoryDao<T>{
 	@Override
 	public void delete(T t) {
 		mongoTemplate.remove(t);
+		
 		
 		
 	}
@@ -79,6 +84,10 @@ public class RepositoryDaoImpl<T> implements RepositoryDao<T>{
 		return mongoTemplate.findAndModify(query, update, t);
 	}
 	@Override
+	public T findAndRemove(Query query,Class<T> t) {
+		return mongoTemplate.findAndRemove(query, t);
+	}
+	@Override
 	public void saveOrUpdate(T t) {
 		mongoTemplate.save(t);
 	}
@@ -103,6 +112,8 @@ public class RepositoryDaoImpl<T> implements RepositoryDao<T>{
 		mongoTemplate.dropCollection(t);
 		
 	}
+
+
 
 	
 	

@@ -12,6 +12,10 @@ public interface RepositoryService<T> {
 	 */
 	public void insert(T t);
 	/**
+	 * 插入多个对象
+	 */
+	public void insertAll(List<T>t);
+	/**
 	 * 根据id删除对象
 	 * @param id
 	 * @return
@@ -71,6 +75,13 @@ public interface RepositoryService<T> {
 	 * @return
 	 */
 	public T findAndModify(Query query,Update update,Class<T>t);
+	/**
+	 * 查询并删除
+	 * @param query
+	 * @param t
+	 * @return
+	 */
+	public T findAndRemove(Query query,Class<T> t);
 	/**
 	 * 保存对象，如果对象存在就更新对象，如果对象不存在则保存对象
 	 * @param t
