@@ -39,6 +39,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <filter>
+      
     <filter-name>openSessionInViewFilter</filter-name>
     <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
     <init-param>

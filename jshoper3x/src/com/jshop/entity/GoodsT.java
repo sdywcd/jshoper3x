@@ -55,7 +55,7 @@ public class GoodsT implements Serializable {
 	private double price;
 	private String productSn;
 	private int quantity;
-	private int readcount;
+	private double readcount;
 	private int realsales;
 	private String recommended;
 	private String relatedproductid;
@@ -468,11 +468,11 @@ public class GoodsT implements Serializable {
 	}
 
 
-	public int getReadcount() {
+	public double getReadcount() {
 		return this.readcount;
 	}
 
-	public void setReadcount(int readcount) {
+	public void setReadcount(double readcount) {
 		this.readcount = readcount;
 	}
 

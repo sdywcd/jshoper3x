@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
+import org.apache.struts2.convention.annotation.InterceptorRefs;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.interceptor.ServletRequestAware;
@@ -78,6 +80,7 @@ public class BaseAppAction extends BaseTAction implements ServletRequestAware, S
 	 * 2，保存服务器返回的token
 	 * 注册请求权限
 	 */
+	
 	@Action(value="registerUuid4App")
 	public void registerUuid(){
 		PrintWriter out = null;

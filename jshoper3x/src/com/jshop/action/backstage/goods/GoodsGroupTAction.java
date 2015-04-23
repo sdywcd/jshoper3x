@@ -1,5 +1,6 @@
 package com.jshop.action.backstage.goods;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,39 +33,115 @@ public class GoodsGroupTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	@Resource
 	private GoodsGroupTService goodsGroupTService;
-	private String pictureurl;
 	private String groupid;
+	private String brandid;
+	private String brandname;
+	private String commoditylist;
+	private BigDecimal cost;
+	private Date createtime;
+	private String creatorid;
+	private String goodsTypeId;
+	private String goodsTypeName;
 	private String goodsid;
 	private String goodsname;
-	private String state;
-	private Date begintime;
-	private Date endtime;
-	private String creatorid;
-	private Date createtime;
-	private String cashstate;
-	private Double cashlimit;
-	private int limitbuy;
-	private int salequantity;
-	private int SOrderCount;
-	private int totalOrderCount;
-	private double sendpoint;
-	private String priceladder;
-	private String detail;
-	private double memberprice;
-	private double groupprice;
-	private String htmlpath;
+	private Date groupBeginTime;
+	private Date groupEndTime;
+	private double groupNeedPointsLimit;
+	private String groupname;
+	private BigDecimal groupprice;
+	private String htmlPath;
+	private String isNewGroup;
+	private String ismobileplatformgoods;
+	private String isoutsite;
+	private String isvirtualsale;
+	private String keywords;
+	private String mainPicture;
+	private String mainSmallPicture;
+	private BigDecimal memberprice;
+	private String metaDescription;
+	private String metaKeywords;
+	private String outsitelink;
+	private String pictures;
+	private String placename;
+	private BigDecimal price;
+	private double readcount;
+	private int realOrdersCount;
+	private int replycount;
+	private BigDecimal saleprice;
+	private String salestate;
+	private double sendPoint;
+	private String shopid;
+	private String shopname;
+	private String smallPictures;
+	private int sort;
+	private String subgroupname;
+	private int totalcomment;
+	private int totalstar;
+	private int totalstaruser;
+	private Date updatetime;
+	private String usersetnum;
+	private int versiont;
+	private int virtualOrdersCount;
+	private GoodsGroupT bean= new GoodsGroupT();
+	private List<Map<String,Object>> rows= new ArrayList<Map<String,Object>>();
 	private int total=0;
 	private int page=1;
 	private int rp;
 	private boolean sucflag;
-	private GoodsGroupT groupList= new GoodsGroupT();
-	private List<Map<String,Object>> rows= new ArrayList<Map<String,Object>>();
-	
+
 	public String getGroupid() {
 		return groupid;
 	}
 	public void setGroupid(String groupid) {
 		this.groupid = groupid;
+	}
+	public String getBrandid() {
+		return brandid;
+	}
+	public void setBrandid(String brandid) {
+		this.brandid = brandid;
+	}
+	public String getBrandname() {
+		return brandname;
+	}
+	public void setBrandname(String brandname) {
+		this.brandname = brandname;
+	}
+	public String getCommoditylist() {
+		return commoditylist;
+	}
+	public void setCommoditylist(String commoditylist) {
+		this.commoditylist = commoditylist;
+	}
+	public BigDecimal getCost() {
+		return cost;
+	}
+	public void setCost(BigDecimal cost) {
+		this.cost = cost;
+	}
+	public Date getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+	public String getCreatorid() {
+		return creatorid;
+	}
+	public void setCreatorid(String creatorid) {
+		this.creatorid = creatorid;
+	}
+	public String getGoodsTypeId() {
+		return goodsTypeId;
+	}
+	public void setGoodsTypeId(String goodsTypeId) {
+		this.goodsTypeId = goodsTypeId;
+	}
+	public String getGoodsTypeName() {
+		return goodsTypeName;
+	}
+	public void setGoodsTypeName(String goodsTypeName) {
+		this.goodsTypeName = goodsTypeName;
 	}
 	public String getGoodsid() {
 		return goodsid;
@@ -78,89 +155,245 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setGoodsname(String goodsname) {
 		this.goodsname = goodsname;
 	}
-	public String getState() {
-		return state;
+	public Date getGroupBeginTime() {
+		return groupBeginTime;
 	}
-	public void setState(String state) {
-		this.state = state;
+	public void setGroupBeginTime(Date groupBeginTime) {
+		this.groupBeginTime = groupBeginTime;
 	}
-	public Date getBegintime() {
-		return begintime;
+	public Date getGroupEndTime() {
+		return groupEndTime;
 	}
-	public void setBegintime(Date begintime) {
-		this.begintime = begintime;
+	public void setGroupEndTime(Date groupEndTime) {
+		this.groupEndTime = groupEndTime;
 	}
-	public Date getEndtime() {
-		return endtime;
+	public double getGroupNeedPointsLimit() {
+		return groupNeedPointsLimit;
 	}
-	public void setEndtime(Date endtime) {
-		this.endtime = endtime;
+	public void setGroupNeedPointsLimit(double groupNeedPointsLimit) {
+		this.groupNeedPointsLimit = groupNeedPointsLimit;
 	}
-	public String getCreatorid() {
-		return creatorid;
+	public String getGroupname() {
+		return groupname;
 	}
-	public void setCreatorid(String creatorid) {
-		this.creatorid = creatorid;
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
 	}
-	public Date getCreatetime() {
-		return createtime;
+	public BigDecimal getGroupprice() {
+		return groupprice;
 	}
-	public void setCreatetime(Date createtime) {
-		this.createtime = createtime;
+	public void setGroupprice(BigDecimal groupprice) {
+		this.groupprice = groupprice;
 	}
-	public String getCashstate() {
-		return cashstate;
+	public String getHtmlPath() {
+		return htmlPath;
 	}
-	public void setCashstate(String cashstate) {
-		this.cashstate = cashstate;
+	public void setHtmlPath(String htmlPath) {
+		this.htmlPath = htmlPath;
 	}
-	public Double getCashlimit() {
-		return cashlimit;
+	public String getIsNewGroup() {
+		return isNewGroup;
 	}
-	public void setCashlimit(Double cashlimit) {
-		this.cashlimit = cashlimit;
+	public void setIsNewGroup(String isNewGroup) {
+		this.isNewGroup = isNewGroup;
 	}
-	public int getLimitbuy() {
-		return limitbuy;
+	public String getIsmobileplatformgoods() {
+		return ismobileplatformgoods;
 	}
-	public void setLimitbuy(int limitbuy) {
-		this.limitbuy = limitbuy;
+	public void setIsmobileplatformgoods(String ismobileplatformgoods) {
+		this.ismobileplatformgoods = ismobileplatformgoods;
 	}
-	public int getSalequantity() {
-		return salequantity;
+	public String getIsoutsite() {
+		return isoutsite;
 	}
-	public void setSalequantity(int salequantity) {
-		this.salequantity = salequantity;
+	public void setIsoutsite(String isoutsite) {
+		this.isoutsite = isoutsite;
 	}
-	public int getSOrderCount() {
-		return SOrderCount;
+	public String getIsvirtualsale() {
+		return isvirtualsale;
 	}
-	public void setSOrderCount(int sOrderCount) {
-		SOrderCount = sOrderCount;
+	public void setIsvirtualsale(String isvirtualsale) {
+		this.isvirtualsale = isvirtualsale;
 	}
-	public int getTotalOrderCount() {
-		return totalOrderCount;
+	public String getKeywords() {
+		return keywords;
 	}
-	public void setTotalOrderCount(int totalOrderCount) {
-		this.totalOrderCount = totalOrderCount;
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
-	public double getSendpoint() {
-		return sendpoint;
+	public String getMainPicture() {
+		return mainPicture;
 	}
-	public void setSendpoint(double sendpoint) {
-		this.sendpoint = sendpoint;
+	public void setMainPicture(String mainPicture) {
+		this.mainPicture = mainPicture;
 	}
-	public String getPriceladder() {
-		return priceladder;
+	public String getMainSmallPicture() {
+		return mainSmallPicture;
 	}
-	public void setPriceladder(String priceladder) {
-		this.priceladder = priceladder;
+	public void setMainSmallPicture(String mainSmallPicture) {
+		this.mainSmallPicture = mainSmallPicture;
 	}
-	public String getDetail() {
-		return detail;
+	public BigDecimal getMemberprice() {
+		return memberprice;
 	}
-	public void setDetail(String detail) {
-		this.detail = detail;
+	public void setMemberprice(BigDecimal memberprice) {
+		this.memberprice = memberprice;
+	}
+	public String getMetaDescription() {
+		return metaDescription;
+	}
+	public void setMetaDescription(String metaDescription) {
+		this.metaDescription = metaDescription;
+	}
+	public String getMetaKeywords() {
+		return metaKeywords;
+	}
+	public void setMetaKeywords(String metaKeywords) {
+		this.metaKeywords = metaKeywords;
+	}
+	public String getOutsitelink() {
+		return outsitelink;
+	}
+	public void setOutsitelink(String outsitelink) {
+		this.outsitelink = outsitelink;
+	}
+	public String getPictures() {
+		return pictures;
+	}
+	public void setPictures(String pictures) {
+		this.pictures = pictures;
+	}
+	public String getPlacename() {
+		return placename;
+	}
+	public void setPlacename(String placename) {
+		this.placename = placename;
+	}
+	public BigDecimal getPrice() {
+		return price;
+	}
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+	public double getReadcount() {
+		return readcount;
+	}
+	public void setReadcount(double readcount) {
+		this.readcount = readcount;
+	}
+	public int getRealOrdersCount() {
+		return realOrdersCount;
+	}
+	public void setRealOrdersCount(int realOrdersCount) {
+		this.realOrdersCount = realOrdersCount;
+	}
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
+	public BigDecimal getSaleprice() {
+		return saleprice;
+	}
+	public void setSaleprice(BigDecimal saleprice) {
+		this.saleprice = saleprice;
+	}
+	public String getSalestate() {
+		return salestate;
+	}
+	public void setSalestate(String salestate) {
+		this.salestate = salestate;
+	}
+	public double getSendPoint() {
+		return sendPoint;
+	}
+	public void setSendPoint(double sendPoint) {
+		this.sendPoint = sendPoint;
+	}
+	public String getShopid() {
+		return shopid;
+	}
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
+	}
+	public String getShopname() {
+		return shopname;
+	}
+	public void setShopname(String shopname) {
+		this.shopname = shopname;
+	}
+	public String getSmallPictures() {
+		return smallPictures;
+	}
+	public void setSmallPictures(String smallPictures) {
+		this.smallPictures = smallPictures;
+	}
+	public int getSort() {
+		return sort;
+	}
+	public void setSort(int sort) {
+		this.sort = sort;
+	}
+	public String getSubgroupname() {
+		return subgroupname;
+	}
+	public void setSubgroupname(String subgroupname) {
+		this.subgroupname = subgroupname;
+	}
+	public int getTotalcomment() {
+		return totalcomment;
+	}
+	public void setTotalcomment(int totalcomment) {
+		this.totalcomment = totalcomment;
+	}
+	public int getTotalstar() {
+		return totalstar;
+	}
+	public void setTotalstar(int totalstar) {
+		this.totalstar = totalstar;
+	}
+	public int getTotalstaruser() {
+		return totalstaruser;
+	}
+	public void setTotalstaruser(int totalstaruser) {
+		this.totalstaruser = totalstaruser;
+	}
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+	public String getUsersetnum() {
+		return usersetnum;
+	}
+	public void setUsersetnum(String usersetnum) {
+		this.usersetnum = usersetnum;
+	}
+	public int getVersiont() {
+		return versiont;
+	}
+	public void setVersiont(int versiont) {
+		this.versiont = versiont;
+	}
+	public int getVirtualOrdersCount() {
+		return virtualOrdersCount;
+	}
+	public void setVirtualOrdersCount(int virtualOrdersCount) {
+		this.virtualOrdersCount = virtualOrdersCount;
+	}
+	public GoodsGroupT getBean() {
+		return bean;
+	}
+	public void setBean(GoodsGroupT bean) {
+		this.bean = bean;
+	}
+	public List<Map<String, Object>> getRows() {
+		return rows;
+	}
+	public void setRows(List<Map<String, Object>> rows) {
+		this.rows = rows;
 	}
 	public int getTotal() {
 		return total;
@@ -168,12 +401,6 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	public List<Map<String,Object>> getRows() {
-		return rows;
-	}
-	public void setRows(List<Map<String,Object>> rows) {
-		this.rows = rows;
-	}		
 	public int getPage() {
 		return page;
 	}
@@ -186,38 +413,6 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setRp(int rp) {
 		this.rp = rp;
 	}
-
-	public GoodsGroupT getGroupList() {
-		return groupList;
-	}
-	public void setGroupList(GoodsGroupT groupList) {
-		this.groupList = groupList;
-	}
-	public String getPictureurl() {
-		return pictureurl;
-	}
-	public void setPictureurl(String pictureurl) {
-		this.pictureurl = pictureurl;
-	}
-	public String getHtmlpath() {
-		return htmlpath;
-	}
-	public void setHtmlpath(String htmlpath) {
-		this.htmlpath = htmlpath;
-	}
-	public double getMemberprice() {
-		return memberprice;
-	}
-	public void setMemberprice(double memberprice) {
-		this.memberprice = memberprice;
-	}
-	public double getGroupprice() {
-		return groupprice;
-	}
-	public void setGroupprice(double groupprice) {
-		this.groupprice = groupprice;
-	}
-	
 	public boolean isSucflag() {
 		return sucflag;
 	}
@@ -235,30 +430,30 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="addGoodsGroupT",results={@Result(name="json",type="json")})
 	public String addGoodsGroupT(){
-		GoodsGroupT ggt = new GoodsGroupT();		
-		ggt.setGroupid(this.getSerial().Serialid(Serial.GOODSGROUPT));
-		ggt.setGoodsid(this.getGoodsid().trim());
-		ggt.setCreatetime(BaseTools.getSystemTime());
-		ggt.setGoodsname(this.getGoodsname().trim());
-		ggt.setCreatorid(BaseTools.getAdminCreateId());
-		ggt.setState(this.getState().trim());
-		ggt.setCashstate(this.getCashstate().trim());
-		ggt.setCashlimit(this.getCashlimit());
-		ggt.setLimitbuy(this.getLimitbuy());
-		ggt.setSalequantity(this.getSalequantity());
-	//	ggt.setSOrderCount(this.getSOrderCount());
-		//ggt.setTotalOrderCount(this.getTotalOrderCount());
-		ggt.setBegintime(this.getBegintime());
-		ggt.setEndtime(this.getEndtime());
-		ggt.setSendpoint(this.getSendpoint());
-		ggt.setPriceladder("0");
-		ggt.setGroupprice(this.getGroupprice());
-		ggt.setMemberprice(this.getMemberprice());
-		ggt.setDetail(this.getDetail().trim());		
-		ggt.setPictureurl(this.getPictureurl());
-		ggt.setHtmlpath(StaticKey.EMPTY);
-		this.goodsGroupTService.save(ggt);
-		this.setSucflag(true);
+//		GoodsGroupT ggt = new GoodsGroupT();		
+//		ggt.setGroupid(this.getSerial().Serialid(Serial.GOODSGROUPT));
+//		ggt.setGoodsid(this.getGoodsid().trim());
+//		ggt.setCreatetime(BaseTools.getSystemTime());
+//		ggt.setGoodsname(this.getGoodsname().trim());
+//		ggt.setCreatorid(BaseTools.getAdminCreateId());
+//		ggt.setState(this.getState().trim());
+//		ggt.setCashstate(this.getCashstate().trim());
+//		ggt.setCashlimit(this.getCashlimit());
+//		ggt.setLimitbuy(this.getLimitbuy());
+//		ggt.setSalequantity(this.getSalequantity());
+//	//	ggt.setSOrderCount(this.getSOrderCount());
+//		//ggt.setTotalOrderCount(this.getTotalOrderCount());
+//		ggt.setBegintime(this.getBegintime());
+//		ggt.setEndtime(this.getEndtime());
+//		ggt.setSendpoint(this.getSendpoint());
+//		ggt.setPriceladder("0");
+//		ggt.setGroupprice(this.getGroupprice());
+//		ggt.setMemberprice(this.getMemberprice());
+//		ggt.setDetail(this.getDetail().trim());		
+//		ggt.setPictureurl(this.getPictureurl());
+//		ggt.setHtmlpath(StaticKey.EMPTY);
+//		this.goodsGroupTService.save(ggt);
+//		this.setSucflag(true);
 		return JSON;			
 	}
 
@@ -276,16 +471,16 @@ public class GoodsGroupTAction extends BaseTAction {
 					ggt.getGoodsid(),
 					ggt.getGoodsname(),
 					ggt.getGroupprice(),
-					ggt.getSendpoint(),
-					ggt.getCashlimit(),
-					ggt.getBegintime(),
-					ggt.getEndtime(),					
-					ggt.getCashstate(),
-					ggt.getState(),
-					ggt.getLimitbuy(),
-					ggt.getSalequantity(),
-					ggt.getSOrderCount(),
-					ggt.getTotalOrderCount(),					
+//					ggt.getSendpoint(),
+//					ggt.getCashlimit(),
+//					ggt.getBegintime(),
+//					ggt.getEndtime(),					
+//					ggt.getCashstate(),
+//					ggt.getState(),
+//					ggt.getLimitbuy(),
+//					ggt.getSalequantity(),
+//					ggt.getSOrderCount(),
+//					ggt.getTotalOrderCount(),					
 					ggt.getCreatorid()
 			});
 			rows.add(cellMap);
@@ -334,11 +529,11 @@ public class GoodsGroupTAction extends BaseTAction {
 	@Action(value="findGoodsGroupById",results={@Result(name="json",type="json")})
 	public String findGoodsGroupById(){
 		if(StringUtils.isNotBlank(this.getGroupid())){
-			groupList= this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
-			if(groupList!=null){
-				this.setSucflag(true);
-				return JSON;
-			}
+//			groupList= this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
+//			if(groupList!=null){
+//				this.setSucflag(true);
+//				return JSON;
+//			}
 		}
 		return JSON;
 	}
@@ -351,24 +546,24 @@ public class GoodsGroupTAction extends BaseTAction {
 		if(StringUtils.isNotBlank(this.getGroupid())){
 			GoodsGroupT ggt=this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
 			if(ggt!=null){
-				ggt.setBegintime(this.getBegintime());
-				ggt.setEndtime(this.getEndtime());
-				ggt.setDetail(this.getDetail().trim());
-				ggt.setCashlimit(this.getCashlimit());
-				ggt.setCashstate(this.getCashstate().trim());
-				ggt.setLimitbuy(this.getLimitbuy());
-//				ggt.setGoodsid(this.getGoodsid().trim());
-				ggt.setCreatetime(BaseTools.getSystemTime());
-				ggt.setGoodsname(this.getGoodsname().trim());
-				ggt.setState(this.getState().trim());
-				ggt.setSalequantity(this.getSalequantity());
-//				ggt.setSOrderCount(0);
-//				ggt.setTotalOrderCount(0);
-				ggt.setSendpoint(this.getSendpoint());
-				ggt.setGroupprice(this.getGroupprice());
-				ggt.setMemberprice(this.getMemberprice());
-				ggt.setPictureurl(this.getPictureurl());
-				this.goodsGroupTService.update(ggt);
+//				ggt.setBegintime(this.getBegintime());
+//				ggt.setEndtime(this.getEndtime());
+//				ggt.setDetail(this.getDetail().trim());
+//				ggt.setCashlimit(this.getCashlimit());
+//				ggt.setCashstate(this.getCashstate().trim());
+//				ggt.setLimitbuy(this.getLimitbuy());
+////				ggt.setGoodsid(this.getGoodsid().trim());
+//				ggt.setCreatetime(BaseTools.getSystemTime());
+//				ggt.setGoodsname(this.getGoodsname().trim());
+//				ggt.setState(this.getState().trim());
+//				ggt.setSalequantity(this.getSalequantity());
+////				ggt.setSOrderCount(0);
+////				ggt.setTotalOrderCount(0);
+//				ggt.setSendpoint(this.getSendpoint());
+//				ggt.setGroupprice(this.getGroupprice());
+//				ggt.setMemberprice(this.getMemberprice());
+//				ggt.setPictureurl(this.getPictureurl());
+//				this.goodsGroupTService.update(ggt);
 				this.setSucflag(true);
 				return JSON;
 			}
@@ -402,7 +597,7 @@ public class GoodsGroupTAction extends BaseTAction {
 		if(StringUtils.isNotBlank(this.getGroupid())){
 			GoodsGroupT ggt=this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
 			if(ggt!=null){
-				ggt.setState("2");
+				//ggt.setState("2");
 				this.goodsGroupTService.update(ggt);
 				this.setSucflag(true);
 			}

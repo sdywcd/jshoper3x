@@ -26,7 +26,6 @@
 		<class>com.jshop.entity.GoodsCategoryT</class>
 		<class>com.jshop.entity.GoodsCommentT</class>
 		<class>com.jshop.entity.GoodsDetailRpT</class>
-		<class>com.jshop.entity.GoodsGroupT</class>
 		<class>com.jshop.entity.GoodsTwocodeRelationshipT</class>
 		<class>com.jshop.entity.GoodsTwocodeRpT</class>
 		<class>com.jshop.entity.GoodsTypeBrandT</class>
@@ -91,5 +90,6 @@
 		<class>com.jshop.entity.GoodsSpecificationsProductRpT</class>
 		<class>com.jshop.entity.ProductT</class>
 		<class>com.jshop.entity.AppRegisterTokenT</class>
+		<class>com.jshop.entity.GoodsGroupT</class>
 	</persistence-unit>
 </persistence>
