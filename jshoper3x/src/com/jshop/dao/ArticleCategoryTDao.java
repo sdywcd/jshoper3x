@@ -1,9 +1,6 @@
 package com.jshop.dao;
 
-import java.util.List;
-
 import com.jshop.entity.ArticleCategoryT;
-import com.jshop.entity.GoodsCategoryT;
 
 public interface ArticleCategoryTDao extends BaseTDao<ArticleCategoryT> {
 

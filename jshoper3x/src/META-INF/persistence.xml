@@ -91,5 +91,7 @@
 		<class>com.jshop.entity.ProductT</class>
 		<class>com.jshop.entity.AppRegisterTokenT</class>
 		<class>com.jshop.entity.GoodsGroupT</class>
+		<class>com.jshop.entity.GoodsGroupAttributeRpT</class>
+		<class>com.jshop.entity.GoodsGroupDetailRpT</class>
 	</persistence-unit>
 </persistence>

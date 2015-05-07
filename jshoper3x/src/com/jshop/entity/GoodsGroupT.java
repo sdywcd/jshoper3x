@@ -16,12 +16,14 @@ import java.util.Date;
 public class GoodsGroupT implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String groupid;
+	private String bargainprice;
 	private String brandid;
 	private String brandname;
 	private String commoditylist;
 	private BigDecimal cost;
 	private Date createtime;
 	private String creatorid;
+	private String goodsParameterValue;
 	private String goodsTypeId;
 	private String goodsTypeName;
 	private String goodsid;
@@ -31,12 +33,14 @@ public class GoodsGroupT implements Serializable {
 	private double groupNeedPointsLimit;
 	private String groupname;
 	private BigDecimal groupprice;
+	private String hotsale;
 	private String htmlPath;
-	private String isNewGroup;
+	private String isNew;
 	private String ismobileplatformgoods;
 	private String isoutsite;
 	private String isvirtualsale;
 	private String keywords;
+	private int limitBuy;
 	private String mainPicture;
 	private String mainSmallPicture;
 	private BigDecimal memberprice;
@@ -44,14 +48,13 @@ public class GoodsGroupT implements Serializable {
 	private String metaKeywords;
 	private String outsitelink;
 	private String pictures;
-	private String placename;
+	private double points;
 	private BigDecimal price;
 	private double readcount;
 	private int realOrdersCount;
-	private int replycount;
+	private String recommended;
 	private BigDecimal saleprice;
 	private String salestate;
-	private double sendPoint;
 	private String shopid;
 	private String shopname;
 	private String smallPictures;
@@ -76,6 +79,15 @@ public class GoodsGroupT implements Serializable {
 
 	public void setGroupid(String groupid) {
 		this.groupid = groupid;
+	}
+
+
+	public String getBargainprice() {
+		return this.bargainprice;
+	}
+
+	public void setBargainprice(String bargainprice) {
+		this.bargainprice = bargainprice;
 	}
 
 
@@ -131,6 +143,16 @@ public class GoodsGroupT implements Serializable {
 
 	public void setCreatorid(String creatorid) {
 		this.creatorid = creatorid;
+	}
+
+
+	@Column(name="GOODS_PARAMETER_VALUE")
+	public String getGoodsParameterValue() {
+		return this.goodsParameterValue;
+	}
+
+	public void setGoodsParameterValue(String goodsParameterValue) {
+		this.goodsParameterValue = goodsParameterValue;
 	}
 
 
@@ -222,6 +244,15 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	public String getHotsale() {
+		return this.hotsale;
+	}
+
+	public void setHotsale(String hotsale) {
+		this.hotsale = hotsale;
+	}
+
+
 	@Column(name="HTML_PATH")
 	public String getHtmlPath() {
 		return this.htmlPath;
@@ -232,13 +263,13 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="IS_NEW_GROUP")
-	public String getIsNewGroup() {
-		return this.isNewGroup;
+	@Column(name="IS_NEW")
+	public String getIsNew() {
+		return this.isNew;
 	}
 
-	public void setIsNewGroup(String isNewGroup) {
-		this.isNewGroup = isNewGroup;
+	public void setIsNew(String isNew) {
+		this.isNew = isNew;
 	}
 
 
@@ -275,6 +306,16 @@ public class GoodsGroupT implements Serializable {
 
 	public void setKeywords(String keywords) {
 		this.keywords = keywords;
+	}
+
+
+	@Column(name="LIMIT_BUY")
+	public int getLimitBuy() {
+		return this.limitBuy;
+	}
+
+	public void setLimitBuy(int limitBuy) {
+		this.limitBuy = limitBuy;
 	}
 
 
@@ -345,12 +386,12 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	public String getPlacename() {
-		return this.placename;
+	public double getPoints() {
+		return this.points;
 	}
 
-	public void setPlacename(String placename) {
-		this.placename = placename;
+	public void setPoints(double points) {
+		this.points = points;
 	}
 
 
@@ -382,12 +423,12 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	public int getReplycount() {
-		return this.replycount;
+	public String getRecommended() {
+		return this.recommended;
 	}
 
-	public void setReplycount(int replycount) {
-		this.replycount = replycount;
+	public void setRecommended(String recommended) {
+		this.recommended = recommended;
 	}
 
 
@@ -406,16 +447,6 @@ public class GoodsGroupT implements Serializable {
 
 	public void setSalestate(String salestate) {
 		this.salestate = salestate;
-	}
-
-
-	@Column(name="SEND_POINT")
-	public double getSendPoint() {
-		return this.sendPoint;
-	}
-
-	public void setSendPoint(double sendPoint) {
-		this.sendPoint = sendPoint;
 	}
 
 

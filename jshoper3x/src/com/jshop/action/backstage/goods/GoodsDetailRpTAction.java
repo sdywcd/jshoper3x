@@ -8,6 +8,8 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.json.annotations.JSON;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.entity.GoodsDetailRpT;
@@ -63,7 +65,8 @@ public class GoodsDetailRpTAction extends BaseTAction {
 	@Action(value = "findGoodsDetialRpTBygoodsid", results = { @Result(name = "json", type = "json") })
 	public String findGoodsDetialRpTBygoodsid(){
 		if(StringUtils.isNotBlank(this.getGoodsid())){
-			bean=this.goodsDetailRpTService.findByPK(GoodsDetailRpT.class, this.getGoodsid());
+			Criterion criterion=Restrictions.eq("goodsid", this.getGoodsid());
+			bean=this.goodsDetailRpTService.findOneByCriteria(GoodsDetailRpT.class, criterion);
 			if(bean!=null){
 				this.setSucflag(true);
 				return JSON;

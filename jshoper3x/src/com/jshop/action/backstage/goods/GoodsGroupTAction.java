@@ -1,6 +1,7 @@
 package com.jshop.action.backstage.goods;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,8 +22,9 @@ import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.backstage.base.BaseTAction;
 import com.jshop.action.backstage.utils.BaseTools;
-import com.jshop.action.backstage.utils.Validate;
+import com.jshop.action.backstage.utils.enums.BaseEnums.GoodsSaleState;
 import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.entity.GoodsGroupDetailRpT;
 import com.jshop.entity.GoodsGroupT;
 import com.jshop.service.GoodsGroupTService;
 import com.jshop.service.impl.Serial;
@@ -33,28 +35,33 @@ public class GoodsGroupTAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	@Resource
 	private GoodsGroupTService goodsGroupTService;
+	
 	private String groupid;
+	private String bargainprice;
 	private String brandid;
 	private String brandname;
 	private String commoditylist;
 	private BigDecimal cost;
 	private Date createtime;
 	private String creatorid;
+	private String goodsParameterValue;
 	private String goodsTypeId;
 	private String goodsTypeName;
 	private String goodsid;
 	private String goodsname;
-	private Date groupBeginTime;
-	private Date groupEndTime;
+	private String groupBeginTime;
+	private String groupEndTime;
 	private double groupNeedPointsLimit;
 	private String groupname;
 	private BigDecimal groupprice;
+	private String hotsale;
 	private String htmlPath;
-	private String isNewGroup;
+	private String isNew;
 	private String ismobileplatformgoods;
 	private String isoutsite;
 	private String isvirtualsale;
 	private String keywords;
+	private int limitBuy;
 	private String mainPicture;
 	private String mainSmallPicture;
 	private BigDecimal memberprice;
@@ -62,14 +69,13 @@ public class GoodsGroupTAction extends BaseTAction {
 	private String metaKeywords;
 	private String outsitelink;
 	private String pictures;
-	private String placename;
+	private double points;
 	private BigDecimal price;
 	private double readcount;
 	private int realOrdersCount;
-	private int replycount;
+	private String recommended;
 	private BigDecimal saleprice;
 	private String salestate;
-	private double sendPoint;
 	private String shopid;
 	private String shopname;
 	private String smallPictures;
@@ -82,13 +88,28 @@ public class GoodsGroupTAction extends BaseTAction {
 	private String usersetnum;
 	private int versiont;
 	private int virtualOrdersCount;
+	private String detail;
+	private String goodsAttrsVals;
 	private GoodsGroupT bean= new GoodsGroupT();
 	private List<Map<String,Object>> rows= new ArrayList<Map<String,Object>>();
 	private int total=0;
 	private int page=1;
 	private int rp;
 	private boolean sucflag;
+	public String getGoodsAttrsVals() {
+		return goodsAttrsVals;
+	}
 
+	public void setGoodsAttrsVals(String goodsAttrsVals) {
+		this.goodsAttrsVals = goodsAttrsVals;
+	}
+
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
 	public String getGroupid() {
 		return groupid;
 	}
@@ -155,18 +176,24 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setGoodsname(String goodsname) {
 		this.goodsname = goodsname;
 	}
-	public Date getGroupBeginTime() {
+	
+	
+	public String getGroupBeginTime() {
 		return groupBeginTime;
 	}
-	public void setGroupBeginTime(Date groupBeginTime) {
+
+	public void setGroupBeginTime(String groupBeginTime) {
 		this.groupBeginTime = groupBeginTime;
 	}
-	public Date getGroupEndTime() {
+
+	public String getGroupEndTime() {
 		return groupEndTime;
 	}
-	public void setGroupEndTime(Date groupEndTime) {
+
+	public void setGroupEndTime(String groupEndTime) {
 		this.groupEndTime = groupEndTime;
 	}
+
 	public double getGroupNeedPointsLimit() {
 		return groupNeedPointsLimit;
 	}
@@ -190,12 +217,6 @@ public class GoodsGroupTAction extends BaseTAction {
 	}
 	public void setHtmlPath(String htmlPath) {
 		this.htmlPath = htmlPath;
-	}
-	public String getIsNewGroup() {
-		return isNewGroup;
-	}
-	public void setIsNewGroup(String isNewGroup) {
-		this.isNewGroup = isNewGroup;
 	}
 	public String getIsmobileplatformgoods() {
 		return ismobileplatformgoods;
@@ -263,12 +284,7 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setPictures(String pictures) {
 		this.pictures = pictures;
 	}
-	public String getPlacename() {
-		return placename;
-	}
-	public void setPlacename(String placename) {
-		this.placename = placename;
-	}
+	
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -287,12 +303,7 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setRealOrdersCount(int realOrdersCount) {
 		this.realOrdersCount = realOrdersCount;
 	}
-	public int getReplycount() {
-		return replycount;
-	}
-	public void setReplycount(int replycount) {
-		this.replycount = replycount;
-	}
+
 	public BigDecimal getSaleprice() {
 		return saleprice;
 	}
@@ -305,12 +316,7 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setSalestate(String salestate) {
 		this.salestate = salestate;
 	}
-	public double getSendPoint() {
-		return sendPoint;
-	}
-	public void setSendPoint(double sendPoint) {
-		this.sendPoint = sendPoint;
-	}
+
 	public String getShopid() {
 		return shopid;
 	}
@@ -419,41 +425,122 @@ public class GoodsGroupTAction extends BaseTAction {
 	public void setSucflag(boolean sucflag) {
 		this.sucflag = sucflag;
 	}
+	
+	public String getBargainprice() {
+		return bargainprice;
+	}
+	public void setBargainprice(String bargainprice) {
+		this.bargainprice = bargainprice;
+	}
+	public String getHotsale() {
+		return hotsale;
+	}
+	public void setHotsale(String hotsale) {
+		this.hotsale = hotsale;
+	}
+	public String getIsNew() {
+		return isNew;
+	}
+	public void setIsNew(String isNew) {
+		this.isNew = isNew;
+	}
+	public int getLimitBuy() {
+		return limitBuy;
+	}
+	public void setLimitBuy(int limitBuy) {
+		this.limitBuy = limitBuy;
+	}
+	public double getPoints() {
+		return points;
+	}
+	public void setPoints(double points) {
+		this.points = points;
+	}
+	public String getRecommended() {
+		return recommended;
+	}
+	public void setRecommended(String recommended) {
+		this.recommended = recommended;
+	}
+	
+	public String getGoodsParameterValue() {
+		return goodsParameterValue;
+	}
+	public void setGoodsParameterValue(String goodsParameterValue) {
+		this.goodsParameterValue = goodsParameterValue;
+	}
 	@Override
 	public void validate() {
 		this.clearErrorsAndMessages();
-
 	}
 	/**
 	 * 添加团购商品
 	 * @return
+	 * @throws ParseException 
 	 */
-	@Action(value="addGoodsGroupT",results={@Result(name="json",type="json")})
-	public String addGoodsGroupT(){
-//		GoodsGroupT ggt = new GoodsGroupT();		
-//		ggt.setGroupid(this.getSerial().Serialid(Serial.GOODSGROUPT));
-//		ggt.setGoodsid(this.getGoodsid().trim());
-//		ggt.setCreatetime(BaseTools.getSystemTime());
-//		ggt.setGoodsname(this.getGoodsname().trim());
-//		ggt.setCreatorid(BaseTools.getAdminCreateId());
-//		ggt.setState(this.getState().trim());
-//		ggt.setCashstate(this.getCashstate().trim());
-//		ggt.setCashlimit(this.getCashlimit());
-//		ggt.setLimitbuy(this.getLimitbuy());
-//		ggt.setSalequantity(this.getSalequantity());
-//	//	ggt.setSOrderCount(this.getSOrderCount());
-//		//ggt.setTotalOrderCount(this.getTotalOrderCount());
-//		ggt.setBegintime(this.getBegintime());
-//		ggt.setEndtime(this.getEndtime());
-//		ggt.setSendpoint(this.getSendpoint());
-//		ggt.setPriceladder("0");
-//		ggt.setGroupprice(this.getGroupprice());
-//		ggt.setMemberprice(this.getMemberprice());
-//		ggt.setDetail(this.getDetail().trim());		
-//		ggt.setPictureurl(this.getPictureurl());
-//		ggt.setHtmlpath(StaticKey.EMPTY);
-//		this.goodsGroupTService.save(ggt);
-//		this.setSucflag(true);
+	@Action(value="saveGoodsGroupT",results={@Result(name="json",type="json")})
+	public String saveGoodsGroupT() throws ParseException{
+		//构造goodsgroup
+		GoodsGroupT ggt = new GoodsGroupT();		
+		ggt.setGroupid(this.getSerial().Serialid(Serial.GOODSGROUPT));
+		ggt.setBargainprice(this.getBargainprice());
+		ggt.setBrandid(this.getBrandid());
+		ggt.setBrandname(this.getBrandname());
+		ggt.setCommoditylist(this.getCommoditylist());
+		ggt.setCost(this.getCost());
+		ggt.setCreatetime(BaseTools.getSystemTime());
+		ggt.setCreatorid(BaseTools.getAdminCreateId());
+		ggt.setGoodsParameterValue(this.getGoodsParameterValue());
+		ggt.setGoodsTypeId(this.getGoodsTypeId());
+		ggt.setGoodsTypeName(this.getGoodsTypeName());
+		ggt.setGoodsid(this.getGoodsid());
+		ggt.setGoodsname(this.getGoodsname());
+		ggt.setGroupBeginTime(BaseTools.formatString2DataYYYMMDDHHMMSS(this.getGroupBeginTime()));
+		ggt.setGroupEndTime(BaseTools.formatString2DataYYYMMDDHHMMSS(this.getGroupEndTime()));
+		ggt.setGroupNeedPointsLimit(this.getGroupNeedPointsLimit());
+		ggt.setGroupname(this.getGroupname());
+		ggt.setGroupprice(this.getGroupprice());
+		ggt.setHotsale(this.getHotsale());
+		ggt.setHtmlPath(StaticKey.EMPTY);
+		ggt.setIsNew(this.getIsNew());
+		ggt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+		ggt.setIsoutsite(this.getIsoutsite());
+		ggt.setIsvirtualsale(this.getIsvirtualsale());
+		ggt.setKeywords(this.getMetaKeywords());
+		ggt.setLimitBuy(this.getLimitBuy());
+		ggt.setMainPicture(this.getMainPicture());
+		ggt.setMainSmallPicture(this.getMainSmallPicture());
+		ggt.setMemberprice(this.getMemberprice());
+		ggt.setMetaDescription(this.getMetaDescription());
+		ggt.setMetaKeywords(this.getMetaKeywords());
+		ggt.setOutsitelink(this.getOutsitelink());
+		ggt.setPictures(this.getPictures());
+		ggt.setPoints(this.getPoints());
+		ggt.setPrice(this.getPrice());
+		ggt.setReadcount(this.getReadcount());
+		ggt.setRealOrdersCount(0);
+		ggt.setRecommended(this.getRecommended());
+		ggt.setSaleprice(this.getSaleprice());
+		ggt.setSalestate(this.getSalestate());
+		ggt.setShopid(BaseTools.getShopId());
+		ggt.setShopname(BaseTools.getShopName());
+		ggt.setSmallPictures(this.getSmallPictures());
+		ggt.setSort(this.getSort());
+		ggt.setSubgroupname(this.getSubgroupname());
+		ggt.setTotalcomment(this.getTotalcomment());
+		ggt.setTotalstar(0);
+		ggt.setTotalstaruser(0);
+		ggt.setUpdatetime(BaseTools.getSystemTime());
+		ggt.setUsersetnum(this.getUsersetnum());
+		ggt.setVersiont(0);
+		ggt.setVirtualOrdersCount(this.getVirtualOrdersCount());
+		//构造goodsgroupdetail和goodsgroup关系
+		GoodsGroupDetailRpT ggdt=new GoodsGroupDetailRpT();
+		ggdt.setId(this.getSerial().Serialid(Serial.GOODSGROUPDETAILRPT));
+		ggdt.setDetail(this.getDetail());
+		ggdt.setGroupid(ggt.getGroupid());
+		this.goodsGroupTService.saveGoodsGroupProcess(ggt, ggdt, this.getGoodsAttrsVals());
+		this.setSucflag(true);
 		return JSON;			
 	}
 
@@ -468,24 +555,13 @@ public class GoodsGroupTAction extends BaseTAction {
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", ggt.getGroupid());
 			cellMap.put("cell", new Object[]{
-					ggt.getGoodsid(),
-					ggt.getGoodsname(),
+					ggt.getGroupname(),
 					ggt.getGroupprice(),
-//					ggt.getSendpoint(),
-//					ggt.getCashlimit(),
-//					ggt.getBegintime(),
-//					ggt.getEndtime(),					
-//					ggt.getCashstate(),
-//					ggt.getState(),
-//					ggt.getLimitbuy(),
-//					ggt.getSalequantity(),
-//					ggt.getSOrderCount(),
-//					ggt.getTotalOrderCount(),					
-					ggt.getCreatorid()
-			});
+					ggt.getGroupBeginTime(),
+					ggt.getGroupEndTime(),
+					"<a id='editgroupgoods' href='goodsgroup.jsp?operate=edit&folder=goods&groupid="+ggt.getGroupid()+"' name='editgoodsgroup'>[编辑]</a>"});
 			rows.add(cellMap);
 		}
-		
 	}
 	/**
 	 * 获取默认所有的团购商品信息
@@ -529,41 +605,72 @@ public class GoodsGroupTAction extends BaseTAction {
 	@Action(value="findGoodsGroupById",results={@Result(name="json",type="json")})
 	public String findGoodsGroupById(){
 		if(StringUtils.isNotBlank(this.getGroupid())){
-//			groupList= this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
-//			if(groupList!=null){
-//				this.setSucflag(true);
-//				return JSON;
-//			}
+			bean= this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
+			if(bean!=null){
+				this.setSucflag(true);
+				return JSON;
+			}
 		}
 		return JSON;
 	}
 	/**
 	 * 修改团购商品的信息
 	 * @return
+	 * @throws ParseException 
 	 */
 	@Action(value="updateGoodsGroup",results={@Result(name="json",type="json")})
-	public String updateGoodsGroup(){
+	public String updateGoodsGroup() throws ParseException{
 		if(StringUtils.isNotBlank(this.getGroupid())){
 			GoodsGroupT ggt=this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
 			if(ggt!=null){
-//				ggt.setBegintime(this.getBegintime());
-//				ggt.setEndtime(this.getEndtime());
-//				ggt.setDetail(this.getDetail().trim());
-//				ggt.setCashlimit(this.getCashlimit());
-//				ggt.setCashstate(this.getCashstate().trim());
-//				ggt.setLimitbuy(this.getLimitbuy());
-////				ggt.setGoodsid(this.getGoodsid().trim());
-//				ggt.setCreatetime(BaseTools.getSystemTime());
-//				ggt.setGoodsname(this.getGoodsname().trim());
-//				ggt.setState(this.getState().trim());
-//				ggt.setSalequantity(this.getSalequantity());
-////				ggt.setSOrderCount(0);
-////				ggt.setTotalOrderCount(0);
-//				ggt.setSendpoint(this.getSendpoint());
-//				ggt.setGroupprice(this.getGroupprice());
-//				ggt.setMemberprice(this.getMemberprice());
-//				ggt.setPictureurl(this.getPictureurl());
-//				this.goodsGroupTService.update(ggt);
+				ggt.setBargainprice(this.getBargainprice());
+				ggt.setBrandid(this.getBrandid());
+				ggt.setBrandname(this.getBrandname());
+				ggt.setCommoditylist(this.getCommoditylist());
+				ggt.setCost(this.getCost());
+				ggt.setCreatorid(BaseTools.getAdminCreateId());
+				ggt.setGoodsParameterValue(this.getGoodsParameterValue());
+				ggt.setGoodsTypeId(this.getGoodsTypeId());
+				ggt.setGoodsTypeName(this.getGoodsTypeName());
+				ggt.setGoodsid(this.getGoodsid());
+				ggt.setGoodsname(this.getGoodsname());
+				ggt.setGroupBeginTime(BaseTools.formatString2DataYYYMMDDHHMMSS(this.getGroupBeginTime()));
+				ggt.setGroupEndTime(BaseTools.formatString2DataYYYMMDDHHMMSS(this.getGroupEndTime()));
+				ggt.setGroupNeedPointsLimit(this.getGroupNeedPointsLimit());
+				ggt.setGroupname(this.getGroupname());
+				ggt.setGroupprice(this.getGroupprice());
+				ggt.setHotsale(this.getHotsale());
+				ggt.setHtmlPath(StaticKey.EMPTY);
+				ggt.setIsNew(this.getIsNew());
+				ggt.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+				ggt.setIsoutsite(this.getIsoutsite());
+				ggt.setIsvirtualsale(this.getIsvirtualsale());
+				ggt.setKeywords(this.getMetaKeywords());
+				ggt.setLimitBuy(this.getLimitBuy());
+				ggt.setMainPicture(this.getMainPicture());
+				ggt.setMainSmallPicture(this.getMainSmallPicture());
+				ggt.setMemberprice(this.getMemberprice());
+				ggt.setMetaDescription(this.getMetaDescription());
+				ggt.setMetaKeywords(this.getMetaKeywords());
+				ggt.setOutsitelink(this.getOutsitelink());
+				ggt.setPictures(this.getPictures());
+				ggt.setPrice(this.getPrice());
+				ggt.setReadcount(this.getReadcount());
+				ggt.setRealOrdersCount(0);
+				ggt.setRecommended(this.getRecommended());
+				ggt.setSaleprice(this.getSaleprice());
+				ggt.setSalestate(this.getSalestate());
+				ggt.setShopid(BaseTools.getShopId());
+				ggt.setShopname(BaseTools.getShopName());
+				ggt.setSmallPictures(this.getSmallPictures());
+				ggt.setSort(this.getSort());
+				ggt.setSubgroupname(this.getSubgroupname());
+				ggt.setTotalcomment(this.getTotalcomment());
+				ggt.setUpdatetime(BaseTools.getSystemTime());
+				ggt.setUsersetnum(this.getUsersetnum());
+				ggt.setVirtualOrdersCount(this.getVirtualOrdersCount());
+				ggt.setVersiont(ggt.getVersiont()+1);
+				this.goodsGroupTService.updateGoodsGroupProcess(ggt, this.getDetail(), this.getGoodsAttrsVals());
 				this.setSucflag(true);
 				return JSON;
 			}
@@ -597,7 +704,7 @@ public class GoodsGroupTAction extends BaseTAction {
 		if(StringUtils.isNotBlank(this.getGroupid())){
 			GoodsGroupT ggt=this.goodsGroupTService.findByPK(GoodsGroupT.class, this.getGroupid());
 			if(ggt!=null){
-				//ggt.setState("2");
+				ggt.setSalestate(GoodsSaleState.UNSALE.getState());
 				this.goodsGroupTService.update(ggt);
 				this.setSucflag(true);
 			}
@@ -611,7 +718,7 @@ public class GoodsGroupTAction extends BaseTAction {
 	 */
 	@Action(value="findGoodsGroupByState",results={@Result(name="json", type="json")})
 	public String findGoodsGroupByState(){
-		Criterion criterion=Restrictions.eq("state", "1");
+		Criterion criterion=Restrictions.eq("salestate",GoodsSaleState.SALE.getState());
 		List<GoodsGroupT> list =this.goodsGroupTService.findByCriteria(GoodsGroupT.class, criterion);
 		if(!list.isEmpty()){
 			this.setSucflag(true);

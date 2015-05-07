@@ -1044,9 +1044,6 @@ public class GoodsTAction extends BaseTAction {
 		this.saveGoodsAttributeRp(gt, this.getGoodsAttrsVals());
 		this.setSucflag(true);
 		return JSON;
-	
-		
-		
 	}
 	/**
 	 * 保存属性和商品关系
@@ -1301,19 +1298,17 @@ public class GoodsTAction extends BaseTAction {
 	 */
 	private void updateGoodsAttributeRp(GoodsT gt,String goodsattrvals){
 		Criterion criterion=Restrictions.eq("goodsid", gt.getGoodsid());
-		GoodsAttributeRpT garpt=this.goodsAttributeRpTService.findOneByCriteria(GoodsAttributeRpT.class, criterion);
-		if(garpt!=null){
-			this.goodsAttributeRpTService.delete(garpt);
-			JSONArray ja=(JSONArray)JSONValue.parse(goodsattrvals);
-			int jsonsize=ja.size();
-			GoodsAttributeRpT gart=new GoodsAttributeRpT();
-			for(int i=0;i<jsonsize;i++){
-				gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
-				gart.setGoodsid(gt.getGoodsid());
-				JSONObject jo=(JSONObject) ja.get(i);
-				gart.setAttrval(jo.get(StaticKey.ATTRVAL).toString());
-				this.goodsAttributeRpTService.save(gart);
-			}
+		List<GoodsAttributeRpT>list=this.goodsAttributeRpTService.findByCriteria(GoodsAttributeRpT.class, criterion);
+		this.goodsAttributeRpTService.deleteAll(list);
+		JSONArray ja=(JSONArray)JSONValue.parse(goodsattrvals);
+		int jsonsize=ja.size();
+		GoodsAttributeRpT gart=new GoodsAttributeRpT();
+		for(int i=0;i<jsonsize;i++){
+			gart.setId(this.getSerial().Serialid(Serial.GOODSATTRIBUTERPT));
+			gart.setGoodsid(gt.getGoodsid());
+			JSONObject jo=(JSONObject) ja.get(i);
+			gart.setAttrval(jo.get(StaticKey.ATTRVAL).toString());
+			this.goodsAttributeRpTService.save(gart);
 		}
 	}
 	

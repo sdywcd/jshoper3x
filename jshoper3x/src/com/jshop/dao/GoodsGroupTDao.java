@@ -1,9 +1,6 @@
 package com.jshop.dao;
 
-import java.util.List;
-
 import com.jshop.entity.GoodsGroupT;
-import com.jshop.entity.GoodsT;
 
 public interface GoodsGroupTDao extends BaseTDao<GoodsGroupT> {
 //	/**

@@ -1,7 +1,5 @@
 package com.jshop.service;
 
-import java.util.List;
-
 import com.jshop.entity.ArticleCategoryT;
 
 public interface ArticleCategoryTService extends BaseTService<ArticleCategoryT>{

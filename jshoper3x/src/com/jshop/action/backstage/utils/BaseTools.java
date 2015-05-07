@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,6 +102,22 @@ public class BaseTools {
 		dateFormat = new SimpleDateFormat(StaticKey.DF_FF_MM_DD, Locale.CHINA);
 		dateFormat.setLenient(false);
 		Date timeDate = dateFormat.parse(dateString);
+		Date dateTime = new Date(timeDate.getTime());
+		return dateTime;
+	}
+	
+	/**
+	 * 格式化日期
+	 * @param str
+	 * @return
+	 * @throws ParseException
+	 */
+	public static Date formatString2DataYYYMMDDHHMMSS(String str) throws ParseException{
+		DateFormat dateFormat;
+		dateFormat = new SimpleDateFormat(StaticKey.DF_YYYY_MM_DD_HH_MM_SS, Locale.CHINA);
+		dateFormat.setLenient(false);
+		String strs=StringUtils.replaceChars(str, "/", "-");
+		Date timeDate = dateFormat.parse(strs);
 		Date dateTime = new Date(timeDate.getTime());
 		return dateTime;
 	}

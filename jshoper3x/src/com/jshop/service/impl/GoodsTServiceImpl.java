@@ -1,8 +1,5 @@
 package com.jshop.service.impl;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.hibernate.criterion.Criterion;
@@ -363,6 +360,7 @@ public class GoodsTServiceImpl extends BaseTServiceImpl<GoodsT>implements GoodsT
 		}else{
 			gdrt=new GoodsDetailRpT();
 			gdrt.setGoodsid(gt.getGoodsid());
+			gdrt.setDetail(detail);
 			gdrt.setId(this.serial.Serialid(Serial.GOODSDETAILRPT));
 			this.goodsDetailRpTDao.save(gdrt);
 		}

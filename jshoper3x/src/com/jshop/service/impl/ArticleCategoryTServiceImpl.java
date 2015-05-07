@@ -1,14 +1,8 @@
 package com.jshop.service.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.jshop.dao.ArticleCategoryTDao;
-import com.jshop.dao.impl.ArticleCategoryTDaoImpl;
 import com.jshop.entity.ArticleCategoryT;
 import com.jshop.service.ArticleCategoryTService;
 

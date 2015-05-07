@@ -1,10 +1,11 @@
 package com.jshop.service.impl;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.dao.SerialTDao;
 import com.jshop.entity.SerialT;
@@ -24,8 +25,9 @@ public class SerialTServiceImpl extends BaseTServiceImpl<SerialT>implements Seri
 		return this.serialTDao.updateBybaseid(transientInstance);
 	}
 
-	@Transactional
+
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
 	public SerialT SerialTlastId(String serialkey) {
 		SerialT st = this.serialTDao.findBybaseid(serialkey);
 		if (st != null) {

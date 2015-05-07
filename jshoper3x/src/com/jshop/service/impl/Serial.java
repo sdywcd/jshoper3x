@@ -1,13 +1,13 @@
 package com.jshop.service.impl;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jshop.action.backstage.utils.BaseTools;
 import com.jshop.entity.SerialT;
-import com.jshop.service.BaseTService;
 import com.jshop.service.SerialTService;
 
 @Service("serial")
@@ -176,12 +176,16 @@ public class Serial {
 	public static String APPREGISTERTOKEN="app_post_token_t";
 	//tokenkey
 	public static String TOKENKEY="tokenkey";
+	//团购商品和团购详情关系
+	public static String GOODSGROUPDETAILRPT="goods_group_detail_rp_t";
+	//团购商品属性和团购商品关系
+	public static String GOODSGROUPATTRIBUTERPT="goods_group_attribute_rp_t";
+	
 	@Resource
 	private SerialTService serialTService;
 
 	
-
-	@Transactional
+	@Transactional(propagation=Propagation.REQUIRED)
 	public String Serialid(String serialkey) {
 		String serialid = null;
 		SerialT list = this.serialTService.SerialTlastId(serialkey);
