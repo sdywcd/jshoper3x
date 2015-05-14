@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jshop.action.backstage.utils.BaseTools;
+import com.jshop.action.mall.backstage.utils.BaseTools;
 import com.jshop.entity.SerialT;
 import com.jshop.service.SerialTService;
 

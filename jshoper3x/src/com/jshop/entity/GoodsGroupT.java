@@ -23,6 +23,7 @@ public class GoodsGroupT implements Serializable {
 	private BigDecimal cost;
 	private Date createtime;
 	private String creatorid;
+	private String fname;
 	private String goodsParameterValue;
 	private String goodsTypeId;
 	private String goodsTypeName;
@@ -41,11 +42,15 @@ public class GoodsGroupT implements Serializable {
 	private String isvirtualsale;
 	private String keywords;
 	private int limitBuy;
+	private String lname;
+	private String ltypeid;
 	private String mainPicture;
 	private String mainSmallPicture;
 	private BigDecimal memberprice;
 	private String metaDescription;
 	private String metaKeywords;
+	private String navid;
+	private String nname;
 	private String outsitelink;
 	private String pictures;
 	private double points;
@@ -58,7 +63,9 @@ public class GoodsGroupT implements Serializable {
 	private String shopid;
 	private String shopname;
 	private String smallPictures;
+	private String sname;
 	private int sort;
+	private String stypeid;
 	private String subgroupname;
 	private int totalcomment;
 	private int totalstar;
@@ -143,6 +150,15 @@ public class GoodsGroupT implements Serializable {
 
 	public void setCreatorid(String creatorid) {
 		this.creatorid = creatorid;
+	}
+
+
+	public String getFname() {
+		return this.fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
 	}
 
 
@@ -319,6 +335,24 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	public String getLname() {
+		return this.lname;
+	}
+
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
+
+
+	public String getLtypeid() {
+		return this.ltypeid;
+	}
+
+	public void setLtypeid(String ltypeid) {
+		this.ltypeid = ltypeid;
+	}
+
+
 	@Column(name="MAIN_PICTURE")
 	public String getMainPicture() {
 		return this.mainPicture;
@@ -365,6 +399,24 @@ public class GoodsGroupT implements Serializable {
 
 	public void setMetaKeywords(String metaKeywords) {
 		this.metaKeywords = metaKeywords;
+	}
+
+
+	public String getNavid() {
+		return this.navid;
+	}
+
+	public void setNavid(String navid) {
+		this.navid = navid;
+	}
+
+
+	public String getNname() {
+		return this.nname;
+	}
+
+	public void setNname(String nname) {
+		this.nname = nname;
 	}
 
 
@@ -478,12 +530,30 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	public String getSname() {
+		return this.sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+
 	public int getSort() {
 		return this.sort;
 	}
 
 	public void setSort(int sort) {
 		this.sort = sort;
+	}
+
+
+	public String getStypeid() {
+		return this.stypeid;
+	}
+
+	public void setStypeid(String stypeid) {
+		this.stypeid = stypeid;
 	}
 
 

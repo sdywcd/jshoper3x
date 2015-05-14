@@ -26,7 +26,7 @@
 		<interceptors>
 			<interceptor name="json"
 				class="org.apache.struts2.json.JSONInterceptor" />
-			<interceptor name="validateapp" class="com.jshop.action.app.interceptor.ValidateAppInterceptor"></interceptor>
+			<interceptor name="validateapp" class="com.jshop.action.mall.app.interceptor.ValidateAppInterceptor"></interceptor>
 	       
 			<!-- 这是jshop的拦截器 -->
 			<interceptor-stack name="jshopdefaultStack">

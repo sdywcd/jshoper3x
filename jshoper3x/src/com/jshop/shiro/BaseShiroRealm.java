@@ -21,8 +21,8 @@ import org.apache.shiro.subject.Subject;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-import com.jshop.action.backstage.authority.UserRoleMAction;
-import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.action.mall.backstage.authority.UserRoleMAction;
+import com.jshop.action.mall.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.FunctionM;
 import com.jshop.entity.UserT;
 import com.jshop.service.UsertService;

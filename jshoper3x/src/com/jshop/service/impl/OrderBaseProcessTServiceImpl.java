@@ -11,8 +11,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.jshop.action.backstage.utils.enums.BaseEnums.DataUsingState;
-import com.jshop.action.backstage.utils.enums.BaseEnums.LogisticsShowRange;
+import com.jshop.action.mall.backstage.utils.enums.BaseEnums.DataUsingState;
+import com.jshop.action.mall.backstage.utils.enums.BaseEnums.LogisticsShowRange;
 import com.jshop.dao.CartTDao;
 import com.jshop.dao.DeliverAddressTDao;
 import com.jshop.dao.LogisticsBAreaTDao;

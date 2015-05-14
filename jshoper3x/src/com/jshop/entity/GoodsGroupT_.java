@@ -6,7 +6,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-05-07T14:08:34.921+0800")
+@Generated(value="Dali", date="2015-05-14T14:59:40.953+0800")
 @StaticMetamodel(GoodsGroupT.class)
 public class GoodsGroupT_ {
 	public static volatile SingularAttribute<GoodsGroupT, String> groupid;
@@ -34,6 +34,7 @@ public class GoodsGroupT_ {
 	public static volatile SingularAttribute<GoodsGroupT, String> commoditylist;
 	public static volatile SingularAttribute<GoodsGroupT, BigDecimal> cost;
 	public static volatile SingularAttribute<GoodsGroupT, String> creatorid;
+	public static volatile SingularAttribute<GoodsGroupT, String> fname;
 	public static volatile SingularAttribute<GoodsGroupT, String> goodsid;
 	public static volatile SingularAttribute<GoodsGroupT, String> goodsname;
 	public static volatile SingularAttribute<GoodsGroupT, String> groupname;
@@ -43,7 +44,11 @@ public class GoodsGroupT_ {
 	public static volatile SingularAttribute<GoodsGroupT, String> isoutsite;
 	public static volatile SingularAttribute<GoodsGroupT, String> isvirtualsale;
 	public static volatile SingularAttribute<GoodsGroupT, String> keywords;
+	public static volatile SingularAttribute<GoodsGroupT, String> lname;
+	public static volatile SingularAttribute<GoodsGroupT, String> ltypeid;
 	public static volatile SingularAttribute<GoodsGroupT, BigDecimal> memberprice;
+	public static volatile SingularAttribute<GoodsGroupT, String> navid;
+	public static volatile SingularAttribute<GoodsGroupT, String> nname;
 	public static volatile SingularAttribute<GoodsGroupT, String> outsitelink;
 	public static volatile SingularAttribute<GoodsGroupT, String> pictures;
 	public static volatile SingularAttribute<GoodsGroupT, Double> points;
@@ -54,7 +59,9 @@ public class GoodsGroupT_ {
 	public static volatile SingularAttribute<GoodsGroupT, String> salestate;
 	public static volatile SingularAttribute<GoodsGroupT, String> shopid;
 	public static volatile SingularAttribute<GoodsGroupT, String> shopname;
+	public static volatile SingularAttribute<GoodsGroupT, String> sname;
 	public static volatile SingularAttribute<GoodsGroupT, Integer> sort;
+	public static volatile SingularAttribute<GoodsGroupT, String> stypeid;
 	public static volatile SingularAttribute<GoodsGroupT, String> subgroupname;
 	public static volatile SingularAttribute<GoodsGroupT, Integer> totalcomment;
 	public static volatile SingularAttribute<GoodsGroupT, Integer> totalstar;

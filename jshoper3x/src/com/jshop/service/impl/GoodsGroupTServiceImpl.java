@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.action.mall.backstage.utils.statickey.StaticKey;
 import com.jshop.dao.GoodsGroupAttributeRpTDao;
 import com.jshop.dao.GoodsGroupDetailRpTDao;
 import com.jshop.dao.GoodsGroupTDao;
@@ -56,6 +56,7 @@ public class GoodsGroupTServiceImpl extends BaseTServiceImpl<GoodsGroupT> implem
 
 
 	@Override
+	@Transactional(propagation=Propagation.REQUIRED)
 	public void updateGoodsGroupProcess(GoodsGroupT ggt, String detail,
 			String goodsAttrsVals) {
 		//更新商品团购表
@@ -77,8 +78,8 @@ public class GoodsGroupTServiceImpl extends BaseTServiceImpl<GoodsGroupT> implem
 		this.goodsGroupAttributeRpTDao.deleteAll(list);
 		JSONArray ja=(JSONArray)JSONValue.parse(goodsAttrsVals);
 		int jsonsize=ja.size();
-		GoodsGroupAttributeRpT gart=new GoodsGroupAttributeRpT();
 		for(int i=0;i<jsonsize;i++){
+			GoodsGroupAttributeRpT gart=new GoodsGroupAttributeRpT();
 			gart.setId(this.serial.Serialid(Serial.GOODSGROUPATTRIBUTERPT));
 			gart.setGroupid(ggt.getGroupid());
 			JSONObject jo=(JSONObject) ja.get(i);

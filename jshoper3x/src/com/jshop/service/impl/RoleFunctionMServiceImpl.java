@@ -6,8 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import com.jshop.action.backstage.utils.Validate;
-import com.jshop.action.backstage.utils.statickey.StaticKey;
+import com.jshop.action.mall.backstage.utils.statickey.StaticKey;
 import com.jshop.dao.RoleFunctionMDao;
 import com.jshop.entity.RoleFunctionM;
 import com.jshop.entity.RoleM;
