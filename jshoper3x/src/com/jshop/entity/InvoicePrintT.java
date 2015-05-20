@@ -31,6 +31,7 @@ public class InvoicePrintT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getInvoiceprintid() {
 		return this.invoiceprintid;
 	}
@@ -40,6 +41,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getInvoicenumber() {
 		return this.invoicenumber;
 	}
@@ -50,6 +52,7 @@ public class InvoicePrintT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getInvoiceprinttime() {
 		return this.invoiceprinttime;
 	}
@@ -59,6 +62,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -68,6 +72,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getLogisticsnumber() {
 		return this.logisticsnumber;
 	}
@@ -77,6 +82,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}
@@ -86,6 +92,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getOperatorname() {
 		return this.operatorname;
 	}
@@ -95,6 +102,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -104,6 +112,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1000)
 	public String getOrdername() {
 		return this.ordername;
 	}
@@ -113,6 +122,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getShippingaddressid() {
 		return this.shippingaddressid;
 	}
@@ -122,6 +132,7 @@ public class InvoicePrintT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}

@@ -30,6 +30,7 @@ import com.jshop.action.mall.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsAttributeT;
 import com.jshop.service.GoodsAttributeTService;
 import com.jshop.service.impl.Serial;
+import com.sun.tools.xjc.reader.xmlschema.bindinfo.BIConversion.Static;
 @Namespace("")
 @ParentPackage("jshop")
 public class GoodsAttributeTAction extends BaseTAction {
@@ -260,6 +261,8 @@ public class GoodsAttributeTAction extends BaseTAction {
 		int jsonsize=ja.size();
 		GoodsAttributeT gat = new GoodsAttributeT();
 		for (int i = 0; i <jsonsize; i++) {
+			gat.setIssametolink(StaticKey.ZERO);//关闭关联属性搜索
+			gat.setIssearch(StaticKey.ZERO);//关闭属性关联搜索
 			gat.setCreatetime(BaseTools.getSystemTime());
 			gat.setState(DataUsingState.USING.getState());
 			gat.setCreatorid(BaseTools.getAdminCreateId());
@@ -278,6 +281,8 @@ public class GoodsAttributeTAction extends BaseTAction {
 			}else{
 				this.goodsAttributeTService.update(gat);
 			}
+			
+			
 		}
 		this.setSucflag(true);
 		return JSON;

@@ -273,10 +273,6 @@ $(function() {
 										bclass : 'edit',
 										onpress : action
 									}, {
-										name : '审核通过',
-										bclass : 'edit',
-										onpress : action
-									}, {
 										name : '删除',
 										bclass : 'del',
 										onpress : action

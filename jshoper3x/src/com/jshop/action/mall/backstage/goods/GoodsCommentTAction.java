@@ -261,6 +261,7 @@ public class GoodsCommentTAction extends BaseTAction {
 		gct.setReplyid(StaticKey.COMMENT_DEFAULT_REPLYID);
 		gct.setEmailable(StaticKey.COMMENT_EMAILABLE_ONE_NUM);
 		gct.setVirtualadd(StaticKey.COMMENT_VIRTUALADD_ONE_NUM);
+		gct.setShopid(BaseTools.getShopId());
 		this.goodsCommentTService.save(gct);
 		this.setSucflag(true);
 		return JSON;

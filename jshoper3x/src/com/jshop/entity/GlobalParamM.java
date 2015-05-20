@@ -21,6 +21,7 @@ public class GlobalParamM implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=45)
 	public String getGkey() {
 		return this.gkey;
 	}
@@ -30,6 +31,7 @@ public class GlobalParamM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=500)
 	public String getGvalue() {
 		return this.gvalue;
 	}

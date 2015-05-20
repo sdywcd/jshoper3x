@@ -25,7 +25,7 @@ public class GoodsTypeTN implements Serializable {
 
 
 	@Id
-	@Column(name="GOODS_TYPE_ID")
+	@Column(name="GOODS_TYPE_ID", unique=true, nullable=false, length=20)
 	public String getGoodsTypeId() {
 		return this.goodsTypeId;
 	}
@@ -36,6 +36,7 @@ public class GoodsTypeTN implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -45,6 +46,7 @@ public class GoodsTypeTN implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -54,8 +56,7 @@ public class GoodsTypeTN implements Serializable {
 	}
 
 
-	@Lob
-	@Column(name="GOODS_PARAMETER")
+	@Column(name="GOODS_PARAMETER", nullable=false, length=5000)
 	public String getGoodsParameter() {
 		return this.goodsParameter;
 	}
@@ -65,6 +66,7 @@ public class GoodsTypeTN implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}

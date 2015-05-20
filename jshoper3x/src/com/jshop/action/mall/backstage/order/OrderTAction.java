@@ -1,5 +1,6 @@
 package com.jshop.action.mall.backstage.order;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -104,12 +105,12 @@ public class OrderTAction extends BaseTAction {
 	private String email;
 	private String country;
 	private String logisticsid;
-	private double freight;
-	private double amount;
+	private BigDecimal freight;
+	private BigDecimal amount;
 	private String isinvoice;
 	private String customerordernotes;
 	private String orderTag;
-	private double shouldpay;
+	private BigDecimal shouldpay;
 	private String hidshippingaddressid;//隐藏的发货地址id
 	private String ordername;
 	private String memberdelivertime;//会员指定的送货日期
@@ -372,22 +373,7 @@ public class OrderTAction extends BaseTAction {
 		this.sucflag = sucflag;
 	}
 
-	public double getFreight() {
-		return freight;
-	}
-
-	public void setFreight(double freight) {
-		this.freight = freight;
-	}
-
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
-
+	
 	public String getIsinvoice() {
 		return isinvoice;
 	}
@@ -412,11 +398,28 @@ public class OrderTAction extends BaseTAction {
 		this.orderTag = orderTag;
 	}
 
-	public double getShouldpay() {
+	
+	public BigDecimal getFreight() {
+		return freight;
+	}
+
+	public void setFreight(BigDecimal freight) {
+		this.freight = freight;
+	}
+
+	public BigDecimal getAmount() {
+		return amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		this.amount = amount;
+	}
+
+	public BigDecimal getShouldpay() {
 		return shouldpay;
 	}
 
-	public void setShouldpay(double shouldpay) {
+	public void setShouldpay(BigDecimal shouldpay) {
 		this.shouldpay = shouldpay;
 	}
 
@@ -496,7 +499,6 @@ public class OrderTAction extends BaseTAction {
 			Map<String,Object> cellMap = new HashMap<String,Object>();
 			cellMap.put("id", o.getOrderid());
 			cellMap.put("cell", new Object[] {
-					o.getShopname(),
 					o.getOrderid(),
 					"<a id='orderdetial' href='InitOrdersDetail.action?orderid=" + o.getOrderid() + "' name='orderdetail'>" + o.getOrdername() + "</a>",
 					o.getAmount(), 
@@ -911,30 +913,30 @@ public class OrderTAction extends BaseTAction {
 		return JSON;
 	}
 
-	/**
-	 * 获取同步发货必要参数
-	 * 
-	 * @return
-	 */
-	@Action(value="GetAlipayFhNeedParams",results={
-			@Result(name="json",type="json")
-	})
-	public String getAlipayFhNeedParams() {
-		if(StringUtils.isNotBlank(this.getOrderid())){
-			OrderT o = this.orderTService.findByPK(OrderT.class, this.getOrderid());
-			this.setTradeno(o.getTradeNo());//支付宝交易号
-			this.setExpressnumber(o.getExpressnumber());//快递单号，发货单号
-			this.setDelivermode(o.getDelivermode());
-			this.setPaymentid(o.getPaymentid());
-			LogisticsBusinessT lt =this.logisticsBTService.findByPK(LogisticsBusinessT.class, this.getLogisticsid());
-			if(lt!=null){
-				this.setLogisticsname(lt.getLogisticsname());
-			}
-			this.setSucflag(true);
-		}
-		return JSON;
-	
-	}
+//	/**
+//	 * 获取同步发货必要参数
+//	 * 
+//	 * @return
+//	 */
+//	@Action(value="GetAlipayFhNeedParams",results={
+//			@Result(name="json",type="json")
+//	})
+//	public String getAlipayFhNeedParams() {
+//		if(StringUtils.isNotBlank(this.getOrderid())){
+//			OrderT o = this.orderTService.findByPK(OrderT.class, this.getOrderid());
+//			this.setTradeno(o.getTradeNo());//支付宝交易号
+//			this.setExpressnumber(o.getExpressnumber());//快递单号，发货单号
+//			this.setDelivermode(o.getDelivermode());
+//			this.setPaymentid(o.getPaymentid());
+//			LogisticsBusinessT lt =this.logisticsBTService.findByPK(LogisticsBusinessT.class, this.getLogisticsid());
+//			if(lt!=null){
+//				this.setLogisticsname(lt.getLogisticsname());
+//			}
+//			this.setSucflag(true);
+//		}
+//		return JSON;
+//	
+//	}
 	/**
 	 * 查询所有已发货的订单
 	 * @return
@@ -1049,9 +1051,9 @@ public class OrderTAction extends BaseTAction {
 				t.setNeedquantity(1);//后台默认购买数量为1
 				t.setPrice(p.getPrice());
 				t.setFavorable(p.getMemberprice());
-				t.setChangeprice(Math.abs(p.getPrice()-p.getMemberprice()));
+				t.setChangeprice(BigDecimal.valueOf(Arith.sub(p.getPrice().doubleValue(),p.getMemberprice().doubleValue())));
 				t.setPoints(g.getPoints());//设置商品积分等于会员价 且可以通过aop进行全局控制
-				t.setSubtotal(1.00*p.getMemberprice());//价格小计
+				t.setSubtotal(p.getMemberprice());//价格小计
 				t.setAddtime(BaseTools.getSystemTime());
 				t.setQuantity(p.getStore());//库存
 				if(g.getPictureurl()!=null&&g.getPictureurl().length()>0){//处理图片
@@ -1127,7 +1129,7 @@ public class OrderTAction extends BaseTAction {
 		orderT.setLogisticsname(lBusinessT.getLogisticsname());
 		orderT.setLogisticswebaddress(lBusinessT.getWebsite());//查询快递点信息地址
 		orderT.setFreight(this.getFreight());//运费
-		orderT.setAmount(Arith.add(this.getAmount(), this.getFreight()));//此处可能有一个抵用券逻辑
+		orderT.setAmount(BigDecimal.valueOf(Arith.add(this.getAmount().doubleValue(), this.getFreight().doubleValue())));//此处可能有一个抵用券逻辑
 		orderT.setPoints(totalpoints);//积分
 		orderT.setPurchasetime(BaseTools.getSystemTime());
 		orderT.setDeliverytime(null);//目前没有到发货步骤所以设置成null

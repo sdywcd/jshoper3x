@@ -23,7 +23,7 @@ public class GoodsSpecificationsProductRpT implements Serializable {
 
 
 	@Id
-	@Column(name="GOODS_SPECIFICATIONS_PRODUCT_RP_TID")
+	@Column(name="GOODS_SPECIFICATIONS_PRODUCT_RP_TID", unique=true, nullable=false, length=45)
 	public String getGoodsSpecificationsProductRpTid() {
 		return this.goodsSpecificationsProductRpTid;
 	}
@@ -33,6 +33,7 @@ public class GoodsSpecificationsProductRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -42,6 +43,7 @@ public class GoodsSpecificationsProductRpT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getProductid() {
 		return this.productid;
 	}
@@ -51,6 +53,7 @@ public class GoodsSpecificationsProductRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=200)
 	public String getSpecidicationsid() {
 		return this.specidicationsid;
 	}

@@ -42,7 +42,7 @@ public class GoodsCategoryT implements Serializable {
 
 
 	@Id
-	@Column(name="GOODS_CATEGORY_TID")
+	@Column(name="GOODS_CATEGORY_TID", unique=true, nullable=false, length=20)
 	public String getGoodsCategoryTid() {
 		return this.goodsCategoryTid;
 	}
@@ -53,6 +53,7 @@ public class GoodsCategoryT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -62,6 +63,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -71,7 +73,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_ID")
+	@Column(name="GOODS_TYPE_ID", nullable=false, length=20)
 	public String getGoodsTypeId() {
 		return this.goodsTypeId;
 	}
@@ -81,6 +83,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getGrade() {
 		return this.grade;
 	}
@@ -90,6 +93,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getHtmlpath() {
 		return this.htmlpath;
 	}
@@ -99,6 +103,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getLogo() {
 		return this.logo;
 	}
@@ -108,7 +113,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
-	@Column(name="META_DES")
+	@Column(name="META_DES", length=255)
 	public String getMetaDes() {
 		return this.metaDes;
 	}
@@ -118,7 +123,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
-	@Column(name="META_KEYWORDS")
+	@Column(name="META_KEYWORDS", length=255)
 	public String getMetaKeywords() {
 		return this.metaKeywords;
 	}
@@ -128,6 +133,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getMobilesync() {
 		return this.mobilesync;
 	}
@@ -137,6 +143,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}
@@ -146,7 +153,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
-	@Column(name="PARENT_ID")
+	@Column(name="PARENT_ID", length=20)
 	public String getParentId() {
 		return this.parentId;
 	}
@@ -156,7 +163,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
-	@Column(name="PARENT_NAME")
+	@Column(name="PARENT_NAME", length=45)
 	public String getParentName() {
 		return this.parentName;
 	}
@@ -166,6 +173,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=2000)
 	public String getPath() {
 		return this.path;
 	}
@@ -175,6 +183,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -184,6 +193,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -193,6 +203,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getSign() {
 		return this.sign;
 	}
@@ -202,7 +213,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
-	@Column(name="SMALL_LOGO")
+	@Column(name="SMALL_LOGO", nullable=false, length=255)
 	public String getSmallLogo() {
 		return this.smallLogo;
 	}
@@ -221,6 +232,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -231,6 +243,7 @@ public class GoodsCategoryT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -240,6 +253,7 @@ public class GoodsCategoryT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

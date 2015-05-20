@@ -34,6 +34,7 @@ public class WeixinBaseT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -43,7 +44,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
-	@Column(name="ACCESS_TOKEN")
+	@Column(name="ACCESS_TOKEN", nullable=false, length=512)
 	public String getAccessToken() {
 		return this.accessToken;
 	}
@@ -53,6 +54,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=256)
 	public String getAccount() {
 		return this.account;
 	}
@@ -62,6 +64,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=256)
 	public String getAppid() {
 		return this.appid;
 	}
@@ -72,6 +75,7 @@ public class WeixinBaseT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -81,6 +85,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -90,6 +95,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getJshoperxid() {
 		return this.jshoperxid;
 	}
@@ -99,6 +105,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=512)
 	public String getSecret() {
 		return this.secret;
 	}
@@ -108,7 +115,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
-	@Column(name="SERVICE_ACCOUNT")
+	@Column(name="SERVICE_ACCOUNT", nullable=false, length=256)
 	public String getServiceAccount() {
 		return this.serviceAccount;
 	}
@@ -118,6 +125,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -127,6 +135,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -136,6 +145,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getToken() {
 		return this.token;
 	}
@@ -146,6 +156,7 @@ public class WeixinBaseT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -155,6 +166,7 @@ public class WeixinBaseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getUrl() {
 		return this.url;
 	}

@@ -32,6 +32,7 @@ public class ProductSpecificationsT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getSpecificationsid() {
 		return this.specificationsid;
 	}
@@ -42,6 +43,7 @@ public class ProductSpecificationsT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -51,6 +53,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -60,7 +63,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_ID")
+	@Column(name="GOODS_TYPE_ID", nullable=false, length=20)
 	public String getGoodsTypeId() {
 		return this.goodsTypeId;
 	}
@@ -70,7 +73,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_NAME")
+	@Column(name="GOODS_TYPE_NAME", nullable=false, length=45)
 	public String getGoodsTypeName() {
 		return this.goodsTypeName;
 	}
@@ -80,6 +83,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}
@@ -89,6 +93,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getNote() {
 		return this.note;
 	}
@@ -98,6 +103,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -107,6 +113,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getSort() {
 		return this.sort;
 	}
@@ -116,7 +123,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
-	@Column(name="SPECIFICATIONS_TYPE")
+	@Column(name="SPECIFICATIONS_TYPE", nullable=false, length=1)
 	public String getSpecificationsType() {
 		return this.specificationsType;
 	}
@@ -126,7 +133,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
-	@Column(name="SPECIFICATIONS_VALUE")
+	@Column(name="SPECIFICATIONS_VALUE", nullable=false, length=5000)
 	public String getSpecificationsValue() {
 		return this.specificationsValue;
 	}
@@ -136,6 +143,7 @@ public class ProductSpecificationsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}

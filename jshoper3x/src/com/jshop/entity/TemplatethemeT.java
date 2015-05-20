@@ -27,6 +27,7 @@ public class TemplatethemeT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getTtid() {
 		return this.ttid;
 	}
@@ -37,6 +38,7 @@ public class TemplatethemeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -46,6 +48,7 @@ public class TemplatethemeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -55,6 +58,7 @@ public class TemplatethemeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getNote() {
 		return this.note;
 	}
@@ -64,6 +68,7 @@ public class TemplatethemeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getSign() {
 		return this.sign;
 	}
@@ -73,6 +78,7 @@ public class TemplatethemeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -82,6 +88,7 @@ public class TemplatethemeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getThemename() {
 		return this.themename;
 	}

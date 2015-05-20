@@ -2,6 +2,7 @@ package com.jshop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -15,19 +16,19 @@ import java.util.Date;
 public class ProductT implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String productid;
-	private double cost;
+	private BigDecimal cost;
 	private Date createtime;
 	private String creatorid;
 	private int freezeStore;
 	private String goodsid;
 	private String isDefault;
 	private String isSalestate;
-	private double memberprice;
+	private BigDecimal memberprice;
 	private String placeStore;
-	private double price;
+	private BigDecimal price;
 	private String productName;
 	private String productSn;
-	private double saleprice;
+	private BigDecimal saleprice;
 	private String shopid;
 	private String specificationsName;
 	private String specificationsValue;
@@ -43,6 +44,7 @@ public class ProductT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getProductid() {
 		return this.productid;
 	}
@@ -52,16 +54,18 @@ public class ProductT implements Serializable {
 	}
 
 
-	public double getCost() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getCost() {
 		return this.cost;
 	}
 
-	public void setCost(double cost) {
+	public void setCost(BigDecimal cost) {
 		this.cost = cost;
 	}
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -71,6 +75,7 @@ public class ProductT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -80,7 +85,7 @@ public class ProductT implements Serializable {
 	}
 
 
-	@Column(name="FREEZE_STORE")
+	@Column(name="FREEZE_STORE", nullable=false)
 	public int getFreezeStore() {
 		return this.freezeStore;
 	}
@@ -90,6 +95,7 @@ public class ProductT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -99,7 +105,7 @@ public class ProductT implements Serializable {
 	}
 
 
-	@Column(name="IS_DEFAULT")
+	@Column(name="IS_DEFAULT", nullable=false, length=1)
 	public String getIsDefault() {
 		return this.isDefault;
 	}
@@ -109,7 +115,7 @@ public class ProductT implements Serializable {
 	}
 
 
-	@Column(name="IS_SALESTATE")
+	@Column(name="IS_SALESTATE", nullable=false, length=1)
 	public String getIsSalestate() {
 		return this.isSalestate;
 	}
@@ -119,16 +125,17 @@ public class ProductT implements Serializable {
 	}
 
 
-	public double getMemberprice() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getMemberprice() {
 		return this.memberprice;
 	}
 
-	public void setMemberprice(double memberprice) {
+	public void setMemberprice(BigDecimal memberprice) {
 		this.memberprice = memberprice;
 	}
 
 
-	@Column(name="PLACE_STORE")
+	@Column(name="PLACE_STORE", nullable=false, length=100)
 	public String getPlaceStore() {
 		return this.placeStore;
 	}
@@ -138,16 +145,17 @@ public class ProductT implements Serializable {
 	}
 
 
-	public double getPrice() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
 
-	@Column(name="PRODUCT_NAME")
+	@Column(name="PRODUCT_NAME", nullable=false, length=200)
 	public String getProductName() {
 		return this.productName;
 	}
@@ -157,7 +165,7 @@ public class ProductT implements Serializable {
 	}
 
 
-	@Column(name="PRODUCT_SN")
+	@Column(name="PRODUCT_SN", nullable=false, length=45)
 	public String getProductSn() {
 		return this.productSn;
 	}
@@ -167,15 +175,17 @@ public class ProductT implements Serializable {
 	}
 
 
-	public double getSaleprice() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getSaleprice() {
 		return this.saleprice;
 	}
 
-	public void setSaleprice(double saleprice) {
+	public void setSaleprice(BigDecimal saleprice) {
 		this.saleprice = saleprice;
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -185,7 +195,7 @@ public class ProductT implements Serializable {
 	}
 
 
-	@Column(name="SPECIFICATIONS_NAME")
+	@Column(name="SPECIFICATIONS_NAME", nullable=false, length=200)
 	public String getSpecificationsName() {
 		return this.specificationsName;
 	}
@@ -195,7 +205,7 @@ public class ProductT implements Serializable {
 	}
 
 
-	@Column(name="SPECIFICATIONS_VALUE")
+	@Column(name="SPECIFICATIONS_VALUE", nullable=false, length=500)
 	public String getSpecificationsValue() {
 		return this.specificationsValue;
 	}
@@ -205,6 +215,7 @@ public class ProductT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=200)
 	public String getSpecificationsid() {
 		return this.specificationsid;
 	}
@@ -214,6 +225,7 @@ public class ProductT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getStore() {
 		return this.store;
 	}
@@ -223,6 +235,7 @@ public class ProductT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUnit() {
 		return this.unit;
 	}
@@ -233,6 +246,7 @@ public class ProductT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -242,7 +256,7 @@ public class ProductT implements Serializable {
 	}
 
 
-	@Column(name="WAREHOUSE_LOCATION")
+	@Column(name="WAREHOUSE_LOCATION", nullable=false, length=100)
 	public String getWarehouseLocation() {
 		return this.warehouseLocation;
 	}
@@ -252,6 +266,7 @@ public class ProductT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getWeight() {
 		return this.weight;
 	}

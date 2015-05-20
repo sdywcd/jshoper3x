@@ -1,5 +1,6 @@
 package com.jshop.action.mall.backstage.product;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,6 +15,7 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
@@ -34,10 +36,10 @@ public class ProductTAction extends BaseTAction {
 	@Resource
 	private GoodsSpecificationsProductRpTService goodsSpecificationsProductRpTService;
 	private String productid;
-	private Double price;
-	private Double memberprice;
-	private Double cost;
-	private Double saleprice;
+	private BigDecimal price;
+	private BigDecimal memberprice;
+	private BigDecimal cost;
+	private BigDecimal saleprice;
 	private String freezeStore;
 	private String store;
 	private String isDefault;
@@ -103,39 +105,40 @@ public class ProductTAction extends BaseTAction {
 		this.productid = productid;
 	}
 
-	public Double getPrice() {
+	
+
+
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
-	public Double getMemberprice() {
+	public BigDecimal getMemberprice() {
 		return memberprice;
 	}
 
-	public void setMemberprice(Double memberprice) {
+	public void setMemberprice(BigDecimal memberprice) {
 		this.memberprice = memberprice;
 	}
 
-	public Double getCost() {
+	public BigDecimal getCost() {
 		return cost;
 	}
 
-	public void setCost(Double cost) {
+	public void setCost(BigDecimal cost) {
 		this.cost = cost;
 	}
 
-	public Double getSaleprice() {
+	public BigDecimal getSaleprice() {
 		return saleprice;
 	}
 
-	public void setSaleprice(Double saleprice) {
+	public void setSaleprice(BigDecimal saleprice) {
 		this.saleprice = saleprice;
 	}
-
-
 
 	public String getFreezeStore() {
 		return freezeStore;
@@ -483,7 +486,7 @@ public class ProductTAction extends BaseTAction {
 	@Action(value = "updateProductT", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
 	public String updateProductT(){
 		if(StringUtils.isBlank(this.getProductid())){
-			return "json";
+			return JSON;
 		}
 		ProductT pt=new ProductT();
 		pt=this.productTService.findByPK(ProductT.class, this.getProductid());
@@ -517,7 +520,7 @@ public class ProductTAction extends BaseTAction {
 		gsrt.setSpecidicationsid(pt.getSpecificationsid());
 		this.productTService.updateProductProcess(pt, gsrt,oldQuantity);
 		this.setSucflag(true);
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -535,9 +538,9 @@ public class ProductTAction extends BaseTAction {
 				}
 			}
 			this.setSucflag(true);
-			return "json";
+			return JSON;
 		}
-		return "json";
+		return JSON;
 	}
 	
 	/**
@@ -547,16 +550,16 @@ public class ProductTAction extends BaseTAction {
 	@Action(value = "findProductByproductName", results = { @Result(name = "json", type = "json", params = { "excludeNullProperties", "true" }) })
 	public String findProductByproductName(){
 		if(StringUtils.isBlank(this.getProductName())){
-			return "json";
+			return JSON;
 		}
-		Criterion criterion=Restrictions.eq("productName", this.getProductName());
+		Criterion criterion=Restrictions.like("productName", this.getProductName(), MatchMode.ANYWHERE);
+		total=this.productTService.count(ProductT.class, criterion).intValue();
 		beanlist=this.productTService.findByCriteria(ProductT.class, criterion);
 		if(!beanlist.isEmpty()){
 			ProcessProductsList(beanlist);
 			this.setSucflag(true);
-			return "json";
 		}
-		return "json";
+		return JSON;
 	}
 	
 	

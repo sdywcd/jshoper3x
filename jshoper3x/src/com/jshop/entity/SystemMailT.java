@@ -34,6 +34,7 @@ public class SystemMailT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -44,6 +45,7 @@ public class SystemMailT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -53,6 +55,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -62,6 +65,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getCreatorname() {
 		return this.creatorname;
 	}
@@ -71,6 +75,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getEmail() {
 		return this.email;
 	}
@@ -80,6 +85,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIsdefault() {
 		return this.isdefault;
 	}
@@ -89,6 +95,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIsssl() {
 		return this.isssl;
 	}
@@ -98,6 +105,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getPort() {
 		return this.port;
 	}
@@ -107,6 +115,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getPwd() {
 		return this.pwd;
 	}
@@ -116,6 +125,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -125,6 +135,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -134,6 +145,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getSmtp() {
 		return this.smtp;
 	}
@@ -143,6 +155,7 @@ public class SystemMailT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -153,6 +166,7 @@ public class SystemMailT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

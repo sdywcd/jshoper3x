@@ -24,7 +24,7 @@ public class InvoicePrintingT implements Serializable {
 
 
 	@Id
-	@Column(name="INVOICE_PRINTING_ID")
+	@Column(name="INVOICE_PRINTING_ID", unique=true, nullable=false, length=20)
 	public String getInvoicePrintingId() {
 		return this.invoicePrintingId;
 	}
@@ -35,7 +35,7 @@ public class InvoicePrintingT implements Serializable {
 
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="CREATE_PRINTING_TIME")
+	@Column(name="CREATE_PRINTING_TIME", nullable=false)
 	public Date getCreatePrintingTime() {
 		return this.createPrintingTime;
 	}
@@ -45,6 +45,7 @@ public class InvoicePrintingT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getOperatorname() {
 		return this.operatorname;
 	}
@@ -54,6 +55,7 @@ public class InvoicePrintingT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}

@@ -22,6 +22,7 @@ public class UserRoleM implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -31,6 +32,7 @@ public class UserRoleM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getRoleid() {
 		return this.roleid;
 	}
@@ -40,6 +42,7 @@ public class UserRoleM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUserid() {
 		return this.userid;
 	}

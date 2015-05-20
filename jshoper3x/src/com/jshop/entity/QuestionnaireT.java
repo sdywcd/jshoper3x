@@ -32,6 +32,7 @@ public class QuestionnaireT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getQid() {
 		return this.qid;
 	}
@@ -41,6 +42,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getAnswer() {
 		return this.answer;
 	}
@@ -50,6 +52,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=10)
 	public String getChoosetag() {
 		return this.choosetag;
 	}
@@ -60,6 +63,7 @@ public class QuestionnaireT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -69,6 +73,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -78,6 +83,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -87,6 +93,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getInputtype() {
 		return this.inputtype;
 	}
@@ -96,6 +103,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getQuestion() {
 		return this.question;
 	}
@@ -105,6 +113,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -114,6 +123,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getStatistics() {
 		return this.statistics;
 	}
@@ -123,6 +133,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getTitle() {
 		return this.title;
 	}
@@ -132,6 +143,7 @@ public class QuestionnaireT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

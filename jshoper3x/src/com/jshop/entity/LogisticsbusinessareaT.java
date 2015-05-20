@@ -29,6 +29,7 @@ public class LogisticsbusinessareaT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getLogbusareaid() {
 		return this.logbusareaid;
 	}
@@ -38,6 +39,7 @@ public class LogisticsbusinessareaT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getCostway() {
 		return this.costway;
 	}
@@ -47,6 +49,7 @@ public class LogisticsbusinessareaT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -56,6 +59,7 @@ public class LogisticsbusinessareaT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getLogisticsname() {
 		return this.logisticsname;
 	}
@@ -74,6 +78,7 @@ public class LogisticsbusinessareaT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getNormalvalue() {
 		return this.normalvalue;
 	}
@@ -101,6 +106,7 @@ public class LogisticsbusinessareaT implements Serializable {
 	}
 
 
+	@Column(length=5000)
 	public String getSendarea() {
 		return this.sendarea;
 	}
@@ -110,6 +116,7 @@ public class LogisticsbusinessareaT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}

@@ -37,6 +37,7 @@ public class OutsideGoodsT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -47,6 +48,7 @@ public class OutsideGoodsT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -56,6 +58,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -65,6 +68,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getFname() {
 		return this.fname;
 	}
@@ -74,6 +78,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -83,7 +88,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
-	@Column(name="LINK_URL")
+	@Column(name="LINK_URL", nullable=false, length=225)
 	public String getLinkUrl() {
 		return this.linkUrl;
 	}
@@ -93,6 +98,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getLname() {
 		return this.lname;
 	}
@@ -102,6 +108,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLtypeid() {
 		return this.ltypeid;
 	}
@@ -111,6 +118,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getNavid() {
 		return this.navid;
 	}
@@ -120,6 +128,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getNname() {
 		return this.nname;
 	}
@@ -129,6 +138,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getPictureurl() {
 		return this.pictureurl;
 	}
@@ -138,6 +148,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getSalestate() {
 		return this.salestate;
 	}
@@ -147,6 +158,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getSname() {
 		return this.sname;
 	}
@@ -156,6 +168,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getSort() {
 		return this.sort;
 	}
@@ -165,6 +178,7 @@ public class OutsideGoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getStypeid() {
 		return this.stypeid;
 	}
@@ -175,6 +189,7 @@ public class OutsideGoodsT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

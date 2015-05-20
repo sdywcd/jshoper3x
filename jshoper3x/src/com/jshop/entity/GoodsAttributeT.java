@@ -33,6 +33,7 @@ public class GoodsAttributeT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getGoodsattributeid() {
 		return this.goodsattributeid;
 	}
@@ -42,7 +43,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
-	@Column(name="ATTRIBUTE_INDEX")
+	@Column(name="ATTRIBUTE_INDEX", nullable=false, length=1)
 	public String getAttributeIndex() {
 		return this.attributeIndex;
 	}
@@ -52,7 +53,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
-	@Column(name="ATTRIBUTE_TYPE")
+	@Column(name="ATTRIBUTE_TYPE", nullable=false, length=1)
 	public String getAttributeType() {
 		return this.attributeType;
 	}
@@ -63,6 +64,7 @@ public class GoodsAttributeT implements Serializable {
 
 
 	@Lob
+	@Column(nullable=false)
 	public String getAttributelist() {
 		return this.attributelist;
 	}
@@ -73,6 +75,7 @@ public class GoodsAttributeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -82,6 +85,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -91,7 +95,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_ID")
+	@Column(name="GOODS_TYPE_ID", nullable=false, length=20)
 	public String getGoodsTypeId() {
 		return this.goodsTypeId;
 	}
@@ -101,7 +105,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_NAME")
+	@Column(name="GOODS_TYPE_NAME", nullable=false, length=45)
 	public String getGoodsTypeName() {
 		return this.goodsTypeName;
 	}
@@ -111,6 +115,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getGoodsattributename() {
 		return this.goodsattributename;
 	}
@@ -120,6 +125,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIssametolink() {
 		return this.issametolink;
 	}
@@ -129,6 +135,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIssearch() {
 		return this.issearch;
 	}
@@ -138,6 +145,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=10)
 	public String getSort() {
 		return this.sort;
 	}
@@ -147,6 +155,7 @@ public class GoodsAttributeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}

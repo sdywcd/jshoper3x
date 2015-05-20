@@ -41,6 +41,7 @@ public class LogisticsBusinessT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -50,6 +51,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getAddress() {
 		return this.address;
 	}
@@ -59,6 +61,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getBankaccount() {
 		return this.bankaccount;
 	}
@@ -68,6 +71,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getBankaddress() {
 		return this.bankaddress;
 	}
@@ -77,6 +81,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getCity() {
 		return this.city;
 	}
@@ -86,6 +91,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getContractor() {
 		return this.contractor;
 	}
@@ -96,6 +102,7 @@ public class LogisticsBusinessT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -105,6 +112,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -114,6 +122,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getDes() {
 		return this.des;
 	}
@@ -123,6 +132,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getEmail() {
 		return this.email;
 	}
@@ -132,6 +142,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getFaxno() {
 		return this.faxno;
 	}
@@ -141,6 +152,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getInsure() {
 		return this.insure;
 	}
@@ -150,7 +162,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
-	@Column(name="IS_COD")
+	@Column(name="IS_COD", length=1)
 	public String getIsCod() {
 		return this.isCod;
 	}
@@ -160,6 +172,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getLogisticsname() {
 		return this.logisticsname;
 	}
@@ -169,6 +182,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -178,6 +192,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getReceiver() {
 		return this.receiver;
 	}
@@ -187,6 +202,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getSendrange() {
 		return this.sendrange;
 	}
@@ -196,6 +212,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -205,6 +222,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getTelno() {
 		return this.telno;
 	}
@@ -214,6 +232,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getVisible() {
 		return this.visible;
 	}
@@ -223,6 +242,7 @@ public class LogisticsBusinessT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getWebsite() {
 		return this.website;
 	}

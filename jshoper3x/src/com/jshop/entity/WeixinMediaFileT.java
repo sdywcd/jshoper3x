@@ -31,6 +31,7 @@ public class WeixinMediaFileT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -41,6 +42,7 @@ public class WeixinMediaFileT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -50,6 +52,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -59,6 +62,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getFilename() {
 		return this.filename;
 	}
@@ -68,6 +72,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getFilesize() {
 		return this.filesize;
 	}
@@ -77,6 +82,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getJshoperxid() {
 		return this.jshoperxid;
 	}
@@ -86,7 +92,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
-	@Column(name="MEDIA_ID")
+	@Column(name="MEDIA_ID", nullable=false, length=256)
 	public String getMediaId() {
 		return this.mediaId;
 	}
@@ -96,6 +102,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -105,6 +112,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -114,6 +122,7 @@ public class WeixinMediaFileT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getType() {
 		return this.type;
 	}
@@ -124,6 +133,7 @@ public class WeixinMediaFileT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

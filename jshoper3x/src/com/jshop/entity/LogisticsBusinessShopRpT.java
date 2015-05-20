@@ -28,6 +28,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -38,6 +39,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -47,6 +49,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -56,6 +59,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getLogisticsname() {
 		return this.logisticsname;
 	}
@@ -65,6 +69,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -74,6 +79,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -83,6 +89,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -93,6 +100,7 @@ public class LogisticsBusinessShopRpT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

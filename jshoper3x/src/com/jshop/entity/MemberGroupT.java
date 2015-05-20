@@ -30,6 +30,7 @@ public class MemberGroupT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -39,6 +40,7 @@ public class MemberGroupT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getAttrs() {
 		return this.attrs;
 	}
@@ -49,6 +51,7 @@ public class MemberGroupT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -58,6 +61,7 @@ public class MemberGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -67,6 +71,7 @@ public class MemberGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}
@@ -76,6 +81,7 @@ public class MemberGroupT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -85,6 +91,7 @@ public class MemberGroupT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -94,6 +101,7 @@ public class MemberGroupT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -104,6 +112,7 @@ public class MemberGroupT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

@@ -29,6 +29,7 @@ public class GoodsCardsT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -38,6 +39,7 @@ public class GoodsCardsT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getAmount() {
 		return this.amount;
 	}
@@ -47,6 +49,7 @@ public class GoodsCardsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getCardname() {
 		return this.cardname;
 	}
@@ -57,6 +60,7 @@ public class GoodsCardsT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -66,6 +70,7 @@ public class GoodsCardsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -75,6 +80,7 @@ public class GoodsCardsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -84,6 +90,7 @@ public class GoodsCardsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=200)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -93,6 +100,7 @@ public class GoodsCardsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -103,6 +111,7 @@ public class GoodsCardsT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

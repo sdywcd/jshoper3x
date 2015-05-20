@@ -31,6 +31,7 @@ public class VirtualShippingAddressT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=45)
 	public String getVirtualshippingaddressid() {
 		return this.virtualshippingaddressid;
 	}
@@ -41,6 +42,7 @@ public class VirtualShippingAddressT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -50,6 +52,7 @@ public class VirtualShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getEmail() {
 		return this.email;
 	}
@@ -59,6 +62,7 @@ public class VirtualShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIssend() {
 		return this.issend;
 	}
@@ -68,6 +72,7 @@ public class VirtualShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -77,6 +82,7 @@ public class VirtualShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -87,6 +93,7 @@ public class VirtualShippingAddressT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getSendtime() {
 		return this.sendtime;
 	}
@@ -96,6 +103,7 @@ public class VirtualShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -106,6 +114,7 @@ public class VirtualShippingAddressT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -115,6 +124,7 @@ public class VirtualShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUserid() {
 		return this.userid;
 	}
@@ -124,6 +134,7 @@ public class VirtualShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getUsername() {
 		return this.username;
 	}

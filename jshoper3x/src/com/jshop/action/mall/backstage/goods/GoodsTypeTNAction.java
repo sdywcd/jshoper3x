@@ -183,7 +183,11 @@ public class GoodsTypeTNAction extends BaseTAction {
 			gtn.setName(this.getName().trim());
 			gtn.setCreatetime(BaseTools.getSystemTime());
 			gtn.setCreatorid(BaseTools.getAdminCreateId());
-			gtn.setGoodsParameter(this.getGoodsParameter());
+			if(StringUtils.isBlank(this.getGoodsParameter())){
+				gtn.setGoodsParameter(StaticKey.EMPTY);
+			}else{
+				gtn.setGoodsParameter(this.getGoodsParameter());
+			}
 			this.goodsTypeTNService.save(gtn);
 			this.setSucflag(true);
 			return JSON;

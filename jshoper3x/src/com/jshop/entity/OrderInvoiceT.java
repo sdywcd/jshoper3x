@@ -34,7 +34,7 @@ public class OrderInvoiceT implements Serializable {
 
 
 	@Id
-	@Column(name="ORDER_INVOICEID")
+	@Column(name="ORDER_INVOICEID", unique=true, nullable=false, length=20)
 	public String getOrderInvoiceid() {
 		return this.orderInvoiceid;
 	}
@@ -44,6 +44,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getAmount() {
 		return this.amount;
 	}
@@ -54,6 +55,7 @@ public class OrderInvoiceT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -63,7 +65,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
-	@Column(name="INV_CONTENT")
+	@Column(name="INV_CONTENT", length=45)
 	public String getInvContent() {
 		return this.invContent;
 	}
@@ -73,7 +75,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
-	@Column(name="INV_PAYEE")
+	@Column(name="INV_PAYEE", nullable=false, length=45)
 	public String getInvPayee() {
 		return this.invPayee;
 	}
@@ -83,7 +85,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
-	@Column(name="INV_TYPE")
+	@Column(name="INV_TYPE", nullable=false, length=10)
 	public String getInvType() {
 		return this.invType;
 	}
@@ -93,6 +95,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -102,6 +105,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getMembername() {
 		return this.membername;
 	}
@@ -111,6 +115,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -120,6 +125,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -129,6 +135,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -138,6 +145,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -148,6 +156,7 @@ public class OrderInvoiceT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -157,6 +166,7 @@ public class OrderInvoiceT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

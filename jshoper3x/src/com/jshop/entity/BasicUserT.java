@@ -36,6 +36,7 @@ public class BasicUserT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -46,6 +47,7 @@ public class BasicUserT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -55,6 +57,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getDepartment() {
 		return this.department;
 	}
@@ -64,6 +67,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getEmail() {
 		return this.email;
 	}
@@ -73,6 +77,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getGroupid() {
 		return this.groupid;
 	}
@@ -82,6 +87,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getIp() {
 		return this.ip;
 	}
@@ -91,6 +97,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIstemp() {
 		return this.istemp;
 	}
@@ -100,6 +107,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=128)
 	public String getPassword() {
 		return this.password;
 	}
@@ -109,6 +117,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getRank() {
 		return this.rank;
 	}
@@ -119,6 +128,7 @@ public class BasicUserT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getRegistertime() {
 		return this.registertime;
 	}
@@ -128,6 +138,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getTeamid() {
 		return this.teamid;
 	}
@@ -146,6 +157,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=32)
 	public String getUid() {
 		return this.uid;
 	}
@@ -156,6 +168,7 @@ public class BasicUserT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -165,6 +178,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getUsername() {
 		return this.username;
 	}
@@ -174,6 +188,7 @@ public class BasicUserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getUserstate() {
 		return this.userstate;
 	}

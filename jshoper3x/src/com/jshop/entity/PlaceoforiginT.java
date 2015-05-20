@@ -30,6 +30,7 @@ public class PlaceoforiginT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getPlaceid() {
 		return this.placeid;
 	}
@@ -40,6 +41,7 @@ public class PlaceoforiginT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -49,6 +51,7 @@ public class PlaceoforiginT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -58,6 +61,7 @@ public class PlaceoforiginT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getGrade() {
 		return this.grade;
 	}
@@ -67,7 +71,7 @@ public class PlaceoforiginT implements Serializable {
 	}
 
 
-	@Column(name="PARENT_ID")
+	@Column(name="PARENT_ID", nullable=false, length=20)
 	public String getParentId() {
 		return this.parentId;
 	}
@@ -77,7 +81,7 @@ public class PlaceoforiginT implements Serializable {
 	}
 
 
-	@Column(name="PARENT_NAME")
+	@Column(name="PARENT_NAME", nullable=false, length=45)
 	public String getParentName() {
 		return this.parentName;
 	}
@@ -87,6 +91,7 @@ public class PlaceoforiginT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getPlacename() {
 		return this.placename;
 	}
@@ -96,6 +101,7 @@ public class PlaceoforiginT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getSort() {
 		return this.sort;
 	}
@@ -106,6 +112,7 @@ public class PlaceoforiginT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -115,6 +122,7 @@ public class PlaceoforiginT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

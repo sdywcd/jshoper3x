@@ -60,7 +60,7 @@ public class ElectronicMenuOrderT implements Serializable {
 
 
 	@Id
-	@Column(name="ELECTRONIC_MENU_ORDERID")
+	@Column(name="ELECTRONIC_MENU_ORDERID", unique=true, nullable=false, length=20)
 	public String getElectronicMenuOrderid() {
 		return this.electronicMenuOrderid;
 	}
@@ -70,6 +70,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getAmount() {
 		return this.amount;
 	}
@@ -80,6 +81,7 @@ public class ElectronicMenuOrderT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -89,6 +91,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=2000)
 	public String getCustomernotes() {
 		return this.customernotes;
 	}
@@ -98,6 +101,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getDeliveraddressid() {
 		return this.deliveraddressid;
 	}
@@ -107,6 +111,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getDelivermode() {
 		return this.delivermode;
 	}
@@ -116,6 +121,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getDeliverynumber() {
 		return this.deliverynumber;
 	}
@@ -135,6 +141,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getElectronicorderstate() {
 		return this.electronicorderstate;
 	}
@@ -144,6 +151,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getExpressnumber() {
 		return this.expressnumber;
 	}
@@ -153,6 +161,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getFreight() {
 		return this.freight;
 	}
@@ -162,6 +171,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=1000)
 	public String getGoodid() {
 		return this.goodid;
 	}
@@ -171,6 +181,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=5000)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -180,6 +191,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getHasprintexpress() {
 		return this.hasprintexpress;
 	}
@@ -189,6 +201,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getHasprintfpinvoice() {
 		return this.hasprintfpinvoice;
 	}
@@ -198,6 +211,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getHasprintinvoice() {
 		return this.hasprintinvoice;
 	}
@@ -207,6 +221,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getInvoice() {
 		return this.invoice;
 	}
@@ -216,6 +231,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -225,6 +241,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=225)
 	public String getLogisticswebaddress() {
 		return this.logisticswebaddress;
 	}
@@ -243,7 +260,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
-	@Column(name="ORDER_TAG")
+	@Column(name="ORDER_TAG", length=1)
 	public String getOrderTag() {
 		return this.orderTag;
 	}
@@ -253,6 +270,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getPaymentid() {
 		return this.paymentid;
 	}
@@ -262,6 +280,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getPaymentname() {
 		return this.paymentname;
 	}
@@ -271,6 +290,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getPaystate() {
 		return this.paystate;
 	}
@@ -300,6 +320,7 @@ public class ElectronicMenuOrderT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getPurchasetime() {
 		return this.purchasetime;
 	}
@@ -309,7 +330,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
-	@Column(name="ROOM_NAME")
+	@Column(name="ROOM_NAME", length=45)
 	public String getRoomName() {
 		return this.roomName;
 	}
@@ -319,6 +340,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShippingaddressid() {
 		return this.shippingaddressid;
 	}
@@ -328,6 +350,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getShippingstate() {
 		return this.shippingstate;
 	}
@@ -337,6 +360,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getShippingusername() {
 		return this.shippingusername;
 	}
@@ -346,6 +370,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getShouldpay() {
 		return this.shouldpay;
 	}
@@ -355,7 +380,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
-	@Column(name="TABLE_NUMBER")
+	@Column(name="TABLE_NUMBER", nullable=false, length=20)
 	public String getTableNumber() {
 		return this.tableNumber;
 	}
@@ -365,6 +390,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getTablestate() {
 		return this.tablestate;
 	}
@@ -374,7 +400,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
-	@Column(name="TO_BUYER")
+	@Column(name="TO_BUYER", length=100)
 	public String getToBuyer() {
 		return this.toBuyer;
 	}
@@ -384,7 +410,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
-	@Column(name="TRADE_NO")
+	@Column(name="TRADE_NO", length=45)
 	public String getTradeNo() {
 		return this.tradeNo;
 	}
@@ -394,6 +420,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getUsepoints() {
 		return this.usepoints;
 	}
@@ -403,6 +430,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getUserid() {
 		return this.userid;
 	}
@@ -412,6 +440,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getUsername() {
 		return this.username;
 	}
@@ -421,6 +450,7 @@ public class ElectronicMenuOrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getVouchersid() {
 		return this.vouchersid;
 	}

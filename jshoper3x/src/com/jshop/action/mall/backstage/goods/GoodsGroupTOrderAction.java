@@ -29,15 +29,15 @@ import com.jshop.action.mall.backstage.utils.enums.BaseEnums.OrderShippingState;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.OrderState;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.ShippingIsOrderState;
 import com.jshop.action.mall.backstage.utils.statickey.StaticKey;
-import com.jshop.entity.GroupCartT;
-import com.jshop.entity.GroupOrderT;
+import com.jshop.entity.CartGroupT;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.entity.MemberT;
+import com.jshop.entity.OrderGroupT;
 import com.jshop.entity.ShippingAddressT;
-import com.jshop.service.GroupCartService;
-import com.jshop.service.GroupOrderTService;
+import com.jshop.service.CartGroupTService;
 import com.jshop.service.LogisticsBTService;
 import com.jshop.service.MemberTService;
+import com.jshop.service.OrderGroupTService;
 import com.jshop.service.ShippingAddressTService;
 import com.opensymphony.xwork2.ActionContext;
 @Namespace("")
@@ -45,13 +45,13 @@ import com.opensymphony.xwork2.ActionContext;
 public class GoodsGroupTOrderAction extends BaseTAction {
 	private static final long serialVersionUID = 1L;
 	@Resource
-	private GroupOrderTService groupOrderTService;
+	private OrderGroupTService orderGroupTService;
 	@Resource
 	private MemberTService memberTService;
 	@Resource
 	private ShippingAddressTService shippingAddressTService;
 	@Resource
-	private GroupCartService groupCartService;
+	private CartGroupTService cartGroupTService;
 	@Resource
 	private LogisticsBTService logisticsBTService;
 	private String orderid;
@@ -393,10 +393,10 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	 * 迭代显示数据
 	 * @param list
 	 */
-	public void processGroupOrder(List<GroupOrderT> list){
+	public void processGroupOrder(List<OrderGroupT> list){
 		rows.clear();
-		for(Iterator<GroupOrderT> it = list.iterator();it.hasNext();){
-			GroupOrderT gt =it.next();
+		for(Iterator<OrderGroupT> it = list.iterator();it.hasNext();){
+			OrderGroupT gt =it.next();
 			gt.setOrderstate(OrderState.getName(gt.getOrderstate()));
 			gt.setPaystate(OrderPayState.getName(gt.getPaystate()));
 			gt.setShippingstate(OrderShippingState.getName(gt.getShippingstate()));
@@ -435,7 +435,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	public void  finddefaultGroupOrder(){
 		int currentPage = page;
 		int lineSize= rp;
-		total = this.groupOrderTService.count(GroupOrderT.class).intValue();
+		total = this.orderGroupTService.count(OrderGroupT.class).intValue();
 		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
 			Order order=null;
 			if(StringUtils.equals(this.getSortorder(), StaticKey.ASC)){
@@ -443,7 +443,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 			}else{
 				order=Order.desc(this.getSortname());
 			}
-			List<GroupOrderT>list=this.groupOrderTService.findByCriteriaByPage(GroupOrderT.class, order, currentPage, lineSize);
+			List<OrderGroupT>list=this.orderGroupTService.findByCriteriaByPage(OrderGroupT.class, order, currentPage, lineSize);
 			this.processGroupOrder(list);
 		}
 	}
@@ -464,7 +464,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	 * 获取订单详细
 	 */
 	public void GetGroupOrderDetail(String orderid) {
-		GroupOrderT o = this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		OrderGroupT o = this.orderGroupTService.findByPK(OrderGroupT.class, orderid);
 		o.setOrderstate(OrderState.getName(o.getOrderstate()));
 		o.setPaystate(OrderPayState.getName(o.getPaystate()));
 		o.setShippingstate(OrderShippingState.getName(o.getShippingstate()));
@@ -526,7 +526,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	 */
 	public void getGroupOrderGoodsList(String orderid) {
 		Criterion criterion=Restrictions.and(Restrictions.eq("orderid", orderid)).add(Restrictions.eq("state", CartGoodstate.HAVE_ADDTOCART_THREE_NUM.getState()));
-		List<GroupCartT> list = this.groupCartService.findByCriteria(GroupCartT.class, criterion);
+		List<CartGroupT> list = this.cartGroupTService.findByCriteria(CartGroupT.class, criterion);
 		if (list != null) {
 			map.put("ordergoods", list);
 		}
@@ -544,7 +544,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 		//String orderstate = AllOrderState.ORDERSTATE_FIVE_NUM;//关闭
 		//String paystate = AllOrderState.PAYSTATE_TWO_NUM;//表示关闭订单后的付款状态制空
 		//String shippingstate = AllOrderState.SHIPPINGSTATE_TWO_NUM;//表示关闭订单后的发货状态制空
-		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		OrderGroupT got=this.orderGroupTService.findByPK(OrderGroupT.class, orderid);
 		if(got!=null){
 			String orderstate=OrderState.ORDERSTATE_CLOSE_FIVE_NUM.getState();//关闭
 			String paystate=OrderPayState.ORDERPAYSTATE_CLOSE_TWO_NUM.getState();
@@ -552,7 +552,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 			got.setOrderstate(orderstate);
 			got.setPaystate(paystate);
 			got.setShippingstate(shippingstate);
-			this.groupOrderTService.update(got);
+			this.orderGroupTService.update(got);
 			this.setSucflag(true);
 		}
 		return JSON;
@@ -570,7 +570,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 		//String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
 		//String paystate = AllOrderState.PAYSTATE_ZERO_NUM;//未付款
 		//String shippingstate = AllOrderState.SHIPPINGSTATE_ZERO_NUM;//配货，未发货
-		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		OrderGroupT got=this.orderGroupTService.findByPK(OrderGroupT.class, orderid);
 		if(got!=null){
 			String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();//已确认
 			String paystate=OrderPayState.ORDERPAYSTATE_UNPAY_ZERO_NUM.getState();//未付款
@@ -595,7 +595,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 		//String orderstate = AllOrderState.ORDERSTATE_THREE_NUM;//等待确认收获
 		//String paystate = this.getPaystate().trim();//付款状态
 		//String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
-		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		OrderGroupT got=this.orderGroupTService.findByPK(OrderGroupT.class, orderid);
 		if(got!=null){
 			String orderstate=OrderState.ORDERSTATE_WAIT_CONFIRM_RECEIVE_THREE_NUM.getState();//等待确认收获
 			String paystate=this.getPaystate().trim();//付款状态
@@ -603,7 +603,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 			got.setOrderstate(orderstate);
 			got.setPaystate(paystate);
 			got.setShippingstate(shippingstate);
-			this.groupOrderTService.update(got);
+			this.orderGroupTService.update(got);
 			this.setSucflag(true);
 		}
 		return JSON;
@@ -621,7 +621,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 		//String orderstate = AllOrderState.ORDERSTATE_ONE_NUM;//已确认
 		//String paystate = AllOrderState.PAYSTATE_ONE_NUM;//付款
 		//String shippingstate = AllOrderState.SHIPPINGSTATE_ONE_NUM;//发货
-		GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, orderid);
+		OrderGroupT got=this.orderGroupTService.findByPK(OrderGroupT.class, orderid);
 		if(got!=null){
 			String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();//已确认
 			String paystate=OrderPayState.ORDERPAYSTATE_HAVEPAY_ONE_NUM.getState();//付款
@@ -629,7 +629,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 			got.setOrderstate(orderstate);
 			got.setPaystate(paystate);
 			got.setShippingstate(shippingstate);
-			this.groupOrderTService.update(got);
+			this.orderGroupTService.update(got);
 			this.setSucflag(true);
 		}
 		return JSON;
@@ -644,10 +644,10 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	})
 	public String UpdateExpressnumberByGroupOrderId() {
 		if(StringUtils.isNotBlank(this.getExpressnumber())&&StringUtils.isNotBlank(this.getOrderid())){
-			GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, this.getOrderid());
+			OrderGroupT got=this.orderGroupTService.findByPK(OrderGroupT.class, this.getOrderid());
 			if(got!=null){
 				got.setExpressnumber(this.getExpressnumber());
-				this.groupOrderTService.update(got);
+				this.orderGroupTService.update(got);
 				this.setSucflag(true);
 			}
 		}
@@ -663,10 +663,10 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	})
 	public String UpdateInvoicenumberByGroupOrderId() {
 		if(StringUtils.isNotBlank(this.getInvoicenumber())&&StringUtils.isNotBlank(this.getOrderid())){
-			GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, this.getOrderid());
+			OrderGroupT got=this.orderGroupTService.findByPK(OrderGroupT.class, this.getOrderid());
 			if(got!=null){
 				got.setDeliverynumber(this.getInvoicenumber());
-				this.groupOrderTService.update(got);
+				this.orderGroupTService.update(got);
 				this.setSucflag(true);
 			}
 		}
@@ -683,7 +683,7 @@ public class GoodsGroupTOrderAction extends BaseTAction {
 	})
 	public String GetAlipayFhNeedParamsGroup() {
 		if(StringUtils.isNotBlank(this.getOrderid())){
-			GroupOrderT got=this.groupOrderTService.findByPK(GroupOrderT.class, this.getOrderid());
+			OrderGroupT got=this.orderGroupTService.findByPK(OrderGroupT.class, this.getOrderid());
 			if(got!=null){
 				this.setTradeno(got.getTradeNo());//支付宝交易号
 				this.setExpressnumber(got.getExpressnumber());//快递单号，发货单号

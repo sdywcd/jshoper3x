@@ -22,6 +22,7 @@ public class GoodsDetailRpT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -32,6 +33,7 @@ public class GoodsDetailRpT implements Serializable {
 
 
 	@Lob
+	@Column(nullable=false)
 	public String getDetail() {
 		return this.detail;
 	}
@@ -41,6 +43,7 @@ public class GoodsDetailRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}

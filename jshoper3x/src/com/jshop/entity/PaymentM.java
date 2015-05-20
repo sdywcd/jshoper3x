@@ -32,6 +32,7 @@ public class PaymentM implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getPaymentid() {
 		return this.paymentid;
 	}
@@ -41,6 +42,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getAccount() {
 		return this.account;
 	}
@@ -50,6 +52,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getDes() {
 		return this.des;
 	}
@@ -59,7 +62,7 @@ public class PaymentM implements Serializable {
 	}
 
 
-	@Column(name="IS_FAST")
+	@Column(name="IS_FAST", length=1)
 	public String getIsFast() {
 		return this.isFast;
 	}
@@ -69,6 +72,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(length=128)
 	public String getPartnerid() {
 		return this.partnerid;
 	}
@@ -78,7 +82,7 @@ public class PaymentM implements Serializable {
 	}
 
 
-	@Column(name="PAYMENT_CODE")
+	@Column(name="PAYMENT_CODE", length=20)
 	public String getPaymentCode() {
 		return this.paymentCode;
 	}
@@ -88,7 +92,7 @@ public class PaymentM implements Serializable {
 	}
 
 
-	@Column(name="PAYMENT_FREE")
+	@Column(name="PAYMENT_FREE", length=20)
 	public String getPaymentFree() {
 		return this.paymentFree;
 	}
@@ -98,7 +102,7 @@ public class PaymentM implements Serializable {
 	}
 
 
-	@Column(name="PAYMENT_INTERFACE")
+	@Column(name="PAYMENT_INTERFACE", length=1)
 	public String getPaymentInterface() {
 		return this.paymentInterface;
 	}
@@ -108,6 +112,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getPaymentname() {
 		return this.paymentname;
 	}
@@ -117,6 +122,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(length=128)
 	public String getSafecode() {
 		return this.safecode;
 	}
@@ -126,6 +132,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -135,6 +142,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -144,6 +152,7 @@ public class PaymentM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}

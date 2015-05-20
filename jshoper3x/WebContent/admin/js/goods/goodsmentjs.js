@@ -192,12 +192,19 @@ $(function() {
 	 * 获取所有商品品牌列表
 	 */
 	findAllBrandtjson=function(data){
-		$.post("findAllBrandtjson.action",function(data){
-			if(data.sucflag){
-				var header="<option value='0'>---请选择---</option>";
-				$("#brandname").append(header).append(data.brandjson);
-			}else{
-				$("#brandname").append(header);
+		$.ajax({
+			url:"findAllBrandtjson.action",
+			type:"post",
+			data:{},
+			dataType:"json",
+			async:false,
+			success:function(data){
+				if(data.sucflag){
+					var header="<option value='0'>---请选择---</option>";
+					$("#brandname").append(header).append(data.brandjson);
+				}else{
+					$("#brandname").append(header);
+				}
 			}
 		});
 	},
@@ -308,6 +315,7 @@ $(function() {
 		}
 		var fname="";
 		var goodsname=$("#goodsname").val();
+		var subgoodsname=$('#subgoodsname').val();
 		var usersetnum=$("#usersetnum").val();
 		var brandid=$("#brandname").val();
 		if(brandid=="-1"){
@@ -380,6 +388,7 @@ $(function() {
 			"sname":sname,
 			"fname":fname,
 			"goodsname":goodsname,
+			"subgoodsname":subgoodsname,
 			"usersetnum":usersetnum,
 			"brandid":brandid,
 			"brandname":brandname,
@@ -460,6 +469,7 @@ $(function() {
 			sname=$("#hidsname").val();
 		}
 		var goodsname=$("#goodsname").val();
+		var subgoodsname=$("#subgoodsname").val();
 		var usersetnum=$("#usersetnum").val();
 		var brandid=$("#brandname").val();
 		if(brandid=="-1"){
@@ -545,6 +555,7 @@ $(function() {
 			"sname":sname,
 			"fname":fname,
 			"goodsname":goodsname,
+			"subgoodsname":subgoodsname,
 			"usersetnum":usersetnum,
 			"brandid":brandid,
 			"brandname":brandname,
@@ -690,6 +701,7 @@ $(function() {
 					$('#hidstypeid').val(data.bean.stypeid);
 					$('#hidsname').val(data.bean.sname);
 					$('#goodsname').val(data.bean.goodsname);
+					$('#subgoodsname').val(data.bean.subgoodsname);
 					$('#usersetnum').val(data.bean.usersetnum);
 					$('#brandname').val(data.bean.brandid);
 					$('#cost').val(data.bean.cost);
@@ -874,6 +886,12 @@ $(function() {
 			width : 60,
 			sortable : true,
 			align : 'center'
+		},{
+			display:'移动平台',
+			name:'ismobileplatformgoods',
+			width:60,
+			sortable:true,
+			align:'center'
 		}, {
 			display : '库存',
 			name : 'quantity',

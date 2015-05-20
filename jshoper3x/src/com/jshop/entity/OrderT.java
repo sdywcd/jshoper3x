@@ -2,6 +2,7 @@ package com.jshop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -15,7 +16,7 @@ import java.util.Date;
 public class OrderT implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String orderid;
-	private double amount;
+	private BigDecimal amount;
 	private Date createtime;
 	private String customerordernotes;
 	private String deliveraddressid;
@@ -24,7 +25,7 @@ public class OrderT implements Serializable {
 	private Date deliverytime;
 	private String errorOrderTag;
 	private String expressnumber;
-	private double freight;
+	private BigDecimal freight;
 	private String isinvoice;
 	private String isprintexpress;
 	private String isprintfpinvoice;
@@ -52,7 +53,7 @@ public class OrderT implements Serializable {
 	private String shippingusername;
 	private String shopid;
 	private String shopname;
-	private double shouldpay;
+	private BigDecimal shouldpay;
 	private String toBuyerNotes;
 	private String tradeNo;
 	private Date updatetime;
@@ -67,6 +68,7 @@ public class OrderT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -76,11 +78,12 @@ public class OrderT implements Serializable {
 	}
 
 
-	public double getAmount() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getAmount() {
 		return this.amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
@@ -95,6 +98,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getCustomerordernotes() {
 		return this.customerordernotes;
 	}
@@ -104,6 +108,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getDeliveraddressid() {
 		return this.deliveraddressid;
 	}
@@ -113,6 +118,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getDelivermode() {
 		return this.delivermode;
 	}
@@ -122,6 +128,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getDeliverynumber() {
 		return this.deliverynumber;
 	}
@@ -141,7 +148,7 @@ public class OrderT implements Serializable {
 	}
 
 
-	@Column(name="ERROR_ORDER_TAG")
+	@Column(name="ERROR_ORDER_TAG", length=1)
 	public String getErrorOrderTag() {
 		return this.errorOrderTag;
 	}
@@ -151,6 +158,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getExpressnumber() {
 		return this.expressnumber;
 	}
@@ -160,15 +168,17 @@ public class OrderT implements Serializable {
 	}
 
 
-	public double getFreight() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getFreight() {
 		return this.freight;
 	}
 
-	public void setFreight(double freight) {
+	public void setFreight(BigDecimal freight) {
 		this.freight = freight;
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIsinvoice() {
 		return this.isinvoice;
 	}
@@ -178,6 +188,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getIsprintexpress() {
 		return this.isprintexpress;
 	}
@@ -187,6 +198,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getIsprintfpinvoice() {
 		return this.isprintfpinvoice;
 	}
@@ -196,6 +208,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getIsprintinvoice() {
 		return this.isprintinvoice;
 	}
@@ -205,6 +218,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -214,6 +228,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getLogisticsname() {
 		return this.logisticsname;
 	}
@@ -223,6 +238,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=225)
 	public String getLogisticswebaddress() {
 		return this.logisticswebaddress;
 	}
@@ -232,6 +248,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getMainpicture() {
 		return this.mainpicture;
 	}
@@ -251,6 +268,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -260,6 +278,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getMembername() {
 		return this.membername;
 	}
@@ -269,6 +288,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getNeedquantity() {
 		return this.needquantity;
 	}
@@ -278,7 +298,7 @@ public class OrderT implements Serializable {
 	}
 
 
-	@Column(name="ORDER_TAG")
+	@Column(name="ORDER_TAG", nullable=false, length=1)
 	public String getOrderTag() {
 		return this.orderTag;
 	}
@@ -288,6 +308,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1000)
 	public String getOrdername() {
 		return this.ordername;
 	}
@@ -297,6 +318,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getOrderstate() {
 		return this.orderstate;
 	}
@@ -306,6 +328,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getPaymentid() {
 		return this.paymentid;
 	}
@@ -315,6 +338,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getPaymentname() {
 		return this.paymentname;
 	}
@@ -324,6 +348,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getPaystate() {
 		return this.paystate;
 	}
@@ -343,6 +368,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getPoints() {
 		return this.points;
 	}
@@ -352,6 +378,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=2000)
 	public String getProductinfo() {
 		return this.productinfo;
 	}
@@ -362,6 +389,7 @@ public class OrderT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getPurchasetime() {
 		return this.purchasetime;
 	}
@@ -371,6 +399,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShippingaddressid() {
 		return this.shippingaddressid;
 	}
@@ -380,6 +409,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getShippingstate() {
 		return this.shippingstate;
 	}
@@ -389,6 +419,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShippingusername() {
 		return this.shippingusername;
 	}
@@ -398,6 +429,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -407,6 +439,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -416,16 +449,17 @@ public class OrderT implements Serializable {
 	}
 
 
-	public double getShouldpay() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getShouldpay() {
 		return this.shouldpay;
 	}
 
-	public void setShouldpay(double shouldpay) {
+	public void setShouldpay(BigDecimal shouldpay) {
 		this.shouldpay = shouldpay;
 	}
 
 
-	@Column(name="TO_BUYER_NOTES")
+	@Column(name="TO_BUYER_NOTES", length=100)
 	public String getToBuyerNotes() {
 		return this.toBuyerNotes;
 	}
@@ -435,7 +469,7 @@ public class OrderT implements Serializable {
 	}
 
 
-	@Column(name="TRADE_NO")
+	@Column(name="TRADE_NO", length=45)
 	public String getTradeNo() {
 		return this.tradeNo;
 	}
@@ -455,6 +489,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getUsepoints() {
 		return this.usepoints;
 	}
@@ -464,6 +499,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getUserid() {
 		return this.userid;
 	}
@@ -473,6 +509,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getUsername() {
 		return this.username;
 	}
@@ -491,6 +528,7 @@ public class OrderT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getVouchersid() {
 		return this.vouchersid;
 	}

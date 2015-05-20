@@ -32,6 +32,7 @@ public class TemplateT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getTid() {
 		return this.tid;
 	}
@@ -42,6 +43,7 @@ public class TemplateT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -51,6 +53,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -60,6 +63,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}
@@ -69,6 +73,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getNote() {
 		return this.note;
 	}
@@ -78,6 +83,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getSign() {
 		return this.sign;
 	}
@@ -87,6 +93,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -96,6 +103,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getThemeid() {
 		return this.themeid;
 	}
@@ -105,6 +113,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getThemename() {
 		return this.themename;
 	}
@@ -115,6 +124,7 @@ public class TemplateT implements Serializable {
 
 
 	@Lob
+	@Column(nullable=false)
 	public String getTvalue() {
 		return this.tvalue;
 	}
@@ -124,6 +134,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getType() {
 		return this.type;
 	}
@@ -133,6 +144,7 @@ public class TemplateT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getUrl() {
 		return this.url;
 	}

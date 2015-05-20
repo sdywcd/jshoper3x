@@ -30,6 +30,7 @@ public class TemplatesetT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getTsid() {
 		return this.tsid;
 	}
@@ -39,6 +40,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getBuildhtmlpath() {
 		return this.buildhtmlpath;
 	}
@@ -49,6 +51,7 @@ public class TemplatesetT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -58,6 +61,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -67,6 +71,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getSign() {
 		return this.sign;
 	}
@@ -76,6 +81,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -85,6 +91,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getSystemcontent() {
 		return this.systemcontent;
 	}
@@ -94,6 +101,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getTemplateurl() {
 		return this.templateurl;
 	}
@@ -103,6 +111,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getThemeid() {
 		return this.themeid;
 	}
@@ -112,6 +121,7 @@ public class TemplatesetT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getThemename() {
 		return this.themename;
 	}

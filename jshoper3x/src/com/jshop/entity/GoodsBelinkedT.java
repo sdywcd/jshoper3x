@@ -33,6 +33,7 @@ public class GoodsBelinkedT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -42,6 +43,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=5000)
 	public String getBelinkedproductinfo() {
 		return this.belinkedproductinfo;
 	}
@@ -52,6 +54,7 @@ public class GoodsBelinkedT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -61,6 +64,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -70,6 +74,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMaingoodsid() {
 		return this.maingoodsid;
 	}
@@ -79,6 +84,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=200)
 	public String getMaingoodsname() {
 		return this.maingoodsname;
 	}
@@ -88,6 +94,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getMainproductid() {
 		return this.mainproductid;
 	}
@@ -97,6 +104,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getMode() {
 		return this.mode;
 	}
@@ -106,6 +114,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -115,6 +124,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -124,6 +134,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getSxlinkedgoodsid() {
 		return this.sxlinkedgoodsid;
 	}
@@ -134,6 +145,7 @@ public class GoodsBelinkedT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -143,6 +155,7 @@ public class GoodsBelinkedT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

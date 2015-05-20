@@ -192,12 +192,19 @@ $(function() {
 	 * 获取所有商品品牌列表
 	 */
 	findAllBrandtjson=function(data){
-		$.post("findAllBrandtjson.action",function(data){
-			if(data.sucflag){
-				var header="<option value='0'>---请选择---</option>";
-				$("#brandname").append(header).append(data.brandjson);
-			}else{
-				$("#brandname").append(header);
+		$.ajax({
+			url:"findAllBrandtjson.action",
+			type:"post",
+			data:{},
+			dataType:"json",
+			async:false,
+			success:function(data){
+				if(data.sucflag){
+					var header="<option value='0'>---请选择---</option>";
+					$("#brandname").append(header).append(data.brandjson);
+				}else{
+					$("#brandname").append(header);
+				}
 			}
 		});
 	},
@@ -907,6 +914,42 @@ $(function() {
 			sortable : true,
 			align : 'center'
 		}, {
+			display : '上架',
+			name : 'salestate',
+			width : 60,
+			sortable : true,
+			align : 'center'
+		}, {
+			display : '新品',
+			name : 'isNew',
+			width : 60,
+			sortable : true,
+			align : 'center'
+		}, {
+			display : '特价',
+			name : 'bargainprice',
+			width : 60,
+			sortable : true,
+			align : 'center'
+		}, {
+			display : '热销',
+			name : 'hotsale',
+			width : 60,
+			sortable : true,
+			align : 'center'
+		}, {
+			display : '推荐',
+			name : 'recommended',
+			width : 60,
+			sortable : true,
+			align : 'center'
+		},{
+			display:'移动平台',
+			name:'ismobileplatformgoods',
+			width:60,
+			sortable:true,
+			align:'center'
+		},{
 			display : '团购开始时间',
 			name : 'groupbegintime',
 			width : 200,
@@ -1056,12 +1099,12 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				var bargainprice = "1";
-				$.post("updateGoodsbargainprice.action", {
-					"goodsid" : str,
+				$.post("updateGoodsGroupbargainprice.action", {
+					"groupid" : str,
 					"bargainprice" : bargainprice
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "标记特价成功");
 					}
 				});
@@ -1077,12 +1120,12 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				var hotsale = "1";
-				$.post("updateGoodshotsale.action", {
-					"goodsid" : str,
+				$.post("updateGoodsGrouphotsale.action", {
+					"groupid" : str,
 					"hotsale" : hotsale
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "标记热销成功");
 					}
 				});
@@ -1098,12 +1141,12 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				var recommended = "1";
-				$.post("updateGoodsrecommended.action", {
-					"goodsid" : str,
+				$.post("updateGoodsGrouprecommend.action", {
+					"groupid" : str,
 					"recommended" : recommended
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "标记推荐成功");
 					}
 				});
@@ -1120,12 +1163,12 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				var isNew = "1";
-				$.post("updateGoodsisNew.action", {
-					"goodsid" : str,
+				$.post("updateGoodsGroupisnew.action", {
+					"groupid" : str,
 					"isNew" : isNew
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "标记新品成功");
 					}
 				});
@@ -1141,12 +1184,12 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				var ismobileplatformgoods = "1";
-				$.post("updateGoodsismobileplatformgoods.action", {
-					"goodsid" : str,
+				$.post("updateGoodsGroupismobileplatform.action", {
+					"groupid" : str,
 					"ismobileplatformgoods" : ismobileplatformgoods
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "标记移动平台成功");
 					}
 				});
@@ -1166,8 +1209,8 @@ $(function() {
 				var bargainprice = "0";
 				var isNew = "0";
 				var ismobileplatformgoods = "0";
-				$.post("updateFiveGoodsState.action", {
-					"goodsid" : str,
+				$.post("resetGoodsGroupState.action", {
+					"groupid" : str,
 					"recommended" : recommended,
 					"hotsale" : hotsale,
 					"bargainprice" : bargainprice,
@@ -1175,7 +1218,7 @@ $(function() {
 					"ismobileplatformgoods" : ismobileplatformgoods
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "重置标记成功");
 					}
 				});
@@ -1191,12 +1234,12 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				var salestate = "1";
-				$.post("updateGoodsSaleState.action", {
-					"goodsid" : str,
+				$.post("updateGoodsGroupsalestate.action", {
+					"groupid" : str,
 					"salestate" : salestate
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "上架成功");
 					}
 				});
@@ -1212,12 +1255,12 @@ $(function() {
 					str += this.id.substr(3) + ",";
 				});
 				var salestate = "0";
-				$.post("updateGoodsSaleState.action", {
-					"goodsid" : str,
+				$.post("updateGoodsGroupsalestate.action", {
+					"groupid" : str,
 					"salestate" : salestate
 				}, function(data) {
 					if (data.sucflag) {
-						$('#goodsmanagement').flexReload();
+						$('#goodsgroupmanagement').flexReload();
 						forminfo("#alertinfo", "下架成功");
 					}
 				});

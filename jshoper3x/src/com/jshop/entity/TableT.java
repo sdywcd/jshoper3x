@@ -31,6 +31,7 @@ public class TableT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getTableid() {
 		return this.tableid;
 	}
@@ -51,6 +52,7 @@ public class TableT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -60,6 +62,7 @@ public class TableT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -69,6 +72,7 @@ public class TableT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getFloor() {
 		return this.floor;
 	}
@@ -87,6 +91,7 @@ public class TableT implements Serializable {
 	}
 
 
+	@Column(length=500)
 	public String getNote() {
 		return this.note;
 	}
@@ -105,7 +110,7 @@ public class TableT implements Serializable {
 	}
 
 
-	@Column(name="ROOM_NAME")
+	@Column(name="ROOM_NAME", nullable=false, length=45)
 	public String getRoomName() {
 		return this.roomName;
 	}
@@ -115,7 +120,7 @@ public class TableT implements Serializable {
 	}
 
 
-	@Column(name="TABLE_NUMBER")
+	@Column(name="TABLE_NUMBER", nullable=false, length=20)
 	public String getTableNumber() {
 		return this.tableNumber;
 	}
@@ -125,6 +130,7 @@ public class TableT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getTablestate() {
 		return this.tablestate;
 	}

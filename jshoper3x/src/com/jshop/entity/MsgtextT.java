@@ -23,6 +23,7 @@ public class MsgtextT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getMsgtextid() {
 		return this.msgtextid;
 	}
@@ -33,6 +34,7 @@ public class MsgtextT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getSendtime() {
 		return this.sendtime;
 	}
@@ -42,6 +44,7 @@ public class MsgtextT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=2000)
 	public String getText() {
 		return this.text;
 	}

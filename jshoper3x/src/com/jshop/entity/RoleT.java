@@ -25,6 +25,7 @@ public class RoleT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getRoleid() {
 		return this.roleid;
 	}
@@ -35,6 +36,7 @@ public class RoleT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -44,6 +46,7 @@ public class RoleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -53,6 +56,7 @@ public class RoleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getNote() {
 		return this.note;
 	}
@@ -62,6 +66,7 @@ public class RoleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getRolename() {
 		return this.rolename;
 	}

@@ -132,6 +132,10 @@
 							class="label label-info">商品名称会根据货品规格信息智能变化</span>
 					</div>
 					<div class="form-inline">
+						<span class="label label-required">商品副标题:</span> <input type="text"
+							id="subgoodsname" name="subgoodsname" class="medium" />
+					</div>
+					<div class="form-inline">
 						<span class="label label-required">商品编码:</span> <input type="text"
 							id="usersetnum" name="usersetnum" class="small" /> <span
 							class="label label-info">商品编码可以标记货品和商品的归属关系（货品表要记录商品编码）</span>

@@ -23,6 +23,7 @@ public class InvoicetempleteT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getInvoicetempleteid() {
 		return this.invoicetempleteid;
 	}
@@ -33,6 +34,7 @@ public class InvoicetempleteT implements Serializable {
 
 
 	@Lob
+	@Column(nullable=false)
 	public String getCode() {
 		return this.code;
 	}
@@ -42,6 +44,7 @@ public class InvoicetempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -51,6 +54,7 @@ public class InvoicetempleteT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}

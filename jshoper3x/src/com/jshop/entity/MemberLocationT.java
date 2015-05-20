@@ -28,6 +28,7 @@ public class MemberLocationT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getLid() {
 		return this.lid;
 	}
@@ -37,6 +38,7 @@ public class MemberLocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getAddress() {
 		return this.address;
 	}
@@ -47,6 +49,7 @@ public class MemberLocationT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -56,6 +59,7 @@ public class MemberLocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getLat() {
 		return this.lat;
 	}
@@ -65,6 +69,7 @@ public class MemberLocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getLng() {
 		return this.lng;
 	}
@@ -74,6 +79,7 @@ public class MemberLocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -84,6 +90,7 @@ public class MemberLocationT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -93,6 +100,7 @@ public class MemberLocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

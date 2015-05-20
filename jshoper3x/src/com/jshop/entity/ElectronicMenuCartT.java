@@ -47,6 +47,7 @@ public class ElectronicMenuCartT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -57,6 +58,7 @@ public class ElectronicMenuCartT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getAddtime() {
 		return this.addtime;
 	}
@@ -75,6 +77,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getCookingstate() {
 		return this.cookingstate;
 	}
@@ -93,7 +96,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
-	@Column(name="ELECTRONIC_MENU_CARTID")
+	@Column(name="ELECTRONIC_MENU_CARTID", nullable=false, length=20)
 	public String getElectronicMenuCartid() {
 		return this.electronicMenuCartid;
 	}
@@ -103,7 +106,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
-	@Column(name="ELECTRONIC_MENU_ORDERID")
+	@Column(name="ELECTRONIC_MENU_ORDERID", length=20)
 	public String getElectronicMenuOrderid() {
 		return this.electronicMenuOrderid;
 	}
@@ -113,6 +116,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -122,6 +126,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -131,6 +136,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getIspackaway() {
 		return this.ispackaway;
 	}
@@ -149,6 +155,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getMemberprice() {
 		return this.memberprice;
 	}
@@ -158,6 +165,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getNeedquantity() {
 		return this.needquantity;
 	}
@@ -167,6 +175,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getPicture() {
 		return this.picture;
 	}
@@ -176,6 +185,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getPoints() {
 		return this.points;
 	}
@@ -203,7 +213,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
-	@Column(name="ROOM_NAME")
+	@Column(name="ROOM_NAME", length=45)
 	public String getRoomName() {
 		return this.roomName;
 	}
@@ -213,6 +223,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -222,6 +233,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getSubtotal() {
 		return this.subtotal;
 	}
@@ -231,7 +243,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
-	@Column(name="TABLE_NUMBER")
+	@Column(name="TABLE_NUMBER", nullable=false, length=20)
 	public String getTableNumber() {
 		return this.tableNumber;
 	}
@@ -241,6 +253,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getTablestate() {
 		return this.tablestate;
 	}
@@ -250,6 +263,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(length=500)
 	public String getTaste() {
 		return this.taste;
 	}
@@ -259,6 +273,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getUserid() {
 		return this.userid;
 	}
@@ -268,6 +283,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getUsername() {
 		return this.username;
 	}
@@ -277,6 +293,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUsersetnum() {
 		return this.usersetnum;
 	}
@@ -286,6 +303,7 @@ public class ElectronicMenuCartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getWeight() {
 		return this.weight;
 	}

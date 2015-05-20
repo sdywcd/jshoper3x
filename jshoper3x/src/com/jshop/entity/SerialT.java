@@ -25,6 +25,7 @@ public class SerialT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=45)
 	public String getBiz() {
 		return this.biz;
 	}
@@ -34,6 +35,7 @@ public class SerialT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getHead() {
 		return this.head;
 	}
@@ -43,6 +45,7 @@ public class SerialT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getIncrement() {
 		return this.increment;
 	}
@@ -52,6 +55,7 @@ public class SerialT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLastid() {
 		return this.lastid;
 	}
@@ -62,6 +66,7 @@ public class SerialT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

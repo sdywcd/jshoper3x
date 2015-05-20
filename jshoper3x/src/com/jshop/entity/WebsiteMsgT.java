@@ -30,6 +30,7 @@ public class WebsiteMsgT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getMsgid() {
 		return this.msgid;
 	}
@@ -40,6 +41,7 @@ public class WebsiteMsgT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -49,6 +51,7 @@ public class WebsiteMsgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMsgfromuserid() {
 		return this.msgfromuserid;
 	}
@@ -58,6 +61,7 @@ public class WebsiteMsgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getMsgfromusrname() {
 		return this.msgfromusrname;
 	}
@@ -67,6 +71,7 @@ public class WebsiteMsgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getMsgstate() {
 		return this.msgstate;
 	}
@@ -76,6 +81,7 @@ public class WebsiteMsgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMsgtextid() {
 		return this.msgtextid;
 	}
@@ -85,6 +91,7 @@ public class WebsiteMsgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getMsgtousername() {
 		return this.msgtousername;
 	}
@@ -95,6 +102,7 @@ public class WebsiteMsgT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getReadtime() {
 		return this.readtime;
 	}
@@ -104,6 +112,7 @@ public class WebsiteMsgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -113,6 +122,7 @@ public class WebsiteMsgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getTitle() {
 		return this.title;
 	}

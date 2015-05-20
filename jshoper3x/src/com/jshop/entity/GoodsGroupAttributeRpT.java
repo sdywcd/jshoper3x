@@ -22,6 +22,7 @@ public class GoodsGroupAttributeRpT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -31,6 +32,7 @@ public class GoodsGroupAttributeRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getAttrval() {
 		return this.attrval;
 	}
@@ -40,6 +42,7 @@ public class GoodsGroupAttributeRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGroupid() {
 		return this.groupid;
 	}

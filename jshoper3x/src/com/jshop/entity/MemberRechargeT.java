@@ -28,6 +28,7 @@ public class MemberRechargeT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -37,6 +38,7 @@ public class MemberRechargeT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getBalance() {
 		return this.balance;
 	}
@@ -47,6 +49,7 @@ public class MemberRechargeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -56,6 +59,7 @@ public class MemberRechargeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -65,6 +69,7 @@ public class MemberRechargeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getMembername() {
 		return this.membername;
 	}
@@ -74,6 +79,7 @@ public class MemberRechargeT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -84,6 +90,7 @@ public class MemberRechargeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -93,6 +100,7 @@ public class MemberRechargeT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

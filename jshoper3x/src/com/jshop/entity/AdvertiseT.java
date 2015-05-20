@@ -36,6 +36,7 @@ public class AdvertiseT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -45,7 +46,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
-	@Column(name="ADV_PATH")
+	@Column(name="ADV_PATH", nullable=false, length=255)
 	public String getAdvPath() {
 		return this.advPath;
 	}
@@ -55,6 +56,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getAlt() {
 		return this.alt;
 	}
@@ -65,6 +67,7 @@ public class AdvertiseT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getBegintime() {
 		return this.begintime;
 	}
@@ -74,6 +77,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(length=10)
 	public String getCode() {
 		return this.code;
 	}
@@ -84,6 +88,7 @@ public class AdvertiseT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -93,6 +98,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -103,6 +109,7 @@ public class AdvertiseT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getEndtime() {
 		return this.endtime;
 	}
@@ -112,6 +119,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getHeight() {
 		return this.height;
 	}
@@ -121,7 +129,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
-	@Column(name="SHOW_TAG")
+	@Column(name="SHOW_TAG", nullable=false, length=20)
 	public String getShowTag() {
 		return this.showTag;
 	}
@@ -131,7 +139,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
-	@Column(name="SHOW_WHERE")
+	@Column(name="SHOW_WHERE", nullable=false, length=1)
 	public String getShowWhere() {
 		return this.showWhere;
 	}
@@ -141,6 +149,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getSort() {
 		return this.sort;
 	}
@@ -150,6 +159,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -159,6 +169,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getType() {
 		return this.type;
 	}
@@ -168,6 +179,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}
@@ -177,6 +189,7 @@ public class AdvertiseT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getWidth() {
 		return this.width;
 	}

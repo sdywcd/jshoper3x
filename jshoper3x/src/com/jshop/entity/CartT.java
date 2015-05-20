@@ -2,6 +2,7 @@ package com.jshop.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -18,8 +19,8 @@ public class CartT implements Serializable {
 	private Date addtime;
 	private String cartTag;
 	private String cartid;
-	private double changeprice;
-	private double favorable;
+	private BigDecimal changeprice;
+	private BigDecimal favorable;
 	private String goodsid;
 	private String goodsname;
 	private String htmlpath;
@@ -30,7 +31,7 @@ public class CartT implements Serializable {
 	private String orderid;
 	private String picture;
 	private double points;
-	private double price;
+	private BigDecimal price;
 	private String productName;
 	private String productid;
 	private int quantity;
@@ -38,7 +39,7 @@ public class CartT implements Serializable {
 	private String shopname;
 	private String state;
 	private int storeTag;
-	private double subtotal;
+	private BigDecimal subtotal;
 	private String userid;
 	private String username;
 	private String usersetnum;
@@ -49,6 +50,7 @@ public class CartT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -59,6 +61,7 @@ public class CartT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getAddtime() {
 		return this.addtime;
 	}
@@ -68,7 +71,7 @@ public class CartT implements Serializable {
 	}
 
 
-	@Column(name="CART_TAG")
+	@Column(name="CART_TAG", nullable=false, length=1)
 	public String getCartTag() {
 		return this.cartTag;
 	}
@@ -78,6 +81,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCartid() {
 		return this.cartid;
 	}
@@ -87,24 +91,27 @@ public class CartT implements Serializable {
 	}
 
 
-	public double getChangeprice() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getChangeprice() {
 		return this.changeprice;
 	}
 
-	public void setChangeprice(double changeprice) {
+	public void setChangeprice(BigDecimal changeprice) {
 		this.changeprice = changeprice;
 	}
 
 
-	public double getFavorable() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getFavorable() {
 		return this.favorable;
 	}
 
-	public void setFavorable(double favorable) {
+	public void setFavorable(BigDecimal favorable) {
 		this.favorable = favorable;
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -114,6 +121,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -123,6 +131,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getHtmlpath() {
 		return this.htmlpath;
 	}
@@ -132,6 +141,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -141,6 +151,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getMembername() {
 		return this.membername;
 	}
@@ -150,6 +161,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getNeedquantity() {
 		return this.needquantity;
 	}
@@ -159,7 +171,7 @@ public class CartT implements Serializable {
 	}
 
 
-	@Column(name="ORDER_TAG")
+	@Column(name="ORDER_TAG", nullable=false, length=1)
 	public String getOrderTag() {
 		return this.orderTag;
 	}
@@ -169,6 +181,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -178,6 +191,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=250)
 	public String getPicture() {
 		return this.picture;
 	}
@@ -187,6 +201,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getPoints() {
 		return this.points;
 	}
@@ -196,16 +211,17 @@ public class CartT implements Serializable {
 	}
 
 
-	public double getPrice() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
 
-	@Column(name="PRODUCT_NAME")
+	@Column(name="PRODUCT_NAME", nullable=false, length=100)
 	public String getProductName() {
 		return this.productName;
 	}
@@ -215,6 +231,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getProductid() {
 		return this.productid;
 	}
@@ -224,6 +241,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getQuantity() {
 		return this.quantity;
 	}
@@ -233,6 +251,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -242,6 +261,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -251,6 +271,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -260,7 +281,7 @@ public class CartT implements Serializable {
 	}
 
 
-	@Column(name="STORE_TAG")
+	@Column(name="STORE_TAG", nullable=false)
 	public int getStoreTag() {
 		return this.storeTag;
 	}
@@ -270,15 +291,17 @@ public class CartT implements Serializable {
 	}
 
 
-	public double getSubtotal() {
+	@Column(nullable=false, precision=10, scale=2)
+	public BigDecimal getSubtotal() {
 		return this.subtotal;
 	}
 
-	public void setSubtotal(double subtotal) {
+	public void setSubtotal(BigDecimal subtotal) {
 		this.subtotal = subtotal;
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUserid() {
 		return this.userid;
 	}
@@ -288,6 +311,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getUsername() {
 		return this.username;
 	}
@@ -297,6 +321,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUsersetnum() {
 		return this.usersetnum;
 	}
@@ -306,6 +331,7 @@ public class CartT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getWeight() {
 		return this.weight;
 	}

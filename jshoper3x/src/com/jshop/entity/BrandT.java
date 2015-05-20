@@ -33,6 +33,7 @@ public class BrandT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getBrandid() {
 		return this.brandid;
 	}
@@ -42,6 +43,7 @@ public class BrandT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getBrandname() {
 		return this.brandname;
 	}
@@ -52,6 +54,7 @@ public class BrandT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -61,6 +64,7 @@ public class BrandT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -80,7 +84,7 @@ public class BrandT implements Serializable {
 	}
 
 
-	@Column(name="LOGO_PATH")
+	@Column(name="LOGO_PATH", nullable=false, length=255)
 	public String getLogoPath() {
 		return this.logoPath;
 	}
@@ -90,6 +94,7 @@ public class BrandT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getRemark() {
 		return this.remark;
 	}
@@ -99,6 +104,7 @@ public class BrandT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -108,6 +114,7 @@ public class BrandT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -117,7 +124,7 @@ public class BrandT implements Serializable {
 	}
 
 
-	@Column(name="SMALL_LOGO_PATH")
+	@Column(name="SMALL_LOGO_PATH", nullable=false, length=255)
 	public String getSmallLogoPath() {
 		return this.smallLogoPath;
 	}
@@ -136,6 +143,7 @@ public class BrandT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getUrl() {
 		return this.url;
 	}
@@ -145,6 +153,7 @@ public class BrandT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getUsername() {
 		return this.username;
 	}

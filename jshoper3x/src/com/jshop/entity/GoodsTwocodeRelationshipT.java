@@ -24,6 +24,7 @@ public class GoodsTwocodeRelationshipT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -33,6 +34,7 @@ public class GoodsTwocodeRelationshipT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -42,6 +44,7 @@ public class GoodsTwocodeRelationshipT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -51,6 +54,7 @@ public class GoodsTwocodeRelationshipT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -60,6 +64,7 @@ public class GoodsTwocodeRelationshipT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getTwocodepath() {
 		return this.twocodepath;
 	}

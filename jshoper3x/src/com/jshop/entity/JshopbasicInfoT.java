@@ -44,6 +44,7 @@ public class JshopbasicInfoT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getBasicinfoid() {
 		return this.basicinfoid;
 	}
@@ -53,6 +54,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=12)
 	public String getCity() {
 		return this.city;
 	}
@@ -62,6 +64,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=12)
 	public String getCountry() {
 		return this.country;
 	}
@@ -72,6 +75,7 @@ public class JshopbasicInfoT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -81,6 +85,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -90,6 +95,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=12)
 	public String getDistrict() {
 		return this.district;
 	}
@@ -99,6 +105,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getEmailservice() {
 		return this.emailservice;
 	}
@@ -108,6 +115,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getIcpnum() {
 		return this.icpnum;
 	}
@@ -117,6 +125,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getJshopname() {
 		return this.jshopname;
 	}
@@ -126,6 +135,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getJshopslogan() {
 		return this.jshopslogan;
 	}
@@ -135,6 +145,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getLicensed() {
 		return this.licensed;
 	}
@@ -144,7 +155,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
-	@Column(name="META_DES")
+	@Column(name="META_DES", length=255)
 	public String getMetaDes() {
 		return this.metaDes;
 	}
@@ -154,7 +165,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
-	@Column(name="META_KEYWORDS")
+	@Column(name="META_KEYWORDS", length=255)
 	public String getMetaKeywords() {
 		return this.metaKeywords;
 	}
@@ -164,6 +175,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getOpenstate() {
 		return this.openstate;
 	}
@@ -173,6 +185,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getPhoneservice() {
 		return this.phoneservice;
 	}
@@ -182,6 +195,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=12)
 	public String getProvince() {
 		return this.province;
 	}
@@ -191,6 +205,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getQqservice() {
 		return this.qqservice;
 	}
@@ -200,6 +215,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getSinaweiboservice() {
 		return this.sinaweiboservice;
 	}
@@ -209,6 +225,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getSiteclosenotes() {
 		return this.siteclosenotes;
 	}
@@ -218,6 +235,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getSitelogo() {
 		return this.sitelogo;
 	}
@@ -227,6 +245,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getSkypeservice() {
 		return this.skypeservice;
 	}
@@ -236,6 +255,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -245,6 +265,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getStreet() {
 		return this.street;
 	}
@@ -254,6 +275,7 @@ public class JshopbasicInfoT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getWeixinservice() {
 		return this.weixinservice;
 	}

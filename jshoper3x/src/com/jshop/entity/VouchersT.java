@@ -33,6 +33,7 @@ public class VouchersT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getVouchersid() {
 		return this.vouchersid;
 	}
@@ -42,6 +43,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getBegintime() {
 		return this.begintime;
 	}
@@ -52,6 +54,7 @@ public class VouchersT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -61,6 +64,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -70,6 +74,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getEndtime() {
 		return this.endtime;
 	}
@@ -79,6 +84,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getGivenmemberid() {
 		return this.givenmemberid;
 	}
@@ -88,6 +94,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getLimitprice() {
 		return this.limitprice;
 	}
@@ -97,6 +104,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getMobilesync() {
 		return this.mobilesync;
 	}
@@ -106,6 +114,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -115,6 +124,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getVoucherscontent() {
 		return this.voucherscontent;
 	}
@@ -124,6 +134,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getVouchersname() {
 		return this.vouchersname;
 	}
@@ -133,6 +144,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getVoucherstate() {
 		return this.voucherstate;
 	}
@@ -142,6 +154,7 @@ public class VouchersT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getVoucheruseway() {
 		return this.voucheruseway;
 	}

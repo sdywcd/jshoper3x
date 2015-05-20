@@ -26,6 +26,7 @@ public class AuthorityT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getAutid() {
 		return this.autid;
 	}
@@ -35,6 +36,7 @@ public class AuthorityT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getChpagename() {
 		return this.chpagename;
 	}
@@ -45,6 +47,7 @@ public class AuthorityT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -54,6 +57,7 @@ public class AuthorityT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getEnpagename() {
 		return this.enpagename;
 	}
@@ -63,6 +67,7 @@ public class AuthorityT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getOperate() {
 		return this.operate;
 	}
@@ -72,6 +77,7 @@ public class AuthorityT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getRoleid() {
 		return this.roleid;
 	}

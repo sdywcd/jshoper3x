@@ -35,7 +35,7 @@ public class ImgT implements Serializable {
 
 
 	@Id
-	@Column(name="IMG_ID")
+	@Column(name="IMG_ID", unique=true, nullable=false, length=20)
 	public String getImgId() {
 		return this.imgId;
 	}
@@ -46,6 +46,7 @@ public class ImgT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -55,6 +56,7 @@ public class ImgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -64,6 +66,7 @@ public class ImgT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getDes() {
 		return this.des;
 	}
@@ -73,7 +76,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="IMG_HREF")
+	@Column(name="IMG_HREF", nullable=false, length=225)
 	public String getImgHref() {
 		return this.imgHref;
 	}
@@ -83,7 +86,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="IMG_NAME")
+	@Column(name="IMG_NAME", length=45)
 	public String getImgName() {
 		return this.imgName;
 	}
@@ -93,7 +96,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="IMG_TYPE")
+	@Column(name="IMG_TYPE", length=10)
 	public String getImgType() {
 		return this.imgType;
 	}
@@ -103,7 +106,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="IMG_TYPE_ID")
+	@Column(name="IMG_TYPE_ID", length=20)
 	public String getImgTypeId() {
 		return this.imgTypeId;
 	}
@@ -113,7 +116,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="IMG_TYPE_NAME")
+	@Column(name="IMG_TYPE_NAME", length=45)
 	public String getImgTypeName() {
 		return this.imgTypeName;
 	}
@@ -123,6 +126,7 @@ public class ImgT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -132,7 +136,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="USED_GOODSID")
+	@Column(name="USED_GOODSID", length=20)
 	public String getUsedGoodsid() {
 		return this.usedGoodsid;
 	}
@@ -142,7 +146,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="USED_GOODSNAME")
+	@Column(name="USED_GOODSNAME", length=100)
 	public String getUsedGoodsname() {
 		return this.usedGoodsname;
 	}
@@ -152,7 +156,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="USED_POSITION_ID")
+	@Column(name="USED_POSITION_ID", length=20)
 	public String getUsedPositionId() {
 		return this.usedPositionId;
 	}
@@ -162,7 +166,7 @@ public class ImgT implements Serializable {
 	}
 
 
-	@Column(name="USED_POSITION_NAME")
+	@Column(name="USED_POSITION_NAME", length=45)
 	public String getUsedPositionName() {
 		return this.usedPositionName;
 	}

@@ -34,6 +34,7 @@ public class MemberGradeT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -44,6 +45,7 @@ public class MemberGradeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -53,6 +55,7 @@ public class MemberGradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -71,6 +74,7 @@ public class MemberGradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getEnd() {
 		return this.end;
 	}
@@ -98,6 +102,7 @@ public class MemberGradeT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getMpstate() {
 		return this.mpstate;
 	}
@@ -116,6 +121,7 @@ public class MemberGradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}
@@ -125,6 +131,7 @@ public class MemberGradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getStart() {
 		return this.start;
 	}
@@ -134,6 +141,7 @@ public class MemberGradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getType() {
 		return this.type;
 	}
@@ -144,6 +152,7 @@ public class MemberGradeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -153,6 +162,7 @@ public class MemberGradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

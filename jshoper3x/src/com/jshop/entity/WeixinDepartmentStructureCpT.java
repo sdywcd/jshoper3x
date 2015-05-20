@@ -38,6 +38,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -47,7 +48,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
-	@Column(name="BASICSETTING_ID")
+	@Column(name="BASICSETTING_ID", length=20)
 	public String getBasicsettingId() {
 		return this.basicsettingId;
 	}
@@ -57,7 +58,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
-	@Column(name="BASICSETTING_SITENAME")
+	@Column(name="BASICSETTING_SITENAME", length=45)
 	public String getBasicsettingSitename() {
 		return this.basicsettingSitename;
 	}
@@ -67,6 +68,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getCode() {
 		return this.code;
 	}
@@ -77,6 +79,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -86,6 +89,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getGrade() {
 		return this.grade;
 	}
@@ -95,6 +99,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getLogo() {
 		return this.logo;
 	}
@@ -104,6 +109,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getMobilesync() {
 		return this.mobilesync;
 	}
@@ -113,6 +119,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=60)
 	public String getName() {
 		return this.name;
 	}
@@ -122,7 +129,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
-	@Column(name="`ORDER`")
+	@Column(name="`ORDER`", nullable=false)
 	public int getOrder() {
 		return this.order;
 	}
@@ -132,6 +139,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=10)
 	public String getParentid() {
 		return this.parentid;
 	}
@@ -141,6 +149,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=60)
 	public String getParentname() {
 		return this.parentname;
 	}
@@ -150,6 +159,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=200)
 	public String getPath() {
 		return this.path;
 	}
@@ -159,6 +169,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getSort() {
 		return this.sort;
 	}
@@ -168,6 +179,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getStatus() {
 		return this.status;
 	}
@@ -178,6 +190,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -187,6 +200,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}
@@ -196,6 +210,7 @@ public class WeixinDepartmentStructureCpT implements Serializable {
 	}
 
 
+	@Column(length=10)
 	public String getWxgivenid() {
 		return this.wxgivenid;
 	}

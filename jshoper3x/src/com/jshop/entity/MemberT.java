@@ -59,6 +59,7 @@ public class MemberT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -68,6 +69,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getAnswer() {
 		return this.answer;
 	}
@@ -86,6 +88,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getBirthday() {
 		return this.birthday;
 	}
@@ -95,6 +98,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getBlood() {
 		return this.blood;
 	}
@@ -104,6 +108,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getCity() {
 		return this.city;
 	}
@@ -113,6 +118,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getConstellation() {
 		return this.constellation;
 	}
@@ -123,6 +129,7 @@ public class MemberT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -132,6 +139,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -141,6 +149,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=500)
 	public String getDes() {
 		return this.des;
 	}
@@ -150,6 +159,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getDistrict() {
 		return this.district;
 	}
@@ -159,6 +169,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getEmail() {
 		return this.email;
 	}
@@ -168,6 +179,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getHeadpath() {
 		return this.headpath;
 	}
@@ -186,6 +198,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getLoginname() {
 		return this.loginname;
 	}
@@ -195,6 +208,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=32)
 	public String getLoginpwd() {
 		return this.loginpwd;
 	}
@@ -213,7 +227,7 @@ public class MemberT implements Serializable {
 	}
 
 
-	@Column(name="MEMBER_GROUP_ID")
+	@Column(name="MEMBER_GROUP_ID", length=20)
 	public String getMemberGroupId() {
 		return this.memberGroupId;
 	}
@@ -223,7 +237,7 @@ public class MemberT implements Serializable {
 	}
 
 
-	@Column(name="MEMBER_GROUP_NAME")
+	@Column(name="MEMBER_GROUP_NAME", length=45)
 	public String getMemberGroupName() {
 		return this.memberGroupName;
 	}
@@ -233,6 +247,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getMemberstate() {
 		return this.memberstate;
 	}
@@ -242,6 +257,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getMerrystatus() {
 		return this.merrystatus;
 	}
@@ -251,6 +267,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=32)
 	public String getMid() {
 		return this.mid;
 	}
@@ -260,6 +277,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -269,6 +287,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getNick() {
 		return this.nick;
 	}
@@ -278,6 +297,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=32)
 	public String getPaypassword() {
 		return this.paypassword;
 	}
@@ -296,6 +316,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getQq() {
 		return this.qq;
 	}
@@ -305,6 +326,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getQuestion() {
 		return this.question;
 	}
@@ -314,6 +336,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getRealname() {
 		return this.realname;
 	}
@@ -323,6 +346,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getSex() {
 		return this.sex;
 	}
@@ -332,6 +356,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -341,6 +366,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -350,6 +376,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getSinaweibo() {
 		return this.sinaweibo;
 	}
@@ -359,6 +386,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getTag() {
 		return this.tag;
 	}
@@ -368,6 +396,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getTelno() {
 		return this.telno;
 	}
@@ -378,6 +407,7 @@ public class MemberT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -387,6 +417,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}
@@ -396,6 +427,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getWeixin() {
 		return this.weixin;
 	}
@@ -405,6 +437,7 @@ public class MemberT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getWhichsex() {
 		return this.whichsex;
 	}

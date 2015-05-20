@@ -27,6 +27,7 @@ public class FunctionM implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -37,6 +38,7 @@ public class FunctionM implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -46,6 +48,7 @@ public class FunctionM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getFunctionname() {
 		return this.functionname;
 	}
@@ -55,6 +58,7 @@ public class FunctionM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getModuleid() {
 		return this.moduleid;
 	}
@@ -64,6 +68,7 @@ public class FunctionM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getVisitmethodname() {
 		return this.visitmethodname;
 	}
@@ -73,6 +78,7 @@ public class FunctionM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=200)
 	public String getVisitpagesourceids() {
 		return this.visitpagesourceids;
 	}
@@ -82,6 +88,7 @@ public class FunctionM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=225)
 	public String getVisiturl() {
 		return this.visiturl;
 	}

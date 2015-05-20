@@ -52,6 +52,7 @@ public class UserT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getUserid() {
 		return this.userid;
 	}
@@ -61,6 +62,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getAnswer() {
 		return this.answer;
 	}
@@ -71,6 +73,7 @@ public class UserT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -80,6 +83,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -89,6 +93,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getCredentialsalt() {
 		return this.credentialsalt;
 	}
@@ -98,6 +103,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getEmail() {
 		return this.email;
 	}
@@ -107,6 +113,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getGroupid() {
 		return this.groupid;
 	}
@@ -116,6 +123,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=225)
 	public String getHeadpath() {
 		return this.headpath;
 	}
@@ -125,6 +133,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -134,6 +143,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getParttime1() {
 		return this.parttime1;
 	}
@@ -143,6 +153,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getParttime2() {
 		return this.parttime2;
 	}
@@ -152,6 +163,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getParttime3() {
 		return this.parttime3;
 	}
@@ -161,6 +173,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=32)
 	public String getPassword() {
 		return this.password;
 	}
@@ -170,6 +183,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getPosition() {
 		return this.position;
 	}
@@ -188,6 +202,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getQq() {
 		return this.qq;
 	}
@@ -197,6 +212,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getQuestion() {
 		return this.question;
 	}
@@ -206,6 +222,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getRealname() {
 		return this.realname;
 	}
@@ -215,6 +232,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getRolemid() {
 		return this.rolemid;
 	}
@@ -224,6 +242,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getRolemname() {
 		return this.rolemname;
 	}
@@ -233,6 +252,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getSalt() {
 		return this.salt;
 	}
@@ -242,6 +262,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getSection() {
 		return this.section;
 	}
@@ -251,6 +272,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -260,6 +282,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -269,6 +292,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getSinaweibo() {
 		return this.sinaweibo;
 	}
@@ -278,6 +302,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -287,6 +312,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getTelno() {
 		return this.telno;
 	}
@@ -296,6 +322,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getUid() {
 		return this.uid;
 	}
@@ -306,6 +333,7 @@ public class UserT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -315,6 +343,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getUsername() {
 		return this.username;
 	}
@@ -324,6 +353,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getUserstate() {
 		return this.userstate;
 	}
@@ -333,6 +363,7 @@ public class UserT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getWeixin() {
 		return this.weixin;
 	}

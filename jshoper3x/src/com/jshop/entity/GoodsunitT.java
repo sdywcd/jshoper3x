@@ -25,6 +25,7 @@ public class GoodsunitT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getUnitid() {
 		return this.unitid;
 	}
@@ -35,6 +36,7 @@ public class GoodsunitT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -44,6 +46,7 @@ public class GoodsunitT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -53,6 +56,7 @@ public class GoodsunitT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getEngunitname() {
 		return this.engunitname;
 	}
@@ -62,6 +66,7 @@ public class GoodsunitT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getUnitname() {
 		return this.unitname;
 	}

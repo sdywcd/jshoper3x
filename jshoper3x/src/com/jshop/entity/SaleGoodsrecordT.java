@@ -47,6 +47,7 @@ public class SaleGoodsrecordT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=200)
 	public String getSalerecordid() {
 		return this.salerecordid;
 	}
@@ -66,6 +67,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=30)
 	public String getEmail() {
 		return this.email;
 	}
@@ -94,6 +96,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getHtmlpath() {
 		return this.htmlpath;
 	}
@@ -121,6 +124,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=30)
 	public String getManufacturer() {
 		return this.manufacturer;
 	}
@@ -139,6 +143,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=30)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -148,6 +153,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=30)
 	public String getPlace() {
 		return this.place;
 	}
@@ -157,6 +163,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getPoints() {
 		return this.points;
 	}
@@ -166,6 +173,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getRealname() {
 		return this.realname;
 	}
@@ -175,6 +183,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getSalegoodsid() {
 		return this.salegoodsid;
 	}
@@ -184,6 +193,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getSalegoodsinformation() {
 		return this.salegoodsinformation;
 	}
@@ -193,6 +203,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getSalegoodsmessage() {
 		return this.salegoodsmessage;
 	}
@@ -202,6 +213,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getSalegoodsname() {
 		return this.salegoodsname;
 	}
@@ -211,6 +223,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getSalegoodsnumber() {
 		return this.salegoodsnumber;
 	}
@@ -220,6 +233,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=225)
 	public String getSalegoodspictureurl() {
 		return this.salegoodspictureurl;
 	}
@@ -229,6 +243,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getSalepeople() {
 		return this.salepeople;
 	}
@@ -257,6 +272,7 @@ public class SaleGoodsrecordT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getSaletradetime() {
 		return this.saletradetime;
 	}
@@ -266,6 +282,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getSex() {
 		return this.sex;
 	}
@@ -275,6 +292,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=30)
 	public String getTelno() {
 		return this.telno;
 	}
@@ -284,6 +302,7 @@ public class SaleGoodsrecordT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getUsername() {
 		return this.username;
 	}

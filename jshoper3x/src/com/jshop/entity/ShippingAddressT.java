@@ -38,6 +38,7 @@ public class ShippingAddressT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getShippingaddressid() {
 		return this.shippingaddressid;
 	}
@@ -47,6 +48,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getCity() {
 		return this.city;
 	}
@@ -56,6 +58,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getCountry() {
 		return this.country;
 	}
@@ -66,6 +69,7 @@ public class ShippingAddressT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -75,6 +79,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getDeliveraddressid() {
 		return this.deliveraddressid;
 	}
@@ -84,6 +89,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getDistrict() {
 		return this.district;
 	}
@@ -93,6 +99,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getEmail() {
 		return this.email;
 	}
@@ -102,6 +109,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIssend() {
 		return this.issend;
 	}
@@ -111,6 +119,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -120,6 +129,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -129,6 +139,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -138,6 +149,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getPostcode() {
 		return this.postcode;
 	}
@@ -147,6 +159,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getProvince() {
 		return this.province;
 	}
@@ -156,6 +169,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getShippingusername() {
 		return this.shippingusername;
 	}
@@ -165,6 +179,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -174,6 +189,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -183,6 +199,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getStreet() {
 		return this.street;
 	}
@@ -192,6 +209,7 @@ public class ShippingAddressT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getTelno() {
 		return this.telno;
 	}

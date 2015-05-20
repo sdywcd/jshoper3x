@@ -32,6 +32,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -41,6 +42,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getCompanyname() {
 		return this.companyname;
 	}
@@ -50,6 +52,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getCorpid() {
 		return this.corpid;
 	}
@@ -59,6 +62,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=512)
 	public String getCorpsecret() {
 		return this.corpsecret;
 	}
@@ -69,6 +73,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -78,6 +83,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -87,6 +93,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getEncodingaeskey() {
 		return this.encodingaeskey;
 	}
@@ -96,6 +103,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getMode() {
 		return this.mode;
 	}
@@ -105,6 +113,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatue() {
 		return this.statue;
 	}
@@ -114,6 +123,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=32)
 	public String getToken() {
 		return this.token;
 	}
@@ -124,6 +134,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -133,6 +144,7 @@ public class WexinCompanyBaseCpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=256)
 	public String getUrl() {
 		return this.url;
 	}

@@ -54,6 +54,7 @@ public class ArticleT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getArticleid() {
 		return this.articleid;
 	}
@@ -63,6 +64,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getAuthor() {
 		return this.author;
 	}
@@ -73,6 +75,7 @@ public class ArticleT implements Serializable {
 
 
 	@Lob
+	@Column(nullable=false)
 	public String getContentvalue() {
 		return this.contentvalue;
 	}
@@ -83,6 +86,7 @@ public class ArticleT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -92,6 +96,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -101,6 +106,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getFname() {
 		return this.fname;
 	}
@@ -110,7 +116,7 @@ public class ArticleT implements Serializable {
 	}
 
 
-	@Column(name="HTML_PATH")
+	@Column(name="HTML_PATH", length=255)
 	public String getHtmlPath() {
 		return this.htmlPath;
 	}
@@ -120,6 +126,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getIsnotice() {
 		return this.isnotice;
 	}
@@ -129,6 +136,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getIsoutsite() {
 		return this.isoutsite;
 	}
@@ -138,6 +146,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIspublication() {
 		return this.ispublication;
 	}
@@ -147,6 +156,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIsrecommend() {
 		return this.isrecommend;
 	}
@@ -156,6 +166,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIstop() {
 		return this.istop;
 	}
@@ -165,6 +176,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getLname() {
 		return this.lname;
 	}
@@ -174,6 +186,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getLtypeid() {
 		return this.ltypeid;
 	}
@@ -183,6 +196,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getMainpicture() {
 		return this.mainpicture;
 	}
@@ -192,7 +206,7 @@ public class ArticleT implements Serializable {
 	}
 
 
-	@Column(name="META_DES")
+	@Column(name="META_DES", length=225)
 	public String getMetaDes() {
 		return this.metaDes;
 	}
@@ -202,7 +216,7 @@ public class ArticleT implements Serializable {
 	}
 
 
-	@Column(name="META_KEYWORDS")
+	@Column(name="META_KEYWORDS", length=225)
 	public String getMetaKeywords() {
 		return this.metaKeywords;
 	}
@@ -212,6 +226,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getMobilesync() {
 		return this.mobilesync;
 	}
@@ -221,6 +236,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getNavid() {
 		return this.navid;
 	}
@@ -230,6 +246,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getNname() {
 		return this.nname;
 	}
@@ -239,6 +256,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=255)
 	public String getOutsitelink() {
 		return this.outsitelink;
 	}
@@ -258,6 +276,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getPosition() {
 		return this.position;
 	}
@@ -276,6 +295,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -285,6 +305,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -294,6 +315,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getSname() {
 		return this.sname;
 	}
@@ -312,6 +334,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -321,6 +344,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getStypeid() {
 		return this.stypeid;
 	}
@@ -330,6 +354,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(length=100)
 	public String getTipcontent() {
 		return this.tipcontent;
 	}
@@ -339,6 +364,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getTitle() {
 		return this.title;
 	}
@@ -349,6 +375,7 @@ public class ArticleT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -358,6 +385,7 @@ public class ArticleT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}

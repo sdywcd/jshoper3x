@@ -27,6 +27,7 @@ public class NoticeT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getNoticeid() {
 		return this.noticeid;
 	}
@@ -37,6 +38,7 @@ public class NoticeT implements Serializable {
 
 
 	@Lob
+	@Column(nullable=false)
 	public String getContent() {
 		return this.content;
 	}
@@ -47,6 +49,7 @@ public class NoticeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -56,6 +59,7 @@ public class NoticeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -65,6 +69,7 @@ public class NoticeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getNoticenlid() {
 		return this.noticenlid;
 	}
@@ -74,6 +79,7 @@ public class NoticeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getNoticenlname() {
 		return this.noticenlname;
 	}
@@ -83,6 +89,7 @@ public class NoticeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getTitle() {
 		return this.title;
 	}

@@ -54,6 +54,7 @@ public class ExpresstempleteT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getExpresstempleteid() {
 		return this.expresstempleteid;
 	}
@@ -63,6 +64,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getDay() {
 		return this.day;
 	}
@@ -72,7 +74,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="EXPRESS_CSS")
+	@Column(name="EXPRESS_CSS", length=500)
 	public String getExpressCss() {
 		return this.expressCss;
 	}
@@ -82,7 +84,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="EXPRESS_IMG")
+	@Column(name="EXPRESS_IMG", length=255)
 	public String getExpressImg() {
 		return this.expressImg;
 	}
@@ -92,6 +94,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getHour() {
 		return this.hour;
 	}
@@ -112,6 +115,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getLogisticsid() {
 		return this.logisticsid;
 	}
@@ -121,6 +125,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getMinutes() {
 		return this.minutes;
 	}
@@ -130,6 +135,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getMonth() {
 		return this.month;
 	}
@@ -139,6 +145,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getNotes() {
 		return this.notes;
 	}
@@ -148,6 +155,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -157,6 +165,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getQuantity() {
 		return this.quantity;
 	}
@@ -166,7 +175,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_CITY")
+	@Column(name="RECIPIENT_CITY", length=20)
 	public String getRecipientCity() {
 		return this.recipientCity;
 	}
@@ -176,7 +185,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_CONTACTOR")
+	@Column(name="RECIPIENT_CONTACTOR", length=20)
 	public String getRecipientContactor() {
 		return this.recipientContactor;
 	}
@@ -186,7 +195,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_COUNTRY")
+	@Column(name="RECIPIENT_COUNTRY", length=20)
 	public String getRecipientCountry() {
 		return this.recipientCountry;
 	}
@@ -196,7 +205,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_DISTRICT")
+	@Column(name="RECIPIENT_DISTRICT", length=20)
 	public String getRecipientDistrict() {
 		return this.recipientDistrict;
 	}
@@ -206,7 +215,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_MOBILE")
+	@Column(name="RECIPIENT_MOBILE", length=20)
 	public String getRecipientMobile() {
 		return this.recipientMobile;
 	}
@@ -216,7 +225,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_NAME")
+	@Column(name="RECIPIENT_NAME", length=20)
 	public String getRecipientName() {
 		return this.recipientName;
 	}
@@ -226,7 +235,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_POSTCODE")
+	@Column(name="RECIPIENT_POSTCODE", length=20)
 	public String getRecipientPostcode() {
 		return this.recipientPostcode;
 	}
@@ -236,7 +245,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_PROVINCE")
+	@Column(name="RECIPIENT_PROVINCE", length=20)
 	public String getRecipientProvince() {
 		return this.recipientProvince;
 	}
@@ -246,7 +255,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_STREET")
+	@Column(name="RECIPIENT_STREET", length=20)
 	public String getRecipientStreet() {
 		return this.recipientStreet;
 	}
@@ -256,7 +265,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RECIPIENT_TELNO")
+	@Column(name="RECIPIENT_TELNO", length=20)
 	public String getRecipientTelno() {
 		return this.recipientTelno;
 	}
@@ -266,7 +275,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="RIGHT_TAG")
+	@Column(name="RIGHT_TAG", length=20)
 	public String getRightTag() {
 		return this.rightTag;
 	}
@@ -276,7 +285,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_CITY")
+	@Column(name="SEND_CITY", length=20)
 	public String getSendCity() {
 		return this.sendCity;
 	}
@@ -286,7 +295,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_CONTACTOR")
+	@Column(name="SEND_CONTACTOR", length=20)
 	public String getSendContactor() {
 		return this.sendContactor;
 	}
@@ -296,7 +305,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_COUNTRY")
+	@Column(name="SEND_COUNTRY", length=20)
 	public String getSendCountry() {
 		return this.sendCountry;
 	}
@@ -306,7 +315,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_DISTRICT")
+	@Column(name="SEND_DISTRICT", length=20)
 	public String getSendDistrict() {
 		return this.sendDistrict;
 	}
@@ -316,7 +325,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_MOBILE")
+	@Column(name="SEND_MOBILE", length=20)
 	public String getSendMobile() {
 		return this.sendMobile;
 	}
@@ -326,7 +335,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_NAME")
+	@Column(name="SEND_NAME", length=45)
 	public String getSendName() {
 		return this.sendName;
 	}
@@ -336,7 +345,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_PROVINCE")
+	@Column(name="SEND_PROVINCE", length=20)
 	public String getSendProvince() {
 		return this.sendProvince;
 	}
@@ -346,7 +355,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_STREET")
+	@Column(name="SEND_STREET", length=20)
 	public String getSendStreet() {
 		return this.sendStreet;
 	}
@@ -356,7 +365,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_TELNO")
+	@Column(name="SEND_TELNO", length=20)
 	public String getSendTelno() {
 		return this.sendTelno;
 	}
@@ -366,7 +375,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
-	@Column(name="SEND_TIME")
+	@Column(name="SEND_TIME", length=20)
 	public String getSendTime() {
 		return this.sendTime;
 	}
@@ -376,6 +385,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -385,6 +395,7 @@ public class ExpresstempleteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getYear() {
 		return this.year;
 	}

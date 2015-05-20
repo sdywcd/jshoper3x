@@ -25,6 +25,7 @@ public class GoodsstarCommentT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getStarcommentid() {
 		return this.starcommentid;
 	}
@@ -35,6 +36,7 @@ public class GoodsstarCommentT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -44,6 +46,7 @@ public class GoodsstarCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -53,6 +56,7 @@ public class GoodsstarCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -62,6 +66,7 @@ public class GoodsstarCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getStarnum() {
 		return this.starnum;
 	}

@@ -26,6 +26,7 @@ public class LocationT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getLid() {
 		return this.lid;
 	}
@@ -35,6 +36,7 @@ public class LocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getLat() {
 		return this.lat;
 	}
@@ -44,6 +46,7 @@ public class LocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getLng() {
 		return this.lng;
 	}
@@ -53,6 +56,7 @@ public class LocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUserid() {
 		return this.userid;
 	}
@@ -62,6 +66,7 @@ public class LocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getUsername() {
 		return this.username;
 	}
@@ -71,6 +76,7 @@ public class LocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}
@@ -80,6 +86,7 @@ public class LocationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getZoom() {
 		return this.zoom;
 	}

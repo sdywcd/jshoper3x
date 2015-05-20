@@ -39,6 +39,7 @@ public class CouponT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getCid() {
 		return this.cid;
 	}
@@ -49,6 +50,7 @@ public class CouponT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getBegintime() {
 		return this.begintime;
 	}
@@ -58,6 +60,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=225)
 	public String getCimage() {
 		return this.cimage;
 	}
@@ -67,6 +70,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCoupontypeid() {
 		return this.coupontypeid;
 	}
@@ -76,6 +80,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getCoupontypename() {
 		return this.coupontypename;
 	}
@@ -86,6 +91,7 @@ public class CouponT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -95,6 +101,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -104,6 +111,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=225)
 	public String getCtitle() {
 		return this.ctitle;
 	}
@@ -114,6 +122,7 @@ public class CouponT implements Serializable {
 
 
 	@Lob
+	@Column(nullable=false)
 	public String getDetails() {
 		return this.details;
 	}
@@ -124,6 +133,7 @@ public class CouponT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getEndtime() {
 		return this.endtime;
 	}
@@ -133,6 +143,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getGousersum() {
 		return this.gousersum;
 	}
@@ -142,6 +153,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getLat() {
 		return this.lat;
 	}
@@ -151,6 +163,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getLng() {
 		return this.lng;
 	}
@@ -161,6 +174,7 @@ public class CouponT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getModifytime() {
 		return this.modifytime;
 	}
@@ -170,6 +184,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getReadcount() {
 		return this.readcount;
 	}
@@ -179,6 +194,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getReplycount() {
 		return this.replycount;
 	}
@@ -188,6 +204,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getStarsum() {
 		return this.starsum;
 	}
@@ -197,6 +214,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getStarusersum() {
 		return this.starusersum;
 	}
@@ -206,6 +224,7 @@ public class CouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getZoom() {
 		return this.zoom;
 	}

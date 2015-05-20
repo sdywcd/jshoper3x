@@ -32,6 +32,7 @@ public class SiteNavigationT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getSnid() {
 		return this.snid;
 	}
@@ -42,6 +43,7 @@ public class SiteNavigationT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -51,6 +53,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -60,7 +63,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
-	@Column(name="HTML_PATH")
+	@Column(name="HTML_PATH", nullable=false, length=255)
 	public String getHtmlPath() {
 		return this.htmlPath;
 	}
@@ -70,7 +73,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
-	@Column(name="IS_TARGET_BLANK")
+	@Column(name="IS_TARGET_BLANK", nullable=false, length=1)
 	public String getIsTargetBlank() {
 		return this.isTargetBlank;
 	}
@@ -80,7 +83,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
-	@Column(name="IS_VISIBLE")
+	@Column(name="IS_VISIBLE", nullable=false, length=1)
 	public String getIsVisible() {
 		return this.isVisible;
 	}
@@ -90,6 +93,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}
@@ -99,6 +103,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getPosition() {
 		return this.position;
 	}
@@ -108,6 +113,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -117,6 +123,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -126,6 +133,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getSign() {
 		return this.sign;
 	}
@@ -135,6 +143,7 @@ public class SiteNavigationT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getSort() {
 		return this.sort;
 	}

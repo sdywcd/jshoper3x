@@ -30,6 +30,7 @@ public class EcouponT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getEid() {
 		return this.eid;
 	}
@@ -40,6 +41,7 @@ public class EcouponT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getBegintime() {
 		return this.begintime;
 	}
@@ -49,6 +51,7 @@ public class EcouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getEcouponstate() {
 		return this.ecouponstate;
 	}
@@ -59,6 +62,7 @@ public class EcouponT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getEndtime() {
 		return this.endtime;
 	}
@@ -68,6 +72,7 @@ public class EcouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getFavourableprices() {
 		return this.favourableprices;
 	}
@@ -77,6 +82,7 @@ public class EcouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -86,6 +92,7 @@ public class EcouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -95,6 +102,7 @@ public class EcouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=500)
 	public String getNote() {
 		return this.note;
 	}
@@ -104,6 +112,7 @@ public class EcouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getPricededuction() {
 		return this.pricededuction;
 	}
@@ -113,6 +122,7 @@ public class EcouponT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}

@@ -25,6 +25,7 @@ public class GoodsTwocodeRpT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -34,6 +35,7 @@ public class GoodsTwocodeRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -43,6 +45,7 @@ public class GoodsTwocodeRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getProductid() {
 		return this.productid;
 	}
@@ -52,6 +55,7 @@ public class GoodsTwocodeRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getProductname() {
 		return this.productname;
 	}
@@ -61,6 +65,7 @@ public class GoodsTwocodeRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -70,6 +75,7 @@ public class GoodsTwocodeRpT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getTwocodepath() {
 		return this.twocodepath;
 	}

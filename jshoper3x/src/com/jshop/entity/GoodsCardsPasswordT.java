@@ -27,6 +27,7 @@ public class GoodsCardsPasswordT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -37,6 +38,7 @@ public class GoodsCardsPasswordT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -46,7 +48,7 @@ public class GoodsCardsPasswordT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_CARDS_ID")
+	@Column(name="GOODS_CARDS_ID", nullable=false, length=20)
 	public String getGoodsCardsId() {
 		return this.goodsCardsId;
 	}
@@ -56,6 +58,7 @@ public class GoodsCardsPasswordT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -65,6 +68,7 @@ public class GoodsCardsPasswordT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getPassword() {
 		return this.password;
 	}
@@ -74,6 +78,7 @@ public class GoodsCardsPasswordT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getStatus() {
 		return this.status;
 	}
@@ -84,6 +89,7 @@ public class GoodsCardsPasswordT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}

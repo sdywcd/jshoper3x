@@ -32,6 +32,7 @@ public class FavoriteT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getFavoriteid() {
 		return this.favoriteid;
 	}
@@ -42,6 +43,7 @@ public class FavoriteT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getAddtime() {
 		return this.addtime;
 	}
@@ -51,6 +53,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getDescript() {
 		return this.descript;
 	}
@@ -60,6 +63,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -69,6 +73,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getHtmlpath() {
 		return this.htmlpath;
 	}
@@ -78,6 +83,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -87,6 +93,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(length=10)
 	public String getMemberprice() {
 		return this.memberprice;
 	}
@@ -96,6 +103,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getProductid() {
 		return this.productid;
 	}
@@ -114,6 +122,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -123,6 +132,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getTag() {
 		return this.tag;
 	}
@@ -132,6 +142,7 @@ public class FavoriteT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=200)
 	public String getTitle() {
 		return this.title;
 	}

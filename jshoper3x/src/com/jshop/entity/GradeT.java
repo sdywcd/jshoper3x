@@ -27,6 +27,7 @@ public class GradeT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getGradeid() {
 		return this.gradeid;
 	}
@@ -37,6 +38,7 @@ public class GradeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -46,6 +48,7 @@ public class GradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -55,6 +58,7 @@ public class GradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getDiscount() {
 		return this.discount;
 	}
@@ -64,6 +68,7 @@ public class GradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getGradename() {
 		return this.gradename;
 	}
@@ -73,6 +78,7 @@ public class GradeT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getGradevalue() {
 		return this.gradevalue;
 	}
@@ -82,6 +88,7 @@ public class GradeT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getNeedcost() {
 		return this.needcost;
 	}

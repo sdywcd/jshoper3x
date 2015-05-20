@@ -24,7 +24,7 @@ public class GoodsTypeBrandT implements Serializable {
 
 
 	@Id
-	@Column(name="GOODS_TYPE_BRAND_TID")
+	@Column(name="GOODS_TYPE_BRAND_TID", unique=true, nullable=false, length=20)
 	public String getGoodsTypeBrandTid() {
 		return this.goodsTypeBrandTid;
 	}
@@ -34,6 +34,7 @@ public class GoodsTypeBrandT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getBrandid() {
 		return this.brandid;
 	}
@@ -43,6 +44,7 @@ public class GoodsTypeBrandT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getBrandname() {
 		return this.brandname;
 	}
@@ -52,7 +54,7 @@ public class GoodsTypeBrandT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_ID")
+	@Column(name="GOODS_TYPE_ID", nullable=false, length=20)
 	public String getGoodsTypeId() {
 		return this.goodsTypeId;
 	}
@@ -62,6 +64,7 @@ public class GoodsTypeBrandT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getName() {
 		return this.name;
 	}

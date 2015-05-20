@@ -24,7 +24,7 @@ public class ImgTypeT implements Serializable {
 
 
 	@Id
-	@Column(name="IMG_TYPE_ID")
+	@Column(name="IMG_TYPE_ID", unique=true, nullable=false, length=20)
 	public String getImgTypeId() {
 		return this.imgTypeId;
 	}
@@ -35,6 +35,7 @@ public class ImgTypeT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -44,6 +45,7 @@ public class ImgTypeT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -53,7 +55,7 @@ public class ImgTypeT implements Serializable {
 	}
 
 
-	@Column(name="IMG_TYPE_NAME")
+	@Column(name="IMG_TYPE_NAME", nullable=false, length=45)
 	public String getImgTypeName() {
 		return this.imgTypeName;
 	}

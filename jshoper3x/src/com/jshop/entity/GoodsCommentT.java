@@ -35,6 +35,7 @@ public class GoodsCommentT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getCommentid() {
 		return this.commentid;
 	}
@@ -44,6 +45,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=500)
 	public String getCommentcontent() {
 		return this.commentcontent;
 	}
@@ -53,6 +55,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getEmailable() {
 		return this.emailable;
 	}
@@ -62,6 +65,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -71,6 +75,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -81,6 +86,7 @@ public class GoodsCommentT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getPosttime() {
 		return this.posttime;
 	}
@@ -90,6 +96,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getReplyid() {
 		return this.replyid;
 	}
@@ -99,6 +106,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getReplyorcomment() {
 		return this.replyorcomment;
 	}
@@ -108,6 +116,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getReplyorcommentuserid() {
 		return this.replyorcommentuserid;
 	}
@@ -117,6 +126,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getReplyorcommentusername() {
 		return this.replyorcommentusername;
 	}
@@ -135,6 +145,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -144,6 +155,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getState() {
 		return this.state;
 	}
@@ -153,6 +165,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getTitle() {
 		return this.title;
 	}
@@ -162,6 +175,7 @@ public class GoodsCommentT implements Serializable {
 	}
 
 
+	@Column(length=1)
 	public String getVirtualadd() {
 		return this.virtualadd;
 	}

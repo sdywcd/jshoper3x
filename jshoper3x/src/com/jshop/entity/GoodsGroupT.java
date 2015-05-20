@@ -80,6 +80,7 @@ public class GoodsGroupT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getGroupid() {
 		return this.groupid;
 	}
@@ -89,6 +90,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getBargainprice() {
 		return this.bargainprice;
 	}
@@ -98,6 +100,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getBrandid() {
 		return this.brandid;
 	}
@@ -107,6 +110,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getBrandname() {
 		return this.brandname;
 	}
@@ -116,6 +120,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1000)
 	public String getCommoditylist() {
 		return this.commoditylist;
 	}
@@ -125,6 +130,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, precision=10, scale=2)
 	public BigDecimal getCost() {
 		return this.cost;
 	}
@@ -135,6 +141,7 @@ public class GoodsGroupT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -144,6 +151,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getCreatorid() {
 		return this.creatorid;
 	}
@@ -153,6 +161,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getFname() {
 		return this.fname;
 	}
@@ -162,7 +171,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_PARAMETER_VALUE")
+	@Column(name="GOODS_PARAMETER_VALUE", nullable=false, length=5000)
 	public String getGoodsParameterValue() {
 		return this.goodsParameterValue;
 	}
@@ -172,7 +181,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_ID")
+	@Column(name="GOODS_TYPE_ID", nullable=false, length=20)
 	public String getGoodsTypeId() {
 		return this.goodsTypeId;
 	}
@@ -182,7 +191,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="GOODS_TYPE_NAME")
+	@Column(name="GOODS_TYPE_NAME", nullable=false, length=45)
 	public String getGoodsTypeName() {
 		return this.goodsTypeName;
 	}
@@ -192,6 +201,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getGoodsid() {
 		return this.goodsid;
 	}
@@ -201,6 +211,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getGoodsname() {
 		return this.goodsname;
 	}
@@ -211,7 +222,7 @@ public class GoodsGroupT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="GROUP_BEGIN_TIME")
+	@Column(name="GROUP_BEGIN_TIME", nullable=false)
 	public Date getGroupBeginTime() {
 		return this.groupBeginTime;
 	}
@@ -222,7 +233,7 @@ public class GoodsGroupT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="GROUP_END_TIME")
+	@Column(name="GROUP_END_TIME", nullable=false)
 	public Date getGroupEndTime() {
 		return this.groupEndTime;
 	}
@@ -232,7 +243,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="GROUP_NEED_POINTS_LIMIT")
+	@Column(name="GROUP_NEED_POINTS_LIMIT", nullable=false)
 	public double getGroupNeedPointsLimit() {
 		return this.groupNeedPointsLimit;
 	}
@@ -242,6 +253,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getGroupname() {
 		return this.groupname;
 	}
@@ -251,6 +263,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, precision=10, scale=2)
 	public BigDecimal getGroupprice() {
 		return this.groupprice;
 	}
@@ -260,6 +273,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getHotsale() {
 		return this.hotsale;
 	}
@@ -269,7 +283,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="HTML_PATH")
+	@Column(name="HTML_PATH", nullable=false, length=255)
 	public String getHtmlPath() {
 		return this.htmlPath;
 	}
@@ -279,7 +293,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="IS_NEW")
+	@Column(name="IS_NEW", nullable=false, length=1)
 	public String getIsNew() {
 		return this.isNew;
 	}
@@ -289,6 +303,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIsmobileplatformgoods() {
 		return this.ismobileplatformgoods;
 	}
@@ -298,6 +313,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIsoutsite() {
 		return this.isoutsite;
 	}
@@ -307,6 +323,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getIsvirtualsale() {
 		return this.isvirtualsale;
 	}
@@ -316,6 +333,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getKeywords() {
 		return this.keywords;
 	}
@@ -325,7 +343,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="LIMIT_BUY")
+	@Column(name="LIMIT_BUY", nullable=false)
 	public int getLimitBuy() {
 		return this.limitBuy;
 	}
@@ -335,6 +353,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLname() {
 		return this.lname;
 	}
@@ -344,6 +363,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getLtypeid() {
 		return this.ltypeid;
 	}
@@ -353,7 +373,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="MAIN_PICTURE")
+	@Column(name="MAIN_PICTURE", nullable=false, length=100)
 	public String getMainPicture() {
 		return this.mainPicture;
 	}
@@ -363,7 +383,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="MAIN_SMALL_PICTURE")
+	@Column(name="MAIN_SMALL_PICTURE", length=100)
 	public String getMainSmallPicture() {
 		return this.mainSmallPicture;
 	}
@@ -373,6 +393,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, precision=10, scale=2)
 	public BigDecimal getMemberprice() {
 		return this.memberprice;
 	}
@@ -382,7 +403,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="META_DESCRIPTION")
+	@Column(name="META_DESCRIPTION", nullable=false, length=255)
 	public String getMetaDescription() {
 		return this.metaDescription;
 	}
@@ -392,7 +413,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="META_KEYWORDS")
+	@Column(name="META_KEYWORDS", nullable=false, length=255)
 	public String getMetaKeywords() {
 		return this.metaKeywords;
 	}
@@ -402,6 +423,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getNavid() {
 		return this.navid;
 	}
@@ -411,6 +433,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getNname() {
 		return this.nname;
 	}
@@ -420,6 +443,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=255)
 	public String getOutsitelink() {
 		return this.outsitelink;
 	}
@@ -429,6 +453,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(length=2000)
 	public String getPictures() {
 		return this.pictures;
 	}
@@ -438,6 +463,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getPoints() {
 		return this.points;
 	}
@@ -447,6 +473,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, precision=10, scale=2)
 	public BigDecimal getPrice() {
 		return this.price;
 	}
@@ -456,6 +483,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getReadcount() {
 		return this.readcount;
 	}
@@ -465,7 +493,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="REAL_ORDERS_COUNT")
+	@Column(name="REAL_ORDERS_COUNT", nullable=false)
 	public int getRealOrdersCount() {
 		return this.realOrdersCount;
 	}
@@ -475,6 +503,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getRecommended() {
 		return this.recommended;
 	}
@@ -484,6 +513,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, precision=10, scale=2)
 	public BigDecimal getSaleprice() {
 		return this.saleprice;
 	}
@@ -493,6 +523,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getSalestate() {
 		return this.salestate;
 	}
@@ -502,6 +533,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getShopid() {
 		return this.shopid;
 	}
@@ -511,6 +543,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getShopname() {
 		return this.shopname;
 	}
@@ -520,7 +553,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="SMALL_PICTURES")
+	@Column(name="SMALL_PICTURES", length=2000)
 	public String getSmallPictures() {
 		return this.smallPictures;
 	}
@@ -530,6 +563,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getSname() {
 		return this.sname;
 	}
@@ -539,6 +573,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getSort() {
 		return this.sort;
 	}
@@ -548,6 +583,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getStypeid() {
 		return this.stypeid;
 	}
@@ -557,6 +593,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getSubgroupname() {
 		return this.subgroupname;
 	}
@@ -566,6 +603,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getTotalcomment() {
 		return this.totalcomment;
 	}
@@ -575,6 +613,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getTotalstar() {
 		return this.totalstar;
 	}
@@ -584,6 +623,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getTotalstaruser() {
 		return this.totalstaruser;
 	}
@@ -594,6 +634,7 @@ public class GoodsGroupT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -603,6 +644,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getUsersetnum() {
 		return this.usersetnum;
 	}
@@ -612,6 +654,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getVersiont() {
 		return this.versiont;
 	}
@@ -621,7 +664,7 @@ public class GoodsGroupT implements Serializable {
 	}
 
 
-	@Column(name="VIRTUAL_ORDERS_COUNT")
+	@Column(name="VIRTUAL_ORDERS_COUNT", nullable=false)
 	public int getVirtualOrdersCount() {
 		return this.virtualOrdersCount;
 	}

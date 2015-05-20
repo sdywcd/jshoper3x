@@ -25,6 +25,7 @@ public class AppRegisterTokenT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getAid() {
 		return this.aid;
 	}
@@ -35,6 +36,7 @@ public class AppRegisterTokenT implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -44,6 +46,7 @@ public class AppRegisterTokenT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getMemberid() {
 		return this.memberid;
 	}
@@ -53,6 +56,7 @@ public class AppRegisterTokenT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getToken() {
 		return this.token;
 	}
@@ -62,6 +66,7 @@ public class AppRegisterTokenT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=45)
 	public String getUuid() {
 		return this.uuid;
 	}

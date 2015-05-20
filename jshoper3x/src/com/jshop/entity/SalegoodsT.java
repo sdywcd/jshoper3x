@@ -42,6 +42,7 @@ public class SalegoodsT implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getSalegoodsid() {
 		return this.salegoodsid;
 	}
@@ -71,6 +72,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=45)
 	public String getHtmlpath() {
 		return this.htmlpath;
 	}
@@ -89,6 +91,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=35)
 	public String getManufacturer() {
 		return this.manufacturer;
 	}
@@ -107,6 +110,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=10)
 	public String getNewornot() {
 		return this.newornot;
 	}
@@ -116,6 +120,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=30)
 	public String getPlace() {
 		return this.place;
 	}
@@ -125,6 +130,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getRealname() {
 		return this.realname;
 	}
@@ -134,6 +140,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getSalebudget() {
 		return this.salebudget;
 	}
@@ -143,6 +150,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=200)
 	public String getSalegoodsinformation() {
 		return this.salegoodsinformation;
 	}
@@ -152,6 +160,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=50)
 	public String getSalegoodsmessage() {
 		return this.salegoodsmessage;
 	}
@@ -161,6 +170,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getSalegoodsname() {
 		return this.salegoodsname;
 	}
@@ -170,6 +180,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=50)
 	public String getSalegoodsnumber() {
 		return this.salegoodsnumber;
 	}
@@ -179,6 +190,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=225)
 	public String getSalegoodspictureurl() {
 		return this.salegoodspictureurl;
 	}
@@ -188,6 +200,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=1)
 	public String getSalegoodsstate() {
 		return this.salegoodsstate;
 	}
@@ -197,6 +210,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public int getSalejoinpeople() {
 		return this.salejoinpeople;
 	}
@@ -206,6 +220,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(length=20)
 	public String getSalepeople() {
 		return this.salepeople;
 	}
@@ -215,6 +230,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getSaleprice() {
 		return this.saleprice;
 	}
@@ -224,6 +240,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false)
 	public double getSalestartingprice() {
 		return this.salestartingprice;
 	}
@@ -233,6 +250,7 @@ public class SalegoodsT implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=20)
 	public String getUserid() {
 		return this.userid;
 	}

@@ -23,6 +23,7 @@ public class ModuleM implements Serializable {
 
 
 	@Id
+	@Column(unique=true, nullable=false, length=20)
 	public String getId() {
 		return this.id;
 	}
@@ -33,6 +34,7 @@ public class ModuleM implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -42,6 +44,7 @@ public class ModuleM implements Serializable {
 	}
 
 
+	@Column(nullable=false, length=100)
 	public String getModulename() {
 		return this.modulename;
 	}

@@ -2,6 +2,7 @@ package com.jshop.action.mall.backstage.goods;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,16 +102,16 @@ public class GoodsTAction extends BaseTAction {
 	private String navid;
 	private String ltypeid;
 	private String stypeid;
-	private String price;
-	private String memberprice;
-	private String points;
+	private BigDecimal price;
+	private BigDecimal memberprice;
+	private double points;
 	private String pictureurl;
 	private String quantity;
 	private String salestate;
 	private String detail;
 	private String keywordname;
 	private String weight;
-	private String readcount;
+	private double readcount;
 	private String relatedproductid;
 	private String recommended;
 	private String hotsale;
@@ -123,8 +124,8 @@ public class GoodsTAction extends BaseTAction {
 	private String placeStore;
 	private String metaKeywords;
 	private String metaDescription;
-	private String cost;
-	private String saleprice;
+	private BigDecimal cost;
+	private BigDecimal saleprice;
 	private String isNew;
 	private String htmlPath;
 	private String productSn;
@@ -620,30 +621,7 @@ public class GoodsTAction extends BaseTAction {
 		this.isSpecificationsOpen = isSpecificationsOpen;
 	}
 
-	public String getPrice() {
-		return price;
-	}
-
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
-	public String getMemberprice() {
-		return memberprice;
-	}
-
-	public void setMemberprice(String memberprice) {
-		this.memberprice = memberprice;
-	}
-
-	public String getPoints() {
-		return points;
-	}
-
-	public void setPoints(String points) {
-		this.points = points;
-	}
-
+	
 	public String getWarehouseLocation() {
 		return warehouseLocation;
 	}
@@ -660,13 +638,7 @@ public class GoodsTAction extends BaseTAction {
 		this.quantity = quantity;
 	}
 
-	public String getReadcount() {
-		return readcount;
-	}
 
-	public void setReadcount(String readcount) {
-		this.readcount = readcount;
-	}
 
 	public String getSort() {
 		return sort;
@@ -684,19 +656,14 @@ public class GoodsTAction extends BaseTAction {
 		this.replycount = replycount;
 	}
 
-	public String getCost() {
-		return cost;
-	}
+	
 
-	public void setCost(String cost) {
-		this.cost = cost;
-	}
 
-	public String getSaleprice() {
+	public BigDecimal getSaleprice() {
 		return saleprice;
 	}
 
-	public void setSaleprice(String saleprice) {
+	public void setSaleprice(BigDecimal saleprice) {
 		this.saleprice = saleprice;
 	}
 
@@ -928,6 +895,46 @@ public class GoodsTAction extends BaseTAction {
 		this.outsitelink = outsitelink;
 	}
 
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public BigDecimal getMemberprice() {
+		return memberprice;
+	}
+
+	public void setMemberprice(BigDecimal memberprice) {
+		this.memberprice = memberprice;
+	}
+
+	public double getPoints() {
+		return points;
+	}
+
+	public void setPoints(double points) {
+		this.points = points;
+	}
+
+	public double getReadcount() {
+		return readcount;
+	}
+
+	public void setReadcount(double readcount) {
+		this.readcount = readcount;
+	}
+
+	public BigDecimal getCost() {
+		return cost;
+	}
+
+	public void setCost(BigDecimal cost) {
+		this.cost = cost;
+	}
+
 	/**
 	 * 清理错误
 	 */
@@ -963,11 +970,11 @@ public class GoodsTAction extends BaseTAction {
 		gt.setUsersetnum(this.getUsersetnum());
 		gt.setBrandid(this.getBrandid());
 		gt.setBrandname(this.getBrandname());
-		gt.setCost(Double.parseDouble(this.getCost()));
-		gt.setSaleprice(Double.parseDouble(this.getSaleprice()));
-		gt.setMemberprice(Double.parseDouble(this.getMemberprice()));
-		gt.setPrice(Double.parseDouble(this.getPrice()));
-		gt.setPoints(Double.parseDouble(this.getPoints()));
+		gt.setCost(this.getCost());
+		gt.setSaleprice(this.getSaleprice());
+		gt.setMemberprice(this.getMemberprice());
+		gt.setPrice(this.getPrice());
+		gt.setPoints(this.getPoints());
 		gt.setSort(Integer.parseInt(this.getSort()));
 		gt.setIsNew(this.getIsNew());
 		gt.setRecommended(this.getRecommended());
@@ -1145,12 +1152,16 @@ public class GoodsTAction extends BaseTAction {
 			} else {
 				gt.setIsNew("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-			if (gt.getSalestate().equals(GoodsSaleState.SALE.getState())) {
+			if (gt.getSalestate().equals(GoodsState.SALE.getState())) {
 				gt.setSalestate("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
 			} else {
 				gt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
 			}
-
+			if (gt.getIsmobileplatformgoods().equals(GoodsState.ISMOBILEPLATFORM.getState())) {
+				gt.setIsmobileplatformgoods("<span class='truestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
+			} else {
+				gt.setIsmobileplatformgoods("<span class='falsestatue'><img width='20px' height='20px' src='"+this.getBasepath()+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
+			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gt.getGoodsid());
 			cellMap.put("cell", new Object[] {
@@ -1162,7 +1173,8 @@ public class GoodsTAction extends BaseTAction {
 					gt.getIsNew(), 
 					gt.getBargainprice(), 
 					gt.getHotsale(), 
-					gt.getRecommended(), 
+					gt.getRecommended(),
+					gt.getIsmobileplatformgoods(),
 					gt.getQuantity(), 
 					"<a id='editgoods' href='goods.jsp?operate=edit&folder=setting&goodsid="+gt.getGoodsid()+"' name='editgoods'>[编辑]</a>"});
 			rows.add(cellMap);
@@ -1233,11 +1245,11 @@ public class GoodsTAction extends BaseTAction {
 				bean.setUsersetnum(this.getUsersetnum());
 				bean.setBrandid(this.getBrandid());
 				bean.setBrandname(this.getBrandname());
-				bean.setCost(Double.parseDouble(this.getCost()));
-				bean.setSaleprice(Double.parseDouble(this.getSaleprice()));
-				bean.setMemberprice(Double.parseDouble(this.getMemberprice()));
-				bean.setPrice(Double.parseDouble(this.getPrice()));
-				bean.setPoints(Double.parseDouble(this.getPoints()));
+				bean.setCost(this.getCost());
+				bean.setSaleprice(this.getSaleprice());
+				bean.setMemberprice(this.getMemberprice());
+				bean.setPrice(this.getPrice());
+				bean.setPoints(this.getPoints());
 				bean.setSort(Integer.parseInt(this.getSort()));
 				bean.setIsNew(this.getIsNew());
 				bean.setRecommended(this.getRecommended());
@@ -1351,10 +1363,11 @@ public class GoodsTAction extends BaseTAction {
 				if(gt!=null){
 					gt.setSalestate(this.getSalestate());
 					this.goodsTService.update(gt);
+					this.setSucflag(true);
 				}
 			}
-			this.setSucflag(true);
-			}
+			
+		}
 		return JSON;
 	}
 
@@ -1747,7 +1760,9 @@ public class GoodsTAction extends BaseTAction {
 			}else{
 				order=Order.desc(this.getSortname());
 			}
+		
 			Criterion criterion=Restrictions.like("goodsname", this.getGoodsname(),MatchMode.ANYWHERE);
+			total=this.goodsTService.count(GoodsT.class, criterion).intValue();
 			beanlist=this.goodsTService.findByCriteriaByPage(GoodsT.class, criterion, order, currentPage, lineSize);
 			this.processGoodsList(beanlist);
 			this.setSucflag(true);

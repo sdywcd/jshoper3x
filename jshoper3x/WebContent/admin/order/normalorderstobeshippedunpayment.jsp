@@ -20,7 +20,7 @@
 			<a class="brand" href="#"><img
 				src="<%=basePath%>admin/ui/assets/img/logo.png" width="175"
 				height="30" alt=""></a> <a class="brand" href="#">订单管理</a> <a
-				class="brand2">所有未发货订单列表</a>
+				class="brand2">所有未付款货到付款订单列表</a>
 		</div>
 	</div>
 	<div class="container-fluid containerb">

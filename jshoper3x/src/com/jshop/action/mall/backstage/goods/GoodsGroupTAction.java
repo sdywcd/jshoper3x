@@ -23,9 +23,11 @@ import org.hibernate.criterion.Restrictions;
 import com.jshop.action.mall.backstage.base.BaseTAction;
 import com.jshop.action.mall.backstage.utils.BaseTools;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.GoodsSaleState;
+import com.jshop.action.mall.backstage.utils.enums.BaseEnums.GoodsState;
 import com.jshop.action.mall.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsGroupDetailRpT;
 import com.jshop.entity.GoodsGroupT;
+import com.jshop.entity.GoodsT;
 import com.jshop.service.GoodsGroupTService;
 import com.jshop.service.impl.Serial;
 @Namespace("")
@@ -630,14 +632,50 @@ public class GoodsGroupTAction extends BaseTAction {
 	 * @param ggtList
 	 */
 	public void processGoodsGroupTList(List<GoodsGroupT> ggtList){
-		rows.clear();
+		String basePath=BaseTools.getBasePath();
 		for(Iterator<GoodsGroupT> it = ggtList.iterator();it.hasNext();){
 			GoodsGroupT ggt =it.next();
+			if (ggt.getRecommended().equals(GoodsState.RECOMMENDED.getState())) {
+				ggt.setRecommended("<span class='truestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
+			} else {
+				ggt.setRecommended("<span class='falsestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
+			}
+			if (ggt.getHotsale().equals(GoodsState.HOTSALE.getState())) {
+				ggt.setHotsale("<span class='truestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
+			} else {
+				ggt.setHotsale("<span class='falsestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
+			}
+			if (ggt.getBargainprice().equals(GoodsState.BARGAINPRICE.getState())) {
+				ggt.setBargainprice("<span class='truestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
+			} else {
+				ggt.setBargainprice("<span class='falsestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
+			}
+			if (ggt.getIsNew().equals(GoodsState.NEW.getState())) {
+				ggt.setIsNew("<span class='truestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
+			} else {
+				ggt.setIsNew("<span class='falsestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
+			}
+			if (ggt.getSalestate().equals(GoodsSaleState.SALE.getState())) {
+				ggt.setSalestate("<span class='truestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
+			} else {
+				ggt.setSalestate("<span class='falsestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
+			}
+			if (ggt.getIsmobileplatformgoods().equals(GoodsState.ISMOBILEPLATFORM.getState())) {
+				ggt.setIsmobileplatformgoods("<span class='truestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-apply.png'/></span>");
+			} else {
+				ggt.setIsmobileplatformgoods("<span class='falsestatue'><img width='20px' height='20px' src='"+basePath+"/admin/ui/assets/img/header/icon-48-deny.png'/></span>");
+			}
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", ggt.getGroupid());
 			cellMap.put("cell", new Object[]{
 					ggt.getGroupname(),
 					ggt.getGroupprice(),
+					ggt.getSalestate(), 
+					ggt.getIsNew(), 
+					ggt.getBargainprice(), 
+					ggt.getHotsale(), 
+					ggt.getRecommended(), 
+					ggt.getIsmobileplatformgoods(),
 					BaseTools.formateDbDate(ggt.getGroupBeginTime()),
 					BaseTools.formateDbDate(ggt.getGroupEndTime()),
 					"<a id='editgroupgoods' href='goodsgroup.jsp?operate=edit&folder=goods&groupid="+ggt.getGroupid()+"' name='editgoodsgroup'>[编辑]</a>"});
@@ -816,6 +854,161 @@ public class GoodsGroupTAction extends BaseTAction {
 			return JSON;
 		}
 		return JSON;
-		
+	}
+	
+	/**
+	 * 更新商品团购上架状态
+	 * @return
+	 */
+	@Action(value = "updateGoodsGroupsalestate", results = { @Result(name = "json", type = "json") })
+	public String updateGoodsGroupsalestate(){
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String strs[]=StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				Criterion criterion =Restrictions.eq("groupid", s);
+				GoodsGroupT bean=this.goodsGroupTService.findOneByCriteria(GoodsGroupT.class, criterion);
+				if(bean!=null){
+					bean.setSalestate(this.getSalestate());
+					this.goodsGroupTService.update(bean);
+					this.setSucflag(true);
+				}
+			}
+		}
+		return JSON;
+	}
+	
+	
+	/**
+	 * 更新特价标记
+	 * @return
+	 */
+	@Action(value="updateGoodsGroupbargainprice",results={@Result(name="json", type="json")})
+	public String updateGoodsGroupbargainprice(){
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String strs[]=StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				Criterion criterion =Restrictions.eq("groupid", s);
+				GoodsGroupT bean=this.goodsGroupTService.findOneByCriteria(GoodsGroupT.class, criterion);
+				if(bean!=null){
+					bean.setBargainprice(this.getBargainprice());
+					this.goodsGroupTService.update(bean);
+					this.setSucflag(true);
+				}
+			}
+		}
+		return JSON;
+	}
+	
+	
+	
+	
+	/**
+	 * 更新热销标记
+	 * @return
+	 */
+	@Action(value="updateGoodsGrouphotsale",results={@Result(name="json", type="json")})
+	public String updateGoodsGrouphotsale(){
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String strs[]=StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				Criterion criterion =Restrictions.eq("groupid", s);
+				GoodsGroupT bean=this.goodsGroupTService.findOneByCriteria(GoodsGroupT.class, criterion);
+				if(bean!=null){
+					bean.setHotsale(this.getHotsale());
+					this.goodsGroupTService.update(bean);
+					this.setSucflag(true);
+				}
+			}
+		}
+		return JSON;
+	}
+	
+
+	/**
+	 * 更新推荐标记
+	 * @return
+	 */
+	@Action(value="updateGoodsGrouprecommend",results={@Result(name="json", type="json")})
+	public String updateGoodsGrouprecommend(){
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String strs[]=StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				Criterion criterion =Restrictions.eq("groupid", s);
+				GoodsGroupT bean=this.goodsGroupTService.findOneByCriteria(GoodsGroupT.class, criterion);
+				if(bean!=null){
+					bean.setRecommended(this.getRecommended());
+					this.goodsGroupTService.update(bean);
+					this.setSucflag(true);
+				}
+			}
+		}
+		return JSON;
+	}
+	/**
+	 * 更新新品标记
+	 * @return
+	 */
+	@Action(value="updateGoodsGroupisnew",results={@Result(name="json", type="json")})
+	public String updateGoodsGroupisnew(){
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String strs[]=StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				Criterion criterion =Restrictions.eq("groupid", s);
+				GoodsGroupT bean=this.goodsGroupTService.findOneByCriteria(GoodsGroupT.class, criterion);
+				if(bean!=null){
+					bean.setIsNew(this.getIsNew());
+					this.goodsGroupTService.update(bean);
+					this.setSucflag(true);
+				}
+			}
+		}
+		return JSON;
+	}
+	
+	/**
+	 * 更新移动平台商品标记
+	 * @return
+	 */
+	@Action(value="updateGoodsGroupismobileplatform",results={@Result(name="json", type="json")})
+	public String updateGoodsGroupismobileplatform(){
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String strs[]=StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				Criterion criterion =Restrictions.eq("groupid", s);
+				GoodsGroupT bean=this.goodsGroupTService.findOneByCriteria(GoodsGroupT.class, criterion);
+				if(bean!=null){
+					bean.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+					this.goodsGroupTService.update(bean);
+					this.setSucflag(true);
+				}
+			}
+		}
+		return JSON;
+	}
+	
+	
+	/**
+	 * 重置商品团购标记
+	 * @return
+	 */
+	@Action(value="resetGoodsGroupState",results={@Result(name="json", type="json")})
+	public String resetGoodsGroupState(){
+		if(StringUtils.isNotBlank(this.getGroupid())){
+			String strs[]=StringUtils.split(this.getGroupid(), StaticKey.SPLITDOT);
+			for(String s:strs){
+				Criterion criterion =Restrictions.eq("groupid", s);
+				GoodsGroupT bean=this.goodsGroupTService.findOneByCriteria(GoodsGroupT.class, criterion);
+				if(bean!=null){
+					bean.setRecommended(this.getRecommended());
+					bean.setHotsale(this.getHotsale());
+					bean.setBargainprice(this.getBargainprice());
+					bean.setIsNew(this.getIsNew());
+					bean.setIsmobileplatformgoods(this.getIsmobileplatformgoods());
+					this.goodsGroupTService.update(bean);
+					this.setSucflag(true);
+				}
+			}
+		}
+		return JSON;
 	}
 }
