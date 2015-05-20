@@ -203,12 +203,6 @@ $(function() {
 		dataType : 'json',
 		cache : false,
 		colModel : [{
-			display : '店铺名称',
-			name : 'shopname',
-			width : 200,
-			sortable : true,
-			align : 'center'
-		}, {
 			display : '商品品牌名称',
 			name : 'brandname',
 			width : 215,

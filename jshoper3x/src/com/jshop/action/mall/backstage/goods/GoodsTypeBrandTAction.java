@@ -18,6 +18,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.jshop.action.mall.backstage.base.BaseTAction;
+import com.jshop.action.mall.backstage.utils.BaseTools;
 import com.jshop.action.mall.backstage.utils.statickey.StaticKey;
 import com.jshop.entity.GoodsTypeBrandT;
 import com.jshop.service.GoodsTypeBrandTService;
@@ -162,6 +163,9 @@ public class GoodsTypeBrandTAction extends BaseTAction {
 			gtbt.setBrandname(brandnamearray[j]);
 			gtbt.setGoodsTypeId(this.getGoodsTypeId());
 			gtbt.setName(this.getName());
+			gtbt.setCreatorid(BaseTools.getAdminCreateId());
+			gtbt.setCreatetime(BaseTools.getSystemTime());
+			gtbt.setUpdatetime(BaseTools.getSystemTime());
 			Criterion criterion=Restrictions.and(Restrictions.eq("goodsTypeId", this.getGoodsTypeId())).add(Restrictions.eq("brandid", brandidarray[j]));
 			GoodsTypeBrandT list = this.goodsTypeBrandTService.findOneByCriteria(GoodsTypeBrandT.class, criterion);
 			if (list != null) {
@@ -217,7 +221,7 @@ public class GoodsTypeBrandTAction extends BaseTAction {
 			GoodsTypeBrandT gtbt = (GoodsTypeBrandT) it.next();
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", gtbt.getGoodsTypeBrandTid());
-			cellMap.put("cell", new Object[] {gtbt.getBrandname(), gtbt.getName() });
+			cellMap.put("cell", new Object[] {gtbt.getBrandname(), gtbt.getName(),BaseTools.formateDbDate(gtbt.getCreatetime()) });
 			rows.add(cellMap);
 		}
 
