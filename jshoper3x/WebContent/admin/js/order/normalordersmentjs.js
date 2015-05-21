@@ -148,7 +148,10 @@ $(function() {
 							str = this.id.substr(3);
 						});
 						window.location.href = "InitOrdersDetail.action?operate=edit&orderid="+str+"&folder=order";
-					return;
+						return;
+					}else{
+						formwarning("#alerterror", "请选择需要编辑的订单");
+						return false;
 					}
 				}
 			}

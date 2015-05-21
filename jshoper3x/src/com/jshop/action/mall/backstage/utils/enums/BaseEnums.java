@@ -1,6 +1,47 @@
 package com.jshop.action.mall.backstage.utils.enums;
 
 public class BaseEnums {
+	
+	
+	
+	public enum OrderTag{
+		ORDERTAG_NORMAL("普通订单","1"),
+		ORDERTAG_GROUPON("团购订单","2"),
+		ORDERTAG_MOBILE("手机订单","4");
+		private String name;
+		private String state;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+
+		public String getState() {
+			return state;
+		}
+
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private OrderTag(String name, String state) {
+			this.name = name;
+			this.state = state;
+		}
+
+		public static String getName(String state) {
+			for (OrderTag orderstate : OrderTag.values()) {
+				if (orderstate.getState().equals(state)) {
+					return orderstate.getName();
+				}
+			}
+			return "";
+		}
+	}
 	/**
 	 * 订单开票状态
 	 * 

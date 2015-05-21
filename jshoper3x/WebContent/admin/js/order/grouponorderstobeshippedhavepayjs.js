@@ -3,9 +3,9 @@
  * flexigrid list 
  */
 $(function() {
-	findAllTobeShippedOrdersHavepay=function(){
-		$("#tobeshippedordershavepaymanagement").flexigrid({
-			url : 'findAllTobeShippedOrdersHavepay.action',
+	findAllTobeShippedOrderGroupHavepay=function(){
+		$("#groupontobeshippedordershavepaymanagement").flexigrid({
+			url : 'findAllTobeShippedOrderGroupHavapay.action',
 			dataType : 'json',
 			cache : false,
 			colModel : [{ 
@@ -141,7 +141,7 @@ $(function() {
 	}else if(operate=="edit"){
 	
 	}else if(operate=="find"){
-		findAllTobeShippedOrdersHavepay();
+		findAllTobeShippedOrderGroupHavepay();
 	}
 
 

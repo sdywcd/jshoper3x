@@ -157,18 +157,11 @@
 											href="<%=basePath%>admin/order/grouponorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货团购订单</a></li>
 
 									</ul></li>
-								<li class="dropdown-submenu"><a tabindex="-1"
-									href="<%=basePath%>admin/order/auctionordersment.jsp?operate=find">拍卖订单</a>
-									<ul class="dropdown-menu">
-										<li><a tabindex="-1"
-											href="<%=basePath%>admin/order/auctionorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货拍卖订单</a></li>
-
-									</ul></li>
+						
 								<li class="dropdown-submenu"><a tabindex="-1"
 									href="<%=basePath%>admin/order/mobileordersment.jsp?operate=find">手机订单</a>
 									<ul class="dropdown-menu">
-										<li><a tabindex="-1"
-											href="<%=basePath%>admin/order/mobileorderstobeshippedunpayment.jsp?operate=find">未付款——货到付款手机订单</a></li>
+									
 										<li><a tabindex="-1"
 											href="<%=basePath%>admin/order/mobileorderstobeshippedhavepayment.jsp?operate=find">已付款——需发货手机订单</a></li>
 

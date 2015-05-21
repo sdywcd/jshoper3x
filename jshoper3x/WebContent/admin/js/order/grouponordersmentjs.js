@@ -3,9 +3,9 @@
  * flexigrid list 
  */
 $(function() {
-	  findAllOrders=function(){
-		  $("#normalordersmanagement").flexigrid({
-				url : 'findAllOrders.action',
+	  findAllGroupOrders=function(){
+		  $("#grouponordersmanagement").flexigrid({
+				url : 'findAllOrderGroup.action',
 				dataType : 'json',
 				cache : false,
 				colModel : [{
@@ -103,10 +103,6 @@ $(function() {
 					separator : true
 				} ],
 				buttons:[{
-					name:'添加普通订单',
-					bclass:'add',
-					onpress:action
-				},{
 					name:'编辑订单',
 					bclass:'edit',
 					onpress:action
@@ -137,17 +133,17 @@ $(function() {
 				checkbox:true
 			});
 			function action(com,grid){
-				if(com=='添加普通订单'){
-					window.location.href = "normalorder.jsp?operate=add&folder=orders";
-					return;
-				}else if(com=="编辑订单"){
+				if(com=="编辑订单"){
 					if ($('.trSelected', grid).length == 1) {
 						var str = "";
 						$('.trSelected', grid).each(function() {
 							str = this.id.substr(3);
 						});
-						window.location.href = "InitOrdersDetail.action?operate=edit&orderid="+str+"&folder=order";
-					return;
+						window.location.href = "findOrderGroupDetail.action?operate=edit&orderid="+str+"&folder=order";
+						return;
+					}else{
+						formwarning("#alerterror", "请选择需要编辑的订单");
+						return false;
 					}
 				}
 			}
@@ -162,6 +158,6 @@ $(function() {
 	}else if(operate=="edit"){
 	
 	}else if(operate=="find"){
-		findAllOrders();
+		findAllGroupOrders();
 	}
 });

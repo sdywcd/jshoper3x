@@ -30,6 +30,7 @@ import com.jshop.action.mall.backstage.utils.enums.BaseEnums.OrderIsInvoice;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.OrderPayState;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.OrderShippingState;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.OrderState;
+import com.jshop.action.mall.backstage.utils.enums.BaseEnums.OrderTag;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.PrintExpressState;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.PrintFaPiaoInvoiceState;
 import com.jshop.action.mall.backstage.utils.enums.BaseEnums.PrintInvoiceState;
@@ -42,6 +43,7 @@ import com.jshop.entity.DeliverAddressT;
 import com.jshop.entity.GoodsT;
 import com.jshop.entity.LogisticsBusinessT;
 import com.jshop.entity.MemberT;
+import com.jshop.entity.OrderGroupT;
 import com.jshop.entity.OrderInvoiceT;
 import com.jshop.entity.OrderT;
 import com.jshop.entity.PaymentM;
@@ -478,7 +480,7 @@ public class OrderTAction extends BaseTAction {
 	private void processOrderList(List<OrderT> order) {
 		rows.clear();
 		for (Iterator<OrderT> it = order.iterator(); it.hasNext();) {
-			OrderT o = (OrderT) it.next();
+			OrderT o = it.next();
 			//订单状态
 			o.setOrderstate(OrderState.getName(o.getOrderstate()));
 			//支付状态
@@ -494,7 +496,7 @@ public class OrderTAction extends BaseTAction {
 			if(o.getDeliverytime()!=null){
 				this.setFormatedeliverytime(BaseTools.formateDbDate(o.getDeliverytime()));
 			}else{
-				this.setFormatedeliverytime("");
+				this.setFormatedeliverytime(StaticKey.EMPTY);
 			}
 			Map<String,Object> cellMap = new HashMap<String,Object>();
 			cellMap.put("id", o.getOrderid());
@@ -1070,6 +1072,8 @@ public class OrderTAction extends BaseTAction {
 				t.setCartTag(CartGoodstate.NEWADDTOCART_BACKSTAGE_ZERO_NUM.getState());//从后台加入的购物车
 				t.setMemberid(memberid);
 				t.setMembername(membername);
+				t.setShopid(BaseTools.getShopId());
+				t.setShopname(BaseTools.getShopName());
 				cartlists.add(t);//将购物车信息加入购物车集合
 			}
 		}
@@ -1304,6 +1308,76 @@ public class OrderTAction extends BaseTAction {
 		
 	}
 	
+	/**
+	 * 查询所有来自移动端的订单信息
+	 * @return
+	 */
+	@Action(value="findAllMobileOrder",results={
+			@Result(name="json",type="json")
+	})
+	public String findAllMobileOrder(){
+		if(StringUtils.equals(StaticKey.SC, this.getQtype())){
+			this.findDefaultAllMobileOrder();
+		}else{
+			if(StringUtils.isBlank(this.getQtype())){
+				return JSON;
+			}
+		}
+		return JSON;
+	}
 
+	private void findDefaultAllMobileOrder() {
+		int currentPage=page;
+		int lineSize=rp;
+		Criterion criterion=Restrictions.eq("orderTag", OrderTag.ORDERTAG_MOBILE.getState());
+		total=this.orderTService.count(OrderT.class, criterion).intValue();
+		if(StringUtils.isNotBlank(this.getSortname())&&StringUtils.isNotBlank(this.getSortorder())){
+			Order order=null;
+			if(StringUtils.equals(this.getSortorder(),StaticKey.ASC)){
+				order=Order.asc(this.getSortname());
+			}else{
+				order=Order.desc(this.getSortname());
+			}
+			List<OrderT>list=this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+			this.processOrderList(list);
+		}
+	}
+	
+	/**
+	 * 获取已经付款切为发货的手机订单
+	 * @return
+	 */
+	@Action(value="findAllTobeShippedOrderMobileHavapay",results={
+			@Result(name="json",type="json")
+	})
+	public String findAllTobeShippedOrderMobileHavapay(){
+		if(StringUtils.equals(StaticKey.SC, this.getQtype())){
+			this.findDefaultAllHavaPayTobeShippedOrderMobile();
+		}else{
+			if(StringUtils.isBlank(this.getQtype())){
+				return JSON;
+			}
+		}
+		return JSON;
+	}
+	private void findDefaultAllHavaPayTobeShippedOrderMobile() {
+		int currentPage=page;
+		int lineSize=rp;
+		String shippingstate=OrderShippingState.ORDERSHIPPINGSTATE_UNDELIVER_GOODS_ZERO_NUM.getState();//配货中未发货
+		String orderstate=OrderState.ORDERSTATE_CONFIRMED_ONE_NUM.getState();//订单状态已确认
+		String paystate=OrderPayState.ORDERPAYSTATE_HAVEPAY_ONE_NUM.getState();//付款状态已支付
+		String orderTag=OrderTag.ORDERTAG_MOBILE.getState();
+		Map<String, String>params=new HashMap<String,String>();
+		params.put("orderstate", orderstate);
+		params.put("shippingstate", shippingstate);
+		params.put("paystate", paystate);
+		params.put("orderTag", orderTag);
+		Criterion criterion=Restrictions.allEq(params);
+		Order order=Order.desc("updatetime");
+		total=this.orderTService.count(OrderT.class, criterion).intValue();
+		List<OrderT>list=this.orderTService.findByCriteriaByPage(OrderT.class, criterion, order, currentPage, lineSize);
+		this.processOrderList(list);
+	}
+	
 	
 }
