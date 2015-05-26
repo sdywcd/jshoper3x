@@ -418,22 +418,8 @@ public class ShopTAction extends BaseTAction {
 	private void processList(List<JshopbasicInfoT> list) {
 		for (Iterator<JshopbasicInfoT> it = list.iterator(); it.hasNext();) {
 			JshopbasicInfoT jbi = (JshopbasicInfoT) it.next();
-			if (StringUtils.equals(jbi.getOpenstate(),
-					JshopOpenState.OPEN.getOpenstate())) {
-				jbi.setOpenstate(JshopOpenState.OPEN.getName());
-			}
-			if (StringUtils.equals(jbi.getOpenstate(),
-					JshopOpenState.CLOSE.getOpenstate())) {
-				jbi.setOpenstate(JshopOpenState.CLOSE.getName());
-			}
-			if (StringUtils.equals(jbi.getState(),
-					DataUsingState.USING.getState())) {
-				jbi.setState(DataUsingState.USING.getName());
-			}
-			if (StringUtils.equals(jbi.getState(),
-					DataUsingState.UNUSING.getState())) {
-				jbi.setState(DataUsingState.UNUSING.getName());
-			}
+			jbi.setOpenstate(JshopOpenState.getName(jbi.getOpenstate()));
+			jbi.setState(DataUsingState.getName(jbi.getState()));
 			Map<String, Object> cellMap = new HashMap<String, Object>();
 			cellMap.put("id", jbi.getBasicinfoid());
 			cellMap.put(

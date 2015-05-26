@@ -901,7 +901,7 @@ public class BaseEnums {
 	public enum JshopOpenState {
 		OPEN("运行", "1"), CLOSE("关闭", "0");
 		private String name;
-		private String openstate;
+		private String state;
 
 		public String getName() {
 			return name;
@@ -911,22 +911,23 @@ public class BaseEnums {
 			this.name = name;
 		}
 
-		public String getOpenstate() {
-			return openstate;
+		
+		public String getState() {
+			return state;
 		}
 
-		private JshopOpenState(String name, String openstate) {
+		public void setState(String state) {
+			this.state = state;
+		}
+
+		private JshopOpenState(String name, String state) {
 			this.name = name;
-			this.openstate = openstate;
+			this.state = state;
 		}
 
-		public void setOpenstate(String openstate) {
-			this.openstate = openstate;
-		}
-
-		public static String getName(String openstate) {
+		public static String getName(String state) {
 			for (JshopOpenState jshopOpenState : JshopOpenState.values()) {
-				if (jshopOpenState.getOpenstate().equals(openstate)) {
+				if (jshopOpenState.getState().equals(state)) {
 					return jshopOpenState.getName();
 				}
 			}

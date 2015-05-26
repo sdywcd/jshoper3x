@@ -178,7 +178,7 @@ public class DataCollectionTAction extends ActionSupport {
 		//获取导航数据
 		ActionContext.getContext().put(FreeMarkervariable.SITENAVIGATIONLIST, findSiteNavigation(DataShowState.SHOW.getState()));
 		//获取商城基本数据
-		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO,findJshopbasicInfo(DataShowState.SHOW.getState(),JshopOpenState.OPEN.getOpenstate()));
+		ActionContext.getContext().put(FreeMarkervariable.JSHOPBASICINFO,findJshopbasicInfo(DataShowState.SHOW.getState(),JshopOpenState.OPEN.getState()));
 		//获取页脚分类数据
 		ActionContext.getContext().put(FreeMarkervariable.FOOTCATEGORY, findFooterCateogyrT(CategoryGrade.FIRST.getState(),DataUsingState.USING.getState()));
 		//获取页脚文章数据
@@ -194,7 +194,7 @@ public class DataCollectionTAction extends ActionSupport {
 	public Map<String,Object> getBaseInfoContext(Map<String,Object> map){
 		map.put(FreeMarkervariable.BASEPATH, BaseTools.getBasePath());
 		map.put(FreeMarkervariable.SITENAVIGATIONLIST, findSiteNavigation(DataShowState.SHOW.getState()));
-		map.put(FreeMarkervariable.JSHOPBASICINFO,findJshopbasicInfo(DataShowState.SHOW.getState(),JshopOpenState.OPEN.getOpenstate()));
+		map.put(FreeMarkervariable.JSHOPBASICINFO,findJshopbasicInfo(DataShowState.SHOW.getState(),JshopOpenState.OPEN.getState()));
 		map.put(FreeMarkervariable.FOOTCATEGORY, findFooterCateogyrT(CategoryGrade.FIRST.getState(),DataUsingState.USING.getState()));
 		map.put(FreeMarkervariable.FOOTERATRICLE, findFooterArticle(DataShowState.SHOW.getState()));
 		return map;
