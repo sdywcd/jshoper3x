@@ -1,0 +1,41 @@
+.jqzoom {
+	border: 1px solid black;
+	float: left;
+	position: relative;
+	padding: 0px;
+	cursor: pointer;
+}
+
+.jqzoom img {
+	float: left;
+}
+
+div.zoomdiv {
+	z-index: 100;
+	position: absolute;
+	top: 110px;
+	left:310px;
+	width: 500px;
+	height: 500px;
+	background: #ffffff;
+	border: 1px solid #CCCCCC;
+	display: none;
+	text-align: center;
+	overflow: hidden;
+}
+
+div.jqZoomPup {
+	z-index: 10;
+	position: absolute;
+	float: left;
+	top: 0px;
+	left: 0px;
+	width: 50px;
+	height: 50px;
+	border: 1px solid #aaa;
+	background: #ffffff url(../images/zoom.gif) 50% top no-repeat;;
+	opacity: 0.5;
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	filter: alpha(Opacity = 50);
+}

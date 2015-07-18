@@ -1,0 +1,155 @@
+package com.jshop.entity;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
+
+
+/**
+ * The persistent class for the product_specifications_t database table.
+ * 
+ */
+@Entity
+@Table(name="product_specifications_t")
+@NamedQuery(name="ProductSpecificationsT.findAll", query="SELECT p FROM ProductSpecificationsT p")
+public class ProductSpecificationsT implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private String specificationsid;
+	private Date createtime;
+	private String creatorid;
+	private String goodsTypeId;
+	private String goodsTypeName;
+	private String name;
+	private String note;
+	private String shopid;
+	private String sort;
+	private String specificationsType;
+	private String specificationsValue;
+	private String state;
+
+	public ProductSpecificationsT() {
+	}
+
+
+	@Id
+	@Column(unique=true, nullable=false, length=20)
+	public String getSpecificationsid() {
+		return this.specificationsid;
+	}
+
+	public void setSpecificationsid(String specificationsid) {
+		this.specificationsid = specificationsid;
+	}
+
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
+	public Date getCreatetime() {
+		return this.createtime;
+	}
+
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
+
+
+	@Column(nullable=false, length=20)
+	public String getCreatorid() {
+		return this.creatorid;
+	}
+
+	public void setCreatorid(String creatorid) {
+		this.creatorid = creatorid;
+	}
+
+
+	@Column(name="GOODS_TYPE_ID", nullable=false, length=20)
+	public String getGoodsTypeId() {
+		return this.goodsTypeId;
+	}
+
+	public void setGoodsTypeId(String goodsTypeId) {
+		this.goodsTypeId = goodsTypeId;
+	}
+
+
+	@Column(name="GOODS_TYPE_NAME", nullable=false, length=45)
+	public String getGoodsTypeName() {
+		return this.goodsTypeName;
+	}
+
+	public void setGoodsTypeName(String goodsTypeName) {
+		this.goodsTypeName = goodsTypeName;
+	}
+
+
+	@Column(nullable=false, length=45)
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	@Column(length=45)
+	public String getNote() {
+		return this.note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+
+	@Column(length=20)
+	public String getShopid() {
+		return this.shopid;
+	}
+
+	public void setShopid(String shopid) {
+		this.shopid = shopid;
+	}
+
+
+	@Column(length=45)
+	public String getSort() {
+		return this.sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+
+	@Column(name="SPECIFICATIONS_TYPE", nullable=false, length=1)
+	public String getSpecificationsType() {
+		return this.specificationsType;
+	}
+
+	public void setSpecificationsType(String specificationsType) {
+		this.specificationsType = specificationsType;
+	}
+
+
+	@Column(name="SPECIFICATIONS_VALUE", nullable=false, length=5000)
+	public String getSpecificationsValue() {
+		return this.specificationsValue;
+	}
+
+	public void setSpecificationsValue(String specificationsValue) {
+		this.specificationsValue = specificationsValue;
+	}
+
+
+	@Column(nullable=false, length=1)
+	public String getState() {
+		return this.state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+}

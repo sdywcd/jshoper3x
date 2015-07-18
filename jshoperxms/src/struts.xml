@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+
+<struts>
+	<!--开发模式设置开始// -->
+	<!--开发状态 -->
+
+
+
+	<constant name="struts.devMode" value="false" />
+	<!-- 配置文件重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- convention类从新加载 -->
+	<constant name="struts.convention.classes.reload" value="true" />
+	<!-- 主题 -->
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.custom.i18n.resources" value="globalMessages" />
+	<constant name="struts.i18n.encodeing" value="UTF-8" />
+	<constant name="struts.convention.result.path" value="/" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.convention.package.locators" value="action" />
+	<!-- 指定允许上传的文件最大字节数,默认值是2097152(2M),使用struts常量扩大默认上传文件大小 -->
+	<constant name="struts.multipart.maxSize" value="104857600"></constant>
+	<package name="jshop" extends="struts-default,json-default" namespace="/">
+		<!-- 后台拦截器定义 -->
+		<interceptors>
+			<interceptor name="json"
+				class="org.apache.struts2.json.JSONInterceptor" />
+			<interceptor name="validateapp" class="com.jshop.action.mall.app.interceptor.ValidateAppInterceptor"></interceptor>
+	       
+			<!-- 这是jshop的拦截器 -->
+			<interceptor-stack name="jshopdefaultStack">
+				<interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">error</param>
+				</interceptor-ref>
+				<interceptor-ref name="json">
+					<param name="excludeNullProperties">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+			
+			<!-- 接口拦截器定义 -->
+		    <interceptor-stack name="appstack">
+		        <interceptor-ref name="validateapp">
+		            <param name="excludeMethods">registerUuid4App</param>
+		        </interceptor-ref>
+		        <interceptor-ref name="defaultStack">
+					<param name="exception.logEnabled">true</param>
+					<param name="exception.logLevel">error</param>
+				</interceptor-ref>
+				<interceptor-ref name="json">
+					<param name="excludeNullProperties">true</param>
+				</interceptor-ref>
+			</interceptor-stack>
+
+		</interceptors>
+		<default-interceptor-ref name="jshopdefaultStack" />
+		
+		<global-results>
+			<result name="adminloginfailed" type="redirect">/admin/jump.jsp</result>
+			<result name="success">/jshop/admin/authorfailed.jsp</result>
+			<result name="login" type="redirect">/html/default/shop/login.html
+			</result>
+			<result name="isusercanregister">/usercenter/warning/warningmsg.jsp</result>
+			<result name="canuserregistermoreshopinfo">/jshop/admin/error/adminerror.jsp
+			
+			</result>
+			<result name="authorityfalied" type="redirect">/admin/authorityfalied.jsp</result>
+		</global-results>
+
+	</package>
+</struts>

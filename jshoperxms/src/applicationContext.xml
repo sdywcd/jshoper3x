@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation=" 
+	http://www.springframework.org/schema/data/mongo   
+		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-4.0.xsd
+		http://www.springframework.org/schema/cache
+		http://www.springframework.org/schema/cache/spring-cache.xsd"
+
+	default-autowire="byName" default-lazy-init="false">
+
+
+
+
+	<aop:aspectj-autoproxy />
+
+	<context:component-scan base-package="com.jshop">
+	</context:component-scan>
+
+	<context:annotation-config />
+	<context:property-placeholder location="classpath*:*.properties" />
+	<!-- mongo配置 -->
+	<mongo:mongo host="${mongo.host}" port="${mongo.port}" />
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg name="databaseName" value="${mongo.db}" />
+
+	</bean>
+
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="initialPoolSize" value="${pool.initialPoolSize}" />
+		<property name="minPoolSize" value="${pool.minPoolSize}" />
+		<property name="maxPoolSize" value="${pool.maxPoolSize}" />
+		<property name="maxIdleTime" value="${pool.maxIdleTime}" />
+		<property name="acquireIncrement" value="${pool.acquireIncrement}" />
+		<property name="checkoutTimeout" value="${pool.checkoutTimeout}" />
+		<property name="maxIdleTimeExcessConnections" value="${pool.maxIdleTimeExcessConnections}" />
+	</bean>
+	<!-- 邮箱服务器配置 -->
+	<bean id="javamailsenderimpl" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.host}"></property>
+		<property name="defaultEncoding" value="${email.defaultEncoding}"></property>
+		<property name="port" value="${email.port}"></property>
+		<property name="username" value="${email.username}"></property>
+		<property name="password" value="${email.password}"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${email.auth}</prop>
+				<prop key="mail.smtp.timeout">${email.timeout}</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- jedis缓存配置 -->
+	<bean id="jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="hostName" value="${redis.ip}" />
+		<property name="port" value="${redis.port}" />
+	
+		<property name="poolConfig" ref="jedisPoolConfig" />
+	</bean>
+	<bean class="org.springframework.data.redis.core.RedisTemplate"
+		p:connection-factory-ref="jedisConnectionFactory">
+		<property name="keySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+		<property name="valueSerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+	</bean>
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxActive" value="${redis.pool.maxActive}" />
+		<property name="maxIdle" value="${redis.pool.maxIdle}" />
+		<property name="maxWait" value="${redis.pool.maxWait}" />
+		<property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
+
+	</bean>
+	
+	
+	
+	<!-- org.springframework.orm.hibernate3.LocalSessionFactoryBean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="packagesToScan">
+			<list>
+				<value>com.jshop.entity</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=${hibernate.dialect}
+				hibernate.show_sql=${hibernate.show_sql}
+				hibernate.format_sql=${hibernate.format_sql}
+				hibernate.cache.use_second_level_cache=${hibernate.cache.use_second_level_cache}
+				hibernate.cache.provider_class=${hibernate.cache.provider_class}
+				hibernate.cache.use_query_cache=${hibernate.cache.use_query_cache}
+				hibernate.jdbc.batch_size=${hibernate.jdbc.batch_size}
+				hibernate.jdbc.fetch_size=${hibernate.jdbc.fetch_size}
+			
+			</value>
+		</property>
+
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<aop:config >
+		<aop:advisor pointcut="execution(* com.jshop.service.impl.*.*Service.*(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="SerialT*" propagation="REQUIRES_NEW" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="get*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="query*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="find*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="load*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="count*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="check*" read-only="true" propagation="REQUIRED" />
+			<tx:method name="*" rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+
+
+
+	<!-- 配置异步线程执行器 -->  <!-- 为异步线程执行器 进注入 -->
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 设置核心池子的大小 -->
+		<property name="corePoolSize" value="10"></property>
+		<!-- 设置最大池子的大小 -->
+		<property name="maxPoolSize" value="30"></property>
+	</bean>
+	
+	<!-- 权限框架shiro -->
+	
+	<!-- ehcache 的配置 -->
+	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager">
+		<!--  <property name="configLocation" value="classpath:ehcache-shiro.xml"/> -->
+	</bean>
+	
+	<bean id="basehiroRealm" class="com.jshop.shiro.BaseShiroRealm"> 
+    	<!--  用来实现用户名密码的查询 --> 
+    	<property name="cacheManager" ref="cacheManager"/> 
+	    <property name="authenticationCacheName" value="shiroAuthorizationCache"></property>
+  	</bean>
+  	
+  	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"> 
+  	 	<!-- <property name="sessionMode" value="native" />
+  	 	<property name="sessionManager" ref="sessionManager" />  -->
+  	 <!-- 	<property name="cacheManager" ref="shiroCacheManager"/>  -->
+   	 	<property name="realm" ref="basehiroRealm"/>
+ 	</bean> 
+ 	
+ 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/> 
+	
+	<!-- <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager"> 
+    	<property name="cacheManager" ref="cacheManager"/> 
+    </bean> -->
+    
+	<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter"/>
+	 
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager"/>
+		<property name="loginUrl" value="/admin/login.jsp"/> 
+	    <property name="successUrl" value="/admin/index.jsp"/> 
+	    <property name="unauthorizedUrl" value="/admin/error/error.jsp"/> 
+	    <property name="filters"> 
+	       <util:map> 
+	         <entry key="authc" value-ref="formAuthenticationFilter"/> 
+	       </util:map>
+    	</property> 
+	    <property name="filterChainDefinitions"> 
+	       <value>
+	         /admin/**=anon
+	       	 /admin/js/** = authc
+	       	 /admin/ui/** = anon
+	       	 /login.action = anon
+	       	 /app/*.action=anon
+	       </value>
+	    </property> 
+	</bean>
+
+	
+	
+</beans>
+	

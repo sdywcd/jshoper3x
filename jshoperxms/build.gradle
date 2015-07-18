@@ -1,0 +1,100 @@
+import org.gradle.plugins.ide.eclipse.model.Facet
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+sourceCompatibility = 1.7   // 设置 JDK 版本
+webAppDirName = 'WebContent'    // 设置 WebApp 根目录
+sourceSets.main.java.srcDir 'src'   // 设置 Java 源码所在目录
+
+// 设置 maven 库地址
+repositories {  
+    mavenCentral() // 中央库
+}
+
+// 设置依赖
+dependencies {
+    providedCompile 'javax.servlet:servlet-api:2.5' // 编译期
+    providedRuntime 'javax.servlet:jstl:1.2'    // 运行时
+    compile(
+    	'org.apache.activemq:activemq-all:5.10.0',
+    	'org.apache.activemq:activemq-camel:5.10.0',
+    	'org.apache.activemq:activemq-console:5.10.0',
+    	
+    	'org.activiti:activiti-bpmn-converter:5.17.0',
+    	'org.activiti:activiti-engine:5.17.0',
+    	'org.activiti:activiti-spring:5.17.0',
+    	'org.activiti:activiti-bpmn-layout:5.17.0',
+    	'org.activiti:activiti-camel:5.17.0',
+    	'org.activiti:activiti-cdi:5.17.0',
+    	'org.activiti:activiti-camel:5.17.0',
+    	'org.activiti:activiti-common-rest:5.17.0',
+    	'org.activiti:activiti-cxf:5.17.0',
+    	'org.activiti:activiti-diagram-rest:5.17.0',
+    	'org.activiti:activiti-explorer:5.17.0',
+    	'org.activiti:activiti-json-converter:5.17.0',
+    	'org.activiti:activiti-ldap:5.17.0',
+    	'org.activiti:activiti-modeler:5.17.0',
+    	'org.activiti:activiti-mule:5.17.0',
+    	'org.activiti:activiti-osgi:5.17.0',
+    	'org.activiti:activiti-rest:5.17.0',
+    	'org.activiti:activiti-simple-workflow:5.17.0',
+    	'org.activiti:activiti-spring:5.17.0',
+    	
+    	'org.apache.struts:struts2-core:2.3.24',
+    	'org.apache.struts:struts2-convention-plugin:2.3.24',
+    	'org.apache.struts:struts2-json-plugin:2.3.24',
+    	'org.apache.struts:struts2-junit-plugin:2.3.24',
+    	'org.apache.struts:struts2-spring-plugin:2.3.24',
+    	
+    	
+    	'org.hibernate:hibernate-core:4.3.8.Final',
+    	'org.hibernate:hibernate-c3p0:4.3.8.Final',
+    	'org.hibernate:hibernate-entitymanager:4.3.8.Final',
+    	'org.hibernate:hibernate-validator:4.3.8.Final',
+    	
+    	
+    	'org.springframework:spring-core:4.0.2.RELEASE',
+    	'org.springframework:spring-aspects:4.0.2.RELEASE',
+    	'org.springframework:spring-web:4.0.2.RELEASE',
+    	'org.springframework:spring-data-jpa:18.1.RELEASE',
+    	'org.springframework:spring-instrument:4.0.2.RELEASE',
+    	'org.springframework:spring-instrument-tomcat:4.0.2.RELEASE',
+    	'org.springframework:spring-jms-tomcat:4.0.2.RELEASE',
+    	'org.springframework:spring-test:4.0.2.RELEASE',
+    	'org.springframework:spring-oxm:4.0.2.RELEASE',
+    	'org.springframework:spring-webmvc:4.0.2.RELEASE',
+    	'org.springframework:spring-webmvc-portlet:4.0.2.RELEASE',
+    	'org.springframework:spring-orm:4.0.2.RELEASE',
+    	'org.springframework.data:spring-data-mongodb:1.7.1.RELEASE',
+    	'org.springframework.data:spring-data-redis:1.1.0.RELEASE',
+
+    	'aspectj:aspectjrt:1.5.4',
+    	'org.aspectj:aspectjweaver:1.8.6',
+    	'com.google.code.gson:gson:2.3.1',
+    	'com.googlecode.json-simple:json-simple:1.1.1',
+    	'com.qiniu:qiniu-java-sdk:6.1.7.1',
+    	'org.apache.shiro:shiro-all:1.2.3',
+    	'org.mongodb:mongo-java-driver:3.0.3',
+    	'mysql:mysql-connector-java:5.1.36',
+    	'com.mchange:c3p0:0.9.5.1',
+    	'redis.clients:jedis:2.1.0',
+    	'log4j:log4j:1.2.17',
+    	'org.tuckey:urlrewritefilter:4.0.4'
+    )
+}
+
+// 设置 Project Facets
+eclipse {
+    wtp {
+        facet {
+            facet name: 'jst.web', type: Facet.FacetType.fixed
+            facet name: 'wst.jsdt.web', type: Facet.FacetType.fixed
+            facet name: 'jst.java', type: Facet.FacetType.fixed
+            facet name: 'jst.web', version: '3.0'
+            facet name: 'jst.java', version: '1.7'
+            facet name: 'wst.jsdt.web', version: '1.0'
+        }
+    }
+}
