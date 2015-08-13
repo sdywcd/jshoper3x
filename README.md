@@ -1,8 +1,11 @@
 ##重要通知
 >
 >jshoper3x项目将搬迁到https://git.oschina.net/ 上。jshoper3x项目将进行重大重构和更新，以后将更名为jshoperxms。
+>
 >jshoper3x基于Gradle构建的项目名称是jshoperx 地址是：https://github.com/sdywcd/jshoperx
+>
 >作出如上决定是因为墙太深，阻碍了日常的开发和朋友们获取代码的便捷性。所以搬迁到国内的git服务。
+>
 >更多信息请关注http://www.jshoper.org/  
 >
 
