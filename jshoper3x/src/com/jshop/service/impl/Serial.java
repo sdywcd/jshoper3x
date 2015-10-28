@@ -49,7 +49,7 @@ public class Serial {
 	//商品类型品牌（保存该类型下有多少个品牌信息）
 	public static final String GOODSTYPEBRAND="goodstypebrand";
 	//商品类型表主键生成
-	public static final String GOODSTYPE="goodstype";
+	public static final String GOODSTYPE="goods_type_t";
 	//单位表主键生成
 	public static final String UNIT="unit";
 	//会员等级表主键生成
